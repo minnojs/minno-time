@@ -1,0 +1,22 @@
+{
+  "name": "pip",
+  "version": "0.0.0",
+  "description": "Project Implicit Player",
+  "main": "js/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://eladzlot@bitbucket.org/eladzlot/piplayer.git"
+  },
+  "author": "Elad Zlotnick",
+  "license": "BSD",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-requirejs": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.1",
+    "grunt-docco": "~0.2.0",
+    "docco": "~0.6.2"
+  }
+}

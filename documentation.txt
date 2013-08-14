@@ -1,0 +1,653 @@
+Player manual
+
+Media are the objects that we display.
+Stimuli are responsible for how we display the media.
+Trials are a set of stimuli and the rules governing their display.
+
+******************************************************
+Media
+******************************************************
+
+Media are the objects that we display. We currently support four types of media:
+
+Plain text: {word: 'Your very cool stimulus'}
+Image: {image: 'some/url/image.png}
+Jquery elements: {jquery: $('<div>',{text: 'anything you want' })}
+HTML: {html: "<div>any html</div>"}
+Template: {template: 'some/url/template.html'}
+	// templates may include any valid html and underscore template formating (http://documentcloud.github.com/underscore/#template)
+	// stimuli are passed the trial and stimulus data attributes as "trialData" and "stimulusData" so that you can call:
+	<div>
+		<%= trialData.name ?>
+		<span> <%= stimulusData.handle %> </span>
+	</div>
+
+******************************************************
+Stimuli
+******************************************************
+
+Stimuli are responsible for how we present the media.
+
+{
+	handle:'myStim',
+	size: {height:25,width:25},
+	location: {left:25,top:75},
+	css:{color:'red','font-size':'2em'},
+	media: {word: 'Your very cool stimulus'},
+	data: {myData: 'some info', myOtherData: 'some other info'}
+	nolog: false
+}
+
+handle:
+-------
+this is how refer to this specific stimulus inside the player (i.e. if we want to hide or show it). If more than one stimulus (per trial) has the same handle, all actions targeted at that handle will affect both stimuli.
+the handle may be set either in the body of the stimulus or in the data attribute.
+
+size:
+-----
+the size of the stimulus in percentage of the player canvas. By default, size is set to {height:'auto',width:'auto'}
+
+location:
+---------
+the location to display the stimulus, in percentage of the player canvas. Where left:20 means that the left border of the stimulus should be 20% from the left of the canvas. You may define any of left/right/top/bottom attributes.
+Instead of specifying percentages you may use the keyword 'center' in order to center the stimulus, or the keyword 'auto' in order to override any previous settings.
+By default, location is set to {left:'center', right:'auto',top:'center', left:'auto'}.
+
+css:
+----
+accepts any jquery css object. (see http://api.jquery.com/css/ for details)
+
+media:
+------
+defines the media associated with this stimulus.
+
+touchMedia
+----------
+An alternative media object to display in case we are on a touch device (by default, the regular media is used)
+
+data:
+-----
+in addition to the basic attributes of the stimulus you may add any attribute you like as meta deta that will be available from within the player
+
+nolog:
+------
+If this attribute is set to true, this stimulus (and its associated media) will not be logged.
+By default nolog is set to false.
+
+******************************************************
+Trial
+******************************************************
+
+Trials are responsible for organizing stimuli and interactions with the user.
+
+{
+	data:{orientation: 'left'},
+	layout: [
+		{location:{left:0,top:0},media:{word:'click left to hide'}},
+		{location:{left:'auto',right:0,top:0},media:{word:'right to show'}}
+	],
+	input: [
+		{handle:'left',on:'leftTouch'},
+		{handle:'right',on:'rightTouch'}
+	],
+	stimuli: [
+		{orientation:'right', handle:'myStim', css:{color:'red','font-size':'2em'}, media: {word: 'Your very cool stimulus'}}
+	],
+	interactions: [
+		{
+			propositions: [{type:'begin'}],
+			actions: [{type:'hideStim',handle:'myStim'}]
+		},
+		{
+			propositions: [{type:'stimEquals',value:'orientation'}],
+			actions: [{type:'showStim',handle:'myStim'},{type:'setInput',input:{handle:'time',on:'timeout',duration:300}}]
+		},
+		{
+			propositions: [{type:'stimEquals',value:'orientation',negate:true},{type:'inputEquals',value:'time',negate:true}],
+			actions: [{type:'endTrial'}]
+		},
+		{
+			propositions: [{type:'inputEquals',value:'time'}],
+			actions: [{type:'hideStim',handle:'myStim'}]
+		}
+	]
+}
+
+layout / stimuli
+----------------
+
+the layout and stimuli list the stimuli associated with this trial. stimuli in "layout" will be statically displayed throughout the trial. stimuli within "stimuli" are not displayed automatically and may be dynamically interacted with during the trial (see interactions).
+
+input
+-----
+the input attribute lists the input elements that the player is familiar with.
+each input element must include both a handle and an on elements.
+
+handle: the way we refer to this input element inside the player (e.g., 'rightClick')
+on: what triggers this input element. for now we have several types of input:
+
+	keypressed: takes a key attribute that may either be a key code, a one letter string, or an array of keys.
+	{handle: 'enter',on: 'keypressed',key:'a'}
+	{handle: 'enter',on: 'keypressed',key:13}
+	{handle: 'enter',on: 'keypressed',key:[13,'a']}
+
+	click: takes either a class handle or an html element to present, in case an element is defined it is presented when the input is activated
+	{handle:'right',on:'click',element:$('<div>'),css:{}}
+	{handle:'right',on:'click',stimHandle:'myStimHandle'}
+
+	timeout: takes duration and fires after the duration passes
+	{handle:'time',on:'timeout',duration:300}
+
+	in addition, we have several shortcuts to commonly used inputs:
+	{handle: 'enter',on: 'enter'}
+	{handle: 'space',on: 'space'}
+	{handle: 'escape',on: 'esc'}
+	{handle:'left',on:'leftTouch'},
+	{handle:'right',on:'rightTouch'}
+	{handle:'top',on:'topTouch'}
+	{handle:'bottom',on:'bottomTouch'}
+
+in addition to the preset input types you can create custom input:
+	{
+		handle: 'myInput',
+		on: function(callback){
+			// do your mojo here and then
+			callback(e, 'eventType');
+		},
+		off: function(){
+			// remove your listener (if you need to keep state you can encapsulate the whole input object in a module)
+		}
+	}
+
+the input objects support an aditional meta property: touch. If touch is undefined then this input will always be used.
+If it is set to true then the input will be used only in touch devices.
+If it is set to false then the input will be used only in non touch devices.
+	{handle:'end',on:'bottomTouch',touch:true}
+	{handle: 'end',on: 'enter', touch:false}
+
+
+interactions: propositions
+--------------------------
+the interactions are composed of propositions and actions. Each time there is an event (any input or the begining of a trial) all the propositions are evaluated.
+For each row: if all the propositions are true, then all the actions are carried out.
+Each proposition has a "type" attribute that defines what type of evaluation to perform.
+In addition it has a negate attribute (false by default) that determines if to activate the proposition when it is true or when it is false.
+
+** the propositions we have are: **
+
+begin: automatically activated at the beginning of the trial, and is never fired again.
+	propositions: [{type:'begin'}]
+
+inputEquals: check if the input handle equals to a static "value".
+	propositions: [{type:'inputEquals',value:'enter'}]
+
+trialEquals: check if the input handle equals to the "value" attribute of trial.data
+	propositions: [{type:'trialEquals',value:"customAttribute"}]
+
+stimEquals: check if the input handle equals to the  "value" attribute of one of any stimulus.data
+			the optional attribute handle narrows the search down to stimuli having the handle
+	propositions: [{stimEquals:'trialEquals',value:"customAttribute"}]
+	propositions: [{stimEquals:'trialEquals',value:"customAttribute",handle:'myStimHandle'}]
+
+function: it is also possible to create a custom proposition:
+	propositions: [{type:'function',value:function(trial,inputData){
+		// do your mojo here and return true or false
+	}}]
+
+** complex proposition **
+
+it is possible to create complex propositions, the following proposition, for instance, is activated in case there is an input that is not equal to trial.data.customAttribute, and the input handle is not "time".
+	propositions: [
+		{type:'trialEquals',value:'customAttribute',negate:true},
+		{type:'inputEquals',value:'time',negate:true}
+	]
+
+
+interactions: actions
+---------------------
+if all the propositions in a row of interactions are true, its actions will be carried out.
+the actions we have are conveniently organized into stimulus actions and trial actions
+
+** stimulus actions **
+showStim: display a stimulus, takes a stimulus handle
+	actions: [{type:'showStim',handle:'myStim'}]
+
+hideStim: hide a stimulus, takes a stimulus handle
+	actions: [{type:'hideStim',handle:'myStim'}]
+
+setStimAttr: set a stimulus attribute, takes a stimulus handle and a setter object or function
+	actions: [{type:'setStimAttr',handle:'myStim',setter:{myAttr:'myValue',myOtherAttr:'myOtherValue'}]
+	actions: [{type:'setStimAttr',handle:'myStim',setter:function(){
+		// do your mojo here :)
+		// the context ("this") of this function is the stimulus model
+	}]
+
+** trial actions **
+setTrialAttr: set a trial.data attribute, takes a setter object or function
+	actions: [{type:'setTrialAttr',setter:{myAttr:'myValue',myOtherAttr:'myOtherValue'}]
+	actions: [{type:'setTrialAttr',setter:function(){
+		// do your mojo here :)
+		// the context ("this") of this function is the trial object
+	}]
+
+setInput: set input listener (usefull for adding timeouts), takes an input object
+	actions: [{type:'setInput',input:{handle:'time',on:'timeout',duration:300}}]
+
+removeInput: remove input listener, takes an input handle or an array of input handles
+	actions: [{type:'removeInput',inputHandle : 'time'}]
+	actions: [{type:'removeInput',inputHandle : ['time','left']}]
+
+endTrial: speaks for itself (note that any actions that come after this is called may not work properly)
+	actions: [{type:'endTrial'}]
+
+** other actions **
+log: log this action. pushes this action into the logging stack so that it is later sent to the server
+	actions: [{type:'log'}]
+
+goto: responsible for the next trial we go to. this action will be executed only after the trial ends, you will probably want to follow it with an endTrial action.
+	the destination defines what type of goto this is (default is "next")
+	properties is an object to compare to the trial data. note that the properties will only compare to properties present in the raw sequence before inheritance!
+
+	actions: [{type:'goto',destination: 'next']												// goto the next trial (this is the default)
+	actions: [{type:'goto',destination: 'current']											// rerun the current trial
+	actions: [{type:'goto',destination: 'first']											// goto the first trial
+	actions: [{type:'goto',destination: 'last']												// goto the last trial
+	actions: [{type:'goto',destination: 'end']												// end this task
+	actions: [{type:'goto',destination: 'nextWhere', properties: {blockStart:true}}]		// goto the next trial that has these properties
+	actions: [{type:'goto',destination: 'previousWhere', properties: {blockStart:true}}]	// goto the previous trial that has these properties
+
+******************************************************
+Inheritance
+******************************************************
+Each element (trial/stimulus/media) can inherit its attributes from an element set.
+
+Sets
+----
+
+The element sets are defined in the main task script under trialSets\stimulusSets\mediaSets.
+Each set is simply an array of elements that can later be referred to as a base for new elements.
+Note that the name that you give the set (in the example, default or IAT) is the handle that you later use to refer to it.
+The examples here use trials as an example, the same principles apply to stimuli and media elements.
+
+task = {
+	// these are the trial sets
+	trialSets: {
+
+		// this is the first set, it has only one trial
+		default : [
+			defaultTrial
+		],
+
+		// this is the second set it has three trials, the first explicitly inherits the default trial
+		IAT : [
+			{inherit:{set:default},data:{block:1}},
+			block02Trials,
+			block03Trials
+		]
+	},
+
+	// these are the stimulus and media sets
+	stimulusSets : stimulusSets,
+	mediaSets : mediaSets
+}
+
+Inheriting
+----------
+When inheriting an element the new element starts out with all of the parent's attributes and extends them with its own.
+We shallow extend all attributes except for "data". This means that in case that one of the first level elements is set
+for the child it will completely overwrite the parent attribute of the same name. Except for data in which attempt to combine
+the parent and child attributes (giving precedence to the child).
+
+	Follow this pseudo code:
+	// the parent trial
+	parent = {
+		data: {name: 'jhon', family:'doe'}
+		stimuli: [
+			stim1,
+			stim2
+		]
+	}
+
+	// the child trial which attempts to inherit the parent
+	child = {
+		inherit: 'parent',
+		data: {name: 'jack'}
+		stimuli: [
+			stim1
+		]
+	}
+
+	// the result would be:
+	result = {
+		data: {name: 'jack', family:'doe'} 	// the child kept its own name but inherited the family name
+		stimuli: [							// the stimulus was completely overwritten
+			stim1
+		]
+	}
+
+In order for an element to inherit another element it must use the inherit property.
+
+** There are several types of inheritance we have implemented: **
+
+random: randomly picks an element from the set
+	inherit: 'setName'
+	inherit: {set: 'setName'}
+	inherit: {set: 'setName', type:'random'}
+
+exRandom: picks a random element without repeating the same element until we've gone through the whole set
+	inherit: {set: 'setName', type:'exRandom'}
+
+byData: 	picks a specific element from the set.
+			The set compares the "data" property to the element.data property and if the handle is a subset of the data it picks the element.
+			(this means that if all properties of data property equal to the properties of the same name in element.data it is a fit)
+			this function will pick only the first element to fit the handle.
+
+	inherit: {set: 'setName', type: 'byHandle', data: {block:1, row:2}} // picks the element with
+
+function: 	you may also use a custom function to pick your element.
+	inherit: {set: 'setName', type: function(definitions){
+		// definitions is the inherit object (including  set, type, and whatever other properties you'd like to use)
+		// the context ("this") is the element collection, it is a Backbone.js collection of the elements in the set
+	}}
+
+Customization
+-------------
+trial = {
+	inherit: 'something',
+	stimuli: [], // note that their are no stimuli yet!
+	customize : function(trialSource){
+		trialSource.push(media1);
+	}
+}
+
+Each trial/stimulus/media can also have a customize method, this method is called once the element is inherited but before it is activated.
+It accepts one argument: the source object on which it is called (in this case the appropriate trial object). The source object is also the context for the function.
+The example shows how you can use customize to push "media1" into the trial, media1 in this case can be generated dynamically.
+
+******************************************************
+The sequence
+******************************************************
+The sequence is an ordered list of the trials that you want to present consequently to the users.
+task = {
+	trialSets: trialSets,
+	stimulusSets : stimulusSets,
+	mediaSets : mediaSets,
+	sequence: [
+		trial1,
+		trial2,
+		trial3
+	]
+
+}
+
+This is all you really need to know in order to run a task. In addition the sequencer provides several mixing options
+that allow for powerful randomization of your task.
+
+The mixer
+---------
+The mixer allows wrapping sub sequences in objects that serve as functions.
+You may insert such an object at any place within the sequence and it will be replaced by the appropriate trials.
+
+The basic structure of such an object is:
+{
+	mixer: 'functionType',
+	data: [task1, task2]
+}
+
+and a sequence can look like this (don't get scared it's simpler than it looks):
+this sequence has an opening and ending trial.
+between them them we repeat a set of four trials ten times.
+the order of the four trials is randomized.
+but trials three and four are wrapped together and therefore always stay consecutive.
+
+sequence = [
+	// the first trial to present
+	presentationTrial,
+	// repeat the structure inside 10 time (so we get 40 trials)
+	{
+		mixer: 'repeat',
+		times: 10,
+		data: [
+
+			// randomize the order of the four trials within
+			{
+				mixer: 'random',
+				data: [
+					trial1,
+					trial2,
+					// when randomizing, treat these two trials as one block so they are never seperated
+					{
+						mixer: 'wrapper',
+						data: [
+							trial3,
+							trial4
+						]
+					} // end wrapper
+				]
+			} // end random
+		]
+	}, // end repeat
+	// the last trial to present
+	summaryTrial
+]
+
+** the function types **
+
+repeat: repeats the data element "times" times.
+	element: {mixer:'repeat', times:10, data: [trial1,trial2]}
+
+random: randomizes the order of  the data element
+	element: {mixer:'random', data: [trial1,trial2]}
+
+pick: picks n random elements from the data element (by default the picker picks one element).
+	element: {mixer:'pick', n:1, data: [trial1,trial2]}
+
+wrapper: in case we want to treat a set of elements as one block (when randomizing) we can put them in a wrapper
+	element: {mixer:'wrapper', data: [trial1,trial2]}
+
+******************************************************
+Settings
+******************************************************
+
+Player wide settings are set within the "settings" property of the task JSON.
+
+settings = {
+	logger: {
+		url: 'your/target/url',
+		logger: function(){
+			// do your mojo here :)
+		}
+	},
+	canvas: {
+		maxWidth: 800,
+		proportions : 1
+	}
+}
+
+
+Logger
+------
+logger: {
+	url: 'your/target/url',
+	pulse: 3,
+	fulpath: false,
+	logger: function(){
+		// do your mojo here :)
+	}
+}
+
+The logger section is responsible for logging options.
+url: is the url to which we send the logged data (ask your IT team what it should be). You should set this if you want to log your data...
+pulse: After how many rows should we send data to the server.
+	In case the number of rows is reached during a trial, the player waits until the end of the trial and sends all the log rows it gathered at once.
+	Regardless of pulse, the player sends all remaining log rows at the end of task.
+	This means that it is possible to get pulses holding more or less than "pulse" rows.
+	If pulse is not set (or is set to 0) the player will send all data at the end of the task.
+fullpath: when logging media names from the media path (for images and templates), should we use the full path or just the filename (false by default)
+logger: accepts a function to replace the existing logging function. (don't touch this if you don't know what you're doing)
+	The logger function is called each time a log action is triggered (see interactions: actions)
+	It is responsible for adding a logging row to be sent to the server.
+	logger: function(trialData, inputData, actionData,logStack){
+		// trialData: the data object from this trial
+		// inputData: the input object that triggered this action
+		// actionData: the action object that was triggered (it should look like {type:'log', your:'custom property'})
+		// logStack: an array with all previously logged rows
+
+		// the context for this function ("this") is the original trial object
+
+		// the function should return an object to be pushed into the trial stack, and later be sent to the server
+	}
+
+Canvas
+------
+canvas: {
+	maxWidth: 800,
+	proportions : 0.8
+}
+
+The canvas section is responsible for the overall canvas of the player.
+It controls the shape and appearance of the canvas.
+
+maxWidth: is the maximum width (in pixels) that the canvas may reach. By default it is set to 500px
+proportions: is responsible for the shape of the canvas. You can set it either as a number or an object. By default it is set to 0.8.
+	proportions: {width:2,height:3}
+	proportions: 1.5 // calculated as height/width
+
+background: controls the background color of the whole screen
+canvasBackground: controls the background color of the player canvas
+borderWidth: controls the width of the player canvas borders
+borderColor: controls the color of the player canvas borders
+css: allows you to add any custom css to the canvas (using the jquery css API)
+	background: 'white',
+	canvasBackground: 'red',
+	borderWidth: 3,
+	borderColor: 'blue',
+	css: {background:'yellow'}
+
+Base_url
+--------
+
+The base url section is responsible for loading images and templates. it allows the user to pick a base url from which to load all images and templates.
+It accepts either an object with the image and/or template properties setting the base url:
+	base_url: {
+		image: "images",
+		template: "templates/"
+	}
+or a string that will be used for both images and templates:
+	base_url: "media/"
+
+Redirect
+--------
+The redirect setting decides where to redirect the player at the end of the task.
+By default, the player simply refreshes the current page.
+This option is not used if the endTask hook is set.
+
+redirect: '//google.com'
+
+Hooks
+-----
+Hooks are functions that are to be run at predefined points throughout the player.
+
+hooks: {
+	endTask: function(){} // called at the end of the task instead of redirection
+}
+
+Meta data
+---------
+Meta data is server side data that should be returned with every request to the server.
+Any key value pair in the meta data is added to every post the player makes to the server.
+In order to create a post with three keys: json, session_id and task_id - you would write something like this:
+
+metaData: {
+	session_id	: 9872356,
+	task_id		: '43BTW78'
+}
+
+
+
+******************************************************
+API
+******************************************************
+The API is composed of the js function that are available to the user.
+The basic format for accessing the API is as follows:
+
+require(['app/API'], function(API) {
+	API.addScript(script);
+	API.play();
+});
+
+the API object exposes several helper function to help you organize your script.
+
+addScript
+---------
+Allows pushing a whole script to the player:
+	API.addScript(script);
+
+play
+----
+run your task
+	API.play();
+
+getScript
+---------
+returns the script that youv'e built so far. Usefull mainly for debugging:
+	console.log(API.getScript())
+
+getLogs
+---------
+returns the logs for this task. Usefull for giving user feedback or creating staircase tasks
+	console.log(API.getLogs())
+
+addSettings
+-----------
+API.addSettings allows you to add settings to your script.
+You may either add a whole settings section:
+	API.addSettings({
+		canvas: {},
+		logger: {}
+	});
+
+Alternatively you may add a specific setting:
+	API.addSettings('canvas',{
+		maxWidth: 800,
+		proportions : 0.8
+	});
+
+addTrialSets, addStimulusSets and addMediaSets
+----------------------------------------------
+There are three add set functions, one for each of the set types: addTrialSets, addStimulusSets and addMediaSets.
+Each of them allows adding sets to your script.
+You may add a complete sets object:
+	API.addTrialSets({
+		Default: [defaultTrial],
+		introduction: [intro1, intro2, intro3]
+	});
+
+Or you may add a set or part of a set:
+	API.addTrialSets("introduction",[intro1, intro2]); // adds intro1 and intro2 to the introduction set
+	API.addTrialSets("introduction",intro3); // adds intro3 to the introduction set
+
+addSequence
+-----------
+allows adding sequence objects to your script.
+	API.addSequence([trial1,trial2]);
+	API.addSequence(trial2);
+
+******************************************************
+Logging
+******************************************************
+The player sends all the data it has gathered to the url defined in settings.logger.url
+The data is sent as an ajax POST where the only field is "json".
+The field includes a json array including all logs created. each log is an object including the folowing fields:
+{
+	log_serial: 	// the serial number for this log row (starts at 1)
+	trial_id: 		// a unique identifier for this trial
+	name: 			// the name of this trial - an alias if one is set, otherwise the set the trial inherited
+	block: 			// the block attribute of trial.data (it is up to the user to set this attribute, usually in the trial definitions)
+	responseHandle: // the handle for the input that triggered this log
+	score: 			// the score attribute of trial.data (it is up to the user to set this attribute, usually using setTrialAttr)
+	latency:		// the latency of the response from the beginning of the trial
+	stimuli: 		// a json including the stimuli used in this trial (we use an alias if one is set, otherwise the stimulus set, otherwise the stimulus handle otherwise stim#)
+	media: 			// a json including the media used in this trial (we use an alias if one is set, otherwise the media set, otherwise media#)
+	data: 			// a json including the data property of this trial
+}
