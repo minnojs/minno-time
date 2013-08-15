@@ -209,11 +209,13 @@ if all the propositions in a row of interactions are true, its actions will be c
 the actions we have are conveniently organized into stimulus actions and trial actions
 
 ** stimulus actions **
-showStim: display a stimulus, takes a stimulus handle
+showStim: display a stimulus, takes a stimulus handle or 'All' for all stimuli.
 	actions: [{type:'showStim',handle:'myStim'}]
+	actions: [{type:'showStim',handle:'All'}]
 
-hideStim: hide a stimulus, takes a stimulus handle
+hideStim: hide a stimulus, takes a stimulus handle or 'All' for all stimuli.
 	actions: [{type:'hideStim',handle:'myStim'}]
+	actions: [{type:'hideStim',handle:'All'}]
 
 setStimAttr: set a stimulus attribute, takes a stimulus handle and a setter object or function
 	actions: [{type:'setStimAttr',handle:'myStim',setter:{myAttr:'myValue',myOtherAttr:'myOtherValue'}]
