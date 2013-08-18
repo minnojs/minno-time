@@ -138,6 +138,11 @@ on: what triggers this input element. for now we have several types of input:
 	timeout: takes duration and fires after the duration passes
 	{handle:'time',on:'timeout',duration:300}
 
+	/* these are not implemted yet just an API suggestion */
+	{handle:'time',on:'timeout',duration:[300,600,900]]} 			// pick a random value from an array
+	{handle:'time',on:'timeout',duration:{from:300, to: 900}}} 		// randomly pick from within a range
+	{handle:'time',on:'timeout',duration:function(){return 630}} 	// use a custom function to pick duration
+
 	in addition, we have several shortcuts to commonly used inputs:
 	{handle: 'enter',on: 'enter'}
 	{handle: 'space',on: 'space'}
@@ -338,6 +343,9 @@ random: randomly picks an element from the set
 
 exRandom: picks a random element without repeating the same element until we've gone through the whole set
 	inherit: {set: 'setName', type:'exRandom'}
+
+bySequence: picks the elements by the order they were inserted into the set
+	inherit: {set: 'setName', type:'bySequence'}
 
 byData: 	picks a specific element from the set.
 			The set compares the "data" property to the element.data property and if the handle is a subset of the data it picks the element.
