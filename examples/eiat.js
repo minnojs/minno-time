@@ -280,7 +280,7 @@ require(['app/API'], function(API) {
 
 		// this stimulus used for giving feedback, in this case only the error notification
 		feedback : [
-			{handle:'error', location: {top: 80}, css:{color:'red','font-size':'2em'}, media: {word:'X'}}
+			{handle:'error', location: {top: 80}, css:{color:'red','font-size':'2em'}, media: {word:'X'}, nolog:true}
 		]
 	});
 
