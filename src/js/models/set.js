@@ -3,6 +3,8 @@ define(["backbone","underscore"], function(Backbone, _) {
 	var Model = Backbone.Collection.extend({
 		// holds a list of the next members to call if we're using the exclusive randomisation
 		orderList: [],
+		// the next pick for the bySequence function
+		nextPick: 0,
 
 		// similar to the collection function where, only searches the data attribute
 		whereData: function(attrs) {
@@ -31,6 +33,12 @@ define(["backbone","underscore"], function(Backbone, _) {
 			return this.at(this.orderList.pop()).attributes;
 		},
 
+		bySequence: function(){
+			// reset the nextPick pointer if needed
+			this.nextPick < this.length || (this.nextPick = 0);
+			return this.at(this.nextPick);
+		},
+
 		// find model by data attributes
 		// check if all attributes of the handle appear in the model data
 		// if the handle is not an abject compare to data.handle
@@ -54,6 +62,7 @@ define(["backbone","underscore"], function(Backbone, _) {
 
 			// otherwise call the appropriate built in function
 			switch (definitions.type) {
+				case 'bySequence' : return this.bySequence();
 				case 'byData' : return this.byData(definitions);
 				case 'exRandom' : return this.exRandom();
 				case 'random' :
