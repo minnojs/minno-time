@@ -36,7 +36,7 @@ define(["backbone","underscore"], function(Backbone, _) {
 		bySequence: function(){
 			// reset the nextPick pointer if needed
 			this.nextPick < this.length || (this.nextPick = 0);
-			return this.at(this.nextPick);
+			return this.at(this.nextPick++).attributes;
 		},
 
 		// find model by data attributes
