@@ -162,7 +162,7 @@ in addition to the preset input types you can create custom input:
 		}
 	}
 
-the input objects support an aditional meta property: touch. If touch is undefined then this input will always be used.
+the input objects support an additional meta property: touch. If touch is undefined then this input will always be used.
 If it is set to true then the input will be used only in touch devices.
 If it is set to false then the input will be used only in non touch devices.
 	{handle:'end',on:'bottomTouch',touch:true}
@@ -235,7 +235,7 @@ setTrialAttr: set a trial.data attribute, takes a setter object or function
 		// the context ("this") of this function is the trial object
 	}]
 
-setInput: set input listener (usefull for adding timeouts), takes an input object
+setInput: set input listener (useful for adding timeouts), takes an input object
 	actions: [{type:'setInput',input:{handle:'time',on:'timeout',duration:300}}]
 
 removeInput: remove input listener, takes an input handle or an array of input handles
@@ -423,7 +423,7 @@ sequence = [
 				data: [
 					trial1,
 					trial2,
-					// when randomizing, treat these two trials as one block so they are never seperated
+					// when randomizing, treat these two trials as one block so they are never separated
 					{
 						mixer: 'wrapper',
 						data: [
@@ -478,7 +478,7 @@ Logger
 logger: {
 	url: 'your/target/url',
 	pulse: 3,
-	fulpath: false,
+	fullpath: false,
 	logger: function(){
 		// do your mojo here :)
 	}
@@ -598,12 +598,12 @@ run your task
 
 getScript
 ---------
-returns the script that youv'e built so far. Usefull mainly for debugging:
+returns the script that you've built so far. Useful mainly for debugging:
 	console.log(API.getScript())
 
 getLogs
 ---------
-returns the logs for this task. Usefull for giving user feedback or creating staircase tasks
+returns the logs for this task. Useful for giving user feedback or creating staircase tasks
 	console.log(API.getLogs())
 
 addSettings
@@ -646,7 +646,7 @@ Logging
 ******************************************************
 The player sends all the data it has gathered to the url defined in settings.logger.url
 The data is sent as an ajax POST where the only field is "json".
-The field includes a json array including all logs created. each log is an object including the folowing fields:
+The field includes a json array including all logs created. each log is an object including the following fields:
 {
 	log_serial: 	// the serial number for this log row (starts at 1)
 	trial_id: 		// a unique identifier for this trial
