@@ -1,19 +1,33 @@
 # Project Implicit Player (PIP)
 
-The PIP is a time sensitive cognitve psychology experimentat builder for the net.
-It is written in JavaScript and is built to be extremely verastile and customizable.
+The PIP is a time sensitive, cognitive psychology, experiment builder for the Internet.
+It is written in JavaScript and is built to be extremely versatile and customizable.
 
+The scripts for the PIP are written as JavaScript objects.
+This format allows, on one hand, the writing of simple and straightforward scripts using a constrained scripting language.
+And on the other hand, allows advanced users to easily create extremely complex and dynamic scripts using in-line JavaScript.
 
-The PIP treats each task as a **sequence** of **trial**s. Trials are consecutive, in that there cannot be more than one trial at a time, and each trial should have the power to change anything in the players’ behavior.
-Trials do three things:
+#### Central Concepts
+The PIP treats each task as a **sequence** of **trials**.
 
-* Present a stimulus or stimuli
-* Evaluate a response \ responses to the stimuli
-* Respond to user input (give feedback, finish trial etc.)
+**Trials** do three things:
 
-A task is constituted of a **sequence** of trials. The PIP supports a powerfull system for the genration and ranomizing of trial sequences.
+* Control stimuli presentation
+* Evaluate user responses
+* Respond to user responses (give feedback, finish trial etc.)
 
-* Trials within the sequence may be duplicated, reordered and selected using the powerfull mixing features.
+The PIP treats each trial as composed of three types of objects. **Trial** objects are the frame for the trial, and are responsible for anything that 'happens' in the trial. **Media** objects are responsible for *what* we show the user - be it text, images or any other form of media. **Stimuli** objects are the *how* for the *what* of the media objects - they control the size, location etc. of their respective media. Each Stimuli has to have exactly one Media, but the Trials may have multiple stimuli.
+These objects (Trials, Stimuli and Media) that are the building blocks of your task may be grouped into **Sets**. The Sets are used to organize and randomize their members.
+
+The PIP supports a powerful system for the generation and randomization of trial **sequences**.
+Trials are consecutive, in that there cannot be more than one trial at a time, and each trial has the power to change just about anything in the players' behavior (It is possible to jump between trials though).
+
+* Trials within a sequence may be duplicated, reordered and selected using powerful mixing tools.
 * Trials may inherit their features from custom prototypes.
 * Trials may be randomly picked from custom lists (**sets**).
-*
+
+
+#### Creating a Task
+
+When creating a task you first create your building blocks. You create prototypes for each trial type you intend to use and create sets of stimuli for later use.
+Next, you drop the building blocks into the sequence; at this stage you create the randomization for your task
