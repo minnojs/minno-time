@@ -137,10 +137,8 @@ on: what triggers this input element. for now we have several types of input:
 
 	timeout: takes duration and fires after the duration passes
 	{handle:'time',on:'timeout',duration:300}
-
-	/* these are not implemted yet just an API suggestion */
 	{handle:'time',on:'timeout',duration:[300,600,900]]} 			// pick a random value from an array
-	{handle:'time',on:'timeout',duration:{from:300, to: 900}}} 		// randomly pick from within a range
+	{handle:'time',on:'timeout',duration:{min:300, max: 900}}} 		// randomly pick from within a range
 	{handle:'time',on:'timeout',duration:function(){return 630}} 	// use a custom function to pick duration
 
 	in addition, we have several shortcuts to commonly used inputs:
