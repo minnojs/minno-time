@@ -1,9 +1,9 @@
-define(['jquery','app/API','underscore','app/computeD','app/msgCat','app/parcelMng'],function($,API,_,computeData,msgMan,parcelMng){
+define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],function($,API,_,computeData,msgMan,parcelMng){
 
-	
+
 	var Scorer = {};
 
-	
+
 
 	$.extend(Scorer, {
 
@@ -18,10 +18,10 @@ define(['jquery','app/API','underscore','app/computeD','app/msgCat','app/parcelM
 			}
 
 		},
-		
+
 		computeD: function(Obj){
 
-			
+
 			computeData.setDataArray();
 			var score = 0;
 			console.log('started computeD');
@@ -35,20 +35,20 @@ define(['jquery','app/API','underscore','app/computeD','app/msgCat','app/parcelM
 			console.log('the score is: '+ score);
 	//		var oldScore = parcelMng.simulateOldCode();//for testing only
 	//		console.log('the score from old scoree is: '+oldScore );
-			
+
 			return score;
 
 		},
-		
+
 
 		getInfo: function(){
 
 			//return computeData;
 
 		},
-		
-		
-		
+
+
+
     	postToServer: function(url,score,msg){
     		var data = {};
     		data.score =score;
@@ -59,15 +59,15 @@ define(['jquery','app/API','underscore','app/computeD','app/msgCat','app/parcelM
 
 
     		});
-           
+
     	},
-    	    	
+
       	// get message according to user input
     	getFBMsg: function(DScore, Obj){
 
     		var msg = msgMan.getMsg(DScore);
     		return msg;
-    		
+
 
     	}
 

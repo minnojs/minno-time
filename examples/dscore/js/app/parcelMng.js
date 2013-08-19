@@ -1,15 +1,15 @@
-define(['jquery','app/API','underscore','app/computeD'],function($,API,_,compute){
+define(['jquery','app/API','underscore','./computeD'],function($,API,_,compute){
 
-	
+
 	var parcelMng= {};
 
-	
+
 	$.extend(parcelMng, {
 
 		parcelArray: [],
 
 		Init: function(){
-			
+
 			var data = API.getLogs();
 			var AnalyzedVar = compute.AnalyzedVar;
 			var parcelVar = compute.parcelVar;
@@ -20,8 +20,8 @@ define(['jquery','app/API','underscore','app/computeD'],function($,API,_,compute
 			var totalScoredTrials = 0;
 			var trialsUnder = 0;
 			var maxFastTrialsRate = parseFloat(compute.maxFastTrialsRate);
-			
-			
+
+
 			if (typeof parcels == 'undefined' || parcels.length == 0) {
 				var p = {};
 				p.name = 'general';
@@ -55,14 +55,14 @@ define(['jquery','app/API','underscore','app/computeD'],function($,API,_,compute
 							}else {
 								if (value[AnalyzedVar]<= fastRT) trialsUnder++;
 							}
-						
+
 						}
 
 					});
 					parcelMng.parcelArray[index] = p;
 				});
 			}
-			if ( (trialsUnder/totalScoredTrials) > maxFastTrialsRate) 
+			if ( (trialsUnder/totalScoredTrials) > maxFastTrialsRate)
 				return "Too many fast trials";
 			console.log('finished init the parcelArray is:');
 			console.log(parcelMng.parcelArray);
@@ -122,10 +122,10 @@ define(['jquery','app/API','underscore','app/computeD'],function($,API,_,compute
 
 						}else{
 							if (diff2.length == 0 ){
-								value[AnalyzedVar] += avg2+ penalty;								
+								value[AnalyzedVar] += avg2+ penalty;
 							}
 						}
-					
+
 					}
 
 				});
@@ -135,12 +135,12 @@ define(['jquery','app/API','underscore','app/computeD'],function($,API,_,compute
 
 		avgAll: function(){
 
-			
+
 
 			_.each(parcelMng.parcelArray, function (value,index) {
 				parcelMng.avgParcel(value);
 			});
-			
+
 		},
 
 		avgParcel: function(p){
@@ -173,7 +173,7 @@ define(['jquery','app/API','underscore','app/computeD'],function($,API,_,compute
 						numCond2++;
 						avgCon2 += AnVar;
 
-					} 
+					}
 				}
 
 			});
@@ -227,24 +227,24 @@ define(['jquery','app/API','underscore','app/computeD'],function($,API,_,compute
 				if ( diff1.length == 0 ) {
 					if (useForSTD){
 						pooledCond1.push(AnVar);
-					} 
+					}
 					else{
 						if (error=='0') pooledCond1.push(AnVar);
 					}
-				} 
+				}
 				else {
 					if ( diff2.length == 0 ){
 						if (useForSTD){
-							pooledCond2.push(AnVar);	
-						} 
+							pooledCond2.push(AnVar);
+						}
 						else{
 							if (error=='0') pooledCond1.push(AnVar);
 						}
 
-					} 
+					}
 				}
-					 
-				
+
+
 			});
 
 			pooledData = pooledCond1.concat(pooledCond2);
@@ -258,7 +258,7 @@ define(['jquery','app/API','underscore','app/computeD'],function($,API,_,compute
 			console.log('finished variance parcel: '+p.name);
 			console.log('variance: '+p.variance);
 			console.log('--------------------');
-        	
+
 		},
 
 		diffAll: function(){
@@ -266,7 +266,7 @@ define(['jquery','app/API','underscore','app/computeD'],function($,API,_,compute
 			_.each (parcelMng.parcelArray, function (value,index) {
 				parcelMng.diffParcel(value);
 			});
-			
+
 		},
 
 		diffParcel: function(p){
@@ -315,8 +315,8 @@ define(['jquery','app/API','underscore','app/computeD'],function($,API,_,compute
 			var parcelB = parcelMng.parcelArray[1];
 			var trialsA = parcelA.trialIData;
 			var trialsB = parcelB.trialIData;
-			
-			
+
+
 				//console.log('cond1 diff: ' + diff1.length );
 
 			_.each (trialsA, function (value,index) {
@@ -328,17 +328,17 @@ define(['jquery','app/API','underscore','app/computeD'],function($,API,_,compute
 					trial.block = rb[0];
 					trial.lat = value[AnalyzedVar];
 					trial.err = data[ErrorVar];
-					
+
 				} else {
 					if ( diff2.length == 0 ){
 					trial.block = rb[2];
 					trial.lat = value[AnalyzedVar];
 					trial.err = data[ErrorVar];
 
-					} 
+					}
 				}
 				results.push(trial);
-				
+
 			});
 			_.each (trialsB, function (value,index) {
 				var data = value.data;
@@ -349,29 +349,29 @@ define(['jquery','app/API','underscore','app/computeD'],function($,API,_,compute
 					trial.block = rb[1];
 					trial.lat = value[AnalyzedVar];
 					trial.err = data[ErrorVar];
-					
+
 				} else {
 					if ( diff2.length == 0 ){
 					trial.block = rb[3];
 					trial.lat = value[AnalyzedVar];
 					trial.err = data[ErrorVar];
 
-					} 
+					}
 				}
 				results.push(trial);
-				
+
 			});
 
 
-			
+
 			var score = parcelMng.scoreTask(results,rb);
 			return score;
 
 		},
 		//old scorer
-		
+
 		scoreTask: function(results,rb) {
-		        
+
 		        var b = new Array();
 		        b[0] = new Array();
 		        b[1] = new Array();
@@ -484,7 +484,7 @@ define(['jquery','app/API','underscore','app/computeD'],function($,API,_,compute
 	        }
 	        return(parcelMng.sd(temp));
 	    },
-	    
+
 	    ave: function(a){
 	        var result=0,i=0,num=0;
 	        while(i<a.length){
@@ -511,11 +511,11 @@ define(['jquery','app/API','underscore','app/computeD'],function($,API,_,compute
 	        console.log('variance from old code is: '+x2/(arr.length-1));
 	        return (x2/(arr.length-1));
 	    },
-	    
+
 	    sd: function(arr){
 	        return Math.sqrt(parcelMng.variance(arr));
 	    }
-		
+
 	});
 
 	return parcelMng;
