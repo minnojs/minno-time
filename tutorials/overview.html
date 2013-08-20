@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>PIP Tutorials</title>
+    <title>player Tutorials</title>
 
     <!-- Bootstrap core CSS -->
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css" rel="stylesheet">
@@ -27,37 +27,42 @@
         <h3 class="text-muted">Project Implicit Player</h3>
       </div>
 
-		<h1>Project Implicit Player (PIP)</h1>
+		<h1>Project Implicit Player</h1>
 
-		<p>The PIP is a time sensitive, cognitive psychology, experiment builder for the Internet.
+		<p>PI Player builds and runs experiments with time-sensitive tasks over the Internet.
 		It is written in JavaScript and is built to be extremely versatile and customizable.</p>
 
-		<p>The scripts for the PIP are written as JavaScript objects.
-		This format allows, on one hand, the writing of simple and straightforward scripts using a constrained scripting language.
-		And on the other hand, allows advanced users to easily create extremely complex and dynamic scripts using in-line JavaScript.</p>
+		<p>The scripts for the player are written as JavaScript objects.
+		This format allows, writing simple and straightforward scripts using a constrained scripting language.
+		The format also allows advanced users to easily create complex and dynamic scripts using in-line JavaScript.</p>
 
 		<h3>Central Concepts</h3>
 
-		<p>The PIP treats each task as a <strong>sequence</strong> of <strong>trials</strong>.</p>
+		<p>The player treats each task as a <strong>sequence</strong> of <strong>trials</strong>.</p>
 
 		<p><strong>Trials</strong> do three things:</p>
 
 		<ul>
 		<li>Control stimuli presentation</li>
 		<li>Evaluate user responses</li>
-		<li>Respond to user responses (give feedback, finish trial etc.)</li>
+		<li>React to user responses (give feedback, hide a stimulus, finish trial etc.)</li>
 		</ul>
 
-		<p>The PIP treats each trial as composed of three types of objects. <strong>Trial</strong> objects are the frame for the trial, and are responsible for anything that 'happens' in the trial. <strong>Media</strong> objects are responsible for <em>what</em> we show the user - be it text, images or any other form of media. <strong>Stimuli</strong> objects are the <em>how</em> for the <em>what</em> of the media objects - they control the size, location etc. of their respective media. Each Stimuli has to have exactly one Media, but the Trials may have multiple stimuli.
-		These objects (Trials, Stimuli and Media) that are the building blocks of your task may be grouped into <strong>Sets</strong>. The Sets are used to organize and randomize their members.</p>
+		<p>Trials are implemented with a <strong>Trial</strong> object. The Trial object is responsible for anything that 'happens' in the trial (e.g., presentation of stimuli).
+		The trial object uses several other objects, the most important of them are the <strong>Stimulus</strong> and the <strong>Media</strong> objects. 
+		<strong>Media</strong> objects are responsible for <em>what</em> we show the user (text, images or any other form of media).
+		<strong>Stimuli</strong> objects are the <em>how</em> for the <em>what</em> of the media objects - they control the size, location etc. of their respective media. 
+		Each stimulus has one Media object. A Trial object may have multiple stimulus objects.<br/><br/>
+		Trials, Stimuli and Media are the main building blocks of your task. Often, you will want to group them into <strong>Sets</strong>. The Sets are used to organize and randomize their members.</p>
 
-		<p>The PIP supports a powerful system for the generation and randomization of trial <strong>sequences</strong>.
-		Trials are consecutive, in that there cannot be more than one trial at a time, and each trial has the power to change just about anything in the players' behavior (It is possible to jump between trials though).</p>
+		<p>There cannot be more than one trial at a time, and each trial can change just about anything in the player's behavior. 
+		The player supports a powerful system for the generation and randomization of trial <strong>sequences</strong>.
+		</p>
 
 		<ul>
-		<li>Trials within a sequence may be duplicated, reordered and selected using powerful mixing tools.</li>
-		<li>Trials may inherit their features from custom prototypes.</li>
-		<li>Trials may be randomly picked from custom lists (<strong>sets</strong>).</li>
+		<li>Trials within a sequence may be duplicated, reordered and randomly selected.</li>
+		<li>Trials can be created by inheriting some features from another trial.</li>
+		<li>Trials may be randomly selected from custom lists (<strong>sets</strong>).</li>
 		</ul>
 
 		<h3>Creating a Task</h3>
@@ -65,11 +70,11 @@
 		<p>When creating a task you first create your building blocks. You create prototypes for each trial type you intend to use and create sets of stimuli for later use.
 		Next, you drop the building blocks into the sequence; at this stage you decide on the global structure of your task and create the exact randomization that you want.</p>
 
-		<p>Once your script is ready all you have to do is to call it from within the PIP index page.</p>
+		<p>Once your script is ready all you have to do is to call it from within the player index page.</p>
 
 		<h3>Collecting the data</h3>
 
-		<p>All the data that is gathered by the PIP is sent to a URL of your choosing. Tasks may vary greatly so we give you the flexibility to send whatever data you need and process it however you see fit.</p>
+		<p>All the data that is recorded by the player is sent to a URL of your choosing. Tasks may vary greatly so we give you the flexibility to send whatever data you need and process it however you see fit.</p>
 
       <div class="footer">
         <p><a href="https://implicit.harvard.edu/implicit/">&copy; Project Implicit 2013</a></p>
