@@ -346,11 +346,13 @@ bySequence: picks the elements by the order they were inserted into the set
 	inherit: {set: 'setName', type:'bySequence'}
 
 byData: 	picks a specific element from the set.
-			The set compares the "data" property to the element.data property and if the handle is a subset of the data it picks the element.
+			The set compares the "data" property to the element.data property and if the data is a subset of element.data it picks the element.
 			(this means that if all properties of data property equal to the properties of the same name in element.data it is a fit)
-			this function will pick only the first element to fit the handle.
+			this function will pick only the first element to fit the data.
+			If the data property is set as a string, we assume it refers to the element handle.
 
-	inherit: {set: 'setName', type: 'byHandle', data: {block:1, row:2}} // picks the element with
+	inherit: {set: 'setName', type: 'byData', data: {block:1, row:2}} 	// picks the element with both block:1 and row:2
+	inherit: {set: 'setName', type: 'byData', data: "myStimHandle"} 	// picks the element that has the "myStimHandle" handle
 
 function: 	you may also use a custom function to pick your element.
 	inherit: {set: 'setName', type: function(definitions){
