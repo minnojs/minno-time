@@ -59,7 +59,11 @@ accepts any jquery css object. (see http://api.jquery.com/css/ for details)
 
 media:
 ------
-defines the media associated with this stimulus.
+Defines the media associated with this stimulus.
+If you insert a string instead of a media object the player treats it as if it was a media word. The folowing two media definitions have the same outcome:
+	media: 'Wiki'
+	media: {word:'Wiki'}
+
 
 touchMedia
 ----------
