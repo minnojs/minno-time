@@ -42,14 +42,19 @@ define(["backbone","underscore"], function(Backbone, _) {
 		// find model by data attributes
 		// check if all attributes of the handle appear in the model data
 		// if the handle is not an abject compare to data.handle
-		byData : function(definitions){
-			// if a handle object isn't	defined use the keyword "handle"
-			var data = _.isEmpty(definitions.data) ? {data:definitions.data} : definitions.data;
+		byData: function(definitions){
+			if (_.isUndefined(definitions.data)) {
+				console.log(definitions);
+				throw new Error("A data property must by defined for byData");
+			}
+
+			// if a the data property is a string, assume its a handle
+			var data =  _.isString(definitions.data) ? {handle:definitions.data} : definitions.data;
 
 			// get the first element that fits the handle
 			var element = this.whereData(data)[0];
 			if (!element) {
-                throw new Error('Inherit by Handle failed. Handle not found: ' + definitions.data);
+                throw new Error('Inherit by Data failed. Data not found: ' + definitions.data);
             }
 			return	element.attributes;
 		},

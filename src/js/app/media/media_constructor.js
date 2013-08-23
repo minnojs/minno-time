@@ -1,9 +1,13 @@
 define(['jquery', './media_view','../inflator','utils/html','app/task/build_url'], function($, Media,inflate,html,build_url) {
 
-	return function(options,model){
+	return function(mediaObject,model){
+		if (typeof mediaObject == 'string'){
+			mediaObject = {word:mediaObject};
+		}
+
 		// inflate the definitions
 		// note that the base url is added to the media object during the sequence preload
-		var definitions = inflate(options,'media');
+		var definitions = inflate(mediaObject,'media');
 
 		// if needed, build url
 		if (definitions.template) {

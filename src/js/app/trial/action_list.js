@@ -29,9 +29,18 @@ define(["utils/pubsub"],function(pubsub){
 			pubsub.publish('trial:setAttr',[options.setter]);
 		},
 
-
 		setInput: function(options){
+			if (typeof options.input == 'undefined') {
+				throw new Error('The setInput action requires an input property');
+			}
 			pubsub.publish('trial:setInput',[options.input]);
+		},
+
+		trigger: function(options){
+			if (typeof options.handle == 'undefined') {
+				throw new Error('The trigger action requires a handle property');
+			}
+			pubsub.publish('trial:setInput',[{handle:options.handle,on:'timeout',duration:0}]);
 		},
 
 		removeInput: function(options){
