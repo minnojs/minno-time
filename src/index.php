@@ -21,10 +21,10 @@
 			}
 		</script>
 		<script data-main="js/main" src="js/libs/require.js?get=<?php echo time()?>"></script>
-		<script src="../examples/priming.js?get=<?php echo time()?>"></script>
+		<script src="../examples/AMP.js?get=<?php echo time()?>"></script>
 
 		<script type="text/javascript">
-			require(['app/API','utils/pubsub','../../examples/dscore/Scorer'], function(API,pubsub) {
+			require(['app/API','utils/pubsub'], function(API,pubsub) {
 				API.addSettings('metaData',{
 					sessionId : '987348576'
 				});

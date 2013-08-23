@@ -12,6 +12,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		borderWidth: 5,
 		borderColor: 'black'
 	});
+
 	//the source of the images
 	API.addSettings('base_url',{
 		image : '../examples/images'

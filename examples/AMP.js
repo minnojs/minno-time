@@ -57,7 +57,7 @@ require(['app/API'], function(API) {
 	});
 	// from where to take the images
 	API.addSettings('base_url',{
-		image : '../examples/images2'
+		image : '../examples/images'
 	});
 
 	API.addSettings('logger',{
