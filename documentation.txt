@@ -239,6 +239,9 @@ setTrialAttr: set a trial.data attribute, takes a setter object or function
 		// the context ("this") of this function is the trial object
 	}]
 
+trigger: activate specific input handle (this is equivilent to adding a timeout with duration set to 0)
+	actions: [{type:'trigger',handle : 'now'}]
+
 setInput: set input listener (useful for adding timeouts), takes an input object
 	actions: [{type:'setInput',input:{handle:'time',on:'timeout',duration:300}}]
 
