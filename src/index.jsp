@@ -22,7 +22,7 @@
 			}
 		</script>
 		<script data-main="js/main" src="js/libs/require.js"></script>
-		<script src="../examples/eiat.js"></script>
+		<script src="../examples/IAT.js"></script>
 
 		<script type="text/javascript">
 			<%--
@@ -33,8 +33,6 @@
 				API.addSettings('metaData',{
 					sessionId : '987348576'
 				});
-
-				API.play();
 			});
 		</script>
 	</head>

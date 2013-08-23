@@ -1,34 +1,31 @@
-require(['app/API','../../examples/dscore/js/app/Scorer'], function(API,Scorer) {
-
-
+require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 	var category1 = 'Pleasent';
 	var category2 = 'Unpleasent';
 
 	//Set the size of the screen
 	API.addSettings('canvas',{
-		maxWidth: 800,
+		maxWidth: 1000,
 		proportions : 0.8,
 		//Change the colors to allow better presentation of the colored stimuli.
 		background: 'white',
 		canvasBackground: 'green',
-		borderColor: 'green'
+		borderWidth: 5,
+		borderColor: 'black'
 	});
-
+	//the source of the images
 	API.addSettings('base_url',{
-		image : '../examples/images2'
+		image : '../examples/images'
 	});
-
 
 	API.addSettings('logger',{
 		url : 'google.com',
 		pulse : 20
 	});
-
-
+	//the Scorer that compute the user feedback
 	Scorer.addSettings('compute',{
 		condVar:"trialCategories",
-		cond1VarValues: ["Black People/Bad Words","White People/Good Words"],
-		cond2VarValues: ["Black People/Good Words","White People/Bad Words"],
+		cond1VarValues: ["Black People/Bad Words","White People/Good Words"], //condition 1
+		cond2VarValues: ["Black People/Good Words","White People/Bad Words"], //condition 2
 		parcelVar : "parcel",
 		parcelValue : ["research"],
 		fastRT : 150, //Below this reaction time, the latency is considered extremely fast.
@@ -51,8 +48,7 @@ require(['app/API','../../examples/dscore/js/app/Scorer'], function(API,Scorer) 
 	//Define the basic trial (the prsentation of the images and words)
 	API.addTrialSets({
 	basicTrial: [{
-	// by default each trial is crrect, this is modified in case of an error
-		data : {input1:'',input2:'',error:0},
+		data : {error:0},// by default each trial is crrect, this is modified in case of an error
 		//Layout defines what will be presented in the trial. It is like a background display.
 		layout: [
 			{location:{left:15,top:3},media:{word:'key: e'}, css:{color:'black','font-size':'1em'}},
@@ -63,7 +59,9 @@ require(['app/API','../../examples/dscore/js/app/Scorer'], function(API,Scorer) 
 		//Inputs for two possible responses.
 		input: [
 			{handle:category2,on: 'keypressed', key:'e'},
-			{handle:category1,on: 'keypressed', key:'i'}
+			{handle:category1,on: 'keypressed', key:'i'},
+			{handle:category2,on:'leftTouch',touch:true},//support touch as well
+			{handle:category1,on:'rightTouch',touch:true}
 		],
 		//Set what to do.
 		interactions: [
@@ -76,56 +74,54 @@ require(['app/API','../../examples/dscore/js/app/Scorer'], function(API,Scorer) 
             propositions: [{type:'inputEquals',value:'primeOut'}], // on time out
             actions: [
                 {type:'hideStim',handle:'primingImage'}, // hide the first stimulus
-				{type:'setTrialAttr',setter:{input1:category1,input2:category2}},
                 {type:'showStim',handle:'targetStim'} // and show the second one
 				]
         },
+		//there are 2 possible responses: "pleasent" and "unpleasent", here we handle with these responses when the user answer
+       //mathces the word value (correct response)
 		{
-			propositions: [{type:'stimEquals',value:'wordValue'}, {type:'trialEquals',value:'input1'}],
+			propositions: [{type:'stimEquals',value:'wordValue'}, {type:'inputEquals',value:category1}],
 			actions: [
 				{type:'setInput',input:{handle:'correctResp', on:'timeout',duration:0}}
 			]
 		},
 		{
-			propositions: [{type:'stimEquals',value:'wordValue'}, {type:'trialEquals',value:'input2'}],
+			propositions: [{type:'stimEquals',value:'wordValue'}, {type:'inputEquals',value:category2}],
 			actions: [
 				{type:'setInput',input:{handle:'correctResp', on:'timeout',duration:0}}
 			]
 		},
 
 		{//What to do upon correct response
-		//the first proposition: check if the word value is the same as what we defined
-		//the second proposition: dont remove the word upon timeout, wait until reaction
-			propositions: [{type:'inputEquals',value:'correctResp'}],
 			//This proposition is true when the presented stimulus has a word value that is equal to the input's handle.
-			//Make sure you understand how this works because you will probably use something like this for most of your tasks.
+			propositions: [{type:'inputEquals',value:'correctResp'}],
 			actions: [
-				{type:'setTrialAttr',setter:{input1:'',input2:''}},
+				{type:'removeInput',inputHandle:[category2,category1]},//only one respnse is possible
 				//The player sends the value of score to the server, when you call the 'log' action
-				{type:'log'}, //Oh, here we call the log action. This is because we want to record the latency of this input (the latency of the response)
+				{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
 				{type:'setInput',input:{handle:'showFix', on:'timeout',duration:0}} //End the trial immidiatlly after correct response
 			]
 		},
+		//there are 2 possible responses: "pleasent" and "unpleasent", here we handle with these responses when the user answer
+       //dosen't mathc the word value (incorrect response)
 		{
-			propositions: [{type:'stimEquals',value:'wordValue', negate:true}, {type:'trialEquals',value:'input1'}],
+			propositions: [{type:'stimEquals',value:'wordValue', negate:true}, {type:'inputEquals',value:category1}],
 			actions: [
 				{type:'setInput',input:{handle:'errorResp', on:'timeout',duration:0}}
 			]
 		},
 		{
-			propositions: [{type:'stimEquals',value:'wordValue', negate:true}, {type:'trialEquals',value:'input2'}],
+			propositions: [{type:'stimEquals',value:'wordValue', negate:true}, {type:'inputEquals',value:category2}],
 			actions: [
 				{type:'setInput',input:{handle:'errorResp', on:'timeout',duration:0}}
 			]
 		},
-		//only score upon correct response
 		{
 			propositions: [{type:'inputEquals',value:'errorResp'}], //What to do upon incorrect response.
 			actions: [
 				{type:'showStim',handle:'errorFB'}, //show correct feedback
-				// block the option to change the answer or to answer twice
 				{type:'setTrialAttr', setter:{error:1}},
-				{type:'setTrialAttr',setter:{input1:'',input2:''}},
+				{type:'removeInput',inputHandle:[category2,category1]},// block the option to change the answer or to answer twice
 				{type:'setInput',input:{handle:'showFix', on:'timeout',duration:250}} //End the trial in 250ms (show the x until then)
 			]
 		},
@@ -200,26 +196,22 @@ require(['app/API','../../examples/dscore/js/app/Scorer'], function(API,Scorer) 
 		Default: [
 			{css:{color:'white','font-size':'2em'}}
 		],
-
-	//first catagory of words
-		targetStimulusA: [
+		targetStimulusA: [	//first catagory of words
 			{
 				data : {wordValue:category1},
 				inherit:'Default',
 				media: {inherit:{type:'exRandom',set:'targetWordsA'}} //Select a word from the media, randomly
 			}
 			],
-		//the second catagory of words
-		targetStimulusB: [
+
+		targetStimulusB: [	//the second catagory of words
 			{
 				data : {wordValue:category2},
 				inherit:'Default',
 				media: {inherit:{type:'exRandom',set:'targetWordsB'}}
 			}
-
 		],
-		//Error feedback stimulus
-		errorFB : [
+		errorFB : [//Error feedback stimulus
 			{
 				data : {handle:'errorFB'},
 				size: {height:15,width:15},
@@ -227,28 +219,24 @@ require(['app/API','../../examples/dscore/js/app/Scorer'], function(API,Scorer) 
 				media: {image:'cross.png'} //An image.
 			}
 		],
-
-
-		//blanckScreen  stimulus (in between the trials)
-		blanckScreen : [
+		blanckScreen : [//blanckScreen  stimulus (in between the trials) can be used as a fixation point
 			{
 				data : {handle:'blanckScreen'},
-				css:{color:'green','font-size':'2em'},
-				media: {word:'.'}//the dot is the same color of the screen, cant be see
+				media: {word:' '}//can be replace with '+'
 			}
 		],
-		//priming stimulus: the five catagories of images
+		//priming stimulus: the catagories of images
 		primingImage1 : [
 			{
 
-				data : {handle:'primingImage',imageValue:'white'},
+				data : {handle:'primingImage'},
 				inherit:'Default',
 				media: {inherit:{type:'exRandom',set:'Images1'}}
 			}
 			],
 			primingImage2 : [
 			{
-				data : {handle:'primingImage',imageValue:'black'},
+				data : {handle:'primingImage'},
 				inherit:'Default',
 				media: {inherit:{type:'exRandom',set:'Images2'}}
 			}
@@ -328,7 +316,7 @@ require(['app/API','../../examples/dscore/js/app/Scorer'], function(API,Scorer) 
 	API.addTrialSets('inst',{
 			input: [
 				{handle:'space',on:'space'}, //Will handle a SPACEBAR reponse
-				{handle:'space',on:'space'}
+				{handle:'space',on:'centerTouch',touch:true}
 			],
 			interactions: [
 				{ // begin trial
@@ -351,7 +339,7 @@ require(['app/API','../../examples/dscore/js/app/Scorer'], function(API,Scorer) 
 			]
 	});
 
-	//Defines the sequence of trials next
+	//Defines the sequence of trials
 	API.addSequence([
 		{ //Instructions trial
 			inherit : "inst",
@@ -359,7 +347,7 @@ require(['app/API','../../examples/dscore/js/app/Scorer'], function(API,Scorer) 
 				{//The instructions stimulus
 					data : {'handle':'instStim'},
 					//the instructions that will be shown on the screen
-					media:{html:'<div><p style="font-size:26px"><color="FFFAFA">Put your middle or index fingers on the <b>E</b> key of the keyboard, and the <b>I</b> key as well. <br/> Words and photos will appear one after another. Ignore the photos and categorize the words as pleasant or unpleasant.<br/><br/>When the word belongs to the catagory "Unpleasant", press the <b>E</b> key. ; when the word belongs to the category "Pleasant", press the <b>I</b> key.</br></br>If you make an error, an X will appear.</br>This is a timed sorting task. <b>GO AS FAST AS YOU CAN</b> while making as few mistakes as possible.<br>This task will take about 5 minutes to complete.<br> press on "space" to begin <br><br>[Round 1 of 3]</p></div>'}
+					media:{html:'<div><p style="font-size:24px"><color="FFFAFA">Put your middle or index fingers on the <b>E</b> key of the keyboard, and the <b>I</b> key as well. <br/> Words and photos will appear one after another. Ignore the photos and categorize the words as pleasant or unpleasant.<br/><br/>When the word belongs to the catagory "Unpleasant", press the <b>E</b> key. <br/> when the word belongs to the category "Pleasant", press the <b>I</b> key.</br></br>If you make an error, an X will appear.</br>This is a timed sorting task. <b>GO AS FAST AS YOU CAN</b> while making as few mistakes as possible.<br>This task will take about 5 minutes to complete.<br> press on "space" to begin <br><br>[Round 1 of 3]</p></div>'}
 				}
 			]
 		},
@@ -368,7 +356,7 @@ require(['app/API','../../examples/dscore/js/app/Scorer'], function(API,Scorer) 
 			mixer: 'random',		//
 			data : [{
 				mixer: 'repeat',
-				times: 1,
+				times: 15,
 				data : [
 					{inherit: 'pleasentWhite'},
 					{inherit: 'pleasentBlack'},
@@ -392,7 +380,7 @@ require(['app/API','../../examples/dscore/js/app/Scorer'], function(API,Scorer) 
 			mixer: 'random',		//
 			data : [{
 				mixer: 'repeat',
-				times: 1,
+				times: 15,
 				data : [
 				{inherit: 'pleasentWhite'},
 					{inherit: 'pleasentBlack'},
@@ -417,7 +405,7 @@ require(['app/API','../../examples/dscore/js/app/Scorer'], function(API,Scorer) 
 			mixer: 'random',		//
 			data : [{
 				mixer: 'repeat',
-				times: 1,
+				times: 15,
 				data : [
 				    {inherit: 'pleasentWhite'},
 					{inherit: 'pleasentBlack'},
@@ -455,6 +443,4 @@ require(['app/API','../../examples/dscore/js/app/Scorer'], function(API,Scorer) 
 			]
 		}
 	]);
-
-	// API.play();
 });
