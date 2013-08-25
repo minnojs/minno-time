@@ -48,7 +48,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 	//Define the basic trial (the prsentation of the images and words)
 	API.addTrialSets({
 		basicTrial: [{
-			data : {error:0},// by default each trial is crrect, this is modified in case of an error
+			data : {score:1},// by default each trial is crrect, this is modified in case of an error
 			//Layout defines what will be presented in the trial. It is like a background display.
 			layout: [
 				{location:{left:15,top:3},media:{word:'key: e'}, css:{color:'black','font-size':'1em'}},
@@ -81,26 +81,12 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				},
 				// there are 2 possible responses: "pleasent" and "unpleasent", here we handle these responses when the user answers
 				// matches the word value (correct response)
-
-				// ELAD: why do you need to treat them seperately? whe not just {type:'stimEquals',value:'wordValue'}?
-				// ELAD: also, you should use type:trigger instead of type:setInput here (I created it especialy for you :))
-				// ELAD: It should look like this: {type:'trigger', handle:'correctResp'}
 				{
 					propositions: [
-						{type:'stimEquals',value:'wordValue'},
-						{type:'inputEquals',value:category1}
-					],
+						{type:'stimEquals',value:'wordValue'}],
 					actions: [
-						{type:'setInput',input:{handle:'correctResp', on:'timeout',duration:0}}
-					]
-				},
-				{
-					propositions: [
-						{type:'stimEquals',value:'wordValue'},
-						{type:'inputEquals',value:category2}
-					],
-					actions: [
-						{type:'setInput',input:{handle:'correctResp', on:'timeout',duration:0}}
+						{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
+						{type:'trigger', handle:'correctResp'}
 					]
 				},
 
@@ -108,56 +94,27 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 					//This proposition is true when the presented stimulus has a word value that is equal to the input's handle.
 					propositions: [{type:'inputEquals',value:'correctResp'}],
 					actions: [
-						{type:'removeInput',inputHandle:[category2,category1]},//only one respnse is possible
-						//The player sends the value of score to the server, when you call the 'log' action
-
-						// ELAD: important!! we want to do the logging in the interaction that responds to the click itself so we have a meaningful response type in the log (this interaction responds to a timeout/trigger)
-
-						{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
-						{type:'setInput',input:{handle:'showFix', on:'timeout',duration:0}} //End the trial immidiatlly after correct response
+						{type:'removeInput',inputHandle:[category2,category1]},//only one response is possible
+						{type:'trigger', handle:'showFix'} //End the trial immidiatlly after correct response
 					]
 				},
 				// there are 2 possible responses: "pleasent" and "unpleasent", here we handle with these responses when the user answer
 				// doesn't match the word value (incorrect response)
-
-				/* ELAD:
-					You don't log incorrect answers, is this intentional?
-					note that you have to log after setting the error score.
-
-					I'd try to create one proposition for all incorrect answers: (note you have to negate all timeout inputs...)
+				//this propositions are true only after incorrect response
+				{
 					propositions: [
 						{type:'stimEquals',value:'wordValue', negate:true},
 						{type:'inputEquals',value:'begin', negate:true},
-						{type:'inputEquals',value:'errorResp', negate:true}
-					],
-
-					I'm thinking of allowing a list of values to trial/stim/inputEquals (that will allow a type of OR)
-					Maybe allow detecting type of input too?
-					Your thoughts?
-				*/
-				{
-					propositions: [
-						{type:'stimEquals',value:'wordValue', negate:true},
-						{type:'inputEquals',value:category1}
+						{type:'inputEquals',value:'errorResp', negate:true},
+						{type:'inputEquals',value:'correctResp', negate:true},
+						{type:'inputEquals',value:'showFix', negate:true},
+						{type:'inputEquals',value:'primeOut', negate:true},
+						{type:'inputEquals',value:'endTrial', negate:true}
 					],
 					actions: [
-						{type:'setInput',input:{handle:'errorResp', on:'timeout',duration:0}}
-					]
-				},
-				{
-					propositions: [
-						{type:'stimEquals',value:'wordValue', negate:true},
-						{type:'inputEquals',value:category2}
-					],
-					actions: [
-						{type:'setInput',input:{handle:'errorResp', on:'timeout',duration:0}}
-					]
-				},
-				{
-					propositions: [{type:'inputEquals',value:'errorResp'}], //What to do upon incorrect response.
-					actions: [
+						{type:'setTrialAttr', setter:{score:0}},
+						{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
 						{type:'showStim',handle:'errorFB'}, //show error feedback
-						{type:'setTrialAttr', setter:{error:1}},
 						{type:'removeInput',inputHandle:[category2,category1]},// block the option to change the answer or to answer twice
 						{type:'setInput',input:{handle:'showFix', on:'timeout',duration:250}} //End the trial in 250ms (show the x until then)
 					]
@@ -166,14 +123,11 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 					propositions: [{type:'inputEquals',value:'showFix'}], //What to do when endTrial is called.
 					actions: [
 						{type:'setTrialAttr',setter:{state:'after'}},
-						// ELAD: alternatively: {type:'hideStim',handle:'All'}
-
-						{type:'hideStim',handle:'targetStim'}, //show blanckScreen
-						{type:'hideStim',handle:'errorFB'}, //show blanckScreen
+						{type:'hideStim',handle:'All'},
 						{type:'showStim',handle:'blanckScreen'}, //show blanckScreen
-
-						{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:600}}//should be a random number in the interval: [300,900]
+						{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:{min:300, max: 900}}} // randomly pick from within a range
 					]
+
 				},
 				{
 					propositions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
@@ -466,12 +420,10 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			customize: function(){
 				var trial = this;
 				console.log('calling Scorer');
-				var DScore = Scorer.computeD();
-				var FBMsg = Scorer.getFBMsg(DScore);
-				console.log(FBMsg);
-				console.log(DScore);
+				var DScore = Scorer.computeD();//compute the Dscore
+				var FBMsg = Scorer.getFBMsg(DScore);//the user feedback
 				var media = {media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};
-				trial.stimuli.push(media);
+				trial.stimuli.push(media);//show the user feedback
 			}
 		},
 

@@ -2,6 +2,8 @@
 require(['app/API'], function(API) {
 	var category1 = 'Pleasent';
 	var category2 = 'Unpleasent';
+	var condition1= "white/word (1)";
+	var condition2= "black/word (2)";
 	//a Scorer for the AMP
 	var AMPScorer = {
 						prime1: 'White',
@@ -26,7 +28,7 @@ require(['app/API'], function(API) {
 	function computeAMPScore(scoreArray){
 		for(var i=3; i<scoreArray.length; i++){// the first 3 are the example images, go over all the other logs.
 			if(scoreArray[i].responseHandle == category1){ //pleasent response
-				if(scoreArray[i].stimuli[1] == "primingImage1"){ //the image is from the first category
+				if(scoreArray[i].data.condition == condition1){ //the image is from the first category
 					inc_prime1_category1();
 				}
 				else{
@@ -34,7 +36,7 @@ require(['app/API'], function(API) {
 				}
 			}
 			else{// unpleasent response
-				if(scoreArray[i].stimuli[1] == "primingImage1"){ //the image is from the first category
+				if(scoreArray[i].data.condition == condition1){ //the image is from the first category
 					inc_prime1_category2();
 				}
 				else{
@@ -87,6 +89,7 @@ require(['app/API'], function(API) {
 				{
 					propositions: [{type:'begin'}],
 					actions: [
+						{type:'removeInput',inputHandle:[category2,category1]},//answer only in the Mask screen
 						{type:'showStim',handle:'primingImage'},// display the first stimulus=priming image
 						{type:'setInput',input:{handle:'primeOut',on:'timeout',duration:100}} //for 100 ms
 					]
@@ -111,6 +114,8 @@ require(['app/API'], function(API) {
 					propositions: [{type:'inputEquals',value:'targetOut'}], // on time out
 					actions: [
 						{type:'hideStim',handle:'targetStime'}, // hide the letter
+						{type:'setInput',input:{handle:category2,on: 'keypressed', key:'e'}},//the user can only answer here
+						{type:'setInput',input:{handle:category1,on: 'keypressed', key:'i'}},
 						{type:'showStim',handle:'MaskScreen'} // and show the mask screen
 					]
 				},
@@ -122,7 +127,7 @@ require(['app/API'], function(API) {
 						{type:'removeInput',inputHandle:[category2,category1]},//only one respnse is possible
 						//The player sends the value of score to the server, when you call the 'log' action
 						{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
-						{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:0}}
+						{type:'trigger', handle:'endTrial'}//end the trial immidiatly after the response
 					]
 				},
 				{
@@ -131,7 +136,7 @@ require(['app/API'], function(API) {
 						{type:'setTrialAttr',setter:{score:'0'}},
 						{type:'removeInput',inputHandle:[category2,category1]},
 						{type:'log'},
-						{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:0}}
+						{type:'trigger', handle:'endTrial'}
 					]
 				},
 				{
@@ -144,7 +149,8 @@ require(['app/API'], function(API) {
 	}); // end trialset
 
 	API.addTrialSets({
-		white:[{		//priming1
+		white:[{		//first condition
+			data: {condition: condition1},
 			inherit:{set: 'basicTrial'},
 			stimuli: [
 				{ inherit: {set: 'targetStimulus', type:'exRandom'}, data : {handle:'targetStim'} },
@@ -153,7 +159,8 @@ require(['app/API'], function(API) {
 				{ inherit: 'blanckScreen'}
 			]
 		}],
-		black:[{		//priming2
+		black:[{		//second condition
+			data: {condition: condition2},
 			inherit:{set: 'basicTrial'},
 			stimuli: [
 				{ inherit: {set: 'targetStimulus', type:'exRandom'}, data : {handle:'targetStim'} },
@@ -186,6 +193,7 @@ require(['app/API'], function(API) {
 				{
 					propositions: [{type:'begin'}],
 					actions: [{type:'showStim',handle:'primingImage'},// display the first stimulus
+					{type:'removeInput',inputHandle:[category2,category1]},//answer only in the Mask screen
 					{type:'setInput',input:{handle:'primeOut',on:'timeout',duration:125}}]  //display longer time in the example trial
 				},
 				{
@@ -208,6 +216,8 @@ require(['app/API'], function(API) {
 					propositions: [{type:'inputEquals',value:'targetOut'}], // on time out
 					actions: [
 						{type:'hideStim',handle:'targetStime'}, // hide the first stimulus
+						{type:'setInput',input:{handle:category2,on: 'keypressed', key:'e'}},//the user can only answer here
+						{type:'setInput',input:{handle:category1,on: 'keypressed', key:'i'}},
 						{type:'showStim',handle:'MaskScreen'} // and show the mask screen
 						]
 				},
@@ -218,7 +228,7 @@ require(['app/API'], function(API) {
 						{type:'setTrialAttr',setter:{score:'1'}},
 						{type:'removeInput',inputHandle:[category2,category1]},
 						{type:'log'},
-						{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:0}}
+						{type:'trigger', handle:'endTrial'}
 					]
 				},
 
@@ -228,7 +238,7 @@ require(['app/API'], function(API) {
 						{type:'setTrialAttr',setter:{score:'0'}},
 						{type:'removeInput',inputHandle:[category2,category1]},
 						{type:'log'},
-						{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:0}}
+						{type:'trigger', handle:'endTrial'}
 					]
 				},
 				{
@@ -239,6 +249,7 @@ require(['app/API'], function(API) {
 		}], // end example trial
 
 		example:[{
+			data:{condition:"example"},
 			inherit:{set: 'exampleTrial'},
 			stimuli: [
 				{ inherit: {set: 'targetStimulus', type:'exRandom'}, data : {handle:'targetStim'} },
@@ -608,7 +619,9 @@ require(['app/API'], function(API) {
 				var logs = API.getLogs();//saving the logs
 				computeAMPScore(logs);// computing the AMP score
 				var media1 = {media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> After black men, '+AMPScorer.counter.prime2.category1+' of the responses were pleasant  and '+ AMPScorer.counter.prime2.category2+' of the responses were ‘unpleasant’<br>After white men, '+ AMPScorer.counter.prime1.category1+' of the responses were ‘pleasant’ and '+ AMPScorer.counter.prime1.category2+' of the responses were ‘unpleasant’.</p></div>'}};
+				//Add: send to the server the feedback
 				trial.stimuli.push(media1);//show the score
+				
 			}
 		},
 		{ //Instructions trial, the end of the task, instruction what to do next

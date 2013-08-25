@@ -65,8 +65,8 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 
 		// constant elements in the display, in this case: the user instructions: left / right
 		layout: [
-			{location:{left:0,top:0},media:{template:'left.html'}},
-			{location:{left:'auto',right:0,top:0},media:{template:'right.html'}}
+			{location:{left:0,top:0},media:{template:'left.jst'}},
+			{location:{left:'auto',right:0,top:0},media:{template:'right.jst'}}
 		],
 
 		// user interactions
@@ -135,10 +135,9 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			],
 
 			// display fixed layout
-			// @TODO: do we even need this here??
 			layout:[
-				{location:{left:0,top:0},media:{html:'left'}},
-				{location:{left:'auto',right:0,top:0},media:{html:'right'}}
+				{location:{left:0,top:0},media:{template:'left.jst'}},
+				{location:{right:0,top:0},media:{template:'right.jst'}}
 			],
 
 			interactions: [
