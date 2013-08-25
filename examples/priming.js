@@ -22,6 +22,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		url : 'google.com',
 		pulse : 20
 	});
+
 	//the Scorer that compute the user feedback
 	Scorer.addSettings('compute',{
 		condVar:"trialCategories",
@@ -34,7 +35,6 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		minRT : 150, //Below this latency
 		maxRT : 5000, //above this
 		errorLatency : {use:"false", penalty:600, useForSTD:true}//ignore error respones
-
 	});
 
 	Scorer.addSettings('message',{
@@ -43,120 +43,162 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			{ cut:'0.3', message:'Your data suggest no or slight difference in your preference between white people and black people.' },// -0.3 <= D <= 0.3
 			{ cut:'5', message:'Your data suggest an automatic preference for white people over black people.' }// D > 0.3 (and D<=5)
 		]
-
 	});
 
 	//Define the basic trial (the prsentation of the images and words)
 	API.addTrialSets({
-	basicTrial: [{
-		data : {error:0},// by default each trial is crrect, this is modified in case of an error
-		//Layout defines what will be presented in the trial. It is like a background display.
-		layout: [
-			{location:{left:15,top:3},media:{word:'key: e'}, css:{color:'black','font-size':'1em'}},
-			{location:{left:75,top:3},media:{word:'key: i'},  css:{color:'black','font-size':'1em'}},
-			{location:{left:10,top:6},media:{word:category2}, css:{color:'white','font-size':'2em'}},
-			{location:{left:70,top:6},media:{word:category1},  css:{color:'white','font-size':'2em'}}
-		],
-		//Inputs for two possible responses.
-		input: [
-			{handle:category2,on: 'keypressed', key:'e'},
-			{handle:category1,on: 'keypressed', key:'i'},
-			{handle:category2,on:'leftTouch',touch:true},//support touch as well
-			{handle:category1,on:'rightTouch',touch:true}
-		],
-		//Set what to do.
-		interactions: [
-		 {
-            propositions: [{type:'begin'}],
-            actions: [{type:'showStim',handle:'primingImage'},// display the first stimulus
-			{type:'setInput',input:{handle:'primeOut',on:'timeout',duration:300}}]
-        },
-		{
-            propositions: [{type:'inputEquals',value:'primeOut'}], // on time out
-            actions: [
-                {type:'hideStim',handle:'primingImage'}, // hide the first stimulus
-                {type:'showStim',handle:'targetStim'} // and show the second one
-				]
-        },
-		//there are 2 possible responses: "pleasent" and "unpleasent", here we handle with these responses when the user answer
-       //mathces the word value (correct response)
-		{
-			propositions: [{type:'stimEquals',value:'wordValue'}, {type:'inputEquals',value:category1}],
-			actions: [
-				{type:'setInput',input:{handle:'correctResp', on:'timeout',duration:0}}
-			]
-		},
-		{
-			propositions: [{type:'stimEquals',value:'wordValue'}, {type:'inputEquals',value:category2}],
-			actions: [
-				{type:'setInput',input:{handle:'correctResp', on:'timeout',duration:0}}
-			]
-		},
+		basicTrial: [{
+			data : {error:0},// by default each trial is crrect, this is modified in case of an error
+			//Layout defines what will be presented in the trial. It is like a background display.
+			layout: [
+				{location:{left:15,top:3},media:{word:'key: e'}, css:{color:'black','font-size':'1em'}},
+				{location:{left:75,top:3},media:{word:'key: i'}, css:{color:'black','font-size':'1em'}},
+				{location:{left:10,top:6},media:{word:category2}, css:{color:'white','font-size':'2em'}},
+				{location:{left:70,top:6},media:{word:category1}, css:{color:'white','font-size':'2em'}}
+			],
+			//Inputs for two possible responses.
+			input: [
+				{handle:category2,on: 'keypressed', key:'e'},
+				{handle:category1,on: 'keypressed', key:'i'},
+				{handle:category2,on:'leftTouch',touch:true},//support touch as well
+				{handle:category1,on:'rightTouch',touch:true}
+			],
+			//Set what to do.
+			interactions: [
+				{
+					propositions: [{type:'begin'}],
+					actions: [
+						{type:'showStim',handle:'primingImage'},// display the first stimulus
+						{type:'setInput',input:{handle:'primeOut',on:'timeout',duration:300}}
+					]
+				},
+				{
+					propositions: [{type:'inputEquals',value:'primeOut'}], // on time out
+					actions: [
+						{type:'hideStim',handle:'primingImage'}, // hide the first stimulus
+						{type:'showStim',handle:'targetStim'} // and show the second one
+					]
+				},
+				// there are 2 possible responses: "pleasent" and "unpleasent", here we handle these responses when the user answers
+				// matches the word value (correct response)
 
-		{//What to do upon correct response
-			//This proposition is true when the presented stimulus has a word value that is equal to the input's handle.
-			propositions: [{type:'inputEquals',value:'correctResp'}],
-			actions: [
-				{type:'removeInput',inputHandle:[category2,category1]},//only one respnse is possible
-				//The player sends the value of score to the server, when you call the 'log' action
-				{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
-				{type:'setInput',input:{handle:'showFix', on:'timeout',duration:0}} //End the trial immidiatlly after correct response
-			]
-		},
-		//there are 2 possible responses: "pleasent" and "unpleasent", here we handle with these responses when the user answer
-       //dosen't mathc the word value (incorrect response)
-		{
-			propositions: [{type:'stimEquals',value:'wordValue', negate:true}, {type:'inputEquals',value:category1}],
-			actions: [
-				{type:'setInput',input:{handle:'errorResp', on:'timeout',duration:0}}
-			]
-		},
-		{
-			propositions: [{type:'stimEquals',value:'wordValue', negate:true}, {type:'inputEquals',value:category2}],
-			actions: [
-				{type:'setInput',input:{handle:'errorResp', on:'timeout',duration:0}}
-			]
-		},
-		{
-			propositions: [{type:'inputEquals',value:'errorResp'}], //What to do upon incorrect response.
-			actions: [
-				{type:'showStim',handle:'errorFB'}, //show correct feedback
-				{type:'setTrialAttr', setter:{error:1}},
-				{type:'removeInput',inputHandle:[category2,category1]},// block the option to change the answer or to answer twice
-				{type:'setInput',input:{handle:'showFix', on:'timeout',duration:250}} //End the trial in 250ms (show the x until then)
-			]
-		},
-		{
-			propositions: [{type:'inputEquals',value:'showFix'}], //What to do when endTrial is called.
-			actions: [
-				{type:'setTrialAttr',setter:{state:'after'}},
-				{type:'hideStim',handle:'targetStim'}, //show blanckScreen
-				{type:'hideStim',handle:'errorFB'}, //show blanckScreen
-				{type:'showStim',handle:'blanckScreen'}, //show blanckScreen
-				{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:600}}//should be a random number in the interval: [300,900]
-			]
-		},
-		{
-			propositions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
-			actions: [{type:'endTrial'}]
-		}
-		]
+				// ELAD: why do you need to treat them seperately? whe not just {type:'stimEquals',value:'wordValue'}?
+				// ELAD: also, you should use type:trigger instead of type:setInput here (I created it especialy for you :))
+				// ELAD: It should look like this: {type:'trigger', handle:'correctResp'}
+				{
+					propositions: [
+						{type:'stimEquals',value:'wordValue'},
+						{type:'inputEquals',value:category1}
+					],
+					actions: [
+						{type:'setInput',input:{handle:'correctResp', on:'timeout',duration:0}}
+					]
+				},
+				{
+					propositions: [
+						{type:'stimEquals',value:'wordValue'},
+						{type:'inputEquals',value:category2}
+					],
+					actions: [
+						{type:'setInput',input:{handle:'correctResp', on:'timeout',duration:0}}
+					]
+				},
 
-		}]});
+				{//What to do upon correct response
+					//This proposition is true when the presented stimulus has a word value that is equal to the input's handle.
+					propositions: [{type:'inputEquals',value:'correctResp'}],
+					actions: [
+						{type:'removeInput',inputHandle:[category2,category1]},//only one respnse is possible
+						//The player sends the value of score to the server, when you call the 'log' action
 
-		API.addTrialSets({
-	pleasentWhite:[{		//pleasant+white people (condition 1)
-			data: {parcel:'research',trialCategories:["Black People/Bad Words","White People/Good Words"]},
+						// ELAD: important!! we want to do the logging in the interaction that responds to the click itself so we have a meaningful response type in the log (this interaction responds to a timeout/trigger)
+
+						{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
+						{type:'setInput',input:{handle:'showFix', on:'timeout',duration:0}} //End the trial immidiatlly after correct response
+					]
+				},
+				// there are 2 possible responses: "pleasent" and "unpleasent", here we handle with these responses when the user answer
+				// doesn't match the word value (incorrect response)
+
+				/* ELAD:
+					You don't log incorrect answers, is this intentional?
+					note that you have to log after setting the error score.
+
+					I'd try to create one proposition for all incorrect answers: (note you have to negate all timeout inputs...)
+					propositions: [
+						{type:'stimEquals',value:'wordValue', negate:true},
+						{type:'inputEquals',value:'begin', negate:true},
+						{type:'inputEquals',value:'errorResp', negate:true}
+					],
+
+					I'm thinking of allowing a list of values to trial/stim/inputEquals (that will allow a type of OR)
+					Maybe allow detecting type of input too?
+					Your thoughts?
+				*/
+				{
+					propositions: [
+						{type:'stimEquals',value:'wordValue', negate:true},
+						{type:'inputEquals',value:category1}
+					],
+					actions: [
+						{type:'setInput',input:{handle:'errorResp', on:'timeout',duration:0}}
+					]
+				},
+				{
+					propositions: [
+						{type:'stimEquals',value:'wordValue', negate:true},
+						{type:'inputEquals',value:category2}
+					],
+					actions: [
+						{type:'setInput',input:{handle:'errorResp', on:'timeout',duration:0}}
+					]
+				},
+				{
+					propositions: [{type:'inputEquals',value:'errorResp'}], //What to do upon incorrect response.
+					actions: [
+						{type:'showStim',handle:'errorFB'}, //show error feedback
+						{type:'setTrialAttr', setter:{error:1}},
+						{type:'removeInput',inputHandle:[category2,category1]},// block the option to change the answer or to answer twice
+						{type:'setInput',input:{handle:'showFix', on:'timeout',duration:250}} //End the trial in 250ms (show the x until then)
+					]
+				},
+				{
+					propositions: [{type:'inputEquals',value:'showFix'}], //What to do when endTrial is called.
+					actions: [
+						{type:'setTrialAttr',setter:{state:'after'}},
+						// ELAD: alternatively: {type:'hideStim',handle:'All'}
+
+						{type:'hideStim',handle:'targetStim'}, //show blanckScreen
+						{type:'hideStim',handle:'errorFB'}, //show blanckScreen
+						{type:'showStim',handle:'blanckScreen'}, //show blanckScreen
+
+						{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:600}}//should be a random number in the interval: [300,900]
+					]
+				},
+				{
+					propositions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
+					actions: [{type:'endTrial'}]
+				}
+			] // end interactions
+		}] // end basic trial
+	}); // end trialsets
+
+	API.addTrialSets({
+		//pleasant+white people (condition 1)
+		pleasentWhite:[{
+			data: {parcel:'research',trialCategories:["Black People/Bad Words","White People/Good Words"], condition: "pleasant/white (1)"},
 			inherit:{set: 'basicTrial'},
 			stimuli: [
-			{ inherit: {set: 'targetStimulusA', type:'exRandom'}, data : {handle:'targetStim'} },
-			{ inherit: {set: 'primingImage1', type:'exRandom'}, data : {handle:'primingImage'} },
-			{ inherit: 'errorFB'},
-			{ inherit: 'blanckScreen'}
+				{ inherit: {set: 'targetStimulusA', type:'exRandom'}, data : {handle:'targetStim'} },
+				{ inherit: {set: 'primingImage1', type:'exRandom'}, data : {handle:'primingImage'} },
+				{ inherit: 'errorFB'},
+				{ inherit: 'blanckScreen'}
 			]
 		}],
-		pleasentBlack:[{		//pleasant+black people (condition 2)
-			data: {parcel:'research',trialCategories:["Black People/Good Words","White People/Bad Words"]},
+
+		//pleasant+black people (condition 2)
+		pleasentBlack:[{
+			data: {parcel:'research',trialCategories:["Black People/Good Words","White People/Bad Words"], condition: "pleasant/black (2)"},
 			inherit:{set: 'basicTrial'},
 			stimuli: [
 			{ inherit: {set: 'targetStimulusA', type:'exRandom'}, data : {handle:'targetStim'} },
@@ -166,8 +208,9 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			]
 		}],
 
-		unpleasentWhite:[{		//unpleasant+white people (condition 2)
-			data: {parcel:'research',trialCategories:["Black People/Good Words","White People/Bad Words"]},
+		//unpleasant+white people (condition 2)
+		unpleasentWhite:[{
+			data: {parcel:'research',trialCategories:["Black People/Good Words","White People/Bad Words"], condition: "unpleasant/white (2)"},
 			inherit:{set: 'basicTrial'},
 			stimuli: [
 			{ inherit: {set: 'targetStimulusB', type:'exRandom'}, data : {handle:'targetStim'} },
@@ -176,8 +219,10 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			{ inherit: 'blanckScreen'}
 			]
 		}],
-		unpleasentBlack:[{		//unpleasant+ black people (condition 1)
-			data: {parcel:'research',trialCategories:["Black People/Bad Words","White People/Good Words"]},
+
+		//unpleasant+ black people (condition 1)
+		unpleasentBlack:[{
+			data: {parcel:'research',trialCategories:["Black People/Bad Words","White People/Good Words"], condition: "unpleasant/black (1)"},
 			inherit:{set: 'basicTrial'},
 			stimuli: [
 			{ inherit: {set: 'targetStimulusB', type:'exRandom'}, data : {handle:'targetStim'} },
@@ -188,18 +233,18 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		}]
 	});
 
-//Create the stimuli
+	//Create the stimuli
 	API.addStimulusSets({
 	//These are diffrent types of stimuli.
 	//That way we can later create a stimulus object the inherits from this set randomly.
 
-	// This Default stimulus is inherited by the other stimuli so that we can have a consistent look and change it from one place
+		// This Default stimulus is inherited by the other stimuli so that we can have a consistent look and change it from one place
 		Default: [
 			{css:{color:'white','font-size':'2em'}}
 		],
 		targetStimulusA: [	//first catagory of words
 			{
-				data : {wordValue:category1},
+				data : {wordValue:category1, alias:category1},
 				inherit:'Default',
 				media: {inherit:{type:'exRandom',set:'targetWordsA'}} //Select a word from the media, randomly
 			}
@@ -207,7 +252,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 
 		targetStimulusB: [	//the second catagory of words
 			{
-				data : {wordValue:category2},
+				data : {wordValue:category2, alias:category2},
 				inherit:'Default',
 				media: {inherit:{type:'exRandom',set:'targetWordsB'}}
 			}
@@ -217,32 +262,35 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				data : {handle:'errorFB'},
 				size: {height:15,width:15},
 				location: {top:70},
-				media: {image:'cross.png'} //An image.
+				media: {image:'cross.png'}, //An image.
+				nolog:true
 			}
 		],
 		blanckScreen : [//blanckScreen  stimulus (in between the trials) can be used as a fixation point
 			{
 				data : {handle:'blanckScreen'},
-				media: {word:' '}//can be replace with '+'
+				media: {word:' '},//can be replace with '+'
+				nolog:true
 			}
 		],
+
 		//priming stimulus: the catagories of images
 		primingImage1 : [
 			{
-
-				data : {handle:'primingImage'},
+				data : {handle:'primingImage',alias:'white'},
 				inherit:'Default',
 				media: {inherit:{type:'exRandom',set:'Images1'}}
 			}
-			],
-			primingImage2 : [
+		],
+		primingImage2 : [
 			{
-				data : {handle:'primingImage'},
+				data : {handle:'primingImage',alias:'black'},
 				inherit:'Default',
 				media: {inherit:{type:'exRandom',set:'Images2'}}
 			}
-			]
+		]
 	});
+
 	//Create materials (media) for the stimulus
 	//Twp categories of images, and two categories of words.
 	API.addMediaSets({
@@ -259,9 +307,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			{image: 'sw10.jpg'},
 			{image: 'sw11.jpg'},
 			{image: 'sw12.jpg'}
-		]
-	});
-	API.addMediaSets({
+		],
 		Images2: [
 			{image: 'sb01.jpg'},
 			{image: 'sb02.jpg'},
@@ -275,9 +321,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			{image: 'sb10.jpg'},
 			{image: 'sb11.jpg'},
 			{image: 'sb12.jpg'}
-		]
-	});
-	API.addMediaSets({
+		],
 		targetWordsA: [
 			{word: 'Paradise'},
 			{word: 'Pleasure'},
@@ -293,9 +337,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			{word: 'Attractive'},
 			{word: 'Likeable'},
 			{word: 'Wonderful'}
-		]
-	});
-	API.addMediaSets({
+		],
 		targetWordsB: [
 			{word: 'Bomb'},
 			{word: 'Abuse'},
@@ -313,31 +355,32 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			{word: 'Offensive'}
 		]
 	});
+
 	//Define the instructions trial
 	API.addTrialSets('inst',{
-			input: [
-				{handle:'space',on:'space'}, //Will handle a SPACEBAR reponse
-				{handle:'space',on:'centerTouch',touch:true}
-			],
-			interactions: [
-				{ // begin trial
-					propositions: [{type:'begin'}],
-					actions: [{type:'showStim',handle:'All'}] //Show the instructions
-				},
-				{
-					propositions: [{type:'inputEquals',value:'space'}], //What to do when space is pressed
-					actions: [
-						{type:'hideStim',handle:'All'}, //Hide the instructions
-						{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:500}} //In 500ms: end the trial. In the mean time, we get a blank screen.
-					]
-				},
-				{
-					propositions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
-					actions: [
-						{type:'endTrial'} //End the trial
-					]
-				}
-			]
+		input: [
+			{handle:'space',on:'space'}, //Will handle a SPACEBAR reponse
+			{handle:'space',on:'centerTouch',touch:true}
+		],
+		interactions: [
+			{ // begin trial
+				propositions: [{type:'begin'}],
+				actions: [{type:'showStim',handle:'All'}] //Show the instructions
+			},
+			{
+				propositions: [{type:'inputEquals',value:'space'}], //What to do when space is pressed
+				actions: [
+					{type:'hideStim',handle:'All'}, //Hide the instructions
+					{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:500}} //In 500ms: end the trial. In the mean time, we get a blank screen.
+				]
+			},
+			{
+				propositions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
+				actions: [
+					{type:'endTrial'} //End the trial
+				]
+			}
+		]
 	});
 
 	//Defines the sequence of trials
@@ -346,24 +389,24 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
-					data : {'handle':'instStim'},
 					//the instructions that will be shown on the screen
 					media:{html:'<div><p style="font-size:24px"><color="FFFAFA">Put your middle or index fingers on the <b>E</b> key of the keyboard, and the <b>I</b> key as well. <br/> Words and photos will appear one after another. Ignore the photos and categorize the words as pleasant or unpleasant.<br/><br/>When the word belongs to the catagory "Unpleasant", press the <b>E</b> key. <br/> when the word belongs to the category "Pleasant", press the <b>I</b> key.</br></br>If you make an error, an X will appear.</br>This is a timed sorting task. <b>GO AS FAST AS YOU CAN</b> while making as few mistakes as possible.<br>This task will take about 5 minutes to complete.<br> press on "space" to begin <br><br>[Round 1 of 3]</p></div>'}
 				}
 			]
 		},
 		{ //The presentation trials
-			// Repeat 60 times the trial. (15 times each comination)
+			// Repeat 60 times the trial. (15 times each combination)
 			mixer: 'random',		//
-			data : [{
-				mixer: 'repeat',
-				times: 15,
-				data : [
-					{inherit: 'pleasentWhite'},
-					{inherit: 'pleasentBlack'},
-					{inherit: 'unpleasentWhite'},
-					{inherit: 'unpleasentBlack'},
-				]
+			data : [
+				{
+					mixer: 'repeat',
+					times: 15,
+					data : [
+						{inherit: 'pleasentWhite'},
+						{inherit: 'pleasentBlack'},
+						{inherit: 'unpleasentWhite'},
+						{inherit: 'unpleasentBlack'},
+					]
 				} // end wrapper
 			]
 		},
@@ -371,23 +414,23 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
-					data : {'handle':'instStim'},
 					media:{html:'<div><p style="font-size:28px"><color="#FFFAFA">Press "space" to continue with the same task.<br/><br/>Please try to challenge yourself to be as fast as you can without making mistakes<br/><br/>[Round 2 of 3].</p></div>'}
 				}
 			]
 		},
 		{ //The presentation trials
-			// Repeat 60 times the trial. (15 times each comination)
-			mixer: 'random',		//
-			data : [{
-				mixer: 'repeat',
-				times: 15,
-				data : [
-				{inherit: 'pleasentWhite'},
-					{inherit: 'pleasentBlack'},
-					{inherit: 'unpleasentWhite'},
-					{inherit: 'unpleasentBlack'},
-				]
+			// Repeat 60 times the trial. (15 times each combination)
+			mixer: 'random',
+			data : [
+				{
+					mixer: 'repeat',
+					times: 15,
+					data : [
+						{inherit: 'pleasentWhite'},
+						{inherit: 'pleasentBlack'},
+						{inherit: 'unpleasentWhite'},
+						{inherit: 'unpleasentBlack'},
+					]
 				} // end wrapper
 			]
 		},
@@ -396,24 +439,24 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
-					data : {'handle':'instStim'},
 					media:{html:'<div><p style="font-size:28px"><color="#FFFAFA">Press "space" for the last round.<br/><br/>[Round 3 of 3].</p></div>'}
 				}
 			]
 		},
 		{ //The presentation trials
-			// Repeat 60 times the trial. (15 times each comination)
+			// Repeat 60 times the trial. (15 times each combination)
 			mixer: 'random',		//
-			data : [{
-				mixer: 'repeat',
-				times: 15,
-				data : [
-				    {inherit: 'pleasentWhite'},
-					{inherit: 'pleasentBlack'},
-					{inherit: 'unpleasentWhite'},
-					{inherit: 'unpleasentBlack'},
-				]
-				} // end wrapper
+			data : [
+				{
+					mixer: 'repeat',
+					times: 15,
+					data : [
+						{inherit: 'pleasentWhite'},
+						{inherit: 'pleasentBlack'},
+						{inherit: 'unpleasentWhite'},
+						{inherit: 'unpleasentBlack'},
+					]
+				}
 			]
 		},
 		// user feedback- here we will use the computeD function.
@@ -429,9 +472,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				console.log(DScore);
 				var media = {media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};
 				trial.stimuli.push(media);
-
 			}
-
 		},
 
 		{ //Instructions trial, the end of the task, instruction what to do next
@@ -444,4 +485,6 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			]
 		}
 	]);
+
+	API.play();
 });
