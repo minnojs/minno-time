@@ -538,7 +538,7 @@ require(['app/API'], function(API) {
 		{ //The presentation example trials
 			mixer: 'repeat',// Repeat 3 times the trial.
 			times: 3,
-			data : [{inherit: 'example'}]
+			data : [{inherit: 'example',data:{block:0}}]
 		},
 
 		{ //Instructions trial
@@ -553,8 +553,8 @@ require(['app/API'], function(API) {
 				mixer: 'repeat',// Repeat 40 times the trial. (20 times each combination)
 				times: 20,
 				data : [
-					{inherit: 'white'},
-					{inherit: 'black'},
+					{inherit: 'white',data:{block:1}},
+					{inherit: 'black',data:{block:1}},
 				]
 			}]
 		},
@@ -573,8 +573,8 @@ require(['app/API'], function(API) {
 				mixer: 'repeat',// Repeat 40 times the trial. (20 times each combination)
 				times: 20,
 				data : [
-					{inherit: 'white'},
-					{inherit: 'black'},
+					{inherit: 'white',data:{block:2}},
+					{inherit: 'black',data:{block:2}},
 				]
 			}]
 		},
@@ -591,8 +591,8 @@ require(['app/API'], function(API) {
 				mixer: 'repeat',// Repeat 40 times the trial. (20 times each combination)
 				times: 20,
 				data : [
-					{inherit: 'white'},
-					{inherit: 'black'},
+					{inherit: 'white',data:{block:3}},
+					{inherit: 'black',data:{block:3}},
 				]
 			}]
 		},

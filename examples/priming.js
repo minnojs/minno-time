@@ -402,10 +402,10 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 					mixer: 'repeat',
 					times: 15,
 					data : [
-						{inherit: 'pleasentWhite'},
-						{inherit: 'pleasentBlack'},
-						{inherit: 'unpleasentWhite'},
-						{inherit: 'unpleasentBlack'},
+						{inherit: 'pleasentWhite',data:{block:0}},
+						{inherit: 'pleasentBlack',data:{block:0}},
+						{inherit: 'unpleasentWhite',data:{block:0}},
+						{inherit: 'unpleasentBlack',data:{block:0}},
 					]
 				} // end wrapper
 			]
@@ -426,10 +426,10 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 					mixer: 'repeat',
 					times: 15,
 					data : [
-						{inherit: 'pleasentWhite'},
-						{inherit: 'pleasentBlack'},
-						{inherit: 'unpleasentWhite'},
-						{inherit: 'unpleasentBlack'},
+						{inherit: 'pleasentWhite',data:{block:1}},
+						{inherit: 'pleasentBlack',data:{block:1}},
+						{inherit: 'unpleasentWhite',data:{block:1}},
+						{inherit: 'unpleasentBlack',data:{block:1}},
 					]
 				} // end wrapper
 			]
@@ -451,10 +451,10 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 					mixer: 'repeat',
 					times: 15,
 					data : [
-						{inherit: 'pleasentWhite'},
-						{inherit: 'pleasentBlack'},
-						{inherit: 'unpleasentWhite'},
-						{inherit: 'unpleasentBlack'},
+						{inherit: 'pleasentWhite',data:{block:2}},
+						{inherit: 'pleasentBlack',data:{block:2}},
+						{inherit: 'unpleasentWhite',data:{block:2}},
+						{inherit: 'unpleasentBlack',data:{block:2}},
 					]
 				}
 			]
