@@ -1,6 +1,6 @@
 /*
  * activate logger
- * note that we are loading modules into the global object here (json2) 
+ * note that we are loading modules into the global object here (json2)
  */
 define(function(require){
 
@@ -11,7 +11,7 @@ define(function(require){
 		, post = require('./post')
 		, logStack = require('./log_stack');
 
-	// counter for the last time we sent (it holds the last length for which we sent)	
+	// counter for the last time we sent (it holds the last length for which we sent)
 	var lastSend = 0;
 
 	var defaultLogger = function(trialData, inputData, actionData,logStack){
@@ -60,7 +60,7 @@ define(function(require){
 		// get the logger function
 		var callback = logger.logger ? logger.logger : defaultLogger;
 
-		// add row to log stack		
+		// add row to log stack
 		var row = callback.apply(trial(),[trial().data, input_data, options,logStack]);
 		logStack.push(row);
 	});

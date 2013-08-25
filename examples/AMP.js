@@ -24,7 +24,7 @@ require(['app/API'], function(API) {
 
 	//compute the AMP score, according to the logs.
 	function computeAMPScore(scoreArray){
-		for(var i=3; i<scoreArray.length; i++){// the first 3 is the example images, go over all the other logs.
+		for(var i=3; i<scoreArray.length; i++){// the first 3 are the example images, go over all the other logs.
 			if(scoreArray[i].responseHandle == category1){ //pleasent response
 				if(scoreArray[i].stimuli[1] == "primingImage1"){ //the image is from the first category
 					inc_prime1_category1();
@@ -67,210 +67,214 @@ require(['app/API'], function(API) {
 
 	//Define the basic trial (the prsentation of the images and words)
 	API.addTrialSets({
-	basicTrial: [{
-		//Layout defines what will be presented in the trial. It is like a background display.
-		layout: [
-			{location:{left:15,top:3},media:{word:'key: e'}, css:{color:'black','font-size':'1em'}},
-			{location:{left:75,top:3},media:{word:'key: i'},  css:{color:'black','font-size':'1em'}},
-			{location:{left:10,top:6},media:{word:category2}, css:{color:'white','font-size':'2em'}},
-			{location:{left:70,top:6},media:{word:category1},  css:{color:'white','font-size':'2em'}}
-		],
-		//Inputs for two possible responses.
-		input: [
-			{handle:category2,on: 'keypressed', key:'e'},
-			{handle:category1,on: 'keypressed', key:'i'},
-			{handle:category2,on:'leftTouch',touch:true},//support touch as well
-			{handle:category1,on:'rightTouch',touch:true}
-		],
-		//Set what to do.
-		interactions: [
-		{
-            propositions: [{type:'begin'}],
-            actions: [{type:'showStim',handle:'primingImage'},// display the first stimulus=priming image
-			{type:'setInput',input:{handle:'primeOut',on:'timeout',duration:100}}] //for 100 ms
-        },
-		{
-            propositions: [{type:'inputEquals',value:'primeOut'}], // on time out
-            actions: [
-                {type:'hideStim',handle:'primingImage'}, // hide the first stimulus
-				{type:'showStim',handle:'blanckScreen'}, // and show the second one=the blanck screen
-				{type:'setInput',input:{handle:'blanckOut',on:'timeout',duration:100}}
-				]
-        },
-		{
-            propositions: [{type:'inputEquals',value:'blanckOut'}], // on time out
-            actions: [
-                {type:'hideStim',handle:'blanckScreen'}, // hide the blanck screen
-				{type:'showStim',handle:'targetStim'}, // and show the letter
-				{type:'setInput',input:{handle:'targetOut',on:'timeout',duration:100}}
-				]
-        },
-		{
-            propositions: [{type:'inputEquals',value:'targetOut'}], // on time out
-            actions: [
-                {type:'hideStim',handle:'targetStime'}, // hide the letter
-                {type:'showStim',handle:'MaskScreen'} // and show the mask screen
-				]
-        },
-		{//What to do upon response
-		//the  proposition: dont remove the mask upon timeout, wait until reaction
-			propositions: [{type:'inputEquals',value:category1}], //pleasent response
-			actions: [
-				{type:'setTrialAttr',setter:{score:'1'}},
-				{type:'removeInput',inputHandle:[category2,category1]},//only one respnse is possible
-				//The player sends the value of score to the server, when you call the 'log' action
-				{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
-				{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:0}}
-			]
-		},
-		{
-			propositions: [{type:'inputEquals',value:category2}], //unpleasent response.
-			actions: [
-				{type:'setTrialAttr',setter:{score:'0'}},
-				{type:'removeInput',inputHandle:[category2,category1]},
-				{type:'log'},
-				{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:0}}
-			]
-		},
-		{
-			propositions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
-			actions: [{type:'endTrial'}]
-		}
-		]
+		basicTrial: [{
+			//Layout defines what will be presented in the trial. It is like a background display.
+			layout: [
+				{location:{left:15,top:3},media:{word:'key: e'}, css:{color:'black','font-size':'1em'}},
+				{location:{left:75,top:3},media:{word:'key: i'},  css:{color:'black','font-size':'1em'}},
+				{location:{left:10,top:6},media:{word:category2}, css:{color:'white','font-size':'2em'}},
+				{location:{left:70,top:6},media:{word:category1},  css:{color:'white','font-size':'2em'}}
+			],
+			//Inputs for two possible responses.
+			input: [
+				{handle:category2,on: 'keypressed', key:'e'},
+				{handle:category1,on: 'keypressed', key:'i'},
+				{handle:category2,on:'leftTouch',touch:true},//support touch as well
+				{handle:category1,on:'rightTouch',touch:true}
+			],
+			//Set what to do.
+			interactions: [
+				{
+					propositions: [{type:'begin'}],
+					actions: [
+						{type:'showStim',handle:'primingImage'},// display the first stimulus=priming image
+						{type:'setInput',input:{handle:'primeOut',on:'timeout',duration:100}} //for 100 ms
+					]
+				},
+				{
+					propositions: [{type:'inputEquals',value:'primeOut'}], // on time out
+					actions: [
+						{type:'hideStim',handle:'primingImage'}, // hide the first stimulus
+						{type:'showStim',handle:'blanckScreen'}, // and show the second one=the blanck screen
+						{type:'setInput',input:{handle:'blanckOut',on:'timeout',duration:100}}
+					]
+				},
+				{
+					propositions: [{type:'inputEquals',value:'blanckOut'}], // on time out
+					actions: [
+						{type:'hideStim',handle:'blanckScreen'}, // hide the blanck screen
+						{type:'showStim',handle:'targetStim'}, // and show the letter
+						{type:'setInput',input:{handle:'targetOut',on:'timeout',duration:100}}
+					]
+				},
+				{
+					propositions: [{type:'inputEquals',value:'targetOut'}], // on time out
+					actions: [
+						{type:'hideStim',handle:'targetStime'}, // hide the letter
+						{type:'showStim',handle:'MaskScreen'} // and show the mask screen
+					]
+				},
+				{//What to do upon response
+				//the  proposition: dont remove the mask upon timeout, wait until reaction
+					propositions: [{type:'inputEquals',value:category1}], //pleasent response
+					actions: [
+						{type:'setTrialAttr',setter:{score:'1'}},
+						{type:'removeInput',inputHandle:[category2,category1]},//only one respnse is possible
+						//The player sends the value of score to the server, when you call the 'log' action
+						{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
+						{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:0}}
+					]
+				},
+				{
+					propositions: [{type:'inputEquals',value:category2}], //unpleasent response.
+					actions: [
+						{type:'setTrialAttr',setter:{score:'0'}},
+						{type:'removeInput',inputHandle:[category2,category1]},
+						{type:'log'},
+						{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:0}}
+					]
+				},
+				{
+					propositions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
+					actions: [{type:'endTrial'}]
+				}
+			] // end interactions
 
-		}]});
+		}] // end basic trial
+	}); // end trialset
 
-		API.addTrialSets({
+	API.addTrialSets({
 		white:[{		//priming1
 			inherit:{set: 'basicTrial'},
 			stimuli: [
-			{ inherit: {set: 'targetStimulus', type:'exRandom'}, data : {handle:'targetStim'} },
-			{ inherit: {set: 'primingImage1', type:'exRandom'}, data : {handle:'primingImage'} },
-			{ inherit: 'MaskScreen'},
-			{ inherit: 'blanckScreen'}
+				{ inherit: {set: 'targetStimulus', type:'exRandom'}, data : {handle:'targetStim'} },
+				{ inherit: {set: 'primingImage1', type:'exRandom'}, data : {handle:'primingImage'} },
+				{ inherit: 'MaskScreen'},
+				{ inherit: 'blanckScreen'}
 			]
 		}],
 		black:[{		//priming2
 			inherit:{set: 'basicTrial'},
 			stimuli: [
-			{ inherit: {set: 'targetStimulus', type:'exRandom'}, data : {handle:'targetStim'} },
-			{ inherit: {set: 'primingImage2', type:'exRandom'}, data : {handle:'primingImage'} },
-			{ inherit: 'MaskScreen'},
-			{ inherit: 'blanckScreen'}
+				{ inherit: {set: 'targetStimulus', type:'exRandom'}, data : {handle:'targetStim'} },
+				{ inherit: {set: 'primingImage2', type:'exRandom'}, data : {handle:'primingImage'} },
+				{ inherit: 'MaskScreen'},
+				{ inherit: 'blanckScreen'}
 			]
 		}],
 	});
 
 	//define an example trial- should be diffrent trial because it has diffrent durations.
 	API.addTrialSets({
-	exampleTrial: [{
-		//Layout defines what will be presented in the trial. It is like a background display.
-		layout: [
-			{location:{left:15,top:3},media:{word:'key: e'}, css:{color:'black','font-size':'1em'}},
-			{location:{left:75,top:3},media:{word:'key: i'},  css:{color:'black','font-size':'1em'}},
-			{location:{left:10,top:6},media:{word:'unpleasant'}, css:{color:'white','font-size':'2em'}},
-			{location:{left:70,top:6},media:{word:'pleasant'},  css:{color:'white','font-size':'2em'}}
-		],
-		//Inputs for two possible responses.
-		input: [
-			{handle:category2,on: 'keypressed', key:'e'},
-			{handle:category1,on: 'keypressed', key:'i'},
-			{handle:category2,on:'leftTouch',touch:true},
-			{handle:category1,on:'rightTouch',touch:true}
-		],
-		//Set what to do.
-		interactions: [
-		{
-            propositions: [{type:'begin'}],
-            actions: [{type:'showStim',handle:'primingImage'},// display the first stimulus
-			{type:'setInput',input:{handle:'primeOut',on:'timeout',duration:125}}]  //display longer time in the example trial
-        },
-		{
-            propositions: [{type:'inputEquals',value:'primeOut'}], // on time out
-            actions: [
-                {type:'hideStim',handle:'primingImage'}, // hide the first stimulus
-				{type:'showStim',handle:'blanckScreen'}, // and show the second one
-				{type:'setInput',input:{handle:'blanckOut',on:'timeout',duration:125}}
-				]
-        },
-		{
-            propositions: [{type:'inputEquals',value:'blanckOut'}], // on time out
-            actions: [
-                {type:'hideStim',handle:'blanckScreen'}, // hide the blanck screen
-				{type:'showStim',handle:'targetStim'}, // and show the letter
-				{type:'setInput',input:{handle:'targetOut',on:'timeout',duration:125}}
-				]
-        },
-		{
-            propositions: [{type:'inputEquals',value:'targetOut'}], // on time out
-            actions: [
-                {type:'hideStim',handle:'targetStime'}, // hide the first stimulus
-                {type:'showStim',handle:'MaskScreen'} // and show the mask screen
-				]
-        },
-		{//What to do upon correct response
-		//the proposition: dont remove the word upon timeout, wait until reaction
-			propositions: [{type:'inputEquals',value:category1}], //pleasent response
-			actions: [
-				{type:'setTrialAttr',setter:{score:'1'}},
-				{type:'removeInput',inputHandle:[category2,category1]},
-				{type:'log'},
-				{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:0}}
-			]
-		},
-
-		{
-			propositions: [{type:'inputEquals',value:category2}], //unpleasent response.
-			actions: [
-				{type:'setTrialAttr',setter:{score:'0'}},
-				{type:'removeInput',inputHandle:[category2,category1]},
-				{type:'log'},
-				{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:0}}
-			]
-		},
-		{
-			propositions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
-			actions: [{type:'endTrial'}]
-		}
-		]
-
-		}],
-		example:[{
-			inherit:{set: 'exampleTrial'},
-			stimuli: [
-			{ inherit: {set: 'targetStimulus', type:'exRandom'}, data : {handle:'targetStim'} },
-			{ inherit: {set: 'exprimingImage', type:'exRandom'}, data : {handle:'primingImage'} },
-			{ inherit: 'exMaskScreen'},
-			{ inherit: 'blanckScreen'}
-			]
-		}],
-
-	});
-	//Define the instructions trial- will be use gor showing the instruction at the begining of each block, and the user feedback at the end.
-	API.addTrialSets('inst',{
-			input: [
-				{handle:'space',on:'space'}, //Will handle a SPACEBAR reponse
-				{handle:'space',on:'centerTouch',touch:true}
+		exampleTrial: [{
+			//Layout defines what will be presented in the trial. It is like a background display.
+			layout: [
+				{location:{left:15,top:3},media:{word:'key: e'}, css:{color:'black','font-size':'1em'}},
+				{location:{left:75,top:3},media:{word:'key: i'},  css:{color:'black','font-size':'1em'}},
+				{location:{left:10,top:6},media:{word:'unpleasant'}, css:{color:'white','font-size':'2em'}},
+				{location:{left:70,top:6},media:{word:'pleasant'},  css:{color:'white','font-size':'2em'}}
 			],
+			//Inputs for two possible responses.
+			input: [
+				{handle:category2,on: 'keypressed', key:'e'},
+				{handle:category1,on: 'keypressed', key:'i'},
+				{handle:category2,on:'leftTouch',touch:true},
+				{handle:category1,on:'rightTouch',touch:true}
+			],
+			//Set what to do.
 			interactions: [
-				{ // begin trial
+				{
 					propositions: [{type:'begin'}],
-					actions: [{type:'showStim',handle:'All'}] //Show the instructions, later use to show the user feedback
+					actions: [{type:'showStim',handle:'primingImage'},// display the first stimulus
+					{type:'setInput',input:{handle:'primeOut',on:'timeout',duration:125}}]  //display longer time in the example trial
 				},
 				{
-					propositions: [{type:'inputEquals',value:'space'}], //What to do when space is pressed
+					propositions: [{type:'inputEquals',value:'primeOut'}], // on time out
 					actions: [
-						{type:'hideStim',handle:'All'}, //Hide the instructions
-						{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:500}} //In 500ms: end the trial. In the mean time, we get a blank screen.
+						{type:'hideStim',handle:'primingImage'}, // hide the first stimulus
+						{type:'showStim',handle:'blanckScreen'}, // and show the second one
+						{type:'setInput',input:{handle:'blanckOut',on:'timeout',duration:125}}
+					]
+				},
+				{
+					propositions: [{type:'inputEquals',value:'blanckOut'}], // on time out
+					actions: [
+						{type:'hideStim',handle:'blanckScreen'}, // hide the blanck screen
+						{type:'showStim',handle:'targetStim'}, // and show the letter
+						{type:'setInput',input:{handle:'targetOut',on:'timeout',duration:125}}
+						]
+				},
+				{
+					propositions: [{type:'inputEquals',value:'targetOut'}], // on time out
+					actions: [
+						{type:'hideStim',handle:'targetStime'}, // hide the first stimulus
+						{type:'showStim',handle:'MaskScreen'} // and show the mask screen
+						]
+				},
+				{//What to do upon correct response
+				//the proposition: dont remove the word upon timeout, wait until reaction
+					propositions: [{type:'inputEquals',value:category1}], //pleasent response
+					actions: [
+						{type:'setTrialAttr',setter:{score:'1'}},
+						{type:'removeInput',inputHandle:[category2,category1]},
+						{type:'log'},
+						{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:0}}
+					]
+				},
+
+				{
+					propositions: [{type:'inputEquals',value:category2}], //unpleasent response.
+					actions: [
+						{type:'setTrialAttr',setter:{score:'0'}},
+						{type:'removeInput',inputHandle:[category2,category1]},
+						{type:'log'},
+						{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:0}}
 					]
 				},
 				{
 					propositions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
-					actions: [
-						{type:'endTrial'} //End the trial
-					]
+					actions: [{type:'endTrial'}]
 				}
 			]
+		}], // end example trial
+
+		example:[{
+			inherit:{set: 'exampleTrial'},
+			stimuli: [
+				{ inherit: {set: 'targetStimulus', type:'exRandom'}, data : {handle:'targetStim'} },
+				{ inherit: {set: 'exprimingImage', type:'exRandom'}, data : {handle:'primingImage'} },
+				{ inherit: 'exMaskScreen'},
+				{ inherit: 'blanckScreen'}
+			]
+		}],
+
+	});
+
+	//Define the instructions trial- will be use gor showing the instruction at the begining of each block, and the user feedback at the end.
+	API.addTrialSets('inst',{
+		input: [
+			{handle:'space',on:'space'}, //Will handle a SPACEBAR reponse
+			{handle:'space',on:'centerTouch',touch:true}
+		],
+		interactions: [
+			{ // begin trial
+				propositions: [{type:'begin'}],
+				actions: [{type:'showStim',handle:'All'}] //Show the instructions, later use to show the user feedback
+			},
+			{
+				propositions: [{type:'inputEquals',value:'space'}], //What to do when space is pressed
+				actions: [
+					{type:'hideStim',handle:'All'}, //Hide the instructions
+					{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:500}} //In 500ms: end the trial. In the mean time, we get a blank screen.
+				]
+			},
+			{
+				propositions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
+				actions: [
+					{type:'endTrial'} //End the trial
+				]
+			}
+		]
 	});
 
 	//Create the stimuli
@@ -284,58 +288,61 @@ require(['app/API'], function(API) {
 	//That way we can later create a stimulus object the inherits from this set randomly.
 		targetStimulus: [
 			{
+				data: {alias:'chinese char.'},
 				inherit:'Default',
 				media: {inherit:{type:'exRandom',set:'targetWords'}} //Select a word from the media, randomly
 			}
-			],
-
+		],
 
 		//blanckScreen  stimulus (in between the trials)
 		MaskScreen : [
 			{
 				data : {handle:'MaskScreen'},
 				inherit:'Default',
-				media: {image:'ampmask.jpg'}//the mask we put on the letter
+				media: {image:'ampmask.jpg'},//the mask we put on the letter
+				nolog:true
 			}
 		],
 		exMaskScreen : [// the mask with the : "Rate now"
 			{
 				data : {handle:'MaskScreen'},
 				inherit:'Default',
-				media: {image:'ampmaskr.jpg'}//the mask we put on the letter in the example trial
+				media: {image:'ampmaskr.jpg'},//the mask we put on the letter in the example trial
+				nolog:true
 			}
 		],
 		blanckScreen : [// can be used as a fixation point by replacing the word with '+'
 			{
 				data : {handle:'blanckScreen'},
 				css:{color:'green','font-size':'2em'},
-				media: {word:' '}//the blanck screen in between
+				media: {word:' '},//the blanck screen in between
+				nolog:true
 			}
 		],
 		//priming stimulus: the two catagories of images
-		//white
 		primingImage1 : [
-			{
-				data : {handle:'primingImage'},
-				inherit:'Default',
-				media: {inherit:{type:'exRandom',set:'Images1'}}
-			}
+				//white
+				{
+					data : {handle:'primingImage',alias: 'white'},
+					inherit:'Default',
+					media: {inherit:{type:'exRandom',set:'Images1'}}
+				}
 			],
 			//black
 			primingImage2 : [
-			{
-				data : {handle:'primingImage'},
-				inherit:'Default',
-				media: {inherit:{type:'exRandom',set:'Images2'}}
-			}
+				{
+					data : {handle:'primingImage',alias: 'black'},
+					inherit:'Default',
+					media: {inherit:{type:'exRandom',set:'Images2'}}
+				}
 			],
 			//example images
 			exprimingImage : [
-			{
-				data : {handle:'primingImage'},
-				inherit:'Default',
-				media: {inherit:{type:'exRandom',set:'exImages'}}
-			}
+				{
+					data : {handle:'primingImage',alias:'example'},
+					inherit:'Default',
+					media: {inherit:{type:'exRandom',set:'exImages'}}
+				}
 			]
 	});
 
@@ -525,7 +532,6 @@ require(['app/API'], function(API) {
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
-					data : {'handle':'instStim'},
 					//the instructions that will be shown on the screen
 					media:{html:'<div><p style="font-size:26px"><color="FFFAFA">Put your middle or index fingers on the <b>E</b> and <b>I</b> keys of your keyboard.<br/> Press the key <B>I</B> if the drawing is more pleasant than average.<br/> Hit the <b>E</b> key If it is more unpleasant than average. <br/><br/> The images appear and disappear quickly.<br/> Remember to ignore the first picture and evaluate only the Chinese drawing.</br></br> When you are ready to try a few practice responses,<br/> hit the <b>space bar</b>.</p></div>'}
 				}]},
@@ -534,57 +540,64 @@ require(['app/API'], function(API) {
 			times: 3,
 			data : [{inherit: 'example'}]
 		},
-			{ //Instructions trial
+
+		{ //Instructions trial
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
-					data : {'handle':'instStim'},
 					media:{html:'<div><p style="font-size:26px"><color="FFFAFA">See how fast it is? Dont worry if you miss some. Go with your gut feelings.<br/> Concentrate on the drawing and rate it as more "pleasant" than average with the <b>I</b> key,<br/> or more "unpleasant" than average with the <b>E</b> key.<br/><br/> Ready? Press the <b>space bar</b> to begin.<br/><br/>(round 1 of 3) </p></div>'}
 				}]},
 		{ //The presentation trials
 			mixer: 'random',
 			data : [{
-				mixer: 'repeat',// Repeat 40 times the trial. (20 times each comination)
+				mixer: 'repeat',// Repeat 40 times the trial. (20 times each combination)
 				times: 20,
 				data : [
 					{inherit: 'white'},
 					{inherit: 'black'},
-					]}]},
+				]
+			}]
+		},
+
 		{ //Instructions trial, second round
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
-					data : {'handle':'instStim'},
 					media:{html:'<div><p style="font-size:28px"><color="#FFFAFA">Continue to the second round of this task.<br/> The rules are exactly the same.<br/><br/>Concentrate on the drawing and rate it as more "pleasant" than average with the <b>I</b> key,<br/>  or more "unpleasant" than average with the <b>E</b> key.<br/><br/> Evaluate each Chinese drawing and not the image that appears before it.<br/> The images are sometimes distracting.<br/><br/>Ready? Press the <b>space bar</b> to begin.<br/><br/>(Round 2 of 3).</p></div>'}
 				}
 			]},
 		{ //The presentation trials
-			// Repeat 40 times the trial. (20 times each comination)
+			// Repeat 40 times the trial. (20 times each combination)
 			mixer: 'random',
 			data : [{
-				mixer: 'repeat',// Repeat 40 times the trial. (20 times each comination)
+				mixer: 'repeat',// Repeat 40 times the trial. (20 times each combination)
 				times: 20,
 				data : [
 					{inherit: 'white'},
 					{inherit: 'black'},
-				]}]},
+				]
+			}]
+		},
+
 		{ //Instructions trial, third round
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
-					data : {'handle':'instStim'},
 					media:{html:'<div><p style="font-size:28px"><color="#FFFAFA">And now to the last round of this task.<br/> The rules are exactly the same.<br/><br/>Concentrate on the drawing and rate it as more "pleasant" than average with the <b>I</b> key,<br/>  or more "unpleasant" than average with the <b>E</b> key.<br/><br/> Evaluate each Chinese drawing and not the image that appears before it.<br/> The images are sometimes distracting.<br/><br/>Ready? Press the <b>space bar</b> to begin.<br/><br/>(Round 3 of 3).</p></div>'}
 				}]},
 		{ //The presentation trials
 			mixer: 'random',
 			data : [{
-				mixer: 'repeat',// Repeat 40 times the trial. (20 times each comination)
+				mixer: 'repeat',// Repeat 40 times the trial. (20 times each combination)
 				times: 20,
 				data : [
 					{inherit: 'white'},
 					{inherit: 'black'},
-				]}]},
-			// user feedback
+				]
+			}]
+		},
+
+		// user feedback
 		{
 			inherit: "inst",
 			stimuli: [],
@@ -602,10 +615,11 @@ require(['app/API'], function(API) {
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
-					data : {'handle':'instStim'},
 					media:{html:'<div><p style="font-size:28px"><color="#FFFAFA">You have completed the study<br/><br/>Thank you very much for your participation.<br/><br/> Press space for continue to next task.</p></div>'}
-			}]}]);
+				}
+			]
+		}
+	]); // end sequence
 
 	API.play();
-
 });
