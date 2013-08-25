@@ -67,7 +67,9 @@ require(['app/API'], function(API) {
 				// The size property allows you to control the image size (in percentage of canvas). By default it is set to 'auto'.
 				{
 					size: {height:75, width:'auto'},
-					media :{image:'../tutorials/images/learning.jpg'}
+					media :{image:'../tutorials/images/learning.jpg'},
+					// `nolog` allows you to control whether this stimulus will be logged (see the interactions section)
+					nolog:true
 				}
 			],
 
