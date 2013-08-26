@@ -3,7 +3,7 @@ define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],f
 
 	var Scorer = {};
 
-
+//comment
 
 	$.extend(Scorer, {
 
@@ -49,17 +49,19 @@ define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],f
 
 
 
-    	postToServer: function(url,score,msg){
+    	postToServer: function(score,msg){
+    		
+    		var postSettings = computeData.postSettings;
+    		var url = postSettings.url;
+    		var scoreKey = postSettings.score;
+    		var msgKey = postSettings.msg;
     		var data = {};
-    		data.score =score;
-    		data.msg = msg;
+    		data[scoreKey] =score;
+    		data[msgKey] = msg;
 
-    		$.post(url,data).done( function(retdata){
-    			console.log(retdata);
+    		$.post(url,JSON.stringify(data));
 
-
-    		});
-
+           
     	},
 
       	// get message according to user input
