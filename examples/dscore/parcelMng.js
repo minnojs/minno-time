@@ -163,13 +163,16 @@ define(['jquery','app/API','underscore','./computeD'],function($,API,_,compute){
 				var data = value.data;
 				avgBoth += AnVar;
 				numBoth ++;
-				var diff1 = ( _(data[condVar]).difference(cond1) );
-				var diff2 = ( _(data[condVar]).difference(cond2) );
-				if ( diff1.length == 0 ) {
+				//var diff1 = ( _(data[condVar]).difference(cond1) );
+				//var diff2 = ( _(data[condVar]).difference(cond2) );
+				var dataCond = data[condVar];
+				var diff1 = parcelMng.checkArray(dataCond,cond1);
+				var diff2 = parcelMng.checkArray(dataCond,cond2);
+				if ( diff1 == true ) {
 					numCond1++;
 					avgCon1 += AnVar;
 				} else {
-					if ( diff2.length == 0 ){
+					if (diff2 == true ){
 						numCond2++;
 						avgCon2 += AnVar;
 
@@ -188,6 +191,16 @@ define(['jquery','app/API','underscore','./computeD'],function($,API,_,compute){
 			console.log('Avg2 is: '+p.avgCon2);
 			console.log('AvgBoth is: '+p.avgBoth);
 			console.log('--------------------');
+		},
+
+		checkArray: function(conFromData,con){
+			var res;
+			res = _.find(con,function(conFromData){ 
+				 return true;
+				
+			});
+			return res==conFromData;
+			
 		},
 
 		varianceAll: function(){
