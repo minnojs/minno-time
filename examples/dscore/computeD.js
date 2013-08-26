@@ -16,7 +16,8 @@ define(['jquery','app/API'],function($,API){
 			maxFastTrialsRate : 0.1, //Above this % of extremely fast responses within a condition, the participant is considered too fast.
 			minRT : 400, //Below this latency 
 			maxRT : 10000, //above this
-			errorLatency : {use:"latency", penalty:600, useForSTD:true}
+			errorLatency : {use:"latency", penalty:600, useForSTD:true},
+			postSettings : {}
 			//ignoreErr : false, // if this is true then if error per 
 			//userErrLatency : true, //if this is true then consider only trials that are between minRT  and maxRT
 			//useErrSTD : true,//?
@@ -39,6 +40,7 @@ define(['jquery','app/API'],function($,API){
 				 if (Obj.minRT != null) this.minRT = Obj.minRT;
 				 if (Obj.maxRT != null) this.maxRT = Obj.maxRT;
 				 if (Obj.errorLatency != null) this.errorLatency = Obj.errorLatency;
+				 if (Obj.postSettings != null) this.postSettings = Obj.postSettings;
 				 // if (Obj.userErrLatency != null) this.userErrLatency = Obj.userErrLatency;
 				 // if (Obj.correctExtreme != null) this.correctExtreme = Obj.correctExtreme;
 				 // if (Obj.useErrSTD != null) this.useErrSTD = Obj.useErrSTD;
