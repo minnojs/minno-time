@@ -28,7 +28,8 @@ require(['app/API','app/Scorer'], function(API,Scorer) {
 		cond2VarValues: ["Black People/Good Words","White People/Bad Words"], 
 		parcelVar : "parcel", 
 		parcelValue : ["test","research"],
-		errorLatency : {use:"latency", penalty:600, useForSTD:true}
+		errorLatency : {use:"latency", penalty:600, useForSTD:true},
+		postSettings : {score:"score",msg:"feedback",url:"http://localhost:80/implicit/scorer"}
 
 	});
 
@@ -194,7 +195,7 @@ require(['app/API','app/Scorer'], function(API,Scorer) {
 
 		// block3
 		{
-			data: {block:'3', parcel:'research',trialCategories:["Black People/Bad Words","White People/Good Words"], row:1, left1:attribute1, right1:attribute2, left2:category1, right2:category2},
+			data: {block:'3', parcel:'research',trialCategories:["Black People/Bad Words"], row:1, left1:attribute1, right1:attribute2, left2:category1, right2:category2},
 			inherit: 'Default',
 			stimuli: [
 				{inherit:{type:'exRandom',set:'category1_left'}},
@@ -203,7 +204,7 @@ require(['app/API','app/Scorer'], function(API,Scorer) {
 		},
 
 		{
-			data: {block:'3',parcel:'test',trialCategories:["Black People/Bad Words","White People/Good Words"], row:2, left1:attribute1, right1:attribute2, left2:category1, right2:category2},
+			data: {block:'3',parcel:'test',trialCategories:["Black People/Bad Words"], row:2, left1:attribute1, right1:attribute2, left2:category1, right2:category2},
 			inherit: 'Default',
 			stimuli: [
 				{inherit:{type:'exRandom',set:'attribute1_left'}},
@@ -223,7 +224,7 @@ require(['app/API','app/Scorer'], function(API,Scorer) {
 
 		// block6
 		{
-			data: {block:6, parcel:'research',trialCategories:["Black People/Good Words","White People/Bad Words"], row:1, left1:attribute1, right1:attribute2, left2:category2, right2:category1},
+			data: {block:6, parcel:'research',trialCategories:["Black People/Good Words"], row:1, left1:attribute1, right1:attribute2, left2:category2, right2:category1},
 			inherit: 'Default',
 			stimuli: [
 				{inherit:{type:'exRandom',set:'category1_right'}},
@@ -232,7 +233,7 @@ require(['app/API','app/Scorer'], function(API,Scorer) {
 		},
 
 		{
-			data: {block:6, row:2, parcel:'test',trialCategories:["Black People/Good Words","White People/Bad Words"], left1:attribute1, right1:attribute2, left2:category2, right2:category1},
+			data: {block:6, row:2, parcel:'test',trialCategories:["Black People/Good Words"], left1:attribute1, right1:attribute2, left2:category2, right2:category1},
 			inherit: 'Default',
 			stimuli: [
 				{inherit:{type:'exRandom',set:'attribute1_left'}},
@@ -494,6 +495,7 @@ require(['app/API','app/Scorer'], function(API,Scorer) {
 				console.log(FBMsg);
 				var media = {media:{html:'<div> '+FBMsg+'<br>The Score is:'+DScore+'</div>'}};
 				trial.stimuli.push(media);
+				Scorer.postToServer(DScore,FBMsg);
 				
 			}
 		}
