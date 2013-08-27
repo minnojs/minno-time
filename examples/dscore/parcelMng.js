@@ -1,4 +1,4 @@
-define(['jquery','app/API','underscore','./computeD'],function($,API,_,compute){
+define(['jquery','app/API','underscore'],function($,API,_){
 
 
 	var parcelMng= {};
@@ -6,9 +6,16 @@ define(['jquery','app/API','underscore','./computeD'],function($,API,_,compute){
 
 	$.extend(parcelMng, {
 
-		parcelArray: [],
+		parcelArray: [], // Holds parcel array
+		
+/* Sets the parcelArray. Init goes over the log and creates an array of object type Parcel according to name.
+   each parcel object holds several relevant information regarding the parcel including an array of trials
+   of type parcel (see documentaion).
 
-		Init: function(){
+*/
+		Init: function(compute){
+
+
 
 			var data = API.getLogs();
 			var AnalyzedVar = compute.AnalyzedVar;
@@ -30,7 +37,7 @@ define(['jquery','app/API','underscore','./computeD'],function($,API,_,compute){
 						if (value[AnalyzedVar]>=min && value[AnalyzedVar]<=max){
 							//p.trialIData.push(value);//push all data
 							//totalScoredTrials++;
-							if (parcelMng.validate(p,value)) totalScoredTrials++;
+							if (parcelMng.validate(p,value,compute)) totalScoredTrials++;
 
 						}else {
 							if (value[AnalyzedVar]<= fastRT) trialsUnder++;
@@ -49,7 +56,7 @@ define(['jquery','app/API','underscore','./computeD'],function($,API,_,compute){
 							if (value[AnalyzedVar]>=min && value[AnalyzedVar]<=max){
 								//p.trialIData.push(value);//push all data
 								//totalScoredTrials++;
-								if (parcelMng.validate(p,value)) totalScoredTrials++;
+								if (parcelMng.validate(p,value,compute)) totalScoredTrials++;
 
 
 							}else {
@@ -69,7 +76,14 @@ define(['jquery','app/API','underscore','./computeD'],function($,API,_,compute){
 			console.log('--------------------');
 		},
 
-		validate: function(p,value){
+/* Function: validate. 
+   Returns true/false.
+   Description: Helper function it sets the trial in the trial array 
+   according to its errorLatency (see documentation).
+
+*/		
+
+		validate: function(p,value,compute){
 			var errorLatency = compute.errorLatency;
 			var error = compute.ErrorVar;
 			var data = value.data;
@@ -95,7 +109,7 @@ define(['jquery','app/API','underscore','./computeD'],function($,API,_,compute){
 
 
 		},
-		addPenalty: function(p){
+		addPenalty: function(p,compute){
 			var errorLatency = compute.errorLatency;
 
 
@@ -133,17 +147,17 @@ define(['jquery','app/API','underscore','./computeD'],function($,API,_,compute){
 			}
 		},
 
-		avgAll: function(){
+		avgAll: function(compute){
 
 
 
 			_.each(parcelMng.parcelArray, function (value,index) {
-				parcelMng.avgParcel(value);
+				parcelMng.avgParcel(value,compute);
 			});
 
 		},
 
-		avgParcel: function(p){
+		avgParcel: function(p,compute){
 
 			var trialIData = p.trialIData;
 			var condVar = compute.condVar;
@@ -185,7 +199,7 @@ define(['jquery','app/API','underscore','./computeD'],function($,API,_,compute){
 			p.avgCon1 = avgCon1;
 			p.avgCon2 = avgCon2;
 			p.avgBoth = avgBoth/numBoth;
-			parcelMng.addPenalty(p);
+			parcelMng.addPenalty(p,compute);
 			console.log('finished parcel: '+p.name);
 			console.log('Avg1 is: '+p.avgCon1);
 			console.log('Avg2 is: '+p.avgCon2);
@@ -203,15 +217,15 @@ define(['jquery','app/API','underscore','./computeD'],function($,API,_,compute){
 			
 		},
 
-		varianceAll: function(){
+		varianceAll: function(compute){
 			console.log('starting varianceAll');
 			_.each (parcelMng.parcelArray, function (value,index) {
-				parcelMng.varianceParcel(value);
+				parcelMng.varianceParcel(value,compute);
 			});
 			console.log(parcelMng.parcelArray);
 		},
 
-		varianceParcel: function(p){
+		varianceParcel: function(p,compute){
 			console.log('starting varianceParcel');
 			var AnalyzedVar = compute.AnalyzedVar;
 			var trialIData = p.trialIData;
@@ -274,15 +288,15 @@ define(['jquery','app/API','underscore','./computeD'],function($,API,_,compute){
 
 		},
 
-		diffAll: function(){
+		diffAll: function(compute){
 			console.log('starting diffAll');
 			_.each (parcelMng.parcelArray, function (value,index) {
-				parcelMng.diffParcel(value);
+				parcelMng.diffParcel(value,compute);
 			});
 
 		},
 
-		diffParcel: function(p){
+		diffParcel: function(p,compute){
 			console.log('starting diffParcel');
 			p.diff = p.avgCon1 - p.avgCon2;
 			console.log('finished diff parcel: '+p.name);
@@ -291,11 +305,11 @@ define(['jquery','app/API','underscore','./computeD'],function($,API,_,compute){
 
 		},
 
-		scoreAll: function(){
+		scoreAll: function(compute){
 			console.log('starting scoreAll');
 			var dAvg = 0;
 			_.each (parcelMng.parcelArray, function (value,index) {
-				parcelMng.scoreParcel(value);
+				parcelMng.scoreParcel(value,compute);
 				dAvg +=  value.score;
 
 			});
@@ -303,7 +317,7 @@ define(['jquery','app/API','underscore','./computeD'],function($,API,_,compute){
 			return score;
 		},
 
-		scoreParcel: function(p){
+		scoreParcel: function(p,compute){
 			console.log('starting scoreParcel');
 			var sd = Math.sqrt(p.variance);
 			p.score = p.diff/sd;

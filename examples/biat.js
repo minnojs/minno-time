@@ -1,4 +1,4 @@
-require(['app/API','app/Scorer'], function(API,Scorer) {
+require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 
 	var attribute1 = 'Bad Words';
 	var attribute2 = 'Good Words';
@@ -13,6 +13,11 @@ require(['app/API','app/Scorer'], function(API,Scorer) {
 	API.addSettings('logger',{
 		url : 'google.com',
 		pulse : 20
+	});
+
+	API.addSettings('base_url',{
+		image : '../examples',
+		template : '../../examples/IAT'
 	});
 
 	API.addSettings('hooks', {
@@ -65,8 +70,8 @@ require(['app/API','app/Scorer'], function(API,Scorer) {
 
 		// constant elements in the display, in this case: the user instructions: left / right
 		layout: [
-			{location:{left:0,top:0},media:{template:'templates/left.html'}},
-			{location:{left:'auto',right:0,top:0},media:{template:'templates/right.html'}}
+			{location:{left:0,top:0},media:{template:'left.jst'}},
+			{location:{left:'auto',right:0,top:0},media:{template:'right.jst'}}
 		],
 
 		// user interactions
