@@ -45,15 +45,14 @@ require(['app/API'], function(API) {
 
 			}
 		}
-
 	}
 	//Set the size of the screen
 	API.addSettings('canvas',{
-		maxWidth: 800,
+		maxWidth: 900,
 		proportions : 0.8,
 		//Change the colors to allow better presentation of the colored stimuli.
 		background: 'white',
-		borderWidth: 4,
+		borderWidth: 5,
 		canvasBackground: 'green',
 		borderColor: 'black'
 	});
@@ -63,8 +62,7 @@ require(['app/API'], function(API) {
 	});
 
 	API.addSettings('logger',{
-		url : 'google.com',
-		pulse : 20
+		url : '/implicit/PiPlayerApplet'
 	});
 
 	//Define the basic trial (the prsentation of the images and words)
@@ -79,10 +77,7 @@ require(['app/API'], function(API) {
 			],
 			//Inputs for two possible responses.
 			input: [
-				{handle:category2,on: 'keypressed', key:'e'},
-				{handle:category1,on: 'keypressed', key:'i'},
-				{handle:category2,on:'leftTouch',touch:true},//support touch as well
-				{handle:category1,on:'rightTouch',touch:true}
+				{handle:'enter',on:'enter'},
 			],
 			//Set what to do.
 			interactions: [
@@ -107,6 +102,10 @@ require(['app/API'], function(API) {
 					actions: [
 						{type:'hideStim',handle:'blanckScreen'}, // hide the blanck screen
 						{type:'showStim',handle:'targetStim'}, // and show the letter
+						{type:'setInput',input:{handle:category2,on: 'keypressed', key:'e'}},//the user can only answer here
+						{type:'setInput',input:{handle:category1,on: 'keypressed', key:'i'}},
+						{type:'setInput',input:{handle:category2,on:'leftTouch',touch:true}},
+						{type:'setInput',input:{handle:category1,on:'rightTouch',touch:true}},
 						{type:'setInput',input:{handle:'targetOut',on:'timeout',duration:100}}
 					]
 				},
@@ -114,29 +113,39 @@ require(['app/API'], function(API) {
 					propositions: [{type:'inputEquals',value:'targetOut'}], // on time out
 					actions: [
 						{type:'hideStim',handle:'targetStime'}, // hide the letter
-						{type:'setInput',input:{handle:category2,on: 'keypressed', key:'e'}},//the user can only answer here
-						{type:'setInput',input:{handle:category1,on: 'keypressed', key:'i'}},
 						{type:'showStim',handle:'MaskScreen'} // and show the mask screen
 					]
 				},
+
+				// skip block -> if you press 'enter' you will skip the current block.
+				{
+					propositions: [{type:'inputEquals',value:'enter'}],
+					actions: [
+						{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
+						{type:'endTrial'}
+					]
+				},
+
 				{//What to do upon response
 				//the  proposition: dont remove the mask upon timeout, wait until reaction
 					propositions: [{type:'inputEquals',value:category1}], //pleasent response
 					actions: [
 						{type:'setTrialAttr',setter:{score:'1'}},
+						{type:'hideStim',handle:'All'},
 						{type:'removeInput',inputHandle:[category2,category1]},//only one respnse is possible
 						//The player sends the value of score to the server, when you call the 'log' action
 						{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
-						{type:'trigger', handle:'endTrial'}//end the trial immidiatly after the response
+						{type:'setInput',input:{handle:'endTrial',on:'timeout',duration:250}}//end the trial 250ms after the response
 					]
 				},
 				{
 					propositions: [{type:'inputEquals',value:category2}], //unpleasent response.
 					actions: [
 						{type:'setTrialAttr',setter:{score:'0'}},
+						{type:'hideStim',handle:'All'},
 						{type:'removeInput',inputHandle:[category2,category1]},
 						{type:'log'},
-						{type:'trigger', handle:'endTrial'}
+						{type:'setInput',input:{handle:'endTrial',on:'timeout',duration:250}}
 					]
 				},
 				{
@@ -183,17 +192,13 @@ require(['app/API'], function(API) {
 			],
 			//Inputs for two possible responses.
 			input: [
-				{handle:category2,on: 'keypressed', key:'e'},
-				{handle:category1,on: 'keypressed', key:'i'},
-				{handle:category2,on:'leftTouch',touch:true},
-				{handle:category1,on:'rightTouch',touch:true}
+				{handle:'enter',on: 'enter'},
 			],
 			//Set what to do.
 			interactions: [
 				{
 					propositions: [{type:'begin'}],
 					actions: [{type:'showStim',handle:'primingImage'},// display the first stimulus
-					{type:'removeInput',inputHandle:[category2,category1]},//answer only in the Mask screen
 					{type:'setInput',input:{handle:'primeOut',on:'timeout',duration:125}}]  //display longer time in the example trial
 				},
 				{
@@ -209,38 +214,52 @@ require(['app/API'], function(API) {
 					actions: [
 						{type:'hideStim',handle:'blanckScreen'}, // hide the blanck screen
 						{type:'showStim',handle:'targetStim'}, // and show the letter
+						{type:'setInput',input:{handle:category2,on: 'keypressed', key:'e'}},//the user can only answer here
+						{type:'setInput',input:{handle:category1,on: 'keypressed', key:'i'}},
+						{type:'setInput',input:{handle:category2,on:'leftTouch',touch:true}},
+						{type:'setInput',input:{handle:category1,on:'rightTouch',touch:true}},
 						{type:'setInput',input:{handle:'targetOut',on:'timeout',duration:125}}
-						]
+					]
 				},
 				{
 					propositions: [{type:'inputEquals',value:'targetOut'}], // on time out
 					actions: [
-						{type:'hideStim',handle:'targetStime'}, // hide the first stimulus
-						{type:'setInput',input:{handle:category2,on: 'keypressed', key:'e'}},//the user can only answer here
-						{type:'setInput',input:{handle:category1,on: 'keypressed', key:'i'}},
+						{type:'hideStim',handle:'targetStim'}, // hide the first stimulus
 						{type:'showStim',handle:'MaskScreen'} // and show the mask screen
-						]
+					]
 				},
 				{//What to do upon correct response
 				//the proposition: dont remove the word upon timeout, wait until reaction
 					propositions: [{type:'inputEquals',value:category1}], //pleasent response
 					actions: [
+						{type:'hideStim',handle:'All'},
 						{type:'setTrialAttr',setter:{score:'1'}},
 						{type:'removeInput',inputHandle:[category2,category1]},
 						{type:'log'},
-						{type:'trigger', handle:'endTrial'}
+						{type:'setInput',input:{handle:'endTrial',on:'timeout',duration:250}}
 					]
 				},
 
 				{
 					propositions: [{type:'inputEquals',value:category2}], //unpleasent response.
 					actions: [
+						{type:'hideStim',handle:'All'},
 						{type:'setTrialAttr',setter:{score:'0'}},
 						{type:'removeInput',inputHandle:[category2,category1]},
 						{type:'log'},
-						{type:'trigger', handle:'endTrial'}
+						{type:'setInput',input:{handle:'endTrial',on:'timeout',duration:250}}
 					]
 				},
+
+				// skip block -> if you press 'enter' you will skip the current block.
+				{
+					propositions: [{type:'inputEquals',value:'enter'}],
+					actions: [
+						{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
+						{type:'endTrial'}
+					]
+				},
+
 				{
 					propositions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
 					actions: [{type:'endTrial'}]
@@ -265,7 +284,8 @@ require(['app/API'], function(API) {
 	API.addTrialSets('inst',{
 		input: [
 			{handle:'space',on:'space'}, //Will handle a SPACEBAR reponse
-			{handle:'space',on:'centerTouch',touch:true}
+			{handle:'enter',on:'enter'},
+			{handle:'space',on:'bottomTouch',touch:true}
 		],
 		interactions: [
 			{ // begin trial
@@ -284,7 +304,15 @@ require(['app/API'], function(API) {
 				actions: [
 					{type:'endTrial'} //End the trial
 				]
-			}
+			},
+			// skip block -> if you press 'enter' while the instructions is shown, you will skip the current block.
+				{
+					propositions: [{type:'inputEquals',value:'enter'}],
+					actions: [
+						{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
+						{type:'endTrial'}
+					]
+				}
 		]
 	});
 
@@ -540,6 +568,7 @@ require(['app/API'], function(API) {
 		//Defines the sequence of trials
 	API.addSequence([
 		{ //Instructions trial
+			data: {blockStart:true},
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
@@ -553,6 +582,7 @@ require(['app/API'], function(API) {
 		},
 
 		{ //Instructions trial
+			data: {blockStart:true},
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
@@ -571,6 +601,7 @@ require(['app/API'], function(API) {
 		},
 
 		{ //Instructions trial, second round
+			data: {blockStart:true},
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
@@ -591,6 +622,7 @@ require(['app/API'], function(API) {
 		},
 
 		{ //Instructions trial, third round
+			data: {blockStart:true},
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
@@ -610,6 +642,7 @@ require(['app/API'], function(API) {
 
 		// user feedback
 		{
+			data: {blockStart:true},
 			inherit: "inst",
 			stimuli: [],
 			customize: function(){
@@ -618,13 +651,14 @@ require(['app/API'], function(API) {
 				console.log(API.getLogs());//printing to the consol the log's array
 				var logs = API.getLogs();//saving the logs
 				computeAMPScore(logs);// computing the AMP score
-				var media1 = {media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> After black men, '+AMPScorer.counter.prime2.category1+' of the responses were pleasant  and '+ AMPScorer.counter.prime2.category2+' of the responses were ‘unpleasant’<br>After white men, '+ AMPScorer.counter.prime1.category1+' of the responses were ‘pleasant’ and '+ AMPScorer.counter.prime1.category2+' of the responses were ‘unpleasant’.</p></div>'}};
+				var media1 = {media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> After black men, '+AMPScorer.counter.prime2.category1+' of the responses were ‘pleasant’  and '+ AMPScorer.counter.prime2.category2+' of the responses were ‘unpleasant’<br>After white men, '+ AMPScorer.counter.prime1.category1+' of the responses were ‘pleasant’ and '+ AMPScorer.counter.prime1.category2+' of the responses were ‘unpleasant’.</p></div>'}};
 				//Add: send to the server the feedback
 				trial.stimuli.push(media1);//show the score
-				
+
 			}
 		},
 		{ //Instructions trial, the end of the task, instruction what to do next
+			data: {blockStart:true},
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
