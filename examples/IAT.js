@@ -1,4 +1,4 @@
-require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
+require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer,d) {
 
 	var attribute1 = 'Bad Words';
 	var attribute2 = 'Good Words';
@@ -26,7 +26,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 
 	//the Scorer that computes the user feedback
 	Scorer.addSettings('compute',{
-		errorVar:'score',
+		ErrorVar:'score',
 		condVar:"condition",
 		//condition 1
 		cond1VarValues: [
