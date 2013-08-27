@@ -146,7 +146,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			input: [
 				{handle:'space',on:'space'},
 				{handle:'enter',on:'enter'},
-				{handle:'space',on:'centerTouch',touch:true}
+				{handle:'space',on:'bottomTouch',touch:true}
 			],
 
 			// display fixed layout
