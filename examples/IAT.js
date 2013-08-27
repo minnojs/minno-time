@@ -26,7 +26,8 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 
 	//the Scorer that computes the user feedback
 	Scorer.addSettings('compute',{
-		condVar:"trialCategories",
+		errorVar:'score',
+		condVar:"condition",
 		//condition 1
 		cond1VarValues: [
 			attribute1 + ',' + category1 + '/' + attribute2 + ',' + category2
@@ -35,13 +36,14 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		cond2VarValues: [
 			attribute1 + ',' + category2 + '/' + attribute2 + ',' + category1
 		],
-		parcelVar : "block",
-		parcelValue : [3,4,6,7],
+		parcelVar : "parcel",
+		parcelValue : ['first','second'],
 		fastRT : 150, //Below this reaction time, the latency is considered extremely fast.
 		maxFastTrialsRate : 0.1, //Above this % of extremely fast responses within a condition, the participant is considered too fast.
-		minRT : 150, //Below this latency
-		maxRT : 5000, //above this
-		errorLatency : {use:"false", penalty:600, useForSTD:true}//ignore error respones
+		minRT : 400, //Below this latency
+		maxRT : 10000, //above this
+		errorLatency : {use:"false", penalty:600, useForSTD:true},//ignore error respones
+		postSettings : {score:"score",msg:"feedback",url:"/implicit/scorer"}
 	});
 
 	Scorer.addSettings('message',{
@@ -62,7 +64,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 	 */
 	API.addTrialSets('Default',{
 		// by default each trial is correct, this is modified in case of an error
-		data: {score:1},
+		data: {score:0},
 
 		// set the interface for trials
 		input: [
@@ -96,15 +98,8 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				],
 				actions: [
 					{type:'showStim',handle:'error'},											// show error stimulus
-					//{type:'setInput',input:{handle:'error_end', on:'timeout',duration:300}},	// hide error stimulus after 300ms
-					{type:'setTrialAttr', setter:{score:0}}										// set the score to 0
+					{type:'setTrialAttr', setter:{score:1}}										// set the score to 1
 				]
-			},
-
-			// hide error stimulus
-			{
-				propositions: [{type:'inputEquals',value:'error_end'}],							// check if the input handle is "error_end"
-				actions: [{type:'hideStim', handle: 'error'}]									// hide error stim
 			},
 
 			// correct
@@ -214,7 +209,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 
 		// block3
 		{
-			data: {block:3, row:1, left1:attribute1, right1:attribute2, left2:category1, right2:category2, condition: attribute1 + ',' + category1 + '/' + attribute2 + ',' + category2},
+			data: {block:3, row:1, left1:attribute1, right1:attribute2, left2:category1, right2:category2, condition: attribute1 + ',' + category1 + '/' + attribute2 + ',' + category2,parcel:'first'},
 			inherit: 'Default',
 			stimuli: [
 				{inherit:{type:'exRandom',set:'category1_left'}},
@@ -223,7 +218,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		},
 
 		{
-			data: {block:3, row:2, left1:attribute1, right1:attribute2, left2:category1, right2:category2, condition: attribute1 + ',' + category1 + '/' + attribute2 + ',' + category2},
+			data: {block:3, row:2, left1:attribute1, right1:attribute2, left2:category1, right2:category2, condition: attribute1 + ',' + category1 + '/' + attribute2 + ',' + category2,parcel:'first'},
 			inherit: 'Default',
 			stimuli: [
 				{inherit:{type:'exRandom',set:'attribute1_left'}},
@@ -233,7 +228,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 
 		// block4 (same as 3)
 		{
-			data: {block:4, row:1, left1:attribute1, right1:attribute2, left2:category1, right2:category2, condition: attribute1 + ',' + category1 + '/' + attribute2 + ',' + category2},
+			data: {block:4, row:1, left1:attribute1, right1:attribute2, left2:category1, right2:category2, condition: attribute1 + ',' + category1 + '/' + attribute2 + ',' + category2,parcel:'second'},
 			inherit: 'Default',
 			stimuli: [
 				{inherit:{type:'exRandom',set:'category1_left'}},
@@ -242,7 +237,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		},
 
 		{
-			data: {block:4, row:2, left1:attribute1, right1:attribute2, left2:category1, right2:category2, condition: attribute1 + ',' + category1 + '/' + attribute2 + ',' + category2},
+			data: {block:4, row:2, left1:attribute1, right1:attribute2, left2:category1, right2:category2, condition: attribute1 + ',' + category1 + '/' + attribute2 + ',' + category2,parcel:'second'},
 			inherit: 'Default',
 			stimuli: [
 				{inherit:{type:'exRandom',set:'attribute1_left'}},
@@ -262,7 +257,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 
 		// block6
 		{
-			data: {block:6, row:1, left1:attribute1, right1:attribute2, left2:category2, right2:category1, condition: attribute1 + ',' + category2 + '/' + attribute2 + ',' + category1},
+			data: {block:6, row:1, left1:attribute1, right1:attribute2, left2:category2, right2:category1, condition: attribute1 + ',' + category2 + '/' + attribute2 + ',' + category1,parcel:'first'},
 			inherit: 'Default',
 			stimuli: [
 				{inherit:{type:'exRandom',set:'category1_right'}},
@@ -271,7 +266,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		},
 
 		{
-			data: {block:6, row:2, left1:attribute1, right1:attribute2, left2:category2, right2:category1, condition: attribute1 + ',' + category2 + '/' + attribute2 + ',' + category1},
+			data: {block:6, row:2, left1:attribute1, right1:attribute2, left2:category2, right2:category1, condition: attribute1 + ',' + category2 + '/' + attribute2 + ',' + category1,parcel:'first'},
 			inherit: 'Default',
 			stimuli: [
 				{inherit:{type:'exRandom',set:'attribute1_left'}},
@@ -281,7 +276,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 
 		// block7  (same as 6)
 		{
-			data: {block:7, row:1, left1:attribute1, right1:attribute2, left2:category2, right2:category1, condition: attribute1 + ',' + category2 + '/' + attribute2 + ',' + category1},
+			data: {block:7, row:1, left1:attribute1, right1:attribute2, left2:category2, right2:category1, condition: attribute1 + ',' + category2 + '/' + attribute2 + ',' + category1,parcel:'second'},
 			inherit: 'Default',
 			stimuli: [
 				{inherit:{type:'exRandom',set:'category1_right'}},
@@ -290,7 +285,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		},
 
 		{
-			data: {block:7, row:2, left1:attribute1, right1:attribute2, left2:category2, right2:category1, condition: attribute1 + ',' + category2 + '/' + attribute2 + ',' + category1},
+			data: {block:7, row:2, left1:attribute1, right1:attribute2, left2:category2, right2:category1, condition: attribute1 + ',' + category2 + '/' + attribute2 + ',' + category1,parcel:'second'},
 			inherit: 'Default',
 			stimuli: [
 				{inherit:{type:'exRandom',set:'attribute1_left'}},
@@ -711,6 +706,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				console.log(DScore);
 				var media = {css:{color:'black'},media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};
 				trial.stimuli.push(media);
+				Scorer.postToServer(DScore,FBMsg);
 			}
 		},
 
