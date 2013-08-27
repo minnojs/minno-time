@@ -37,7 +37,7 @@ define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],f
 	//		var oldScore = parcelMng.simulateOldCode();//for testing only
 	//		console.log('the score from old scoree is: '+oldScore );
 
-			return score;
+			return score.toFixed(2); 
 
 		},
 
