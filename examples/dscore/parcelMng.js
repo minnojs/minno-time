@@ -128,14 +128,16 @@ define(['jquery','app/API','underscore'],function($,API,_){
 				_.each (trialIData, function (value,index) {
 					var data = value.data;
 					var error = data[ErrorVar];
-					var diff1 = ( _(data[condVar]).difference(cond1) );
-					var diff2 = ( _(data[condVar]).difference(cond2) );
+					var dataCond = data[condVar];
+					var diff1 = parcelMng.checkArray(dataCond,cond1);
+					var diff2 = parcelMng.checkArray(dataCond,cond2);
+					
 					if (error=='1'){
-						if ( diff1.length == 0){
+						if ( diff1 == true){
 							value[AnalyzedVar] += avg1+ penalty;
 
 						}else{
-							if (diff2.length == 0 ){
+							if (diff2 == true ){
 								value[AnalyzedVar] += avg2+ penalty;
 							}
 						}
@@ -249,9 +251,12 @@ define(['jquery','app/API','underscore'],function($,API,_){
 				var AnVar = value[AnalyzedVar];
 				var ErrorVar = compute.ErrorVar;
 				var error = data[ErrorVar];
-				var diff1 = ( _(data[condVar]).difference(cond1) );
-				var diff2 = ( _(data[condVar]).difference(cond2) );
-				if ( diff1.length == 0 ) {
+				var dataCond = data[condVar];
+				var diff1 = parcelMng.checkArray(dataCond,cond1);
+				var diff2 = parcelMng.checkArray(dataCond,cond2);
+				//var diff1 = ( _(data[condVar]).difference(cond1) );
+				//var diff2 = ( _(data[condVar]).difference(cond2) );
+				if ( diff1 == true ) {
 					if (useForSTD){
 						pooledCond1.push(AnVar);
 					}
@@ -260,7 +265,7 @@ define(['jquery','app/API','underscore'],function($,API,_){
 					}
 				}
 				else {
-					if ( diff2.length == 0 ){
+					if ( diff2 == true ){
 						if (useForSTD){
 							pooledCond2.push(AnVar);
 						}
@@ -348,16 +353,19 @@ define(['jquery','app/API','underscore'],function($,API,_){
 
 			_.each (trialsA, function (value,index) {
 				var data = value.data;
-				var diff1 = ( _(data[condVar]).difference(cond1) );//block 2
-				var diff2 = ( _(data[condVar]).difference(cond2) );//block 5
+				var dataCond = data[condVar];
+				var diff1 = parcelMng.checkArray(dataCond,cond1);
+				var diff2 = parcelMng.checkArray(dataCond,cond2);
+				//var diff1 = ( _(data[condVar]).difference(cond1) );//block 2
+				//var diff2 = ( _(data[condVar]).difference(cond2) );//block 5
 				var trial = {};
-				if ( diff1.length == 0 ) {
+				if ( diff1 == true ) {
 					trial.block = rb[0];
 					trial.lat = value[AnalyzedVar];
 					trial.err = data[ErrorVar];
 
 				} else {
-					if ( diff2.length == 0 ){
+					if ( diff2 == true ){
 					trial.block = rb[2];
 					trial.lat = value[AnalyzedVar];
 					trial.err = data[ErrorVar];
@@ -369,16 +377,19 @@ define(['jquery','app/API','underscore'],function($,API,_){
 			});
 			_.each (trialsB, function (value,index) {
 				var data = value.data;
-				var diff1 = ( _(data[condVar]).difference(cond1) );//block 3
-				var diff2 = ( _(data[condVar]).difference(cond2) );//block 6
+				var dataCond = data[condVar];
+				var diff1 = parcelMng.checkArray(dataCond,cond1);
+				var diff2 = parcelMng.checkArray(dataCond,cond2);
+				//var diff1 = ( _(data[condVar]).difference(cond1) );//block 3
+				//var diff2 = ( _(data[condVar]).difference(cond2) );//block 6
 				var trial = {};
-				if ( diff1.length == 0 ) {
+				if ( diff1 == true ) {
 					trial.block = rb[1];
 					trial.lat = value[AnalyzedVar];
 					trial.err = data[ErrorVar];
 
 				} else {
-					if ( diff2.length == 0 ){
+					if ( diff2 == true ){
 					trial.block = rb[3];
 					trial.lat = value[AnalyzedVar];
 					trial.err = data[ErrorVar];
