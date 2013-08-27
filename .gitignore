@@ -35,5 +35,3 @@ nbproject
 .idea
 node_modules
 dist
-
-src/index.php
