@@ -651,9 +651,13 @@ require(['app/API'], function(API) {
 				console.log(API.getLogs());//printing to the consol the log's array
 				var logs = API.getLogs();//saving the logs
 				computeAMPScore(logs);// computing the AMP score
-				var media1 = {media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> After black men, '+AMPScorer.counter.prime2.category1+' of the responses were ‘pleasant’  and '+ AMPScorer.counter.prime2.category2+' of the responses were ‘unpleasant’<br>After white men, '+ AMPScorer.counter.prime1.category1+' of the responses were ‘pleasant’ and '+ AMPScorer.counter.prime1.category2+' of the responses were ‘unpleasant’.</p></div>'}};
-				//Add: send to the server the feedback
-				trial.stimuli.push(media1);//show the score
+				var feedback = 'After black men, '+AMPScorer.counter.prime2.category1+' of the responses were ‘pleasant’  and '+ AMPScorer.counter.prime2.category2+' of the responses were ‘unpleasant’<br>After white men, '+ AMPScorer.counter.prime1.category1+' of the responses were ‘pleasant’ and '+ AMPScorer.counter.prime1.category2+' of the responses were ‘unpleasant’.';
+				// report to the server
+				$.post("/implicit/scorer", JSON.stringify({feedback:feedback}));
+
+				//show the score
+				var media1 = {media:{html:'<div><p style="font-size:28px"><color="#FFFAFA">' + '</p></div>'}};
+				trial.stimuli.push(media1);
 
 			}
 		},
