@@ -93,8 +93,8 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer,d) {
 			{
 				propositions: [
 					{type:'stimEquals',value:'side',negate:true},								// check if the input handle is unequal to the "side" attribute of stimulus.data
-					{type:'inputEquals',value:'error_end', negate:true},						// make sure this isn't an error end interaction
-					{type:'inputEquals',value:'end', negate:true}								// make sure this isn't an end interaction
+					{type:'inputEquals',value:['right','left']},								// make sure this is a click interaction
+
 				],
 				actions: [
 					{type:'showStim',handle:'error'},											// show error stimulus

@@ -185,8 +185,9 @@ In addition it has a negate attribute (false by default) that determines if to a
 begin: automatically activated at the beginning of the trial, and is never fired again.
 	propositions: [{type:'begin'}]
 
-inputEquals: check if the input handle equals to a static "value".
+inputEquals: check if the input handle equals to a static "value", value may be either an input handle string or an array of handles.
 	propositions: [{type:'inputEquals',value:'enter'}]
+	propositions: [{type:'inputEquals',value:['left','right']}]
 
 trialEquals: check if the input handle equals to the "value" attribute of trial.data
 	propositions: [{type:'trialEquals',value:"customAttribute"}]

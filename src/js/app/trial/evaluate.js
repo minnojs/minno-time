@@ -46,7 +46,10 @@ define(['underscore','./current_trial'],function(_,current_trial){
 					break;
 
 				case 'inputEquals' :
-					if (inputData.handle !== proposition.value) {
+					// make sure proposition.value is an array
+					_.isArray(proposition.value) || (proposition.value = [proposition.value]);
+
+					if (_.indexOf(proposition.value,inputData.handle) === -1) {
 						evaluation = false;
 					}
 					break;
