@@ -7,18 +7,23 @@ define(['jquery','app/API','underscore'],function($,API,_){
 	$.extend(parcelMng, {
 
 		parcelArray: [], // Holds parcel array
-		
-/* Sets the parcelArray. Init goes over the log and creates an array of object type Parcel according to name.
-   each parcel object holds several relevant information regarding the parcel including an array of trials
-   of type parcel (see documentaion).
+		scoreData: {},	// Holds score and error message
+
+/*  Method: Void Init
+	Input: Uses logs from API
+	Output: Sets parcelArray with array of type parcel
+	Description: Init goes over the log and creates an array of object of type Parcel according to 
+	the parcelValue array in computeD. Each parcel object holds relevant information regarding the
+	parcel including an array of trials with the relevant parcel name.
+    
 
 */
 		Init: function(compute){
 
-
-
 			var data = API.getLogs();
+			console.log(data);
 			var AnalyzedVar = compute.AnalyzedVar;
+			var error = compute.ErrorVar;
 			var parcelVar = compute.parcelVar;
 			var parcels = compute.parcelValue;
 			var min = compute.minRT;
@@ -26,15 +31,23 @@ define(['jquery','app/API','underscore'],function($,API,_){
 			var fastRT= compute.fastRT;
 			var totalScoredTrials = 0;
 			var trialsUnder = 0;
+			var totalTrials=0;
+			var totalErrorTrials =0;
 			var maxFastTrialsRate = parseFloat(compute.maxFastTrialsRate);
 
 
 			if (typeof parcels == 'undefined' || parcels.length == 0) {
+				totalTrials =0;
+				totalScoredTrials=0;
+				trialsUnder=0;
+				totalErrorTrials=0;
 				var p = {};
 				p.name = 'general';
 				p.trialIData = [];
-				_.each (data, function (value,index) {// per object in logger
+				_.each (data, function (value,index) {// loop per object in logger
 						if (value[AnalyzedVar]>=min && value[AnalyzedVar]<=max){
+							totalTrials++;
+							if (value.data[error] == 1) totalErrorTrials++;
 							//p.trialIData.push(value);//push all data
 							//totalScoredTrials++;
 							if (parcelMng.validate(p,value,compute)) totalScoredTrials++;
@@ -43,17 +56,28 @@ define(['jquery','app/API','underscore'],function($,API,_){
 							if (value[AnalyzedVar]<= fastRT) trialsUnder++;
 						}
 				});
+				parcelMng.checkErrors(totalTrials,totalErrorTrials,compute);
 				parcelMng.parcelArray[0] = p;
 			}else{
 
 				_.each (parcels, function(parcelName,index) {// per parcel from parcelValue
+					//set variables calculated per parcel
+					totalTrials =0;
+					totalScoredTrials=0;
+					trialsUnder=0;
+					totalErrorTrials=0;
 					var p = {};
 					p.name = parcelName;
 					p.trialIData = [];
-					_.each (data, function (value,index) {// per object in logger
+					///////////////////////////////////
+					_.each (data, function (value,index) {//loop per object in logger
 						var trialParcelName = value.data[parcelVar];
-						if (trialParcelName == parcelName){
+						console.log(value.data);
+						if (trialParcelName == parcelName){// if this trial belongs tp parcel
+							console.log('enter loop');
 							if (value[AnalyzedVar]>=min && value[AnalyzedVar]<=max){
+								totalTrials++;
+								if (value.data[error] == 1) totalErrorTrials++;
 								//p.trialIData.push(value);//push all data
 								//totalScoredTrials++;
 								if (parcelMng.validate(p,value,compute)) totalScoredTrials++;
@@ -66,20 +90,43 @@ define(['jquery','app/API','underscore'],function($,API,_){
 						}
 
 					});
+					parcelMng.checkErrors(totalTrials,totalErrorTrials,compute);//apply maxErrorParcelRate logic
 					parcelMng.parcelArray[index] = p;
 				});
 			}
-			if ( (trialsUnder/totalScoredTrials) > maxFastTrialsRate)
-				return "Too many fast trials";
+			if ( (trialsUnder/totalScoredTrials) > maxFastTrialsRate){
+				parcelMng.scoreData.errorMessage = "Too many fast trials";
+
+			}
+		
 			console.log('finished init the parcelArray is:');
 			console.log(parcelMng.parcelArray);
 			console.log('--------------------');
 		},
 
-/* Function: validate. 
-   Returns true/false.
-   Description: Helper function it sets the trial in the trial array 
-   according to its errorLatency (see documentation).
+/*  Method: Void checkErrors
+	Input: totalTrials,totalErrorTrials and compute object.
+	Output: Sets scoreData with error message if relevant.
+	Description: Helper method to check for errors according to maxErrorParcelRate from compute object.
+	sets an error message in scoreData.
+
+*/
+		checkErrors: function(totalTrials,totalErrorTrials,compute){
+
+			var maxErrorParcelRate = compute.maxErrorParcelRate;
+			if (totalErrorTrials/totalTrials > maxErrorParcelRate){
+				parcelMng.scoreData.errorMessage = "Too many errors";
+
+			}
+
+		},
+
+/* Function: Void validate.
+	Input: parcel object, trial object from the log and the compute object.
+	Output: Pushes the trial to the parcel based on information from errorLatency. Returns true/false.
+	Description: Helper method to apply errorLatency logic. If set to 'latency' trials witch are error 
+	would be added to the parcel trial array. if set to false trials that are error would not be added,
+	if set to panelty error trials will be added and later panelized. 
 
 */		
 
@@ -109,6 +156,15 @@ define(['jquery','app/API','underscore'],function($,API,_){
 
 
 		},
+
+/*  Function: Void addPenalty.
+	Input: parcel object and the compute object.
+	Output: adds penalty to latency of trials
+	Description: Helper method to add average and penalty to error trials 
+	if errorLatency is set to 'penalty'. Should be called after avgAll.
+
+*/	
+
 		addPenalty: function(p,compute){
 			var errorLatency = compute.errorLatency;
 
@@ -149,6 +205,14 @@ define(['jquery','app/API','underscore'],function($,API,_){
 			}
 		},
 
+
+/*  Function: Void avgAll.
+	Input: compute object.
+	Output: setting avgCon1 and avgCon2
+	Description: Loop over the parcels and Set average for condition 1 trials and for condition 2 trials.
+
+*/	
+
 		avgAll: function(compute){
 
 
@@ -158,6 +222,14 @@ define(['jquery','app/API','underscore'],function($,API,_){
 			});
 
 		},
+
+
+/*  Function: Void avgParcel.
+	Input: compute object, parcel.
+	Output: setting avgCon1 and avgCon2 in parcel.
+	Description: Set average for condition 1 trials and for condition 2 trials in the parcel.
+
+*/	
 
 		avgParcel: function(p,compute){
 
@@ -196,11 +268,16 @@ define(['jquery','app/API','underscore'],function($,API,_){
 				}
 
 			});
+			if (numCond1 <= 2 || numCond2 <= 2){
+				parcelMng.scoreData.errorMessage = "Not enougth correct responces";
+
+			}
 			if (numCond1 != 0) avgCon1 = avgCon1/numCond1;
 			if (numCond2 != 0) avgCon2 = avgCon2/numCond2;
 			p.avgCon1 = avgCon1;
 			p.avgCon2 = avgCon2;
-			p.avgBoth = avgBoth/numBoth;
+			p.diff = p.avgCon1 - p.avgCon2;
+			if (numBoth != 0) p.avgBoth = avgBoth/numBoth;
 			parcelMng.addPenalty(p,compute);
 			console.log('finished parcel: '+p.name);
 			console.log('Avg1 is: '+p.avgCon1);
@@ -208,6 +285,13 @@ define(['jquery','app/API','underscore'],function($,API,_){
 			console.log('AvgBoth is: '+p.avgBoth);
 			console.log('--------------------');
 		},
+
+/*  Function: Void checkArray.
+	Input: the condition from the trial and an array of condition from computeD object.
+	Output: return true if condition is in the array.
+	Description: Helper function that returns true if condition is in the array or false otherwise.
+
+*/	
 
 		checkArray: function(conFromData,con){
 			var res;
@@ -219,6 +303,13 @@ define(['jquery','app/API','underscore'],function($,API,_){
 			
 		},
 
+/*  Function: Void varianceAll.
+	Input: compute object, parcel.
+	Output: variance variable in parcel.
+	Description: Loop over the parcels and set the variance variable.
+
+*/	
+
 		varianceAll: function(compute){
 			console.log('starting varianceAll');
 			_.each (parcelMng.parcelArray, function (value,index) {
@@ -227,6 +318,12 @@ define(['jquery','app/API','underscore'],function($,API,_){
 			console.log(parcelMng.parcelArray);
 		},
 
+/*  Function: Void varianceParcel.
+	Input: compute object, parcel.
+	Output: setting variance variable in parcel.
+	Description: goes over the trials of the parcel and calculate variance.
+
+*/	
 		varianceParcel: function(p,compute){
 			console.log('starting varianceParcel');
 			var AnalyzedVar = compute.AnalyzedVar;
@@ -293,6 +390,13 @@ define(['jquery','app/API','underscore'],function($,API,_){
 
 		},
 
+/*  Function: Void diffAll.
+	Input: compute object.
+	Output: diff variabel.
+	Description: Loop over the pacels and set diff variable
+	that stores the diffrance between the averages of conditions.
+
+	
 		diffAll: function(compute){
 			console.log('starting diffAll');
 			_.each (parcelMng.parcelArray, function (value,index) {
@@ -301,6 +405,12 @@ define(['jquery','app/API','underscore'],function($,API,_){
 
 		},
 
+/*  Function: Void diffParcel.
+	Input: compute object, parcel.
+	Output: setting avgCon1 and avgCon2
+	Description: Set average for condition 1 trials and for condition 2 trials in the parcel.
+
+	
 		diffParcel: function(p,compute){
 			console.log('starting diffParcel');
 			p.diff = p.avgCon1 - p.avgCon2;
@@ -310,6 +420,12 @@ define(['jquery','app/API','underscore'],function($,API,_){
 
 		},
 
+/*  Function: Void scoreAll.
+	Input: compute object.
+	Output: score variable in scoreData object
+	Description: Average the scores from all parcels set score in scoreData object.
+
+*/	
 		scoreAll: function(compute){
 			console.log('starting scoreAll');
 			var dAvg = 0;
@@ -319,9 +435,16 @@ define(['jquery','app/API','underscore'],function($,API,_){
 
 			});
 			var score = (dAvg/(parcelMng.parcelArray.length));
-			return score;
+			parcelMng.scoreData.score = score.toFixed(2);
+			
 		},
 
+/*  Function: Void scoreParcel.
+	Input: compute object, parcel.
+	Output: score variable in parcel
+	Description: Calculate the score for the parcel.
+
+*/	
 		scoreParcel: function(p,compute){
 			console.log('starting scoreParcel');
 			var sd = Math.sqrt(p.variance);
@@ -332,8 +455,14 @@ define(['jquery','app/API','underscore'],function($,API,_){
 
 		},
 
+/*  Function: Void simulateOldCode.
+	Input: 
+	Output: 
+	Description: For debug seimulate old scorer.
+
+*/	
 		//for QA purposes only!!
-		simulateOldCode: function(){
+		simulateOldCode: function(compute){
 
 			//require
 			var results = [];

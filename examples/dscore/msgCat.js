@@ -26,6 +26,7 @@ define(['jquery','underscore'],function($,_){
 			var rightMsg = 'error: msg was not set';
 			var set = false;
 			var count =0;
+			var msgIndex=0;
 			_.each(array, function(val,key) {
 				cut = parseFloat(val.cut);
 				msg = val.message;
@@ -34,13 +35,13 @@ define(['jquery','underscore'],function($,_){
 				if (scoreNum<=cut && set ==false){
 					rightMsg = msg;
 					set = true;
-
 				} 
-				count++;
+			
 			});
 			
-			if (array.length ==count){
-				var obj = array[count-1];
+			if (set==false){
+				var length = array.length;
+				var obj = array[length-1];
 				rightMsg = obj.message;
 			} 
 			return rightMsg;
