@@ -58,7 +58,8 @@ require(['app/API'], function(API) {
 						{
 							// Set the proposition type
 							type:'inputEquals',
-							// This action will only be activated if the input handle is 'left'
+							// This action will only be activated if the input handle is 'left' </br>
+							// Pro tip: You can pass an array to the `value` property instead of just a handle name
 							value:'left'
 						}
 					],
@@ -133,7 +134,7 @@ require(['app/API'], function(API) {
 		// ##### Negate
 		// Sometimes we want a proposition to be true only if a certain condition does NOT happen.
 		// In these cases we can use the negate property to reverse a proposition.
-		// (when using negate you should be carefull that the proposition doesn't turn out true in unexpected situations, for instance - on the begin input)
+		// (when using negate you should be carefull that the proposition doesn't turn out true in unexpected situations, for instance - on the begin input, or when triggering various timeouts)
 		{
 			data: {leftOrRight: 'right'},
 			input: [
