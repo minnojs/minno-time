@@ -43,7 +43,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		maxFastTrialsRate : 0.1, //Above this % of extremely fast responses within a condition, the participant is considered too fast.
 		minRT : 400, //Below this latency
 		maxRT : 10000, //above this
-		errorLatency : {use:"false", penalty:600, useForSTD:true},//ignore error respones
+		errorLatency : {use:"latency", penalty:600, useForSTD:true},//ignore error respones
 		postSettings : {score:"score",msg:"feedback",url:"/implicit/scorer"}
 	});
 

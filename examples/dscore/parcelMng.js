@@ -294,12 +294,23 @@ define(['jquery','app/API','underscore'],function($,API,_){
 */	
 
 		checkArray: function(conFromData,con){
-			var res;
-			res = _.find(con,function(conFromData){ 
-				 return true;
+			
+			for(var i=0; i<con.length; i++){
+				var condition = con[i];
+				if (condition == conFromData ){
+					return true;
+				}
+			}
+
+		return false;
+
+			// var res;
+
+			// res = _.find(con,function(conFromData){ 
+			// 	 return true;
 				
-			});
-			return res==conFromData;
+			// });
+			// return res==conFromData;
 			
 		},
 
