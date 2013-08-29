@@ -305,7 +305,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer,d) {
 		],
 
 		Instructions: [
-			{css:{'font-size':'1.3em',color:'black'}}
+			{css:{'font-size':'1.3em',color:'black', lineHeight:1.2}}
 		],
 
 		// The trial stimuli
@@ -537,8 +537,8 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer,d) {
 			mixer: 'repeat',
 			times: 20,
 			data: [
-				{inherit : {type:'byData', data:{block:6,row:1}, set:'IAT'}},
-				{inherit : {type:'byData', data:{block:6,row:2}, set:'IAT'}}
+				{inherit : {type:'byData', data:{block:7,row:1}, set:'IAT'}},
+				{inherit : {type:'byData', data:{block:7,row:2}, set:'IAT'}}
 			]
 		}
 	]; // end regular IAT
@@ -618,8 +618,8 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer,d) {
 			mixer: 'repeat',
 			times: 20,
 			data: [
-				{inherit : {type:'byData', data:{block:6,row:1}, set:'IAT'}},
-				{inherit : {type:'byData', data:{block:6,row:2}, set:'IAT'}}
+				{inherit : {type:'byData', data:{block:7,row:1}, set:'IAT'}},
+				{inherit : {type:'byData', data:{block:7,row:2}, set:'IAT'}}
 			]
 		},
 
