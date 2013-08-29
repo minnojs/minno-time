@@ -22,7 +22,7 @@
 			}
 		</script>
 		<script data-main="js/main" src="js/libs/require.js"></script>
-		<script src="../examples/IAT.js"></script>
+		<script src="../examples/amp.js"></script>
 
 		<script type="text/javascript">
 			require(['app/API'], function(API) {
