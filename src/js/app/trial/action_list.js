@@ -25,8 +25,8 @@ define(["utils/pubsub"],function(pubsub){
 		 * Trial actions
 		 */
 
-		setTrialAttr: function(options){
-			pubsub.publish('trial:setAttr',[options.setter]);
+		setTrialAttr: function(options, eventData){
+			pubsub.publish('trial:setAttr',[options.setter, eventData]);
 		},
 
 		setInput: function(options){
@@ -59,8 +59,8 @@ define(["utils/pubsub"],function(pubsub){
 		 * Logger
 		 */
 
-		log: function(options,input_data){
-			pubsub.publish('log',[options,input_data]);
+		log: function(options,eventData){
+			pubsub.publish('log',[options,eventData]);
 		}
 	};
 

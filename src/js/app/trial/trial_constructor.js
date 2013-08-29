@@ -67,9 +67,9 @@ define(function(require){
 			pubsub.subscribe("trial:end",this._pubsubStack,_.bind(this.deactivate,this));
 
 			// subscribe to set attribute
-			pubsub.subscribe("trial:setAttr",this._pubsubStack,function(setter){
+			pubsub.subscribe("trial:setAttr",this._pubsubStack,function(setter,event_data){
 				if (_.isFunction(setter)) {
-					setter.apply(self);
+					setter.apply(self, [self.data,event_data]);
 				} else {
 					_.extend(self.data,setter);
 				}

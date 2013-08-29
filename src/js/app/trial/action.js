@@ -9,12 +9,12 @@ define(['jquery','./action_list'],function($,action_list){
 	 * ]
 	 */
 
-	return function(actions,input_data){
+	return function(actions,eventData){
 		actions = $.isArray(actions) ? actions : [actions];
 
 		$.each(actions,function(index,action){
 			if (action_list[action.type]) {
-				action_list[action.type](action, input_data);
+				action_list[action.type](action, eventData);
 			} else {
 				throw new Error('unknown action: ' + action.type);
 			}

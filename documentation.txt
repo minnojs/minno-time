@@ -235,8 +235,10 @@ setStimAttr: set a stimulus attribute, takes a stimulus handle and a setter obje
 ** trial actions **
 setTrialAttr: set a trial.data attribute, takes a setter object or function
 	actions: [{type:'setTrialAttr',setter:{myAttr:'myValue',myOtherAttr:'myOtherValue'}]
-	actions: [{type:'setTrialAttr',setter:function(){
+	actions: [{type:'setTrialAttr',setter:function(trialData, eventData){
 		// do your mojo here :)
+		// trialData is the data object for this trial
+		// eventData is the internal event that triggered this action
 		// the context ("this") of this function is the trial object
 	}]
 
