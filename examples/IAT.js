@@ -704,14 +704,14 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				var DScore;
 				console.log('calling Scorer');
 				var DScoreObj = Scorer.computeD();
-				if (DScoreObj.errorMessage == undefined || DScoreObj.errorMessage == null){
+				if (DScoreObj.errorMessage === undefined || DScoreObj.errorMessage === null){
 					FBMsg = Scorer.getFBMsg(DScoreObj.score);
 					DScore = DScoreObj.score;
 				}else{
 					FBMsg = DScoreObj.errorMessage;
 					DScore = "";
 				}
-				
+
 				console.log(FBMsg);
 				console.log(DScore);
 				var media = {css:{color:'black'},media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};
