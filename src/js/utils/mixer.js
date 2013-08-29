@@ -27,10 +27,10 @@ define(['underscore'],function(_){
 					result = shallow ? mixed : mix(mixed);	// if this is top level lets open all those wrappers now
 					stack = stack.concat(result);
 					break;
-				case 'pick' :
+				case 'choose' :
 					mixed = _.chain(value.data)
-						.shuffle()								// first lets shuffle data so that the pick is random
-						.first(value.n ? value.n : 1)			// then we pick the first n items
+						.shuffle()								// first lets shuffle data so that the choice is random
+						.first(value.n ? value.n : 1)			// then we choose the first n items
 						.value();								// finaly lets get out of the chain
 					result = shallow ? mixed : mix(mixed);		// if this is top level lets open all those wrappers now
 					stack = stack.concat(result);

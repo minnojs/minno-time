@@ -1,4 +1,4 @@
-require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer,d) {
+require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 
 	var attribute1 = 'Bad Words';
 	var attribute2 = 'Good Words';
@@ -21,6 +21,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer,d) {
 	});
 
 	API.addSettings('logger',{
+		pulse: 20,
 		url : '/implicit/PiPlayerApplet'
 	});
 
@@ -685,7 +686,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer,d) {
 	 */
 	API.addSequence([
 		{
-			mixer: 'pick',
+			mixer: 'choose',
 			data: [
 				{mixer:'wrapper',data:regularIAT},
 				{mixer:'wrapper',data:swapedIAT},

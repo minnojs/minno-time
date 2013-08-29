@@ -70,27 +70,27 @@ require(['app/API'], function(API) {
 			]
 		},
 
-		// ##### Pick
+		// ##### Choose
 		{
-			// This mixer randomly picks one or more trials
-			mixer : 'pick',
-			// The number of trials to pick (by default only one)
+			// This mixer randomly chooses one or more trials
+			mixer : 'chose',
+			// The number of trials to choose (by default only one)
 			n : 1,
 			// The data property holds a sequence array from which the mixer picks trials.
 			data : [
 				{
 					input: [{handle:'space',on:'space'}],
-					layout: [{media :{word:'Pick only one (1)'}}],
+					layout: [{media :{word:'Choose only one (1)'}}],
 					interactions: [{propositions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
 				},
 				{
 					input: [{handle:'space',on:'space'}],
-					layout: [{media :{word:'Pick only one (2)'}}],
+					layout: [{media :{word:'Choose only one (2)'}}],
 					interactions: [{propositions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
 				},
 				{
 					input: [{handle:'space',on:'space'}],
-					layout: [{media :{word:'Pick only one (3)'}}],
+					layout: [{media :{word:'Choose only one (3)'}}],
 					interactions: [{propositions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
 				}
 

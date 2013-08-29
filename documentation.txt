@@ -457,7 +457,7 @@ repeat: repeats the data element "times" times.
 random: randomizes the order of  the data element
 	element: {mixer:'random', data: [trial1,trial2]}
 
-pick: picks n random elements from the data element (by default the picker picks one element).
+choose: picks n random elements from the data element (by default the picker picks one element).
 	element: {mixer:'pick', n:1, data: [trial1,trial2]}
 
 wrapper: in case we want to treat a set of elements as one block (when randomizing) we can put them in a wrapper
