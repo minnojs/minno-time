@@ -17,7 +17,7 @@ define(['jquery','underscore'],function($,_){
 
 		getMsg: function(score){
 
-		var array = this.mesCatArray;
+			var array = this.mesCatArray;
 			var scoreNum = parseFloat(score);
 			console.log('entering getMsg'+scoreNum);
 			console.log(array);
@@ -25,6 +25,7 @@ define(['jquery','underscore'],function($,_){
 			var msg = null;
 			var rightMsg = 'error: msg was not set';
 			var set = false;
+			var count =0;
 			_.each(array, function(val,key) {
 				cut = parseFloat(val.cut);
 				msg = val.message;
@@ -35,10 +36,15 @@ define(['jquery','underscore'],function($,_){
 					set = true;
 
 				} 
+				count++;
 			});
+			
+			if (array.length ==count){
+				var obj = array[count-1];
+				rightMsg = obj.message;
+			} 
 			return rightMsg;
 		}
-
 
 	});
 	return msgCat;

@@ -7,10 +7,12 @@ define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],f
 
 	$.extend(Scorer, {
 
+		
 		addSettings: function(type,Obj){
 
 			if (type =="compute"){
 				computeData.setComputeObject(Obj);
+				
 
 			}else{
 				if (type =="message") msgMan.setMsgObject(Obj);
@@ -23,20 +25,19 @@ define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],f
 
 
 			computeData.setDataArray();
-			var score = 0;
 			console.log('started computeD');
 			console.log(computeData);
 			console.log(msgMan);
-			var error = parcelMng.Init();
-			parcelMng.avgAll();
-			parcelMng.diffAll();
-			parcelMng.varianceAll();
-			score = parcelMng.scoreAll();
+			var error = parcelMng.Init(computeData);
+			parcelMng.avgAll(computeData);
+			parcelMng.diffAll(computeData);
+			parcelMng.varianceAll(computeData);
+			score = parcelMng.scoreAll(computeData);
 			console.log('the score is: '+ score);
 	//		var oldScore = parcelMng.simulateOldCode();//for testing only
 	//		console.log('the score from old scoree is: '+oldScore );
 
-			return score;
+			return score.toFixed(2); 
 
 		},
 
