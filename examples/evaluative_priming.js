@@ -18,10 +18,10 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		image : '../examples/images'
 	});
 
-	API.addSettings('logger',{
-		url : 'google.com',
-		pulse : 20
-	});
+	   API.addSettings('logger',{
+        pulse: 20,
+        url : '/implicit/PiPlayerApplet'
+    });
 
 	//the Scorer that compute the user feedback
 	Scorer.addSettings('compute',{
@@ -56,13 +56,11 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				{location:{left:10,top:6},media:{word:category2}, css:{color:'white','font-size':'2em'}},
 				{location:{left:70,top:6},media:{word:category1}, css:{color:'white','font-size':'2em'}}
 			],
-			//Inputs for two possible responses.
+		
 			input: [
-				{handle:category2,on: 'keypressed', key:'e'},
-				{handle:category1,on: 'keypressed', key:'i'},
-				{handle:category2,on:'leftTouch',touch:true},//support touch as well
-				{handle:category1,on:'rightTouch',touch:true}
+				{handle:'enter',on:'enter'} //'enter' to skip the current block 
 			],
+
 			//Set what to do.
 			interactions: [
 				{
@@ -76,40 +74,51 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 					propositions: [{type:'inputEquals',value:'primeOut'}], // on time out
 					actions: [
 						{type:'hideStim',handle:'primingImage'}, // hide the first stimulus
-						{type:'showStim',handle:'targetStim'} // and show the second one
+						{type:'showStim',handle:'targetStim'},// and show the second one
+						//Set the possible key inputs.
+						{type:'setInput',input:{handle:category2,on: 'keypressed', key:'e'}},
+						{type:'setInput',input:{handle:category1,on: 'keypressed', key:'i'}},
+						{type:'setInput',input:{handle:category2,on:'leftTouch',touch:true}},
+						{type:'setInput',input:{handle:category1,on:'rightTouch',touch:true}}
 					]
 				},
 				// there are 2 possible responses: "pleasent" and "unpleasent", here we handle these responses when the user answers
 				// matches the word value (correct response)
 				{
 					propositions: [
-						{type:'stimEquals',value:'wordValue'}],
+						{type:'stimEquals',value:'wordCategory'}],
 					actions: [
 						{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
-						{type:'trigger', handle:'correctResp'}
-					]
-				},
-
-				{//What to do upon correct response
-					//This proposition is true when the presented stimulus has a word value that is equal to the input's handle.
-					propositions: [{type:'inputEquals',value:'correctResp'}],
-					actions: [
 						{type:'removeInput',inputHandle:[category2,category1]},//only one response is possible
-						{type:'trigger', handle:'showFix'} //End the trial immidiatlly after correct response
+						{type:'trigger', handle:'showFix'}//End the trial immidiatlly after correct response
 					]
 				},
 				// there are 2 possible responses: "pleasent" and "unpleasent", here we handle with these responses when the user answer
 				// doesn't match the word value (incorrect response)
 				//this propositions are true only after incorrect response
+				// handle incorrect response.
+				//this propositions are true only after incorrect response
 				{
 					propositions: [
-						{type:'stimEquals',value:'wordValue', negate:true},
-						{type:'inputEquals',value:'begin', negate:true},
-						{type:'inputEquals',value:'errorResp', negate:true},
-						{type:'inputEquals',value:'correctResp', negate:true},
-						{type:'inputEquals',value:'showFix', negate:true},
-						{type:'inputEquals',value:'primeOut', negate:true},
-						{type:'inputEquals',value:'endTrial', negate:true}
+						{type:'stimEquals',value:'wordCategory', negate:true},
+						{type:'inputEquals',value:category1} //Category1 is not the wordCategory.
+					],
+					actions: [
+						{type:'trigger', handle:'onError'}
+					]
+				},
+				{
+					propositions: [
+						{type:'stimEquals',value:'wordCategory', negate:true},
+						{type:'inputEquals',value:category2} //Category2 is not the wordCategory.
+					],
+					actions: [
+						{type:'trigger', handle:'onError'}
+					]
+				},
+				{//what to do on incorrect response
+					propositions: [
+						{type:'inputEquals',value:'onError'} 
 					],
 					actions: [
 						{type:'setTrialAttr', setter:{score:0}},
@@ -122,12 +131,19 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				{
 					propositions: [{type:'inputEquals',value:'showFix'}], //What to do when endTrial is called.
 					actions: [
-						{type:'setTrialAttr',setter:{state:'after'}},
 						{type:'hideStim',handle:'All'},
-						{type:'showStim',handle:'blanckScreen'}, //show blanckScreen
+						{type:'showStim',handle:'blankScreen'}, //show blankScreen
 						{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:{min:300, max: 900}}} // randomly pick from within a range
 					]
 
+				},
+					// skip block -> if you press 'enter' you will skip the current block.
+				{
+					propositions: [{type:'inputEquals',value:'enter'}],
+					actions: [
+						{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
+						{type:'endTrial'}
+					]
 				},
 				{
 					propositions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
@@ -140,49 +156,49 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 	API.addTrialSets({
 		//pleasant+white people (condition 1)
 		pleasentWhite:[{
-			data: {parcel:'research',trialCategories:["Black People/Bad Words","White People/Good Words"], condition: "pleasant/white (1)"},
+			data: {parcel:'research', condition: "pleasant/white"},
 			inherit:{set: 'basicTrial'},
 			stimuli: [
 				{ inherit: {set: 'targetStimulusA', type:'exRandom'}, data : {handle:'targetStim'} },
 				{ inherit: {set: 'primingImage1', type:'exRandom'}, data : {handle:'primingImage'} },
 				{ inherit: 'errorFB'},
-				{ inherit: 'blanckScreen'}
+				{ inherit: 'blankScreen'}
 			]
 		}],
 
 		//pleasant+black people (condition 2)
 		pleasentBlack:[{
-			data: {parcel:'research',trialCategories:["Black People/Good Words","White People/Bad Words"], condition: "pleasant/black (2)"},
+			data: {parcel:'research',condition: "pleasant/black "},
 			inherit:{set: 'basicTrial'},
 			stimuli: [
 			{ inherit: {set: 'targetStimulusA', type:'exRandom'}, data : {handle:'targetStim'} },
 			{ inherit: {set: 'primingImage2', type:'exRandom'}, data : {handle:'primingImage'} },
 			{ inherit: 'errorFB'},
-			{ inherit: 'blanckScreen'}
+			{ inherit: 'blankScreen'}
 			]
 		}],
 
 		//unpleasant+white people (condition 2)
 		unpleasentWhite:[{
-			data: {parcel:'research',trialCategories:["Black People/Good Words","White People/Bad Words"], condition: "unpleasant/white (2)"},
+			data: {parcel:'research',condition: "unpleasant/white"},
 			inherit:{set: 'basicTrial'},
 			stimuli: [
 			{ inherit: {set: 'targetStimulusB', type:'exRandom'}, data : {handle:'targetStim'} },
 			{ inherit: {set: 'primingImage1', type:'exRandom'}, data : {handle:'primingImage'} },
 			{ inherit: 'errorFB'},
-			{ inherit: 'blanckScreen'}
+			{ inherit: 'blankScreen'}
 			]
 		}],
 
 		//unpleasant+ black people (condition 1)
 		unpleasentBlack:[{
-			data: {parcel:'research',trialCategories:["Black People/Bad Words","White People/Good Words"], condition: "unpleasant/black (1)"},
+			data: {parcel:'research',condition: "unpleasant/black"},
 			inherit:{set: 'basicTrial'},
 			stimuli: [
 			{ inherit: {set: 'targetStimulusB', type:'exRandom'}, data : {handle:'targetStim'} },
 			{ inherit: {set: 'primingImage2', type:'exRandom'}, data : {handle:'primingImage'} },
 			{ inherit: 'errorFB'},
-			{ inherit: 'blanckScreen'}
+			{ inherit: 'blankScreen'}
 			]
 		}]
 	});
@@ -198,7 +214,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		],
 		targetStimulusA: [	//first catagory of words
 			{
-				data : {wordValue:category1, alias:category1},
+				data : {wordCategory:category1, alias:category1},
 				inherit:'Default',
 				media: {inherit:{type:'exRandom',set:'targetWordsA'}} //Select a word from the media, randomly
 			}
@@ -206,7 +222,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 
 		targetStimulusB: [	//the second catagory of words
 			{
-				data : {wordValue:category2, alias:category2},
+				data : {wordCategory:category2, alias:category2},
 				inherit:'Default',
 				media: {inherit:{type:'exRandom',set:'targetWordsB'}}
 			}
@@ -220,9 +236,9 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				nolog:true
 			}
 		],
-		blanckScreen : [//blanckScreen  stimulus (in between the trials) can be used as a fixation point
+		blankScreen : [//blankScreen  stimulus (in between the trials) can be used as a fixation point
 			{
-				data : {handle:'blanckScreen'},
+				data : {handle:'blankScreen'},
 				media: {word:' '},//can be replace with '+'
 				nolog:true
 			}
@@ -314,6 +330,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 	API.addTrialSets('inst',{
 		input: [
 			{handle:'space',on:'space'}, //Will handle a SPACEBAR reponse
+			{handle: 'enter', on:'enter'},
 			{handle:'space',on:'centerTouch',touch:true}
 		],
 		interactions: [
@@ -328,6 +345,14 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 					{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:500}} //In 500ms: end the trial. In the mean time, we get a blank screen.
 				]
 			},
+				// skip block -> if you press 'enter' you will skip the current block.
+				{
+					propositions: [{type:'inputEquals',value:'enter'}],
+					actions: [
+						{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
+						{type:'endTrial'}
+					]
+				},
 			{
 				propositions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
 				actions: [
@@ -340,6 +365,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 	//Defines the sequence of trials
 	API.addSequence([
 		{ //Instructions trial
+			data: {blockStart:true},
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
@@ -365,6 +391,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			]
 		},
 		{ //Instructions trial, second round
+			data: {blockStart:true},
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
@@ -390,6 +417,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		},
 
 		{ //Instructions trial, third round
+			data: {blockStart:true},
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
@@ -415,6 +443,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		},
 		// user feedback- here we will use the computeD function.
 		{
+			data: {blockStart:true},
 			inherit: "inst",
 			stimuli: [],
 			customize: function(){
@@ -422,12 +451,14 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				console.log('calling Scorer');
 				var DScore = Scorer.computeD();//compute the Dscore
 				var FBMsg = Scorer.getFBMsg(DScore);//the user feedback
-				var media = {media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};
+				console.log('DScore='+DScore+ " FBMsg="+FBMsg);
+				var media = {media:{html:'<div><p style="font-size:28px"><color="#FFFFFF"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};
 				trial.stimuli.push(media);//show the user feedback
 			}
 		},
 
 		{ //Instructions trial, the end of the task, instruction what to do next
+			data: {blockStart:true},
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus

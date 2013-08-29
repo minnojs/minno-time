@@ -2,27 +2,36 @@
 require(['app/API'], function(API) {
 	var category1 = 'Pleasent';
 	var category2 = 'Unpleasent';
-	var condition1= "white/word (1)";
-	var condition2= "black/word (2)";
+	var condition1= "white";
+	var condition2= "black";
 	//a Scorer for the AMP
 	var AMPScorer = {
-						prime1: 'White',
-						prime2: 'Black',
 						counter: { prime1: {category1: 0, category2: 0} , prime2: {category1: 0, category2: 0}}
 					};
 	//count the resposnes of the users
+	//prime1/category1++
 	function inc_prime1_category1(){
 		AMPScorer.counter.prime1.category1 = AMPScorer.counter.prime1.category1+1;
 		}
+	//prime1/category2++
 	function inc_prime1_category2(){
 		AMPScorer.counter.prime1.category2 = AMPScorer.counter.prime1.category2+1;
 		}
+	//prime2/category1++
 	function inc_prime2_category1(){
 		AMPScorer.counter.prime2.category1 = AMPScorer.counter.prime2.category1+1;
 		}
+	//prime2/category2++
 	function inc_prime2_category2(){
 		AMPScorer.counter.prime2.category2 = AMPScorer.counter.prime2.category2+1;
 		}
+	//reset all the counters to 0,call this function before we count all the responses
+	function resetCounters(){
+		AMPScorer.counter.prime2.category2=0;
+		AMPScorer.counter.prime2.category1=0;
+		AMPScorer.counter.prime1.category2=0;
+		AMPScorer.counter.prime1.category1=0;
+	}
 
 	//compute the AMP score, according to the logs.
 	function computeAMPScore(scoreArray){
@@ -31,18 +40,23 @@ require(['app/API'], function(API) {
 				if(scoreArray[i].data.condition == condition1){ //the image is from the first category
 					inc_prime1_category1();
 				}
-				else{
-					inc_prime2_category1(); //the image is from the second category
+				else{//do nothing when there is no answer
+					if(scoreArray[i].data.condition == condition2){
+						inc_prime2_category1(); //the image is from the second category
+					}
 				}
 			}
 			else{// unpleasent response
-				if(scoreArray[i].data.condition == condition1){ //the image is from the first category
-					inc_prime1_category2();
+				if(scoreArray[i].responseHandle == category2){//do nothing when there is no answer
+					if(scoreArray[i].data.condition == condition1){ //the image is from the first category
+						inc_prime1_category2();
+					}
+					else{
+						if(scoreArray[i].data.condition == condition2){//do nothing when there is no answer
+							inc_prime2_category2(); //the image is from the second category
+						}
+					}
 				}
-				else{
-					inc_prime2_category2(); //the image is from the second category
-				}
-
 			}
 		}
 	}
@@ -61,19 +75,20 @@ require(['app/API'], function(API) {
 		image : '../examples/images'
 	});
 
-	API.addSettings('logger',{
-		url : '/implicit/PiPlayerApplet'
-	});
+	   API.addSettings('logger',{
+        pulse: 20,
+        url : '/implicit/PiPlayerApplet'
+    });
 
 	//Define the basic trial (the prsentation of the images and words)
 	API.addTrialSets({
 		basicTrial: [{
 			//Layout defines what will be presented in the trial. It is like a background display.
 			layout: [
-				{location:{left:15,top:3},media:{word:'key: e'}, css:{color:'black','font-size':'1em'}},
-				{location:{left:75,top:3},media:{word:'key: i'},  css:{color:'black','font-size':'1em'}},
-				{location:{left:10,top:6},media:{word:category2}, css:{color:'white','font-size':'2em'}},
-				{location:{left:70,top:6},media:{word:category1},  css:{color:'white','font-size':'2em'}}
+				{location:{left:2,top:2},media:{word:'key: E'}, css:{color:'white','font-size':'1em'}},
+				{location:{left:75,top:2},media:{word:'key: I'},  css:{color:'white','font-size':'1em'}},
+				{location:{left:2,top:5},media:{word:category2}, css:{color:'#33ff33','font-size':'2em'}},
+				{location:{left:75,top:5},media:{word:category1},  css:{color:'#33ff33','font-size':'2em'}}
 			],
 			//Inputs for two possible responses.
 			input: [
@@ -84,7 +99,6 @@ require(['app/API'], function(API) {
 				{
 					propositions: [{type:'begin'}],
 					actions: [
-						{type:'removeInput',inputHandle:[category2,category1]},//answer only in the Mask screen
 						{type:'showStim',handle:'primingImage'},// display the first stimulus=priming image
 						{type:'setInput',input:{handle:'primeOut',on:'timeout',duration:100}} //for 100 ms
 					]
@@ -93,14 +107,14 @@ require(['app/API'], function(API) {
 					propositions: [{type:'inputEquals',value:'primeOut'}], // on time out
 					actions: [
 						{type:'hideStim',handle:'primingImage'}, // hide the first stimulus
-						{type:'showStim',handle:'blanckScreen'}, // and show the second one=the blanck screen
-						{type:'setInput',input:{handle:'blanckOut',on:'timeout',duration:100}}
+						{type:'showStim',handle:'blankScreen'}, // and show the second one=the blank screen
+						{type:'setInput',input:{handle:'blankOut',on:'timeout',duration:100}}
 					]
 				},
 				{
-					propositions: [{type:'inputEquals',value:'blanckOut'}], // on time out
+					propositions: [{type:'inputEquals',value:'blankOut'}], // on time out
 					actions: [
-						{type:'hideStim',handle:'blanckScreen'}, // hide the blanck screen
+						{type:'hideStim',handle:'blankScreen'}, // hide the blank screen
 						{type:'showStim',handle:'targetStim'}, // and show the letter
 						{type:'setInput',input:{handle:category2,on: 'keypressed', key:'e'}},//the user can only answer here
 						{type:'setInput',input:{handle:category1,on: 'keypressed', key:'i'}},
@@ -112,7 +126,7 @@ require(['app/API'], function(API) {
 				{
 					propositions: [{type:'inputEquals',value:'targetOut'}], // on time out
 					actions: [
-						{type:'hideStim',handle:'targetStime'}, // hide the letter
+						{type:'hideStim',handle:'targetStim'}, // hide the letter
 						{type:'showStim',handle:'MaskScreen'} // and show the mask screen
 					]
 				},
@@ -158,24 +172,24 @@ require(['app/API'], function(API) {
 	}); // end trialset
 
 	API.addTrialSets({
-		white:[{		//first condition
+		prime1:[{		//first condition
 			data: {condition: condition1},
 			inherit:{set: 'basicTrial'},
 			stimuli: [
 				{ inherit: {set: 'targetStimulus', type:'exRandom'}, data : {handle:'targetStim'} },
 				{ inherit: {set: 'primingImage1', type:'exRandom'}, data : {handle:'primingImage'} },
 				{ inherit: 'MaskScreen'},
-				{ inherit: 'blanckScreen'}
+				{ inherit: 'blankScreen'}
 			]
 		}],
-		black:[{		//second condition
+		prime2:[{		//second condition
 			data: {condition: condition2},
 			inherit:{set: 'basicTrial'},
 			stimuli: [
 				{ inherit: {set: 'targetStimulus', type:'exRandom'}, data : {handle:'targetStim'} },
 				{ inherit: {set: 'primingImage2', type:'exRandom'}, data : {handle:'primingImage'} },
 				{ inherit: 'MaskScreen'},
-				{ inherit: 'blanckScreen'}
+				{ inherit: 'blankScreen'}
 			]
 		}],
 	});
@@ -185,11 +199,11 @@ require(['app/API'], function(API) {
 		exampleTrial: [{
 			//Layout defines what will be presented in the trial. It is like a background display.
 			layout: [
-				{location:{left:15,top:3},media:{word:'key: e'}, css:{color:'black','font-size':'1em'}},
-				{location:{left:75,top:3},media:{word:'key: i'},  css:{color:'black','font-size':'1em'}},
-				{location:{left:10,top:6},media:{word:'unpleasant'}, css:{color:'white','font-size':'2em'}},
-				{location:{left:70,top:6},media:{word:'pleasant'},  css:{color:'white','font-size':'2em'}}
-			],
+			{location:{left:2,top:2},media:{word:'key: E'}, css:{color:'white','font-size':'1em'}},
+			{location:{left:75,top:2},media:{word:'key: I'},  css:{color:'white','font-size':'1em'}},
+			{location:{left:2,top:5},media:{word:category2}, css:{color:'#33ff33','font-size':'2em'}},
+			{location:{left:75,top:5},media:{word:category1},  css:{color:'#33ff33','font-size':'2em'}}
+		],
 			//Inputs for two possible responses.
 			input: [
 				{handle:'enter',on: 'enter'},
@@ -205,14 +219,14 @@ require(['app/API'], function(API) {
 					propositions: [{type:'inputEquals',value:'primeOut'}], // on time out
 					actions: [
 						{type:'hideStim',handle:'primingImage'}, // hide the first stimulus
-						{type:'showStim',handle:'blanckScreen'}, // and show the second one
-						{type:'setInput',input:{handle:'blanckOut',on:'timeout',duration:125}}
+						{type:'showStim',handle:'blankScreen'}, // and show the second one
+						{type:'setInput',input:{handle:'blankOut',on:'timeout',duration:125}}
 					]
 				},
 				{
-					propositions: [{type:'inputEquals',value:'blanckOut'}], // on time out
+					propositions: [{type:'inputEquals',value:'blankOut'}], // on time out
 					actions: [
-						{type:'hideStim',handle:'blanckScreen'}, // hide the blanck screen
+						{type:'hideStim',handle:'blankScreen'}, // hide the blank screen
 						{type:'showStim',handle:'targetStim'}, // and show the letter
 						{type:'setInput',input:{handle:category2,on: 'keypressed', key:'e'}},//the user can only answer here
 						{type:'setInput',input:{handle:category1,on: 'keypressed', key:'i'}},
@@ -274,7 +288,7 @@ require(['app/API'], function(API) {
 				{ inherit: {set: 'targetStimulus', type:'exRandom'}, data : {handle:'targetStim'} },
 				{ inherit: {set: 'exprimingImage', type:'exRandom'}, data : {handle:'primingImage'} },
 				{ inherit: 'exMaskScreen'},
-				{ inherit: 'blanckScreen'}
+				{ inherit: 'blankScreen'}
 			]
 		}],
 
@@ -282,6 +296,12 @@ require(['app/API'], function(API) {
 
 	//Define the instructions trial- will be use gor showing the instruction at the begining of each block, and the user feedback at the end.
 	API.addTrialSets('inst',{
+		layout: [
+			{location:{left:2,top:2},media:{word:'key: E'}, css:{color:'white','font-size':'1em'}},
+			{location:{left:75,top:2},media:{word:'key: I'},  css:{color:'white','font-size':'1em'}},
+			{location:{left:2,top:5},media:{word:category2}, css:{color:'#33ff33','font-size':'2em'}},
+			{location:{left:75,top:5},media:{word:category1},  css:{color:'#33ff33','font-size':'2em'}}
+		],
 		input: [
 			{handle:'space',on:'space'}, //Will handle a SPACEBAR reponse
 			{handle:'enter',on:'enter'},
@@ -333,7 +353,7 @@ require(['app/API'], function(API) {
 			}
 		],
 
-		//blanckScreen  stimulus (in between the trials)
+		//blankScreen  stimulus (in between the trials)
 		MaskScreen : [
 			{
 				data : {handle:'MaskScreen'},
@@ -350,11 +370,11 @@ require(['app/API'], function(API) {
 				nolog:true
 			}
 		],
-		blanckScreen : [// can be used as a fixation point by replacing the word with '+'
+		blankScreen : [// can be used as a fixation point by replacing the word with '+'
 			{
-				data : {handle:'blanckScreen'},
+				data : {handle:'blankScreen'},
 				css:{color:'green','font-size':'2em'},
-				media: {word:' '},//the blanck screen in between
+				media: {word:' '},//the blank screen in between
 				nolog:true
 			}
 		],
@@ -368,7 +388,7 @@ require(['app/API'], function(API) {
 				}
 			],
 			//black
-			primingImage2 : [
+		primingImage2 : [
 				{
 					data : {handle:'primingImage',alias: 'black'},
 					inherit:'Default',
@@ -376,7 +396,7 @@ require(['app/API'], function(API) {
 				}
 			],
 			//example images
-			exprimingImage : [
+		exprimingImage : [
 				{
 					data : {handle:'primingImage',alias:'example'},
 					inherit:'Default',
@@ -573,7 +593,7 @@ require(['app/API'], function(API) {
 			stimuli: [
 				{//The instructions stimulus
 					//the instructions that will be shown on the screen
-					media:{html:'<div><p style="font-size:26px"><color="FFFAFA">Put your middle or index fingers on the <b>E</b> and <b>I</b> keys of your keyboard.<br/> Press the key <B>I</B> if the drawing is more pleasant than average.<br/> Hit the <b>E</b> key If it is more unpleasant than average. <br/><br/> The images appear and disappear quickly.<br/> Remember to ignore the first picture and evaluate only the Chinese drawing.</br></br> When you are ready to try a few practice responses,<br/> hit the <b>space bar</b>.</p></div>'}
+					media:{html:'<div><p style="font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial"><color="FFFFFF">Press the key <B>I</B> if the drawing is more pleasant than average. Hit the <b>E</b> key If it is more unpleasant than average. The images appear and disappear quickly.  Remember to ignore the first picture and evaluate only the Chinese drawing.<br/><br/>When you are ready to try a few practice responses, hit the <b>space bar</b>.</p></div>'}
 				}]},
 		{ //The presentation example trials
 			mixer: 'repeat',// Repeat 3 times the trial.
@@ -586,7 +606,7 @@ require(['app/API'], function(API) {
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
-					media:{html:'<div><p style="font-size:26px"><color="FFFAFA">See how fast it is? Dont worry if you miss some. Go with your gut feelings.<br/> Concentrate on the drawing and rate it as more "pleasant" than average with the <b>I</b> key,<br/> or more "unpleasant" than average with the <b>E</b> key.<br/><br/> Ready? Press the <b>space bar</b> to begin.<br/><br/>(round 1 of 3) </p></div>'}
+					media:{html:'<div><p style="font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial"><color="FFFFFF"><br/>See how fast it is? Don\'t worry if you miss some. Go with your gut feelings.<br><br>Concentrate on the drawing and rate it as more "pleasant" than average with the <b>I</b> key, or more "unpleasant" than average with the <b>E</b> key.<br/><br/>Evaluate each Chinese drawing and not the image that appears before it. The images are sometimes distracting.<br/><br/></p><p style="font-size:14px; text-align:center; font-family:arial">Ready? Press the <b>space bar</b> to begin.<br/><br/></p><p style="font-size:12px; text-align:center; font-family:arial">(round 1 of 3)</p></div>'}
 				}]},
 		{ //The presentation trials
 			mixer: 'random',
@@ -594,8 +614,8 @@ require(['app/API'], function(API) {
 				mixer: 'repeat',// Repeat 40 times the trial. (20 times each combination)
 				times: 20,
 				data : [
-					{inherit: 'white',data:{block:1}},
-					{inherit: 'black',data:{block:1}},
+					{inherit: 'prime1',data:{block:1}},
+					{inherit: 'prime2',data:{block:1}},
 				]
 			}]
 		},
@@ -605,7 +625,7 @@ require(['app/API'], function(API) {
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
-					media:{html:'<div><p style="font-size:28px"><color="#FFFAFA">Continue to the second round of this task.<br/> The rules are exactly the same.<br/><br/>Concentrate on the drawing and rate it as more "pleasant" than average with the <b>I</b> key,<br/>  or more "unpleasant" than average with the <b>E</b> key.<br/><br/> Evaluate each Chinese drawing and not the image that appears before it.<br/> The images are sometimes distracting.<br/><br/>Ready? Press the <b>space bar</b> to begin.<br/><br/>(Round 2 of 3).</p></div>'}
+					media:{html:'<div><p style="font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial"><color="FFFFFF"><br/>Continue to the second round of this task. The rules are exactly the same:<br/><br/>Concentrate on the drawing and rate it as more "pleasant" than average with the <b>I</b> key, or more "unpleasant" than average with the <b>E</b> key.<br/><br/>Evaluate each Chinese drawing and not the image that appears before it. The images are sometimes distracting.<br/><br/></p><p style="font-size:14px; text-align:center; font-family:arial">Ready? Press the <b>space bar</b> to begin.<br/><br/></p><p style="font-size:12px; text-align:center; font-family:arial">(round 2 of 3)</p></div>'}
 				}
 			]},
 		{ //The presentation trials
@@ -615,8 +635,8 @@ require(['app/API'], function(API) {
 				mixer: 'repeat',// Repeat 40 times the trial. (20 times each combination)
 				times: 20,
 				data : [
-					{inherit: 'white',data:{block:2}},
-					{inherit: 'black',data:{block:2}},
+					{inherit: 'prime1',data:{block:2}},
+					{inherit: 'prime2',data:{block:2}},
 				]
 			}]
 		},
@@ -626,7 +646,7 @@ require(['app/API'], function(API) {
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
-					media:{html:'<div><p style="font-size:28px"><color="#FFFAFA">And now to the last round of this task.<br/> The rules are exactly the same.<br/><br/>Concentrate on the drawing and rate it as more "pleasant" than average with the <b>I</b> key,<br/>  or more "unpleasant" than average with the <b>E</b> key.<br/><br/> Evaluate each Chinese drawing and not the image that appears before it.<br/> The images are sometimes distracting.<br/><br/>Ready? Press the <b>space bar</b> to begin.<br/><br/>(Round 3 of 3).</p></div>'}
+					media:{html:'<div><p style="font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial"><color="FFFFFF"><br/>And now to the last round of this task. The rules are exactly the same: <br/><br/>Concentrate on the drawing and rate it as more "pleasant" than average with the <b>I</b> key, or more "unpleasant" than average with the <b>E</b> key.<br><br>Evaluate each Chinese drawing and not the image that appears before it. The images are sometimes distracting.<br/><br/></p><p style="font-size:14px; text-align:center; font-family:arial">Ready? Press the <b>space bar</b> to begin.<br/><br/></p><p style="font-size:12px; text-align:center; font-family:arial">(round 3 of 3)</p></div>'}
 				}]},
 		{ //The presentation trials
 			mixer: 'random',
@@ -634,8 +654,8 @@ require(['app/API'], function(API) {
 				mixer: 'repeat',// Repeat 40 times the trial. (20 times each combination)
 				times: 20,
 				data : [
-					{inherit: 'white',data:{block:3}},
-					{inherit: 'black',data:{block:3}},
+					{inherit: 'prime1',data:{block:3}},
+					{inherit: 'prime2',data:{block:3}},
 				]
 			}]
 		},
@@ -644,21 +664,22 @@ require(['app/API'], function(API) {
 		{
 			data: {blockStart:true},
 			inherit: "inst",
+			layout: [],
 			stimuli: [],
-			customize: function(){
+				customize: function(){
 				var trial = this;
 				console.log('computing AMP score..');//printing to the console
+				resetCounters();
 				console.log(API.getLogs());//printing to the consol the log's array
 				var logs = API.getLogs();//saving the logs
 				computeAMPScore(logs);// computing the AMP score
-				var feedback = 'After black men, '+AMPScorer.counter.prime2.category1+' of the responses were ‘pleasant’  and '+ AMPScorer.counter.prime2.category2+' of the responses were ‘unpleasant’<br>After white men, '+ AMPScorer.counter.prime1.category1+' of the responses were ‘pleasant’ and '+ AMPScorer.counter.prime1.category2+' of the responses were ‘unpleasant’.';
+				var feedback = 'After ' + condition1 + ', '+AMPScorer.counter.prime1.category1+' of the responses were ‘pleasant’  and '+ AMPScorer.counter.prime1.category2+' of the responses were ‘unpleasant’<br>After ' + condition2 + ', '+ AMPScorer.counter.prime2.category1+' of the responses were ‘pleasant’ and '+ AMPScorer.counter.prime2.category2+' of the responses were ‘unpleasant’.';
 				// report to the server
 				$.post("/implicit/scorer", JSON.stringify({feedback:feedback}));
 
 				//show the score
-				var media1 = {media:{html:'<div><p style="font-size:28px"><color="#FFFAFA">' + '</p></div>'}};
+				var media1 = {media:{html:'<div><p style="font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial"><color="#FFFFFF">' + feedback + '</p></div>'}};
 				trial.stimuli.push(media1);
-
 			}
 		},
 		{ //Instructions trial, the end of the task, instruction what to do next
@@ -666,7 +687,7 @@ require(['app/API'], function(API) {
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
-					media:{html:'<div><p style="font-size:28px"><color="#FFFAFA">You have completed the study<br/><br/>Thank you very much for your participation.<br/><br/> Press space for continue to next task.</p></div>'}
+					media:{html:'<div><p style="style="font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial"><color="#FFFFFF">You have completed the task. Press space for continue to next task.</p></div>'}
 				}
 			]
 		}
