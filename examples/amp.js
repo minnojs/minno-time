@@ -75,12 +75,31 @@ require(['app/API'], function(API) {
 		image : '../examples/images'
 	});
 
-	   API.addSettings('logger',{
+	API.addSettings('logger',{
         pulse: 20,
-        url : '/implicit/PiPlayerApplet'
+        url : '/implicit/PiPlayerApplet',
+
+        // use default logger (as copied from documents.txt but replace the regular latency with the computed latency)
+        logger: function(trialData, inputData, actionData,logStack){
+
+			var stimList = this._stimulus_collection.get_stimlist();
+			var mediaList = this._stimulus_collection.get_medialist();
+
+			return {
+				log_serial : logStack.length,
+				trial_id: this._id,
+				name: this.name(),
+				responseHandle: inputData.handle,
+				latency: inputData.latency - trialData.begin,
+				absoluteLatency : inputData.latency,
+				stimuli: stimList,
+				media: mediaList,
+				data: trialData
+			};
+        }
     });
 
-	//Define the basic trial (the prsentation of the images and words)
+	//Define the basic trial (the presentation of the images and words)
 	API.addTrialSets({
 		basicTrial: [{
 			//Layout defines what will be presented in the trial. It is like a background display.
@@ -116,10 +135,16 @@ require(['app/API'], function(API) {
 					actions: [
 						{type:'hideStim',handle:'blankScreen'}, // hide the blank screen
 						{type:'showStim',handle:'targetStim'}, // and show the letter
-						{type:'setInput',input:{handle:category2,on: 'keypressed', key:'e'}},//the user can only answer here
+						{type:'setInput',input:{handle:category2,on: 'keypressed', key:'e'}},//the user can only answer here on
 						{type:'setInput',input:{handle:category1,on: 'keypressed', key:'i'}},
 						{type:'setInput',input:{handle:category2,on:'leftTouch',touch:true}},
 						{type:'setInput',input:{handle:category1,on:'rightTouch',touch:true}},
+
+						// set the begin latency in trialData
+						{type:'setTrialAttr',setter:function(data,event){
+							data.begin = event.latency;
+						}},
+
 						{type:'setInput',input:{handle:'targetOut',on:'timeout',duration:100}}
 					]
 				},
@@ -191,7 +216,7 @@ require(['app/API'], function(API) {
 				{ inherit: 'MaskScreen'},
 				{ inherit: 'blankScreen'}
 			]
-		}],
+		}]
 	});
 
 	//define an example trial- should be diffrent trial because it has diffrent durations.
@@ -232,6 +257,12 @@ require(['app/API'], function(API) {
 						{type:'setInput',input:{handle:category1,on: 'keypressed', key:'i'}},
 						{type:'setInput',input:{handle:category2,on:'leftTouch',touch:true}},
 						{type:'setInput',input:{handle:category1,on:'rightTouch',touch:true}},
+
+						// set the begin latency in trialData
+						{type:'setTrialAttr',setter:function(data,event){
+							data.begin = event.latency;
+						}},
+
 						{type:'setInput',input:{handle:'targetOut',on:'timeout',duration:125}}
 					]
 				},
@@ -290,7 +321,7 @@ require(['app/API'], function(API) {
 				{ inherit: 'exMaskScreen'},
 				{ inherit: 'blankScreen'}
 			]
-		}],
+		}]
 
 	});
 

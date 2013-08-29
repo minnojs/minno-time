@@ -518,6 +518,24 @@ logger: accepts a function to replace the existing logging function. (don't touc
 		// the function should return an object to be pushed into the trial stack, and later be sent to the server
 	}
 
+	// this is what the default logger looks like:
+	function(trialData, inputData, actionData,logStack){
+
+		var stimList = this._stimulus_collection.get_stimlist();
+		var mediaList = this._stimulus_collection.get_medialist();
+
+		return {
+			log_serial : logStack.length,
+			trial_id: this._id,
+			name: this.name(),
+			responseHandle: inputData.handle,
+			latency: inputData.latency,
+			stimuli: stimList,
+			media: mediaList,
+			data: trialData
+		};
+	};
+
 Canvas
 ------
 canvas: {
