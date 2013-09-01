@@ -18,7 +18,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		image : '../examples/images'
 	});
 
-	   API.addSettings('logger',{
+	API.addSettings('logger',{
         pulse: 20,
         url : '/implicit/PiPlayerApplet'
     });
@@ -48,7 +48,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 	//Define the basic trial (the prsentation of the images and words)
 	API.addTrialSets({
 		basicTrial: [{
-			data : {score:1},// by default each trial is crrect, this is modified in case of an error
+			data : {score:0},// by default each trial is correct, this is modified in case of an error
 			//Layout defines what will be presented in the trial. It is like a background display.
 			layout: [
 				{location:{left:15,top:3},media:{word:'key: e'}, css:{color:'black','font-size':'1em'}},
@@ -56,9 +56,9 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				{location:{left:10,top:6},media:{word:category2}, css:{color:'white','font-size':'2em'}},
 				{location:{left:70,top:6},media:{word:category1}, css:{color:'white','font-size':'2em'}}
 			],
-		
+
 			input: [
-				{handle:'enter',on:'enter'} //'enter' to skip the current block 
+				{handle:'enter',on:'enter'} //'enter' to skip the current block
 			],
 
 			//Set what to do.
@@ -118,10 +118,10 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				},
 				{//what to do on incorrect response
 					propositions: [
-						{type:'inputEquals',value:'onError'} 
+						{type:'inputEquals',value:'onError'}
 					],
 					actions: [
-						{type:'setTrialAttr', setter:{score:0}},
+						{type:'setTrialAttr', setter:{score:1}},
 						{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
 						{type:'showStim',handle:'errorFB'}, //show error feedback
 						{type:'removeInput',inputHandle:[category2,category1]},// block the option to change the answer or to answer twice
