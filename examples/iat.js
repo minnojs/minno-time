@@ -17,7 +17,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 	});
 
 	API.addSettings('canvas',{
-		background: '#EEEEEE',
+		background: '#EEEEEE'
 	});
 
 	API.addSettings('logger',{
@@ -94,8 +94,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			{
 				propositions: [
 					{type:'stimEquals',value:'side',negate:true},								// check if the input handle is unequal to the "side" attribute of stimulus.data
-					{type:'inputEquals',value:['right','left']},								// make sure this is a click interaction
-
+					{type:'inputEquals',value:['right','left']}									// make sure this is a click interaction
 				],
 				actions: [
 					{type:'showStim',handle:'error'},											// show error stimulus
@@ -678,7 +677,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				{inherit : {type:'byData', data:{block:4,row:1}, set:'IAT'}},
 				{inherit : {type:'byData', data:{block:4,row:2}, set:'IAT'}}
 			]
-		},
+		}
 	]; // end swaped IAT
 
 	/*
@@ -689,7 +688,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			mixer: 'choose',
 			data: [
 				{mixer:'wrapper',data:regularIAT},
-				{mixer:'wrapper',data:swapedIAT},
+				{mixer:'wrapper',data:swapedIAT}
 			]
 		},
 
