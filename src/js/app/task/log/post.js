@@ -2,7 +2,7 @@
  * Send log chunk
  * returns a function that takes data and sends it to the server after appending any meta data
  */
-define(['jquery','app/task/settings','libs/json2'],function($, settings){
+define(['jquery','app/task/settings','JSON'],function($, settings,JSON){
 
 	var send = function(data){
 		var url = settings.logger && settings.logger.url
