@@ -20,7 +20,32 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 
 	API.addSettings('logger',{
         pulse: 20,
-        url : '/implicit/PiPlayerApplet'
+        url : '/implicit/PiPlayerApplet',
+
+        // use default logger (as copied from documents.txt but replace the regular latency with the computed latency)
+        logger: function(trialData, inputData, actionData, logStack){
+
+			var stimList = this._stimulus_collection.get_stimlist();
+			var mediaList = this._stimulus_collection.get_medialist();
+
+			var myLatency = inputData.latency;
+			if (trialData.begin > 0) {
+				myLatency = inputData.latency - trialData.begin;
+			}
+
+			return {
+				log_serial : logStack.length,
+				trial_id: this._id,
+				name: this.name(),
+				responseHandle: inputData.handle,
+				latency: myLatency, // computed latency
+				absoluteLatency : inputData.latency, // original latency
+				stimuli: stimList,
+				media: mediaList,
+				data: trialData
+			};
+        }
+
     });
 
 	//the Scorer that compute the user feedback
@@ -79,7 +104,11 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 						{type:'setInput',input:{handle:category2,on: 'keypressed', key:'e'}},
 						{type:'setInput',input:{handle:category1,on: 'keypressed', key:'i'}},
 						{type:'setInput',input:{handle:category2,on:'leftTouch',touch:true}},
-						{type:'setInput',input:{handle:category1,on:'rightTouch',touch:true}}
+						{type:'setInput',input:{handle:category1,on:'rightTouch',touch:true}},
+						{type:'setTrialAttr',setter:function(data,event){
+							data.begin = event.latency;
+						}},
+
 					]
 				},
 				// there are 2 possible responses: "pleasent" and "unpleasent", here we handle these responses when the user answers
@@ -101,24 +130,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				{
 					propositions: [
 						{type:'stimEquals',value:'wordCategory', negate:true},
-						{type:'inputEquals',value:category1} //Category1 is not the wordCategory.
-					],
-					actions: [
-						{type:'trigger', handle:'onError'}
-					]
-				},
-				{
-					propositions: [
-						{type:'stimEquals',value:'wordCategory', negate:true},
-						{type:'inputEquals',value:category2} //Category2 is not the wordCategory.
-					],
-					actions: [
-						{type:'trigger', handle:'onError'}
-					]
-				},
-				{//what to do on incorrect response
-					propositions: [
-						{type:'inputEquals',value:'onError'}
+						{type:'inputEquals',value: [category1, category2]} // This is a category action - as opposed to some timeout.
 					],
 					actions: [
 						{type:'setTrialAttr', setter:{score:1}},
@@ -128,6 +140,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 						{type:'setInput',input:{handle:'showFix', on:'timeout',duration:250}} //End the trial in 250ms (show the x until then)
 					]
 				},
+
 				{
 					propositions: [{type:'inputEquals',value:'showFix'}], //What to do when endTrial is called.
 					actions: [
