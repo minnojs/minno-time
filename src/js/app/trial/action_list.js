@@ -47,7 +47,11 @@ define(["utils/pubsub"],function(pubsub){
 			pubsub.publish('trial:removeInput',[options.inputHandle]);
 		},
 
+		// we use es3 true to protect from trailing commas in IE7. Here it thinks goto is a reserved word.
+		/* jshint es3:false */
 		goto: function(options){
+		/* jshint es3:true */
+
 			pubsub.publish('trial:goto',[options]);
 		},
 
