@@ -21,43 +21,53 @@ module.exports = function(grunt) {
 				"node":true,
 				"expr":true,
 				"laxcomma":true,
+				"es3":true,
 				"globals": { "define": false, "require": false }
 			}
 		},
 
+		/**
+		 * r.js optimizer
+		 */
 		requirejs: {
 			compile : {
 				options : {
-					// Creates a js-optimized folder at the same folder level as your "js" folder and places the optimized project there
-					dir: "js-optimized",
+					// Creates a dist folder with optimized js
+					dir: "dist",
+					appDir: 'src',
+					baseUrl: 'js',
 
 					// Tells Require.js to look at main.js for all shim and path configurations
-					mainConfigFile: 'js/main.js',
+					mainConfigFile: 'src/js/main.js',
 
 					// Modules to be optimized:
 					modules: [
 						{
-							name: "main"
+							name: "app/API"
 						}
 					]
 				}
 			}
 		},
-		docco: {
-			tutorials : {
-				src : ['tutorials/*.js'],
-				options : {
-					output: 'docs'
-				}
+
+		/**
+		 * run shell scripts
+		 */
+		shell: {
+			// build tutorials from js in tutorials
+			docco: {
+				command: 'docco tutorials/*.js'
 			}
 		}
-
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
-	grunt.loadNpmTasks('grunt-docco');
+	grunt.loadNpmTasks('grunt-shell');
 
 	// Default task(s).
-	grunt.registerTask('default', ['jshint','docco']);
+	grunt.registerTask('default', ['jshint']);
+
+	// build production stuff
+	grunt.registerTask('build', ['requirejs','shell:docco']);
 };
