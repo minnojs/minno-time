@@ -1,3 +1,4 @@
+/* global $ */
 //This example creates an amp task.
 require(['app/API'], function(API) {
 	var category1 = 'Pleasent';
@@ -111,7 +112,7 @@ require(['app/API'], function(API) {
 			],
 			//Inputs for two possible responses.
 			input: [
-				{handle:'enter',on:'enter'},
+				{handle:'enter',on:'enter'}
 			],
 			//Set what to do.
 			interactions: [
@@ -231,7 +232,7 @@ require(['app/API'], function(API) {
 		],
 			//Inputs for two possible responses.
 			input: [
-				{handle:'enter',on: 'enter'},
+				{handle:'enter',on: 'enter'}
 			],
 			//Set what to do.
 			interactions: [
@@ -646,7 +647,7 @@ require(['app/API'], function(API) {
 				times: 20,
 				data : [
 					{inherit: 'prime1',data:{block:1}},
-					{inherit: 'prime2',data:{block:1}},
+					{inherit: 'prime2',data:{block:1}}
 				]
 			}]
 		},
@@ -667,7 +668,7 @@ require(['app/API'], function(API) {
 				times: 20,
 				data : [
 					{inherit: 'prime1',data:{block:2}},
-					{inherit: 'prime2',data:{block:2}},
+					{inherit: 'prime2',data:{block:2}}
 				]
 			}]
 		},
@@ -686,7 +687,7 @@ require(['app/API'], function(API) {
 				times: 20,
 				data : [
 					{inherit: 'prime1',data:{block:3}},
-					{inherit: 'prime2',data:{block:3}},
+					{inherit: 'prime2',data:{block:3}}
 				]
 			}]
 		},

@@ -50,6 +50,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 
 	//the Scorer that compute the user feedback
 	Scorer.addSettings('compute',{
+		ErrorVar:'score',
 		condVar:"trialCategories",
 		cond1VarValues: ["Black People/Bad Words","White People/Good Words"], //condition 1
 		cond2VarValues: ["Black People/Good Words","White People/Bad Words"], //condition 2
@@ -107,8 +108,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 						{type:'setInput',input:{handle:category1,on:'rightTouch',touch:true}},
 						{type:'setTrialAttr',setter:function(data,event){
 							data.begin = event.latency;
-						}},
-
+						}}
 					]
 				},
 				// there are 2 possible responses: "pleasent" and "unpleasent", here we handle these responses when the user answers
@@ -398,7 +398,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 						{inherit: 'pleasentWhite',data:{block:0}},
 						{inherit: 'pleasentBlack',data:{block:0}},
 						{inherit: 'unpleasentWhite',data:{block:0}},
-						{inherit: 'unpleasentBlack',data:{block:0}},
+						{inherit: 'unpleasentBlack',data:{block:0}}
 					]
 				} // end wrapper
 			]
@@ -423,7 +423,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 						{inherit: 'pleasentWhite',data:{block:1}},
 						{inherit: 'pleasentBlack',data:{block:1}},
 						{inherit: 'unpleasentWhite',data:{block:1}},
-						{inherit: 'unpleasentBlack',data:{block:1}},
+						{inherit: 'unpleasentBlack',data:{block:1}}
 					]
 				} // end wrapper
 			]
@@ -449,7 +449,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 						{inherit: 'pleasentWhite',data:{block:2}},
 						{inherit: 'pleasentBlack',data:{block:2}},
 						{inherit: 'unpleasentWhite',data:{block:2}},
-						{inherit: 'unpleasentBlack',data:{block:2}},
+						{inherit: 'unpleasentBlack',data:{block:2}}
 					]
 				}
 			]
