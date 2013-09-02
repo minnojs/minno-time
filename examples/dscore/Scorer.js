@@ -91,7 +91,7 @@ define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],f
     		data[scoreKey] =score;
     		data[msgKey] = msg;
 
-    		$.post(url,JSON.stringify(data));
+    		return $.post(url,JSON.stringify(data));
 
 
     	},
