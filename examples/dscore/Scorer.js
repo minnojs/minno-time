@@ -92,8 +92,6 @@ define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],f
     		data[msgKey] = msg;
 
     		return $.post(url,JSON.stringify(data));
-
-
     	},
 
       	// get message according to user input
