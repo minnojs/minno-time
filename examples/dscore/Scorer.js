@@ -49,16 +49,16 @@ define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],f
 
 			Scorer.init();
 			computeData.setDataArray();
-			console.log('started computeD');
-			console.log(computeData);
-			console.log(msgMan);
+			// console.log('started computeD');
+			// console.log(computeData);
+			// console.log(msgMan);
 			parcelMng.Init(computeData);
 			parcelMng.avgAll(computeData);
 			//parcelMng.diffAll(computeData);
 			parcelMng.varianceAll(computeData);
 			parcelMng.scoreAll(computeData);
 			var scoreObj = parcelMng.scoreData;
-			console.log('the score from new scoree is: '+scoreObj.score );
+		//	console.log('the score from new scoree is: '+scoreObj.score );
 			//var oldScore = parcelMng.simulateOldCode(computeData);//for testing only
 			//console.log('the score from old scoree is: '+oldScore );
 			return scoreObj;

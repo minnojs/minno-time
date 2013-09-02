@@ -21,7 +21,7 @@ define(['jquery','app/API','underscore'],function($,API,_){
 		Init: function(compute){
 
 			var data = API.getLogs();
-			console.log(data);
+		//	console.log(data);
 			var AnalyzedVar = compute.AnalyzedVar;
 			var error = compute.ErrorVar;
 			var parcelVar = compute.parcelVar;
@@ -72,9 +72,9 @@ define(['jquery','app/API','underscore'],function($,API,_){
 					///////////////////////////////////
 					_.each (data, function (value,index) {//loop per object in logger
 						var trialParcelName = value.data[parcelVar];
-						console.log(value.data);
+					//	console.log(value.data);
 						if (trialParcelName == parcelName){// if this trial belongs tp parcel
-							console.log('enter loop');
+					//		console.log('enter loop');
 							if (value[AnalyzedVar]>=min && value[AnalyzedVar]<=max){
 								totalTrials++;
 								if (value.data[error] == 1) totalErrorTrials++;
@@ -99,9 +99,9 @@ define(['jquery','app/API','underscore'],function($,API,_){
 
 			}
 		
-			console.log('finished init the parcelArray is:');
-			console.log(parcelMng.parcelArray);
-			console.log('--------------------');
+		//	console.log('finished init the parcelArray is:');
+		//	console.log(parcelMng.parcelArray);
+		//	console.log('--------------------');
 		},
 
 /*  Method: Void checkErrors
@@ -279,11 +279,11 @@ define(['jquery','app/API','underscore'],function($,API,_){
 			p.diff = p.avgCon1 - p.avgCon2;
 			if (numBoth != 0) p.avgBoth = avgBoth/numBoth;
 			parcelMng.addPenalty(p,compute);
-			console.log('finished parcel: '+p.name);
-			console.log('Avg1 is: '+p.avgCon1);
-			console.log('Avg2 is: '+p.avgCon2);
-			console.log('AvgBoth is: '+p.avgBoth);
-			console.log('--------------------');
+			// console.log('finished parcel: '+p.name);
+			// console.log('Avg1 is: '+p.avgCon1);
+			// console.log('Avg2 is: '+p.avgCon2);
+			// console.log('AvgBoth is: '+p.avgBoth);
+			// console.log('--------------------');
 		},
 
 /*  Function: Void checkArray.
@@ -322,11 +322,11 @@ define(['jquery','app/API','underscore'],function($,API,_){
 */	
 
 		varianceAll: function(compute){
-			console.log('starting varianceAll');
+	//		console.log('starting varianceAll');
 			_.each (parcelMng.parcelArray, function (value,index) {
 				parcelMng.varianceParcel(value,compute);
 			});
-			console.log(parcelMng.parcelArray);
+	//		console.log(parcelMng.parcelArray);
 		},
 
 /*  Function: Void varianceParcel.
@@ -336,7 +336,7 @@ define(['jquery','app/API','underscore'],function($,API,_){
 
 */	
 		varianceParcel: function(p,compute){
-			console.log('starting varianceParcel');
+	//		console.log('starting varianceParcel');
 			var AnalyzedVar = compute.AnalyzedVar;
 			var trialIData = p.trialIData;
 			var cond1 = compute.cond1VarValues;
@@ -395,9 +395,9 @@ define(['jquery','app/API','underscore'],function($,API,_){
 
 			});
 			p.variance = x2/(pooledData.length-1);
-			console.log('finished variance parcel: '+p.name);
-			console.log('variance: '+p.variance);
-			console.log('--------------------');
+			// console.log('finished variance parcel: '+p.name);
+			// console.log('variance: '+p.variance);
+			// console.log('--------------------');
 
 		},
 
@@ -438,7 +438,7 @@ define(['jquery','app/API','underscore'],function($,API,_){
 
 */	
 		scoreAll: function(compute){
-			console.log('starting scoreAll');
+	//		console.log('starting scoreAll');
 			var dAvg = 0;
 			_.each (parcelMng.parcelArray, function (value,index) {
 				parcelMng.scoreParcel(value,compute);
@@ -457,12 +457,17 @@ define(['jquery','app/API','underscore'],function($,API,_){
 
 */	
 		scoreParcel: function(p,compute){
-			console.log('starting scoreParcel');
+	//		console.log('starting scoreParcel');
 			var sd = Math.sqrt(p.variance);
-			p.score = p.diff/sd;
-			console.log('finished score parcel: '+p.name);
-			console.log('score: '+p.score);
-			console.log('--------------------');
+			if (sd == 0){
+				parcelMng.scoreData.errorMessage = "Variance is zero";
+				p.score = p.diff;
+			}else{
+				p.score = p.diff/sd;
+			}
+			// console.log('finished score parcel: '+p.name);
+			// console.log('score: '+p.score);
+			// console.log('--------------------');
 
 		},
 
@@ -579,7 +584,7 @@ define(['jquery','app/API','underscore'],function($,API,_){
 		        var errorString;
 		        var trial;
 		        // BNG Steps 1-5
-		        console.log('-------starting old code---------');
+		    //    console.log('-------starting old code---------');
 		        for(i=0;i < results.length; i++){  //  Loop through all trials
 		            trial = results[i];
 		            for (j=0;j< rb.length; j++){  //  check if trial is in a report block and < 10000
@@ -622,19 +627,19 @@ define(['jquery','app/API','underscore'],function($,API,_){
 		            ave4 = parcelMng.ave(b[1]);//block 3
 		            ave6 = parcelMng.ave(b[2]);//block 5
 		            ave7 = parcelMng.ave(b[3]);//blcok 6
-		            console.log('Avg block 2: '+ave3);
-		            console.log('Avg block 3: '+ave4);
-		            console.log('Avg block 5: '+ave6);
-		            console.log('Avg block 6: '+ave7);
-		            console.log('---------------------');
+		            // console.log('Avg block 2: '+ave3);
+		            // console.log('Avg block 3: '+ave4);
+		            // console.log('Avg block 5: '+ave6);
+		            // console.log('Avg block 6: '+ave7);
+		            // console.log('---------------------');
 		            //            console.log("ave3:"+ave3+",ave4:"+ave4+",ave6:"+ave6+",ave7:"+ave7);
 
 		            // difference  BNG 10
 		            diff36 = ave3 - ave6;
 		            diff47 = ave4 - ave7;
-		            console.log('diff between block 2 and 5: '+diff36);
-		            console.log('diff between block 3 and 6: '+diff47);
-		            console.log('---------------------');
+		            // console.log('diff between block 2 and 5: '+diff36);
+		            // console.log('diff between block 3 and 6: '+diff47);
+		            // console.log('---------------------');
 		            //            console.log("Diffs "+diff36+","+diff47);
 
 		            //  Divide  BNG11
@@ -686,7 +691,7 @@ define(['jquery','app/API','underscore'],function($,API,_){
 	            d = arr[l]-m;
 	            x2 += d*d;
 	        }
-	        console.log('variance from old code is: '+x2/(arr.length-1));
+	 //       console.log('variance from old code is: '+x2/(arr.length-1));
 	        return (x2/(arr.length-1));
 	    },
 
