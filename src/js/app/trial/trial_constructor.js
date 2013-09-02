@@ -129,12 +129,13 @@ define(function(require){
 
 			// IE7 or lower
 			// @todo: improve very ugly solution to ie7 bug, we need the no timeout solution for ipad where this causes a blink
-			if (document.all && !document.querySelector) {
+			if (document.all && !document.addEventListener) {
 				// resolve this trial (inside timeout, to make sure the endtrial subscription ends. ie7 bug)
 				setTimeout(function(){
 					// remove all stimuli from canvas (needs to be inside timeout to prevent blink in some browsers)
 					main.empty();
 					self.deferred.resolve(self._next[0], self._next[1]);
+
 				},1);
 			} else {
 				// regular resolve (let the deferred know were we are going next)
