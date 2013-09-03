@@ -269,7 +269,7 @@ define(['jquery','app/API','underscore'],function($,API,_){
 
 			});
 			if (numCond1 <= 2 || numCond2 <= 2){
-				parcelMng.scoreData.errorMessage = "Not enougth correct responces";
+				parcelMng.scoreData.errorMessage = "Not enough correct responses";
 
 			}
 			if (numCond1 != 0) avgCon1 = avgCon1/numCond1;
@@ -460,7 +460,7 @@ define(['jquery','app/API','underscore'],function($,API,_){
 	//		console.log('starting scoreParcel');
 			var sd = Math.sqrt(p.variance);
 			if (sd == 0){
-				parcelMng.scoreData.errorMessage = "Variance is zero";
+				parcelMng.scoreData.errorMessage = "Not enough correct responses";
 				p.score = p.diff;
 			}else{
 				p.score = p.diff/sd;
