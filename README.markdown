@@ -26,7 +26,17 @@ There cannot be more than one trial at a time, and each trial can change just ab
 
 When creating a task you first create your building blocks. You create prototypes for each trial type you intend to use and create sets of stimuli for later use. Next, you drop the building blocks into the sequence; at this stage you decide on the global structure of your task and create the exact randomization that you want.
 
-Once your script is ready all you have to do is to call it from within the player index page.
+Once your script is ready all you have to do is to call it from within the player index page. i.e.,
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>TEST</title>
+        </head>
+        <body>
+          <a target="_blank" href="../static/src/index.html?url=../tutorials/trial.js">go to my test experiment!</a>
+        </body>
+       </html>
 
 ### Collecting the data
 All the data that is recorded by the player is sent to a URL of your choosing. Tasks may vary greatly so we give you the flexibility to send whatever data you need and process it however you see fit.
