@@ -22,6 +22,8 @@ define(['jquery','app/API','underscore'],function($,API,_){
 
 			var data = API.getLogs();
 		//	console.log(data);
+			parcelMng.parcelArray = [];
+			parcelMng.scoreData = {};
 			var AnalyzedVar = compute.AnalyzedVar;
 			var error = compute.ErrorVar;
 			var parcelVar = compute.parcelVar;
