@@ -38,7 +38,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			attribute1 + ',' + category2 + '/' + attribute2 + ',' + category1
 		],
 		parcelVar : "parcel",
-		parcelValue : ['first','second'],
+		parcelValue : ['first'],
 		fastRT : 150, //Below this reaction time, the latency is considered extremely fast.
 		maxFastTrialsRate : 0.1, //Above this % of extremely fast responses within a condition, the participant is considered too fast.
 		minRT : 400, //Below this latency
@@ -703,19 +703,34 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				var DScore;
 				console.log('calling Scorer');
 				var DScoreObj = Scorer.computeD();
-				if (DScoreObj.errorMessage === undefined || DScoreObj.errorMessage === null){
-					FBMsg = Scorer.getFBMsg(DScoreObj.score);
-					DScore = DScoreObj.score;
-				}else{
-					FBMsg = DScoreObj.errorMessage;
-					DScore = "";
-				}
-
-				console.log(FBMsg);
-				console.log(DScore);
-				var media = {css:{color:'black'},media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};
+				//console.log(FBMsg);
+				//console.log(DScore);
+				
+				var media = {css:{color:'black'},media:{html:'<div><p style="font-size:12px"><color="#FFFAFA"> '+DScoreObj.FBMsg+'<br>The Score is:'+DScoreObj.DScore+'</p></div>'}};
 				trial.stimuli.push(media);
-				Scorer.postToServer(DScore,FBMsg,"score1","feedback1");
+				Scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score1","feedback1");
+
+				//////second call to score//////
+				Scorer.addSettings('compute',{
+					parcelValue : ['second'],
+
+				});
+				Scorer.addSettings('message',{
+					MessageDef: [
+						{ cut:'-0.65', message:'Your data suggest a strong implicit preference for Black People compared to White People' },
+						{ cut:'-0.35', message:'Your data suggest a moderate implicit preference for Black People compared to White People.' },
+						{ cut:'-0.15', message:'Your data suggest a slight implicit preference for Black People compared to White People.' },
+						{ cut:'0', message:'Your data suggest little to no difference in implicit preference between Black People and White People.' },
+						{ cut:'0.15', message:'Your data suggest a slight implicit preference for White People compared to Black People' },
+						{ cut:'0.35', message:'Your data suggest a moderate implicit preference for White People compared to Black People' },
+						{ cut:'0.65', message:'Your data suggest a strong implicit preference for White People compared to Black People' }
+					]
+				});
+				var DScoreObj = Scorer.computeD();
+				var media = {css:{color:'black'},media:{html:'<h1><div><p style="font-size:12px"><color="#FFFAFA"> '+DScoreObj.FBMsg+'<br>The Score is:'+DScoreObj.DScore+'</p></div>'}};
+				trial.stimuli.push(media);
+				Scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score1","feedback1");
+
 			}
 		},
 
