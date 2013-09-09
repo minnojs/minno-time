@@ -58,11 +58,21 @@ define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],f
 			parcelMng.varianceAll(computeData);
 			parcelMng.scoreAll(computeData);
 			var scoreObj = parcelMng.scoreData;
+			var scoreData = {};
+			if (scoreObj.errorMessage === undefined || scoreObj.errorMessage === null){
+					scoreData.FBMsg = Scorer.getFBMsg(scoreObj.score);
+					scoreData.DScore = scoreObj.score;
+			}else{
+					scoreData.FBMsg = scoreObj.errorMessage;
+					scoreData.DScore = "";
+			}
+			
 		//	console.log('the score from new scoree is: '+scoreObj.score );
 			//var oldScore = parcelMng.simulateOldCode(computeData);//for testing only
 			//console.log('the score from old scoree is: '+oldScore );
-			return scoreObj;
-			//return score.toFixed(2);
+
+			return scoreData;
+			
 
 		},
 
