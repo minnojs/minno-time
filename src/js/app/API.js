@@ -94,6 +94,7 @@ define(['jquery','./task/script','app/task/main_view','app/task/parser','app/seq
 
 		// run the player, returns deferred
 		play: function(){
+
 			// make sure this is the first time we're playing this sequence
 			if (player_activated) {
 				throw new Error('Player has already been activated. You can only call API.play() once per session');
@@ -101,18 +102,20 @@ define(['jquery','./task/script','app/task/main_view','app/task/parser','app/seq
 			player_activated = true;
 
 			var parseDef = parse();
+
 			// activate main view and then display the loading screen
 			main
 				.activate()
-				.loading(parseDef);
-
-			parseDef
 				.done(function(){
-					main.empty(); // remove the loading content
-					play();
-				})
-				.fail(function(src){
-					throw new Error('loading resource failed, do something about it! (you can start by checking the error log, you are probably reffering to the wrong url - ' + src +')');
+					main
+						.loading(parseDef) // activate loading screen
+						.done(function(){
+							main.empty(); // remove the loading screen
+							play(); // activate task
+						})
+						.fail(function(src){
+							throw new Error('loading resource failed, do something about it! (you can start by checking the error log, you are probably reffering to the wrong url - ' + src +')');
+						});
 				});
 
 			return this;

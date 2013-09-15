@@ -19,21 +19,34 @@ define(['backbone','jquery','./adjust_canvas','app/task/script','text!templates/
 		},
 
 		activate: function(){
-			// canvas decorations
+			var self = this;
+			var docReady = $.Deferred(); // document ready deferred, so we can continue only after activation is culminated
 			var settings = script.settings.canvas || {};
-			if (settings.background) {$('body').css('background-color',settings.background);}
-			if (settings.canvasBackground) {this.$el.css('background-color',settings.canvasBackground);}
-			if (settings.borderColor) {this.$el.css('border-color',settings.borderColor);}
-			if (settings.borderWidth) {this.$el.css('border-width',settings.borderWidth);}
-			if (settings.css) {this.$el.css(settings.css);}
 
-			this.$el.appendTo('body');
-			this.render();
-			return this;
+			$(document).ready(function(){
+				// canvas decorations
+				if (settings.background) {$('body').css('background-color',settings.background);}
+				if (settings.canvasBackground) {self.$el.css('background-color',settings.canvasBackground);}
+				if (settings.borderColor) {self.$el.css('border-color',settings.borderColor);}
+				if (settings.borderWidth) {self.$el.css('border-width',settings.borderWidth);}
+				if (settings.css) {self.$el.css(settings.css);}
+
+				// append to body and render
+				self.$el.appendTo('body');
+				self.render();
+				docReady.resolve();
+			});
+
+			return docReady;
 		},
 
 		// display loading page
 		loading: function(parseDef){
+			// if loading has already finished lets skip the loading page
+			if (parseDef.state() != "pending"){
+				return parseDef;
+			}
+
 			// display the loading template
 			this.$el.html(loadingTpl);
 
