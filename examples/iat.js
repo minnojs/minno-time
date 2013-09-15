@@ -699,21 +699,20 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			stimuli: [],
 			customize: function(){
 				var trial = this;
-				var FBMsg;
-				var DScore;
+				var DScoreObj, media;
+
 				console.log('calling Scorer');
-				var DScoreObj = Scorer.computeD();
+				DScoreObj = Scorer.computeD();
 				//console.log(FBMsg);
 				//console.log(DScore);
-				
-				var media = {css:{color:'black'},media:{html:'<div><p style="font-size:12px"><color="#FFFAFA"> '+DScoreObj.FBMsg+'<br>The Score is:'+DScoreObj.DScore+'</p></div>'}};
+
+				media = {css:{color:'black'},media:{html:'<div><p style="font-size:12px"><color="#FFFAFA"> '+DScoreObj.FBMsg+'<br>The Score is:'+DScoreObj.DScore+'</p></div>'}};
 				trial.stimuli.push(media);
 				Scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score1","feedback1");
 
 				//////second call to score//////
 				Scorer.addSettings('compute',{
-					parcelValue : ['second'],
-
+					parcelValue : ['second']
 				});
 				Scorer.addSettings('message',{
 					MessageDef: [
@@ -726,8 +725,8 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 						{ cut:'0.65', message:'Your data suggest a strong implicit preference for White People compared to Black People' }
 					]
 				});
-				var DScoreObj = Scorer.computeD();
-				var media = {css:{color:'black'},media:{html:'<h1><div><p style="font-size:12px"><color="#FFFAFA"> '+DScoreObj.FBMsg+'<br>The Score is:'+DScoreObj.DScore+'</p></div>'}};
+				DScoreObj = Scorer.computeD();
+				media = {css:{color:'black'},media:{html:'<h1><div><p style="font-size:12px"><color="#FFFAFA"> '+DScoreObj.FBMsg+'<br>The Score is:'+DScoreObj.DScore+'</p></div>'}};
 				trial.stimuli.push(media);
 				Scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score1","feedback1");
 
