@@ -17,7 +17,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				{location:{left:70,top:18},media:{word:category}, css:{color:'red','font-size':'2em'}},
 				{location:{left:70,top:6},media:{word:attribute2}, css:{color:'white','font-size':'2em'}}
 			];
-	
+
 	API.addSettings('canvas',{
 		maxWidth: 1000,
 		proportions : 0.8,
@@ -43,11 +43,11 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		condVar:"condition",
 		//condition 1
 		cond1VarValues: [// Unpleasant, Black people/ pleasant
-			attribute1 + ',' + category + '/' + attribute2 
+			attribute1 + ',' + category + '/' + attribute2
 		],
 		//condition 2
 		cond2VarValues: [// Unpleasant / Black people, Pleasant
-			attribute2 + ',' + category + '/' + attribute1 
+			attribute2 + ',' + category + '/' + attribute1
 		],
 		parcelVar : "parcel",
 		parcelValue : ['first'],
@@ -187,7 +187,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 	API.addTrialSets({
 
 		leftBlack:[{//black people + unpleasant/ pleasant
-		
+
 			data: {condition: attribute1 + ',' + category + '/' + attribute2},
 			layout: leftLayout,
 			inherit: 'Default',
@@ -197,7 +197,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			]
 		}],
 		rightUnpleasant:[{ //black people + pleasant/ unpleasant
-		
+
 			data: {condition: attribute2 + ',' + category + '/' + attribute1},
 			layout: rightLayout,
 			inherit: 'Default',
@@ -207,7 +207,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			]
 		}],
 		leftUnpleasant:[{ //black people + unpleasant/ pleasant
-		
+
 			data: {condition: attribute1 + ',' + category + '/' + attribute2},
 			layout: leftLayout,
 			inherit: 'Default',
@@ -216,9 +216,9 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				{inherit:{type:'random',set:'feedback'}}
 			]
 		}],
-		
+
 		leftPleasant:[{ //black people + unpleasant/ pleasant
-		
+
 			data: {condition: attribute1 + ',' + category + '/' + attribute2},
 			layout: leftLayout,
 			inherit: 'Default',
@@ -228,7 +228,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			]
 		}],
 		rightPleasant:[{ //black people + pleasant/ unpleasant
-		
+
 			data: {condition: attribute2 + ',' + category + '/' + attribute1},
 			layout: rightLayout,
 			inherit: 'Default',
@@ -330,7 +330,6 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			mixer: 'random',		//in random order: 14 times: pleasant, 14 times: black people 14+6=20 times: unpleasant
 			data : [
 				{ //The presentation trials
-					data: {block:1},
 					mixer: 'repeat',
 					times:14,
 					data : [
@@ -340,7 +339,6 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 					]
 				},
 				{ //The presentation trials
-					data: {block:1},
 					mixer: 'repeat',
 					times:6,
 					data : [
@@ -363,7 +361,6 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			mixer: 'random',		//in random order: 14 times: unpleasant, 14 times: black people 14+6=20 times: pleasant
 			data : [
 				{ //The presentation trials
-					data: {block:2},
 					mixer: 'repeat',
 					times:14,
 					data : [
@@ -373,7 +370,6 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 					]
 				},
 				{ //The presentation trials
-					data: {block:2},
 					mixer: 'repeat',
 					times:6,
 					data : [
@@ -393,10 +389,9 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			}]
 		},
 	{ //The presentation trials
-			mixer: 'random',		
+			mixer: 'random',
 			data : [
 				{
-					data: {block:3},
 					mixer: 'repeat',
 					times:14,
 					data : [
@@ -406,7 +401,6 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 					]
 				},
 				{ //The presentation trials
-					data: {block:3},
 					mixer: 'repeat',
 					times:6,
 					data : [
@@ -426,9 +420,9 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			}]
 		},
 		{ //The presentation trials
-			mixer: 'random',		
+			mixer: 'random',
 			data : [
-				{ 
+				{
 					data: {block:4},
 					mixer: 'repeat',
 					times:14,
@@ -454,33 +448,36 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			data: {blockStart:true},
 			stimuli: [],
 			customize: function(){
+				var DScoreObj, DScore, FBMsg;
 				var trial = this;
-				var DScoreObj = Scorer.computeD();
+
+
+				DScoreObj = Scorer.computeD();
 				var DScore1= DScoreObj.DScore;
-				
+
 					//////second call to score//////
 				Scorer.addSettings('compute',{
 					parcelValue : ['second']
 				});
-			
-				var DScoreObj = Scorer.computeD();
+
+				DScoreObj = Scorer.computeD();
 				var DScore2 = DScoreObj.DScore;
-				
+
 					//avrage the scores
 					console.log(DScore1);
 					console.log(DScore2);
-					if(!(DScore1 == "NaN") && (!(DScore2 == "NaN"))){
-						var DScore = (parseFloat(DScore1) + parseFloat(DScore2))/2
+					if((DScore1 != "NaN") && (DScore2 != "NaN")){
+						DScore = (parseFloat(DScore1) + parseFloat(DScore2))/2;
 						console.log(DScore);
-						var FBMsg = Scorer.getFBMsg(DScore);
+						FBMsg = Scorer.getFBMsg(DScore);
 						console.log(FBMsg);
 					}
 					else{
 						FBMsg = DScoreObj.errorMessage;
 						DScore = "";
-					
+
 					}
-				
+
 				var media = {css:{color:'black'},media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};
 				trial.stimuli.push(media);
 				Scorer.postToServer(DScore,FBMsg,"score1","feedback1");

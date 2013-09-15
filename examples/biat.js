@@ -722,59 +722,61 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				{mixer:'wrapper',data:BIAT2}
 			]
 		},
-		
+
 		// user feedback- here we will use the computeD function.
 		{
 			data: {blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},
 			stimuli: [],
 			customize: function(){
+				var DScoreObj, FBMsg, DScore;
 				var trial = this;
 				console.log('calling Scorer');
-				var DScoreObj = Scorer.computeD();
+				DScoreObj = Scorer.computeD();
 				var DScore1 = DScoreObj.DScore;
 				console.log(DScore1);
-				
+
 				//////second call to score//////
 				Scorer.addSettings('compute',{
 					parcelValue : ['second']
 				});
-			
+
 				console.log('calling Scorer for the second time');
-				var DScoreObj = Scorer.computeD();
+				DScoreObj = Scorer.computeD();
 				var DScore2 = DScoreObj.DScore;
-				
+
 				//////third call to score//////
 				Scorer.addSettings('compute',{
-					parcelValue : ['third'],
+					parcelValue : ['third']
 				});
 				console.log('calling Scorer for the third time');
-				var DScoreObj = Scorer.computeD();
+				DScoreObj = Scorer.computeD();
 				var DScore3 = DScoreObj.DScore;
-				
+
 				//////fourth call to score//////
 				Scorer.addSettings('compute',{
-					parcelValue : ['fourth'],
+					parcelValue : ['fourth']
 				});
 				console.log('calling Scorer for the fourth time');
-				var DScoreObj = Scorer.computeD();
+				DScoreObj = Scorer.computeD();
 				var DScore4 = DScoreObj.DScore;
-				if(!(DScore1 == "NaN") && (!(DScore2 == "NaN")) && (!(DScore3 == "NaN")) && (!(DScore4 == "NaN"))){
-							//avrage the 4 scores
-						var DScore = (parseFloat(DScore1) + parseFloat(DScore2) + parseFloat(DScore3) + parseFloat(DScore4))/4
-						console.log(DScore);
-						var FBMsg = Scorer.getFBMsg(DScore);
-						console.log(FBMsg);
-					}
-					else{
-						FBMsg = DScoreObj.errorMessage;
-						DScore = "";
-					
-					}
+
+				if((DScore1 != "NaN") && (DScore2 != "NaN") && (DScore3 != "NaN") && (DScore4 != "NaN")){
+					//avrage the 4 scores
+					DScore = (parseFloat(DScore1) + parseFloat(DScore2) + parseFloat(DScore3) + parseFloat(DScore4))/4;
+					console.log(DScore);
+					FBMsg = Scorer.getFBMsg(DScore);
+					console.log(FBMsg);
+				}
+				else{
+					FBMsg = DScoreObj.errorMessage;
+					DScore = "";
+
+				}
 				var media = {css:{color:'black'},media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};
 				trial.stimuli.push(media);
 				Scorer.postToServer(DScore,FBMsg,"score","feedback");
-				
+
 
 			}
 		},
