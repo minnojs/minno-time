@@ -17,11 +17,10 @@ define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],f
 
 			if (type =="compute"){
 				computeData.setComputeObject(Obj);
-
-
 			}else{
-				if (type =="message") msgMan.setMsgObject(Obj);
-
+				if (type =="message") {
+					msgMan.setMsgObject(Obj);
+				}
 			}
 
 		},
@@ -66,13 +65,13 @@ define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],f
 					scoreData.FBMsg = scoreObj.errorMessage;
 					scoreData.DScore = "";
 			}
-			
+
 		//	console.log('the score from new scoree is: '+scoreObj.score );
 			//var oldScore = parcelMng.simulateOldCode(computeData);//for testing only
 			//console.log('the score from old scoree is: '+oldScore );
 
 			return scoreData;
-			
+
 
 		},
 
@@ -90,28 +89,32 @@ define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],f
 
 */
 
-    	postToServer: function(score,msg,scoreKey,msgKey){
+		postToServer: function(score,msg,scoreKey,msgKey){
 
-    		var postSettings = computeData.postSettings;
-    		var url = postSettings.url;
+			var postSettings = computeData.postSettings;
+			var url = postSettings.url;
 
-    		if (scoreKey == null || scoreKey == undefined) scoreKey = postSettings.score;
-    		if (msgKey == null || msgKey == undefined) msgKey = postSettings.msg;
-    		var data = {};
-    		data[scoreKey] =score;
-    		data[msgKey] = msg;
+			if (scoreKey == null || scoreKey == undefined) {
+				scoreKey = postSettings.score;
+			}
+			if (msgKey == null || msgKey == undefined) {
+				msgKey = postSettings.msg;
+			}
+			var data = {};
+			data[scoreKey] =score;
+			data[msgKey] = msg;
 
-    		return $.post(url,JSON.stringify(data));
-    	},
+			return $.post(url,JSON.stringify(data));
+		},
 
-      	// get message according to user input
-    	getFBMsg: function(DScore){
+		// get message according to user input
+		getFBMsg: function(DScore){
 
-    		var msg = msgMan.getMsg(DScore);
-    		return msg;
+			var msg = msgMan.getMsg(DScore);
+			return msg;
 
 
-    	}
+		}
 
 	});
 	return Scorer;
