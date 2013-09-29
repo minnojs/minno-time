@@ -1,8 +1,8 @@
 
 // Sets the require.js configuration for your application.
 require.config({
-  // how long to wait for incoming files (default is 7, we had problems loading Backbone - maybe this will do the trick)
-  waitSeconds: 30,
+  // how long to wait for incoming files (default is 7, we had problems loading Backbone - maybe this will do the trick - we need to set it so ridiculisly high because our servers are so slow...)
+  waitSeconds: 200,
 
   enforceDefine: true,
 
