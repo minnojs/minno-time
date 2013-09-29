@@ -384,7 +384,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			mixer: 'repeat',// Repeat 16 times the trial.
 			times: 16,
 			data : [
-				{inherit: 'pleasantBlack',data:{block:1+2}}]
+				{inherit: 'pleasantBlack',data:{block:1}}]
 		}, // end wrapper
 		{
 			data: {block:2,blockStart:true},
@@ -563,7 +563,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			mixer: 'repeat',// Repeat 16 times the trial.
 			times: 16,
 			data : [
-				{inherit: 'pleasantWhite',data:{block:1+2}}]
+				{inherit: 'pleasantWhite',data:{block:1}}]
 		}, // end wrapper
 		{
 			data: {block:2,blockStart:true},
@@ -761,16 +761,23 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				DScoreObj = Scorer.computeD();
 				var DScore4 = DScoreObj.DScore;
 
-				if((DScore1 != "NaN") && (DScore2 != "NaN") && (DScore3 != "NaN") && (DScore4 != "NaN")){
+				if((!isNaN(DScore2)) && (!isNaN(DScore2)) && (!isNaN(DScore3)) && (!isNaN(DScore4))){
 					//avrage the 4 scores
 					DScore = (parseFloat(DScore1) + parseFloat(DScore2) + parseFloat(DScore3) + parseFloat(DScore4))/4;
 					console.log(DScore);
-					FBMsg = Scorer.getFBMsg(DScore);
+					if(isNaN(DScore)){
+						FBMsg = DScoreObj.errorMessage;
+					}
+					else{
+						FBMsg = Scorer.getFBMsg(DScore);
+						}
 					console.log(FBMsg);
 				}
 				else{
 					FBMsg = DScoreObj.errorMessage;
 					DScore = "";
+					console.log(DScore);
+					console.log(FBMsg);
 
 				}
 				var media = {css:{color:'black'},media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};

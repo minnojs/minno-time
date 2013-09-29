@@ -8,14 +8,14 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				{location:{left:16,top:12},media:{word:'or'}, css:{color:'black','font-size':'2em'}},
 				{location:{left:10,top:6},media:{word:attribute1}, css:{color:'white','font-size':'2em'}},
 				{location:{left:10,top:18},media:{word:category}, css:{color:'red','font-size':'2em'}},
-				{location:{left:70,top:6},media:{word:attribute2}, css:{color:'white','font-size':'2em'}}
+				{location:{right:10,top:6},media:{word:attribute2}, css:{color:'white','font-size':'2em'}}
 			];
 	// the layout for the trials were the 'Black People' are on the right side (with the 'Pleasant')
 	var rightLayout = [
-				{location:{left:76,top:12},media:{word:'or'}, css:{color:'black','font-size':'2em'}},
+				{location:{right:16,top:12},media:{word:'or'}, css:{color:'black','font-size':'2em'}},
 				{location:{left:10,top:6},media:{word:attribute1}, css:{color:'white','font-size':'2em'}},
-				{location:{left:70,top:18},media:{word:category}, css:{color:'red','font-size':'2em'}},
-				{location:{left:70,top:6},media:{word:attribute2}, css:{color:'white','font-size':'2em'}}
+				{location:{right:6,top:18},media:{word:category}, css:{color:'red','font-size':'2em'}},
+				{location:{right:10,top:6},media:{word:attribute2}, css:{color:'white','font-size':'2em'}}
 			];
 
 	API.addSettings('canvas',{
@@ -466,11 +466,17 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 					//avrage the scores
 					console.log(DScore1);
 					console.log(DScore2);
-					if((DScore1 != "NaN") && (DScore2 != "NaN")){
+					if((!isNaN(DScore1)) && (!isNaN(DScore2)) ){
 						DScore = (parseFloat(DScore1) + parseFloat(DScore2))/2;
 						console.log(DScore);
+						if(isNaN(DScore)){
+						FBMsg = DScoreObj.errorMessage;
+						}
+						else{
 						FBMsg = Scorer.getFBMsg(DScore);
+						}
 						console.log(FBMsg);
+						
 					}
 					else{
 						FBMsg = DScoreObj.errorMessage;
