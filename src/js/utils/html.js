@@ -30,12 +30,13 @@ define(['jquery','underscore'],function($,_){
 			media.el = $(_.template(media.html,context || {}));
 		}
 		else if (media.template) {
+			// the template should be already loaded through the preloading module - we load it synchronously here.
+			// see https://github.com/jrburke/requirejs/wiki/Upgrading-to-RequireJS-2.1#enforcing-async-require-
+			var template = require('text!' + media.template);
+
 			media.displayType = 'element';
 			media.type = 'html';
-			// this require should be already loaded through the preloading module
-			require(['text!' + media.template], function(template){
-				media.el = $(_.template(template,context || {}));
-			});
+			media.el = $(_.template(template,context || {}));
 		}
 		else {
 			return false; // this is not a supported html type
