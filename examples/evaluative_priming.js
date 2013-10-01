@@ -1,4 +1,4 @@
-require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
+require(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 	var category1 = 'Pleasent';
 	var category2 = 'Unpleasent';
 
@@ -47,7 +47,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
         }
 
     });
-
+log(Scorer)
 	//the Scorer that compute the user feedback
 	Scorer.addSettings('compute',{
 		ErrorVar:'score',

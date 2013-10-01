@@ -1,4 +1,4 @@
-require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
+require(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 	var category1 = 'Pleasant';
 	var category2 = 'Unpleasant';
@@ -23,8 +23,8 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		url : '/implicit/PiPlayerApplet',
 		pulse : 20,
 
-				// use default logger (as copied from documents.txt but replace the regular latency with the computed latency)
-				logger: function(trialData, inputData, actionData, logStack){
+		// use default logger (as copied from documents.txt but replace the regular latency with the computed latency)
+		logger: function(trialData, inputData, actionData, logStack){
 
 			var stimList = this._stimulus_collection.get_stimlist();
 			var mediaList = this._stimulus_collection.get_medialist();
@@ -45,7 +45,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				media: mediaList,
 				data: trialData
 			};
-				}
+		}
 	});
 	//the Scorer that compute the user feedback
 	Scorer.addSettings('compute',{
@@ -60,7 +60,6 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		minRT : 150, //Below this latency
 		maxRT : 5000, //above this
 		errorLatency : {use:"false", penalty:600, useForSTD:true}//ignore error respones
-
 	});
 
 	Scorer.addSettings('message',{
@@ -616,7 +615,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				Scorer.addSettings('compute',{
 					parcelValue : ['third'],
 					cond1VarValues: ["Young black People / Unpleasant"], //condition 1
-					cond2VarValues: ["Young black People / Pleasant"], //condition 2
+					cond2VarValues: ["Young black People / Pleasant"] //condition 2
 
 				});
 				Scorer.addSettings('message',{

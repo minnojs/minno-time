@@ -2,17 +2,13 @@ define(['jquery','underscore'],function($,_){
 
 	var msgCat = {
 		mesCatArray:[]
-		
-
 	};
-		
-
 
 	$.extend(msgCat,{
 
 		setMsgObject: function(Obj){
 			this.mesCatArray = Obj.MessageDef;
-		
+
 		},
 
 		getMsg: function(score){
@@ -25,30 +21,28 @@ define(['jquery','underscore'],function($,_){
 			var msg = null;
 			var rightMsg = 'error: msg was not set';
 			var set = false;
-			var count =0;
-			var msgIndex=0;
-			_.each(array, function(val,key) {
+			//var count =0;
+			//var msgIndex=0;
+			_.each(array, function(val) {
 				cut = parseFloat(val.cut);
 				msg = val.message;
 			//	console.log(cut);
 			//	console.log(msg);
-				if (scoreNum<=cut && set ==false){
+				if (scoreNum<=cut && !set){
 					rightMsg = msg;
 					set = true;
-				} 
-			
+				}
+
 			});
-			
-			if (set==false){
+
+			if (!set){
 				var length = array.length;
 				var obj = array[length-1];
 				rightMsg = obj.message;
-			} 
+			}
 			return rightMsg;
 		}
-
 	});
-	return msgCat;
-			
 
+	return msgCat;
 });

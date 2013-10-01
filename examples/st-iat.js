@@ -1,4 +1,4 @@
-require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
+require(['app/API','extensions/dscore/Scorer		'], function(API,Scorer) {
 
 	var attribute1 = 'Unpleasant';
 	var attribute2 = 'Pleasant';

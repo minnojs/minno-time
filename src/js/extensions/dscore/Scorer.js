@@ -1,6 +1,4 @@
 define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],function($,API,_,computeData,msgMan,parcelMng){
-
-
 	var Scorer = {};
 
 //comment
@@ -32,8 +30,11 @@ define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],f
 
 */
 		init: function(){
+			// js hint thinks that console is read only - and its correct except where it doesn't exist...  this is how we tell it to ignore these lines
+			/* jshint -W020 */
 			console || (console = {});
 			console.log || (console.log = function(){});
+			/* jshint +W020 */
 		},
 
 /*  Function: Void computeD.
@@ -43,7 +44,6 @@ define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],f
 	the score an an error msg.
 
 */
-
 		computeD: function(){
 
 			Scorer.init();
@@ -77,9 +77,7 @@ define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],f
 
 
 		getInfo: function(){
-
 			//return computeData;
-
 		},
 
 /*  Function: Void postToServer.
@@ -90,14 +88,13 @@ define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],f
 */
 
 		postToServer: function(score,msg,scoreKey,msgKey){
-
-			var postSettings = computeData.postSettings;
+			var postSettings = computeData.postSettings || {};
 			var url = postSettings.url;
 
-			if (scoreKey == null || scoreKey == undefined) {
+			if (!scoreKey) {
 				scoreKey = postSettings.score;
 			}
-			if (msgKey == null || msgKey == undefined) {
+			if (!msgKey) {
 				msgKey = postSettings.msg;
 			}
 			var data = {};
@@ -109,11 +106,8 @@ define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],f
 
 		// get message according to user input
 		getFBMsg: function(DScore){
-
 			var msg = msgMan.getMsg(DScore);
 			return msg;
-
-
 		}
 
 	});
