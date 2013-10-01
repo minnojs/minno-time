@@ -273,10 +273,10 @@ require(['app/API'], function(API) {
 				{
 					propositions: [{type:'inputEquals',value:'end'}],
 					actions: [
-						// `type:'removeInput'` removes all inputs that have the `inputHandle` handles.
+						// `type:'removeInput'` removes all inputs that have the `handle` handles.
 						{
 							type:'removeInput',
-							inputHandle:'time'
+							handle	:'time'
 						},
 						// `type: 'setTrialAttr'` merges the values from `setter` into the trial data.
 						// (setter may also take a function, see documentation)

@@ -249,8 +249,8 @@ setInput: set input listener (useful for adding timeouts), takes an input object
 	actions: [{type:'setInput',input:{handle:'time',on:'timeout',duration:300}}]
 
 removeInput: remove input listener, takes an input handle or an array of input handles
-	actions: [{type:'removeInput',inputHandle : 'time'}]
-	actions: [{type:'removeInput',inputHandle : ['time','left']}]
+	actions: [{type:'removeInput',handle : 'time'}]
+	actions: [{type:'removeInput',handle : ['time','left']}]
 
 endTrial: speaks for itself (note that any actions that come after this is called may not work properly)
 	actions: [{type:'endTrial'}]
