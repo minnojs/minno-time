@@ -12,9 +12,15 @@
   mainConfigFile: '../src/js/main.js',
 
   // Modules to be optimized:
+  // we'll keep jquery and underscore seperate so they can be used by all modules
   modules: [
     {
-        name: "app/API"
+      name: "app/API",
+      exclude: ['underscore','jquery']
+    },
+    {
+      name: "extensions/dscore/Scorer",
+      exclude: ["app/API",'underscore','jquery']
     }
   ]
 })
