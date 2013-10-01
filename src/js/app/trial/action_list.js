@@ -26,6 +26,9 @@ define(["utils/pubsub"],function(pubsub){
 		 */
 
 		setTrialAttr: function(options, eventData){
+			if (typeof options.setter == 'undefined') {
+				throw new Error('The setTrialAttr action requires a setter property');
+			}
 			pubsub.publish('trial:setAttr',[options.setter, eventData]);
 		},
 
@@ -44,10 +47,13 @@ define(["utils/pubsub"],function(pubsub){
 		},
 
 		removeInput: function(options){
+			if (typeof options.handle == 'undefined') {
+				throw new Error('The removeInput action requires a handle property');
+			}
 			pubsub.publish('trial:removeInput',[options.handle]);
 		},
 
-		// we use es3 true to protect from trailing commas in IE7. Here it thinks goto is a reserved word.
+		// we use es3 true to protect from trailing commas in IE7. Here jshint thinks goto is a reserved word.
 		/* jshint es3:false */
 		goto: function(options){
 		/* jshint es3:true */

@@ -172,7 +172,7 @@ require(['app/API'], function(API) {
 					actions: [
 						{type:'setTrialAttr',setter:{score:'1'}},
 						{type:'hideStim',handle:'All'},
-						{type:'removeInput',inputHandle:[category2,category1]},//only one respnse is possible
+						{type:'removeInput',handle	:[category2,category1]},//only one respnse is possible
 						//The player sends the value of score to the server, when you call the 'log' action
 						{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
 						{type:'setInput',input:{handle:'endTrial',on:'timeout',duration:250}}//end the trial 250ms after the response
@@ -183,7 +183,7 @@ require(['app/API'], function(API) {
 					actions: [
 						{type:'setTrialAttr',setter:{score:'0'}},
 						{type:'hideStim',handle:'All'},
-						{type:'removeInput',inputHandle:[category2,category1]},
+						{type:'removeInput',handle	:[category2,category1]},
 						{type:'log'},
 						{type:'setInput',input:{handle:'endTrial',on:'timeout',duration:250}}
 					]
@@ -280,7 +280,7 @@ require(['app/API'], function(API) {
 					actions: [
 						{type:'hideStim',handle:'All'},
 						{type:'setTrialAttr',setter:{score:'1'}},
-						{type:'removeInput',inputHandle:[category2,category1]},
+						{type:'removeInput',handle	:[category2,category1]},
 						{type:'log'},
 						{type:'setInput',input:{handle:'endTrial',on:'timeout',duration:250}}
 					]
@@ -291,7 +291,7 @@ require(['app/API'], function(API) {
 					actions: [
 						{type:'hideStim',handle:'All'},
 						{type:'setTrialAttr',setter:{score:'0'}},
-						{type:'removeInput',inputHandle:[category2,category1]},
+						{type:'removeInput',handle	:[category2,category1]},
 						{type:'log'},
 						{type:'setInput',input:{handle:'endTrial',on:'timeout',duration:250}}
 					]

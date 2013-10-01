@@ -118,7 +118,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 						{type:'stimEquals',value:'wordCategory'}],
 					actions: [
 						{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
-						{type:'removeInput',inputHandle:[category2,category1]},//only one response is possible
+						{type:'removeInput',handle	:[category2,category1]},//only one response is possible
 						{type:'trigger', handle:'showFix'}//End the trial immidiatlly after correct response
 					]
 				},
@@ -136,7 +136,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 						{type:'setTrialAttr', setter:{score:1}},
 						{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
 						{type:'showStim',handle:'errorFB'}, //show error feedback
-						{type:'removeInput',inputHandle:[category2,category1]},// block the option to change the answer or to answer twice
+						{type:'removeInput',handle	:[category2,category1]},// block the option to change the answer or to answer twice
 						{type:'setInput',input:{handle:'showFix', on:'timeout',duration:250}} //End the trial in 250ms (show the x until then)
 					]
 				},

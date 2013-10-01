@@ -95,6 +95,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				{type:'setInput',input:{handle:'primeOut',on:'timeout',duration:300}}
 			]
 		},
+		// show target stim
 		{
 			propositions: [{type:'inputEquals',value:'primeOut'}], // on time out
 			actions: [
@@ -108,25 +109,25 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				{type:'setInput',input:{handle:'targetOut',on:'timeout',duration:1500}}
 			]
 		},
+		// on time out
 		{
-						propositions: [{type:'inputEquals',value:'targetOut'}], // on time out
-						actions: [
-								{type:'hideStim',handle:'targetStim'}, // hide the stimulus
-				{type:'removeInput',inputHandle:[category2,category1]},//only one respnse is possible
-								{type:'showStim',handle:'warning'}, // and show the warning
+			propositions: [{type:'inputEquals',value:'targetOut'}],
+			actions: [
+				{type:'removeInput',handle	:[category2,category1]},//only one respnse is possible
+				{type:'hideStim',handle:'targetStim'}, // hide the stimulus
+				{type:'showStim',handle:'warning'}, // and show the warning
 				{type:'setInput',input:{handle:'showFix', on:'timeout',duration:250}} //End the trial in 250ms (show the warning until then)
-				]
-				},
+			]
+		},
 		// there are 2 possible responses: "pleasant" and "unpleasant", here we handle these responses when the user answers
 		// matches the word value (correct response)
 		{
 			propositions: [{type:'stimEquals',value:'wordCategory'}],
 			actions: [
 				{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
-				{type:'removeInput',inputHandle:[category2,category1]},//only one response is possible
-				{type:'removeInput',inputHandle:'targetOut'},
+				{type:'removeInput',handle	:[category2,category1,'targetOut']}, //only one response is possible
 				{type:'trigger', handle:'showFix'}//End the trial immidiatlly after correct response
-				]
+			]
 		},
 				// there are 2 possible responses: "pleasant" and "unpleasant", here we handle with these responses when the user answer
 				// doesn't match the word value (incorrect response)
@@ -142,8 +143,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				{type:'setTrialAttr', setter:{score:1}},
 				{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
 				{type:'showStim',handle:'errorFB'}, //show error feedback
-				{type:'removeInput',inputHandle:[category2,category1]},// block the option to change the answer or to answer twice
-				{type:'removeInput',inputHandle:'targetOut'},
+				{type:'removeInput',handle:[category2,category1,'targetOut']},// block the option to change the answer or to answer twice
 				{type:'setInput',input:{handle:'showFix', on:'timeout',duration:250}} //End the trial in 250ms (show the x until then)
 			]
 		},
@@ -176,44 +176,44 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			data: {parcel:'second', condition: "Old white People / Pleasant"},
 			inherit:{set: 'basicTrial'},
 			stimuli: [
-			{ inherit: {set: 'targetStimulusA', type:'exRandom'}, data : {handle:'targetStim'} },
-			{ inherit: {set: 'primingImage3', type:'exRandom'}, data : {handle:'primingImage'} },
-			{ inherit: 'errorFB'},
-			{ inherit: 'warning'},
-			{ inherit: 'blanckScreen'}
+				{ inherit: {set: 'targetStimulusA', type:'exRandom'}, data : {handle:'targetStim'} },
+				{ inherit: {set: 'primingImage3', type:'exRandom'}, data : {handle:'primingImage'} },
+				{ inherit: 'errorFB'},
+				{ inherit: 'warning'},
+				{ inherit: 'blanckScreen'}
 			]
 		}],
 		pleasantOldBlack:[{		//pleasant+black old people (condition 2)
 			data: {parcel:'first',condition: "Old black People / Pleasant"},
 			inherit:{set: 'basicTrial'},
 			stimuli: [
-			{ inherit: {set: 'targetStimulusA', type:'exRandom'}, data : {handle:'targetStim'} },
-			{ inherit: {set: 'primingImage1', type:'exRandom'}, data : {handle:'primingImage'} },
-			{ inherit: 'errorFB'},
-			{ inherit: 'warning'},
-			{ inherit: 'blanckScreen'}
+				{ inherit: {set: 'targetStimulusA', type:'exRandom'}, data : {handle:'targetStim'} },
+				{ inherit: {set: 'primingImage1', type:'exRandom'}, data : {handle:'primingImage'} },
+				{ inherit: 'errorFB'},
+				{ inherit: 'warning'},
+				{ inherit: 'blanckScreen'}
 			]
 		}],
 		pleasantYoungWhite:[{		//pleasant+white young people (condition 3)
 			data: {parcel:'fourth',condition: "Young white People / Pleasant"},
 			inherit:{set: 'basicTrial'},
 			stimuli: [
-			{ inherit: {set: 'targetStimulusA', type:'exRandom'}, data : {handle:'targetStim'} },
-			{ inherit: {set: 'primingImage4', type:'exRandom'}, data : {handle:'primingImage'} },
-			{ inherit: 'errorFB'},
-			{ inherit: 'warning'},
-			{ inherit: 'blanckScreen'}
+				{ inherit: {set: 'targetStimulusA', type:'exRandom'}, data : {handle:'targetStim'} },
+				{ inherit: {set: 'primingImage4', type:'exRandom'}, data : {handle:'primingImage'} },
+				{ inherit: 'errorFB'},
+				{ inherit: 'warning'},
+				{ inherit: 'blanckScreen'}
 			]
 		}],
 		pleasantYoungBlack:[{		//pleasant+black young people (condition 4)
 			data: {parcel:'third',condition: "Young black People / Pleasant"},
 			inherit:{set: 'basicTrial'},
 			stimuli: [
-			{ inherit: {set: 'targetStimulusA', type:'exRandom'}, data : {handle:'targetStim'} },
-			{ inherit: {set: 'primingImage2', type:'exRandom'}, data : {handle:'primingImage'} },
-			{ inherit: 'errorFB'},
-			{ inherit: 'warning'},
-			{ inherit: 'blanckScreen'}
+				{ inherit: {set: 'targetStimulusA', type:'exRandom'}, data : {handle:'targetStim'} },
+				{ inherit: {set: 'primingImage2', type:'exRandom'}, data : {handle:'primingImage'} },
+				{ inherit: 'errorFB'},
+				{ inherit: 'warning'},
+				{ inherit: 'blanckScreen'}
 			]
 		}],
 

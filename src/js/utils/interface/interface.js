@@ -53,7 +53,6 @@ define(['jquery','./listener', '../is_touch'],function($,Listener,is_touch_devic
 					listenerStack.splice(i,1);
 				}
 			}
-
 		},
 
 		// remove all listeners
