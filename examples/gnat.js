@@ -50,6 +50,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		/**NEED TO ADD*/
 		//Recode latencies faster than 400ms to 400, and latencies slower than 2000ms to 2000 (perhaps not supported by Ben’s computeD function; need to ask him to update the function to support that).
 		//Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me know if not supported by Ben’s function because we can use an alternative rule here).
+
 	});
 
 	Scorer.addSettings('message',{
@@ -74,22 +75,21 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		// by default each trial is correct, this is modified in case of an error
 		data: {score:0},
 
-		// set the interface for trials
 		input: [
-			{handle:'enter',on:'enter'}
+			{handle:'enter',on:'enter'} //to skip block
 		],
 
 		// user interactions
 		interactions: [
-			// begin trial : display stimulus imidiately
+			// begin trial : display stimulus afte 1000ms
 			{
 				propositions: [{type:'begin'}],
 				actions: [
 					{type:'showStim',handle:'blankScreen'},
-					{type:'setInput',input:{handle:'showMyStim', on:'timeout',duration:1000}} //show the stim 1000 ms after the begining
+					{type:'setInput',input:{handle:'showMyStim', on:'timeout',duration:1000}}//show the stim 1000 ms after the beginin
 				]
 			},
-			{
+				{
 				propositions: [{type:'inputEquals',value:'showMyStim'}],
 				actions: [
 					{type:'showStim',handle:'myStim'},
@@ -104,9 +104,10 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				propositions: [{type:'inputEquals',value:'targetOut'}],
 				actions: [
 					{type:'removeInput',handle:'in'},
-					{type:'showStim',handle:'error'},											// show error stimulus
-					{type:'setTrialAttr', setter:{score:1}},									// set the score to 1
-					{type:'setInput',input:{handle:'end', on:'timeout',duration:250}}
+					{type:'showStim',handle:'error'},						// show error stimulus
+					{type:'log'},											// log this trial
+					{type:'setTrialAttr', setter:{score:1}},
+					{type:'setInput',input:{handle:'end', on:'timeout',duration:250}}					// set the score to 1
 				]
 			},
 
@@ -114,7 +115,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			{
 				propositions: [{type:'inputEquals',value:'in'}],
 				actions: [
-					{type:'removeInput',handle:['in','time']},
+					{type:'removeInput',handle:['in','targetOut']},
 					{type:'showStim', handle: 'correct'},
 					{type:'log'},																// log this trial
 					{type:'setInput',input:{handle:'end', on:'timeout',duration:250}}			// trigger the "end action after ITI"
@@ -140,164 +141,160 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			]
 			}] // end basic trial
 	}); // end trialsets
-
 	//this trial is for the 'NoGo' trial, during the first practice block
 	API.addTrialSets({
 		PracticeNoGo: [{
-			// by default each trial is correct, this is modified in case of an error
-			data: {score:0},
-
-			// set the interface for trials
-			input: [
-				{handle:'enter',on:'enter'}
-			],
-
-			// user interactions
-			interactions: [
-				// begin trial : display stimulus imidiately
-				{
-					propositions: [{type:'begin'}],
-					actions: [
-						{type:'showStim',handle:'blankScreen'},
-						{type:'setInput',input:{handle:'showMyStim', on:'timeout',duration:1000}}//show the stim 1000 ms after the beginin
-					]
-				},
-					{
-					propositions: [{type:'inputEquals',value:'showMyStim'}],
-					actions: [
-						{type:'showStim',handle:'myStim'},
-						{type:'setInput',input:{handle: 'in',on:'centerTouch',touch:true}},
-						{type:'setInput',input:{handle: 'in',on:'space'}},
-						{type:'setInput',input:{handle:'targetOut',on:'timeout',duration:1500}}
-					]
-				},
-
-				// correct
-				{
-					propositions: [{type:'inputEquals',value:'targetOut'}],
-					actions: [
-						{type:'removeInput',handle:'in'},
-						{type:'showStim',handle:'correct'},											// show error stimulus
-						{type:'setInput',input:{handle:'end', on:'timeout',duration:250}}			// set the score to 1
-					]
-				},
-
-				// error
-				{
-					propositions: [{type:'inputEquals',value:'in'}],								// check if the input handle is equal to the "side" attribute of stimulus.data
-					actions: [
-						{type:'removeInput',handle:['in','time']},
-						{type:'showStim', handle: 'error'},											// hide everything
-						{type:'setTrialAttr', setter:{score:1}},
-						{type:'setInput',input:{handle:'end', on:'timeout',duration:250}}			// trigger the "end action after ITI"
-					]
-				},
-
-				// end after ITI
-				{
-					propositions: [{type:'inputEquals',value:'end'}],
-					actions: [
-						{type:'endTrial'}
-					]
-				},
-
-				// skip block
-				{
-					propositions: [{type:'inputEquals',value:'enter'}],
-					actions: [
-						{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
-						{type:'endTrial'}
-					]
-				}
-			]
-		}] // end basic trial
-	});
-	//this trial is for the 'Go' trial
-		API.addTrialSets({
-			Go: [{
-			// by default each trial is correct, this is modified in case of an error
-			data: {score:0},
-
-			// set the interface for trials
-			input: [
-				{handle:'enter',on:'enter'}
-			],
-
-			// user interactions
-			interactions: [
-				// begin trial : display stimulus imidiately
-				{
-					propositions: [{type:'begin'}],
-					actions: [
-						{type:'showStim',handle:'blankScreen'},
-						{type:'setInput',input:{handle:'showMyStim', on:'timeout',duration:1000}} //show the stim 1000 ms after the begining
-					]
-				},
-					{
-					propositions: [{type:'inputEquals',value:'showMyStim'}],
-					actions: [
-						{type:'showStim',handle:'myStim'},
-						{type:'setInput',input:{handle: 'in',on:'centerTouch',touch:true}},
-						{type:'setInput',input:{handle: 'in',on:'space'}},
-						{type:'setInput',input:{handle:'targetOut',on:'timeout',duration:1200}}
-					]
-				},
-
-				// error
-				{
-					propositions: [{type:'inputEquals',value:'targetOut'}],
-					actions: [
-						{type:'removeInput',handle:'in'},
-						{type:'showStim',handle:'error'},											// show error stimulus
-						{type:'setTrialAttr', setter:{score:1}},
-						{type:'setInput',input:{handle:'end', on:'timeout',duration:250}}					// set the score to 1
-					]
-				},
-
-				// correct
-				{
-					propositions: [{type:'inputEquals',value:'in'}],								// check if the input handle is equal to the "side" attribute of stimulus.data
-					actions: [
-						{type:'removeInput',handle:['in','time']},
-						{type:'showStim', handle: 'correct'},											// hide everything
-						{type:'log'},																// log this trial
-						{type:'setInput',input:{handle:'end', on:'timeout',duration:250}}			// trigger the "end action after ITI"
-					]
-				},
-
-				// end after ITI
-				{
-					propositions: [{type:'inputEquals',value:'end'}],
-					actions: [
-						{type:'endTrial'}
-					]
-				},
-
-				// skip block
-				{
-					propositions: [{type:'inputEquals',value:'enter'}],
-					actions: [
-						{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
-						{type:'endTrial'}
-					]
-				}
-			] // end interactions
-		}] // end go trial
-	});
-	//this trial is for the 'NoGo' trial
-		API.addTrialSets({
-			NoGo: [{
 		// by default each trial is correct, this is modified in case of an error
 		data: {score:0},
 
-		// set the interface for trials
 		input: [
 			{handle:'enter',on:'enter'}
 		],
 
 		// user interactions
 		interactions: [
-			// begin trial : display stimulus imidiately
+			{
+				propositions: [{type:'begin'}],
+				actions: [
+					{type:'showStim',handle:'blankScreen'},
+					{type:'setInput',input:{handle:'showMyStim', on:'timeout',duration:1000}}//show the stim 1000 ms after the beginin
+				]
+			},
+				{
+				propositions: [{type:'inputEquals',value:'showMyStim'}],
+				actions: [
+					{type:'showStim',handle:'myStim'},
+					{type:'setInput',input:{handle: 'in',on:'centerTouch',touch:true}},
+					{type:'setInput',input:{handle: 'in',on:'space'}},
+					{type:'setInput',input:{handle:'targetOut',on:'timeout',duration:1500}}
+				]
+			},
+
+			// correct
+			{
+				propositions: [{type:'inputEquals',value:'targetOut'}],
+				actions: [
+					{type:'removeInput',handle:'in'},
+					{type:'log'},
+					{type:'showStim',handle:'correct'},											// show error stimulus
+					{type:'setInput',input:{handle:'end', on:'timeout',duration:250}}
+				]
+			},
+
+			// error
+			{
+				propositions: [{type:'inputEquals',value:'in'}],
+				actions: [
+					{type:'removeInput',handle:['in','targetOut']},
+					{type:'showStim', handle: 'error'},
+					{type:'log'},
+					{type:'setTrialAttr', setter:{score:1}},									// set the score to 1
+					{type:'setInput',input:{handle:'end', on:'timeout',duration:250}}			// trigger the "end action after ITI"
+				]
+			},
+
+			// end after ITI
+			{
+				propositions: [{type:'inputEquals',value:'end'}],
+				actions: [
+					{type:'endTrial'}
+				]
+			},
+
+			// skip block
+			{
+				propositions: [{type:'inputEquals',value:'enter'}],
+				actions: [
+					{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
+					{type:'endTrial'}
+				]
+			}
+			]
+		}] // end basic trial
+	});
+	//this trial is for the 'Go' trial
+		API.addTrialSets({
+		Go: [{
+		// by default each trial is correct, this is modified in case of an error
+		data: {score:0},
+
+		input: [
+			{handle:'enter',on:'enter'}
+		],
+
+		// user interactions
+		interactions: [
+			{
+				propositions: [{type:'begin'}],
+				actions: [
+					{type:'showStim',handle:'blankScreen'},
+					{type:'setInput',input:{handle:'showMyStim', on:'timeout',duration:1000}}//show the stim 1000 ms after the beginin
+				]
+			},
+				{
+				propositions: [{type:'inputEquals',value:'showMyStim'}],
+				actions: [
+					{type:'showStim',handle:'myStim'},
+					{type:'setInput',input:{handle: 'in',on:'centerTouch',touch:true}},
+					{type:'setInput',input:{handle: 'in',on:'space'}},
+					{type:'setInput',input:{handle:'targetOut',on:'timeout',duration:1200}}
+				]
+			},
+
+			// error
+			{
+				propositions: [{type:'inputEquals',value:'targetOut'}],
+				actions: [
+					{type:'removeInput',handle:'in'},
+					{type:'showStim',handle:'error'},// show error stimulus
+					{type:'log'},
+					{type:'setTrialAttr', setter:{score:1}},
+					{type:'setInput',input:{handle:'end', on:'timeout',duration:250}}					// set the score to 1
+				]
+			},
+
+			// correct
+			{
+				propositions: [{type:'inputEquals',value:'in'}],
+				actions: [
+					{type:'removeInput',handle:['in','targetOut']},
+					{type:'showStim', handle: 'correct'},											// hide everything
+					{type:'log'},																// log this trial
+					{type:'setInput',input:{handle:'end', on:'timeout',duration:250}}			// trigger the "end action after ITI"
+				]
+			},
+
+			// end after ITI
+			{
+				propositions: [{type:'inputEquals',value:'end'}],
+				actions: [
+					{type:'endTrial'}
+				]
+			},
+
+			// skip block
+			{
+				propositions: [{type:'inputEquals',value:'enter'}],
+				actions: [
+					{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
+					{type:'endTrial'}
+				]
+			}
+			]
+		}] // end basic trial
+	});
+	//this trial is for the 'NoGo' trial
+		API.addTrialSets({
+		NoGo: [{
+		// by default each trial is correct, this is modified in case of an error
+		data: {score:0},
+
+		input: [
+			{handle:'enter',on:'enter'}
+		],
+
+		// user interactions
+		interactions: [
 			{
 				propositions: [{type:'begin'}],
 				actions: [
@@ -320,17 +317,19 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				propositions: [{type:'inputEquals',value:'targetOut'}],
 				actions: [
 					{type:'removeInput',handle:'in'},
-					{type:'showStim',handle:'correct'},											// show error stimulus
+					{type:'showStim',handle:'correct'},	// show error stimulus
+					{type:'log'},
 					{type:'setInput',input:{handle:'end', on:'timeout',duration:250}}					// set the score to 1
 				]
 			},
 
 			// error
 			{
-				propositions: [{type:'inputEquals',value:'in'}],								// check if the input handle is equal to the "side" attribute of stimulus.data
+				propositions: [{type:'inputEquals',value:'in'}],
 				actions: [
-					{type:'removeInput',handle:['in','time']},
-					{type:'showStim', handle: 'error'},					// hide everything
+					{type:'removeInput',handle:['in','targetOut']},
+					{type:'showStim', handle: 'error'},
+					{type:'log'},
 					{type:'setTrialAttr', setter:{score:1}},
 					{type:'setInput',input:{handle:'end', on:'timeout',duration:250}}			// trigger the "end action after ITI"
 				]
@@ -542,11 +541,11 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		],
 
 
-		// this stimulus used for giving feedback, in this case only the error notification
-		errorFeedback : [
+		// this stimulus used for giving feedback
+		errorFeedback : [  //error
 			{handle:'error', location: {top: 80}, css:{color:'red','font-size':'4em'}, media: {word:'X'}, nolog:true}
 		],
-		correctFeedback : [
+		correctFeedback : [ //correct
 			{handle:'correct', location: {top: 80}, css:{color:'#00FF00','font-size':'4em'}, media: {word:'O'}, nolog:true}
 		],
 		blankScreen : [ // for the first 1000 ms in the begining of each trial (can be used for fixation)
@@ -593,7 +592,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 	});
 	//  the 'black people' as the first focal category
 	var GNAT1 = [{
-			data: {block:0,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:0,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -602,7 +601,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		},
 			{ //The presentation trials
 			// Repeat 16 times the trial. (8 times each combination)
-			mixer: 'random',		//
+			mixer: 'random',
 			data : [
 				{
 					mixer: 'repeat',
@@ -615,7 +614,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			]
 		},
 		{   //the instructions
-			data: {block:1,blockStart:true},	//can't tell wich one will be first
+			data: {block:1,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -659,7 +658,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		},
 		//blocks 3+4
 		{
-			data: {block:3,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:3,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -681,7 +680,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			]
 		},
 		{
-			data: {block:4,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:4,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -704,7 +703,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		},
 		//blocks 5+6
 		{
-			data: {block:5,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:5,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -726,7 +725,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			]
 		},
 		{
-			data: {block:6,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:6,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -749,7 +748,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		},
 		//blocks 7+8
 		{
-			data: {block:7,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:7,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -771,7 +770,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			]
 		},
 		{
-			data: {block:8,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:8,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -795,7 +794,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 	];
 	//  the 'white people' as the first focal category
 	var GNAT2 = [{
-			data: {block:0,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:0,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -817,7 +816,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			]
 		},
 		{   //the instructions
-			data: {block:1,blockStart:true},	//can't tell wich one will be first
+			data: {block:1,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -861,7 +860,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		},
 		//blocks 3+4
 		{
-			data: {block:3,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:3,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -883,7 +882,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			]
 		},
 		{
-			data: {block:4,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:4,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -906,7 +905,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		},
 		//blocks 5+6
 		{
-			data: {block:5,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:5,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -928,7 +927,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			]
 		},
 		{
-			data: {block:6,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:6,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -951,7 +950,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		},
 		//blocks 7+8
 		{
-			data: {block:7,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:7,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -973,7 +972,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			]
 		},
 		{
-			data: {block:8,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:8,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -994,7 +993,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				} // end wrapper
 			]
 		}
-		];
+	];
 
 
 

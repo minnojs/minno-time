@@ -352,7 +352,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 	});
 	//  the 'black people' as the first focal category
 	var BIAT1 = [{
-			data: {block:0,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:0,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -367,7 +367,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				{inherit: 'practiceBlock',data:{block:0}}]
 		},
 		{   //the instructions
-			data: {block:1,blockStart:true},	//can't tell wich one will be first
+			data: {block:1,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -407,7 +407,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		}, // end wrapper
 		//blocks 3+4
 		{
-			data: {block:3,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:3,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -427,7 +427,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				{inherit: 'pleasantBlack',data:{block:3,parcel:'second'}}]
 		}, // end wrapper
 		{
-			data: {block:4,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:4,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -448,7 +448,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		}, // end wrapper
 		//blocks 5+6
 		{
-			data: {block:5,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:5,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -468,7 +468,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				{inherit: 'pleasantBlack',data:{block:5,parcel:'third'}}]
 		}, // end wrapper
 		{
-			data: {block:6,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:6,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -489,7 +489,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		}, // end wrapper
 		//blocks 7+8
 		{
-			data: {block:7,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:7,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -509,7 +509,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				{inherit: 'pleasantBlack',data:{block:7,parcel:'fourth'}}]
 		}, // end wrapper
 		{
-			data: {block:8,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:8,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -531,7 +531,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		];
 	//  the 'white people' as the first focal category
 	var BIAT2 = [{
-			data: {block:0,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:0,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -546,7 +546,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				{inherit: 'practiceBlock',data:{block:0}}]
 		},
 		{   //the instructions
-			data: {block:1,blockStart:true},	//can't tell wich one will be first
+			data: {block:1,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -586,7 +586,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		}, // end wrapper
 		//blocks 3+4
 		{
-			data: {block:3,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:3,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -606,7 +606,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				{inherit: 'pleasantWhite',data:{block:3,parcel:'second'}}]
 		}, // end wrapper
 		{
-			data: {block:4,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:4,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -627,7 +627,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		}, // end wrapper
 		//blocks 5+6
 		{
-			data: {block:5,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:5,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -647,7 +647,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				{inherit: 'pleasantWhite',data:{block:5,parcel:'third'}}]
 		}, // end wrapper
 		{
-			data: {block:6,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:6,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -668,7 +668,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		}, // end wrapper
 		//blocks 7+8
 		{
-			data: {block:7,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:7,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -688,7 +688,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				{inherit: 'pleasantWhite',data:{block:7,parcel:'fourth'}}]
 		}, // end wrapper
 		{
-			data: {block:8,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:8,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',

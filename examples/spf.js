@@ -114,7 +114,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				propositions: [{type:'begin'}],
 				actions: [{type:'showStim',handle:'wordStim'},
 							{type:'showStim',handle:'imageStim'}]
-					
+
 			},
 			// error
 			{
@@ -258,7 +258,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				{inherit:{type:'random',set:'feedback'}}
 			]
 		}]
-	
+
 	});
 
 	/*
@@ -330,13 +330,13 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			{image: 'wm1_nc.jpg'}
 		]
 	});
-	
+
 	/*
 	 *	Create the Task sequence
 	 */
 	API.addSequence([
 		{
-			data: {block:1,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:1,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -360,7 +360,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			]
 		},
 		{
-			data: {block:2,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:2,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -385,7 +385,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		},
 
 		{
-			data: {block:3,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:3,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -409,7 +409,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			]
 		},
 		{
-			data: {block:4,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:4,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -442,7 +442,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				console.log('calling Scorer');
 				var DScoreObj = Scorer.computeD();
 				var DScore = DScoreObj.DScore;//compute the Dscore
-				var FBMsg = DScoreObj.errorMessage
+				var FBMsg = DScoreObj.errorMessage;
 				if(!isNaN(DScore)){
 					FBMsg = Scorer.getFBMsg(DScore);//the user feedback
 				}
@@ -453,7 +453,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			}
 		},
 		{
-			data: {blockStart:true},			// we set the data with the category names so the template can display them
+			data: {blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',

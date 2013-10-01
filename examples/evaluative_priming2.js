@@ -23,8 +23,8 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		url : '/implicit/PiPlayerApplet',
 		pulse : 20,
 
-		// use default logger (as copied from documents.txt but replace the regular latency with the computed latency)
-		logger: function(trialData, inputData, actionData, logStack){
+				// use default logger (as copied from documents.txt but replace the regular latency with the computed latency)
+				logger: function(trialData, inputData, actionData, logStack){
 
 			var stimList = this._stimulus_collection.get_stimlist();
 			var mediaList = this._stimulus_collection.get_medialist();
@@ -45,7 +45,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				media: mediaList,
 				data: trialData
 			};
-		}
+				}
 	});
 	//the Scorer that compute the user feedback
 	Scorer.addSettings('compute',{
@@ -74,101 +74,99 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 
 	//Define the basic trial (the prsentation of the images and words)
 	API.addTrialSets({
-		basicTrial: [{
-			data : {error:0},// by default each trial is crrect, this is modified in case of an error
-
-			//Layout defines what will be presented in the trial. It is like a background display.
-			layout: [
-				{location:{left:15,top:3},media:{word:'key: e'}, css:{color:'black','font-size':'1em'}},
-				{location:{right:15,top:3},media:{word:'key: i'},  css:{color:'black','font-size':'1em'}},
-				{location:{left:10,top:6},media:{word:category2}, css:{color:'white','font-size':'2em'}},
-				{location:{right:10,top:6},media:{word:category1},  css:{color:'white','font-size':'2em'}}
-			],
-			//Inputs for two possible responses.
-			input: [
-				{handle:'enter',on:'enter'} //'enter' to skip the current block
-			],
-			//Set what to do.
-			interactions: [
-				{
-					propositions: [{type:'begin'}],
-					actions: [
-						{type:'showStim',handle:'primingImage'},// display the first stimulus
-						{type:'setInput',input:{handle:'primeOut',on:'timeout',duration:300}}
-					]
+	basicTrial: [{
+		data : {error:0},// by default each trial is crrect, this is modified in case of an error
+		//Layout defines what will be presented in the trial. It is like a background display.
+		layout: [
+			{location:{left:15,top:3},media:{word:'key: e'}, css:{color:'black','font-size':'1em'}},
+			{location:{right:15,top:3},media:{word:'key: i'},  css:{color:'black','font-size':'1em'}},
+			{location:{left:10,top:6},media:{word:category2}, css:{color:'white','font-size':'2em'}},
+			{location:{right:10,top:6},media:{word:category1},  css:{color:'white','font-size':'2em'}}
+		],
+		input: [
+			{handle:'enter',on:'enter'} //'enter' to skip the current block
+		],
+		//Set what to do.
+		interactions: [
+		{
+			propositions: [{type:'begin'}],
+			actions: [
+				{type:'showStim',handle:'primingImage'},// display the first stimulus
+				{type:'setInput',input:{handle:'primeOut',on:'timeout',duration:300}}
+			]
+		},
+		{
+			propositions: [{type:'inputEquals',value:'primeOut'}], // on time out
+			actions: [
+				{type:'hideStim',handle:'primingImage'}, // hide the first stimulus
+				{type:'showStim',handle:'targetStim'}, // and show the second one
+				//Set the possible key inputs.
+				{type:'setInput',input:{handle:category2,on: 'keypressed', key:'e'}},
+				{type:'setInput',input:{handle:category1,on: 'keypressed', key:'i'}},
+				{type:'setInput',input:{handle:category2,on:'leftTouch',touch:true}},
+				{type:'setInput',input:{handle:category1,on:'rightTouch',touch:true}},
+				{type:'setInput',input:{handle:'targetOut',on:'timeout',duration:1500}}
+			]
+		},
+		{
+						propositions: [{type:'inputEquals',value:'targetOut'}], // on time out
+						actions: [
+								{type:'hideStim',handle:'targetStim'}, // hide the stimulus
+				{type:'removeInput',inputHandle:[category2,category1]},//only one respnse is possible
+								{type:'showStim',handle:'warning'}, // and show the warning
+				{type:'setInput',input:{handle:'showFix', on:'timeout',duration:250}} //End the trial in 250ms (show the warning until then)
+				]
 				},
-				{
-					propositions: [{type:'inputEquals',value:'primeOut'}], // on time out
-					actions: [
-						{type:'hideStim',handle:'primingImage'}, // hide the first stimulus
-						{type:'showStim',handle:'targetStim'}, // and show the second one
-						//Set the possible key inputs.
-						{type:'setInput',input:{handle:category2,on: 'keypressed', key:'e'}},
-						{type:'setInput',input:{handle:category1,on: 'keypressed', key:'i'}},
-						{type:'setInput',input:{handle:category2,on:'leftTouch',touch:true}},
-						{type:'setInput',input:{handle:category1,on:'rightTouch',touch:true}},
-						{type:'setInput',input:{handle:'targetOut',on:'timeout',duration:1500}}
-					]
-				},
-				{
-					propositions: [{type:'inputEquals',value:'targetOut'}], // on time out
-					actions: [
-						{type:'hideStim',handle:'targetStim'}, // hide the stimulus
-						{type:'removeInput',inputHandle:[category2,category1]},//only one response is possible
-						{type:'showStim',handle:'warning'}, // and show the warning
-						{type:'setInput',input:{handle:'showFix', on:'timeout',duration:250}} //End the trial in 250ms (show the warning until then)
-					]
-				},
-				// there are 2 possible responses: "pleasant" and "unpleasant", here we handle these responses when the user answers
-				// matches the word value (correct response)
-				{
-					propositions: [{type:'stimEquals',value:'wordCategory'}],
-					actions: [
-						{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
-						{type:'removeInput',inputHandle:[category2,category1]},//only one response is possible
-						{type:'removeInput',inputHandle:'time'},
-						{type:'trigger', handle:'showFix'}//End the trial immidiatlly after correct response
-					]
-				},
-						// there are 2 possible responses: "pleasant" and "unpleasant", here we handle with these responses when the user answer
-						// doesn't match the word value (incorrect response)
-						//this propositions are true only after incorrect response
-						// handle incorrect response.
-						//this propositions are true only after incorrect response
-				{
-					propositions: [
-						{type:'stimEquals',value:'wordCategory', negate:true},
-						{type:'inputEquals',value: [category1, category2]}
-					], // This is a category action - as opposed to some timeout.
-					actions: [
-						{type:'setTrialAttr', setter:{score:1}},
-						{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
-						{type:'showStim',handle:'errorFB'}, //show error feedback
-						{type:'removeInput',inputHandle:[category2,category1]},// block the option to change the answer or to answer twice
-						{type:'removeInput',inputHandle:'time'},
-						{type:'setInput',input:{handle:'showFix', on:'timeout',duration:250}} //End the trial in 250ms (show the x until then)
-					]
-				},
-				{
-					propositions: [{type:'inputEquals',value:'showFix'}], //What to do when endTrial is called.
-					actions: [
-						{type:'hideStim',handle:'All'},
-						{type:'showStim',handle:'blankScreen'}, //show blankScreen
-						{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:{min:300, max: 900}}} // randomly pick from within a range
-					]
-				},
-				// skip block -> if you press 'enter' you will skip the current block.
-				{
-					propositions: [{type:'inputEquals',value:'enter'}],
-					actions: [
-						{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
-						{type:'endTrial'}
-					]
-				},
-				{
-					propositions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
-					actions: [{type:'endTrial'}]
-				}
+		// there are 2 possible responses: "pleasant" and "unpleasant", here we handle these responses when the user answers
+		// matches the word value (correct response)
+		{
+			propositions: [{type:'stimEquals',value:'wordCategory'}],
+			actions: [
+				{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
+				{type:'removeInput',inputHandle:[category2,category1]},//only one response is possible
+				{type:'removeInput',inputHandle:'targetOut'},
+				{type:'trigger', handle:'showFix'}//End the trial immidiatlly after correct response
+				]
+		},
+				// there are 2 possible responses: "pleasant" and "unpleasant", here we handle with these responses when the user answer
+				// doesn't match the word value (incorrect response)
+				//this propositions are true only after incorrect response
+				// handle incorrect response.
+				//this propositions are true only after incorrect response
+		{
+			propositions: [
+				{type:'stimEquals',value:'wordCategory', negate:true},
+				{type:'inputEquals',value: [category1, category2]}
+			], // This is a category action - as opposed to some timeout.
+			actions: [
+				{type:'setTrialAttr', setter:{score:1}},
+				{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
+				{type:'showStim',handle:'errorFB'}, //show error feedback
+				{type:'removeInput',inputHandle:[category2,category1]},// block the option to change the answer or to answer twice
+				{type:'removeInput',inputHandle:'targetOut'},
+				{type:'setInput',input:{handle:'showFix', on:'timeout',duration:250}} //End the trial in 250ms (show the x until then)
+			]
+		},
+		{
+			propositions: [{type:'inputEquals',value:'showFix'}], //What to do when endTrial is called.
+			actions: [
+				{type:'hideStim',handle:'All'},
+				{type:'showStim',handle:'blankScreen'}, //show blankScreen
+				{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:{min:300, max: 900}}} // randomly pick from within a range
+			]
+		},
+		// skip block -> if you press 'enter' you will skip the current block.
+		{
+			propositions: [{type:'inputEquals',value:'enter'}],
+			actions: [
+				{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
+				{type:'endTrial'}
+				]
+		},
+		{
+			propositions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
+			actions: [{type:'endTrial'}]
+		}
 			] // end interactions
 		}] // end basic trial
 	}); // end trialsets
@@ -268,8 +266,6 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 
 //Create the stimuli
 	API.addStimulusSets({
-	//These are diffrent types of stimuli.
-	//That way we can later create a stimulus object the inherits from this set randomly.
 
 	// This Default stimulus is inherited by the other stimuli so that we can have a consistent look and change it from one place
 		Default: [
@@ -542,7 +538,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				mixer: 'repeat',
 				times: 8,
 				data : [
-					{inherit: 'pleasantOldWhite',data:{block:1}},
+						{inherit: 'pleasantOldWhite',data:{block:1}},
 					{inherit: 'pleasantYoungWhite',data:{block:1}},
 					{inherit: 'pleasantOldBlack',data:{block:1}},
 					{inherit: 'pleasantYoungBlack',data:{block:1}},
@@ -602,6 +598,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 					parcelValue : ['second'],
 					cond1VarValues: ["Old white People / Unpleasant"], //condition 1
 					cond2VarValues: ["Old white People / Pleasant"] //condition 2
+
 				});
 				Scorer.addSettings('message',{
 					MessageDef: [
@@ -619,7 +616,8 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 				Scorer.addSettings('compute',{
 					parcelValue : ['third'],
 					cond1VarValues: ["Young black People / Unpleasant"], //condition 1
-					cond2VarValues: ["Young black People / Pleasant"] //condition 2
+					cond2VarValues: ["Young black People / Pleasant"], //condition 2
+
 				});
 				Scorer.addSettings('message',{
 					MessageDef: [
@@ -638,6 +636,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 					parcelValue : ['fourth'],
 					cond1VarValues: ["Young white People / Unpleasant"], //condition 1
 					cond2VarValues: ["Young white People / Pleasant"] //condition 2
+
 				});
 				Scorer.addSettings('message',{
 					MessageDef: [

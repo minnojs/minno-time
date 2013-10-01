@@ -349,7 +349,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		},
 		//second block
 		{
-			data: {block:2, blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:2, blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			layout: leftLayout,
 			stimuli: [{
@@ -380,7 +380,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		},
 		//third block
 		{
-			data: {block:3, blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:3, blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			layout: rightLayout,
 			stimuli: [{
@@ -411,7 +411,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 		},
 		//fourth block
 		{
-			data: {block:4, blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:4, blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			layout: leftLayout,
 			stimuli: [{
@@ -423,7 +423,6 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 			mixer: 'random',
 			data : [
 				{
-					data: {block:4},
 					mixer: 'repeat',
 					times:14,
 					data : [
@@ -433,7 +432,6 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 					]
 				},
 				{ //The presentation trials
-					data: {block:4},
 					mixer: 'repeat',
 					times:6,
 					data : [
@@ -476,7 +474,7 @@ require(['app/API','../../examples/dscore/Scorer'], function(API,Scorer) {
 						FBMsg = Scorer.getFBMsg(DScore);
 						}
 						console.log(FBMsg);
-						
+
 					}
 					else{
 						FBMsg = DScoreObj.errorMessage;
