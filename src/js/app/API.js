@@ -3,7 +3,6 @@
  * used to set the script object and run the player
  * will be exported to window
  */
-
 define(['jquery','./task/script','app/task/main_view','app/task/parser','app/sequencer/player', 'app/task/log/log_stack'],function($,script,main,parse,play,logStack){
 
 	// the API object

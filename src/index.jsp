@@ -20,8 +20,13 @@
 
         <link type="text/css" rel="Stylesheet" href="css/reset.css"/>
         <link type="text/css" rel="Stylesheet" href="css/styles.css"/>
-		<script data-main="js/main" src="js/libs/require.js"></script>
-		<script src="<%= script %>"></script>
+		<script src="js/libs/require.js"></script>
+
+		<script>
+			require(['js/config'], function() {
+				require(['<%= script %>']);
+			});
+		</script>
 	</head>
 
 	<body>

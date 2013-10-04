@@ -1,4 +1,4 @@
-require(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
+define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 	var category1 = 'Pleasent';
 	var category2 = 'Unpleasent';
 

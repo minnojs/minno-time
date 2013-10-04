@@ -20,7 +20,7 @@
 				log = function(){};
 			}
 		</script>
-		<script data-main="js/main" src="js/libs/require.js?get=<?php echo time()?>"></script>
+		<script src="js/libs/require.js?get=<?php echo time()?>"></script>
 
 		<script type="text/javascript">
 			function getParameterByName(name) {
@@ -30,11 +30,9 @@
 			    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 			}
 
-		  (function() {
-		    var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-		    script.src = getParameterByName('url') || '../examples/eiat.js';
-		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-		  })();
+			require(['js/config'], function() {
+				require([getParameterByName('url') || '../examples/iat.js']);
+			});
 		</script>
 	</head>
 	<body>

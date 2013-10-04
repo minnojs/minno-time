@@ -26,7 +26,7 @@
 
 
 
-require(['app/API'], function(API) {
+define(['app/API'], function(API) {
 
 
 	// #### media sets
@@ -163,8 +163,7 @@ require(['app/API'], function(API) {
 			// The layout property gets overriden in a different way.
 			layout: [{media:{word:'A differen child'}}]
 		}
-
-
-
 	]);
+
+	API.play();
 });

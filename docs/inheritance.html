@@ -94,7 +94,7 @@ The simplified version randomly inherits a media object form the set &#39;mediaS
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>require([<span class="string">'app/API'</span>], <span class="keyword">function</span>(API) {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>define([<span class="string">'app/API'</span>], <span class="keyword">function</span>(API) {</pre></div></div>
             
         </li>
         
@@ -415,10 +415,9 @@ What this means is that inherited properties are overwritten by explicit propert
             
             <div class="content"><div class='highlight'><pre>			layout: [{media:{word:<span class="string">'A differen child'</span>}}]
 		}
-
-
-
 	]);
+
+	API.play();
 });</pre></div></div>
             
         </li>

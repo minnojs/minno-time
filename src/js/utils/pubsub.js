@@ -1,6 +1,4 @@
-/*
-
-	jQuery pub/sub plugin by Peter Higgins (dante@dojotoolkit.org)
+/*	jQuery pub/sub plugin by Peter Higgins (dante@dojotoolkit.org)
 
 	Loosely based on Dojo publish/subscribe API, limited in scope. Rewritten blindly.
 
@@ -8,10 +6,7 @@
 	http://dojofoundation.org/license for more information.
 
 	modified and fixed by eladzlot 6.9.12
-
 */
-
-
 define(["underscore"],function(_){
 
 	// the pubsub object itself

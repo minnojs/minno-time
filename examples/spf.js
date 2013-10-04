@@ -1,4 +1,4 @@
-require(['app/API','extensions/dscore/Scorer		'], function(API,Scorer) {
+define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 	var attribute1 = 'Good Words';
 	var attribute2 = 'Bad Words';

@@ -1,6 +1,6 @@
 /* We use jQuery in this file as a global, so we need to mark it for the parser (jshint) */
 /* global $ */
-require(['app/API'], function(API) {
+define(['app/API'], function(API) {
 
 	API.addSequence([
 		// ### Stimuli and media
@@ -90,5 +90,6 @@ require(['app/API'], function(API) {
 	]);
 	/* this is where we close the sequence */
 
+	API.play();
 });
 /* don't forget to close the require wrapper */

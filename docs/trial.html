@@ -78,13 +78,13 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <p>All PIP source files are wrapped inside a require function
+              <p>All PIP source files are wrapped inside define function
 This function gives you access to the API object that we use to build the various tasks
 If you want to know more about this, you can read up about AMD and check out <a href="http://requirejs.org/">http://requirejs.org/</a></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>require([<span class="string">'app/API'</span>], <span class="keyword">function</span>(API) {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>define([<span class="string">'app/API'</span>], <span class="keyword">function</span>(API) {</pre></div></div>
             
         </li>
         
@@ -265,6 +265,7 @@ We will learn more about this section in the proposition and action tutorials.</
 	]);
 	<span class="comment">/* this is where we close the sequence */</span>
 
+	API.play();
 });
 <span class="comment">/* don't forget to close the require wrapper */</span></pre></div></div>
             

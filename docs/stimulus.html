@@ -83,7 +83,7 @@
             
             <div class="content"><div class='highlight'><pre><span class="comment">/* We use jQuery in this file as a global, so we need to mark it for the parser (jshint) */</span>
 <span class="comment">/* global $ */</span>
-require([<span class="string">'app/API'</span>], <span class="keyword">function</span>(API) {
+define([<span class="string">'app/API'</span>], <span class="keyword">function</span>(API) {
 
 	API.addSequence([</pre></div></div>
             
@@ -306,6 +306,7 @@ The size property allows you to control the image size (in percentage of canvas)
 	]);
 	<span class="comment">/* this is where we close the sequence */</span>
 
+	API.play();
 });
 <span class="comment">/* don't forget to close the require wrapper */</span></pre></div></div>
             

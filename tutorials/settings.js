@@ -7,7 +7,7 @@
 //			API.addSettings('settingName',{
 //				// some settings
 //			});
-require(['app/API'], function(API) {
+define(['app/API'], function(API) {
 
 	// ### canvas
 	// The canvas setting controls the general look that the player takes
@@ -94,4 +94,6 @@ require(['app/API'], function(API) {
 			]
 		}
 	]);
+
+	API.play();
 });

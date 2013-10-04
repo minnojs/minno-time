@@ -78,7 +78,7 @@ This tutorial will show you how to fully support them in you tasks.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>require([<span class="string">'app/API'</span>], <span class="keyword">function</span>(API) {
+            <div class="content"><div class='highlight'><pre>define([<span class="string">'app/API'</span>], <span class="keyword">function</span>(API) {
 
 	API.addSequence([
 		{</pre></div></div>
@@ -175,6 +175,8 @@ If a <code>touchMedia</code> parameter is not defined the regular media will be 
 		}
 
 	]);
+
+	API.play();
 });</pre></div></div>
             
         </li>

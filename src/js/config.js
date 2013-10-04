@@ -1,10 +1,10 @@
-
 // Sets the require.js configuration for your application.
 require.config({
   // how long to wait for incoming files (default is 7, we had problems loading Backbone - maybe this will do the trick - we need to set it so ridiculisly high because our servers are so slow...)
   waitSeconds: 200,
 
   enforceDefine: true,
+  baseUrl:'js',
 
   // 3rd party script alias names (Easier to type "jquery" than "libs/jquery-1.7.2.min")
   paths: {

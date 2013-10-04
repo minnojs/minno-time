@@ -36,16 +36,17 @@ module.exports = function(grunt) {
 					dir: "dist",
 					appDir: 'src',
 					baseUrl: 'js',
+					//optimize:'none', // toggle this for fast optimized debuging
 
 					// Tells Require.js to look at main.js for all shim and path configurations
-					mainConfigFile: 'src/js/main.js',
+					mainConfigFile: 'src/js/config.js',
 
 					// Modules to be optimized:
 					// we'll keep jquery and underscore seperate so they can be used by all modules
 					modules: [
 						{
 							name: "app/API",
-							exclude: ['underscore','jquery']
+							exclude: ['underscore','jquery','backbone']
 						},
 						{
 							name: "extensions/dscore/Scorer",

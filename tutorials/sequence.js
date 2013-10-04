@@ -1,4 +1,4 @@
-require(['app/API'], function(API) {
+define(['app/API'], function(API) {
 
 	// ### The trial sequence
 	// The heart of any PIP script is the sequence.
@@ -138,50 +138,57 @@ require(['app/API'], function(API) {
 	]);
 	/* this is where we close the sequence */
 
+	API.play();
+
+
+
+	// ### Pro tip
+	// *This section goes beyond the normal scope of the PIP, and is intended for use by advanced users only.* </br>
+	// The sequencer allows for many complex configurations. There are times that you want a quick easy way to test that the sequence you created realy does what it is supposed to.
+	// The proper way to do that is to create a mock sequence and check that it is mixed correcty. </br>
+	// Following is such an example. </br>
+	;
+	// Require the mixer function
+	require(['utils/mixer'], function(mixer) {
+		var sequence;
+
+		// create a sequence using numbers (or strings) instead of trials.
+		// you may use all the regular mixer objects.
+		sequence = [
+			{
+				mixer : 'repeat',
+				times : 4,
+				data : [
+					{
+						mixer: 'random',
+						data: [
+							{
+								mixer : 'repeat',
+								times : 4,
+								data : [
+									{
+										mixer: 'random',
+										// Note that we use numbers instead of trials here. This allows us to follow the order that this mixer follows.
+										data: [
+											1,2,3,4,5,6,7,8
+										] /* end random data */
+									}
+								] /* end repeat data */
+							}
+						] /* end random data */
+					}
+				] /* end repeat data */
+			}
+		];
+
+		// We log the results of the mixer into the console (click F12 to Open Developer Tools - in Firefox requires Firebug extension.) </br>
+		// Now you can check to see if the order is what you intend.
+		console.log(mixer(sequence));
+	});
+
+
 });
-/* don't forget to close the require wrapper */
+/* don't forget to close the define wrapper */
 
-// ### Pro tip
-// *This section goes beyond the normal scope of the PIP, and is intended for use by advanced users only.* </br>
-// The sequencer allows for many complex configurations. There are times that you want a quick easy way to test that the sequence you created realy does what it is supposed to.
-// The proper way to do that is to create a mock sequence and check that it is mixed correcty. </br>
-// Following is such an example. </br>
-;
-// Require the mixer function
-require(['utils/mixer'], function(mixer) {
-	var sequence;
 
-	// create a sequence using numbers (or strings) instead of trials.
-	// you may use all the regular mixer objects.
-	sequence = [
-		{
-			mixer : 'repeat',
-			times : 4,
-			data : [
-				{
-					mixer: 'random',
-					data: [
-						{
-							mixer : 'repeat',
-							times : 4,
-							data : [
-								{
-									mixer: 'random',
-									// Note that we use numbers instead of trials here. This allows us to follow the order that this mixer follows.
-									data: [
-										1,2,3,4,5,6,7,8
-									] /* end random data */
-								}
-							] /* end repeat data */
-						}
-					] /* end random data */
-				}
-			] /* end repeat data */
-		}
-	];
-
-	// We log the results of the mixer into the console (click F12 to Open Developer Tools - requires Firebug extension for Firefox.) </br>
-	// Now you can check to see if the order is what you intend.
-	console.log(mixer(sequence));
-});
 

@@ -81,7 +81,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>require([<span class="string">'app/API'</span>], <span class="keyword">function</span>(API) {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>define([<span class="string">'app/API'</span>], <span class="keyword">function</span>(API) {</pre></div></div>
             
         </li>
         
@@ -499,8 +499,7 @@ In contrast, if we has a repeat mixer here, its content would be randomized.</p>
 	]);
 	<span class="comment">/* this is where we close the sequence */</span>
 
-});
-<span class="comment">/* don't forget to close the require wrapper */</span></pre></div></div>
+	API.play();</pre></div></div>
             
         </li>
         
@@ -519,7 +518,7 @@ Following is such an example. </br></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>	;</pre></div></div>
             
         </li>
         
@@ -534,8 +533,8 @@ Following is such an example. </br></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>require([<span class="string">'utils/mixer'</span>], <span class="keyword">function</span>(mixer) {
-	<span class="keyword">var</span> sequence;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>	require([<span class="string">'utils/mixer'</span>], <span class="keyword">function</span>(mixer) {
+		<span class="keyword">var</span> sequence;</pre></div></div>
             
         </li>
         
@@ -551,20 +550,20 @@ you may use all the regular mixer objects.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>	sequence = [
-		{
-			mixer : <span class="string">'repeat'</span>,
-			times : <span class="number">4</span>,
-			data : [
-				{
-					mixer: <span class="string">'random'</span>,
-					data: [
-						{
-							mixer : <span class="string">'repeat'</span>,
-							times : <span class="number">4</span>,
-							data : [
-								{
-									mixer: <span class="string">'random'</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>		sequence = [
+			{
+				mixer : <span class="string">'repeat'</span>,
+				times : <span class="number">4</span>,
+				data : [
+					{
+						mixer: <span class="string">'random'</span>,
+						data: [
+							{
+								mixer : <span class="string">'repeat'</span>,
+								times : <span class="number">4</span>,
+								data : [
+									{
+										mixer: <span class="string">'random'</span>,</pre></div></div>
             
         </li>
         
@@ -579,17 +578,17 @@ you may use all the regular mixer objects.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>									data: [
-										<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>
-									] <span class="comment">/* end random data */</span>
-								}
-							] <span class="comment">/* end repeat data */</span>
-						}
-					] <span class="comment">/* end random data */</span>
-				}
-			] <span class="comment">/* end repeat data */</span>
-		}
-	];</pre></div></div>
+            <div class="content"><div class='highlight'><pre>										data: [
+											<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>
+										] <span class="comment">/* end random data */</span>
+									}
+								] <span class="comment">/* end repeat data */</span>
+							}
+						] <span class="comment">/* end random data */</span>
+					}
+				] <span class="comment">/* end repeat data */</span>
+			}
+		];</pre></div></div>
             
         </li>
         
@@ -600,13 +599,17 @@ you may use all the regular mixer objects.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
-              <p>We log the results of the mixer into the console (click F12 to Open Developer Tools - requires Firebug extension for Firefox.) </br>
+              <p>We log the results of the mixer into the console (click F12 to Open Developer Tools - in Firefox requires Firebug extension.) </br>
 Now you can check to see if the order is what you intend.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>	console.log(mixer(sequence));
-});</pre></div></div>
+            <div class="content"><div class='highlight'><pre>		console.log(mixer(sequence));
+	});
+
+
+});
+<span class="comment">/* don't forget to close the define wrapper */</span></pre></div></div>
             
         </li>
         
