@@ -37,18 +37,20 @@ define(['../properties'],function(properties){
 					]
 				});
 
-				// end trial if we don't need to correct errors
-				if (!properties.correct_errors || FBtype !== 'error_feedback') {
-					interactions.push({
-						propositions: [{type:'inputEquals',value: 'remove_' + FBtype}],
-						actions: [
-							{type:'trigger',handle: 'end'}
-						]
-					});
-				}
 			}
+
+			// end trial if we don't need to correct errors
+			if (!properties.correct_errors || FBtype !== 'error_feedback') {
+				interactions.push({
+					propositions: [{type:'inputEquals',value: 'remove_' + FBtype}],
+					actions: [
+						{type:'trigger',handle: 'end'}
+					]
+				});
+			}
+
 		} // end FBtype loop
-log(interactions)
+
 		return trial;
 	};
 

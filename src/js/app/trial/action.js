@@ -15,7 +15,6 @@ define(['jquery','./action_list'],function($,action_list){
 		$.each(actions,function(index,action){
 			if (action_list[action.type]) {
 				action_list[action.type](action, eventData);
-				log(eventData.handle, action)
 			} else {
 				throw new Error('unknown action: ' + action.type);
 			}
