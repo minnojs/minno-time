@@ -2,8 +2,8 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 	var attribute1 = 'Bad Words';
 	var attribute2 = 'Good Words';
-	var concept1 = 'Black People';
-	var concept2 = 'White People';
+	var category1 = 'Black People';
+	var category2 = 'White People';
 
 
 	API.addSettings('canvas',{
@@ -31,11 +31,11 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		condVar:"condition",
 		//condition 1
 		cond1VarValues: [
-			attribute1 + ',' + concept1 + '/' + attribute2 + ',' + concept2
+			attribute1 + ',' + category1 + '/' + attribute2 + ',' + category2
 		],
 		//condition 2
 		cond2VarValues: [
-			attribute1 + ',' + concept2 + '/' + attribute2 + ',' + concept1
+			attribute1 + ',' + category2 + '/' + attribute2 + ',' + category1
 		],
 		parcelVar : "parcel",
 		parcelValue : ['first'],
@@ -87,7 +87,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			// begin trial : display stimulus imidiately
 			{
 				propositions: [{type:'begin'}],
-				actions: [{type:'showStim',handle:'target'}]
+				actions: [{type:'showStim',handle:'myStim'}]
 			},
 
 			// error
@@ -189,10 +189,10 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 		// block1
 		{
-			data: {block:1, left2:concept1, right2:concept2, condition: concept1 + '/' + concept2},
+			data: {block:1, left2:category1, right2:category2, condition: category1 + '/' + category2},
 			inherit: 'Default',
 			stimuli: [
-				{inherit:{type:'exRandom',set:'concept1_left'}},
+				{inherit:{type:'exRandom',set:'category1_left'}},
 				{inherit:{type:'random',set:'feedback'}}
 			]
 		},
@@ -209,16 +209,16 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 		// block3
 		{
-			data: {block:3, row:1, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2, condition: attribute1 + ',' + concept1 + '/' + attribute2 + ',' + concept2,parcel:'first'},
+			data: {block:3, row:1, left1:attribute1, right1:attribute2, left2:category1, right2:category2, condition: attribute1 + ',' + category1 + '/' + attribute2 + ',' + category2,parcel:'first'},
 			inherit: 'Default',
 			stimuli: [
-				{inherit:{type:'exRandom',set:'concept1_left'}},
+				{inherit:{type:'exRandom',set:'category1_left'}},
 				{inherit:{type:'random',set:'feedback'}}
 			]
 		},
 
 		{
-			data: {block:3, row:2, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2, condition: attribute1 + ',' + concept1 + '/' + attribute2 + ',' + concept2,parcel:'first'},
+			data: {block:3, row:2, left1:attribute1, right1:attribute2, left2:category1, right2:category2, condition: attribute1 + ',' + category1 + '/' + attribute2 + ',' + category2,parcel:'first'},
 			inherit: 'Default',
 			stimuli: [
 				{inherit:{type:'exRandom',set:'attribute1_left'}},
@@ -228,16 +228,16 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 		// block4 (same as 3)
 		{
-			data: {block:4, row:1, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2, condition: attribute1 + ',' + concept1 + '/' + attribute2 + ',' + concept2,parcel:'second'},
+			data: {block:4, row:1, left1:attribute1, right1:attribute2, left2:category1, right2:category2, condition: attribute1 + ',' + category1 + '/' + attribute2 + ',' + category2,parcel:'second'},
 			inherit: 'Default',
 			stimuli: [
-				{inherit:{type:'exRandom',set:'concept1_left'}},
+				{inherit:{type:'exRandom',set:'category1_left'}},
 				{inherit:{type:'random',set:'feedback'}}
 			]
 		},
 
 		{
-			data: {block:4, row:2, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2, condition: attribute1 + ',' + concept1 + '/' + attribute2 + ',' + concept2,parcel:'second'},
+			data: {block:4, row:2, left1:attribute1, right1:attribute2, left2:category1, right2:category2, condition: attribute1 + ',' + category1 + '/' + attribute2 + ',' + category2,parcel:'second'},
 			inherit: 'Default',
 			stimuli: [
 				{inherit:{type:'exRandom',set:'attribute1_left'}},
@@ -247,26 +247,26 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 		// block5
 		{
-			data: {block:5, left2:concept2, right2:concept1, condition: concept2 + '/' + concept1},
+			data: {block:5, left2:category2, right2:category1, condition: category2 + '/' + category1},
 			inherit: 'Default',
 			stimuli: [
-				{inherit:{type:'exRandom',set:'concept1_right'}},
+				{inherit:{type:'exRandom',set:'category1_right'}},
 				{inherit:{type:'random',set:'feedback'}}
 			]
 		},
 
 		// block6
 		{
-			data: {block:6, row:1, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1, condition: attribute1 + ',' + concept2 + '/' + attribute2 + ',' + concept1,parcel:'first'},
+			data: {block:6, row:1, left1:attribute1, right1:attribute2, left2:category2, right2:category1, condition: attribute1 + ',' + category2 + '/' + attribute2 + ',' + category1,parcel:'first'},
 			inherit: 'Default',
 			stimuli: [
-				{inherit:{type:'exRandom',set:'concept1_right'}},
+				{inherit:{type:'exRandom',set:'category1_right'}},
 				{inherit:{type:'random',set:'feedback'}}
 			]
 		},
 
 		{
-			data: {block:6, row:2, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1, condition: attribute1 + ',' + concept2 + '/' + attribute2 + ',' + concept1,parcel:'first'},
+			data: {block:6, row:2, left1:attribute1, right1:attribute2, left2:category2, right2:category1, condition: attribute1 + ',' + category2 + '/' + attribute2 + ',' + category1,parcel:'first'},
 			inherit: 'Default',
 			stimuli: [
 				{inherit:{type:'exRandom',set:'attribute1_left'}},
@@ -276,16 +276,16 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 		// block7  (same as 6)
 		{
-			data: {block:7, row:1, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1, condition: attribute1 + ',' + concept2 + '/' + attribute2 + ',' + concept1,parcel:'second'},
+			data: {block:7, row:1, left1:attribute1, right1:attribute2, left2:category2, right2:category1, condition: attribute1 + ',' + category2 + '/' + attribute2 + ',' + category1,parcel:'second'},
 			inherit: 'Default',
 			stimuli: [
-				{inherit:{type:'exRandom',set:'concept1_right'}},
+				{inherit:{type:'exRandom',set:'category1_right'}},
 				{inherit:{type:'random',set:'feedback'}}
 			]
 		},
 
 		{
-			data: {block:7, row:2, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1, condition: attribute1 + ',' + concept2 + '/' + attribute2 + ',' + concept1,parcel:'second'},
+			data: {block:7, row:2, left1:attribute1, right1:attribute2, left2:category2, right2:category1, condition: attribute1 + ',' + category2 + '/' + attribute2 + ',' + category1,parcel:'second'},
 			inherit: 'Default',
 			stimuli: [
 				{inherit:{type:'exRandom',set:'attribute1_left'}},
@@ -312,52 +312,52 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		// Each stimulus set holds the left and right stimuli for a specific page settings (is the first attribute/category in the left or right?)
 		// Notably the attribute/category sets repeat themselves 5 times each, this is so that when calling them they will be balanced accross each ten trials
 		attribute1_left : [
-			{data:{side:'left', handle:'target', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}},
-			{data:{side:'right', handle:'target', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}},
-			{data:{side:'left', handle:'target', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}},
-			{data:{side:'right', handle:'target', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}},
-			{data:{side:'left', handle:'target', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}},
-			{data:{side:'right', handle:'target', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}},
-			{data:{side:'left', handle:'target', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}},
-			{data:{side:'right', handle:'target', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}},
-			{data:{side:'left', handle:'target', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}},
-			{data:{side:'right', handle:'target', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}}
+			{data:{side:'left', handle:'myStim', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}},
+			{data:{side:'right', handle:'myStim', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}},
+			{data:{side:'left', handle:'myStim', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}},
+			{data:{side:'right', handle:'myStim', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}},
+			{data:{side:'left', handle:'myStim', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}},
+			{data:{side:'right', handle:'myStim', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}},
+			{data:{side:'left', handle:'myStim', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}},
+			{data:{side:'right', handle:'myStim', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}},
+			{data:{side:'left', handle:'myStim', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}},
+			{data:{side:'right', handle:'myStim', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}}
 		],
 		attribute1_right : [
-			{data:{side:'left', handle:'target', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}},
-			{data:{side:'right', handle:'target', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}},
-			{data:{side:'left', handle:'target', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}},
-			{data:{side:'right', handle:'target', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}},
-			{data:{side:'left', handle:'target', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}},
-			{data:{side:'right', handle:'target', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}},
-			{data:{side:'left', handle:'target', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}},
-			{data:{side:'right', handle:'target', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}},
-			{data:{side:'left', handle:'target', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}},
-			{data:{side:'right', handle:'target', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}}
+			{data:{side:'left', handle:'myStim', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}},
+			{data:{side:'right', handle:'myStim', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}},
+			{data:{side:'left', handle:'myStim', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}},
+			{data:{side:'right', handle:'myStim', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}},
+			{data:{side:'left', handle:'myStim', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}},
+			{data:{side:'right', handle:'myStim', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}},
+			{data:{side:'left', handle:'myStim', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}},
+			{data:{side:'right', handle:'myStim', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}},
+			{data:{side:'left', handle:'myStim', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}},
+			{data:{side:'right', handle:'myStim', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}}
 		],
-		concept1_left: [
-			{data:{side:'left', handle:'target', alias:concept1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'concept1'}}},
-			{data:{side:'right', handle:'target', alias:concept2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'concept2'}}},
-			{data:{side:'left', handle:'target', alias:concept1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'concept1'}}},
-			{data:{side:'right', handle:'target', alias:concept2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'concept2'}}},
-			{data:{side:'left', handle:'target', alias:concept1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'concept1'}}},
-			{data:{side:'right', handle:'target', alias:concept2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'concept2'}}},
-			{data:{side:'left', handle:'target', alias:concept1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'concept1'}}},
-			{data:{side:'right', handle:'target', alias:concept2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'concept2'}}},
-			{data:{side:'left', handle:'target', alias:concept1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'concept1'}}},
-			{data:{side:'right', handle:'target', alias:concept2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'concept2'}}}
+		category1_left: [
+			{data:{side:'left', handle:'myStim', alias:category1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category1'}}},
+			{data:{side:'right', handle:'myStim', alias:category2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category2'}}},
+			{data:{side:'left', handle:'myStim', alias:category1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category1'}}},
+			{data:{side:'right', handle:'myStim', alias:category2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category2'}}},
+			{data:{side:'left', handle:'myStim', alias:category1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category1'}}},
+			{data:{side:'right', handle:'myStim', alias:category2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category2'}}},
+			{data:{side:'left', handle:'myStim', alias:category1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category1'}}},
+			{data:{side:'right', handle:'myStim', alias:category2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category2'}}},
+			{data:{side:'left', handle:'myStim', alias:category1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category1'}}},
+			{data:{side:'right', handle:'myStim', alias:category2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category2'}}}
 		],
-		concept1_right : [
-			{data:{side:'left', handle:'target', alias:concept2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'concept2'}}},
-			{data:{side:'right', handle:'target', alias:concept1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'concept1'}}},
-			{data:{side:'left', handle:'target', alias:concept2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'concept2'}}},
-			{data:{side:'right', handle:'target', alias:concept1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'concept1'}}},
-			{data:{side:'left', handle:'target', alias:concept2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'concept2'}}},
-			{data:{side:'right', handle:'target', alias:concept1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'concept1'}}},
-			{data:{side:'left', handle:'target', alias:concept2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'concept2'}}},
-			{data:{side:'right', handle:'target', alias:concept1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'concept1'}}},
-			{data:{side:'left', handle:'target', alias:concept2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'concept2'}}},
-			{data:{side:'right', handle:'target', alias:concept1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'concept1'}}}
+		category1_right : [
+			{data:{side:'left', handle:'myStim', alias:category2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category2'}}},
+			{data:{side:'right', handle:'myStim', alias:category1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category1'}}},
+			{data:{side:'left', handle:'myStim', alias:category2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category2'}}},
+			{data:{side:'right', handle:'myStim', alias:category1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category1'}}},
+			{data:{side:'left', handle:'myStim', alias:category2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category2'}}},
+			{data:{side:'right', handle:'myStim', alias:category1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category1'}}},
+			{data:{side:'left', handle:'myStim', alias:category2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category2'}}},
+			{data:{side:'right', handle:'myStim', alias:category1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category1'}}},
+			{data:{side:'left', handle:'myStim', alias:category2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category2'}}},
+			{data:{side:'right', handle:'myStim', alias:category1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category1'}}}
 		],
 
 		// this stimulus used for giving feedback, in this case only the error notification
@@ -371,6 +371,42 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		]
 	});
 
+	API.addMediaSets({
+		attribute1 : [
+			{word: 'Bomb'},
+			{word: 'Abuse'},
+			{word: 'Sadness'},
+			{word: 'Pain'},
+			{word: 'Poison'},
+			{word: 'Grief'}
+		],
+		attribute2: [
+			{word: 'Paradise'},
+			{word: 'Pleasure'},
+			{word: 'Cheer'},
+			{word: 'Wonderful'},
+			{word: 'Splendid'},
+			{word: 'Love'}
+		],
+		category1: [
+			{image: 'epbm1.jpg'},
+			{image: 'epbm2.jpg'},
+			{image: 'epbm3.jpg'},
+			{image: 'epbf1.jpg'},
+			{image: 'epbf2.jpg'},
+			{image: 'epbf3.jpg'}
+		],
+		category2: [
+			{image: 'epwm1.jpg'},
+			{image: 'epwm2.jpg'},
+			{image: 'epwm3.jpg'},
+			{image: 'epwf1.jpg'},
+			{image: 'epwf2.jpg'},
+			{image: 'epwf3.jpg'}
+		]
+	});
+
+
 	/*
 		Regular IAT sequence
 		***********************************************************
@@ -379,7 +415,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		// block 1
 		// block 1 instructions
 		{
-			data: {block:1, left2:concept1, right2:concept2,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:1, left2:category1, right2:category2,blockStart:true},			// we set the data with the category names so the template can display them
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -415,7 +451,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		// block 3
 		// block 3 instructions
 		{
-			data: {block:3, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2,blockStart:true},
+			data: {block:3, left1:attribute1, right1:attribute2, left2:category1, right2:category2,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},
 			stimuli: [{
 				inherit:'Instructions',
@@ -434,7 +470,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		// block 4
 		// block 4 instructions
 		{
-			data: {block:4, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2,blockStart:true},
+			data: {block:4, left1:attribute1, right1:attribute2, left2:category1, right2:category2,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},
 			stimuli: [{
 				inherit:'Instructions',
@@ -453,7 +489,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		// block 5
 		// block 5 instructions
 		{
-			data: {block:5, left2:concept2, right2:concept1,blockStart:true},
+			data: {block:5, left2:category2, right2:category1,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},
 			stimuli: [{
 				inherit:'Instructions',
@@ -471,7 +507,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		// block 6
 		// block 6 instructions
 		{
-			data: {block:6, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1,blockStart:true},
+			data: {block:6, left1:attribute1, right1:attribute2, left2:category2, right2:category1,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},
 			stimuli: [{
 				inherit:'Instructions',
@@ -490,7 +526,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		// block 7
 		// block 7 instructions
 		{
-			data: {block:7, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1,blockStart:true},
+			data: {block:7, left1:attribute1, right1:attribute2, left2:category2, right2:category1,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},
 			stimuli: [{
 				inherit:'Instructions',
@@ -516,7 +552,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		// block 5
 		// block 5 instructions
 		{
-			data: {block:5, left2:concept2, right2:concept1,blockStart:true},
+			data: {block:5, left2:category2, right2:category1,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},
 			stimuli: [{
 				inherit:'Instructions',
@@ -552,7 +588,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		// block 6
 		// block 6 instructions
 		{
-			data: {block:6, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1,blockStart:true},
+			data: {block:6, left1:attribute1, right1:attribute2, left2:category2, right2:category1,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},
 			stimuli: [{
 				inherit:'Instructions',
@@ -571,7 +607,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		// block 7
 		// block 7 instructions
 		{
-			data: {block:7, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1,blockStart:true},
+			data: {block:7, left1:attribute1, right1:attribute2, left2:category2, right2:category1,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},
 			stimuli: [{
 				inherit:'Instructions',
@@ -590,7 +626,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		// block 1
 		// block 1 instructions
 		{
-			data: {block:1, left2:concept1, right2:concept2,blockStart:true},			// we set the data with the category names so the template can display them
+			data: {block:1, left2:category1, right2:category2,blockStart:true},			// we set the data with the category names so the template can display them
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
 			stimuli: [{
 				inherit:'Instructions',
@@ -608,7 +644,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		// block 3
 		// block 3 instructions
 		{
-			data: {block:3, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2,blockStart:true},
+			data: {block:3, left1:attribute1, right1:attribute2, left2:category1, right2:category2,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},
 			stimuli: [{
 				inherit:'Instructions',
@@ -627,7 +663,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		// block 4
 		// block 4 instructions
 		{
-			data: {block:4, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2,blockStart:true},
+			data: {block:4, left1:attribute1, right1:attribute2, left2:category1, right2:category2,blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},
 			stimuli: [{
 				inherit:'Instructions',
