@@ -9,7 +9,7 @@ define(['jquery','app/task/settings','JSON'],function($, settings,JSON){
 			, deff = $.Deferred();
 
 		if (!url) {
-			return deff.resolved();
+			return deff.resolve();
 		}
 
 		// build post data

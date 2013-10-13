@@ -16,7 +16,7 @@ define([],function(){
 		// optional of course, the same settings as the main API
 		canvas: {
 			maxWidth: 800,
-			proportions : 1
+			proportions : 0.8
 		},
 
 		// Interface.
@@ -58,8 +58,11 @@ define([],function(){
 		// category seperator
 		seperator: {
 			media: 'or', // default: 'or'
+			height: 4,
 			css : {fontSize:'1.2em'} // optional
 		},
+
+		pusle: 20,
 
 		images_base_url: "",
 		templates_base_url: "extensions/iat/jst"

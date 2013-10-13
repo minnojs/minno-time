@@ -1,7 +1,7 @@
 /*
  * Returns a trial sets object
  */
-define(['../categories','./default', './instructions','./IATlayout'],function(categories,Default,instructions,layout){
+define(['../categories','./default', './instructions','./IATlayout'],function(categories,defaultTrial,instructions,layout){
 
 	return function trials(){
 
@@ -11,7 +11,7 @@ define(['../categories','./default', './instructions','./IATlayout'],function(ca
 			, concept1 = categories.concept1.name
 			, concept2 = categories.concept2.name;
 
-		trialSets.Default = [Default];
+		trialSets.Default = [defaultTrial()];
 		trialSets.instructions = instructions();
 
 		trialSets.IAT = [
@@ -98,11 +98,11 @@ define(['../categories','./default', './instructions','./IATlayout'],function(ca
 
 			// block5
 			{
-				data: {block:5, condition: concept1 + '/' + concept2},
+				data: {block:5, condition: concept2 + '/' + concept1},
 				layout: layout(5),
 				inherit: 'Default',
 				stimuli: [
-					{inherit:{type:'exRandom',set:'concept1_left'}},
+					{inherit:{type:'exRandom',set:'concept1_right'}},
 					{inherit:{type:'exRandom',set:'feedback'}},
 					{inherit:{type:'exRandom',set:'feedback'}},
 					{inherit:{type:'exRandom',set:'feedback'}}

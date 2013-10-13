@@ -1,4 +1,4 @@
-/* global $ */
+/* sglobal $ */
 define(['./IATcomponent'],function(IAT){
 	/**
 	 * Set Properties
@@ -14,7 +14,7 @@ define(['./IATcomponent'],function(IAT){
 		// Default stimulus properties
 		// All optional
 		font: 'Arial',
-		//fontSize: '12',
+		fontSize: '4em',
 		fontColor: 'green',
 		//defaultStimulus: {size:{height:40, width:40}},
 		instructionStimulus: {css:{'font-size':'1.3em',color:'white', lineHeight:1.2}},
@@ -22,17 +22,17 @@ define(['./IATcomponent'],function(IAT){
 		// optional of course, the same settings as the main API
 		canvas: {
 			maxWidth: 800,
-			proportions : 1
+			proportions : 0.8
 		},
 
 		// Interface.
 		left: 'e', // default: e
 		right: 'i', // default: i
-		leftTouch: '<div>left</div>', // default: system
-		rightTouch: $('<div>',{text:'right'}), // default: system
-		notouch: false, // default: true
+		//leftTouch: '<div>left</div>', // default: system
+		//rightTouch: $('<div>',{text:'right'}), // default: system
+		notouch: false, // default: false
 
-		timeout: 450, // default: 0 - no timeout
+		timeout: 4500, // default: 0 - no timeout
 		timeout_value: '', // how to treat timeouts, default: '' always error.
 
 		// behaviour
@@ -41,38 +41,41 @@ define(['./IATcomponent'],function(IAT){
 		post_instruction_interval: 500,
 
 		// do we make the user go back on errors? default: true
-		correct_errors: true,
+		correct_errors: false,
 
 		error_feedback : {
 			active: true, // default: true
 			media: 'X', // default: X
-			//stimulus: {css:{color:'red'}}, // optional
-			duration: 0 // default?
+			//css:{color:'red'}, // optional
+			duration: 300 // default?
 		},
 
 		correct_feedback : {
-			active: false, // default: false
+			active: true, // default: false
 			media: 'OK', // default: V
-			//stimulus: {css:{color:'green'}}, // optional
+			//css:{color:'green'}, // optional
 			duration: 300 // default?
 		},
 
 		timeout_feedback : {
-			active: false, // default: false
-			media: 'TO', // default: X
-			//stimulus: {css:{color:'blue'}}, // optional
+			active: true, // default: false
+			media: 'TimeOut', // default: X
+			css:{color:'blue',fontSize:'4em'}, // optional
 			duration: 300 // default?
 		},
 
 		// category seperator
 		separator: {
 			media: 'or', // default: 'or'
-			//css : {} // optional
+			height:9,
+			css : {fontSize:'2em'} // optional
 		},
-
 
 		// URLS
 		images_base_url: '../examples/images/', // default: ''
+
+		// how many trials per pulse
+		pulse: 5,
 
 		/*
 		 * No Defaults !!!!!!!!
@@ -141,29 +144,24 @@ define(['./IATcomponent'],function(IAT){
 	 * ************************************************************************
 	 * usage: IAT.setInstructions(block_number, properties)
 	 */
-/*
+
 	IAT.setInstructions(1, {
-		escape_key: 32, // default: space
-		time_before_trial: 500,
-		media: 'press space' // takes any media object, default: custom template (we need to work on this),
-		css: {}
+		media: '4 reply redundantly', // takes any media object, default: custom template (we need to work on this),
+		css: {fontSize:'0.5em',color:'lily'}
+	});
+
+	IAT.setInstructions(5, {
+		media: '3 press space' // takes any media object, default: custom template (we need to work on this)
 	});
 
 	IAT.setInstructions(2, {
-		escape_key: 32, // default: space
-		text: 'press space' // takes any media object, default: custom template (we need to work on this)
-	});
-
-	IAT.setInstructions(3, {
-		escape_key: 32, // default: space
-		text: 'press space' // takes any media object, default: custom template (we need to work on this)
+		media: '2 press space' // takes any media object, default: custom template (we need to work on this)
 	});
 
 	// this is a special instruction page to be displayed at the end of the task
 	IAT.setInstructions('last', {
-		escape_key: 32, // default: space
-		text: 'press space' // takes any media object, default: custom template (we need to work on this)
+		media: ' 1 press space' // takes any media object, default: custom template (we need to work on this)
 	});
-*/
+
 	IAT.play();
 });

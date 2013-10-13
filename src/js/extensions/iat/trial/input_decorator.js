@@ -77,6 +77,7 @@ define(['../properties'],function(properties){
 		// Timout
 		// ***********************************************************************************
 		if (properties.timeout){
+
 			input.push({
 				handle:'timeout',
 				on:'timeout',

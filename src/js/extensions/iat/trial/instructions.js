@@ -1,50 +1,60 @@
 define(['underscore','../properties','../categories','./IATlayout'],function(_,properties,categories,layout){
 	// the generic instruction trial
-	var generic = {
-		data: {block:'generic'},
-		// create user interface (just click to move on...)
-		input: [
-			{handle:'space',on:'space'},
-			{handle:'space',on:'bottomTouch',touch:true},
-			{handle:'enter',on:'enter'}
-		],
+	function genericConstructor(){
+		var generic = {
+			data: {block:'generic'},
+			// create user interface (just click to move on...)
+			input: [
+				{handle:'space',on:'space'},
+				{handle:'enter',on:'enter'}
+			],
 
-		interactions: [
-			// display instructions
-			{
-				propositions: [{type:'begin'}],
-				actions: [
-					{type:'showStim',handle:'All'}
-				]
-			},
+			interactions: [
+				// display instructions
+				{
+					propositions: [{type:'begin'}],
+					actions: [
+						{type:'showStim',handle:'All'}
+					]
+				},
 
-			// end after ITI
-			{
-				propositions: [{type:'inputEquals',value:'space'}],
-				actions: [
-					{type:'hideStim',handle:'All'},
-					{type:'setInput',input:{handle:'endTrial', on:'timeout', duration: properties.post_instruction_interval || 0}}
-				]
-			},
+				// end after ITI
+				{
+					propositions: [{type:'inputEquals',value:'space'}],
+					actions: [
+						{type:'hideStim',handle:'All'},
+						{type:'setInput',input:{handle:'endTrial', on:'timeout', duration: properties.post_instruction_interval || 0}}
+					]
+				},
 
-			{
-				propositions: [{type:'inputEquals',value:'endTrial'}],
-				actions: [
-					{type:'endTrial'}
-				]
-			},
+				{
+					propositions: [{type:'inputEquals',value:'endTrial'}],
+					actions: [
+						{type:'endTrial'}
+					]
+				},
 
-			// skip block
-			{
-				propositions: [{type:'inputEquals',value:'enter'}],
-				actions: [
-					{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
-					{type:'endTrial'}
-				]
-			}
-		]
-	};
+				// skip block
+				{
+					propositions: [{type:'inputEquals',value:'enter'}],
+					actions: [
+						{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
+						{type:'endTrial'}
+					]
+				}
+			]
+		};
 
+		// if touch is active add the touch input
+		if (!properties.notouch){
+			generic.input.push({handle:'space',on:'bottomTouch',touch:true});
+		}
+
+		return generic;
+	}
+
+
+/*
 	var last = {
 		data: {block:'last'},
 		inherit: {set:'instructions', type:'byData', data: {block:'generic'}},
@@ -53,13 +63,16 @@ define(['underscore','../properties','../categories','./IATlayout'],function(_,p
 			media: {template:'last.jst'}
 		}]
 	};
+*/
 
 	// this array will hold any user defined settings
 	var settingsArr = [];
 
 	// build insructions array
 	function buildInstructions(){
-		var instructionsArr = [generic]
+
+		var generic = genericConstructor()
+			, instructionsArr = [generic]
 			, trial
 			, stimulus
 			, settings;

@@ -5,6 +5,7 @@ define(function(require){
 		, properties	= require('./properties')
 		, categories	= require('./categories')
 		, trials		= require('./trial/trials')
+		, instructions	= require('./trial/instructions')
 		, stimuli		= require('./stimuli/stimuli')
 		, sequence		= require('./sequence');
 
@@ -36,16 +37,27 @@ define(function(require){
 			// set category
 			categories[name] = categoryObj;
 		},
+		setInstructions: function setInstructions(){
+			instructions.apply(this, arguments);
+		},
 		play : function IATcomponentPlay(){
+			// settings
+			API.addSettings('canvas',properties.canvas);
 			API.addSettings('base_url', {image:properties.images_base_url, template:properties.templates_base_url});
+			API.addSettings('logger',{pulse: properties.pulse, url : properties.post_url});
+			API.addSettings('redirect',properties.next_url);
+
+			// trials and stimuli
 			API.addTrialSets(trials());
 			API.addStimulusSets(stimuli());
+
+			// sequence
 			API.addSequence(sequence);
+
+			// call the original API play
 			APIplay.apply(this);
 		}
 	});
-
-window.a = API;
 
 	return API;
 });

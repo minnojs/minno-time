@@ -11,7 +11,7 @@ define(['underscore','../properties','../categories'],function(_,properties,cate
 		defaultStim.css = _.defaults(defaultStim.css || {}, {
 			font: properties.font,
 			fontSize: properties.fontSize,
-			fontColor: properties.fontColor
+			color: properties.fontColor
 		});
 
 		stimSets.Default = [defaultStim];
@@ -63,8 +63,8 @@ define(['underscore','../properties','../categories'],function(_,properties,cate
 			var stimulus =  defaultFBstim[type];
 
 			// extend the default stimulus with any stimulus data from the properties object
-			if (properties[type + '_feedback'].stimulus){
-				_.extend(stimulus, properties[type + '_feedback'].stimulus);
+			if (properties[type + '_feedback'].css){
+				stimulus.css = properties[type + '_feedback'].css;
 			}
 
 			// if we have media object, use it instead of the default

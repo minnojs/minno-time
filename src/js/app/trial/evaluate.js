@@ -13,7 +13,6 @@ define(['underscore','./current_trial'],function(_,current_trial){
 	 *
 	 */
 
-
 	return function evaluate(propositions, inputData){
 		var trial = current_trial();
 
@@ -86,5 +85,4 @@ define(['underscore','./current_trial'],function(_,current_trial){
 
 		return isTrue;
 	};
-
 });

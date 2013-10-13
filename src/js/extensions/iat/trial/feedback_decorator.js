@@ -17,15 +17,13 @@ define(['../properties'],function(properties){
 					actions: [{type:'trigger',handle : 'remove_' + FBtype}]
 				});
 			} else {
-				// actions
-				// ******************************************
 
 				// show feedback
 				interactions.push({
 					propositions: [{type:'inputEquals',value: FBtype}],
 					actions: [
 						{type:'showStim',handle : FBtype},
-						{type:'setInput',input:{handle:'remove_' + FBtype, on:'timeout', duration:propertiesObj.duration || 300}}
+						{type:'setInput',input:{handle:'remove_' + FBtype, on:'timeout', duration:propertiesObj.duration >= 0 ? propertiesObj.duration : 300}}
 					]
 				});
 
@@ -37,7 +35,7 @@ define(['../properties'],function(properties){
 					]
 				});
 
-			}
+			} // end if FB is active
 
 			// end trial if we don't need to correct errors
 			if (!properties.correct_errors || FBtype !== 'error_feedback') {
