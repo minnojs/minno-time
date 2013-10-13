@@ -5,7 +5,7 @@ define([],function(){
 	v1 = [
 		// block 1
 		{
-			data: {block:1, part:1},
+			data: {block:1, part:1, blockStart:true},
 			inherit: {set:'instructions', type:'byData', data: {block:1}}
 		},
 		{
@@ -18,7 +18,7 @@ define([],function(){
 
 		// block 2
 		{
-			data: {block:2, part:2},
+			data: {block:2, part:2, blockStart:true},
 			inherit: {set:'instructions', type:'byData', data: {block:2}}
 		},
 		{
@@ -31,7 +31,7 @@ define([],function(){
 
 		// block 3
 		{
-			data: {block:3, part:3},
+			data: {block:3, part:3, blockStart:true},
 			inherit: {set:'instructions', type:'byData', data: {block:3}}
 		},
 		{
@@ -45,12 +45,12 @@ define([],function(){
 
 		// block 4
 		{
-			data: {block:4, part:4},
+			data: {block:4, part:4, blockStart:true},
 			inherit: {set:'instructions', type:'byData', data: {block:4}}
 		},
 		{
 			mixer: 'repeat',
-			times: 40,
+			times: 20,
 			data: [
 				{inherit : {type:'byData', data:{block:4,row:1}, set:'IAT'}},
 				{inherit : {type:'byData', data:{block:4,row:2}, set:'IAT'}}
@@ -59,7 +59,7 @@ define([],function(){
 
 		// block 5
 		{
-			data: {block:5, part:5},
+			data: {block:5, part:5, blockStart:true},
 			inherit: {set:'instructions', type:'byData', data: {block:5}}
 		},
 		{
@@ -72,7 +72,7 @@ define([],function(){
 
 		// block 6
 		{
-			data: {block:6, part:6},
+			data: {block:6, part:6, blockStart:true},
 			inherit: {set:'instructions', type:'byData', data: {block:6}}
 		},
 		{
@@ -86,7 +86,7 @@ define([],function(){
 
 		// block 7
 		{
-			data: {block:7, part:7},
+			data: {block:7, part:7, blockStart:true},
 			inherit: {set:'instructions', type:'byData', data: {block:7}}
 		},
 		{
@@ -102,7 +102,7 @@ define([],function(){
 	v2 = [
 		// block 5
 		{
-			data: {block:5, part:1},
+			data: {block:5, part:1, blockStart:true},
 			inherit: {set:'instructions', type:'byData', data: {block:5}}
 		},
 		{
@@ -115,7 +115,7 @@ define([],function(){
 
 		// block 2
 		{
-			data: {block:2, part:2},
+			data: {block:2, part:2, blockStart:true},
 			inherit: {set:'instructions', type:'byData', data: {block:2}}
 		},
 		{
@@ -129,7 +129,7 @@ define([],function(){
 
 		// block 6
 		{
-			data: {block:6, part:3},
+			data: {block:6, part:3, blockStart:true},
 			inherit: {set:'instructions', type:'byData', data: {block:6}}
 		},
 		{
@@ -143,7 +143,7 @@ define([],function(){
 
 		// block 7
 		{
-			data: {block:7, part:4},
+			data: {block:7, part:4, blockStart:true},
 			inherit: {set:'instructions', type:'byData', data: {block:7}}
 		},
 		{
@@ -157,7 +157,7 @@ define([],function(){
 
 		// block 1
 		{
-			data: {block:1, part:5},
+			data: {block:1, part:5, blockStart:true},
 			inherit: {set:'instructions', type:'byData', data: {block:1}}
 		},
 		{
@@ -170,7 +170,7 @@ define([],function(){
 
 		// block 3
 		{
-			data: {block:3, part:6},
+			data: {block:3, part:6, blockStart:true},
 			inherit: {set:'instructions', type:'byData', data: {block:3}}
 		},
 		{
@@ -184,12 +184,12 @@ define([],function(){
 
 		// block 4
 		{
-			data: {block:4, part:7},
+			data: {block:4, part:7, blockStart:true},
 			inherit: {set:'instructions', type:'byData', data: {block:4}}
 		},
 		{
 			mixer: 'repeat',
-			times: 40,
+			times: 20,
 			data: [
 				{inherit : {type:'byData', data:{block:4,row:1}, set:'IAT'}},
 				{inherit : {type:'byData', data:{block:4,row:2}, set:'IAT'}}

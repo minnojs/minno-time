@@ -7,7 +7,7 @@ define(['../categories'], function(categories){
 		}
 
 		var media = category.title || category.name // the category media is preferably the title else the name.
-			, stimulus = {media : media, css: category.css || {}, height: category.height || 2};
+			, stimulus = {media : media, css: category.css || {fontSize:'1.3em'}, height: category.height || 5};
 
 		switch (side) {
 			case 'left' :

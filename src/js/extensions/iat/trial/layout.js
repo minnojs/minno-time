@@ -18,7 +18,7 @@ define(['underscore', '../properties','../stimuli/separator','../stimuli/categor
 				if (index > 0 && _.isObject(properties.separator)){
 					separator = new Separator(side,marginTop);
 					layoutArr.push(separator);
-					marginTop += properties.separator.height || 2;
+					marginTop += properties.separator.height || 4;
 				}
 
 				// push category

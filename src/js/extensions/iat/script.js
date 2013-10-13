@@ -14,9 +14,9 @@ define(['./IATcomponent'],function(IAT){
 		// Default stimulus properties
 		// All optional
 		font: 'Arial',
-		fontSize: '12',
+		//fontSize: '12',
 		fontColor: 'green',
-		defaultStimulus: {size:{height:40, width:40}},
+		//defaultStimulus: {size:{height:40, width:40}},
 		instructionStimulus: {css:{'font-size':'1.3em',color:'white', lineHeight:1.2}},
 
 		// optional of course, the same settings as the main API
@@ -46,33 +46,33 @@ define(['./IATcomponent'],function(IAT){
 		error_feedback : {
 			active: true, // default: true
 			media: 'X', // default: X
-			stimulus: {css:{color:'red'}}, // optional
-			duration: 300 // default?
+			//stimulus: {css:{color:'red'}}, // optional
+			duration: 0 // default?
 		},
 
 		correct_feedback : {
 			active: false, // default: false
 			media: 'OK', // default: V
-			stimulus: {css:{color:'green'}}, // optional
+			//stimulus: {css:{color:'green'}}, // optional
 			duration: 300 // default?
 		},
 
 		timeout_feedback : {
 			active: false, // default: false
 			media: 'TO', // default: X
-			stimulus: {css:{color:'blue'}}, // optional
+			//stimulus: {css:{color:'blue'}}, // optional
 			duration: 300 // default?
 		},
 
 		// category seperator
 		separator: {
 			media: 'or', // default: 'or'
-			css : {} // optional
+			//css : {} // optional
 		},
 
 
 		// URLS
-		images_base_url: '../myFolder/IAT', // default: ''
+		images_base_url: '../examples/images/', // default: ''
 
 		/*
 		 * No Defaults !!!!!!!!
@@ -88,34 +88,31 @@ define(['./IATcomponent'],function(IAT){
 
 	IAT.setCategory('concept1',{
 		name: 'white',
-		title: 'Caucasions',
+		title: 'White people',
+		height: 5, // offset to add to following titles
 		media: [
-			{word:'wm1'},
-			{word:'wm2'},
-			{word:'wm3'},
-			{word:'wf1'},
-			{word:'wf2'},
-			{word:'wf3'}
+			{image: 'wf2_nc.jpg'},
+			{image: 'wf3_nc.jpg'},
+			{image: 'wf6_nc.jpg'},
+			{image: 'wm1_nc.jpg'}
 		]
 	});
 
 	IAT.setCategory('concept2',{
 		name: 'black',
-		title: 'African People', // default: same as name, can be set as a media
-		height: 0, // offset to add to following titles
-		css: {location:{top:20, bottom:20}}, // optional modifier for all media in this category
+		title: 'Black People', // default: same as name, can be set as a media
+		//css: {}, // optional modifier for all media in this category
 		media: [
-			{word:'bm1'},
-			{word:'bm2'},
-			{word:'bm3'},
-			{word:'bf1'},
-			{word:'bf2'},
-			{word:'bf3'}
+			{image: 'bf14_nc.jpg'},
+			{image: 'bf23_nc.jpg'},
+			{image: 'bf56_nc.jpg'},
+			{image: 'bm14_nc.jpg'}
 		]
 	});
 
 	IAT.setCategory('attribute1',{
 		name: 'Good',
+
 		media: [
 			{word: 'Paradise'},
 			{word: 'Pleasure'},
@@ -128,6 +125,7 @@ define(['./IATcomponent'],function(IAT){
 
 	IAT.setCategory('attribute2',{
 		name: 'Bad',
+
 		media: [
 			{word: 'Bomb'},
 			{word: 'Abuse'},

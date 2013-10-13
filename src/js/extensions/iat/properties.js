@@ -8,9 +8,9 @@ define([],function(){
 		// Default stimulus properties
 		// All optional
 		font: 'Arial',
-		fontSize: '12',
+		fontSize: '2em',
 		fontColor: 'green',
-		defaultStimulus: {size:{height:40, width:40}},
+		defaultStimulus: {},
 		instructionStimulus: {css:{'font-size':'1.3em',color:'white', lineHeight:1.2}},
 
 		// optional of course, the same settings as the main API
@@ -58,7 +58,7 @@ define([],function(){
 		// category seperator
 		seperator: {
 			media: 'or', // default: 'or'
-			css : {} // optional
+			css : {fontSize:'1.2em'} // optional
 		},
 
 		images_base_url: "",
