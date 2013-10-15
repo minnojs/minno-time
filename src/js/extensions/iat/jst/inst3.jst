@@ -1,6 +1,6 @@
 <div>
 	<p align="center">
-		<p align="center"><u>Part <%= trialData.part%> of 7</u></p>
+		<p align="center"><u>Part <%= trialData.part%> of <%= trialData.IATversion == 'short' ? 5 : 7 %></u></p>
 	</p>
 	<br/>
 	Use the <b>E</b> key for <font color="#31b404"><%= trialData.attribute1%></font> images and for <font color="#0000FF"><%= trialData.concept1%></font>.<br/>

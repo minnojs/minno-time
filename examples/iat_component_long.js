@@ -37,6 +37,9 @@ define(['extensions/iat/IATcomponent'],function(IAT){
 		// behaviour
 		// The duration after you removed the target stimulus but you still wait before moving to the next trial.
 		randomize_order: false,
+		IATversion: 'short', // Takes 'long'\'short'. default: 'long'
+		trialsPerBlock: {1:1},
+
 		inter_trial_interval: 250,
 		post_instructions_interval: 500,
 
@@ -155,7 +158,7 @@ define(['extensions/iat/IATcomponent'],function(IAT){
 	});
 
 	IAT.setInstructions(2, {
-		media: {inlineTemplate: '<%= trialData.part%>'}
+		media: '<%= trialData.part%>'
 	});
 
 	// this is a special instruction page to be displayed at the end of the task

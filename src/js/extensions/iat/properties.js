@@ -31,6 +31,8 @@ define([],function(){
 		// behaviour
 		// The duration after you removed the target stimulus but you still wait before moving to the next trial.
 		randomize_order: true, // switch blocks 1/5 and 34/67
+		IATversion: 'long', // Takes 'long'\'short'. default: 'long'
+
 		inter_trial_interval: 500,
 		post_instructions_interval: 500,
 

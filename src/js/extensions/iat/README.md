@@ -60,6 +60,14 @@ IAT.setProperties({
 });
 ```
 
+**Settings**
+
+`IATversion`: Should we use the 7 or 5 block long IAT. Takes 'long'\'short' (default:'long').
+
+`randomize_order`: Should we counter balance the experiment by randomly switching blocks 1/5 and blocks 34/56? Takes true/false (default:true).
+
+`trialsPerBlock`: Modify the number of trials per block. Takes a hash of block number:trial count. For example: `{1:40,5:40}`, sets block 1 and 5 to have 40 trials. By default, the long IAT has 20 trials for the first two blocks, and 40 trial for the last five. The short IAT has 20 trials for the first two blocks, 50 trials for the third and fifth, and 30 trials for the fourth.
+
 **URLs**
 
 `post_url`: Defines the url to send any data gathered by the IAT.

@@ -1,212 +1,111 @@
 define(['./properties'],function(properties){
 
-	var v1, v2;
+	/**
+	 * Takes a sequence array and pushes in a block according to the settings in blockObj:
+	 * {
+	 *  block: 1,
+	 *  part: 1,
+	 *  twoRows: false,
+	 *  trials: 20
+	 * }
+	 */
 
-	v1 = [
-		// block 1
-		{
-			data: {block:1, part:1, blockStart:true},
-			inherit: {set:'instructions', type:'byData', data: {block:1}}
-		},
-		{
+	var addBlock = function addBlock(sequenceArr, blockObj){
+
+		// push instructions
+		sequenceArr.push({
+			data: {block:blockObj.block, part:blockObj.part, IATversion:properties.IATversion, blockStart:true},
+			inherit: {set:'instructions', type:'byData', data: {block:blockObj.block}}
+		});
+
+		// push block trials
+		sequenceArr.push({
 			mixer : 'repeat',
-			times : 20,
-			data : [
-				{inherit : {type:'byData', data:{block:1}, set:'IAT'}}
-			]
-		},
+			times : !blockObj.twoRows ? blockObj.trials : Math.floor(blockObj.trials/2),
+			data : !blockObj.twoRows ?
+				// if we have one row
+				[
+					{inherit : {type:'byData', data:{block:blockObj.block}, set:'IAT'}}
+				]
+				// if we have two rows
+				: [
+					{inherit : {type:'byData', data:{block:blockObj.block,row:1}, set:'IAT'}},
+					{inherit : {type:'byData', data:{block:blockObj.block,row:2}, set:'IAT'}}
+				]
+		});
+	};
 
-		// block 2
-		{
-			data: {block:2, part:2, blockStart:true},
-			inherit: {set:'instructions', type:'byData', data: {block:2}}
-		},
-		{
-			mixer : 'repeat',
-			times : 20,
-			data : [
-				{inherit : {type:'byData', data:{block:2}, set:'IAT'}}
-			]
-		},
+	function getTrials(block, defaultTrials){
+		return typeof properties.trialsPerBlock[block] == 'number' ? properties.trialsPerBlock[block] : defaultTrials;
+	}
 
-		// block 3
-		{
-			data: {block:3, part:3, blockStart:true},
-			inherit: {set:'instructions', type:'byData', data: {block:3}}
-		},
-		{
-			mixer: 'repeat',
-			times: 20,
-			data: [
-				{inherit : {type:'byData', data:{block:3,row:1}, set:'IAT'}},
-				{inherit : {type:'byData', data:{block:3,row:2}, set:'IAT'}}
-			]
-		},
+	function longIAT(){
+		var v1 = [], v2 = [];
 
-		// block 4
-		{
-			data: {block:4, part:4, blockStart:true},
-			inherit: {set:'instructions', type:'byData', data: {block:4}}
-		},
-		{
-			mixer: 'repeat',
-			times: 20,
-			data: [
-				{inherit : {type:'byData', data:{block:4,row:1}, set:'IAT'}},
-				{inherit : {type:'byData', data:{block:4,row:2}, set:'IAT'}}
-			]
-		},
+		// build version 1
+		addBlock(v1,{block:1,part:1,trials:getTrials(1,20),twoRows:false});
+		addBlock(v1,{block:2,part:2,trials:getTrials(2,20),twoRows:false});
+		addBlock(v1,{block:3,part:3,trials:getTrials(3,40),twoRows:true});
+		addBlock(v1,{block:4,part:4,trials:getTrials(4,40),twoRows:true});
+		addBlock(v1,{block:5,part:5,trials:getTrials(5,40),twoRows:false});
+		addBlock(v1,{block:6,part:6,trials:getTrials(6,40),twoRows:true});
+		addBlock(v1,{block:7,part:7,trials:getTrials(7,40),twoRows:true});
 
-		// block 5
-		{
-			data: {block:5, part:5, blockStart:true},
-			inherit: {set:'instructions', type:'byData', data: {block:5}}
-		},
-		{
-			mixer : 'repeat',
-			times : 40,
-			data : [
-				{inherit : {type:'byData', data:{block:5}, set:'IAT'}}
-			]
-		},
+		// build version 2
+		addBlock(v2,{block:5,part:1,trials:getTrials(5,20),twoRows:false});
+		addBlock(v2,{block:2,part:2,trials:getTrials(2,20),twoRows:false});
+		addBlock(v2,{block:6,part:3,trials:getTrials(6,40),twoRows:true});
+		addBlock(v2,{block:7,part:4,trials:getTrials(7,40),twoRows:true});
+		addBlock(v2,{block:1,part:5,trials:getTrials(1,40),twoRows:false});
+		addBlock(v2,{block:3,part:6,trials:getTrials(3,40),twoRows:true});
+		addBlock(v2,{block:4,part:7,trials:getTrials(4,40),twoRows:true});
 
-		// block 6
-		{
-			data: {block:6, part:6, blockStart:true},
-			inherit: {set:'instructions', type:'byData', data: {block:6}}
-		},
-		{
-			mixer: 'repeat',
-			times: 20,
-			data: [
-				{inherit : {type:'byData', data:{block:6,row:1}, set:'IAT'}},
-				{inherit : {type:'byData', data:{block:6,row:2}, set:'IAT'}}
-			]
-		},
+		return properties.randomize_order ?
+			v1
+			: [
+				{
+					mixer: 'choose',
+					data: [
+						{mixer:'wrapper',data:v1},
+						{mixer:'wrapper',data:v2}
+					]
+				}
+			];
+	}
 
-		// block 7
-		{
-			data: {block:7, part:7, blockStart:true},
-			inherit: {set:'instructions', type:'byData', data: {block:7}}
-		},
-		{
-			mixer: 'repeat',
-			times: 20,
-			data: [
-				{inherit : {type:'byData', data:{block:7,row:1}, set:'IAT'}},
-				{inherit : {type:'byData', data:{block:7,row:2}, set:'IAT'}}
-			]
-		}
-	];
+	function shortIAT(){
+		var v1 = [], v2 = [];
 
-	v2 = [
-		// block 5
-		{
-			data: {block:5, part:1, blockStart:true},
-			inherit: {set:'instructions', type:'byData', data: {block:5}}
-		},
-		{
-			mixer : 'repeat',
-			times : 40,
-			data : [
-				{inherit : {type:'byData', data:{block:5}, set:'IAT'}}
-			]
-		},
+		// build version 1
+		addBlock(v1,{block:1,part:1,trials:getTrials(1,20),twoRows:false});
+		addBlock(v1,{block:2,part:2,trials:getTrials(2,20),twoRows:false});
+		addBlock(v1,{block:3,part:3,trials:getTrials(3,50),twoRows:true});
+		addBlock(v1,{block:5,part:5,trials:getTrials(5,30),twoRows:false});
+		addBlock(v1,{block:6,part:6,trials:getTrials(6,50),twoRows:true});
 
-		// block 2
-		{
-			data: {block:2, part:2, blockStart:true},
-			inherit: {set:'instructions', type:'byData', data: {block:2}}
-		},
-		{
-			mixer : 'repeat',
-			times : 20,
-			data : [
-				{inherit : {type:'byData', data:{block:2}, set:'IAT'}}
-			]
-		},
+		// build version 2
+		addBlock(v2,{block:5,part:1,trials:getTrials(5,20),twoRows:false});
+		addBlock(v2,{block:2,part:2,trials:getTrials(2,20),twoRows:false});
+		addBlock(v2,{block:6,part:3,trials:getTrials(6,50),twoRows:true});
+		addBlock(v2,{block:1,part:5,trials:getTrials(1,30),twoRows:false});
+		addBlock(v2,{block:3,part:6,trials:getTrials(3,50),twoRows:true});
 
+		return properties.randomize_order ?
+			v1
+			: [
+				{
+					mixer: 'choose',
+					data: [
+						{mixer:'wrapper',data:v1},
+						{mixer:'wrapper',data:v2}
+					]
+				}
+			];
+	}
 
-		// block 6
-		{
-			data: {block:6, part:3, blockStart:true},
-			inherit: {set:'instructions', type:'byData', data: {block:6}}
-		},
-		{
-			mixer: 'repeat',
-			times: 20,
-			data: [
-				{inherit : {type:'byData', data:{block:6,row:1}, set:'IAT'}},
-				{inherit : {type:'byData', data:{block:6,row:2}, set:'IAT'}}
-			]
-		},
-
-		// block 7
-		{
-			data: {block:7, part:4, blockStart:true},
-			inherit: {set:'instructions', type:'byData', data: {block:7}}
-		},
-		{
-			mixer: 'repeat',
-			times: 20,
-			data: [
-				{inherit : {type:'byData', data:{block:7,row:1}, set:'IAT'}},
-				{inherit : {type:'byData', data:{block:7,row:2}, set:'IAT'}}
-			]
-		},
-
-		// block 1
-		{
-			data: {block:1, part:5, blockStart:true},
-			inherit: {set:'instructions', type:'byData', data: {block:1}}
-		},
-		{
-			mixer : 'repeat',
-			times : 20,
-			data : [
-				{inherit : {type:'byData', data:{block:1}, set:'IAT'}}
-			]
-		},
-
-		// block 3
-		{
-			data: {block:3, part:6, blockStart:true},
-			inherit: {set:'instructions', type:'byData', data: {block:3}}
-		},
-		{
-			mixer: 'repeat',
-			times: 20,
-			data: [
-				{inherit : {type:'byData', data:{block:3,row:1}, set:'IAT'}},
-				{inherit : {type:'byData', data:{block:3,row:2}, set:'IAT'}}
-			]
-		},
-
-		// block 4
-		{
-			data: {block:4, part:7, blockStart:true},
-			inherit: {set:'instructions', type:'byData', data: {block:4}}
-		},
-		{
-			mixer: 'repeat',
-			times: 20,
-			data: [
-				{inherit : {type:'byData', data:{block:4,row:1}, set:'IAT'}},
-				{inherit : {type:'byData', data:{block:4,row:2}, set:'IAT'}}
-			]
-		}
-	];
 
 	return function sequence(){
-		return properties.randomize_order ? v1 : [
-			{
-				mixer: 'choose',
-				data: [
-					{mixer:'wrapper',data:v1},
-					{mixer:'wrapper',data:v2}
-				]
-			}
-		];
+		return properties.IATversion == 'short' ? shortIAT() : longIAT();
 	};
 
 });
