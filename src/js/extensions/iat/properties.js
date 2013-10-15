@@ -56,9 +56,9 @@ define([],function(){
 		},
 
 		// category seperator
-		seperator: {
+		separator: {
 			media: 'or', // default: 'or'
-			height: 4,
+			height: 5,
 			css : {fontSize:'1.2em'} // optional
 		},
 
