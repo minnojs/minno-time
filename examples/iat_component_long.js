@@ -1,5 +1,5 @@
 /* sglobal $ */
-define(['./IATcomponent'],function(IAT){
+define(['extensions/iat/IATcomponent'],function(IAT){
 	/**
 	 * Set Properties
 	 * ************************************************************************
