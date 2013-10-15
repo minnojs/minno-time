@@ -15,7 +15,7 @@ define(['underscore','../properties','../categories'],function(_,properties,cate
 		});
 
 		stimSets.Default = [defaultStim];
-		stimSets.instructions = [properties.instructionStimulus];
+		stimSets.instructions = [properties.instructionsStimulus];
 
 		// Trial stimuli
 		// ***************************************************************

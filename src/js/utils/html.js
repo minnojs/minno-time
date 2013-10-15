@@ -38,6 +38,11 @@ define(['jquery','underscore'],function($,_){
 			media.type = 'html';
 			media.el = $(_.template(template,context || {}));
 		}
+		else if (media.inlineTemplate) {
+			media.displayType = 'element';
+			media.type = 'html';
+			media.el = $(_.template(media.inlineTemplate,context || {}));
+		}
 		else {
 			return false; // this is not a supported html type
 		}

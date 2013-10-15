@@ -86,7 +86,7 @@ IAT.setProperties({
 
 `defaultStimulus`: Default stimulus for all categories.
 
-`instructionStimulus`: Default stimulus for all instructions (default: {css:{'font-size':'1.3em',color:'white', lineHeight:1.2}}).
+`instructionsStimulus`: Default stimulus for all instructions (default: {css:{'font-size':'1.3em',color:'white', lineHeight:1.2}}).
 
 `canvas`: Canvas size and shape, uses the same settings object as the PIP.
 
@@ -108,7 +108,7 @@ IAT.setProperties({
 
 `inter_trial_interval`: The duration after removing the target stimulus before moving to the next trial (default: 500).
 
-`post_instruction_interval`: The duration after the instructions before moving on to the first trial (default: 500).
+`post_instructions_interval`: The duration after the instructions before moving on to the first trial (default: 500).
 
 **Feedback**
 

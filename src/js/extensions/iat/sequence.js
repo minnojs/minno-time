@@ -1,4 +1,4 @@
-define([],function(){
+define(['./properties'],function(properties){
 
 	var v1, v2;
 
@@ -197,14 +197,16 @@ define([],function(){
 		}
 	];
 
-	return [
-		{
-			mixer: 'choose',
-			data: [
-				{mixer:'wrapper',data:v1},
-				{mixer:'wrapper',data:v2}
-			]
-		}
-	];
+	return function sequence(){
+		return properties.randomize_order ? v1 : [
+			{
+				mixer: 'choose',
+				data: [
+					{mixer:'wrapper',data:v1},
+					{mixer:'wrapper',data:v2}
+				]
+			}
+		];
+	};
 
 });

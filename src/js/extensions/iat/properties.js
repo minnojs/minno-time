@@ -11,7 +11,7 @@ define([],function(){
 		fontSize: '2em',
 		fontColor: 'green',
 		defaultStimulus: {},
-		instructionStimulus: {css:{'font-size':'1.3em',color:'white', lineHeight:1.2}},
+		instructionsStimulus: {css:{'font-size':'1.3em',color:'white', lineHeight:1.2}},
 
 		// optional of course, the same settings as the main API
 		canvas: {
@@ -31,10 +31,11 @@ define([],function(){
 
 		// behaviour
 		// The duration after you removed the target stimulus but you still wait before moving to the next trial.
+		randomize_order: true, // switch blocks 1/5 and 34/67
 		inter_trial_interval: 500,
-		post_instruction_interval: 500,
+		post_instructions_interval: 500,
 
-		// do we make the user go back on errors? default: true
+		// do we make the user correct errors? default: true
 		correct_errors: true,
 
 		error_feedback : {

@@ -23,7 +23,7 @@ define(['underscore','../properties','../categories','./IATlayout'],function(_,p
 					propositions: [{type:'inputEquals',value:'space'}],
 					actions: [
 						{type:'hideStim',handle:'All'},
-						{type:'setInput',input:{handle:'endTrial', on:'timeout', duration: properties.post_instruction_interval || 0}}
+						{type:'setInput',input:{handle:'endTrial', on:'timeout', duration: properties.post_instructions_interval || 0}}
 					]
 				},
 
@@ -94,6 +94,7 @@ define(['underscore','../properties','../categories','./IATlayout'],function(_,p
 
 			// update trial/stimulus with user settings
 			settings.media && (stimulus.media = settings.media);
+			settings.template && (stimulus.media = {inlineTemplate: settings.template});
 			settings.css && (stimulus.css = settings.css);
 			settings.extend && (_.extend(trial,settings.extend));
 

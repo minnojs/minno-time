@@ -52,7 +52,7 @@ define(function(require){
 			API.addStimulusSets(stimuli());
 
 			// sequence
-			API.addSequence(sequence);
+			API.addSequence(sequence());
 
 			// call the original API play
 			APIplay.apply(this);

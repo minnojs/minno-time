@@ -17,7 +17,7 @@ define(['extensions/iat/IATcomponent'],function(IAT){
 		fontSize: '4em',
 		fontColor: 'green',
 		//defaultStimulus: {size:{height:40, width:40}},
-		instructionStimulus: {css:{'font-size':'1.3em',color:'white', lineHeight:1.2}},
+		instructionsStimulus: {css:{'font-size':'1.3em',color:'white', lineHeight:1.2}},
 
 		// optional of course, the same settings as the main API
 		canvas: {
@@ -33,35 +33,35 @@ define(['extensions/iat/IATcomponent'],function(IAT){
 		notouch: false, // default: false
 
 		timeout: 4500, // default: 0 - no timeout
-		timeout_value: '', // how to treat timeouts, default: '' always error.
 
 		// behaviour
 		// The duration after you removed the target stimulus but you still wait before moving to the next trial.
-		inter_trial_interval: 500,
-		post_instruction_interval: 500,
+		randomize_order: false,
+		inter_trial_interval: 250,
+		post_instructions_interval: 500,
 
-		// do we make the user go back on errors? default: true
+		// do we make the user correct errors? default: true
 		correct_errors: false,
 
 		error_feedback : {
 			active: true, // default: true
-			media: 'X', // default: X
-			//css:{color:'red'}, // optional
-			duration: 300 // default?
+			media: 'X', // default: 'X'
+			//css:{color:'red', fontSize: '3em'}, // optional
+			duration: 300 // default until response
 		},
 
 		correct_feedback : {
 			active: true, // default: false
-			media: 'OK', // default: V
+			media: 'OK', // default: 'OK'
 			//css:{color:'green'}, // optional
-			duration: 300 // default?
+			duration: 300 // default 300
 		},
 
 		timeout_feedback : {
 			active: true, // default: false
-			media: 'TimeOut', // default: X
+			media: 'TimeOut', // default: 'X'
 			css:{color:'blue',fontSize:'4em'}, // optional
-			duration: 300 // default?
+			duration: 300 // default 500
 		},
 
 		// category seperator
@@ -146,16 +146,16 @@ define(['extensions/iat/IATcomponent'],function(IAT){
 	 */
 
 	IAT.setInstructions(1, {
-		media: '4 reply redundantly', // takes any media object, default: custom template (we need to work on this),
+		template: '<p align="center">3232 <u>Part <%= trialData.part%> of 7</u></p>', // takes any media object, default: custom template (we need to work on this),
 		css: {fontSize:'0.5em',color:'lily'}
 	});
 
 	IAT.setInstructions(5, {
-		media: '3 press space' // takes any media object, default: custom template (we need to work on this)
+		template: '<p align="center"><u>Part <%= trialData.part%> of 7</u></p>'
 	});
 
 	IAT.setInstructions(2, {
-		media: '2 press space' // takes any media object, default: custom template (we need to work on this)
+		media: {inlineTemplate: '<%= trialData.part%>'}
 	});
 
 	// this is a special instruction page to be displayed at the end of the task

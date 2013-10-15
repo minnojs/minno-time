@@ -14,8 +14,11 @@ Plain text: {word: 'Your very cool stimulus'}
 Image: {image: 'some/url/image.png}
 Jquery elements: {jquery: $('<div>',{text: 'anything you want' })}
 HTML: {html: "<div>any html</div>"}
-Template: {template: 'some/url/template.html'}
+Template:
+	{template: 'some/url/template.html'} // takes the url of a template file
+	{inlineTemplate: '<span><%= trialData.name ?></span>'} // takes the literal text of a template
 	// templates may include any valid html and underscore template formating (http://documentcloud.github.com/underscore/#template)
+	// note: you should always wrap your template inside a single html element.
 	// stimuli are passed the trial and stimulus data attributes as "trialData" and "stimulusData" so that you can call:
 	<div>
 		<%= trialData.name ?>
