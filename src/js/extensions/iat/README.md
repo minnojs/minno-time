@@ -126,7 +126,7 @@ There are three feedback objects each describing the feedback to a specific even
 * `active`: Wether to display this feedback at all. Takes true/false.
 * `media`: What to display upon feedback. Takes a PIP media object.
 * `css`: a jQuery css object that modifies the feedback stimulus.
-* `duration`: How long to display this feedback before moving on.
+* `duration`: How long to display this feedback before moving on. The error object has a special value `static` that causes the feedback not to be hidden after a duration.
 
 `correct_feedback`: Feedback after a correct response. Takes feedback object (default: not active, displays green OK).
 

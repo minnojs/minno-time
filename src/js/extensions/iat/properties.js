@@ -27,7 +27,6 @@ define([],function(){
 		notouch: true, // default: true
 
 		timeout: 0, // default: 0 - no timeout
-		timeout_value: 'none', // how to treat timeouts, default: 'none' always error.
 
 		// behaviour
 		// The duration after you removed the target stimulus but you still wait before moving to the next trial.
@@ -40,20 +39,20 @@ define([],function(){
 
 		error_feedback : {
 			active: true, // default: true
-			media: 'X', // default: X
-			duration: 300 // default?
+			media: 'X', // default: 'X'
+			duration: 'static' // default 'static'
 		},
 
 		correct_feedback : {
 			active: false, // default: false
-			media: 'OK', // default: V
+			media: 'OK', // default: 'OK'
 			duration: 300 // default?
 		},
 
 		timeout_feedback : {
 			active: true, // default: false
-			media: 'X', // default: X
-			duration: 300 // default?
+			media: 'X', // default: 'X'
+			duration: 500 // default: 500
 		},
 
 		// category seperator

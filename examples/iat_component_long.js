@@ -32,7 +32,7 @@ define(['extensions/iat/IATcomponent'],function(IAT){
 		//rightTouch: $('<div>',{text:'right'}), // default: system
 		notouch: false, // default: false
 
-		timeout: 4500, // default: 0 - no timeout
+		timeout: 45000, // default: 0 - no timeout
 
 		// behaviour
 		// The duration after you removed the target stimulus but you still wait before moving to the next trial.
@@ -41,13 +41,13 @@ define(['extensions/iat/IATcomponent'],function(IAT){
 		post_instructions_interval: 500,
 
 		// do we make the user correct errors? default: true
-		correct_errors: false,
+		correct_errors: true,
 
 		error_feedback : {
 			active: true, // default: true
 			media: 'X', // default: 'X'
 			//css:{color:'red', fontSize: '3em'}, // optional
-			duration: 300 // default until response
+			duration: 'static' // default until response
 		},
 
 		correct_feedback : {

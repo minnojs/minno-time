@@ -21,6 +21,7 @@ define(['../properties','./input_decorator','./feedback_decorator'],function(pro
 					propositions: [{type:'stimEquals',value:'side',handle:'target'}],				// check if the input handle is equal to the "side" attribute of stimulus.data
 					actions: [
 						{type:'removeInput',handle:['left','right','timeout']},
+						{type:'hideStim',handle:'error_feedback'},
 						{type:'log'},																// log this trial
 						{type:'trigger',handle:'correct_feedback'}									// trigger the correct feedback (and maybe endtrial)
 					]
