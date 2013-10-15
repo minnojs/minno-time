@@ -63,9 +63,13 @@ IAT.setProperties({
 ** URLs **
 
 `post_url`: Defines the url to send any data gathered by the IAT.
+
 `pulse`: The size of the post pulses (default: 20).
+
 `images_base_url`: The base url for the images we use.
+
 `templates_base_url`: The base url for the templates we use (default: "extensions/iat/jst").
+
 'redirect_url': Where to redirect when we finish the task. Takes a url or a function to run at the end of the task.
 
 ** Debug **
@@ -75,24 +79,35 @@ IAT.setProperties({
 ** Stimulus properties ** (modifiers for the target stimuli)
 
 `font`: Stimulus font (default: Arial).
+
 `fontSize`: Font size (default: 2em).
+
 `fontColor`: Font Color (default: green).
+
 `defaultStimulus`: Default stimulus for all categories.
+
 `instructionStimulus`: Default stimulus for all instructions (default: {css:{'font-size':'1.3em',color:'white', lineHeight:1.2}}).
+
 `canvas`: Canvas size and shape, uses the same settings object as the PIP.
 
 ** Interface **
 
 `left': The key for the left categories. Takes a single character or an array of characters. (default:e)
+
 `right': The key for the right categories. Takes a single character or an array of characters. (default:i)
+
 `leftTouch`: An element to display for the left category in touch displays (default:PIP default element)
+
 `rightTouch`: An element to display for the right category in touch displays (default:PIP default element)
+
 `notouch`: Do not detect touch devices. Takes true/false (default:false). This is usefull for cases we attach a keyboard to touch devices.
 
 ** Timing **
 
 `timeout`: The duration in miliseconds before we declare a timeout. (default: 0 - no timeout)
+
 `inter_trial_interval`: The duration after removing the target stimulus before moving to the next trial (default: 500).
+
 `post_instruction_interval`: The duration after the instructions before moving on to the first trial (default: 500).
 
 ** Feedback **
