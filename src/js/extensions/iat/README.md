@@ -60,7 +60,7 @@ IAT.setProperties({
 });
 ```
 
-** URLs **
+**URLs**
 
 `post_url`: Defines the url to send any data gathered by the IAT.
 
@@ -72,11 +72,11 @@ IAT.setProperties({
 
 `redirect_url`: Where to redirect when we finish the task. Takes a url or a function to run at the end of the task.
 
-** Debug **
+**Debug**
 
 `DEBUG`: Set to true in order to activate the skip block feature (skip block when you click ENTER). By default this is set to false.
 
-** Stimulus properties ** (modifiers for the target stimuli)
+**Stimulus properties** (modifiers for the target stimuli)
 
 `font`: Stimulus font (default: Arial).
 
@@ -90,7 +90,7 @@ IAT.setProperties({
 
 `canvas`: Canvas size and shape, uses the same settings object as the PIP.
 
-** Interface **
+**Interface**
 
 `left`: The key for the left categories. Takes a single character or an array of characters. (default:e)
 
@@ -102,7 +102,7 @@ IAT.setProperties({
 
 `notouch`: Do not detect touch devices. Takes true/false (default:false). This is usefull for cases we attach a keyboard to touch devices.
 
-** Timing **
+**Timing**
 
 `timeout`: The duration in miliseconds before we declare a timeout. (default: 0 - no timeout)
 
@@ -110,7 +110,7 @@ IAT.setProperties({
 
 `post_instruction_interval`: The duration after the instructions before moving on to the first trial (default: 500).
 
-** Feedback **
+**Feedback**
 
 There are three feedback objects each describing the feedback to a specific event - a correct response, an error or a timeout. The syntax for these three objects is similar and we will expand on them only once. This is how such an object looks:
 
