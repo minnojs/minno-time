@@ -30,20 +30,30 @@ When creating a task you first create your building blocks. You create prototype
 
 Once your script is ready all you have to do is to call it from within the player index page. i.e.,
 
-		<script data-main="js/main" src="js/libs/require.js"></script>
-		<script src="../examples/iat.js"></script>
+```js
+          require(['js/config'], function() {
+            require(['my/path/script.js']);
+          });
+```
 
-Alternatively you can use the url to set the path to your script:
+Alternatively you can give users a url that directly takes them to your experiment:
 
+```html
         <!DOCTYPE html>
         <html>
         <head>
             <title>TEST</title>
         </head>
         <body>
-          <a target="_blank" href="../static/src/index.html?url=../examples/iat.js">go to my test experiment!</a>
+          <a target="_blank" href="../static/src/index.html?url=my/path/script.js">go to my test experiment!</a>
         </body>
        </html>
+```
 
 ### Collecting the data
 All the data that is recorded by the player is sent to a URL of your choosing. Tasks may vary greatly so we give you the flexibility to send whatever data you need and process it however you see fit.
+
+### Building the project
+In order to build this project you should install [Node.js](http://nodejs.org/) and then run `npm install` in the root directory.
+
+We use [Grunt](http://gruntjs.com/) in order to automate tasks. `grunt build` should create a dist folder with the optimzed javascript, and a docs folder with documentation (in case you do not have the grunt client installed globaly, you can try to use `./node_modules/.bin/grunt build` instead).
