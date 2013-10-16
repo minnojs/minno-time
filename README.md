@@ -31,23 +31,23 @@ When creating a task you first create your building blocks. You create prototype
 Once your script is ready all you have to do is to call it from within the player index page. i.e.,
 
 ```js
-          require(['js/config'], function() {
-            require(['my/path/script.js']);
-          });
+require(['js/config'], function() {
+  require(['my/path/script.js']);
+});
 ```
 
 Alternatively you can give users a url that directly takes them to your experiment:
 
 ```html
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>TEST</title>
-        </head>
-        <body>
-          <a target="_blank" href="../static/src/index.html?url=my/path/script.js">go to my test experiment!</a>
-        </body>
-       </html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TEST</title>
+  </head>
+  <body>
+    <a target="_blank" href="../static/src/index.html?url=my/path/script.js">go to my test experiment!</a>
+  </body>
+</html>
 ```
 
 ### Collecting the data
