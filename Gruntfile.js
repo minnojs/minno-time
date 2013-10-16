@@ -61,24 +61,18 @@ module.exports = function(grunt) {
 			}
 		},
 
-		/**
-		 * run shell scripts
-		 */
-		shell: {
-			// build tutorials from js in tutorials
-			docco: {
-				command: 'docco tutorials/*.js'
-			}
+		docco: {
+			src: ['tutorials/*.js']
 		}
 	});
 
+	grunt.loadNpmTasks('grunt-docco');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
-	grunt.loadNpmTasks('grunt-shell');
 
 	// Default task(s).
 	grunt.registerTask('default', ['jshint']);
 
 	// build production stuff
-	grunt.registerTask('build', ['requirejs','shell:docco']);
+	grunt.registerTask('build', ['requirejs','docco']);
 };
