@@ -71,6 +71,7 @@ define(['extensions/iat/IATcomponent'],function(IAT){
 		separator: {
 			media: 'or', // default: 'or'
 			height:9,
+			margin: 6,
 			css : {fontSize:'2em'} // optional
 		},
 
@@ -118,7 +119,7 @@ define(['extensions/iat/IATcomponent'],function(IAT){
 
 	IAT.setCategory('attribute1',{
 		name: 'Good',
-
+		margin: 5,
 		media: [
 			{word: 'Paradise'},
 			{word: 'Pleasure'},
@@ -131,7 +132,7 @@ define(['extensions/iat/IATcomponent'],function(IAT){
 
 	IAT.setCategory('attribute2',{
 		name: 'Bad',
-
+		margin: 6,
 		media: [
 			{word: 'Bomb'},
 			{word: 'Abuse'},

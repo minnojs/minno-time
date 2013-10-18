@@ -1,7 +1,8 @@
 define(['../categories'], function(categories){
 
 	return function Category(categoryName, side, marginTop){
-		var category = categories[categoryName];
+		var category = categories[categoryName]
+			, margin = category.margin || 0;
 		if (!category){
 			throw new Error(categoryName + ' is not a category name (or has not been loaded yet)');
 		}
@@ -11,10 +12,10 @@ define(['../categories'], function(categories){
 
 		switch (side) {
 			case 'left' :
-				stimulus.location = {left: 2, top: marginTop};
+				stimulus.location = {left: 2 + margin, top: marginTop};
 				break;
 			case 'right' :
-				stimulus.location = {right: 2, top: marginTop};
+				stimulus.location = {right: 2 + margin, top: marginTop};
 				break;
 			case 'center' :
 				stimulus.location = {top: marginTop};
