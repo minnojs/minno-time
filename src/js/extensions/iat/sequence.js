@@ -80,15 +80,15 @@ define(['./properties'],function(properties){
 		addBlock(v1,{block:1,part:1,trials:getTrials(1,20),twoRows:false});
 		addBlock(v1,{block:2,part:2,trials:getTrials(2,20),twoRows:false});
 		addBlock(v1,{block:3,part:3,trials:getTrials(3,50),twoRows:true});
-		addBlock(v1,{block:5,part:5,trials:getTrials(5,30),twoRows:false});
-		addBlock(v1,{block:6,part:6,trials:getTrials(6,50),twoRows:true});
+		addBlock(v1,{block:5,part:4,trials:getTrials(5,30),twoRows:false});
+		addBlock(v1,{block:6,part:5,trials:getTrials(6,50),twoRows:true});
 
 		// build version 2
 		addBlock(v2,{block:5,part:1,trials:getTrials(5,20),twoRows:false});
 		addBlock(v2,{block:2,part:2,trials:getTrials(2,20),twoRows:false});
 		addBlock(v2,{block:6,part:3,trials:getTrials(6,50),twoRows:true});
-		addBlock(v2,{block:1,part:5,trials:getTrials(1,30),twoRows:false});
-		addBlock(v2,{block:3,part:6,trials:getTrials(3,50),twoRows:true});
+		addBlock(v2,{block:1,part:4,trials:getTrials(1,30),twoRows:false});
+		addBlock(v2,{block:3,part:5,trials:getTrials(3,50),twoRows:true});
 
 		return properties.randomize_order ?
 			v1
