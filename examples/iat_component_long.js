@@ -40,6 +40,8 @@ define(['extensions/iat/IATcomponent'],function(IAT){
 		IATversion: 'short', // Takes 'long'\'short'. default: 'long'
 		trialsPerBlock: {1:1},
 
+		simpleLayout:true,
+
 		inter_trial_interval: 250,
 		post_instructions_interval: 500,
 

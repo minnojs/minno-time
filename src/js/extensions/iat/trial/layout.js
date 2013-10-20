@@ -2,7 +2,7 @@ define(['underscore', '../properties','../stimuli/separator','../stimuli/categor
 
 	/*
 	 * Takes a map of the form {left: ['concept1'], right: ['concept2']}
-	 * Returns a layout array
+	 * Returns a layout array for a trial (with real stimuli, not inheritance)
 	 */
 	var layout = function layout(map){
 		var layoutArr = [];

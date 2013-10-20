@@ -13,6 +13,8 @@ define([],function(){
 		defaultStimulus: {},
 		instructionsStimulus: {css:{'font-size':'1.3em',color:'white', lineHeight:1.2}},
 
+		simpleLayout: true,
+
 		// optional of course, the same settings as the main API
 		canvas: {
 			maxWidth: 800,

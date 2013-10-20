@@ -54,6 +54,7 @@ module.exports = function(grunt) {
 						},
 						{
 							name: "extensions/iat/IATcomponent",
+							include: "text!extensions/iat/jst/layout.jst", // include the template for the simpleLayout
 							exclude: ["app/API",'underscore','jquery','extensions/dscore/Scorer']
 						}
 					]

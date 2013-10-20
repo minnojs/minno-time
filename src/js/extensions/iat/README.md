@@ -25,7 +25,7 @@ Defining a category is done by passing a category object to the `IAT.setCategory
 
 ```js
 IAT.setCategory('concept1', {
-	name: 'white',					// The category name to be passed to the server
+    name: 'white',					// The category name to be passed to the server
 	title: 'White people',			// The category description to be displayed to the users.
 	titleCss: {color:'green'},		// CSS modifier for this categories media
 	height: 5, 						// The height of the category title.
@@ -47,15 +47,29 @@ The first argument to `IAT.setCategory` is the category name. There are four cat
 
 The second argument to `IAT.setCategory` is the category object. All the properties of the object are optional except for the media array (although you should realy define at least `name` and `title`).
 
-`title`: The category description to be displayed to the users, it can be any valid PIP media object.
-
-`titleCss` and `css`: are jQuery css objects, and are applied to the title and the category media respectively.
-
-`height`: In case that your category titles do not have the standard height you might need to tweek their location by defining appropriate heights.
-
-`margin`: In case you want to center the categories around a common center instead of aligning them to the outer borders.
+`css`: Is a jQuery css objects that is applied to the category media.
 
 `stimulus`: Allows you to modify the category stimuli (see the PIP documentation for more details).
+
+####Category Layout
+The layout for the IAT consists of the category titles presented at the top of the player canvas. The IAT component supports two radicaly different interfaces for creating the layout. You can pick what type of interface you use using the `simpleLayout` property.
+
+The classical layout uses standard PIP media objects as titles for the categories. This gives you extremely powerfull control over the way you present the category titles and the type of titles that you use. The simpleLayout gives you a fast and straight forward way to create a beautiful and simple layout, its main drawback is that it does not allow the use of images or other advanced PIP media objects. By default the IATcomponent uses the simpleLayout scheme.
+
+If you use the **clasical layout** these are the settings you can use:
+
+* `title`: The category description to be displayed to the users, it can be any valid PIP media object.
+* `titleCss`: Is a jQuery css objects that is applied to the category title.
+* `height`: In case that your category titles do not have the standard height you might need to tweek their location by defining appropriate heights.
+* `margin`: In case you want to center the categories around a common center instead of aligning them to the outer borders.
+
+If you use the **simpleLayout** then these are the settings you can use:
+
+* `title`: The category description to be displayed to the users, it can only be a sting of text or a PIP 'word' object.
+* `titleColor`: Sets the color of the title text.
+* `titleSize`: Sets the font-size of the title.
+
+Note that if you are using simpleLayout then the `separator` property is not used. Also, simpleLayout sepends on the layout.jst template, if you want to use templates in your IAT you should copy it to your template folder. If you want to modify the IAT layout even further you can copy layout.jst and modify it in your folder.
 
 ### Setting properties
 The properties object allows you to control the ways that the IAT behaves. All the properties are optional (although you should realy set `post_url` if you want your data... to be saved). We use `IAT.setProperties` in order to set properties.
@@ -126,6 +140,8 @@ IAT.setProperties({
 `post_instructions_interval`: The duration after the instructions before moving on to the first trial (default: 500).
 
 **Layout**
+
+`simpleLayout`: Which layout interface should the player use (see "Defining categories" for details). Takes true for simpleLayout or false for classical (default:true).
 
 `separator`: The separator object allows you to control the appearance of the category title separator. By default it is simply 'or'.
 
