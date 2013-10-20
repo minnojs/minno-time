@@ -5,7 +5,7 @@ The IAT component is here to allow you to use the powefull features that come wi
 Similarly to the PIP you should wrap your IATcomponent scripts with a define wrapper:
 
 ```js
-define(['./IATcomponent'],function(IAT){
+define(['extensions/iat/component'],function(IAT){
 
 });
 ```
@@ -204,3 +204,20 @@ The second argument to `IAT.setCategory` is the instructions object.
 `css`: Controls the CSS for the instruction block. Takes a jQuery CSS object.
 
 `extend`: Extends the instructions trial. Takes an object to extend the trial with (this is an advanced feature, it can be used to attach a scorer or all sorts of hooks)
+
+### The PI component
+The PIP component is an extension of the basic IAT component.
+It shares all capabilities of the basic IAT component with the added functionality of the dscore extension.
+In order to activate the component use the following wrapper:
+
+```js
+define(['extensions/iat/PIcomponent'],function(IAT){
+
+});
+```
+
+In order to tweak the settings of the scorer you can use the following properties:
+
+`scorerObj`: Holds the same object that is normaly used to setup the scorer (everything has defaults of course).
+
+`scorerMessage`: Holds an array of message objects, the same one normaly set into messageDef when setting up the scorer.
