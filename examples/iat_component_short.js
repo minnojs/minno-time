@@ -1,4 +1,4 @@
-define(['extensions/iat/component'],function(IAT){
+define(['extensions/iat/PIcomponent'],function(IAT){
 	/**
 	 * Set Properties
 	 * ************************************************************************

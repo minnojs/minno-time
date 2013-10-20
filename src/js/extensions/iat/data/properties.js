@@ -66,7 +66,7 @@ define([],function(){
 			css : {fontSize:'1.2em'} // optional
 		},
 
-		pusle: 20,
+		pulse: 20,
 
 		images_base_url: "",
 		templates_base_url: "extensions/iat/jst"
