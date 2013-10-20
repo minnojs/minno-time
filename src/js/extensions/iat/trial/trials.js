@@ -1,7 +1,7 @@
 /*
  * Returns a trial sets object
  */
-define(['../categories','./default', './instructions','./IATlayout'],function(categories,defaultTrial,instructions,layout){
+define(['../data/categories','./default', './instructions','./IATlayout'],function(categories,defaultTrial,instructions,layout){
 
 	return function trials(){
 

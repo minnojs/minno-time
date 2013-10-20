@@ -3,7 +3,7 @@
  *	This is the layout array that is used within the trials (with real stimuli, not inheritance)
  *	This function can return either the clasical layout theme or the the simpleLayout.
  */
-define(['../properties','./layout', './simple_layout'],function(properties, layout, simpleLayout){
+define(['../data/properties','./layout', './simple_layout'],function(properties, layout, simpleLayout){
 
 	var layoutArr = {
 		1: {left:['concept1'],right:['concept2']},

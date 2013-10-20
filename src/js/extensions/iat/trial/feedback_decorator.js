@@ -1,7 +1,7 @@
 /*
  * Returns a decorator for trial objects that adds feedback interactions and stimuli
  */
-define(['../properties'],function(properties){
+define(['../data/properties'],function(properties){
 	var decorator = function(trial){
 		var feedback_types = ['correct', 'error', 'timeout'];
 		var interactions = trial.interactions;

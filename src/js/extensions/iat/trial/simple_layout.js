@@ -1,4 +1,4 @@
-define(['underscore', '../properties','../categories'],function(_, properties, categories){
+define(['underscore', '../data/properties','../data/categories'],function(_, properties, categories){
 
 	/*
 	 * Takes a map of the form {left: ['concept1'], right: ['concept2']}

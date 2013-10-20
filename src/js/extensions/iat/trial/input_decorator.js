@@ -1,4 +1,4 @@
-define(['../properties'],function(properties){
+define(['../data/properties'],function(properties){
 
 	var input_decorator = function input_decorator(trial){
 		var input = trial.input;

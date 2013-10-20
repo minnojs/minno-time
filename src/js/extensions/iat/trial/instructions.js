@@ -1,4 +1,4 @@
-define(['underscore','../properties','../categories','./IATlayout'],function(_,properties,categories,layout){
+define(['underscore','../data/properties','../data/categories','./IATlayout'],function(_,properties,categories,layout){
 	// the generic instruction trial
 	function genericConstructor(){
 		var generic = {

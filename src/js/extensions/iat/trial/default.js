@@ -1,4 +1,4 @@
-define(['../properties','./input_decorator','./feedback_decorator'],function(properties,input_decorator,feedback_decorator){
+define(['../data/properties','./input_decorator','./feedback_decorator'],function(properties,input_decorator,feedback_decorator){
 
 	function defaultTrial(){
 		var trial = {

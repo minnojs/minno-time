@@ -1,4 +1,4 @@
-define(['../categories'], function(categories){
+define(['../data/categories'], function(categories){
 
 	return function Category(categoryName, side, marginTop){
 		var category = categories[categoryName]

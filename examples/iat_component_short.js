@@ -1,4 +1,4 @@
-define(['extensions/iat/IATcomponent'],function(IAT){
+define(['extensions/iat/component'],function(IAT){
 	/**
 	 * Set Properties
 	 * ************************************************************************

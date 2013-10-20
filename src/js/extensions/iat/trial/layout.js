@@ -1,4 +1,4 @@
-define(['underscore', '../properties','../stimuli/separator','../stimuli/category'],function(_, properties, Separator, Category){
+define(['underscore', '../data/properties','../stimuli/separator','../stimuli/category'],function(_, properties, Separator, Category){
 
 	/*
 	 * Takes a map of the form {left: ['concept1'], right: ['concept2']}

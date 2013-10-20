@@ -1,4 +1,4 @@
-define(['../properties'], function(properties){
+define(['../data/properties'], function(properties){
 	// return new separator stimulus
 	return function Separator(side, marginTop){
 		var data = properties.separator

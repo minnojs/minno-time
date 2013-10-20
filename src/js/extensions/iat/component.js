@@ -2,12 +2,12 @@ define(function(require){
 
 	var   _				= require('underscore')
 		, API			= require('app/API')
-		, properties	= require('./properties')
-		, categories	= require('./categories')
+		, properties	= require('./data/properties')
+		, categories	= require('./data/categories')
 		, trials		= require('./trial/trials')
 		, instructions	= require('./trial/instructions')
 		, stimuli		= require('./stimuli/stimuli')
-		, sequence		= require('./sequence');
+		, sequence		= require('./data/sequence');
 
 
 	// cache API play so we can extend it.
