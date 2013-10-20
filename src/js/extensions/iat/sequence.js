@@ -36,7 +36,7 @@ define(['./properties'],function(properties){
 	};
 
 	function getTrials(block, defaultTrials){
-		return typeof properties.trialsPerBlock[block] == 'number' ? properties.trialsPerBlock[block] : defaultTrials;
+		return properties.trialsPerBlock && (typeof properties.trialsPerBlock[block] == 'number') ? properties.trialsPerBlock[block] : defaultTrials;
 	}
 
 	function longIAT(){
