@@ -53,7 +53,12 @@ module.exports = function(grunt) {
 							exclude: ["app/API",'underscore','jquery']
 						},
 						{
-							name: "extensions/iat/IATcomponent",
+							name: "extensions/iat/component",
+							include: "text!extensions/iat/jst/layout.jst", // include the template for the simpleLayout
+							exclude: ["app/API",'underscore','jquery','extensions/dscore/Scorer']
+						},
+						{
+							name: "extensions/iat/PIcomponent",
 							include: "text!extensions/iat/jst/layout.jst", // include the template for the simpleLayout
 							exclude: ["app/API",'underscore','jquery','extensions/dscore/Scorer']
 						}
