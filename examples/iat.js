@@ -87,7 +87,9 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			// begin trial : display stimulus imidiately
 			{
 				propositions: [{type:'begin'}],
-				actions: [{type:'showStim',handle:'target'}]
+				actions: [
+					{type:'showStim',handle:'target'}
+				]
 			},
 
 			// error
@@ -370,6 +372,34 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			{data:{handle:'right'}, location:{left:'auto',right:0,top:0},css:{color:'black',fontSize:'2em'},media:{template:'right.jst'}}
 		]
 	});
+
+	API.addMediaSets({
+		attribute1 : [// Pleasant
+			{word: 'Nice'},
+			{word: 'Heaven'},
+			{word: 'Happy'},
+			{word: 'Pleasaure'}
+		],
+		attribute2: [ //Unpleasant
+			{word: 'Nasty'},
+			{word: 'Hell'},
+			{word: 'Horrible'},
+			{word: 'Rotten'}
+		],
+		concept1: [ // Black people
+			{image: 'bf14_nc.jpg'},
+			{image: 'bf23_nc.jpg'},
+			{image: 'bf56_nc.jpg'},
+			{image: 'bm14_nc.jpg'}
+		],
+		concept2: [ //White people
+			{image: 'wf2_nc.jpg'},
+			{image: 'wf3_nc.jpg'},
+			{image: 'wf6_nc.jpg'},
+			{image: 'wm1_nc.jpg'}
+		]
+	});
+
 
 	/*
 		Regular IAT sequence
