@@ -1,7 +1,6 @@
 define(function(require) {
 	var MyModel = require("models/model")
 		,MediaView = require("app/media/media_constructor")
-		,timeout = require("utils/timeout")
 		,pubsub = require("utils/pubsub")
 		,_ = require("underscore")
 		,is_touch = require("utils/is_touch")
@@ -30,8 +29,6 @@ define(function(require) {
 		// Default values for all of the attributes
 		defaults: {
 			size: {height: 'auto', width: 'auto'},
-			// @TODO this is probably depricated??
-			timeline: {before:0,after:0},
 			css:{}
 		},
 
@@ -42,7 +39,6 @@ define(function(require) {
 		activate: function(){
 			var self = this;
 			var stimHandle = this.handle;
-			var timeline = this.get('timeline');
 			this.timeStack = this.timeStack || [];
 			this.pubsubStack = this.pubsubStack || [];
 
@@ -54,10 +50,8 @@ define(function(require) {
 					return false;
 				}
 
-				// wait before presenting the stimulus
-				timeout(timeline.before, self.timeStack, function(){
-					self.media.show();
-				});
+				// present the stimulus
+				self.media.show();
 			});
 
 			// subscribe to set attribute action
@@ -99,11 +93,6 @@ define(function(require) {
 			// make sure the stacks exist
 			this.timeStack = this.timeStack || [];
 			this.pubsubStack = this.pubsubStack || [];
-
-			// clear stack listeners
-			_.each(this.timeStack, function(handle) {
-				clearTimeout(handle);
-			});
 
 			_.each(this.pubsubStack, function(handle) {
 				pubsub.unsubscribe(handle);
