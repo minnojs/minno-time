@@ -50,7 +50,7 @@ module.exports = function(grunt) {
 						},
 						{
 							name: "extensions/dscore/Scorer",
-							exclude: ["app/API",'underscore','jquery']
+							exclude: ["app/API",'underscore','jquery','backbone']
 						},
 						{
 							name: "extensions/iat/component",
