@@ -27,25 +27,8 @@ define(['jquery','app/API'],function($,API){
 
 		$.extend(computeD, {
 
-			setComputeObject: function(Obj){
-
-				if (typeof Obj.AnalyzedVar == 'undefined') {this.AnalyzedVar = Obj.AnalyzedVar ;}
-				if (typeof Obj.ErrorVar == 'undefined') {this.ErrorVar = Obj.ErrorVar;}
-				if (typeof Obj.condVar == 'undefined') {this.condVar = Obj.condVar;}
-				if (typeof Obj.cond1VarValues == 'undefined') {this.cond1VarValues = Obj.cond1VarValues;}
-				if (typeof Obj.cond2VarValues == 'undefined') {this.cond2VarValues = Obj.cond2VarValues;}
-				if (typeof Obj.parcelVar == 'undefined') {this.parcelVar = Obj.parcelVar;}
-				if (typeof Obj.parcelValue == 'undefined') {this.parcelValue = Obj.parcelValue;}
-				if (typeof Obj.fastRT == 'undefined') {this.fastRT = Obj.fastRT;}
-				if (typeof Obj.maxFastTrialsRate == 'undefined') {this.maxFastTrialsRate = Obj.maxFastTrialsRate;}
-				if (typeof Obj.minRT == 'undefined') {this.minRT = Obj.minRT;}
-				if (typeof Obj.maxRT == 'undefined') {this.maxRT = Obj.maxRT;}
-				if (typeof Obj.errorLatency == 'undefined') {this.errorLatency = Obj.errorLatency;}
-				if (typeof Obj.postSettings == 'undefined') {this.postSettings = Obj.postSettings;}
-				if (typeof Obj.maxErrorParcelRate == 'undefined') {this.maxErrorParcelRate = Obj.maxErrorParcelRate;}
-				//if (typeof Obj.userErrLatency == 'undefined') this.userErrLatency = Obj.userErrLatency;
-				//if (typeof Obj.correctExtreme == 'undefined') this.correctExtreme = Obj.correctExtreme;
-				//if (typeof Obj.useErrSTD == 'undefined') this.useErrSTD = Obj.useErrSTD;
+			setComputeObject: function(obj){
+				$.extend(this,obj);
 			},
 
 			setDataArray: function(){
