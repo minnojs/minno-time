@@ -8,7 +8,7 @@
 	} catch (Exception e){
 		out.println("An exception occurred: " + e.getMessage());
 	}
-%>‬
+%>
 <!DOCTYPE html>
 <html>
 	<head>
