@@ -37,7 +37,8 @@ String getBase = getProtocol+"://"+getDomain;
 
 		<script>
 			require(['js/config'], function() {
-				require(['<%= script %>']);
+				// we load backbone here in order to increase download speed
+				require(['<%= script %>','backbone']);
 			});
 		</script>
 	</head>
