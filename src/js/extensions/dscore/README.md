@@ -8,11 +8,11 @@ The Scorer component of the PIP resposible for computing the score for the tasks
 In the main IAT file enter the settings for the scorer according to the options coverd in 'compute settings'. 
 In the main IAT get the score and the message from the scorer similiar to the folowing:
 
-'''
+```
 DScoreObj = Scorer.computeD();
 media = {css:{color:'black'},media:{html:'<h1><div><p style="font-size:12px"><color="#FFFAFA"> '+DScoreObj.FBMsg+'<br>The Score is:'+DScoreObj.DScore+'</p></div>'}};
 
-'''
+```
 
 
 
