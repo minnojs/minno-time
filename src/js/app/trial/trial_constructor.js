@@ -9,6 +9,7 @@ define(function(require){
 	var global_trial = require('./current_trial');
 	var inflate = require('../inflator');
 	var main = require('app/task/main_view');
+	var now = require('utils/now');
 
 	var Trial = function(trialData){
 
@@ -97,7 +98,7 @@ define(function(require){
 			this._stimulus_collection.activate();
 
 			// set begin time, will be used to create latency (inside interactions)
-			this.beginTime = new Date().getTime();
+			this.beginTime = now();
 
 			// listen for interaction
 			interactions.activate(this.interactions);
