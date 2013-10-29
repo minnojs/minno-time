@@ -9,7 +9,9 @@ define(["underscore"],function(_){
 	 * @todo: poll timer instead of using one long timeout
 	 * http://ejohn.org/blog/accuracy-of-javascript-time/
 	 * http://stackoverflow.com/questions/196027/is-there-a-more-accurate-way-to-create-a-javascript-timer-than-settimeout
-	 * http://updates.html5rocks.com/2012/08/When-milliseconds-are-not-enough-performance-now
+	 * http://www.sitepoint.com/creating-accurate-timers-in-javascript/
+	 * http://stackoverflow.com/questions/6875625/does-javascript-provide-a-high-resolution-timer/6875666#6875666
+	 * http://www.websanova.com/blog/javascript/how-to-write-an-accurate-game-timer-in-javascript#.UmZ1PHh4uak
 	 */
 
 	return function timeout(){

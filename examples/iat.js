@@ -16,10 +16,6 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		template : '../../examples/IAT'
 	});
 
-	API.addSettings('canvas',{
-		background: '#EEEEEE'
-	});
-
 	API.addSettings('logger',{
 		pulse: 20,
 		url : '/implicit/PiPlayerApplet'
