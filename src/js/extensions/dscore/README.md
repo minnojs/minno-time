@@ -56,6 +56,19 @@ actions: [
 Example:
 
 ```
+Setting the Scorer:
+
+Scorer.addSettings('compute',{
+		...
+
+		parcelVar : "parcel",
+		parcelValue : ['first','second'],
+
+		...
+
+
+In the API:
+
 {
 			data: {block:3, row:1, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2, condition: attribute1 + ',' + concept1 + '/' + attribute2 + ',' + concept2,parcel:'first'},
 			inherit: 'Default',
@@ -75,3 +88,4 @@ Example:
 		},
 
 ```
+
