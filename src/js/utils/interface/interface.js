@@ -1,4 +1,4 @@
-define(['jquery','./listener', '../is_touch'],function($,Listener,is_touch_device){
+define(['jquery','./listener', '../is_touch','../now'],function($,Listener,is_touch_device,now){
 
 	/*
 	 * adds and removes listeners from the stack
@@ -12,11 +12,23 @@ define(['jquery','./listener', '../is_touch'],function($,Listener,is_touch_devic
 	 *
 	 */
 
-	var listenerStack = []; // holds all active listeners
+	var listenerStack = [] // holds all active listeners
+		, baseTime = 0;
 
 	return {
+		// get latency (time since last reset)
+		getLatency: function(){
+			return now() - baseTime;
+		},
+
+		// reset timer
+		resetTimer: function(){
+			baseTime = now();
+		},
+
 		// add listeners
 		add: function(definitions){
+			var interfaceObj = this;
 			// make sure definitions is set as an array
 			var definitionsArr = $.isArray(definitions) ? definitions : [definitions];
 
@@ -33,7 +45,7 @@ define(['jquery','./listener', '../is_touch'],function($,Listener,is_touch_devic
 					}
 				}
 
-				var listener = new Listener(definition);
+				var listener = new Listener(definition, interfaceObj);
 				listenerStack.push(listener);
 			});
 

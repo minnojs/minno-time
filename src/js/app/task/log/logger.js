@@ -24,7 +24,7 @@ define(function(require){
 			trial_id: this._id,
 			name: this.name(),
 			responseHandle: inputData.handle,
-			latency: inputData.latency,
+			latency: Math.floor(inputData.latency),
 			stimuli: stimList,
 			media: mediaList,
 			data: trialData
@@ -61,7 +61,8 @@ define(function(require){
 		var callback = logger.logger ? logger.logger : defaultLogger;
 
 		// add row to log stack
-		var row = callback.apply(trial(),[trial().data, input_data, options,logStack]);
+		var trialObj = trial();
+		var row = callback.apply(trialObj,[trialObj.data, input_data, options,logStack]);
 		logStack.push(row);
 	});
 

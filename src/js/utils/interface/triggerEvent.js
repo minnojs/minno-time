@@ -1,14 +1,15 @@
-define(['utils/pubsub','utils/now'],function(pubsub,now){
+define(['utils/pubsub'],function(pubsub){
 	/*
 	 * manages publishing the event
 	 */
-	return function triggerEvent(event,type,definitions){
+	return function triggerEvent(event,type,definitions, latency){
 
 		var data = {
-			timestamp	: now(),
-			handle		: definitions.handle,	// right/left and so on
-			type		: type,					// holds click/keypressed and so on
-			e			: event					// the original event if available. just in case
+			timestamp	: +new Date(),
+			latency		: latency,
+			handle		: definitions.handle,			// right/left and so on
+			type		: type,							// holds click/keypressed and so on
+			e			: event							// the original event if available. just in case
 		};
 
 		pubsub.publish("input",[data]);

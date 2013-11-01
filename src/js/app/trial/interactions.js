@@ -1,4 +1,4 @@
-define(['jquery','utils/pubsub','./evaluate','./action','./current_trial'],function($,pubsub,evaluate,activate,trial){
+define(['jquery','utils/pubsub','./evaluate','./action'],function($,pubsub,evaluate,activate){
 	/*
 	 * Organizer for the interaction function
 	 * Allows to subscribe and unsubscribe
@@ -17,12 +17,10 @@ define(['jquery','utils/pubsub','./evaluate','./action','./current_trial'],funct
 	return {
 		activate : function(interactions){
 			// start by checking for "begin" actions
-			interact(interactions,{type:'begin'});
+			interact(interactions,{type:'begin', latency:0});
 
 			// subscribe to input and interact with each input
 			pubsub.subscribe('input',subscriptionStack,function(input_data){
-				// set latency in input_data
-				input_data.latency = input_data.timestamp - trial().beginTime;
 				interact(interactions,input_data);
 			});
 		},
