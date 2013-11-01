@@ -21,6 +21,11 @@ define(['jquery','app/task/settings','JSON'],function($, settings,JSON){
 		// lets post our data
 		deff = $.post(url,post);
 
+		// now, if there was a failure, lets try to resend
+		deff.then(null,function(){
+			return $.post(url,post);
+		});
+
 		return deff;
 	};
 
