@@ -303,7 +303,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		],
 
 		Instructions: [
-			{css:{'font-size':'1.3em',color:'black', lineHeight:1.2}}
+			{css:{'font-size':'1.3em',color:'white', lineHeight:1.2}}
 		],
 
 		// The trial stimuli
@@ -364,8 +364,8 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		],
 
 		layout: [
-			{data:{handle:'left'},location:{left:0,top:0},css:{color:'black',fontSize:'2em'},media:{template:'left.jst'}},
-			{data:{handle:'right'}, location:{left:'auto',right:0,top:0},css:{color:'black',fontSize:'2em'},media:{template:'right.jst'}}
+			{data:{handle:'left'},location:{left:0,top:0},css:{color:'white',fontSize:'2em'},media:{template:'left.jst'}},
+			{data:{handle:'right'}, location:{left:'auto',right:0,top:0},css:{color:'white',fontSize:'2em'},media:{template:'right.jst'}}
 		]
 	});
 
