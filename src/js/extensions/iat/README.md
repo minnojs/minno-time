@@ -58,7 +58,7 @@ If you use the **simpleLayout** then these are the settings you can use:
 * `titleColor`: Sets the color of the title text.
 * `titleSize`: Sets the font-size of the title.
 
-When using simpleLayout, make sure you copy the file layout.jst (ADD LINK) into your template folder. If you want to modify the IAT layout even further you can copy layout.jst and modify it in your folder. If you use simpleLayout then you can use the `separator` property in order to change anything about the separator (it will always say "or", and will have a pre-defined color and font-size). 
+When using simpleLayout, make sure you copy the file layout.jst (ADD LINK) into your template folder. If you want to modify the IAT layout even further you can copy layout.jst and modify it in your folder. If you use simpleLayout then you can't use the `separator` property in order to change anything about the separator (it will always say "or", and will have a pre-defined color and font-size). 
 
 The **classic layout** uses standard PIP media objects as titles for the categories. That means that you have more control over the type of title (e.g., it can an image), and its other properties (e.g., location). 
 If you use the **classic layout** these are the settings you can use:
@@ -68,7 +68,7 @@ If you use the **classic layout** these are the settings you can use:
 * `margin`: In case you want to center the categories around a common center instead of aligning them to the outer borders.
 
 ### Setting properties
-The properties object allows you to control the ways that the IAT behaves. All the properties are optional (although you should realy set `post_url` if you want your data... to be saved). We use `IAT.setProperties` in order to set properties.
+The properties object allows you to control the ways that the IAT behaves. All the properties are optional (although you should really set `post_url` if you want your data to be saved). We use `IAT.setProperties` in order to set properties.
 
 ```js
 IAT.setProperties({
@@ -79,11 +79,11 @@ IAT.setProperties({
 
 **Settings**
 
-`IATversion`: Should we use the 7 or 5 block long IAT. Takes 'long'\'short' (default:'long').
+`IATversion`: Use a 7-block or 5-block IAT. Accepts 'long'\'short' (default:'long').
 
-`randomize_order`: Should we counter balance the experiment by randomly switching blocks 1/5 and blocks 34/56? Takes true/false (default:true).
+`randomize_order`: Set whether to counterbalance the experiment by randomly switching blocks 1/5 and blocks 3,4/5,6. Accepts true/false (default:true).
 
-`trialsPerBlock`: Modify the number of trials per block. Takes a hash of block number:trial count. For example: `{1:40,5:40}`, sets block 1 and 5 to have 40 trials. By default, the long IAT has 20 trials for the first two blocks, and 40 trial for the last five. The short IAT has 20 trials for the first two blocks, 50 trials for the third and fifth, and 30 trials for the fourth.
+`trialsPerBlock`: Set the number of trials per block. Accepts a hash of block number:trial count. For example: `{1:40,5:40}`, sets block 1 and 5 to have 40 trials. By default, the long IAT's number of trials are: `{1:20,2:20,3:20,4:40,5:40,6:20,7:40}` and the short IAT's numbers are `{1:20,2:20,3:50,4:30,5:50}`.
 
 **URLs**
 
