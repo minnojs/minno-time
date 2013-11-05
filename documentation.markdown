@@ -798,7 +798,7 @@ Returns the logs for this task. Useful for giving user feedback or creating stai
 ### Logging
 
 The player sends all the data it has gathered to the url defined in the settings [logger](#logger-).
-The data is sent as an ajax POST where the only field is "json" (unless you added something using [metadata](#meta-data-)).
+The data is sent as an ajax POST where the only field is "json" (unless you added something using [metadata](#meta-data)).
 The field includes a json array including all logs created. each log is an object including the following fields:
 
 Field 			| Description
