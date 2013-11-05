@@ -1,4 +1,4 @@
-define(["utils/pubsub"],function(pubsub){
+define(["utils/pubsub","utils/interface/interface"],function(pubsub,input){
 	var actions = {
 		/*
 		 * Stimulus actions
@@ -63,6 +63,13 @@ define(["utils/pubsub"],function(pubsub){
 
 		endTrial: function(){
 			pubsub.publish('trial:end');
+		},
+
+		resetTimer: function(options,eventData){
+			// set current evenData to 0
+			eventData.latency = 0;
+			// reset the global timer
+			input.resetTimer();
 		},
 
 		/*

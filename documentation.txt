@@ -255,6 +255,11 @@ removeInput: remove input listener, takes an input handle or an array of input h
 	actions: [{type:'removeInput',handle : 'time'}]
 	actions: [{type:'removeInput',handle : ['time','left']}]
 
+resetTimer: resets trial timer. The latency of any events from here on will be calculated back to the reset instead of the begining of the trial.
+	This does *not* affect timeouts in any way.
+
+	actions: [{type:'resetTimer'}]
+
 endTrial: speaks for itself (note that any actions that come after this is called may not work properly)
 	actions: [{type:'endTrial'}]
 

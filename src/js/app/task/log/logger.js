@@ -63,6 +63,7 @@ define(function(require){
 		// add row to log stack
 		var trialObj = trial();
 		var row = callback.apply(trialObj,[trialObj.data, input_data, options,logStack]);
+		log(row.latency)
 		logStack.push(row);
 	});
 
