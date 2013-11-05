@@ -1,8 +1,8 @@
 # IAT component
-The IAT component is here to allow you to use the powefull features that come with the PIP to create simple and quick IAT tasks. The component uses similar features to the PIP, so if you already know it, it should be a flash to learn.
+The IAT component allows you to create IATs quickly, using the PI player (PIP). The language is similar to the one used by PIP, so if you already know PIP, it should be a flash to learn.
 
 ### The structure of your script
-Similarly to the PIP you should wrap your IATcomponent scripts with a define wrapper:
+You wrap your IATcomponent code with a define wrapper:
 
 ```js
 define(['extensions/iat/component'],function(IAT){
@@ -16,20 +16,17 @@ Inside the wrapper there are four parts:
 3. Editing instructions.
 4. Activating the player.
 
-There the IAT object has a function deditcated to each of these parts, and we will explain each of them in the following sections.
-It is notable that the IAT is an extension of the PIP and so you can use any of the PIPs settings or functionality with the IAT.
-
 ### Defining categories
-The IAT requires you to define four categories; two concepts and two attributes.
+The IAT needs four categories: two concepts and two attributes.
 Defining a category is done by passing a category object to the `IAT.setCategory` function.
 
 ```js
 IAT.setCategory('concept1', {
-    name: 'white',					// The category name to be passed to the server
+    name: 'white',				// The category name to be passed to the server (recorded in the data)
 	title: 'White people',			// The category description to be displayed to the users.
 	titleCss: {color:'green'},		// CSS modifier for this categories media
-	height: 5, 						// The height of the category title.
-	margin: 3,						// The horizontal margin to add to the title.
+	height: 5, 				// The height of the category title.
+	margin: 3,				// The horizontal margin to add to the title.
 	css: {color:'green'},			// CSS modifier for all media in this category
 	stimulus: {location:{right:20}}	// A stimulus modifier for media in this category
 
@@ -43,33 +40,32 @@ IAT.setCategory('concept1', {
 });
 ```
 
-The first argument to `IAT.setCategory` is the category name. There are four categories: `concept1`, `concept2`, `attribute1` and `attribute2`. All the categories must be defined for the IAT to work. In the example above we define `concept1`.
+The first argument to `IAT.setCategory` is the category type. There are four types: `concept1`, `concept2`, `attribute1` and `attribute2`. All four must be defined for the IAT to work. The example above defined `concept1`.
 
-The second argument to `IAT.setCategory` is the category object. All the properties of the object are optional except for the media array (although you should realy define at least `name` and `title`).
+The second argument to `IAT.setCategory` is the category object. The object contains all the properties of the category. All the properties are optional except for the media array (although you should really define at least `name` and `title`).
 
-`css`: Is a jQuery css objects that is applied to the category media.
+`css`: Is a jQuery css object that is applied to the category media.
 
-`stimulus`: Allows you to modify the category stimuli (see the PIP documentation for more details).
+`stimulus`: Allows you to modify the properties of the category stimuli (see the PIP documentation for more details).
 
 ####Category Layout
-The layout for the IAT consists of the category titles presented at the top of the player canvas. The IAT component supports two radicaly different interfaces for creating the layout. You can pick what type of interface you use using the `simpleLayout` property.
+When you define the categories, you have two methods to define how to display the titles of the categories at the top of the screen. 
 
-The classical layout uses standard PIP media objects as titles for the categories. This gives you extremely powerfull control over the way you present the category titles and the type of titles that you use. The simpleLayout gives you a fast and straight forward way to create a beautiful and simple layout, its main drawback is that it does not allow the use of images or other advanced PIP media objects. By default the IATcomponent uses the simpleLayout scheme.
-
-If you use the **clasical layout** these are the settings you can use:
-
-* `title`: The category description to be displayed to the users, it can be any valid PIP media object.
-* `titleCss`: Is a jQuery css objects that is applied to the category title.
-* `height`: In case that your category titles do not have the standard height you might need to tweek their location by defining appropriate heights.
-* `margin`: In case you want to center the categories around a common center instead of aligning them to the outer borders.
+By default the IATcomponent uses the simpleLayout scheme. The simpleLayout is simple to use, but it supports only text as the category label (title). 
 
 If you use the **simpleLayout** then these are the settings you can use:
-
-* `title`: The category description to be displayed to the users, it can only be a sting of text or a PIP 'word' object.
+* `title`: The category description to be displayed to the users, it must be text or a PIP 'word' object.
 * `titleColor`: Sets the color of the title text.
 * `titleSize`: Sets the font-size of the title.
 
-Note that if you are using simpleLayout then the `separator` property is not used. Also, simpleLayout sepends on the layout.jst template, if you want to use templates in your IAT you should copy it to your template folder. If you want to modify the IAT layout even further you can copy layout.jst and modify it in your folder.
+When using simpleLayout, make sure you copy the file layout.jst (ADD LINK) into your template folder. If you want to modify the IAT layout even further you can copy layout.jst and modify it in your folder. If you use simpleLayout then you can use the `separator` property in order to change anything about the separator (it will always say "or", and will have a pre-defined color and font-size). 
+
+The **classic layout** uses standard PIP media objects as titles for the categories. That means that you have more control over the type of title (e.g., it can an image), and its other properties (e.g., location). 
+If you use the **classic layout** these are the settings you can use:
+* `title`: The category description to be displayed to the users, it can be any valid PIP media object.
+* `titleCss`: Is a jQuery css objects that is applied to the category title.
+* `height`: In case that your category titles do not have the standard height you might need to tweak their location by defining appropriate heights.
+* `margin`: In case you want to center the categories around a common center instead of aligning them to the outer borders.
 
 ### Setting properties
 The properties object allows you to control the ways that the IAT behaves. All the properties are optional (although you should realy set `post_url` if you want your data... to be saved). We use `IAT.setProperties` in order to set properties.
@@ -221,3 +217,6 @@ In order to tweak the settings of the scorer you can use the following propertie
 `scorerObj`: Holds the same object that is normaly used to setup the scorer (everything has defaults of course).
 
 `scorerMessage`: Holds an array of message objects, the same one normaly set into messageDef when setting up the scorer.
+
+### More...
+This IAT component is an extension of PIP, so you can use any of PIP's settings or functionality with the IAT. For example...
