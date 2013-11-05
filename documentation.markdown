@@ -121,7 +121,7 @@ Trials are responsible for organizing stimuli and interactions with the user.
 
 The `layout` and `stimuli` are arrays that list the stimuli associated with this trial. Stimuli in `layout` will be statically displayed throughout the trial. stimuli within `stimuli` are not displayed automatically and may be dynamically interacted with during the trial (see interactions).
 
-#### Input <a href="#input"></a>
+#### Input
 
 The input attribute lists the input objects that the player reacts to.
 Each input object must include both a `handle` and an `on` property.
@@ -277,7 +277,7 @@ Immediately activate the input `handle` (this is equivilent to adding a timeout 
 * `{type:'trigger',handle : 'now'}`
 
 **setInput**:
-Set input listener (useful for adding timeouts), takes an `input` [object](#input).
+Set input listener (useful for adding timeouts), takes an `input` [object](#input-).
 * `{type:'setInput',input:{handle:'time',on:'timeout',duration:300}}`
 
 **removeInput**: Remove input listener, takes an input `handle` or an array of input handles
@@ -292,8 +292,8 @@ Resets trial timer. The latency of any events from here on (including the curren
 Speaks for itself (note that any actions that come after this is called may not work properly).
 * `{type:'endTrial'}`
 
-**log**: <a href="#actions-log"></a>
-Log this action. Pushes this action into the logging stack so that it is later sent to the server (you can set how the player logs an action using the [logger settings](#settings-logger))
+**log**:
+Log this action. Pushes this action into the logging stack so that it is later sent to the server (you can set how the player logs an action using the [logger settings](#logger-))
 * `{type:'log'}`
 
 **goto**:
@@ -563,7 +563,7 @@ settings = {
 }
 ```
 
-#### Logger <a href="#settings-logger"></a>
+#### Logger <a href="#logger-"></a>
 
 ```js
 logger: {
@@ -593,7 +593,7 @@ When using the media path to log media elements (for images and templates), shou
 
 `logger`:
 Accepts a function to replace the existing logging function. (don't touch this if you don't **realy** know what you're doing).
-The logger function is called each time a log action is triggered (see interactions: actions [log](#actions-log)).
+The logger function is called each time a log action is triggered (see interactions: actions [log](#interactions-actions)).
 It is responsible for adding a logging row to be sent to the server.
 
 ```js
@@ -700,7 +700,7 @@ hooks: {
 `endTask`:
 Called at the end of the task instead of the default redirect.
 
-#### Meta data <a href="#settings-metadata"></a>
+#### Meta data
 
 Meta data is data that should be returned with every request to the server.
 Any key value pair in the meta data is added to every post the player makes to the server.
@@ -797,8 +797,8 @@ Returns the logs for this task. Useful for giving user feedback or creating stai
 
 ### Logging
 
-The player sends all the data it has gathered to the url defined in the settings [logger](#settings-logger).
-The data is sent as an ajax POST where the only field is "json" (unless you added something using [metadata](#settings-metadata)).
+The player sends all the data it has gathered to the url defined in the settings [logger](#logger-).
+The data is sent as an ajax POST where the only field is "json" (unless you added something using [metadata](#meta-data-)).
 The field includes a json array including all logs created. each log is an object including the following fields:
 
 Field 			| Description
