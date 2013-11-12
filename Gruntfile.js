@@ -68,7 +68,19 @@ module.exports = function(grunt) {
 		},
 
 		docco: {
-			src: ['tutorials/*.js']
+			tutorials:{
+				src: ['tutorials/*.js'],
+				options: {
+					output: 'docs/tutorials'
+				}
+			},
+			examples: {
+				src: ['examples/*.js'],
+				options: {
+					output: 'docs/examples'
+				}
+			}
+
 		}
 	});
 
