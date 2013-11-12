@@ -11,11 +11,12 @@ define([],function(){
 		fontSize: '2em',
 		fontColor: 'green',
 		defaultStimulus: {},
-		instructionsStimulus: {css:{'font-size':'1.3em',color:'white', lineHeight:1.2}},
+		instructionsStimulus: {css:{'font-size':'1.3em',color:'black', lineHeight:1.2,'text-align':'left',margin:'25px'}},
 
 		simpleLayout: true,
 
 		// optional of course, the same settings as the main API
+		background : '#EEEEEE', // the default background (for both canvas background and the generic background)
 		canvas: {
 			maxWidth: 800,
 			proportions : 0.8

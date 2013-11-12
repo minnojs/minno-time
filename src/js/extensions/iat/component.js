@@ -42,7 +42,10 @@ define(function(require){
 		},
 		play : function IATcomponentPlay(){
 			// settings
-			API.addSettings('canvas',properties.canvas);
+			API.addSettings('canvas',_.defaults(properties.canvas,{
+				background:properties.background,
+				canvasBackground:properties.background
+			}));
 			API.addSettings('base_url', {image:properties.images_base_url, template:properties.templates_base_url});
 			API.addSettings('logger',{pulse: properties.pulse, url : properties.post_url});
 			API.addSettings('redirect',properties.next_url);

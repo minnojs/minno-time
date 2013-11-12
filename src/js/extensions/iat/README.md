@@ -49,7 +49,7 @@ The second argument to `IAT.setCategory` is the category object. The object cont
 `stimulus`: Allows you to modify the properties of the category stimuli (see the PIP documentation for more details).
 
 ####Category Layout
-When you define the categories, you have two methods to define how to display the titles of the categories at the top of the screen. 
+When you define the categories, you have two methods to define how to display the titles of the categories at the top of the screen.
 
 By default the IATcomponent uses the simpleLayout scheme. The simpleLayout is simple to use, but it supports only text as the category label (title). [YBYB: INSERT CODE EXAMPLE HERE]
 
@@ -58,8 +58,8 @@ If you use the **simpleLayout** then these are the settings you can use:
 * `titleColor`: Sets the color of the title text.
 * `titleSize`: Sets the font-size of the title.
 
-When using simpleLayout, make sure you copy the file layout.jst (ADD LINK) into your template folder [YBYB: or perhaps by default the player will use the layout.jst in the component's folder?]. After that, open that file and see whether you want to modify anything. 
-If you use simpleLayout then you can't use the `separator` property in order to change anything about the separator (it will always say "or", and will have a pre-defined color and font-size). 
+When using simpleLayout, make sure you copy the file layout.jst (ADD LINK) into your template folder [YBYB: or perhaps by default the player will use the layout.jst in the component's folder?]. After that, open that file and see whether you want to modify anything.
+If you use simpleLayout then you can't use the `separator` property in order to change anything about the separator (it will always say "or", and will have a pre-defined color and font-size).
 
 The **classic layout** uses standard PIP media objects as titles for the categories. That means that you have more control over the type of title (e.g., it can an image), and its other properties (e.g., location). [YBYB: INSERT CODE EXAMPLE HERE]
 
@@ -87,7 +87,7 @@ Another example: [YBYB: INSERT HERE A LONG EXAMPLE. FOR READERS TO UNDERSTAND TH
 
 `randomize_order`: Set whether to counterbalance the experiment by randomly switching blocks 1/5 and blocks 3,4/5,6. Accepts true/false (default:true).
 
-`trialsPerBlock`: Set the number of trials per block. Accepts a hash of block number:trial count. For example: `{1:40,5:40}`, sets block 1 and 5 to have 40 trials. By default, the long IAT's number of trials are: `{1:20,2:20,3:20,4:40,5:40,6:20,7:40}` and the short IAT's numbers are `{1:20,2:20,3:50,4:30,5:50}`. 
+`trialsPerBlock`: Set the number of trials per block. Accepts a hash of block number:trial count. For example: `{1:40,5:40}`, sets block 1 and 5 to have 40 trials. By default, the long IAT's number of trials are: `{1:20,2:20,3:20,4:40,5:40,6:20,7:40}` and the short IAT's numbers are `{1:20,2:20,3:50,4:30,5:50}`.
 
 **URLs**
 
@@ -118,6 +118,8 @@ Another example: [YBYB: INSERT HERE A LONG EXAMPLE. FOR READERS TO UNDERSTAND TH
 `instructionsStimulus`: Default stimulus for all instructions (default: {css:{'font-size':'1.3em',color:'white', lineHeight:1.2}}).
 
 `canvas`: Canvas size and shape, uses the same settings object as the PIP.
+
+`background`: The background color for the whole player (if you want to differentiate between canvas background and the surrounding use the `canvas` property)
 
 **Interface**
 
