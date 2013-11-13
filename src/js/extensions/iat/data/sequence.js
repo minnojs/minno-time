@@ -45,19 +45,19 @@ define(['./properties'],function(properties){
 		// build version 1
 		addBlock(v1,{block:1,part:1,trials:getTrials(1,20),twoRows:false});
 		addBlock(v1,{block:2,part:2,trials:getTrials(2,20),twoRows:false});
-		addBlock(v1,{block:3,part:3,trials:getTrials(3,40),twoRows:true});
+		addBlock(v1,{block:3,part:3,trials:getTrials(3,20),twoRows:true});
 		addBlock(v1,{block:4,part:4,trials:getTrials(4,40),twoRows:true});
 		addBlock(v1,{block:5,part:5,trials:getTrials(5,40),twoRows:false});
-		addBlock(v1,{block:6,part:6,trials:getTrials(6,40),twoRows:true});
+		addBlock(v1,{block:6,part:6,trials:getTrials(6,20),twoRows:true});
 		addBlock(v1,{block:7,part:7,trials:getTrials(7,40),twoRows:true});
 
 		// build version 2
 		addBlock(v2,{block:5,part:1,trials:getTrials(5,20),twoRows:false});
 		addBlock(v2,{block:2,part:2,trials:getTrials(2,20),twoRows:false});
-		addBlock(v2,{block:6,part:3,trials:getTrials(6,40),twoRows:true});
+		addBlock(v2,{block:6,part:3,trials:getTrials(6,20),twoRows:true});
 		addBlock(v2,{block:7,part:4,trials:getTrials(7,40),twoRows:true});
 		addBlock(v2,{block:1,part:5,trials:getTrials(1,40),twoRows:false});
-		addBlock(v2,{block:3,part:6,trials:getTrials(3,40),twoRows:true});
+		addBlock(v2,{block:3,part:6,trials:getTrials(3,20),twoRows:true});
 		addBlock(v2,{block:4,part:7,trials:getTrials(4,40),twoRows:true});
 
 		return properties.randomize_order ?

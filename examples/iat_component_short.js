@@ -38,7 +38,7 @@ define(['extensions/iat/PIcomponent'],function(IAT){
 	});
 
 	IAT.setCategory('attribute1',{
-		name: 'Good',
+		name: 'Good Words',
 		media: [
 			{word: 'Paradise'},
 			{word: 'Pleasure'},
@@ -50,7 +50,7 @@ define(['extensions/iat/PIcomponent'],function(IAT){
 	});
 
 	IAT.setCategory('attribute2',{
-		name: 'Bad',
+		name: 'Bad Words',
 		media: [
 			{word: 'Bomb'},
 			{word: 'Abuse'},
