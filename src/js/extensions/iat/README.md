@@ -21,21 +21,17 @@ The IAT needs four categories: two concepts and two attributes.
 Defining a category is done by passing a category object to the `IAT.setCategory` function.
 
 ```js
-IAT.setCategory('concept1', {
-    name: 'white',				// The category name to be passed to the server (recorded in the data)
-	title: 'White people',			// The category description to be displayed to the users.
-	titleCss: {color:'green'},		// CSS modifier for this categories media
-	height: 5, 				// The height of the category title.
-	margin: 3,				// The horizontal margin to add to the title.
-	css: {color:'green'},			// CSS modifier for all media in this category
-	stimulus: {location:{right:20}}	// A stimulus modifier for media in this category
-
+IAT.setCategory('concept1',{
+	name: 'white',
+	title: 'White people',
+	css: {color:'green'},
+	stimulus: {location:{right:20}}
 	// the media objects that are part of this category
 	media: [
-		{image: 'wf1.jpg'},
-		{image: 'wf2.jpg'},
-		{image: 'wm1.jpg'},
-		{image: 'wm2.jpg'}
+		{image: 'wf2_nc.jpg'},
+		{image: 'wf3_nc.jpg'},
+		{image: 'wf6_nc.jpg'},
+		{image: 'wm1_nc.jpg'}
 	]
 });
 ```
@@ -44,6 +40,10 @@ The first argument to `IAT.setCategory` is the category type. There are four typ
 
 The second argument to `IAT.setCategory` is the category object. The object contains all the properties of the category. All the properties are optional except for the media array (although you should really define at least `name` and `title`).
 
+`name`: The category name to be passed to the server (recorded in the data object).
+
+`title`: The category description to be displayed to the users (defaults to the values set in `name`). See more about this property in **category layout**.
+
 `css`: Is a jQuery css object that is applied to the category media.
 
 `stimulus`: Allows you to modify the properties of the category stimuli (see the PIP documentation for more details).
@@ -51,17 +51,48 @@ The second argument to `IAT.setCategory` is the category object. The object cont
 ####Category Layout
 When you define the categories, you have two methods to define how to display the titles of the categories at the top of the screen.
 
-By default the IATcomponent uses the simpleLayout scheme. The simpleLayout is simple to use, but it supports only text as the category label (title). [YBYB: INSERT CODE EXAMPLE HERE]
+By default the IATcomponent uses the simpleLayout scheme. The simpleLayout is simple to use, but it supports only text as the category label (title).
+
+```js
+IAT.setCategory('concept1',{
+	name: 'white',
+	title: 'White people',
+	titleColor: 'green',
+	titleSize: '2em',
+	media: [
+		{image: 'wf2_nc.jpg'},
+		{image: 'wf3_nc.jpg'},
+		{image: 'wf6_nc.jpg'},
+		{image: 'wm1_nc.jpg'}
+	]
+});
+```
 
 If you use the **simpleLayout** then these are the settings you can use:
 * `title`: The category description to be displayed to the users, it must be text or a PIP 'word' object.
 * `titleColor`: Sets the color of the title text.
 * `titleSize`: Sets the font-size of the title.
 
-When using simpleLayout, make sure you copy the file layout.jst (ADD LINK) into your template folder [YBYB: or perhaps by default the player will use the layout.jst in the component's folder?]. After that, open that file and see whether you want to modify anything.
+If you are using templates, or if you want to modify the layout, when using simpleLayout, make sure you copy the file [layout.jst](jst/layout.jst) into your template folder. After that, open that file and see whether you want to modify anything.
 If you use simpleLayout then you can't use the `separator` property in order to change anything about the separator (it will always say "or", and will have a pre-defined color and font-size).
 
-The **classic layout** uses standard PIP media objects as titles for the categories. That means that you have more control over the type of title (e.g., it can an image), and its other properties (e.g., location). [YBYB: INSERT CODE EXAMPLE HERE]
+The **classic layout** uses standard PIP media objects as titles for the categories. That means that you have more control over the type of title (e.g., it can an image), and its other properties (e.g., location).
+
+```js
+IAT.setCategory('concept1', {
+    name: 'white',
+	title: 'White people',
+	titleCss: {color:'green'},
+	height: 5,
+	margin: 3,
+	media: [
+		{image: 'wf1.jpg'},
+		{image: 'wf2.jpg'},
+		{image: 'wm1.jpg'},
+		{image: 'wm2.jpg'}
+	]
+});
+```
 
 If you use the **classic layout** these are the settings you can use:
 * `title`: The category description to be displayed to the users, it can be any valid PIP media object.
@@ -79,7 +110,21 @@ IAT.setProperties({
 });
 ```
 
-Another example: [YBYB: INSERT HERE A LONG EXAMPLE. FOR READERS TO UNDERSTAND THAT THEY CAN SET EVERYTHING HERE]
+Another example: (You can set any number of properties using this object)
+
+```js
+IAT.setProperties({
+	post_url: 'my.domain.com/postPage',
+	correct_errors: false,
+	font: 'Arial',
+	fontSize: '2em',
+	fontColor: 'green',
+	defaultStimulus: {},
+	instructionsStimulus: {css:{'font-size':'1.3em',color:'black', lineHeight:1.2,'text-align':'left',margin:'25px'}},
+	simpleLayout: true,
+	randomize_order:true
+});
+```
 
 **Settings**
 
@@ -113,7 +158,7 @@ Another example: [YBYB: INSERT HERE A LONG EXAMPLE. FOR READERS TO UNDERSTAND TH
 
 `fontColor`: Font Color (default: green).
 
-`defaultStimulus`: Default stimulus for all categories. This should be written in PIP's code [YBYB: ADD LINK].
+`defaultStimulus`: Default stimulus for all categories. This should be written in [PIP's code](/documentation.markdown#stimuli).
 
 `instructionsStimulus`: Default stimulus for all instructions (default: {css:{'font-size':'1.3em',color:'white', lineHeight:1.2}}).
 
@@ -156,7 +201,7 @@ Another example: [YBYB: INSERT HERE A LONG EXAMPLE. FOR READERS TO UNDERSTAND TH
 }
 ```
 Properties of the separator object:
-* `media`: Any media object [YBYB: ADD LINK TO READ ABOUT MEDIA OBJECTS] to be used as the separator.
+* `media`: Any [media object](/documentation.markdown#media) to be used as the separator.
 * `height`: You should define the height so that the player knows where to place the second stimulus.
 * `margin`: In case you want to center the categories around a common center instead of aligning them to the outer borders.
 * `css`: A jQuery css object that modifies the separator stimulus.
@@ -201,7 +246,7 @@ The first argument (parameter) to the `IAT.setInstructions` function is the bloc
 
 The second argument to `IAT.setCategory` is the instructions object.
 
-`media`: Controls the content of the instruction block. It accepts a regular PIP media object [YBYB: ADD LINK TO HELP ABOUT THAT OBJECT].
+`media`: Controls the content of the instruction block. It accepts a regular PIP [media object](/documentation.markdown#media).
 
 `css`: Controls the CSS for the instruction block. Accepts a jQuery CSS object.
 
@@ -224,7 +269,32 @@ In order to tweak the settings of the scorer you can use the following propertie
 
 `scorerMessage`: Holds an array of message objects, the same one normally set into messageDef when setting up the scorer.
 
-To read more about the scorer [YBYB: ADD LINK]
+To read more about the scorer see [here](/src/js/extensions/dscore/README.md)
 
 ### More...
-This IAT component is an extension of PIP, so you can use any of PIP's settings or functionality with the IAT. [YBYB] For example...
+This IAT component is an extension of PIP, so you can use any of PIP's settings or functionality with the IAT. For example you can add any meta data to your post using the IAT
+`addSettings` API:
+
+```js
+IAT.addSettings('metaData',{
+    session_id: 9872356,
+    task_id: '43BTW78'
+});
+```
+
+Alternatively, you can add a custom trial to the end of the sequence using `addSequence`:
+
+```js
+IAT.addSequence([
+	{
+		input: [{handle:'end', on:'space'}],
+		layout:[{media:{word:'Just a plain trial that will be added at the end of the sequence'}}],
+		interactions: [
+			{
+				propositions: [{type:'inputEquals',value:'end'}],
+				actions: [{type:'endTrial'}]
+			}
+		]
+	}
+]);
+```
