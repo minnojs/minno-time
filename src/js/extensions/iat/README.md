@@ -46,7 +46,7 @@ The second argument to `IAT.setCategory` is the category object. The object cont
 
 `css`: Is a jQuery css object that is applied to the category media.
 
-`stimulus`: Allows you to modify the properties of the category stimuli (see the PIP documentation for more details).
+`stimulus`: Allows you to modify the properties of the category stimuli (see the PIP [documentation](/documentation.markdown) for more details).
 
 ####Category Layout
 When you define the categories, you have two methods to define how to display the titles of the categories at the top of the screen.
@@ -69,14 +69,14 @@ IAT.setCategory('concept1',{
 ```
 
 If you use the **simpleLayout** then these are the settings you can use:
-* `title`: The category description to be displayed to the users, it must be text or a PIP 'word' object.
+* `title`: The category description to be displayed to the users, it must be text or a [PIP 'word' object](/documentation.markdown#media).
 * `titleColor`: Sets the color of the title text.
 * `titleSize`: Sets the font-size of the title.
 
 If you are using templates, or if you want to modify the layout, when using simpleLayout, make sure you copy the file [layout.jst](jst/layout.jst) into your template folder. After that, open that file and see whether you want to modify anything.
 If you use simpleLayout then you can't use the `separator` property in order to change anything about the separator (it will always say "or", and will have a pre-defined color and font-size).
 
-The **classic layout** uses standard PIP media objects as titles for the categories. That means that you have more control over the type of title (e.g., it can an image), and its other properties (e.g., location).
+The **classic layout** uses standard PIP [media objects](/documentation.markdown#media) as titles for the categories. That means that you have more control over the type of title (e.g., it can an image), and its other properties (e.g., location).
 
 ```js
 IAT.setCategory('concept1', {
@@ -95,9 +95,9 @@ IAT.setCategory('concept1', {
 ```
 
 If you use the **classic layout** these are the settings you can use:
-* `title`: The category description to be displayed to the users, it can be any valid PIP media object.
+* `title`: The category description to be displayed to the users, it can be any valid PIP [media object](/documentation.markdown#media).
 * `titleCss`: Is a jQuery css objects that is applied to the category title.
-* `height`: In case that your category titles do not have the standard height you might need to tweak their location by defining appropriate heights.
+* `height`: In case that your category titles are not simply text you might need to tweak their location by defining appropriate heights.
 * `margin`: In case you want to center the categories around a common center instead of aligning them to the outer borders.
 
 ### Setting properties
@@ -162,7 +162,7 @@ IAT.setProperties({
 
 `instructionsStimulus`: Default stimulus for all instructions (default: {css:{'font-size':'1.3em',color:'white', lineHeight:1.2}}).
 
-`canvas`: Canvas size and shape, uses the same settings object as the PIP.
+`canvas`: Canvas size and shape, uses the same [settings object]](/documentation.markdown#canvas) as the PIP.
 
 `background`: The background color for the whole player (if you want to differentiate between canvas background and the surrounding use the `canvas` property)
 
@@ -172,9 +172,9 @@ IAT.setProperties({
 
 `right`: The key for the right categories. Accepts a single character or an array of characters. (default:'i')
 
-`leftTouch`: An element to display for the left category in touch displays (default:PIP default element)
+`leftTouch`: An element to display for the left category in touch displays (default:PIP default touch interface)
 
-`rightTouch`: An element to display for the right category in touch displays (default:PIP default element)
+`rightTouch`: An element to display for the right category in touch displays (default:PIP default touch interface)
 
 `notouch`: Do not detect touch devices. Accepts true/false (default:false). This is useful for cases we attach a keyboard to touch devices.
 
@@ -222,9 +222,9 @@ You can set three feedback objects: error_feedback, correct_feedback, and timeou
 ```
 Properties of the feedback object:
 * `active`: Whether to display this feedback at all. Accepts true/false.
-* `media`: What to display upon feedback. Accepts a PIP media object.
+* `media`: What to display upon feedback. Accepts a PIP [media object](/documentation.markdown#media).
 * `css`: A jQuery css object that modifies the feedback stimulus.
-* `duration`: How long to display this feedback before moving on. If you set duration to `static` then the feedback is not hidden until the end of the trial (i.e., until correct response). That is the default in the error_feedback object because we wait until correction.
+* `duration`: How long to display this feedback before moving on. If you set duration to `static` then the feedback is not hidden until the end of the trial (i.e., until correct response). This is the default for the error_feedback object because we wait until correction.
 
 `correct_feedback`: Feedback after a correct response. Accepts feedback object (default: not active, displays green OK).
 
@@ -253,7 +253,7 @@ The second argument to `IAT.setCategory` is the instructions object.
 `extend`: Extends the instructions trial. Accepts an object to extend the trial with (this is an advanced feature, it can be used to attach a scorer or all sorts of hooks)
 
 ### The PI component
-The PIP component is an extension of the basic IAT component.
+The IAT component is an extension of the basic IAT component.
 It shares all capabilities of the basic IAT component with the default urls used on PI, added functionality of the dscore extension.
 In order to activate the component use the following wrapper:
 
@@ -272,8 +272,8 @@ In order to tweak the settings of the scorer you can use the following propertie
 To read more about the scorer see [here](/src/js/extensions/dscore/README.md)
 
 ### More...
-This IAT component is an extension of PIP, so you can use any of PIP's settings or functionality with the IAT. For example you can add any meta data to your post using the IAT
-`addSettings` API:
+This IAT component is an extension of PIP, so you can use any of PIP's settings or functionality with the IAT.
+For example, you can add any meta data to your post using the IAT `addSettings` API:
 
 ```js
 IAT.addSettings('metaData',{
