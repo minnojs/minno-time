@@ -43,6 +43,7 @@ module.exports = function(grunt) {
 
 					// Modules to be optimized:
 					// we'll keep jquery and underscore seperate so they can be used by all modules
+					// backbone must always be excluded as it is not an AMD module and we enforceDefine in config.js
 					modules: [
 						{
 							name: "app/API",
@@ -55,12 +56,12 @@ module.exports = function(grunt) {
 						{
 							name: "extensions/iat/component",
 							include: "text!extensions/iat/jst/layout.jst", // include the template for the simpleLayout
-							exclude: ["app/API",'underscore','jquery','extensions/dscore/Scorer']
+							exclude: ['app/API','underscore','jquery','extensions/dscore/Scorer','backbone']
 						},
 						{
 							name: "extensions/iat/PIcomponent",
 							include: "text!extensions/iat/jst/layout.jst", // include the template for the simpleLayout
-							exclude: ["app/API",'underscore','jquery','extensions/dscore/Scorer']
+							exclude: ['app/API','underscore','jquery','extensions/dscore/Scorer','backbone']
 						}
 					]
 				}
