@@ -9,7 +9,7 @@ define([],function(){
 		// All optional
 		font: 'Arial',
 		fontSize: '2em',
-		fontColor: 'green',
+		fontColor: '#31b404',
 		defaultStimulus: {},
 		instructionsStimulus: {css:{'font-size':'1.3em',color:'black', lineHeight:1.2,'text-align':'left',margin:'25px'}},
 
