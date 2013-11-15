@@ -1,22 +1,33 @@
+// # Race IAT
+// **A simple use of the IAT component**
 define(['extensions/iat/PIcomponent'],function(IAT){
+
+	// ### Properties
+
 	/**
 	 * Set Properties
 	 * ************************************************************************
 	 */
 
 	IAT.setProperties({
-		// activate skip block
+		// Activate skip block
 		DEBUG: true,
-
-		// URLS
+		// Set images url
 		images_base_url: '../examples/images/'
 	});
+
+	// ### Categories
 
 	/**
 	 * Set Categories
 	 * ************************************************************************
 	 */
 
+
+	// Each category is set using a setCategory call.
+	// The minimal use is setting the category `name`, and the `images`/`words` to display.
+
+	// ##### Concept 1
 	IAT.setCategory('concept1',{
 		name: 'White people',
 		media: [
@@ -27,6 +38,7 @@ define(['extensions/iat/PIcomponent'],function(IAT){
 		]
 	});
 
+	// ##### Concept 2
 	IAT.setCategory('concept2',{
 		name: 'Black People',
 		media: [
@@ -37,6 +49,7 @@ define(['extensions/iat/PIcomponent'],function(IAT){
 		]
 	});
 
+	// ##### Attribute 1
 	IAT.setCategory('attribute1',{
 		name: 'Good Words',
 		media: [
@@ -49,6 +62,7 @@ define(['extensions/iat/PIcomponent'],function(IAT){
 		]
 	});
 
+	// ##### Attribute 2
 	IAT.setCategory('attribute2',{
 		name: 'Bad Words',
 		media: [
@@ -61,5 +75,6 @@ define(['extensions/iat/PIcomponent'],function(IAT){
 		]
 	});
 
+	// activate the player
 	IAT.play();
 });
