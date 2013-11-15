@@ -10,7 +10,7 @@ define(['underscore', '../data/properties','../data/categories'],function(_, pro
 
 		// for each side
 		_.each(map, function(type,side){
-			var categoryStim = {media:{template:'layout.jst'}, data:{}}
+			var categoryStim = {media:{template:'layout.jst'}, data:{separatorColor:properties.separatorColor}}
 				, data = categoryStim.data;
 
 			switch (side){
@@ -32,7 +32,6 @@ define(['underscore', '../data/properties','../data/categories'],function(_, pro
 				data[prefix] = name;
 				categoryObj.titleColor && (data[prefix + 'Color'] = categoryObj.titleColor);
 				categoryObj.titleSize && (data[prefix + 'Size'] = categoryObj.titleSize);
-
 			});
 
 			// push category

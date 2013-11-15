@@ -13,8 +13,6 @@ define([],function(){
 		defaultStimulus: {},
 		instructionsStimulus: {css:{'font-size':'1.3em',color:'black', lineHeight:1.2,'text-align':'left',margin:'25px'}},
 
-		simpleLayout: true,
-
 		// optional of course, the same settings as the main API
 		background : '#EEEEEE', // the default background (for both canvas background and the generic background)
 		canvas: {
@@ -60,7 +58,12 @@ define([],function(){
 			duration: 500 // default: 500
 		},
 
-		// category seperator
+		// pick the appropriate layout interface
+		simpleLayout: true,
+
+		separatorColor: 'black', // the separator color (for simple_layout)
+
+		// category seperator (for the advanced layout)
 		separator: {
 			media: 'or', // default: 'or'
 			height: 5,

@@ -50,8 +50,9 @@ The second argument to `IAT.setCategory` is the category object. The object cont
 
 ####Category Layout
 When you define the categories, you have two methods to define how to display the titles of the categories at the top of the screen.
+The layout method is defined using the `simpleLayout` property, by default `simpleLayout` is set to `true`.
 
-By default the IATcomponent uses the simpleLayout scheme. The simpleLayout is simple to use, but it supports only text as the category label (title).
+The simpleLayout scheme is simple to use, but it supports only text as the category label (title).
 
 ```js
 IAT.setCategory('concept1',{
@@ -76,7 +77,7 @@ If you use the **simpleLayout** then these are the settings you can use:
 If you are using templates, or if you want to modify the layout, when using simpleLayout, make sure you copy the file [layout.jst](jst/layout.jst) into your template folder. After that, open that file and see whether you want to modify anything.
 If you use simpleLayout then you can't use the `separator` property in order to change anything about the separator (it will always say "or", and will have a pre-defined color and font-size).
 
-The **classic layout** uses standard PIP [media objects](/documentation.markdown#media) as titles for the categories. That means that you have more control over the type of title (e.g., it can an image), and its other properties (e.g., location).
+The **advanced layout** uses standard PIP [media objects](/documentation.markdown#media) as titles for the categories. This means that you have more control over the type of title (e.g., it can an image), and its other properties (e.g., location). You can activate the **advanced layout** by setting the `simpleLayout` property to `false`.
 
 ```js
 IAT.setCategory('concept1', {
@@ -94,7 +95,7 @@ IAT.setCategory('concept1', {
 });
 ```
 
-If you use the **classic layout** these are the settings you can use:
+If you use the **advanced layout** these are the settings you can use:
 * `title`: The category description to be displayed to the users, it can be any valid PIP [media object](/documentation.markdown#media).
 * `titleCss`: Is a jQuery css objects that is applied to the category title.
 * `height`: In case that your category titles are not simply text you might need to tweak their location by defining appropriate heights.
@@ -188,9 +189,11 @@ IAT.setProperties({
 
 **Layout**
 
-`simpleLayout`: Which layout interface should the player use (see "Category Layout" above for details). Accept true for simpleLayout or false for classic (default:true).
+`simpleLayout`: Which layout interface should the player use (see "Category Layout" above for details). Accept true for simpleLayout or false for advanced (default:true).
 
-`separator`: The separator object allows you to control the appearance of the category title separator. By default:
+`separatorColor`: Controls the color of the title separator. It is used only in the simple layout scheme (default: 'black').
+
+`separator`: The separator object allows you to control the appearance of the category title separator. It is used only in the advanced layout scheme. By default:
 
 ```js
 {

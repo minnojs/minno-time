@@ -106,7 +106,10 @@ define(['underscore','../data/properties','../data/categories','./IATlayout'],fu
 
 		// add the category types into the generic instructions data
 		_.each(categories,function(category, categoryType){
+			// set category names
 			generic.data[categoryType] = category.name;
+			// set category colors (mainly for the simple_layout)
+			generic.data[categoryType + 'Color'] = category.titleColor;
 		});
 
 		return instructionsArr;
