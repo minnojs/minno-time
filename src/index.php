@@ -20,15 +20,13 @@
 				if (!console) console = {};
 				log = function(){};
 			}
+
 		</script>
-		<script data-main="js/main" src="js/libs/require.js"></script>
-		<script src="../examples/amp.js"></script>
+		<script src="js/libs/require.js"></script>
 
 		<script type="text/javascript">
-			require(['app/API'], function(API) {
-				API.addSettings('metaData',{
-					sessionId : '987348576'
-				});
+			require(['js/config'], function() {
+				require(['../../examples/iat_component_long']);
 			});
 		</script>
 	</head>

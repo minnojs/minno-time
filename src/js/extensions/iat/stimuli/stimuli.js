@@ -21,10 +21,10 @@ define(['underscore','../data/properties','../data/categories'],function(_,prope
 		// ***************************************************************
 
 		// create stimuli for each of the categories
-		stimSets['attribute1'] = [_.extend(categories.attribute1.stimulus || {}, {inherit:'Default'})];
-		stimSets['attribute2'] = [_.extend(categories.attribute2.stimulus || {}, {inherit:'Default'})];
-		stimSets['concept1'] = [_.extend(categories.concept1.stimulus || {}, {inherit:'Default'})];
-		stimSets['concept2'] = [_.extend(categories.concept2.stimulus || {}, {inherit:'Default'})];
+		stimSets['attribute1'] = [_.extend(categories.attribute1.stimulus || {}, {inherit:'Default', css:categories.attribute1.css || {}})];
+		stimSets['attribute2'] = [_.extend(categories.attribute2.stimulus || {}, {inherit:'Default', css:categories.attribute2.css || {}})];
+		stimSets['concept1'] = [_.extend(categories.concept1.stimulus || {}, {inherit:'Default', css:categories.concept1.css || {}})];
+		stimSets['concept2'] = [_.extend(categories.concept2.stimulus || {}, {inherit:'Default', css:categories.concept2.css || {}})];
 
 		// add the trial stimuli 5 time so that the randomization has meaning
 		// iterations are supposed to expand the current set

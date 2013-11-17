@@ -2,7 +2,7 @@ define(['../data/properties'], function(properties){
 	// return new separator stimulus
 	return function Separator(side, marginTop){
 		var data = properties.separator
-			, stimulus = {media : data.media, css: data.css || {}}
+			, stimulus = {media : data.media, css: data.css || {color:'black'}}
 			, margin = data.margin || 0;
 
 		switch (side) {

@@ -17,6 +17,8 @@ define(['../data/properties'],function(properties){
 				input.push({handle:'left',on:'keypressed',key:'e'});
 				break;
 			case 'string':
+				/* falls through */
+			case 'number':
 				input.push({handle:'left',on:'keypressed',key:properties.left});
 				break;
 			default:
@@ -32,6 +34,8 @@ define(['../data/properties'],function(properties){
 				input.push({handle:'right',on:'keypressed',key:'i'});
 				break;
 			case 'string':
+				/* falls through */
+			case 'number':
 				input.push({handle:'right',on:'keypressed',key:properties.right});
 				break;
 			default:
