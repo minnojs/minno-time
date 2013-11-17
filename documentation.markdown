@@ -252,25 +252,29 @@ Hide a stimulus, takes a stimulus `handle`. Use 'All' for all stimuli.
 Set a stimulus.data attribute, takes a stimulus `handle` and a `setter` object or function.
 Any attributes in the setter object will be coppied to the stimulus.data object.
 * `{type:'setStimAttr',handle:'myStim',setter:{myAttr:'myValue',myOtherAttr:'myOtherValue'}`
-* ```js
-{type:'setStimAttr',handle:'myStim',setter:function(){
-	// do your mojo here :)
-	// the context ("this") of this function is the stimulus model
-}
-```
+* The setter function:
+
+	```js
+	{type:'setStimAttr',handle:'myStim',setter:function(){
+		// do your mojo here :)
+		// the context ("this") of this function is the stimulus model
+	}
+	```
 
 **setTrialAttr**:
 Set a trial.data attribute, takes a `setter` object or function.
 Any attributes in the setter object will be coppied to the trial.data object.
 * `{type:'setTrialAttr',setter:{myAttr:'myValue',myOtherAttr:'myOtherValue'}`
-* ```js
-{type:'setTrialAttr',setter:function(trialData, eventData){
-	// do your mojo here :)
-	// trialData is the data object for this trial
-	// eventData is the internal event that triggered this action
-	// the context ("this") of this function is the trial object
-}
-```
+* The setter function:
+
+	```js
+	{type:'setTrialAttr',setter:function(trialData, eventData){
+		// do your mojo here :)
+		// trialData is the data object for this trial
+		// eventData is the internal event that triggered this action
+		// the context ("this") of this function is the trial object
+	}
+	```
 
 **trigger**:
 Immediately activate the input `handle` (this is equivilent to adding a timeout with duration set to 0).
@@ -289,7 +293,7 @@ Resets trial timer. The latency of any events from here on (including the curren
 * `{type:'resetTimer'}`
 
 **endTrial**:
-Speaks for itself (note that any actions that come after this is called may not work properly).
+*Speaks for itself (note that any actions that come after this is called may not work properly).
 * `{type:'endTrial'}`
 
 **log**:
@@ -422,7 +426,7 @@ If the data property is set as a string, we assume it refers to the element hand
 
 **function**:
 You may also use a custom function to pick your element.
-* ```js
+```js
 {set: 'setName', type: function(definitions){
 	// definitions is the inherit object (including  set, type, and whatever other properties you'd like to use)
 	// the context ("this") is the element collection, it is a Backbone.js collection of the elements in the set
@@ -757,29 +761,34 @@ API.addSettings('canvas',{
 There are three add set functions, one for each of the set types: `addTrialSets`, `addStimulusSets` and `addMediaSets`.
 Each of them allows adding sets to your script.
 You may add a complete sets object:
+
 ```js
 API.addTrialSets({
 	Default: [defaultTrial],
 	introduction: [intro1, intro2, intro3]
 });
 ```
-Or you may add a set or part of a set:
-* ```js
+
+Or you may add a single set:
+```js
 API.addTrialSets("introduction",[intro1, intro2]); // adds intro1 and intro2 to the introduction set
 ```
 
-* ```js
+Or part of a set
+```js
 API.addTrialSets("introduction",intro3); // adds intro3 to the introduction set
 ```
 
 **addSequence**
 Allows adding sequence objects to your script.
 
-* ```js
+Here is a single set:
+```js
 API.addSequence([trial1,trial2]);
 ```
 
-* ```js
+And part of a set:
+```js
 API.addSequence(trial2);
 ```
 
