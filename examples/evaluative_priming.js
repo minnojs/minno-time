@@ -47,7 +47,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
         }
 
     });
-log(Scorer)
+
 	//the Scorer that compute the user feedback
 	Scorer.addSettings('compute',{
 		ErrorVar:'score',
