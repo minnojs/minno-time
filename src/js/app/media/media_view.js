@@ -50,15 +50,19 @@ define(['jquery', 'backbone','app/task/main_view'], function($, Backbone,main_vi
 
         size: function(){
             var size = this.model.get('size');
-            if (size.height != 'auto') {
+
+            if (size.font_size){
+                this.$el.css('font-size', size.font_size);
+            }
+            // if this is a word, we don't want to set height (it breaks centering)
+            if (size.height != 'auto' && this.options.type != 'word') {
                 this.$el.height(size.height + '%');
             }
             if (size.width != 'auto'){
                 this.$el.width(size.width + '%');
             }
-            if (size.font_size){
-                this.$el.css('font-size', size.font_size);
-            }
+
+            return this;
         },
 
         // places the element on the canvas (has to be called after size)
