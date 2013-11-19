@@ -247,7 +247,7 @@ define(['extensions/iat/component'],function(IAT){
 		// or set the `templates_base_url` property and create templates of your own naming them inst1.jst through inst7.jst.
 		// `template` here can take any media object (a plain string like in this example is treated as an [inlineTemplate](/documentation.markdown#media))
 		template: '<div>' +
-				'<p align="center">3232 <u>Part <%= trialData.part%> of 5</u></p>' +
+				'<p align="center"><u>Part <%= trialData.part%> of 5</u></p>' +
 				'<br/>' +
 				'Put a left finger on the <b>left arrow</b> key for <font color="<%= trialData.concept1Color || "#0000FF" %>"><%= trialData.concept1 %></font> images.<br/>' +
 				'Put a right finger on the <b>right arrow</b> key for <font color="<%= trialData.concept2Color || "#0000FF" %>"><%= trialData.concept2 %></font> images.<br/>' +
