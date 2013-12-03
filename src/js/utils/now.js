@@ -5,7 +5,7 @@ define([],function(){
 
 	// if performance is set, look for the now function
 
-	if (performance) {
+	if (!!window.performance) {
 		nowFn = performance.now  ||
         performance.mozNow    ||
         performance.webkitNow ||
