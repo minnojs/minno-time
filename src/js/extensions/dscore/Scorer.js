@@ -32,7 +32,7 @@ define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],f
 		init: function(){
 			// js hint thinks that console is read only - and its correct except where it doesn't exist...  this is how we tell it to ignore these lines
 			/* jshint -W020 */
-			console || (console = {});
+			!!window.console || (console = {});
 			console.log || (console.log = function(){});
 			/* jshint +W020 */
 		},
