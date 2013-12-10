@@ -5,6 +5,11 @@ define(['jquery', './media_view','../inflator','utils/html','app/task/build_url'
 			mediaObject = {word:mediaObject};
 		}
 
+		// make sure we have a media object
+		if (!mediaObject){
+			throw new Error('Media object not defined for ' + model.name());
+		}
+
 		// inflate the definitions
 		// note that the base url is added to the media object during the sequence preload
 		var definitions = inflate(mediaObject,'media');
