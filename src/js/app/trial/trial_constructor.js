@@ -91,7 +91,7 @@ define(function(require){
 			});
 
 			// activate input
-			input.add(this.input);
+			input.add(this.input || []);
 
 			// activate stimuli
 			this._stimulus_collection.activate();

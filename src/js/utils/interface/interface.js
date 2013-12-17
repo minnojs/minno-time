@@ -28,6 +28,10 @@ define(['jquery','./listener', '../is_touch','../now'],function($,Listener,is_to
 
 		// add listeners
 		add: function(definitions){
+			if (!definitions){
+				throw new Error('Missing input element. Could not add input listener');
+			}
+
 			var interfaceObj = this;
 			// make sure definitions is set as an array
 			var definitionsArr = $.isArray(definitions) ? definitions : [definitions];
