@@ -4,7 +4,6 @@
 define(['underscore','utils/preloader','app/task/build_url'],function(_,preload,build_url){
 
 	var loadMedia = function(media){
-
 		// if this is an image, preload it
 		if (!_.isUndefined(media.image)) {
 			preload.add(build_url(media.image, 'image'),'image');
@@ -32,6 +31,17 @@ define(['underscore','utils/preloader','app/task/build_url'],function(_,preload,
 		_.each(trial.input || [], loadInput);
 	};
 
+	// load trials in sequence (essentialy, recursively pick out the trials out of the mixer)
+	var loadSequence = function(sequence){
+		_.each(sequence,function(element){
+			if (!_.isUndefined(element.mixer)) {
+				loadSequence(element.data);
+			} else {
+				loadTrial(element);
+			}
+		});
+	};
+
 	var loadScript = function(script){
 		// load media sets
 		_.each(script.mediaSets || [], function(set){
@@ -47,17 +57,6 @@ define(['underscore','utils/preloader','app/task/build_url'],function(_,preload,
 		_.each(script.trialSets || [], function(set){
 			_.each(set,loadTrial);
 		});
-
-		// load trials in sequence (essentialy, recursively pick out the trials out of the mixer)
-		var loadSequence = function(sequence){
-			_.each(sequence,function(element){
-				if (!_.isUndefined(element.mixer)) {
-					loadSequence(element.data);
-				} else {
-					loadTrial(element);
-				}
-			});
-		};
 
 		loadSequence(script.sequence);
 	}; // load script
