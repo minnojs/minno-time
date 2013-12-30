@@ -4,8 +4,8 @@ define(['app/API'], function(API) {
 
 	API.addSequence([
 		// ### Stimuli and media
-		// The stimulus object is the object that tells the PIP exactly what and how do display a stimulus.
-		// Part of each stimulus is the media that it dispalys.
+		// The stimulus object is the object that tells the PIP exactly what and how to display a stimulus.
+		// Part of each stimulus is the media that it displays.
 
 		/* The trial begins here */
 		{
@@ -17,11 +17,11 @@ define(['app/API'], function(API) {
 			layout:[
 				/* the top right stimulus begins here */
 				{
-					// The **location** property of the stimulus controls where the stimulus will apear. </br>
-					// Permited values are numbers (percentages of canvas size), 'center' or 'auto'. By default, location is set to center.
+					// The **location** property of the stimulus controls where the stimulus will appear. </br>
+					// Permitted values are numbers (percentages of canvas size), 'center' or 'auto'. By default, location is set to center.
 					location:{right:0,top:0},
 
-					// The **css** property of the stimulus controls the desing of displayed elements
+					// The **css** property of the stimulus controls the styling of displayed elements
 					// it uses the jquery property name standard (http://api.jquery.com/css/)
 					css: {color:'red',fontSize:'2em'},
 
@@ -61,7 +61,7 @@ define(['app/API'], function(API) {
 
 			],
 
-			// The stimuli property holds stimuli that are to be dynamicaly presented
+			// The stimuli property holds stimuli that are to be dynamically presented
 			stimuli: [
 				// Lets show an **image** this time. </br>
 				// The size property allows you to control the image size (in percentage of canvas). By default it is set to 'auto'.
