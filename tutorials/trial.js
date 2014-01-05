@@ -42,7 +42,7 @@ define(['app/API'], function(API) {
 				{media :{word:'Hello world'}}
 			],
 
-			// The interaction property of the trial is responsible for any interactions the user has throught the trial
+			// The interaction property of the trial is responsible for any interactions the user has through the trial.
 			// Each interaction is composed of a propostition (a statement that is either true or false)
 			// And of action to execute in case the proposition is true.
 			// We will learn more about this section in the proposition and action tutorials.
