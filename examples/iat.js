@@ -133,8 +133,9 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 	});
 
 	// #### Introduction Trial
-	// Here, we create a generic introduction trial, to be inherited by all other inroduction trials.
+	// Here, we create a generic introduction trial, to be inherited by all other introduction trials.
 	API.addTrialSets("introduction", {
+
 		// Set `block` as "generic" so we can inherit it later.
 		data: {block: 'generic'},
 
@@ -335,7 +336,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 		// This sets the appearance for the instructions.
 		Instructions: [
-			{css:{'font-size':'1.3em',color:'white', lineHeight:1.2}}
+			{css:{'font-size':'1.3em',color:'white', lineHeight:1.2},handle:'instructions'}
 		],
 
 		// #### The trial stimuli

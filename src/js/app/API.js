@@ -105,6 +105,7 @@ define(['jquery','./task/script','app/task/main_view','app/task/parser','app/seq
 			// activate main view and then display the loading screen
 			main
 				.activate()
+				.docReady()
 				.done(function(){
 					main
 						.loading(parseDef) // activate loading screen

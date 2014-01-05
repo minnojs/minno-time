@@ -83,11 +83,45 @@ module.exports = function(grunt) {
 			}
 
 		}
+		/*
+		mocha: {
+			e2e: []
+		}
+		*/
 	});
 
 	grunt.loadNpmTasks('grunt-docco');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
+
+	/*
+	grunt.registerMultiTask('mocha','Activate Mocha testing suite',function(){
+		var done = this.async(),
+			Mocha = require('mocha'),
+			mocha = new Mocha({
+				reporter: 'spec'
+			});
+
+		this.files.forEach(function(file){
+			// Warn on and remove invalid source files
+			file.src.forEach(function(filepath) {
+				if (!grunt.file.exists(filepath)) {
+					grunt.log.warn('Source file "' + filepath + '" not found.');
+				} else {
+					mocha.addFile(filepath);
+				}
+			});
+
+			// Now, you can run the tests.
+			mocha.run(function(failures){
+				process.on('exit', function () {
+					process.exit(failures);
+					done();
+				});
+			});
+		});
+	});
+	*/
 
 	// Default task(s).
 	grunt.registerTask('default', ['jshint']);

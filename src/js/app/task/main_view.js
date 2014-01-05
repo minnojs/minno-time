@@ -3,6 +3,7 @@
  */
 define(['backbone','jquery','./adjust_canvas','app/task/script','text!templates/loading.html'], function(Backbone, $, adjust_canvas,script,loadingTpl){
 
+	var docReady = $.Deferred(); // document ready deferred, so we can continue only after activation has culminated
 	var View = Backbone.View.extend({
 
 		id: 'canvas',
@@ -20,7 +21,6 @@ define(['backbone','jquery','./adjust_canvas','app/task/script','text!templates/
 
 		activate: function(){
 			var self = this;
-			var docReady = $.Deferred(); // document ready deferred, so we can continue only after activation is culminated
 			var settings = script.settings.canvas || {};
 
 			$(document).ready(function(){
@@ -37,7 +37,7 @@ define(['backbone','jquery','./adjust_canvas','app/task/script','text!templates/
 				docReady.resolve();
 			});
 
-			return docReady;
+			return this;
 		},
 
 		// display loading page
@@ -61,6 +61,10 @@ define(['backbone','jquery','./adjust_canvas','app/task/script','text!templates/
 
 		empty: function(){
 			this.$el.empty();
+		},
+
+		docReady: function(){
+			return docReady;
 		},
 
 		// sets canvas size (used also for refreshing upon orientation change)

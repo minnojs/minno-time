@@ -71,8 +71,11 @@ define(['jquery'], function($){
 			srcStack = [];
 			defStack = [];
 			stackDone = 0;
-			allDone = $.Deferred();
-		}
+			allDone = this.state = $.Deferred();
+		},
+
+		// returns a deferred describing the state of this preload
+		state: allDone
 	};
 
 });

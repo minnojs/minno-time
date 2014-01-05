@@ -62,10 +62,15 @@ define(['underscore','utils/preloader','app/task/build_url'],function(_,preload,
 	}; // load script
 
 	// accepts a piece of script and a type
-	// by default treats this as the whole script, if we want to re-preload a piece of the script it should be easy
-	// returns a deferred object
-	return function(script, type){
-		preload.reset();
+	// @param script: a piece of script
+	// @param type: what sort of object this is (media/stimulus/trial)
+	// @param reset: should we reset the preloader before activating it (use if for some reason we lost the cache...)
+	// @returns a deferred object
+	return function(script, type, reset){
+		if (reset) {
+			preload.reset();
+		}
+
 		switch (type){
 			case 'media'	: loadMedia(script); break;
 			case 'stimulus'	: loadStimulus(script); break;
