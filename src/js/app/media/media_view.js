@@ -37,7 +37,11 @@ define(['jquery', 'backbone','app/task/main_view'], function($, Backbone,main_vi
             // if this is a gif, reload it before displaying so that the gif is reset
             if (this.options.type === 'image' && this.options.image.indexOf('gif') !== -1){
                 // weird IE9 bug that prevents refreshing gifs...
-                this.$el.attr('src',this.options.image + '#' + Math.random());
+                if(window.ActiveXObject || "ActiveXObject" in window){ // true only in IE
+                    this.$el[0].src =  this.options.image + '#' + Math.random();
+                } else {
+                    this.$el[0].src =  this.options.image;
+                }
             }
 
             this.$el.css("visibility", "visible");
