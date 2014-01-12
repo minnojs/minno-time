@@ -652,6 +652,9 @@ Responsible for the shape of the canvas. You can set it either as a number or an
 * `{width:2,height:3}`
 * `1.5` calculated as height/width
 
+`textSize`:
+Controls the default font size in the canvas. It takes a single number that represents font size in percentage of the canvas height (similar to the CSS3 `vh` unit). By default it is set to 3. Any fontSize within your script that uses a relative unit (percent/em) will be relative to this size. Any fontSize that uses an absolute unit (px/pt) will ignore it.
+
 `background`:
 Controls the background color of the whole screen.
 

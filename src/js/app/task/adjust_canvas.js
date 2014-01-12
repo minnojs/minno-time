@@ -14,6 +14,9 @@ define(['jquery','app/task/script','app/trial/current_trial'],function($, script
 		var proportions;
 		if (settings.proportions) {
 			if ($.isPlainObject(settings.proportions)) {
+				if (typeof settings.proportions.height !== 'number' || typeof settings.proportions.width !== 'number'){
+					throw new Error('The canvas proportions object`s height and a width properties must be numeric');
+				}
 				proportions = settings.proportions.height/settings.proportions.width; // if proportions are an object they should include width and height
 			} else {
 				proportions = settings.proportions;
@@ -50,6 +53,7 @@ define(['jquery','app/task/script','app/trial/current_trial'],function($, script
 			// reset canvas size
 			self.$el.width(width);
 			self.$el.height(height);
+			self.$el.css('font-size',height*(settings.textSize || 3)/100);
 
 			// refreash all stimuli (we don't want to do this before we have trials)
 			if (trial()) {

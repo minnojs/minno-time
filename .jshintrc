@@ -1,0 +1,22 @@
+{
+    "browser": true,
+    "curly": true,
+    "eqnull": true,
+    "es3": true,
+    "evil": true,
+    "expr": true,
+    "globals": {
+        "define": false,
+        "require": false
+    },
+    "immed": true,
+    "latedef": true,
+    "laxcomma": true,
+    "newcap": true,
+    "noarg": true,
+    "node": true,
+    "sub": true,
+    "trailing": true,
+    "undef": true,
+    "unused": true
+}

@@ -1,8 +1,8 @@
 {
   "name": "PIPlayer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Project Implicit Player",
-  "main": "src/js/main.js",
+  "main": "src/js/config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,10 +13,11 @@
   "author": "Elad Zlotnick",
   "license": "BSD",
   "devDependencies": {
-    "grunt": "~0.4.1",
+    "grunt": "~0.4.2",
     "grunt-cli": "~0.1.9",
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.1",
-    "grunt-docco": "~0.3.0"
+    "grunt-docco": "~0.3.1",
+    "selenium-webdriver": "~2.39.0"
   }
 }
