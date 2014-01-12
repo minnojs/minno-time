@@ -81,26 +81,45 @@ module.exports = function(grunt) {
 					output: 'docs/examples'
 				}
 			}
+		},
 
+		test: {
+			// local selenium server
+			// by default tests are not paralel because webserver chokes on them...
+			local: {
+				src: ['./test/endToEnd/iat.js'],
+				server:'http://localhost:4444/wd/hub',
+				browsers : [
+					{browserName: 'chrome'},
+					{browserName: 'firefox'}
+				]
+			},
+
+			// sauce connect server
+			connect: {
+				src: ['./test/endToEnd/iat.js'],
+				server:'http://localhost:4445/wd/hub', // sauce: 'http://ondemand.saucelabs.com/wd/hub'
+				paralel: true,
+				browsers : [
+					{browserName: 'internet explorer', version: 7},
+					{browserName: 'internet explorer', version: 10},
+					{browserName: 'safari',platform: "OS X 10.8"}
+				]
+			}
 		}
-		/*
-		mocha: {
-			e2e: []
-		}
-		*/
 	});
 
 	grunt.loadNpmTasks('grunt-docco');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 
-	/*
-	grunt.registerMultiTask('mocha','Activate Mocha testing suite',function(){
-		var done = this.async(),
-			Mocha = require('mocha'),
-			mocha = new Mocha({
-				reporter: 'spec'
-			});
+	grunt.registerMultiTask('test','Run selenium tests',function(){
+		var test = require('./test/runner');
+		var done = this.async();
+		var options = this.data;
+
+		// set the selenium server url
+		test.setServerUrl(options.server);
 
 		this.files.forEach(function(file){
 			// Warn on and remove invalid source files
@@ -108,20 +127,19 @@ module.exports = function(grunt) {
 				if (!grunt.file.exists(filepath)) {
 					grunt.log.warn('Source file "' + filepath + '" not found.');
 				} else {
-					mocha.addFile(filepath);
+					var task = require(filepath);
+					// should we attempt to run the tests in paralel?
+					if (options.paralel){
+						test.runParalel(task,options.browsers);
+					} else {
+						test.runSeries(task,options.browsers);
+					}
 				}
 			});
-
-			// Now, you can run the tests.
-			mocha.run(function(failures){
-				process.on('exit', function () {
-					process.exit(failures);
-					done();
-				});
-			});
 		});
+
+		test.done(done,done);
 	});
-	*/
 
 	// Default task(s).
 	grunt.registerTask('default', ['jshint']);

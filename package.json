@@ -13,13 +13,11 @@
   "author": "Elad Zlotnick",
   "license": "BSD",
   "devDependencies": {
-    "grunt": "~0.4.1",
+    "grunt": "~0.4.2",
     "grunt-cli": "~0.1.9",
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.1",
-    "grunt-docco": "~0.3.0",
+    "grunt-docco": "~0.3.1",
     "selenium-webdriver": "~2.39.0"
-    //"chai": "~1.8.1",
-    //"mocha": "~1.16.1"
   }
 }
