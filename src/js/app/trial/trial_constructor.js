@@ -9,6 +9,7 @@ define(function(require){
 	var global_trial = require('./current_trial');
 	var inflate = require('../inflator');
 	var main = require('app/task/main_view');
+	var counter = 0;
 
 	var Trial = function(trialData){
 
@@ -26,6 +27,7 @@ define(function(require){
 
 		// create a uniqueId for this trial
 		this._id = _.uniqueId('trial_');
+		this.counter = counter++;
 
 		// make sure we have all our stuff :)
 		//if (!this.input) throw new Error('Input module not defined');

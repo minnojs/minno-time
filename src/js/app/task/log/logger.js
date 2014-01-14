@@ -21,7 +21,7 @@ define(function(require){
 
 		return {
 			log_serial : logStack.length,
-			trial_id: this._id,
+			trial_id: this.counter,
 			name: this.name(),
 			responseHandle: inputData.handle,
 			latency: Math.floor(inputData.latency),
