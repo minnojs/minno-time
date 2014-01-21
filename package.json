@@ -18,6 +18,11 @@
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.1",
     "grunt-docco": "~0.3.1",
-    "selenium-webdriver": "~2.39.0"
+    "selenium-webdriver": "~2.39.0",
+    "grunt-express": "~1.2.1"
+  },
+  "dependencies": {
+    "express": "~3.4.8",
+    "jade": "~1.1.5"
   }
 }

@@ -1,5 +1,6 @@
 module.exports = function(grunt) {
 
+var path = require('path');
 	// Project configuration.
 	grunt.initConfig({
 		jshint: {
@@ -83,6 +84,21 @@ module.exports = function(grunt) {
 			}
 		},
 
+		express: {
+			options: {
+				port: 3000,
+				hostname: '*'
+			},
+			server: {
+				options: {
+					server: path.resolve('./server/server'),
+					serverreload: true,
+					bases: [path.resolve('.')],
+					open: true
+				}
+			}
+		},
+
 		test: {
 			// local selenium server
 			// by default tests are not paralel because webserver chokes on them...
@@ -112,6 +128,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-docco');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
+	grunt.loadNpmTasks('grunt-express');
 
 	grunt.registerMultiTask('test','Run selenium tests',function(){
 		var test = require('./test/runner');
