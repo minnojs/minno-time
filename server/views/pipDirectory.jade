@@ -2,7 +2,7 @@ head
 	include bootstrap
 
 
-h1 Hello world
+h1 PIPdirectory listing
 ul
 	each file in files
 		li: a(href="/src/index.html?url=.."  + dir + file)= file.substring(0,file.length-3)

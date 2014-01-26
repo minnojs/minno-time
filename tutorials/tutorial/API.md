@@ -127,7 +127,6 @@ The input attribute lists the input objects that the player reacts to.
 Each input object must include both a `handle` and an `on` property.
 
 `handle`: the way we refer to this input element inside the player (e.g., 'rightClick')
-
 `on`: what triggers this input element. for now we have several types of input:
 
 **keypressed**: Takes a `key` property that may either be a key code, a one letter string, or an array of keys.
