@@ -3,6 +3,14 @@ module.exports = function(grunt) {
 var path = require('path');
 	// Project configuration.
 	grunt.initConfig({
+		pkg: grunt.file.readJSON('package.json'),
+		banner: {
+			compact: '/*! <%= pkg.name %> <%= pkg.version %> (Custom Build) | <%= pkg.license %> */',
+			full: '/*!\n' +
+				' * <%= pkg.name %> v<%= pkg.version %>\n' +
+				' * <%= pkg.license %> License\n */' +
+				'/*\n'
+		},
 		jshint: {
 			files: ['src/js/'],
 			options: {
@@ -65,21 +73,36 @@ var path = require('path');
 							exclude: ['app/API','underscore','jquery','extensions/dscore/Scorer','backbone']
 						}
 					]
+					/*
+					// This works in modernizr why not here?
+					wrap: {
+						start: '<%= banner.compact %>',
+						end: ''
+					}
+					*/
+
 				}
 			}
 		},
 
 		docco: {
+			// https://oncletom.io/2013/dynamic-grunt-targets-using-templates/
 			tutorials:{
-				src: ['tutorials/*.js'],
+				src: ['docs/tutorials/js/*.js'],
 				options: {
-					output: 'docs/tutorials'
+					output: 'docs/tutorials/docco'
+				}
+			},
+			snippets:{
+				src: ['docs/snippets/*.js'],
+				options: {
+					output: 'docs/snippets/docco'
 				}
 			},
 			examples: {
-				src: ['examples/*.js'],
+				src: ['docs/examples/*.js'],
 				options: {
-					output: 'docs/examples'
+					output: 'docs/examples/docco'
 				}
 			}
 		},

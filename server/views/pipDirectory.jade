@@ -1,8 +1,21 @@
-head
-	include bootstrap
+extends template
+
+block head
+	style.
+		#directory-list .badge a {color:#FFFFFF}
+
+block content
+	h1 PIPdirectory listing
+		small
+			=" " + dir.replace('/','')
+	ul#directory-list.list-group
+		each file in files
+			li.list-group-item
+				a(target="_blank" href="/src/index.html?url=.." + dir + file )=file.substring(0,file.length-3)
+				span.badge.badge-js
+					a(href=dir+file download) js
+				span.badge.badge-docco
+					a(href=dir+file) view
 
 
-h1 PIPdirectory listing
-ul
-	each file in files
-		li: a(href="/src/index.html?url=.."  + dir + file)= file.substring(0,file.length-3)
+

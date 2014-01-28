@@ -10,6 +10,8 @@
 *.vi
 *~
 *.sass-cache
+docs/**/docco
+docs/**/html
 
 # OS or Editor folders
 .DS_Store
@@ -35,4 +37,3 @@ nbproject
 .idea
 node_modules
 dist
-docs
