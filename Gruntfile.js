@@ -1,6 +1,6 @@
-module.exports = function(grunt) {
-
 var path = require('path');
+
+module.exports = function(grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -11,27 +11,12 @@ var path = require('path');
 				' * <%= pkg.license %> License\n */' +
 				'/*\n'
 		},
+
 		jshint: {
-			files: ['src/js/'],
+			files: ['src/js/', 'resources'],
 			options: {
-				ignores: ['src/js/libs/*.js', 'src/js/r.js'],
-				"evil": true,
-				"browser": true,
-				"trailing": true,
-				"curly":true,
-				"immed":true,
-				"latedef":true,
-				"newcap":true,
-				"noarg":true,
-				"sub":true,
-				"undef":true,
-				"unused":true,
-				"eqnull":true,
-				"node":true,
-				"expr":true,
-				"laxcomma":true,
-				"es3":true,
-				"globals": { "define": false, "require": false }
+				jshintrc: '.jshintrc',
+				ignores: ['src/js/libs/*.js', 'src/js/r.js']
 			}
 		},
 
@@ -87,23 +72,55 @@ var path = require('path');
 
 		docco: {
 			// https://oncletom.io/2013/dynamic-grunt-targets-using-templates/
-			tutorials:{
-				src: ['docs/tutorials/js/*.js'],
+			examples: {
+				src: ['resources/examples/*.js'],
 				options: {
-					output: 'docs/tutorials/docco'
+					output: 'docs/examples/'
 				}
 			},
 			snippets:{
-				src: ['docs/snippets/*.js'],
+				src: ['resources/snippets/*.js'],
 				options: {
-					output: 'docs/snippets/docco'
+					output: 'docs/snippets/'
 				}
 			},
-			examples: {
-				src: ['docs/examples/*.js'],
+			user:{
+				src: ['user/*.js'],
 				options: {
-					output: 'docs/examples/docco'
+					output: 'docs/user/'
 				}
+			}
+		},
+
+		pipDirectory: {
+			examples: {
+				src: 'resources/examples/',
+				dest:'docs/examples'
+			},
+			snippets: {
+				src: 'resources/snippets/',
+				dest:'docs/snippets'
+			},
+			user: {
+				src: 'user',
+				dest:'docs/user'
+			}
+		},
+
+
+		// custom grunt task (resources/gruntTasks/jadeMarked.js)
+		jadeMarked: {
+			tutorials : {
+				template: 'resources/templates/tutorials.jade',
+				files: [
+					{
+						expand: true,					// Enable dynamic expansion.
+						cwd: 'resources/tutorials',
+						src: ['*.md'],					// Actual pattern(s) to match.
+						dest: 'docs/tutorials/',		// Destination path prefix.
+						ext: '.html'					// Dest filepaths will have this extension.
+					}
+				]
 			}
 		},
 
@@ -114,14 +131,15 @@ var path = require('path');
 			},
 			server: {
 				options: {
-					server: path.resolve('./server/server'),
-					serverreload: true,
+					server: path.resolve('resources/server'),
+					livereload:true,
 					bases: [path.resolve('.')],
 					open: true
 				}
 			}
 		},
 
+		// custum grunt task (resources/gruntTasks/test.js)
 		test: {
 			// local selenium server
 			// by default tests are not paralel because webserver chokes on them...
@@ -145,45 +163,49 @@ var path = require('path');
 					{browserName: 'safari',platform: "OS X 10.8"}
 				]
 			}
+		},
+
+		watch: {
+			user:{
+				files: ['user/*.js'],
+				tasks: ['docco:user', 'pipDirectory:user']
+			}
 		}
 	});
 
+	grunt.task.loadTasks('resources/gruntTasks');
 	grunt.loadNpmTasks('grunt-docco');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-express');
+	grunt.loadNpmTasks('grunt-contrib-watch');
 
-	grunt.registerMultiTask('test','Run selenium tests',function(){
-		var test = require('./test/runner');
-		var done = this.async();
-		var options = this.data;
-
-		// set the selenium server url
-		test.setServerUrl(options.server);
-
-		this.files.forEach(function(file){
-			// Warn on and remove invalid source files
-			file.src.forEach(function(filepath) {
-				if (!grunt.file.exists(filepath)) {
-					grunt.log.warn('Source file "' + filepath + '" not found.');
-				} else {
-					var task = require(filepath);
-					// should we attempt to run the tests in paralel?
-					if (options.paralel){
-						test.runParalel(task,options.browsers);
-					} else {
-						test.runSeries(task,options.browsers);
-					}
-				}
-			});
+	// copy all js files from the tutorials into the user directory
+	grunt.registerTask('userDir','Creating user directory', function(){
+		grunt.file.expandMapping('*.js', 'user/',{cwd:'resources/tutorials/js/'}).forEach(function(file){
+			grunt.file.copy(file.src, file.dest);
 		});
-
-		test.done(done,done);
 	});
 
 	// Default task(s).
 	grunt.registerTask('default', ['jshint']);
 
+	grunt.registerTask('init', ['userDir','docs']);
+
+	grunt.registerTask('server', ['express', 'watch','express-keepalive']);
+
+	// Documentation.
+	// Only run the user targets if the user directory exists
+	grunt.registerTask('docs', 'Building documentation', function(){
+		// if the user directory does not exist, remove the user tasks from the config file...
+		if (!grunt.file.isDir('user')) {
+			delete grunt.config.getRaw('docco').user;
+			delete grunt.config.getRaw('pipDirectory').user;
+		}
+
+		grunt.task.run('docco', 'pipDirectory', 'jadeMarked');
+	});
+
 	// build production stuff
-	grunt.registerTask('build', ['requirejs','docco']);
+	grunt.registerTask('build', ['requirejs','docs']);
 };

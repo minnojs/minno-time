@@ -1,4 +1,123 @@
-/* jshint node: true, curly: false */
+/*
+ * Grunt task for displaying PIP directories
+ */
+
+var path = require('path');
+var jade = require('jade');
+var md = require('marked');
+var fs = require('fs');
+
+module.exports = function(grunt){
+	// create template()
+	var tplPath = path.resolve(__dirname + '/../templates/pipDirectory.jade');
+	var tplSrc = grunt.file.read(tplPath);
+	var template = jade.compile(tplSrc,{
+		filename: tplPath
+	});
+
+	grunt.registerMultiTask('pipDirectory','Creating indexes',function(){
+		var done = this.async();
+
+		// @TODO: warn about non existent folders
+		this.files.forEach(function(file){
+
+			// Warn on and remove invalid source files
+			file.src.forEach(function(filepath) {
+				//filepath = path.resolve(filepath);
+
+				if (!grunt.file.exists(filepath) || !grunt.file.isDir(filepath)) {
+					grunt.log.warn('Directory "' + filepath + '" not found.');
+				} else {
+					// ***
+					// Parse directory
+					// ***
+					// @TODO: read yaml
+					// @TODO: read readme.markdown
+
+					var readme = "";
+					var readmePath = path.join(filepath, 'README.md');
+					if (grunt.file.exists(readmePath)) {
+						readme = md(grunt.file.read(readmePath));
+					}
+
+					fs.readdir(filepath, function(err, files){
+
+						if (err) {return grunt.log.error(err);}
+						files = files
+							// make sure this is a js file
+							.filter(function(file){return file.length - file.lastIndexOf('.js') === 3; })
+							.sort()
+							.map(function(file){
+								return {
+									name: file.substring(0,file.length-3),
+									js:path.join('..', filepath, file),
+									docco: file.replace('.js','.html')
+								};
+							});
+
+						grunt.file.write(path.join(file.dest,'index.html'),template({
+							dir: filepath,
+							files: files,
+							readme: readme
+						}));
+						done();
+					});
+
+
+				}
+				return true;
+
+				if (!grunt.file.exists(filepath)) {
+					grunt.log.warn('Source file "' + filepath + '" not found.');
+				} else {
+					// if this is a js file
+					if (filepath.length - filepath.lastIndexOf('.js') === 3){
+						console.log(filepath)
+					}
+
+
+				}
+
+				return true;
+
+					fs.readdir(path, function(err, files){
+						if (err) return next(err);
+						if (!hidden) files = removeHidden(files);
+						if (filter) files = files.filter(filter);
+						// make sure this is a js file
+						files = files.filter(function(file){return file.length - file.lastIndexOf('.js') === 3; });
+						files.sort();
+					});
+
+
+
+
+					var src = grunt.file.read(filepath);
+
+					// run this file through markdown
+					src = md(src);
+
+					// run this file through the jade template
+					src = template({
+						content: src
+					});
+					console.log('Writing ' + filepath + ' ==> ' + file.dest);
+					grunt.file.write(file.dest, src);
+			});
+		});
+	});
+
+	template;
+
+};
+
+
+
+
+
+
+
+
 /*
  * Middleware for connect/express that shows PIP script directories
  * Cheap ripoff of connect-directory
@@ -46,7 +165,7 @@ var cache = {};
  * @api public
  */
 
-exports = module.exports = function directory(root, options){
+exports = function directory(root, options){
 	options = options || {};
 
 	// root required
@@ -79,35 +198,6 @@ exports = module.exports = function directory(root, options){
 		if (0 !== path.indexOf(root)) return next(utils.error(403));
 
 
-		// check if we have a directory
-		fs.stat(path, function(err, stat){
-			if (err) return 'ENOENT' == err.code?
-				next()
-				: next(err);
-
-			if (!stat.isDirectory()) return next();
-
-			// fetch files
-			fs.readdir(path, function(err, files){
-				if (err) return next(err);
-				if (!hidden) files = removeHidden(files);
-				if (filter) files = files.filter(filter);
-				// make sure this is a js file
-				files = files.filter(function(file){return file.length - file.lastIndexOf('.js') === 3; });
-				files.sort();
-
-				// content-negotiation
-				for (var key in exports) {
-					if (~accept.indexOf(key) || ~accept.indexOf('*/*')) {
-						exports[key](req, res, files, next, originalDir, showUp, icons);
-						return;
-					}
-				}
-
-				// not acceptable
-				next(utils.error(406));
-			});
-		});
 	};
 };
 

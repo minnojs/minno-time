@@ -147,7 +147,7 @@ define(['app/API'], function(API) {
 	// The sequencer allows for many complex configurations. There are times that you want a quick easy way to test that the sequence you created realy does what it is supposed to.
 	// The proper way to do that is to create a mock sequence and check that it is mixed correcty. </br>
 	// Following is such an example. </br>
-	;
+
 	// Require the mixer function
 	require(['utils/mixer'], function(mixer) {
 		var sequence;
@@ -189,6 +189,3 @@ define(['app/API'], function(API) {
 
 });
 /* don't forget to close the define wrapper */
-
-
-
