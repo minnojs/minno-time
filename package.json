@@ -1,6 +1,6 @@
 {
   "name": "PIPlayer",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Project Implicit Player",
   "main": "src/js/config.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "url": "https://github.com/ProjectImplicit/PIPlayer.git"
   },
   "author": "Elad Zlotnick",
-  "license": "BSD",
+  "license": "",
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-cli": "~0.1.9",
