@@ -73,7 +73,7 @@ define(['app/API'], function(API) {
 	});
 	// from where to take the images
 	API.addSettings('base_url',{
-		image : '../examples/images'
+		image : '../resources/examples/images'
 	});
 
 	API.addSettings('logger',{

@@ -73,7 +73,7 @@ module.exports = function(driver){
 	driver.manage().timeouts().setScriptTimeout(10000);
 
 	// navigate to page
-	driver.get('http://localhost/pip/dist/index.html?url=../examples/iat.js')
+	driver.get('http://localhost/pip/dist/index.html?url=../resources/examples/iat.js')
 		.then(function(){
 			driver.executeAsyncScript(function(){
 				var callback = arguments[arguments.length -1];

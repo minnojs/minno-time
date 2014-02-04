@@ -25,10 +25,10 @@ define(['extensions/iat/component'],function(IAT){
 		},
 
 		// Image URLS
-		images_base_url: '../examples/images/',
+		images_base_url: '../resources/examples/images/',
 
 		// Image URLS
-		templates_base_url: '../../examples/IAT_component_long/',
+		templates_base_url: '../../resources/examples/IAT_component_long/',
 
 		// How many trials per logging pulse.
 		pulse: 5,

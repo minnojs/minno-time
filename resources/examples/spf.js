@@ -17,7 +17,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 	});
 
 	API.addSettings('base_url',{
-		image : '../examples/images'
+		image : '../resources/examples/images'
 	});
 
 

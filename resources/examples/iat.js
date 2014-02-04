@@ -21,8 +21,8 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 	// setting the base urls for images and templates
 	API.addSettings('base_url',{
-		image : '../examples/images',
-		template : '../../examples/IAT'
+		image : '../resources/examples/images',
+		template : '../../resources/examples/IAT'
 	});
 
 	// setting the way the logger works (how often we send data to the server and the url for the data)

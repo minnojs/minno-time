@@ -18,8 +18,8 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 	});
 
 	API.addSettings('base_url',{
-		image : '../examples/images',
-		template : '../../examples/GNAT'
+		image : '../resources/examples/images',
+		template : '../../resources/examples/GNAT'
 	});
 
 

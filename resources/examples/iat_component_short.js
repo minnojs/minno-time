@@ -13,7 +13,7 @@ define(['extensions/iat/PIcomponent'],function(IAT){
 		// Activate skip block
 		DEBUG: true,
 		// Set images url
-		images_base_url: '../examples/images/'
+		images_base_url: '../resources/examples/images/'
 	});
 
 	// ### Categories
