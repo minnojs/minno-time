@@ -2,7 +2,7 @@
 This section of the tutorial will walk you through creating your first task. We will create a simple task that says "Hello world". As we go, we will comment on several of the players features and explain some of the ways you can customize your player.
 
 ### The wrapper
-Every PI player script is wrapped within a define function (You don't have to understand what it does, but if you are interested look up [requirejs](http://requirejs.org/).
+Every PI player script is wrapped within a define function (You don't have to understand what it does, but if you are interested look up [requirejs](http://requirejs.org/)).
 
 ```js
 /* The script wrapper */
