@@ -1,0 +1,1 @@
+require.config({waitSeconds:200,enforceDefine:!0,baseUrl:"js",paths:{text:"libs/text",jquery:"libs/jquery",underscore:"libs/lodash",backbone:"libs/backbone",JSON:"libs/json2"},shim:{JSON:{exports:"JSON"},backbone:{deps:["underscore","jquery"],exports:"Backbone"}}}),define({});

@@ -1,0 +1,13 @@
+<div>
+	<% if (stimulusData.attribute) { %>
+		<span style="color:<%= stimulusData.attributeColor || '#31b404' %>; font-size:<%= stimulusData.attributeSize || '1.3em'%>"><%= stimulusData.attribute%></span>
+	<%}%>
+	<% if (stimulusData.attribute && stimulusData.concept) { %>
+		</br>
+		<span style="color:<%= stimulusData.separatorColor %>">or</span>
+		</br>
+	<%}%>
+	<% if (stimulusData.concept) { %>
+		<span style="color:<%= stimulusData.conceptColor || '#0000FF' %>; font-size:<%= stimulusData.conceptSize || '1.3em'%>"><%= stimulusData.concept%></span>
+	<%}%>
+</div>

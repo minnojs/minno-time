@@ -1,0 +1,1 @@
+define(["jquery","app/task/settings","JSON"],function(e,t,n){var r=function(r){var i=t.logger&&t.logger.url,s=e.Deferred();if(!i)return s.resolve();var o={json:n.stringify(r)||""};return e.extend(o,t.metaData||{}),s=e.post(i,o),s=s.then(null,function(){return e.post(i,o)}),s};return r});

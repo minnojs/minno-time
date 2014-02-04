@@ -1,0 +1,1 @@
+define(["../data/properties"],function(e){return function(n,r){var i=e.separator,s={media:i.media,css:i.css||{color:"black"}},o=i.margin||0;switch(n){case"left":s.location={left:2+o,top:r};break;case"right":s.location={right:2+o,top:r};break;case"center":s.location={top:r}}return s}});

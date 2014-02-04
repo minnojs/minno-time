@@ -1,0 +1,1 @@
+define(["jquery","underscore"],function(e,t){var n={mesCatArray:[]};return e.extend(n,{setMsgObject:function(e){this.mesCatArray=e.MessageDef},getMsg:function(e){var n=this.mesCatArray,r=parseFloat(e),i=null,s=null,o="error: msg was not set",u=!1;t.each(n,function(e){i=parseFloat(e.cut),s=e.message,r<=i&&!u&&(o=s,u=!0)});if(!u){var a=n.length,f=n[a-1];o=f.message}return o}}),n});

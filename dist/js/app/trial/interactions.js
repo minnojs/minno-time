@@ -1,0 +1,1 @@
+define(["jquery","utils/pubsub","./evaluate","./action"],function(e,t,n,r){var i=[],s=function(t,i){e.each(t,function(e,t){n(t.propositions,i)&&r(t.actions,i)})};return{activate:function(e){s(e,{type:"begin",latency:0}),t.subscribe("input",i,function(t){s(e,t)})},disable:function(){e.each(i,function(){t.unsubscribe(this)})}}});

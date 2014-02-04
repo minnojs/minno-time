@@ -1,0 +1,1 @@
+define([],function(){var e;return!window.performance||(e=performance.now||performance.mozNow||performance.webkitNow||performance.msNow||performance.oNow),e?function(){return e.apply(performance)}:function(){return+(new Date)}});

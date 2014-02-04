@@ -1,0 +1,1 @@
+define(["utils/pubsub"],function(e){return function(n,r,i,s){var o={timestamp:+(new Date),latency:s,handle:i.handle,type:r,e:n};e.publish("input",[o])}});

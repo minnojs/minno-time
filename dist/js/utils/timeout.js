@@ -1,0 +1,1 @@
+define(["underscore"],function(e){return function(){var n=arguments[0],r=e.isArray(arguments[1])?arguments[1]:[],i=e.isFunction(arguments[1])?arguments[1]:arguments[2],s=0;return n?(s=setTimeout(i,n),r.push(s)):i.call(),s}});

@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>spf.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="amp.html">
+                amp.js
+              </a>
+            
+              
+              <a class="source" href="biat.html">
+                biat.js
+              </a>
+            
+              
+              <a class="source" href="evaluative_priming.html">
+                evaluative_priming.js
+              </a>
+            
+              
+              <a class="source" href="evaluative_priming2.html">
+                evaluative_priming2.js
+              </a>
+            
+              
+              <a class="source" href="gnat.html">
+                gnat.js
+              </a>
+            
+              
+              <a class="source" href="iat.html">
+                iat.js
+              </a>
+            
+              
+              <a class="source" href="iat_component_long.html">
+                iat_component_long.js
+              </a>
+            
+              
+              <a class="source" href="iat_component_short.html">
+                iat_component_short.js
+              </a>
+            
+              
+              <a class="source" href="spf.html">
+                spf.js
+              </a>
+            
+              
+              <a class="source" href="st-iat.html">
+                st-iat.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>spf.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define([<span class="hljs-string">'app/API'</span>,<span class="hljs-string">'extensions/dscore/Scorer'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(API,Scorer)</span> {</span>
+
+	<span class="hljs-keyword">var</span> attribute1 = <span class="hljs-string">'Good Words'</span>;
+	<span class="hljs-keyword">var</span> attribute2 = <span class="hljs-string">'Bad Words'</span>;
+	<span class="hljs-keyword">var</span> category1 = <span class="hljs-string">'Black People'</span>;
+	<span class="hljs-keyword">var</span> category2 = <span class="hljs-string">'White People'</span>;
+
+
+	API.addSettings(<span class="hljs-string">'canvas'</span>,{
+		maxWidth: <span class="hljs-number">1000</span>,
+		proportions : <span class="hljs-number">0.8</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Change the colors to allow better presentation of the colored stimuli.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		background: <span class="hljs-string">'white'</span>,
+		canvasBackground: <span class="hljs-string">'green'</span>,
+		borderWidth: <span class="hljs-number">5</span>,
+		borderColor: <span class="hljs-string">'black'</span>
+	});
+
+	API.addSettings(<span class="hljs-string">'base_url'</span>,{
+		image : <span class="hljs-string">'../examples/images'</span>
+	});
+
+
+	API.addSettings(<span class="hljs-string">'logger'</span>,{
+        pulse: <span class="hljs-number">20</span>,
+        url : <span class="hljs-string">'/implicit/PiPlayerApplet'</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>use default logger (as copied from documents.txt but replace the regular latency with the computed latency)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        logger: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(trialData, inputData, actionData, logStack)</span>{</span>
+
+			<span class="hljs-keyword">var</span> stimList = <span class="hljs-keyword">this</span>._stimulus_collection.get_stimlist();
+			<span class="hljs-keyword">var</span> mediaList = <span class="hljs-keyword">this</span>._stimulus_collection.get_medialist();
+
+			<span class="hljs-keyword">var</span> myLatency = inputData.latency;
+			<span class="hljs-keyword">if</span> (trialData.begin &gt; <span class="hljs-number">0</span>) {
+				myLatency = inputData.latency - trialData.begin;
+			}
+
+			<span class="hljs-keyword">return</span> {
+				log_serial : logStack.length,
+				trial_id: <span class="hljs-keyword">this</span>._id,
+				name: <span class="hljs-keyword">this</span>.name(),
+				responseHandle: inputData.handle,
+				latency: myLatency, <span class="hljs-comment">// computed latency</span>
+				absoluteLatency : inputData.latency, <span class="hljs-comment">// original latency</span>
+				stimuli: stimList,
+				media: mediaList,
+				data: trialData
+			};
+        }
+
+    });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>the Scorer that computes the user feedback</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	Scorer.addSettings(<span class="hljs-string">'compute'</span>,{
+		ErrorVar:<span class="hljs-string">'score'</span>,
+		condVar:<span class="hljs-string">"condition"</span>,
+		cond1VarValues: [category1 + <span class="hljs-string">'+'</span> + attribute1,category2 + <span class="hljs-string">'+'</span> + attribute2], <span class="hljs-comment">//condition 1</span>
+		cond2VarValues: [category1 + <span class="hljs-string">'+'</span> + attribute2,category2 + <span class="hljs-string">'+'</span> + attribute1], <span class="hljs-comment">//condition 2</span>
+		parcelVar : <span class="hljs-string">"parcel"</span>,
+		parcelValue : [<span class="hljs-string">"research"</span>],
+		fastRT : <span class="hljs-number">150</span>, <span class="hljs-comment">//Below this reaction time, the latency is considered extremely fast.</span>
+		maxFastTrialsRate : <span class="hljs-number">0.1</span>, <span class="hljs-comment">//Above this % of extremely fast responses within a condition, the participant is considered too fast.</span>
+		minRT : <span class="hljs-number">150</span>, <span class="hljs-comment">//Below this latency</span>
+		maxRT : <span class="hljs-number">5000</span>, <span class="hljs-comment">//above this</span>
+		errorLatency : {use:<span class="hljs-string">"false"</span>, penalty:<span class="hljs-number">600</span>, useForSTD:<span class="hljs-literal">true</span>}<span class="hljs-comment">//ignore error respones</span>
+	});
+
+	Scorer.addSettings(<span class="hljs-string">'message'</span>,{
+		MessageDef: [
+			{ cut:<span class="hljs-string">'-0.3'</span>, message:<span class="hljs-string">'Your data suggest an automatic preference for black people over white people.'</span> },<span class="hljs-comment">//D &lt; -0.3</span>
+			{ cut:<span class="hljs-string">'0.3'</span>, message:<span class="hljs-string">'Your data suggest no or slight difference in your preference between white people and black people.'</span> },<span class="hljs-comment">// -0.3 &lt;= D &lt;= 0.3</span>
+			{ cut:<span class="hljs-string">'5'</span>, message:<span class="hljs-string">'Your data suggest an automatic preference for white people over black people.'</span> }<span class="hljs-comment">// D &gt; 0.3 (and D&lt;=5)</span>
+		]
+	});
+
+	<span class="hljs-comment">/**
+	 * Create default Trial
+	 * note that this function takes a single object
+	 */</span>
+	API.addTrialSets(<span class="hljs-string">'Default'</span>,{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>by default each trial is correct, this is modified in case of an error</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		data: {score:<span class="hljs-number">0</span>},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>set the interface for trials</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		input: [
+			{handle:<span class="hljs-string">'enter'</span>,on:<span class="hljs-string">'enter'</span>},
+			{handle:<span class="hljs-string">'topLeft'</span>,on:<span class="hljs-string">'keypressed'</span>,key:<span class="hljs-string">'w'</span>},
+			{handle:<span class="hljs-string">'topRight'</span>,on:<span class="hljs-string">'keypressed'</span>,key:<span class="hljs-string">'o'</span>},
+			{handle:<span class="hljs-string">'bottomLeft'</span>,on:<span class="hljs-string">'keypressed'</span>,key:<span class="hljs-string">'c'</span>},
+			{handle:<span class="hljs-string">'bottomRight'</span>,on:<span class="hljs-string">'keypressed'</span>,key:<span class="hljs-string">'m'</span>}
+		],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>display fixed layout</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			layout:[
+				{location:{left:<span class="hljs-number">15</span>,top:<span class="hljs-number">3</span>},media:{word:<span class="hljs-string">'key: w'</span>}, css:{color:<span class="hljs-string">'black'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'1em'</span>}},
+				{location:{left:<span class="hljs-number">10</span>,top:<span class="hljs-number">7</span>},media:{word:attribute2}, css:{color:<span class="hljs-string">'white'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}}, <span class="hljs-comment">//bad words + white people</span>
+				{location:{left:<span class="hljs-number">10</span>,top:<span class="hljs-number">13</span>},media:{word:category2}, css:{color:<span class="hljs-string">'#00FF00'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}},
+				{location:{right:<span class="hljs-number">15</span>,top:<span class="hljs-number">3</span>},media:{word:<span class="hljs-string">'key: o'</span>}, css:{color:<span class="hljs-string">'black'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'1em'</span>}},
+				{location:{right:<span class="hljs-number">10</span>,top:<span class="hljs-number">7</span>},media:{word:attribute1}, css:{color:<span class="hljs-string">'white'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}}, <span class="hljs-comment">// good words + white people</span>
+				{location:{right:<span class="hljs-number">10</span>,top:<span class="hljs-number">13</span>},media:{word:category2}, css:{color:<span class="hljs-string">'#00FF00'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}},
+				{location:{left:<span class="hljs-number">15</span>,bottom:<span class="hljs-number">3</span>},media:{word:<span class="hljs-string">'key: c'</span>}, css:{color:<span class="hljs-string">'black'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'1em'</span>}},
+				{location:{left:<span class="hljs-number">10</span>,bottom:<span class="hljs-number">13</span>},media:{word:attribute2}, css:{color:<span class="hljs-string">'white'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}}, <span class="hljs-comment">// bad words + black people</span>
+				{location:{left:<span class="hljs-number">10</span>,bottom:<span class="hljs-number">7</span>},media:{word:category1}, css:{color:<span class="hljs-string">'#00FF00'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}},
+				{location:{right:<span class="hljs-number">15</span>,bottom:<span class="hljs-number">3</span>},media:{word:<span class="hljs-string">'key: m'</span>}, css:{color:<span class="hljs-string">'black'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'1em'</span>}},
+				{location:{right:<span class="hljs-number">10</span>,bottom:<span class="hljs-number">13</span>},media:{word:attribute1}, css:{color:<span class="hljs-string">'white'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}}, <span class="hljs-comment">// good words + black people</span>
+				{location:{right:<span class="hljs-number">10</span>,bottom:<span class="hljs-number">7</span>},media:{word:category1}, css:{color:<span class="hljs-string">'#00FF00'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}}
+			],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>user interactions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		interactions: [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>begin trial : display stimulus imidiately</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			{
+				propositions: [{type:<span class="hljs-string">'begin'</span>}],
+				actions: [{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'wordStim'</span>},
+							{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'imageStim'</span>}]
+
+			},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>error</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			{
+				propositions: [
+					{type:<span class="hljs-string">'stimEquals'</span>,value:<span class="hljs-string">'side'</span>,negate:<span class="hljs-literal">true</span>},								<span class="hljs-comment">// check if the input handle is unequal to the "side" attribute of stimulus.data</span>
+					{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'error_end'</span>, negate:<span class="hljs-literal">true</span>},						<span class="hljs-comment">// make sure this isn't an error end interaction</span>
+					{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>, negate:<span class="hljs-literal">true</span>}								<span class="hljs-comment">// make sure this isn't an end interaction</span>
+				],
+				actions: [
+					{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'error'</span>},											<span class="hljs-comment">// show error stimulus</span>
+					{type:<span class="hljs-string">'setTrialAttr'</span>, setter:{score:<span class="hljs-number">1</span>}}										<span class="hljs-comment">// set the score to 1</span>
+				]
+			},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>correct</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			{
+				propositions: [{type:<span class="hljs-string">'stimEquals'</span>,value:<span class="hljs-string">'side'</span>}],								<span class="hljs-comment">// check if the input handle is equal to the "side" attribute of stimulus.data</span>
+				actions: [
+					{type:<span class="hljs-string">'removeInput'</span>,handle:[<span class="hljs-string">'bottomLeft'</span>,<span class="hljs-string">'bottomRight'</span>, <span class="hljs-string">'topLeft'</span>,<span class="hljs-string">'topRight'</span>]},
+					{type:<span class="hljs-string">'hideStim'</span>, handle: <span class="hljs-string">'All'</span>},											<span class="hljs-comment">// hide everything</span>
+					{type:<span class="hljs-string">'log'</span>},																<span class="hljs-comment">// log this trial</span>
+					{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'end'</span>, on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">250</span>}}			<span class="hljs-comment">// trigger the "end action after ITI"</span>
+				]
+			},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>end after ITI</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			{
+				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
+				actions: [
+					{type:<span class="hljs-string">'endTrial'</span>}
+				]
+			},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>skip block</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			{
+				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
+				actions: [
+					{type:<span class="hljs-string">'goto'</span>, destination: <span class="hljs-string">'nextWhere'</span>, properties: {blockStart:<span class="hljs-literal">true</span>}},
+					{type:<span class="hljs-string">'endTrial'</span>}
+				]
+			}
+		]
+	});
+
+	<span class="hljs-comment">/**
+	 * Create default Introduction trials
+	 * note that this function takes an array of objects
+	 */</span>
+	API.addTrialSets(<span class="hljs-string">"introduction"</span>, [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>generic introduction trial, to be inherited by all other inroduction trials</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+		{
+			data: {block: <span class="hljs-string">'generic'</span>},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>create user interface (just click to move on…)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			input: [
+				{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>},
+				{handle:<span class="hljs-string">'enter'</span>,on:<span class="hljs-string">'enter'</span>},
+				{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'bottomTouch'</span>,touch:<span class="hljs-literal">true</span>}
+			],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>display fixed layout</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			layout:[
+				{location:{left:<span class="hljs-number">15</span>,top:<span class="hljs-number">3</span>},media:{word:<span class="hljs-string">'key: w'</span>}, css:{color:<span class="hljs-string">'black'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'1em'</span>}},
+				{location:{left:<span class="hljs-number">10</span>,top:<span class="hljs-number">7</span>},media:{word:attribute2}, css:{color:<span class="hljs-string">'white'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}}, <span class="hljs-comment">//bad words + white people</span>
+				{location:{left:<span class="hljs-number">10</span>,top:<span class="hljs-number">13</span>},media:{word:category2}, css:{color:<span class="hljs-string">'#00FF00'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}},
+				{location:{right:<span class="hljs-number">15</span>,top:<span class="hljs-number">3</span>},media:{word:<span class="hljs-string">'key: o'</span>}, css:{color:<span class="hljs-string">'black'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'1em'</span>}},
+				{location:{right:<span class="hljs-number">10</span>,top:<span class="hljs-number">7</span>},media:{word:attribute1}, css:{color:<span class="hljs-string">'white'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}}, <span class="hljs-comment">// good words + white people</span>
+				{location:{right:<span class="hljs-number">10</span>,top:<span class="hljs-number">13</span>},media:{word:category2}, css:{color:<span class="hljs-string">'#00FF00'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}},
+				{location:{left:<span class="hljs-number">15</span>,bottom:<span class="hljs-number">3</span>},media:{word:<span class="hljs-string">'key: c'</span>}, css:{color:<span class="hljs-string">'black'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'1em'</span>}},
+				{location:{left:<span class="hljs-number">10</span>,bottom:<span class="hljs-number">13</span>},media:{word:attribute2}, css:{color:<span class="hljs-string">'white'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}}, <span class="hljs-comment">// bad words + black people</span>
+				{location:{left:<span class="hljs-number">10</span>,bottom:<span class="hljs-number">7</span>},media:{word:category1}, css:{color:<span class="hljs-string">'#00FF00'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}},
+				{location:{right:<span class="hljs-number">15</span>,bottom:<span class="hljs-number">3</span>},media:{word:<span class="hljs-string">'key: m'</span>}, css:{color:<span class="hljs-string">'black'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'1em'</span>}},
+				{location:{right:<span class="hljs-number">10</span>,bottom:<span class="hljs-number">13</span>},media:{word:attribute1}, css:{color:<span class="hljs-string">'white'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}}, <span class="hljs-comment">// good words + black people</span>
+				{location:{right:<span class="hljs-number">10</span>,bottom:<span class="hljs-number">7</span>},media:{word:category1}, css:{color:<span class="hljs-string">'#00FF00'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}}
+			],
+
+			interactions: [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>display instructions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				{
+					propositions: [{type:<span class="hljs-string">'begin'</span>}],
+					actions: [
+						{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'All'</span>}
+					]
+				},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>end trial</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				{
+					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
+					actions: [{type:<span class="hljs-string">'endTrial'</span>}]
+				},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>skip block</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				{
+					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
+					actions: [
+						{type:<span class="hljs-string">'goto'</span>, destination: <span class="hljs-string">'nextWhere'</span>, properties: {blockStart:<span class="hljs-literal">true</span>}},
+						{type:<span class="hljs-string">'endTrial'</span>}
+					]
+				}
+			]
+		}
+	]);
+
+	<span class="hljs-comment">/**
+	 * Create specific trials for each block
+	 */</span>
+	API.addTrialSets({
+	goodBlack:[{
+			data: {condition: category1 + <span class="hljs-string">'+'</span> + attribute1,parcel:<span class="hljs-string">'research'</span>},
+			inherit: <span class="hljs-string">'Default'</span>,
+			stimuli: [
+				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'category1_right'</span>}},
+				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute1_bottom'</span>}},
+				{inherit:{type:<span class="hljs-string">'random'</span>,set:<span class="hljs-string">'feedback'</span>}}
+			]
+		}],
+	badBlack:[{
+			data: {condition: category1 + <span class="hljs-string">'+'</span> + attribute2,parcel:<span class="hljs-string">'research'</span>},
+			inherit: <span class="hljs-string">'Default'</span>,
+			stimuli: [
+				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'category1_left'</span>}},
+				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute2_bottom'</span>}},
+				{inherit:{type:<span class="hljs-string">'random'</span>,set:<span class="hljs-string">'feedback'</span>}}
+			]
+		}],
+	goodWhite:[{
+			data: {condition: category2 + <span class="hljs-string">'+'</span> + attribute1,parcel:<span class="hljs-string">'research'</span>},
+			inherit: <span class="hljs-string">'Default'</span>,													<span class="hljs-comment">// inherit the default trial</span>
+			stimuli: [
+				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'category2_right'</span>}},
+				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute1_top'</span>}},
+				{inherit:{type:<span class="hljs-string">'random'</span>,set:<span class="hljs-string">'feedback'</span>}}
+			]
+		}],
+	badWhite:[{
+			data: {condition: category2 + <span class="hljs-string">'+'</span> + attribute2,parcel:<span class="hljs-string">'research'</span>},
+			inherit: <span class="hljs-string">'Default'</span>,													<span class="hljs-comment">// inherit the default trial</span>
+			stimuli: [
+				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'category2_left'</span>}},
+				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute2_top'</span>}},
+				{inherit:{type:<span class="hljs-string">'random'</span>,set:<span class="hljs-string">'feedback'</span>}}
+			]
+		}]
+
+	});
+
+	<span class="hljs-comment">/*
+	 *	Stimulus Sets
+	 *
+	 */</span>
+	API.addStimulusSets({</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>This Default stimulus is inherited by the other stimuli so that we can have a consistent look and change it from one place</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		Default: [
+			{css:{color:<span class="hljs-string">'white'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>, lineHeight:<span class="hljs-number">1.2</span>}}
+		],
+		Instructions: [
+			{css:{<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'1.3em'</span>,color:<span class="hljs-string">'black'</span>, lineHeight:<span class="hljs-number">1.2</span>}}
+		],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>The trial stimuli</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		category1_right : [
+			{data:{side:<span class="hljs-string">'bottomRight'</span>, handle:<span class="hljs-string">'imageStim'</span>, alias:category1}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'category1'</span>}}}
+		],
+		attribute1_bottom : [
+			{data:{side:<span class="hljs-string">'bottomRight'</span>, handle:<span class="hljs-string">'wordStim'</span>, alias:attribute1}, location: {top: <span class="hljs-number">30</span>}, css:{color:<span class="hljs-string">'white'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>},  media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute1'</span>}}}
+		],
+		category1_left: [
+			{data:{side:<span class="hljs-string">'bottomLeft'</span>, handle:<span class="hljs-string">'imageStim'</span>, alias:category1}, inherit:<span class="hljs-string">'Default'</span>,  media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'category1'</span>}}}
+		],
+		attribute2_bottom: [
+			{data:{side:<span class="hljs-string">'bottomLeft'</span>, handle:<span class="hljs-string">'wordStim'</span>, alias:attribute2}, location: {top: <span class="hljs-number">30</span>}, css:{color:<span class="hljs-string">'white'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute2'</span>}}}
+		],
+		category2_right: [
+			{data:{side:<span class="hljs-string">'topRight'</span>, handle:<span class="hljs-string">'imageStim'</span>, alias:category2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'category2'</span>}}}
+		],
+		attribute1_top : [
+			{data:{side:<span class="hljs-string">'topRight'</span>, handle:<span class="hljs-string">'wordStim'</span>, alias:attribute1}, location: {top: <span class="hljs-number">30</span>}, css:{color:<span class="hljs-string">'white'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>},  media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute1'</span>}}}
+		],
+		category2_left : [
+			{data:{side:<span class="hljs-string">'topLeft'</span>, handle:<span class="hljs-string">'imageStim'</span>, alias:category2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'category2'</span>}}}
+		],
+		attribute2_top : [
+			{data:{side:<span class="hljs-string">'topLeft'</span>, handle:<span class="hljs-string">'wordStim'</span>, alias:attribute2}, location: {top: <span class="hljs-number">30</span>}, css:{color:<span class="hljs-string">'white'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>},  media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute2'</span>}}}
+		],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>this stimulus used for giving feedback, in this case only the error notification</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		feedback : [
+			{handle:<span class="hljs-string">'error'</span>, location: {top: <span class="hljs-number">80</span>}, css:{color:<span class="hljs-string">'red'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'4em'</span>}, media: {word:<span class="hljs-string">'X'</span>}, nolog:<span class="hljs-literal">true</span>}
+		]
+	});
+	API.addMediaSets({
+		attribute1 : [<span class="hljs-comment">// Pleasant</span>
+			{word: <span class="hljs-string">'Nice'</span>},
+			{word: <span class="hljs-string">'Heaven'</span>},
+			{word: <span class="hljs-string">'Happy'</span>},
+			{word: <span class="hljs-string">'Pleasaure'</span>}
+		],
+		attribute2: [ <span class="hljs-comment">//Unpleasant</span>
+			{word: <span class="hljs-string">'Nasty'</span>},
+			{word: <span class="hljs-string">'Hell'</span>},
+			{word: <span class="hljs-string">'Horrible'</span>},
+			{word: <span class="hljs-string">'Rotten'</span>}
+		],
+		category1: [ <span class="hljs-comment">// Black people</span>
+			{image: <span class="hljs-string">'bf14_nc.jpg'</span>},
+			{image: <span class="hljs-string">'bf23_nc.jpg'</span>},
+			{image: <span class="hljs-string">'bf56_nc.jpg'</span>},
+			{image: <span class="hljs-string">'bm14_nc.jpg'</span>}
+		],
+		category2: [ <span class="hljs-comment">//White people</span>
+			{image: <span class="hljs-string">'wf2_nc.jpg'</span>},
+			{image: <span class="hljs-string">'wf3_nc.jpg'</span>},
+			{image: <span class="hljs-string">'wf6_nc.jpg'</span>},
+			{image: <span class="hljs-string">'wm1_nc.jpg'</span>}
+		]
+	});
+
+	<span class="hljs-comment">/*
+	 *	Create the Task sequence
+	 */</span>
+	API.addSequence([
+		{
+			data: {block:<span class="hljs-number">1</span>,blockStart:<span class="hljs-literal">true</span>},
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},			<span class="hljs-comment">// inhertit the generic instruction block</span>
+			stimuli: [{
+				inherit:<span class="hljs-string">'Instructions'</span>,
+				media:{html:<span class="hljs-string">'&lt;div&gt;&lt;p style="font-size:24px"&gt;&lt;color="FFFAFA"&gt;Put your left pinky and index finger on the &lt;b&gt;W&lt;/b&gt; and &lt;b&gt;C&lt;/b&gt; keys respectively. Put your right pinky and index finger on the &lt;b&gt;O&lt;/b&gt; and &lt;b&gt;M&lt;/b&gt; keys respectively. Four pairs of categories appear in the corners of the screen. Pairs of items will appear in the middle of the screen. Sort each pair of items to the corner in which their two categories appear. If you make an error, an &lt;font color="#FF0000"&gt;&lt;b&gt;X&lt;/b&gt;&lt;/font&gt; will appear until you hit the correct key.&lt;/p&gt;&lt;br/&gt;&lt;p align="center"&gt;Press the &lt;b&gt;space bar&lt;/b&gt; to begin. &lt;/br&gt; (block 1 out of 4)&lt;/p&gt;&lt;/div&gt;'</span>}
+					}]
+		},
+		{ <span class="hljs-comment">//The presentation trials</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>Repeat 40 times the trial. (10 times each combination)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			mixer: <span class="hljs-string">'random'</span>,		<span class="hljs-comment">//</span>
+			data : [
+				{
+					mixer: <span class="hljs-string">'repeat'</span>,
+					times: <span class="hljs-number">10</span>,
+					data : [
+						{inherit: <span class="hljs-string">'goodWhite'</span>,data:{block:<span class="hljs-number">1</span>}},
+						{inherit: <span class="hljs-string">'goodBlack'</span>,data:{block:<span class="hljs-number">1</span>}},
+						{inherit: <span class="hljs-string">'badWhite'</span>,data:{block:<span class="hljs-number">1</span>}},
+						{inherit: <span class="hljs-string">'badBlack'</span>,data:{block:<span class="hljs-number">1</span>}}
+					]
+				} <span class="hljs-comment">// end wrapper</span>
+			]
+		},
+		{
+			data: {block:<span class="hljs-number">2</span>,blockStart:<span class="hljs-literal">true</span>},
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},			<span class="hljs-comment">// inhertit the generic instruction block</span>
+			stimuli: [{
+				inherit:<span class="hljs-string">'Instructions'</span>,
+				media:{html:<span class="hljs-string">'&lt;div&gt;&lt;p style="font-size:24px"&gt;&lt;color="FFFAFA"&gt;When you are ready, press the &lt;b&gt;space bar&lt;/b&gt; to continue the task &lt;/br&gt; (block 2 out of 4)&lt;/p&gt;&lt;/div&gt;'</span>}
+					}]
+		},
+		{ <span class="hljs-comment">//The presentation trials</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>Repeat 40 times the trial. (10 times each combination)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			mixer: <span class="hljs-string">'random'</span>,		<span class="hljs-comment">//</span>
+			data : [
+				{
+					mixer: <span class="hljs-string">'repeat'</span>,
+					times: <span class="hljs-number">10</span>,
+					data : [
+						{inherit: <span class="hljs-string">'goodWhite'</span>,data:{block:<span class="hljs-number">2</span>}},
+						{inherit: <span class="hljs-string">'goodBlack'</span>,data:{block:<span class="hljs-number">2</span>}},
+						{inherit: <span class="hljs-string">'badWhite'</span>,data:{block:<span class="hljs-number">2</span>}},
+						{inherit: <span class="hljs-string">'badBlack'</span>,data:{block:<span class="hljs-number">2</span>}}
+					]
+				} <span class="hljs-comment">// end wrapper</span>
+			]
+		},
+
+		{
+			data: {block:<span class="hljs-number">3</span>,blockStart:<span class="hljs-literal">true</span>},
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},			<span class="hljs-comment">// inhertit the generic instruction block</span>
+			stimuli: [{
+				inherit:<span class="hljs-string">'Instructions'</span>,
+				media:{html:<span class="hljs-string">'&lt;div&gt;&lt;p style="font-size:24px"&gt;&lt;color="FFFAFA"&gt;When you are ready, press the &lt;b&gt;space bar&lt;/b&gt; to continue the task &lt;/br&gt; (block 3 out of 4)&lt;/p&gt;&lt;/div&gt;'</span>}
+					}]
+		},
+		{ <span class="hljs-comment">//The presentation trials</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Repeat 40 times the trial. (10 times each combination)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			mixer: <span class="hljs-string">'random'</span>,		<span class="hljs-comment">//</span>
+			data : [
+				{
+					mixer: <span class="hljs-string">'repeat'</span>,
+					times: <span class="hljs-number">10</span>,
+					data : [
+						{inherit: <span class="hljs-string">'goodWhite'</span>,data:{block:<span class="hljs-number">3</span>}},
+						{inherit: <span class="hljs-string">'goodBlack'</span>,data:{block:<span class="hljs-number">3</span>}},
+						{inherit: <span class="hljs-string">'badWhite'</span>,data:{block:<span class="hljs-number">3</span>}},
+						{inherit: <span class="hljs-string">'badBlack'</span>,data:{block:<span class="hljs-number">3</span>}}
+					]
+				} <span class="hljs-comment">// end wrapper</span>
+			]
+		},
+		{
+			data: {block:<span class="hljs-number">4</span>,blockStart:<span class="hljs-literal">true</span>},
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},			<span class="hljs-comment">// inhertit the generic instruction block</span>
+			stimuli: [{
+				inherit:<span class="hljs-string">'Instructions'</span>,
+				media:{html:<span class="hljs-string">'&lt;div&gt;&lt;p style="font-size:24px"&gt;&lt;color="FFFAFA"&gt;Press the &lt;b&gt;space bar&lt;/b&gt; for the final round. &lt;/br&gt; (block 4 out of 4)&lt;/p&gt;&lt;/div&gt;'</span>}
+					}]
+		},
+		{ <span class="hljs-comment">//The presentation trials</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Repeat 40 times the trial. (10 times each combination)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			mixer: <span class="hljs-string">'random'</span>,		<span class="hljs-comment">//</span>
+			data : [
+				{
+					mixer: <span class="hljs-string">'repeat'</span>,
+					times: <span class="hljs-number">10</span>,
+					data : [
+						{inherit: <span class="hljs-string">'goodWhite'</span>,data:{block:<span class="hljs-number">4</span>}},
+						{inherit: <span class="hljs-string">'goodBlack'</span>,data:{block:<span class="hljs-number">4</span>}},
+						{inherit: <span class="hljs-string">'badWhite'</span>,data:{block:<span class="hljs-number">4</span>}},
+						{inherit: <span class="hljs-string">'badBlack'</span>,data:{block:<span class="hljs-number">4</span>}}
+					]
+				} <span class="hljs-comment">// end wrapper</span>
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>user feedback- here we will use the computeD function.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {blockStart:<span class="hljs-literal">true</span>},
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},
+			stimuli: [],
+			customize: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+				<span class="hljs-keyword">var</span> trial = <span class="hljs-keyword">this</span>;
+				console.log(<span class="hljs-string">'calling Scorer'</span>);
+				<span class="hljs-keyword">var</span> DScoreObj = Scorer.computeD();
+				<span class="hljs-keyword">var</span> DScore = DScoreObj.DScore;<span class="hljs-comment">//compute the Dscore</span>
+				<span class="hljs-keyword">var</span> FBMsg = DScoreObj.errorMessage;
+				<span class="hljs-keyword">if</span>(!<span class="hljs-built_in">isNaN</span>(DScore)){
+					FBMsg = Scorer.getFBMsg(DScore);<span class="hljs-comment">//the user feedback</span>
+				}
+				console.log(<span class="hljs-string">'DScore='</span>+DScore+ <span class="hljs-string">" FBMsg="</span>+FBMsg);
+				<span class="hljs-keyword">var</span> media = {media:{html:<span class="hljs-string">'&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt; '</span>+FBMsg+<span class="hljs-string">'&lt;br&gt;The Score is:'</span>+DScore+<span class="hljs-string">'&lt;/p&gt;&lt;/div&gt;'</span>}};
+				trial.stimuli.push(media);<span class="hljs-comment">//show the user feedback</span>
+				Scorer.postToServer(DScore,FBMsg,<span class="hljs-string">"score"</span>,<span class="hljs-string">"feedback"</span>);
+			}
+		},
+		{
+			data: {blockStart:<span class="hljs-literal">true</span>},
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},			<span class="hljs-comment">// inhertit the generic instruction block</span>
+			stimuli: [{
+				inherit:<span class="hljs-string">'Instructions'</span>,
+				media:{html:<span class="hljs-string">'&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt;You have completed the study&lt;br/&gt;&lt;br/&gt;Thank you very much for your participation.&lt;br/&gt;&lt;br/&gt; Press "space" for continue to next task.&lt;/p&gt;&lt;/div&gt;'</span>}
+					}]
+		}
+	]);
+
+	API.play();
+});</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

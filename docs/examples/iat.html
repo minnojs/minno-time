@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>iat.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="amp.html">
+                amp.js
+              </a>
+            
+              
+              <a class="source" href="biat.html">
+                biat.js
+              </a>
+            
+              
+              <a class="source" href="evaluative_priming.html">
+                evaluative_priming.js
+              </a>
+            
+              
+              <a class="source" href="evaluative_priming2.html">
+                evaluative_priming2.js
+              </a>
+            
+              
+              <a class="source" href="gnat.html">
+                gnat.js
+              </a>
+            
+              
+              <a class="source" href="iat.html">
+                iat.js
+              </a>
+            
+              
+              <a class="source" href="iat_component_long.html">
+                iat_component_long.js
+              </a>
+            
+              
+              <a class="source" href="iat_component_short.html">
+                iat_component_short.js
+              </a>
+            
+              
+              <a class="source" href="spf.html">
+                spf.js
+              </a>
+            
+              
+              <a class="source" href="st-iat.html">
+                st-iat.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>iat.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define([<span class="hljs-string">'app/API'</span>,<span class="hljs-string">'extensions/dscore/Scorer'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(API,Scorer)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>This wrapper is neccesary in order to activate the API</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>lets set the attibutes/concepts in one place so we can change them when we want</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	<span class="hljs-keyword">var</span> attribute1 = <span class="hljs-string">'Bad Words'</span>;
+	<span class="hljs-keyword">var</span> attribute2 = <span class="hljs-string">'Good Words'</span>;
+	<span class="hljs-keyword">var</span> concept1 = <span class="hljs-string">'Black People'</span>;
+	<span class="hljs-keyword">var</span> concept2 = <span class="hljs-string">'White People'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <h3 id="settings">Settings</h3>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	<span class="hljs-comment">/*
+		Settings
+		***********************************************************
+	*/</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>set the canvas size</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	API.addSettings(<span class="hljs-string">'canvas'</span>,{
+		maxWidth: <span class="hljs-number">800</span>,
+		proportions : <span class="hljs-number">0.8</span>
+	});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>setting the base urls for images and templates</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	API.addSettings(<span class="hljs-string">'base_url'</span>,{
+		image : <span class="hljs-string">'../examples/images'</span>,
+		template : <span class="hljs-string">'../../examples/IAT'</span>
+	});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>setting the way the logger works (how often we send data to the server and the url for the data)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	API.addSettings(<span class="hljs-string">'logger'</span>,{
+		pulse: <span class="hljs-number">20</span>,
+		url : <span class="hljs-string">'/implicit/PiPlayerApplet'</span>
+	});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <h3 id="trials">Trials</h3>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	<span class="hljs-comment">/*
+		Trials
+		***********************************************************
+	*/</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <h4 id="default-trial">Default trial</h4>
+<p>This trial serves as the default for all IAT trials (excluding instructions)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	API.addTrialSets(<span class="hljs-string">'Default'</span>,{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>By default each trial is correct, this is modified in case of an error</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		data: {score:<span class="hljs-number">0</span>},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Set the interface for trials.
+In this case <strong>e</strong> and <strong>i</strong> are used for left and right.
+And in case this is a touch scenario we present appropriate touch elements.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		input: [
+			{handle:<span class="hljs-string">'enter'</span>,on:<span class="hljs-string">'enter'</span>},
+			{handle:<span class="hljs-string">'left'</span>,on:<span class="hljs-string">'keypressed'</span>,key:<span class="hljs-string">'e'</span>},
+			{handle:<span class="hljs-string">'right'</span>,on:<span class="hljs-string">'keypressed'</span>,key:<span class="hljs-string">'i'</span>},
+			{handle:<span class="hljs-string">'left'</span>,on:<span class="hljs-string">'leftTouch'</span>,touch:<span class="hljs-literal">true</span>},
+			{handle:<span class="hljs-string">'right'</span>,on:<span class="hljs-string">'rightTouch'</span>,touch:<span class="hljs-literal">true</span>}
+		],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Constant elements in the display, in this case: the user instructions: left / right.
+Here we inherit the layout stimuli from the layout set.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		layout: [
+			{inherit:{type:<span class="hljs-string">'byData'</span>,set:<span class="hljs-string">'layout'</span>,data:<span class="hljs-string">'left'</span>}},
+			{inherit:{type:<span class="hljs-string">'byData'</span>,set:<span class="hljs-string">'layout'</span>,data:<span class="hljs-string">'right'</span>}}
+		],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>User interactions.
+This is where we set the rules for the player behaviour (cases and responses).</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		interactions: [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <h5 id="at-the-begining-of-a-trial">At the begining of a trial</h5>
+<p>Display the stimulus imidiately.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			{
+				propositions: [{type:<span class="hljs-string">'begin'</span>}],
+				actions: [
+					{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'target'</span>}
+				]
+			},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <h5 id="correct">Correct</h5>
+<p>The input handle (either left or right) should be equal to the stimulus.data.side attribute.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>If the input handle is equal to the “side” attribute of stimulus.data</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				propositions: [{type:<span class="hljs-string">'stimEquals'</span>,value:<span class="hljs-string">'side'</span>}],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <ul>
+<li>Don’t allow any further interactions.</li>
+<li>Hide all stimuli.</li>
+<li>Log this trial.</li>
+<li>Trigger the <code>trialEnd</code> action after the ITI.</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				actions: [
+					{type:<span class="hljs-string">'removeInput'</span>,handle:[<span class="hljs-string">'left'</span>,<span class="hljs-string">'right'</span>]},
+					{type:<span class="hljs-string">'hideStim'</span>, handle: <span class="hljs-string">'All'</span>},
+					{type:<span class="hljs-string">'log'</span>},
+					{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'end'</span>, on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">250</span>}}
+				]
+			},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <h5 id="error">error</h5>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>If this is a click interaction.
+But input handle is unequal to the “side” attribute of stimulus.data.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				propositions: [
+					{type:<span class="hljs-string">'inputEquals'</span>,value:[<span class="hljs-string">'right'</span>,<span class="hljs-string">'left'</span>]},
+					{type:<span class="hljs-string">'stimEquals'</span>,value:<span class="hljs-string">'side'</span>,negate:<span class="hljs-literal">true</span>}
+				],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <ul>
+<li>Display error stimulus</li>
+<li>Set the score to 1 (error).</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				actions: [
+					{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'error'</span>},
+					{type:<span class="hljs-string">'setTrialAttr'</span>, setter:{score:<span class="hljs-number">1</span>}}
+				]
+			},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <h5 id="end-after-iti">end after ITI</h5>
+<p>This interaction is triggered by a timout after a correct response.
+It allows us to pad each trial with an interval.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Trigger when input handle is “end”.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
+				actions: [
+					{type:<span class="hljs-string">'endTrial'</span>}
+				]
+			},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <h5 id="skip-block">Skip block</h5>
+<p>This interaction has more to do with debugging than with the actual task.
+It allows the user to skip a whole block all the way to the begining of the next block.
+Note that every instruction block is marked with <code>blockStart:true</code> so that <code>nextWhere</code> knows were to go.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			{
+				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
+				actions: [
+					{type:<span class="hljs-string">'goto'</span>, destination: <span class="hljs-string">'nextWhere'</span>, properties: {blockStart:<span class="hljs-literal">true</span>}},
+					{type:<span class="hljs-string">'endTrial'</span>}
+				]
+			}
+		]
+	});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <h4 id="introduction-trial">Introduction Trial</h4>
+<p>Here, we create a generic introduction trial, to be inherited by all other introduction trials.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	API.addTrialSets(<span class="hljs-string">"introduction"</span>, {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Set <code>block</code> as “generic” so we can inherit it later.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		data: {block: <span class="hljs-string">'generic'</span>},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Create user interface (just click space to move on…)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		input: [
+			{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>},
+			{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'bottomTouch'</span>,touch:<span class="hljs-literal">true</span>},
+			{handle:<span class="hljs-string">'enter'</span>,on:<span class="hljs-string">'enter'</span>}
+		],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>Display fixed layout (this is the same layout we use for the trials themselves)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		layout:[
+			{inherit:{type:<span class="hljs-string">'byData'</span>,set:<span class="hljs-string">'layout'</span>,data:<span class="hljs-string">'left'</span>}},
+			{inherit:{type:<span class="hljs-string">'byData'</span>,set:<span class="hljs-string">'layout'</span>,data:<span class="hljs-string">'right'</span>}}
+		],
+
+		interactions: [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <h5 id="at-the-begining-of-a-trial">At the begining of a trial</h5>
+<p>Display the instructions imidiately.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			{
+				propositions: [{type:<span class="hljs-string">'begin'</span>}],
+				actions: [
+					{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'All'</span>}
+				]
+			},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <h5 id="end-trial">End trial</h5>
+<p>End the instructions as soon as space is clicked</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			{
+				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
+				actions: [{type:<span class="hljs-string">'endTrial'</span>}]
+			},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <h5 id="skip-block">Skip block</h5>
+<p>This interaction has more to do with debugging than with the actual task.
+It allows the user to skip a whole block all the way to the begining of the next block.
+Note that every instruction block is marked with <code>blockStart:true</code> so that <code>nextWhere</code> knows were to go.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			{
+				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
+				actions: [
+					{type:<span class="hljs-string">'goto'</span>, destination: <span class="hljs-string">'nextWhere'</span>, properties: {blockStart:<span class="hljs-literal">true</span>}},
+					{type:<span class="hljs-string">'endTrial'</span>}
+				]
+			}
+		]
+	});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <h4 id="blocks">Blocks</h4>
+<p>Now that we have created the generic trials for our task we can go on and create a specific variation for each individual block.
+They will be fully incorporated into the player in the sequence section </br>
+The IAT has seven blocks. The first and the fifth are concept blocks and the second is an attribute block.
+The rest of the blocks are composed of concepts and attributes where the third and forth have the same combination, and the sixth and seventh have the opposing combination.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	API.addTrialSets(<span class="hljs-string">"IAT"</span>, [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <h5 id="block1">block1</h5>
+<p>This is a concept block with concept 1 on the left.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <p>In each block we mark the block number (for logging and so we can pick this trial for inheritance).</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				block:<span class="hljs-number">1</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p>We also insert the concept name (so that the layout templates know what to show).</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				left2:concept1, right2:concept2,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <p>Finaly, we set the condition for the scorer.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				condition: concept1 + <span class="hljs-string">'/'</span> + concept2
+			},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
+              </div>
+              <p>We inherit the default trial.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			inherit: <span class="hljs-string">'Default'</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <p>Here we set the stimuli:
+The first with the target stimulus, and the second for error feedback if we need it.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			stimuli: [
+				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept1_left'</span>}},
+				{inherit:{type:<span class="hljs-string">'random'</span>,set:<span class="hljs-string">'feedback'</span>}}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-38">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              <h5 id="block2">block2</h5>
+<p>This is an attribute block with attribute 1 on the left.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {block:<span class="hljs-number">2</span>, left1 : attribute1, right1:attribute2, condition: attribute1 + <span class="hljs-string">'/'</span> + attribute2},
+			inherit: <span class="hljs-string">'Default'</span>,
+			stimuli: [
+				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute1_left'</span>}},
+				{inherit:{type:<span class="hljs-string">'random'</span>,set:<span class="hljs-string">'feedback'</span>}}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-39">&#182;</a>
+              </div>
+              <h5 id="block3">block3</h5>
+<p>This is a combined block with both concept 1 and attribute 1 on the left.
+It is composed of two types of trials one that displays a concept and one that displays an attribute.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>For combined trials we add the row property so we can distinguish between the trials when inheriting</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				block:<span class="hljs-number">3</span>,row:<span class="hljs-number">1</span>,
+				left1:attribute1, right1:attribute2, left2:concept1, right2:concept2,
+				condition: attribute1 + <span class="hljs-string">','</span> + concept1 + <span class="hljs-string">'/'</span> + attribute2 + <span class="hljs-string">','</span> + concept2,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-41">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-41">&#182;</a>
+              </div>
+              <p>This block is also marked as part of a parcel for the scorer</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				parcel:<span class="hljs-string">'first'</span>
+			},
+			inherit: <span class="hljs-string">'Default'</span>,
+			stimuli: [
+				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept1_left'</span>}},
+				{inherit:{type:<span class="hljs-string">'random'</span>,set:<span class="hljs-string">'feedback'</span>}}
+			]
+		},
+
+		{
+			data: {block:<span class="hljs-number">3</span>, row:<span class="hljs-number">2</span>, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2, condition: attribute1 + <span class="hljs-string">','</span> + concept1 + <span class="hljs-string">'/'</span> + attribute2 + <span class="hljs-string">','</span> + concept2,parcel:<span class="hljs-string">'first'</span>},
+			inherit: <span class="hljs-string">'Default'</span>,
+			stimuli: [
+				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute1_left'</span>}},
+				{inherit:{type:<span class="hljs-string">'random'</span>,set:<span class="hljs-string">'feedback'</span>}}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-42">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-42">&#182;</a>
+              </div>
+              <h5 id="block4">block4</h5>
+<p>This is a combined block - the same as block 3.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {block:<span class="hljs-number">4</span>, row:<span class="hljs-number">1</span>, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2, condition: attribute1 + <span class="hljs-string">','</span> + concept1 + <span class="hljs-string">'/'</span> + attribute2 + <span class="hljs-string">','</span> + concept2,parcel:<span class="hljs-string">'second'</span>},
+			inherit: <span class="hljs-string">'Default'</span>,
+			stimuli: [
+				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept1_left'</span>}},
+				{inherit:{type:<span class="hljs-string">'random'</span>,set:<span class="hljs-string">'feedback'</span>}}
+			]
+		},
+
+		{
+			data: {block:<span class="hljs-number">4</span>, row:<span class="hljs-number">2</span>, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2, condition: attribute1 + <span class="hljs-string">','</span> + concept1 + <span class="hljs-string">'/'</span> + attribute2 + <span class="hljs-string">','</span> + concept2,parcel:<span class="hljs-string">'second'</span>},
+			inherit: <span class="hljs-string">'Default'</span>,
+			stimuli: [
+				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute1_left'</span>}},
+				{inherit:{type:<span class="hljs-string">'random'</span>,set:<span class="hljs-string">'feedback'</span>}}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-43">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-43">&#182;</a>
+              </div>
+              <h5 id="block5">block5</h5>
+<p>This is a concept block, this time with concept 1 on the right instead of the left.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {block:<span class="hljs-number">5</span>, left2:concept2, right2:concept1, condition: concept2 + <span class="hljs-string">'/'</span> + concept1},
+			inherit: <span class="hljs-string">'Default'</span>,
+			stimuli: [
+				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept1_right'</span>}},
+				{inherit:{type:<span class="hljs-string">'random'</span>,set:<span class="hljs-string">'feedback'</span>}}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-44">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-44">&#182;</a>
+              </div>
+              <h5 id="block6">block6</h5>
+<p>This is a combined block; attribute1 stayed on the left but now concept1 is on the right.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {block:<span class="hljs-number">6</span>, row:<span class="hljs-number">1</span>, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1, condition: attribute1 + <span class="hljs-string">','</span> + concept2 + <span class="hljs-string">'/'</span> + attribute2 + <span class="hljs-string">','</span> + concept1,parcel:<span class="hljs-string">'first'</span>},
+			inherit: <span class="hljs-string">'Default'</span>,
+			stimuli: [
+				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept1_right'</span>}},
+				{inherit:{type:<span class="hljs-string">'random'</span>,set:<span class="hljs-string">'feedback'</span>}}
+			]
+		},
+
+		{
+			data: {block:<span class="hljs-number">6</span>, row:<span class="hljs-number">2</span>, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1, condition: attribute1 + <span class="hljs-string">','</span> + concept2 + <span class="hljs-string">'/'</span> + attribute2 + <span class="hljs-string">','</span> + concept1,parcel:<span class="hljs-string">'first'</span>},
+			inherit: <span class="hljs-string">'Default'</span>,
+			stimuli: [
+				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute1_left'</span>}},
+				{inherit:{type:<span class="hljs-string">'random'</span>,set:<span class="hljs-string">'feedback'</span>}}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-45">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-45">&#182;</a>
+              </div>
+              <h5 id="block7">block7</h5>
+<p>This is a combined block - the same as block 6.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {block:<span class="hljs-number">7</span>, row:<span class="hljs-number">1</span>, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1, condition: attribute1 + <span class="hljs-string">','</span> + concept2 + <span class="hljs-string">'/'</span> + attribute2 + <span class="hljs-string">','</span> + concept1,parcel:<span class="hljs-string">'second'</span>},
+			inherit: <span class="hljs-string">'Default'</span>,
+			stimuli: [
+				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept1_right'</span>}},
+				{inherit:{type:<span class="hljs-string">'random'</span>,set:<span class="hljs-string">'feedback'</span>}}
+			]
+		},
+
+		{
+			data: {block:<span class="hljs-number">7</span>, row:<span class="hljs-number">2</span>, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1, condition: attribute1 + <span class="hljs-string">','</span> + concept2 + <span class="hljs-string">'/'</span> + attribute2 + <span class="hljs-string">','</span> + concept1,parcel:<span class="hljs-string">'second'</span>},
+			inherit: <span class="hljs-string">'Default'</span>,
+			stimuli: [
+				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute1_left'</span>}},
+				{inherit:{type:<span class="hljs-string">'random'</span>,set:<span class="hljs-string">'feedback'</span>}}
+			]
+		}
+	]);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-46">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-46">&#182;</a>
+              </div>
+              <h3 id="stimuli">Stimuli</h3>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	<span class="hljs-comment">/*
+		Stimuli
+		***********************************************************
+	*/</span>
+
+	API.addStimulusSets({</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-47">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-47">&#182;</a>
+              </div>
+              <p>This Default stimulus is inherited by the other stimuli so that we can have a consistent appearance and change it from one place.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		Default: [
+			{css:{color:<span class="hljs-string">'#0000FF'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}}
+		],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-48">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-48">&#182;</a>
+              </div>
+              <p>This sets the appearance for the instructions.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		Instructions: [
+			{css:{<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'1.3em'</span>,color:<span class="hljs-string">'white'</span>, lineHeight:<span class="hljs-number">1.2</span>},handle:<span class="hljs-string">'instructions'</span>}
+		],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-49">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-49">&#182;</a>
+              </div>
+              <h4 id="the-trial-stimuli">The trial stimuli</h4>
+<p>Each of the following stimulus set holds the stimuli for a specific trial state (is the attribute1/category1 on the left or on the right?). </br>
+Each set hold stimuli both stimuli that display attribute1/category1 and stimuli that display attribute2/category2.
+The reason that the attribute/category sets repeat themselves 5 times each, is so that when we call them using exRandom, they will be balanced accross each ten trials.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		attribute1_left : [
+			{data:{side:<span class="hljs-string">'left'</span>, handle:<span class="hljs-string">'target'</span>, alias:attribute1}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute1'</span>}}},
+			{data:{side:<span class="hljs-string">'right'</span>, handle:<span class="hljs-string">'target'</span>, alias:attribute2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute2'</span>}}},
+			{data:{side:<span class="hljs-string">'left'</span>, handle:<span class="hljs-string">'target'</span>, alias:attribute1}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute1'</span>}}},
+			{data:{side:<span class="hljs-string">'right'</span>, handle:<span class="hljs-string">'target'</span>, alias:attribute2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute2'</span>}}},
+			{data:{side:<span class="hljs-string">'left'</span>, handle:<span class="hljs-string">'target'</span>, alias:attribute1}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute1'</span>}}},
+			{data:{side:<span class="hljs-string">'right'</span>, handle:<span class="hljs-string">'target'</span>, alias:attribute2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute2'</span>}}},
+			{data:{side:<span class="hljs-string">'left'</span>, handle:<span class="hljs-string">'target'</span>, alias:attribute1}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute1'</span>}}},
+			{data:{side:<span class="hljs-string">'right'</span>, handle:<span class="hljs-string">'target'</span>, alias:attribute2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute2'</span>}}},
+			{data:{side:<span class="hljs-string">'left'</span>, handle:<span class="hljs-string">'target'</span>, alias:attribute1}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute1'</span>}}},
+			{data:{side:<span class="hljs-string">'right'</span>, handle:<span class="hljs-string">'target'</span>, alias:attribute2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute2'</span>}}}
+		],
+		attribute1_right : [
+			{data:{side:<span class="hljs-string">'left'</span>, handle:<span class="hljs-string">'target'</span>, alias:attribute2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute2'</span>}}},
+			{data:{side:<span class="hljs-string">'right'</span>, handle:<span class="hljs-string">'target'</span>, alias:attribute1}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute1'</span>}}},
+			{data:{side:<span class="hljs-string">'left'</span>, handle:<span class="hljs-string">'target'</span>, alias:attribute2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute2'</span>}}},
+			{data:{side:<span class="hljs-string">'right'</span>, handle:<span class="hljs-string">'target'</span>, alias:attribute1}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute1'</span>}}},
+			{data:{side:<span class="hljs-string">'left'</span>, handle:<span class="hljs-string">'target'</span>, alias:attribute2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute2'</span>}}},
+			{data:{side:<span class="hljs-string">'right'</span>, handle:<span class="hljs-string">'target'</span>, alias:attribute1}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute1'</span>}}},
+			{data:{side:<span class="hljs-string">'left'</span>, handle:<span class="hljs-string">'target'</span>, alias:attribute2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute2'</span>}}},
+			{data:{side:<span class="hljs-string">'right'</span>, handle:<span class="hljs-string">'target'</span>, alias:attribute1}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute1'</span>}}},
+			{data:{side:<span class="hljs-string">'left'</span>, handle:<span class="hljs-string">'target'</span>, alias:attribute2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute2'</span>}}},
+			{data:{side:<span class="hljs-string">'right'</span>, handle:<span class="hljs-string">'target'</span>, alias:attribute1}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'attribute1'</span>}}}
+		],
+		concept1_left: [
+			{data:{side:<span class="hljs-string">'left'</span>, handle:<span class="hljs-string">'target'</span>, alias:concept1}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept1'</span>}}},
+			{data:{side:<span class="hljs-string">'right'</span>, handle:<span class="hljs-string">'target'</span>, alias:concept2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept2'</span>}}},
+			{data:{side:<span class="hljs-string">'left'</span>, handle:<span class="hljs-string">'target'</span>, alias:concept1}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept1'</span>}}},
+			{data:{side:<span class="hljs-string">'right'</span>, handle:<span class="hljs-string">'target'</span>, alias:concept2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept2'</span>}}},
+			{data:{side:<span class="hljs-string">'left'</span>, handle:<span class="hljs-string">'target'</span>, alias:concept1}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept1'</span>}}},
+			{data:{side:<span class="hljs-string">'right'</span>, handle:<span class="hljs-string">'target'</span>, alias:concept2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept2'</span>}}},
+			{data:{side:<span class="hljs-string">'left'</span>, handle:<span class="hljs-string">'target'</span>, alias:concept1}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept1'</span>}}},
+			{data:{side:<span class="hljs-string">'right'</span>, handle:<span class="hljs-string">'target'</span>, alias:concept2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept2'</span>}}},
+			{data:{side:<span class="hljs-string">'left'</span>, handle:<span class="hljs-string">'target'</span>, alias:concept1}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept1'</span>}}},
+			{data:{side:<span class="hljs-string">'right'</span>, handle:<span class="hljs-string">'target'</span>, alias:concept2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept2'</span>}}}
+		],
+		concept1_right : [
+			{data:{side:<span class="hljs-string">'left'</span>, handle:<span class="hljs-string">'target'</span>, alias:concept2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept2'</span>}}},
+			{data:{side:<span class="hljs-string">'right'</span>, handle:<span class="hljs-string">'target'</span>, alias:concept1}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept1'</span>}}},
+			{data:{side:<span class="hljs-string">'left'</span>, handle:<span class="hljs-string">'target'</span>, alias:concept2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept2'</span>}}},
+			{data:{side:<span class="hljs-string">'right'</span>, handle:<span class="hljs-string">'target'</span>, alias:concept1}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept1'</span>}}},
+			{data:{side:<span class="hljs-string">'left'</span>, handle:<span class="hljs-string">'target'</span>, alias:concept2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept2'</span>}}},
+			{data:{side:<span class="hljs-string">'right'</span>, handle:<span class="hljs-string">'target'</span>, alias:concept1}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept1'</span>}}},
+			{data:{side:<span class="hljs-string">'left'</span>, handle:<span class="hljs-string">'target'</span>, alias:concept2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept2'</span>}}},
+			{data:{side:<span class="hljs-string">'right'</span>, handle:<span class="hljs-string">'target'</span>, alias:concept1}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept1'</span>}}},
+			{data:{side:<span class="hljs-string">'left'</span>, handle:<span class="hljs-string">'target'</span>, alias:concept2}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept2'</span>}}},
+			{data:{side:<span class="hljs-string">'right'</span>, handle:<span class="hljs-string">'target'</span>, alias:concept1}, inherit:<span class="hljs-string">'Default'</span>, media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'concept1'</span>}}}
+		],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-50">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-50">&#182;</a>
+              </div>
+              <h4 id="feedback">Feedback</h4>
+<p>This stimulus is used for giving feedback, in this case only an error notification</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		feedback : [
+			{handle:<span class="hljs-string">'error'</span>, location: {top: <span class="hljs-number">80</span>}, css:{color:<span class="hljs-string">'red'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'4em'</span>}, media: {word:<span class="hljs-string">'X'</span>}, nolog:<span class="hljs-literal">true</span>}
+		],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-51">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-51">&#182;</a>
+              </div>
+              <h4 id="layout">Layout</h4>
+<p>In this example we use templates to create the layout (you can see the templates in examples/IAT/).
+Here we control only the general way that the layout appears.
+The mechanics inside the templates and the fact that we set the proper data in all trials allow us to use the same stimuli for the layout of all the trials.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		layout: [
+			{data:{handle:<span class="hljs-string">'left'</span>},location:{left:<span class="hljs-number">0</span>,top:<span class="hljs-number">0</span>},css:{color:<span class="hljs-string">'white'</span>,fontSize:<span class="hljs-string">'2em'</span>},media:{template:<span class="hljs-string">'left.jst'</span>}},
+			{data:{handle:<span class="hljs-string">'right'</span>}, location:{left:<span class="hljs-string">'auto'</span>,right:<span class="hljs-number">0</span>,top:<span class="hljs-number">0</span>},css:{color:<span class="hljs-string">'white'</span>,fontSize:<span class="hljs-string">'2em'</span>},media:{template:<span class="hljs-string">'right.jst'</span>}}
+		]
+	});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-52">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-52">&#182;</a>
+              </div>
+              <h3 id="media">Media</h3>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	<span class="hljs-comment">/*
+		Media
+		***********************************************************
+	*/</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-53">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-53">&#182;</a>
+              </div>
+              <p>The media sets control the content of each stimulus.
+note that the image urls are relative to the base_url set in the settings section of this file.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	API.addMediaSets({</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-54">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-54">&#182;</a>
+              </div>
+              <h4 id="pleasant">Pleasant</h4>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		attribute1 : [
+			{word: <span class="hljs-string">'Nice'</span>},
+			{word: <span class="hljs-string">'Heaven'</span>},
+			{word: <span class="hljs-string">'Happy'</span>},
+			{word: <span class="hljs-string">'Pleasaure'</span>}
+		],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-55">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-55">&#182;</a>
+              </div>
+              <h4 id="unpleasant">Unpleasant</h4>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		attribute2: [
+			{word: <span class="hljs-string">'Nasty'</span>},
+			{word: <span class="hljs-string">'Hell'</span>},
+			{word: <span class="hljs-string">'Horrible'</span>},
+			{word: <span class="hljs-string">'Rotten'</span>}
+		],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-56">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-56">&#182;</a>
+              </div>
+              <h4 id="black-people">Black people</h4>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		concept1: [
+			{image: <span class="hljs-string">'bf14_nc.jpg'</span>},
+			{image: <span class="hljs-string">'bf23_nc.jpg'</span>},
+			{image: <span class="hljs-string">'bf56_nc.jpg'</span>},
+			{image: <span class="hljs-string">'bm14_nc.jpg'</span>}
+		],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-57">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-57">&#182;</a>
+              </div>
+              <h4 id="white-people">White people</h4>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		concept2: [
+			{image: <span class="hljs-string">'wf2_nc.jpg'</span>},
+			{image: <span class="hljs-string">'wf3_nc.jpg'</span>},
+			{image: <span class="hljs-string">'wf6_nc.jpg'</span>},
+			{image: <span class="hljs-string">'wm1_nc.jpg'</span>}
+		]
+	});
+
+
+	<span class="hljs-comment">/*
+		Regular IAT sequence
+		***********************************************************
+	*/</span>
+	<span class="hljs-keyword">var</span> regularIAT = [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-58">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-58">&#182;</a>
+              </div>
+              <h5 id="block-1">block 1</h5>
+<p>block 1 instructions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-59">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-59">&#182;</a>
+              </div>
+              <p>we set the data with the category names so the template can display them</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			data: {block:<span class="hljs-number">1</span>, left2:concept1, right2:concept2,blockStart:<span class="hljs-literal">true</span>},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-60">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-60">&#182;</a>
+              </div>
+              <p>inhertit the generic instruction block</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},
+			stimuli: [{
+				inherit:<span class="hljs-string">'Instructions'</span>,
+				media:{template:<span class="hljs-string">'inst1.jst'</span>}
+			}]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-61">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-61">&#182;</a>
+              </div>
+              <p>repeat the block 1 trial 20 times</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			mixer : <span class="hljs-string">'repeat'</span>,
+			times : <span class="hljs-number">20</span>,
+			data : [
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">1</span>}, set:<span class="hljs-string">'IAT'</span>}}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-62">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-62">&#182;</a>
+              </div>
+              <h5 id="block-2">block 2</h5>
+<p>block 2 instructions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {block:<span class="hljs-number">2</span>, left1:attribute1, right1:attribute2, blockStart:<span class="hljs-literal">true</span>},
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},
+			stimuli: [{
+				inherit:<span class="hljs-string">'Instructions'</span>,
+				media:{template:<span class="hljs-string">'inst2.jst'</span>}
+			}]
+		},
+		{
+			mixer : <span class="hljs-string">'repeat'</span>,
+			times : <span class="hljs-number">20</span>,
+			data : [
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">2</span>}, set:<span class="hljs-string">'IAT'</span>}}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-63">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-63">&#182;</a>
+              </div>
+              <h5 id="block-3">block 3</h5>
+<p>block 3 instructions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {block:<span class="hljs-number">3</span>, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2,blockStart:<span class="hljs-literal">true</span>},
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},
+			stimuli: [{
+				inherit:<span class="hljs-string">'Instructions'</span>,
+				media:{template:<span class="hljs-string">'inst3.jst'</span>}
+			}]
+		},
+		{
+			mixer: <span class="hljs-string">'repeat'</span>,
+			times: <span class="hljs-number">20</span>,
+			data: [
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">3</span>,row:<span class="hljs-number">1</span>}, set:<span class="hljs-string">'IAT'</span>}},
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">3</span>,row:<span class="hljs-number">2</span>}, set:<span class="hljs-string">'IAT'</span>}}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-64">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-64">&#182;</a>
+              </div>
+              <h5 id="block-4">block 4</h5>
+<p>block 4 instructions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {block:<span class="hljs-number">4</span>, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2,blockStart:<span class="hljs-literal">true</span>},
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},
+			stimuli: [{
+				inherit:<span class="hljs-string">'Instructions'</span>,
+				media:{template:<span class="hljs-string">'inst4.jst'</span>}
+			}]
+		},
+		{
+			mixer: <span class="hljs-string">'repeat'</span>,
+			times: <span class="hljs-number">40</span>,
+			data: [
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">4</span>,row:<span class="hljs-number">1</span>}, set:<span class="hljs-string">'IAT'</span>}},
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">4</span>,row:<span class="hljs-number">2</span>}, set:<span class="hljs-string">'IAT'</span>}}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-65">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-65">&#182;</a>
+              </div>
+              <h5 id="block-5">block 5</h5>
+<p>block 5 instructions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {block:<span class="hljs-number">5</span>, left2:concept2, right2:concept1,blockStart:<span class="hljs-literal">true</span>},
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},
+			stimuli: [{
+				inherit:<span class="hljs-string">'Instructions'</span>,
+				media:{template:<span class="hljs-string">'inst5.jst'</span>}
+			}]
+		},
+		{
+			mixer : <span class="hljs-string">'repeat'</span>,
+			times : <span class="hljs-number">40</span>,
+			data : [
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">5</span>}, set:<span class="hljs-string">'IAT'</span>}}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-66">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-66">&#182;</a>
+              </div>
+              <h5 id="block-6">block 6</h5>
+<p>block 6 instructions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {block:<span class="hljs-number">6</span>, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1,blockStart:<span class="hljs-literal">true</span>},
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},
+			stimuli: [{
+				inherit:<span class="hljs-string">'Instructions'</span>,
+				media:{template:<span class="hljs-string">'inst6.jst'</span>}
+			}]
+		},
+		{
+			mixer: <span class="hljs-string">'repeat'</span>,
+			times: <span class="hljs-number">20</span>,
+			data: [
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">6</span>,row:<span class="hljs-number">1</span>}, set:<span class="hljs-string">'IAT'</span>}},
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">6</span>,row:<span class="hljs-number">2</span>}, set:<span class="hljs-string">'IAT'</span>}}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-67">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-67">&#182;</a>
+              </div>
+              <h5 id="block-7">block 7</h5>
+<p>block 7 instructions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {block:<span class="hljs-number">7</span>, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1,blockStart:<span class="hljs-literal">true</span>},
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},
+			stimuli: [{
+				inherit:<span class="hljs-string">'Instructions'</span>,
+				media:{template:<span class="hljs-string">'inst7.jst'</span>}
+			}]
+		},
+		{
+			mixer: <span class="hljs-string">'repeat'</span>,
+			times: <span class="hljs-number">20</span>,
+			data: [
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">7</span>,row:<span class="hljs-number">1</span>}, set:<span class="hljs-string">'IAT'</span>}},
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">7</span>,row:<span class="hljs-number">2</span>}, set:<span class="hljs-string">'IAT'</span>}}
+			]
+		}
+	]; <span class="hljs-comment">// end regular IAT sequence</span>
+
+	<span class="hljs-comment">/*
+		Swaped IAT sequence
+		***********************************************************
+	*/</span>
+	<span class="hljs-keyword">var</span> swapedIAT = [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-68">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-68">&#182;</a>
+              </div>
+              <p>block 5
+block 5 instructions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {block:<span class="hljs-number">5</span>, left2:concept2, right2:concept1,blockStart:<span class="hljs-literal">true</span>},
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},
+			stimuli: [{
+				inherit:<span class="hljs-string">'Instructions'</span>,
+				media:{template:<span class="hljs-string">'inst1.jst'</span>}
+			}]
+		},
+		{
+			mixer : <span class="hljs-string">'repeat'</span>,
+			times : <span class="hljs-number">20</span>,
+			data : [
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">5</span>}, set:<span class="hljs-string">'IAT'</span>}}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-69">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-69">&#182;</a>
+              </div>
+              <p>block 2
+block 2 instructions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {block:<span class="hljs-number">2</span>, left1:attribute1, right1:attribute2,blockStart:<span class="hljs-literal">true</span>},
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},
+			stimuli: [{
+				inherit:<span class="hljs-string">'Instructions'</span>,
+				media:{template:<span class="hljs-string">'inst2.jst'</span>}
+			}]
+		},
+		{
+			mixer : <span class="hljs-string">'repeat'</span>,
+			times : <span class="hljs-number">20</span>,
+			data : [
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">2</span>}, set:<span class="hljs-string">'IAT'</span>}}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-70">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-70">&#182;</a>
+              </div>
+              <p>block 6
+block 6 instructions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {block:<span class="hljs-number">6</span>, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1,blockStart:<span class="hljs-literal">true</span>},
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},
+			stimuli: [{
+				inherit:<span class="hljs-string">'Instructions'</span>,
+				media:{template:<span class="hljs-string">'inst3.jst'</span>}
+			}]
+		},
+		{
+			mixer: <span class="hljs-string">'repeat'</span>,
+			times: <span class="hljs-number">20</span>,
+			data: [
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">6</span>,row:<span class="hljs-number">1</span>}, set:<span class="hljs-string">'IAT'</span>}},
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">6</span>,row:<span class="hljs-number">2</span>}, set:<span class="hljs-string">'IAT'</span>}}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-71">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-71">&#182;</a>
+              </div>
+              <p>block 7
+block 7 instructions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {block:<span class="hljs-number">7</span>, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1,blockStart:<span class="hljs-literal">true</span>},
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},
+			stimuli: [{
+				inherit:<span class="hljs-string">'Instructions'</span>,
+				media:{template:<span class="hljs-string">'inst4.jst'</span>}
+			}]
+		},
+		{
+			mixer: <span class="hljs-string">'repeat'</span>,
+			times: <span class="hljs-number">20</span>,
+			data: [
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">7</span>,row:<span class="hljs-number">1</span>}, set:<span class="hljs-string">'IAT'</span>}},
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">7</span>,row:<span class="hljs-number">2</span>}, set:<span class="hljs-string">'IAT'</span>}}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-72">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-72">&#182;</a>
+              </div>
+              <p>block 1
+block 1 instructions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {block:<span class="hljs-number">1</span>, left2:concept1, right2:concept2,blockStart:<span class="hljs-literal">true</span>},			<span class="hljs-comment">// we set the data with the category names so the template can display them</span>
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},			<span class="hljs-comment">// inhertit the generic instruction block</span>
+			stimuli: [{
+				inherit:<span class="hljs-string">'Instructions'</span>,
+				media:{template:<span class="hljs-string">'inst5.jst'</span>}
+			}]
+		},
+		{
+			mixer : <span class="hljs-string">'repeat'</span>,
+			times : <span class="hljs-number">20</span>,
+			data : [
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">1</span>}, set:<span class="hljs-string">'IAT'</span>}}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-73">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-73">&#182;</a>
+              </div>
+              <p>block 3
+block 3 instructions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {block:<span class="hljs-number">3</span>, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2,blockStart:<span class="hljs-literal">true</span>},
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},
+			stimuli: [{
+				inherit:<span class="hljs-string">'Instructions'</span>,
+				media:{template:<span class="hljs-string">'inst6.jst'</span>}
+			}]
+		},
+		{
+			mixer: <span class="hljs-string">'repeat'</span>,
+			times: <span class="hljs-number">20</span>,
+			data: [
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">3</span>,row:<span class="hljs-number">1</span>}, set:<span class="hljs-string">'IAT'</span>}},
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">3</span>,row:<span class="hljs-number">2</span>}, set:<span class="hljs-string">'IAT'</span>}}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-74">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-74">&#182;</a>
+              </div>
+              <p>block 4
+block 4 instructions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {block:<span class="hljs-number">4</span>, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2,blockStart:<span class="hljs-literal">true</span>},
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},
+			stimuli: [{
+				inherit:<span class="hljs-string">'Instructions'</span>,
+				media:{template:<span class="hljs-string">'inst7.jst'</span>}
+			}]
+		},
+		{
+			mixer: <span class="hljs-string">'repeat'</span>,
+			times: <span class="hljs-number">20</span>,
+			data: [
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">4</span>,row:<span class="hljs-number">1</span>}, set:<span class="hljs-string">'IAT'</span>}},
+				{inherit : {type:<span class="hljs-string">'byData'</span>, data:{block:<span class="hljs-number">4</span>,row:<span class="hljs-number">2</span>}, set:<span class="hljs-string">'IAT'</span>}}
+			]
+		}
+	]; <span class="hljs-comment">// end swaped IAT</span>
+
+	<span class="hljs-comment">/*
+	 *	Create the Task sequence
+	 */</span>
+	API.addSequence([
+		{
+			mixer: <span class="hljs-string">'choose'</span>,
+			data: [
+				{mixer:<span class="hljs-string">'wrapper'</span>,data:regularIAT},
+				{mixer:<span class="hljs-string">'wrapper'</span>,data:swapedIAT}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-75">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-75">&#182;</a>
+              </div>
+              <p>user feedback- here we will use the computeD function.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},
+			data: {blockStart:<span class="hljs-literal">true</span>},
+			stimuli: [],
+			customize: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+				<span class="hljs-keyword">var</span> trial = <span class="hljs-keyword">this</span>;
+				<span class="hljs-keyword">var</span> DScoreObj, media;
+
+				console.log(<span class="hljs-string">'calling Scorer'</span>);
+				DScoreObj = Scorer.computeD();
+
+				media = {css:{color:<span class="hljs-string">'black'</span>},media:{html:<span class="hljs-string">'&lt;div&gt;&lt;p style="font-size:12px"&gt;&lt;color="#FFFAFA"&gt; '</span>+DScoreObj.FBMsg+<span class="hljs-string">'&lt;br&gt;The Score is:'</span>+DScoreObj.DScore+<span class="hljs-string">'&lt;/p&gt;&lt;/div&gt;'</span>}};
+				trial.stimuli.push(media);
+				Scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,<span class="hljs-string">"score1"</span>,<span class="hljs-string">"feedback1"</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-76">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-76">&#182;</a>
+              </div>
+              <p>////second call to score//////</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				Scorer.addSettings(<span class="hljs-string">'compute'</span>,{
+					parcelValue : [<span class="hljs-string">'second'</span>]
+				});
+				Scorer.addSettings(<span class="hljs-string">'message'</span>,{
+					MessageDef: [
+						{ cut:<span class="hljs-string">'-0.65'</span>, message:<span class="hljs-string">'Your data suggest a strong implicit preference for Black People compared to White People'</span> },
+						{ cut:<span class="hljs-string">'-0.35'</span>, message:<span class="hljs-string">'Your data suggest a moderate implicit preference for Black People compared to White People.'</span> },
+						{ cut:<span class="hljs-string">'-0.15'</span>, message:<span class="hljs-string">'Your data suggest a slight implicit preference for Black People compared to White People.'</span> },
+						{ cut:<span class="hljs-string">'0'</span>, message:<span class="hljs-string">'Your data suggest little to no difference in implicit preference between Black People and White People.'</span> },
+						{ cut:<span class="hljs-string">'0.15'</span>, message:<span class="hljs-string">'Your data suggest a slight implicit preference for White People compared to Black People'</span> },
+						{ cut:<span class="hljs-string">'0.35'</span>, message:<span class="hljs-string">'Your data suggest a moderate implicit preference for White People compared to Black People'</span> },
+						{ cut:<span class="hljs-string">'0.65'</span>, message:<span class="hljs-string">'Your data suggest a strong implicit preference for White People compared to Black People'</span> }
+					]
+				});
+				DScoreObj = Scorer.computeD();
+				media = {css:{color:<span class="hljs-string">'black'</span>},media:{html:<span class="hljs-string">'&lt;h1&gt;&lt;div&gt;&lt;p style="font-size:12px"&gt;&lt;color="#FFFAFA"&gt; '</span>+DScoreObj.FBMsg+<span class="hljs-string">'&lt;br&gt;The Score is:'</span>+DScoreObj.DScore+<span class="hljs-string">'&lt;/p&gt;&lt;/div&gt;'</span>}};
+				trial.stimuli.push(media);
+				Scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,<span class="hljs-string">"score1"</span>,<span class="hljs-string">"feedback1"</span>);
+
+			}
+		},
+
+		{ <span class="hljs-comment">//Instructions trial, the end of the task, instruction what to do next</span>
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},
+			stimuli: [
+				{<span class="hljs-comment">//The instructions stimulus</span>
+					data : {<span class="hljs-string">'handle'</span>:<span class="hljs-string">'instStim'</span>},
+					css: {color:<span class="hljs-string">'black'</span>},
+					media:{html:<span class="hljs-string">'&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt;You have completed the study&lt;br/&gt;&lt;br/&gt;Thank you very much for your participation.&lt;br/&gt;&lt;br/&gt; Press "space" for continue to next task.&lt;/p&gt;&lt;/div&gt;'</span>}
+				}
+			]
+		}
+	]);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-77">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-77">&#182;</a>
+              </div>
+              <h3 id="the-scorer">The Scorer</h3>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	<span class="hljs-comment">/*
+		The Scorer
+		***********************************************************
+	*/</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-78">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-78">&#182;</a>
+              </div>
+              <p>setting scorer settings</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	Scorer.addSettings(<span class="hljs-string">'compute'</span>,{
+		ErrorVar:<span class="hljs-string">'score'</span>,
+		condVar:<span class="hljs-string">"condition"</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-79">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-79">&#182;</a>
+              </div>
+              <p>condition 1</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		cond1VarValues: [
+			attribute1 + <span class="hljs-string">','</span> + concept1 + <span class="hljs-string">'/'</span> + attribute2 + <span class="hljs-string">','</span> + concept2
+		],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-80">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-80">&#182;</a>
+              </div>
+              <p>condition 2</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		cond2VarValues: [
+			attribute1 + <span class="hljs-string">','</span> + concept2 + <span class="hljs-string">'/'</span> + attribute2 + <span class="hljs-string">','</span> + concept1
+		],
+		parcelVar : <span class="hljs-string">"parcel"</span>,
+		parcelValue : [<span class="hljs-string">'first'</span>],
+		fastRT : <span class="hljs-number">150</span>, <span class="hljs-comment">//Below this reaction time, the latency is considered extremely fast.</span>
+		maxFastTrialsRate : <span class="hljs-number">0.1</span>, <span class="hljs-comment">//Above this % of extremely fast responses within a condition, the participant is considered too fast.</span>
+		minRT : <span class="hljs-number">400</span>, <span class="hljs-comment">//Below this latency</span>
+		maxRT : <span class="hljs-number">10000</span>, <span class="hljs-comment">//above this</span>
+		errorLatency : {use:<span class="hljs-string">"latency"</span>, penalty:<span class="hljs-number">600</span>, useForSTD:<span class="hljs-literal">true</span>},<span class="hljs-comment">//ignore error respones</span>
+		postSettings : {score:<span class="hljs-string">"score"</span>,msg:<span class="hljs-string">"feedback"</span>,url:<span class="hljs-string">"/implicit/scorer"</span>}
+	});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-81">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-81">&#182;</a>
+              </div>
+              <p>scorrer messages</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	Scorer.addSettings(<span class="hljs-string">'message'</span>,{
+		MessageDef: [
+			{ cut:<span class="hljs-string">'-0.65'</span>, message:<span class="hljs-string">'Your data suggest a strong implicit preference for Black People compared to White People'</span> },
+			{ cut:<span class="hljs-string">'-0.35'</span>, message:<span class="hljs-string">'Your data suggest a moderate implicit preference for Black People compared to White People.'</span> },
+			{ cut:<span class="hljs-string">'-0.15'</span>, message:<span class="hljs-string">'Your data suggest a slight implicit preference for Black People compared to White People.'</span> },
+			{ cut:<span class="hljs-string">'0'</span>, message:<span class="hljs-string">'Your data suggest little to no difference in implicit preference between Black People and White People.'</span> },
+			{ cut:<span class="hljs-string">'0.15'</span>, message:<span class="hljs-string">'Your data suggest a slight implicit preference for White People compared to Black People'</span> },
+			{ cut:<span class="hljs-string">'0.35'</span>, message:<span class="hljs-string">'Your data suggest a moderate implicit preference for White People compared to Black People'</span> },
+			{ cut:<span class="hljs-string">'0.65'</span>, message:<span class="hljs-string">'Your data suggest a strong implicit preference for White People compared to Black People'</span> }
+		]
+	});
+
+	API.play();
+});</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

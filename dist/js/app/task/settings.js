@@ -1,0 +1,1 @@
+define(["./script"],function(e){return e.settings});

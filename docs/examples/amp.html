@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>amp.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="amp.html">
+                amp.js
+              </a>
+            
+              
+              <a class="source" href="biat.html">
+                biat.js
+              </a>
+            
+              
+              <a class="source" href="evaluative_priming.html">
+                evaluative_priming.js
+              </a>
+            
+              
+              <a class="source" href="evaluative_priming2.html">
+                evaluative_priming2.js
+              </a>
+            
+              
+              <a class="source" href="gnat.html">
+                gnat.js
+              </a>
+            
+              
+              <a class="source" href="iat.html">
+                iat.js
+              </a>
+            
+              
+              <a class="source" href="iat_component_long.html">
+                iat_component_long.js
+              </a>
+            
+              
+              <a class="source" href="iat_component_short.html">
+                iat_component_short.js
+              </a>
+            
+              
+              <a class="source" href="spf.html">
+                spf.js
+              </a>
+            
+              
+              <a class="source" href="st-iat.html">
+                st-iat.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>amp.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/* global $ */</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>This example creates an amp task.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define([<span class="hljs-string">'app/API'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(API)</span> {</span>
+	<span class="hljs-keyword">var</span> category1 = <span class="hljs-string">'Pleasent'</span>;
+	<span class="hljs-keyword">var</span> category2 = <span class="hljs-string">'Unpleasent'</span>;
+	<span class="hljs-keyword">var</span> condition1= <span class="hljs-string">"white"</span>;
+	<span class="hljs-keyword">var</span> condition2= <span class="hljs-string">"black"</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>a Scorer for the AMP</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	<span class="hljs-keyword">var</span> AMPScorer = {
+						counter: { prime1: {category1: <span class="hljs-number">0</span>, category2: <span class="hljs-number">0</span>} , prime2: {category1: <span class="hljs-number">0</span>, category2: <span class="hljs-number">0</span>}}
+					};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>count the resposnes of the users
+prime1/category1++</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inc_prime1_category1</span><span class="hljs-params">()</span>{</span>
+		AMPScorer.counter.prime1.category1 = AMPScorer.counter.prime1.category1+<span class="hljs-number">1</span>;
+		}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>prime1/category2++</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inc_prime1_category2</span><span class="hljs-params">()</span>{</span>
+		AMPScorer.counter.prime1.category2 = AMPScorer.counter.prime1.category2+<span class="hljs-number">1</span>;
+		}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>prime2/category1++</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inc_prime2_category1</span><span class="hljs-params">()</span>{</span>
+		AMPScorer.counter.prime2.category1 = AMPScorer.counter.prime2.category1+<span class="hljs-number">1</span>;
+		}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>prime2/category2++</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inc_prime2_category2</span><span class="hljs-params">()</span>{</span>
+		AMPScorer.counter.prime2.category2 = AMPScorer.counter.prime2.category2+<span class="hljs-number">1</span>;
+		}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>reset all the counters to 0,call this function before we count all the responses</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">resetCounters</span><span class="hljs-params">()</span>{</span>
+		AMPScorer.counter.prime2.category2=<span class="hljs-number">0</span>;
+		AMPScorer.counter.prime2.category1=<span class="hljs-number">0</span>;
+		AMPScorer.counter.prime1.category2=<span class="hljs-number">0</span>;
+		AMPScorer.counter.prime1.category1=<span class="hljs-number">0</span>;
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>compute the AMP score, according to the logs.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">computeAMPScore</span><span class="hljs-params">(scoreArray)</span>{</span>
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i=<span class="hljs-number">3</span>; i&lt;scoreArray.length; i++){<span class="hljs-comment">// the first 3 are the example images, go over all the other logs.</span>
+			<span class="hljs-keyword">if</span>(scoreArray[i].responseHandle == category1){ <span class="hljs-comment">//pleasent response</span>
+				<span class="hljs-keyword">if</span>(scoreArray[i].data.condition == condition1){ <span class="hljs-comment">//the image is from the first category</span>
+					inc_prime1_category1();
+				}
+				<span class="hljs-keyword">else</span>{<span class="hljs-comment">//do nothing when there is no answer</span>
+					<span class="hljs-keyword">if</span>(scoreArray[i].data.condition == condition2){
+						inc_prime2_category1(); <span class="hljs-comment">//the image is from the second category</span>
+					}
+				}
+			}
+			<span class="hljs-keyword">else</span>{<span class="hljs-comment">// unpleasent response</span>
+				<span class="hljs-keyword">if</span>(scoreArray[i].responseHandle == category2){<span class="hljs-comment">//do nothing when there is no answer</span>
+					<span class="hljs-keyword">if</span>(scoreArray[i].data.condition == condition1){ <span class="hljs-comment">//the image is from the first category</span>
+						inc_prime1_category2();
+					}
+					<span class="hljs-keyword">else</span>{
+						<span class="hljs-keyword">if</span>(scoreArray[i].data.condition == condition2){<span class="hljs-comment">//do nothing when there is no answer</span>
+							inc_prime2_category2(); <span class="hljs-comment">//the image is from the second category</span>
+						}
+					}
+				}
+			}
+		}
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Set the size of the screen</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	API.addSettings(<span class="hljs-string">'canvas'</span>,{
+		maxWidth: <span class="hljs-number">900</span>,
+		proportions : <span class="hljs-number">0.8</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Change the colors to allow better presentation of the colored stimuli.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		background: <span class="hljs-string">'white'</span>,
+		borderWidth: <span class="hljs-number">5</span>,
+		canvasBackground: <span class="hljs-string">'green'</span>,
+		borderColor: <span class="hljs-string">'black'</span>
+	});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>from where to take the images</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	API.addSettings(<span class="hljs-string">'base_url'</span>,{
+		image : <span class="hljs-string">'../examples/images'</span>
+	});
+
+	API.addSettings(<span class="hljs-string">'logger'</span>,{
+        pulse: <span class="hljs-number">20</span>,
+        url : <span class="hljs-string">'/implicit/PiPlayerApplet'</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>use default logger (as copied from documents.txt but replace the regular latency with the computed latency)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        logger: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(trialData, inputData, actionData,logStack)</span>{</span>
+
+			<span class="hljs-keyword">var</span> stimList = <span class="hljs-keyword">this</span>._stimulus_collection.get_stimlist();
+			<span class="hljs-keyword">var</span> mediaList = <span class="hljs-keyword">this</span>._stimulus_collection.get_medialist();
+
+			<span class="hljs-keyword">return</span> {
+				log_serial : logStack.length,
+				trial_id: <span class="hljs-keyword">this</span>._id,
+				name: <span class="hljs-keyword">this</span>.name(),
+				responseHandle: inputData.handle,
+				latency: inputData.latency - trialData.begin,
+				absoluteLatency : inputData.latency,
+				stimuli: stimList,
+				media: mediaList,
+				data: trialData
+			};
+        }
+    });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Define the basic trial (the presentation of the images and words)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	API.addTrialSets({
+		basicTrial: [{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Layout defines what will be presented in the trial. It is like a background display.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			layout: [
+				{location:{left:<span class="hljs-number">2</span>,top:<span class="hljs-number">2</span>},media:{word:<span class="hljs-string">'key: E'</span>}, css:{color:<span class="hljs-string">'white'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'1em'</span>}},
+				{location:{left:<span class="hljs-number">75</span>,top:<span class="hljs-number">2</span>},media:{word:<span class="hljs-string">'key: I'</span>},  css:{color:<span class="hljs-string">'white'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'1em'</span>}},
+				{location:{left:<span class="hljs-number">2</span>,top:<span class="hljs-number">5</span>},media:{word:category2}, css:{color:<span class="hljs-string">'#33ff33'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}},
+				{location:{left:<span class="hljs-number">75</span>,top:<span class="hljs-number">5</span>},media:{word:category1},  css:{color:<span class="hljs-string">'#33ff33'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}}
+			],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Inputs for two possible responses.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			input: [
+				{handle:<span class="hljs-string">'enter'</span>,on:<span class="hljs-string">'enter'</span>}
+			],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Set what to do.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			interactions: [
+				{
+					propositions: [{type:<span class="hljs-string">'begin'</span>}],
+					actions: [
+						{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'primingImage'</span>},<span class="hljs-comment">// display the first stimulus=priming image</span>
+						{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'primeOut'</span>,on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">100</span>}} <span class="hljs-comment">//for 100 ms</span>
+					]
+				},
+				{
+					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'primeOut'</span>}], <span class="hljs-comment">// on time out</span>
+					actions: [
+						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'primingImage'</span>}, <span class="hljs-comment">// hide the first stimulus</span>
+						{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'blankScreen'</span>}, <span class="hljs-comment">// and show the second one=the blank screen</span>
+						{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'blankOut'</span>,on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">100</span>}}
+					]
+				},
+				{
+					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'blankOut'</span>}], <span class="hljs-comment">// on time out</span>
+					actions: [
+						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'blankScreen'</span>}, <span class="hljs-comment">// hide the blank screen</span>
+						{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'targetStim'</span>}, <span class="hljs-comment">// and show the letter</span>
+						{type:<span class="hljs-string">'setInput'</span>,input:{handle:category2,on: <span class="hljs-string">'keypressed'</span>, key:<span class="hljs-string">'e'</span>}},<span class="hljs-comment">//the user can only answer here on</span>
+						{type:<span class="hljs-string">'setInput'</span>,input:{handle:category1,on: <span class="hljs-string">'keypressed'</span>, key:<span class="hljs-string">'i'</span>}},
+						{type:<span class="hljs-string">'setInput'</span>,input:{handle:category2,on:<span class="hljs-string">'leftTouch'</span>,touch:<span class="hljs-literal">true</span>}},
+						{type:<span class="hljs-string">'setInput'</span>,input:{handle:category1,on:<span class="hljs-string">'rightTouch'</span>,touch:<span class="hljs-literal">true</span>}},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>set the begin latency in trialData</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>						{type:<span class="hljs-string">'setTrialAttr'</span>,setter:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data,event)</span>{</span>
+							data.begin = event.latency;
+						}},
+
+						{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'targetOut'</span>,on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">100</span>}}
+					]
+				},
+				{
+					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'targetOut'</span>}], <span class="hljs-comment">// on time out</span>
+					actions: [
+						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'targetStim'</span>}, <span class="hljs-comment">// hide the letter</span>
+						{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'MaskScreen'</span>} <span class="hljs-comment">// and show the mask screen</span>
+					]
+				},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>skip block -&gt; if you press ‘enter’ you will skip the current block.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				{
+					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
+					actions: [
+						{type:<span class="hljs-string">'goto'</span>, destination: <span class="hljs-string">'nextWhere'</span>, properties: {blockStart:<span class="hljs-literal">true</span>}},
+						{type:<span class="hljs-string">'endTrial'</span>}
+					]
+				},
+
+				{<span class="hljs-comment">//What to do upon response</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>the  proposition: dont remove the mask upon timeout, wait until reaction</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:category1}], <span class="hljs-comment">//pleasent response</span>
+					actions: [
+						{type:<span class="hljs-string">'setTrialAttr'</span>,setter:{score:<span class="hljs-string">'1'</span>}},
+						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'All'</span>},
+						{type:<span class="hljs-string">'removeInput'</span>,handle	:[category2,category1]},<span class="hljs-comment">//only one respnse is possible</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>The player sends the value of score to the server, when you call the ‘log’ action</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>						{type:<span class="hljs-string">'log'</span>}, <span class="hljs-comment">// here we call the log action. This is because we want to record the latency of this input (the latency of the response)</span>
+						{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'endTrial'</span>,on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">250</span>}}<span class="hljs-comment">//end the trial 250ms after the response</span>
+					]
+				},
+				{
+					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:category2}], <span class="hljs-comment">//unpleasent response.</span>
+					actions: [
+						{type:<span class="hljs-string">'setTrialAttr'</span>,setter:{score:<span class="hljs-string">'0'</span>}},
+						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'All'</span>},
+						{type:<span class="hljs-string">'removeInput'</span>,handle	:[category2,category1]},
+						{type:<span class="hljs-string">'log'</span>},
+						{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'endTrial'</span>,on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">250</span>}}
+					]
+				},
+				{
+					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'endTrial'</span>}], <span class="hljs-comment">//What to do when endTrial is called.</span>
+					actions: [{type:<span class="hljs-string">'endTrial'</span>}]
+				}
+			] <span class="hljs-comment">// end interactions</span>
+
+		}] <span class="hljs-comment">// end basic trial</span>
+	}); <span class="hljs-comment">// end trialset</span>
+
+	API.addTrialSets({
+		prime1:[{		<span class="hljs-comment">//first condition</span>
+			data: {condition: condition1},
+			inherit:{set: <span class="hljs-string">'basicTrial'</span>},
+			stimuli: [
+				{ inherit: {set: <span class="hljs-string">'targetStimulus'</span>, type:<span class="hljs-string">'exRandom'</span>}, data : {handle:<span class="hljs-string">'targetStim'</span>} },
+				{ inherit: {set: <span class="hljs-string">'primingImage1'</span>, type:<span class="hljs-string">'exRandom'</span>}, data : {handle:<span class="hljs-string">'primingImage'</span>} },
+				{ inherit: <span class="hljs-string">'MaskScreen'</span>},
+				{ inherit: <span class="hljs-string">'blankScreen'</span>}
+			]
+		}],
+		prime2:[{		<span class="hljs-comment">//second condition</span>
+			data: {condition: condition2},
+			inherit:{set: <span class="hljs-string">'basicTrial'</span>},
+			stimuli: [
+				{ inherit: {set: <span class="hljs-string">'targetStimulus'</span>, type:<span class="hljs-string">'exRandom'</span>}, data : {handle:<span class="hljs-string">'targetStim'</span>} },
+				{ inherit: {set: <span class="hljs-string">'primingImage2'</span>, type:<span class="hljs-string">'exRandom'</span>}, data : {handle:<span class="hljs-string">'primingImage'</span>} },
+				{ inherit: <span class="hljs-string">'MaskScreen'</span>},
+				{ inherit: <span class="hljs-string">'blankScreen'</span>}
+			]
+		}]
+	});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>define an example trial- should be diffrent trial because it has diffrent durations.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	API.addTrialSets({
+		exampleTrial: [{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>Layout defines what will be presented in the trial. It is like a background display.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			layout: [
+			{location:{left:<span class="hljs-number">2</span>,top:<span class="hljs-number">2</span>},media:{word:<span class="hljs-string">'key: E'</span>}, css:{color:<span class="hljs-string">'white'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'1em'</span>}},
+			{location:{left:<span class="hljs-number">75</span>,top:<span class="hljs-number">2</span>},media:{word:<span class="hljs-string">'key: I'</span>},  css:{color:<span class="hljs-string">'white'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'1em'</span>}},
+			{location:{left:<span class="hljs-number">2</span>,top:<span class="hljs-number">5</span>},media:{word:category2}, css:{color:<span class="hljs-string">'#33ff33'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}},
+			{location:{left:<span class="hljs-number">75</span>,top:<span class="hljs-number">5</span>},media:{word:category1},  css:{color:<span class="hljs-string">'#33ff33'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}}
+		],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>Inputs for two possible responses.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			input: [
+				{handle:<span class="hljs-string">'enter'</span>,on: <span class="hljs-string">'enter'</span>}
+			],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Set what to do.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			interactions: [
+				{
+					propositions: [{type:<span class="hljs-string">'begin'</span>}],
+					actions: [{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'primingImage'</span>},<span class="hljs-comment">// display the first stimulus</span>
+					{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'primeOut'</span>,on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">125</span>}}]  <span class="hljs-comment">//display longer time in the example trial</span>
+				},
+				{
+					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'primeOut'</span>}], <span class="hljs-comment">// on time out</span>
+					actions: [
+						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'primingImage'</span>}, <span class="hljs-comment">// hide the first stimulus</span>
+						{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'blankScreen'</span>}, <span class="hljs-comment">// and show the second one</span>
+						{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'blankOut'</span>,on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">125</span>}}
+					]
+				},
+				{
+					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'blankOut'</span>}], <span class="hljs-comment">// on time out</span>
+					actions: [
+						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'blankScreen'</span>}, <span class="hljs-comment">// hide the blank screen</span>
+						{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'targetStim'</span>}, <span class="hljs-comment">// and show the letter</span>
+						{type:<span class="hljs-string">'setInput'</span>,input:{handle:category2,on: <span class="hljs-string">'keypressed'</span>, key:<span class="hljs-string">'e'</span>}},<span class="hljs-comment">//the user can only answer here</span>
+						{type:<span class="hljs-string">'setInput'</span>,input:{handle:category1,on: <span class="hljs-string">'keypressed'</span>, key:<span class="hljs-string">'i'</span>}},
+						{type:<span class="hljs-string">'setInput'</span>,input:{handle:category2,on:<span class="hljs-string">'leftTouch'</span>,touch:<span class="hljs-literal">true</span>}},
+						{type:<span class="hljs-string">'setInput'</span>,input:{handle:category1,on:<span class="hljs-string">'rightTouch'</span>,touch:<span class="hljs-literal">true</span>}},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>set the begin latency in trialData</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>						{type:<span class="hljs-string">'setTrialAttr'</span>,setter:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data,event)</span>{</span>
+							data.begin = event.latency;
+						}},
+
+						{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'targetOut'</span>,on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">125</span>}}
+					]
+				},
+				{
+					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'targetOut'</span>}], <span class="hljs-comment">// on time out</span>
+					actions: [
+						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'targetStim'</span>}, <span class="hljs-comment">// hide the first stimulus</span>
+						{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'MaskScreen'</span>} <span class="hljs-comment">// and show the mask screen</span>
+					]
+				},
+				{<span class="hljs-comment">//What to do upon correct response</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>the proposition: dont remove the word upon timeout, wait until reaction</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:category1}], <span class="hljs-comment">//pleasent response</span>
+					actions: [
+						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'All'</span>},
+						{type:<span class="hljs-string">'setTrialAttr'</span>,setter:{score:<span class="hljs-string">'1'</span>}},
+						{type:<span class="hljs-string">'removeInput'</span>,handle	:[category2,category1]},
+						{type:<span class="hljs-string">'log'</span>},
+						{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'endTrial'</span>,on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">250</span>}}
+					]
+				},
+
+				{
+					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:category2}], <span class="hljs-comment">//unpleasent response.</span>
+					actions: [
+						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'All'</span>},
+						{type:<span class="hljs-string">'setTrialAttr'</span>,setter:{score:<span class="hljs-string">'0'</span>}},
+						{type:<span class="hljs-string">'removeInput'</span>,handle	:[category2,category1]},
+						{type:<span class="hljs-string">'log'</span>},
+						{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'endTrial'</span>,on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">250</span>}}
+					]
+				},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>skip block -&gt; if you press ‘enter’ you will skip the current block.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				{
+					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
+					actions: [
+						{type:<span class="hljs-string">'goto'</span>, destination: <span class="hljs-string">'nextWhere'</span>, properties: {blockStart:<span class="hljs-literal">true</span>}},
+						{type:<span class="hljs-string">'endTrial'</span>}
+					]
+				},
+
+				{
+					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'endTrial'</span>}], <span class="hljs-comment">//What to do when endTrial is called.</span>
+					actions: [{type:<span class="hljs-string">'endTrial'</span>}]
+				}
+			]
+		}], <span class="hljs-comment">// end example trial</span>
+
+		example:[{
+			data:{condition:<span class="hljs-string">"example"</span>},
+			inherit:{set: <span class="hljs-string">'exampleTrial'</span>},
+			stimuli: [
+				{ inherit: {set: <span class="hljs-string">'targetStimulus'</span>, type:<span class="hljs-string">'exRandom'</span>}, data : {handle:<span class="hljs-string">'targetStim'</span>} },
+				{ inherit: {set: <span class="hljs-string">'exprimingImage'</span>, type:<span class="hljs-string">'exRandom'</span>}, data : {handle:<span class="hljs-string">'primingImage'</span>} },
+				{ inherit: <span class="hljs-string">'exMaskScreen'</span>},
+				{ inherit: <span class="hljs-string">'blankScreen'</span>}
+			]
+		}]
+
+	});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>Define the instructions trial- will be use gor showing the instruction at the begining of each block, and the user feedback at the end.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	API.addTrialSets(<span class="hljs-string">'inst'</span>,{
+		layout: [
+			{location:{left:<span class="hljs-number">2</span>,top:<span class="hljs-number">2</span>},media:{word:<span class="hljs-string">'key: E'</span>}, css:{color:<span class="hljs-string">'white'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'1em'</span>}},
+			{location:{left:<span class="hljs-number">75</span>,top:<span class="hljs-number">2</span>},media:{word:<span class="hljs-string">'key: I'</span>},  css:{color:<span class="hljs-string">'white'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'1em'</span>}},
+			{location:{left:<span class="hljs-number">2</span>,top:<span class="hljs-number">5</span>},media:{word:category2}, css:{color:<span class="hljs-string">'#33ff33'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}},
+			{location:{left:<span class="hljs-number">75</span>,top:<span class="hljs-number">5</span>},media:{word:category1},  css:{color:<span class="hljs-string">'#33ff33'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}}
+		],
+		input: [
+			{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}, <span class="hljs-comment">//Will handle a SPACEBAR reponse</span>
+			{handle:<span class="hljs-string">'enter'</span>,on:<span class="hljs-string">'enter'</span>},
+			{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'bottomTouch'</span>,touch:<span class="hljs-literal">true</span>}
+		],
+		interactions: [
+			{ <span class="hljs-comment">// begin trial</span>
+				propositions: [{type:<span class="hljs-string">'begin'</span>}],
+				actions: [{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'All'</span>}] <span class="hljs-comment">//Show the instructions, later use to show the user feedback</span>
+			},
+			{
+				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}], <span class="hljs-comment">//What to do when space is pressed</span>
+				actions: [
+					{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'All'</span>}, <span class="hljs-comment">//Hide the instructions</span>
+					{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'endTrial'</span>, on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">500</span>}} <span class="hljs-comment">//In 500ms: end the trial. In the mean time, we get a blank screen.</span>
+				]
+			},
+			{
+				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'endTrial'</span>}], <span class="hljs-comment">//What to do when endTrial is called.</span>
+				actions: [
+					{type:<span class="hljs-string">'endTrial'</span>} <span class="hljs-comment">//End the trial</span>
+				]
+			},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>skip block -&gt; if you press ‘enter’ while the instructions is shown, you will skip the current block.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				{
+					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
+					actions: [
+						{type:<span class="hljs-string">'goto'</span>, destination: <span class="hljs-string">'nextWhere'</span>, properties: {blockStart:<span class="hljs-literal">true</span>}},
+						{type:<span class="hljs-string">'endTrial'</span>}
+					]
+				}
+		]
+	});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>Create the stimuli</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	API.addStimulusSets({</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>These are diffrent types of stimuli.
+That way we can later create a stimulus object the inherits from this set randomly.
+This Default stimulus is inherited by the other stimuli so that we can have a consistent look and change it from one place</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		Default: [
+			{css:{color:<span class="hljs-string">'white'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>}}
+		],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <p>That way we can later create a stimulus object the inherits from this set randomly.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		targetStimulus: [
+			{
+				data: {alias:<span class="hljs-string">'chinese char.'</span>},
+				inherit:<span class="hljs-string">'Default'</span>,
+				media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'targetWords'</span>}} <span class="hljs-comment">//Select a word from the media, randomly</span>
+			}
+		],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p>blankScreen  stimulus (in between the trials)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		MaskScreen : [
+			{
+				data : {handle:<span class="hljs-string">'MaskScreen'</span>},
+				inherit:<span class="hljs-string">'Default'</span>,
+				media: {image:<span class="hljs-string">'ampmask.jpg'</span>},<span class="hljs-comment">//the mask we put on the letter</span>
+				nolog:<span class="hljs-literal">true</span>
+			}
+		],
+		exMaskScreen : [<span class="hljs-comment">// the mask with the : "Rate now"</span>
+			{
+				data : {handle:<span class="hljs-string">'MaskScreen'</span>},
+				inherit:<span class="hljs-string">'Default'</span>,
+				media: {image:<span class="hljs-string">'ampmaskr.jpg'</span>},<span class="hljs-comment">//the mask we put on the letter in the example trial</span>
+				nolog:<span class="hljs-literal">true</span>
+			}
+		],
+		blankScreen : [<span class="hljs-comment">// can be used as a fixation point by replacing the word with '+'</span>
+			{
+				data : {handle:<span class="hljs-string">'blankScreen'</span>},
+				css:{color:<span class="hljs-string">'green'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>},
+				media: {word:<span class="hljs-string">' '</span>},<span class="hljs-comment">//the blank screen in between</span>
+				nolog:<span class="hljs-literal">true</span>
+			}
+		],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <p>priming stimulus: the two catagories of images</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		primingImage1 : [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
+              </div>
+              <p>white</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				{
+					data : {handle:<span class="hljs-string">'primingImage'</span>,alias: <span class="hljs-string">'white'</span>},
+					inherit:<span class="hljs-string">'Default'</span>,
+					media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'Images1'</span>}}
+				}
+			],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <p>black</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		primingImage2 : [
+				{
+					data : {handle:<span class="hljs-string">'primingImage'</span>,alias: <span class="hljs-string">'black'</span>},
+					inherit:<span class="hljs-string">'Default'</span>,
+					media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'Images2'</span>}}
+				}
+			],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-38">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              <p>example images</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		exprimingImage : [
+				{
+					data : {handle:<span class="hljs-string">'primingImage'</span>,alias:<span class="hljs-string">'example'</span>},
+					inherit:<span class="hljs-string">'Default'</span>,
+					media: {inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'exImages'</span>}}
+				}
+			]
+	});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-39">&#182;</a>
+              </div>
+              <p>Create materials (media) for the stimulus
+three catagories of priming images, and one cayagory of words.
+example</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	API.addMediaSets({
+		exImages: [
+			{image: <span class="hljs-string">'ampchair.jpg'</span>},
+			{image: <span class="hljs-string">'amplamp.jpg'</span>},
+			{image: <span class="hljs-string">'ampumbrella.jpg'</span>}
+		]
+	});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>white</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	API.addMediaSets({
+		Images1: [
+			{image: <span class="hljs-string">'sw01.jpg'</span>},
+			{image: <span class="hljs-string">'sw02.jpg'</span>},
+			{image: <span class="hljs-string">'sw03.jpg'</span>},
+			{image: <span class="hljs-string">'sw04.jpg'</span>},
+			{image: <span class="hljs-string">'sw05.jpg'</span>},
+			{image: <span class="hljs-string">'sw06.jpg'</span>},
+			{image: <span class="hljs-string">'sw07.jpg'</span>},
+			{image: <span class="hljs-string">'sw08.jpg'</span>},
+			{image: <span class="hljs-string">'sw09.jpg'</span>},
+			{image: <span class="hljs-string">'sw10.jpg'</span>},
+			{image: <span class="hljs-string">'sw11.jpg'</span>},
+			{image: <span class="hljs-string">'sw12.jpg'</span>},
+			{image: <span class="hljs-string">'wm5.jpg'</span>},
+			{image: <span class="hljs-string">'wm15.jpg'</span>}
+		]
+	});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-41">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-41">&#182;</a>
+              </div>
+              <p>black</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	API.addMediaSets({
+		Images2: [
+			{image: <span class="hljs-string">'sb01.jpg'</span>},
+			{image: <span class="hljs-string">'sb02.jpg'</span>},
+			{image: <span class="hljs-string">'sb03.jpg'</span>},
+			{image: <span class="hljs-string">'sb04.jpg'</span>},
+			{image: <span class="hljs-string">'sb05.jpg'</span>},
+			{image: <span class="hljs-string">'sb06.jpg'</span>},
+			{image: <span class="hljs-string">'sb07.jpg'</span>},
+			{image: <span class="hljs-string">'sb08.jpg'</span>},
+			{image: <span class="hljs-string">'sb09.jpg'</span>},
+			{image: <span class="hljs-string">'sb10.jpg'</span>},
+			{image: <span class="hljs-string">'sb11.jpg'</span>},
+			{image: <span class="hljs-string">'sb12.jpg'</span>}
+		]
+	});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-42">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-42">&#182;</a>
+              </div>
+              <p>the letters</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	API.addMediaSets({
+		targetWords: [
+			{image: <span class="hljs-string">'pic1.jpg'</span>},
+			{image: <span class="hljs-string">'pic2.jpg'</span>},
+			{image: <span class="hljs-string">'pic3.jpg'</span>},
+			{image: <span class="hljs-string">'pic4.jpg'</span>},
+			{image: <span class="hljs-string">'pic5.jpg'</span>},
+			{image: <span class="hljs-string">'pic6.jpg'</span>},
+			{image: <span class="hljs-string">'pic7.jpg'</span>},
+			{image: <span class="hljs-string">'pic8.jpg'</span>},
+			{image: <span class="hljs-string">'pic9.jpg'</span>},
+			{image: <span class="hljs-string">'pic10.jpg'</span>},
+			{image: <span class="hljs-string">'pic11.jpg'</span>},
+			{image: <span class="hljs-string">'pic12.jpg'</span>},
+			{image: <span class="hljs-string">'pic13.jpg'</span>},
+			{image: <span class="hljs-string">'pic14.jpg'</span>},
+			{image: <span class="hljs-string">'pic15.jpg'</span>},
+			{image: <span class="hljs-string">'pic16.jpg'</span>},
+			{image: <span class="hljs-string">'pic17.jpg'</span>},
+			{image: <span class="hljs-string">'pic18.jpg'</span>},
+			{image: <span class="hljs-string">'pic19.jpg'</span>},
+			{image: <span class="hljs-string">'pic20.jpg'</span>},
+			{image: <span class="hljs-string">'pic21.jpg'</span>},
+			{image: <span class="hljs-string">'pic22.jpg'</span>},
+			{image: <span class="hljs-string">'pic23.jpg'</span>},
+			{image: <span class="hljs-string">'pic24.jpg'</span>},
+			{image: <span class="hljs-string">'pic25.jpg'</span>},
+			{image: <span class="hljs-string">'pic26.jpg'</span>},
+			{image: <span class="hljs-string">'pic27.jpg'</span>},
+			{image: <span class="hljs-string">'pic28.jpg'</span>},
+			{image: <span class="hljs-string">'pic29.jpg'</span>},
+			{image: <span class="hljs-string">'pic30.jpg'</span>},
+			{image: <span class="hljs-string">'pic31.jpg'</span>},
+			{image: <span class="hljs-string">'pic32.jpg'</span>},
+			{image: <span class="hljs-string">'pic33.jpg'</span>},
+			{image: <span class="hljs-string">'pic34.jpg'</span>},
+			{image: <span class="hljs-string">'pic35.jpg'</span>},
+			{image: <span class="hljs-string">'pic36.jpg'</span>},
+			{image: <span class="hljs-string">'pic37.jpg'</span>},
+			{image: <span class="hljs-string">'pic38.jpg'</span>},
+			{image: <span class="hljs-string">'pic39.jpg'</span>},
+			{image: <span class="hljs-string">'pic40.jpg'</span>},
+			{image: <span class="hljs-string">'pic41.jpg'</span>},
+			{image: <span class="hljs-string">'pic42.jpg'</span>},
+			{image: <span class="hljs-string">'pic43.jpg'</span>},
+			{image: <span class="hljs-string">'pic44.jpg'</span>},
+			{image: <span class="hljs-string">'pic45.jpg'</span>},
+			{image: <span class="hljs-string">'pic46.jpg'</span>},
+			{image: <span class="hljs-string">'pic47.jpg'</span>},
+			{image: <span class="hljs-string">'pic48.jpg'</span>},
+			{image: <span class="hljs-string">'pic49.jpg'</span>},
+			{image: <span class="hljs-string">'pic50.jpg'</span>},
+			{image: <span class="hljs-string">'pic51.jpg'</span>},
+			{image: <span class="hljs-string">'pic52.jpg'</span>},
+			{image: <span class="hljs-string">'pic53.jpg'</span>},
+			{image: <span class="hljs-string">'pic54.jpg'</span>},
+			{image: <span class="hljs-string">'pic55.jpg'</span>},
+			{image: <span class="hljs-string">'pic56.jpg'</span>},
+			{image: <span class="hljs-string">'pic57.jpg'</span>},
+			{image: <span class="hljs-string">'pic58.jpg'</span>},
+			{image: <span class="hljs-string">'pic59.jpg'</span>},
+			{image: <span class="hljs-string">'pic60.jpg'</span>},
+			{image: <span class="hljs-string">'pic61.jpg'</span>},
+			{image: <span class="hljs-string">'pic62.jpg'</span>},
+			{image: <span class="hljs-string">'pic63.jpg'</span>},
+			{image: <span class="hljs-string">'pic64.jpg'</span>},
+			{image: <span class="hljs-string">'pic65.jpg'</span>},
+			{image: <span class="hljs-string">'pic66.jpg'</span>},
+			{image: <span class="hljs-string">'pic67.jpg'</span>},
+			{image: <span class="hljs-string">'pic68.jpg'</span>},
+			{image: <span class="hljs-string">'pic69.jpg'</span>},
+			{image: <span class="hljs-string">'pic70.jpg'</span>},
+			{image: <span class="hljs-string">'pic71.jpg'</span>},
+			{image: <span class="hljs-string">'pic72.jpg'</span>},
+			{image: <span class="hljs-string">'pic73.jpg'</span>},
+			{image: <span class="hljs-string">'pic74.jpg'</span>},
+			{image: <span class="hljs-string">'pic75.jpg'</span>},
+			{image: <span class="hljs-string">'pic76.jpg'</span>},
+			{image: <span class="hljs-string">'pic77.jpg'</span>},
+			{image: <span class="hljs-string">'pic78.jpg'</span>},
+			{image: <span class="hljs-string">'pic79.jpg'</span>},
+			{image: <span class="hljs-string">'pic80.jpg'</span>},
+			{image: <span class="hljs-string">'pic81.jpg'</span>},
+			{image: <span class="hljs-string">'pic82.jpg'</span>},
+			{image: <span class="hljs-string">'pic83.jpg'</span>},
+			{image: <span class="hljs-string">'pic84.jpg'</span>},
+			{image: <span class="hljs-string">'pic85.jpg'</span>},
+			{image: <span class="hljs-string">'pic86.jpg'</span>},
+			{image: <span class="hljs-string">'pic87.jpg'</span>},
+			{image: <span class="hljs-string">'pic88.jpg'</span>},
+			{image: <span class="hljs-string">'pic89.jpg'</span>},
+			{image: <span class="hljs-string">'pic90.jpg'</span>},
+			{image: <span class="hljs-string">'pic91.jpg'</span>},
+			{image: <span class="hljs-string">'pic92.jpg'</span>},
+			{image: <span class="hljs-string">'pic93.jpg'</span>},
+			{image: <span class="hljs-string">'pic94.jpg'</span>},
+			{image: <span class="hljs-string">'pic95.jpg'</span>},
+			{image: <span class="hljs-string">'pic96.jpg'</span>},
+			{image: <span class="hljs-string">'pic97.jpg'</span>},
+			{image: <span class="hljs-string">'pic98.jpg'</span>},
+			{image: <span class="hljs-string">'pic99.jpg'</span>},
+			{image: <span class="hljs-string">'pic100.jpg'</span>},
+			{image: <span class="hljs-string">'pic101.jpg'</span>},
+			{image: <span class="hljs-string">'pic102.jpg'</span>},
+			{image: <span class="hljs-string">'pic103.jpg'</span>},
+			{image: <span class="hljs-string">'pic104.jpg'</span>},
+			{image: <span class="hljs-string">'pic105.jpg'</span>},
+			{image: <span class="hljs-string">'pic106.jpg'</span>},
+			{image: <span class="hljs-string">'pic107.jpg'</span>},
+			{image: <span class="hljs-string">'pic108.jpg'</span>},
+			{image: <span class="hljs-string">'pic109.jpg'</span>},
+			{image: <span class="hljs-string">'pic110.jpg'</span>},
+			{image: <span class="hljs-string">'pic111.jpg'</span>},
+			{image: <span class="hljs-string">'pic112.jpg'</span>},
+			{image: <span class="hljs-string">'pic113.jpg'</span>},
+			{image: <span class="hljs-string">'pic114.jpg'</span>},
+			{image: <span class="hljs-string">'pic115.jpg'</span>},
+			{image: <span class="hljs-string">'pic116.jpg'</span>},
+			{image: <span class="hljs-string">'pic117.jpg'</span>},
+			{image: <span class="hljs-string">'pic118.jpg'</span>},
+			{image: <span class="hljs-string">'pic119.jpg'</span>},
+			{image: <span class="hljs-string">'pic120.jpg'</span>},
+			{image: <span class="hljs-string">'pic121.jpg'</span>},
+			{image: <span class="hljs-string">'pic122.jpg'</span>},
+			{image: <span class="hljs-string">'pic123.jpg'</span>},
+			{image: <span class="hljs-string">'pic124.jpg'</span>},
+			{image: <span class="hljs-string">'pic125.jpg'</span>},
+			{image: <span class="hljs-string">'pic126.jpg'</span>},
+			{image: <span class="hljs-string">'pic127.jpg'</span>},
+			{image: <span class="hljs-string">'pic128.jpg'</span>}
+		]
+	});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-43">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-43">&#182;</a>
+              </div>
+              <p>Defines the sequence of trials</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	API.addSequence([
+		{ <span class="hljs-comment">//Instructions trial</span>
+			data: {blockStart:<span class="hljs-literal">true</span>},
+			inherit : <span class="hljs-string">"inst"</span>,
+			stimuli: [
+				{<span class="hljs-comment">//The instructions stimulus</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-44">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-44">&#182;</a>
+              </div>
+              <p>the instructions that will be shown on the screen</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>					media:{html:<span class="hljs-string">'&lt;div&gt;&lt;p style="font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial"&gt;&lt;color="FFFFFF"&gt;Press the key &lt;B&gt;I&lt;/B&gt; if the drawing is more pleasant than average. Hit the &lt;b&gt;E&lt;/b&gt; key If it is more unpleasant than average. The images appear and disappear quickly.  Remember to ignore the first picture and evaluate only the Chinese drawing.&lt;br/&gt;&lt;br/&gt;When you are ready to try a few practice responses, hit the &lt;b&gt;space bar&lt;/b&gt;.&lt;/p&gt;&lt;/div&gt;'</span>}
+				}]},
+		{ <span class="hljs-comment">//The presentation example trials</span>
+			mixer: <span class="hljs-string">'repeat'</span>,<span class="hljs-comment">// Repeat 3 times the trial.</span>
+			times: <span class="hljs-number">3</span>,
+			data : [{inherit: <span class="hljs-string">'example'</span>,data:{block:<span class="hljs-number">0</span>}}]
+		},
+
+		{ <span class="hljs-comment">//Instructions trial</span>
+			data: {blockStart:<span class="hljs-literal">true</span>},
+			inherit : <span class="hljs-string">"inst"</span>,
+			stimuli: [
+				{<span class="hljs-comment">//The instructions stimulus</span>
+					media:{html:<span class="hljs-string">'&lt;div&gt;&lt;p style="font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial"&gt;&lt;color="FFFFFF"&gt;&lt;br/&gt;See how fast it is? Don\'t worry if you miss some. Go with your gut feelings.&lt;br&gt;&lt;br&gt;Concentrate on the drawing and rate it as more "pleasant" than average with the &lt;b&gt;I&lt;/b&gt; key, or more "unpleasant" than average with the &lt;b&gt;E&lt;/b&gt; key.&lt;br/&gt;&lt;br/&gt;Evaluate each Chinese drawing and not the image that appears before it. The images are sometimes distracting.&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style="font-size:14px; text-align:center; font-family:arial"&gt;Ready? Press the &lt;b&gt;space bar&lt;/b&gt; to begin.&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style="font-size:12px; text-align:center; font-family:arial"&gt;(round 1 of 3)&lt;/p&gt;&lt;/div&gt;'</span>}
+				}]},
+		{ <span class="hljs-comment">//The presentation trials</span>
+			mixer: <span class="hljs-string">'random'</span>,
+			data : [{
+				mixer: <span class="hljs-string">'repeat'</span>,<span class="hljs-comment">// Repeat 40 times the trial. (20 times each combination)</span>
+				times: <span class="hljs-number">20</span>,
+				data : [
+					{inherit: <span class="hljs-string">'prime1'</span>,data:{block:<span class="hljs-number">1</span>}},
+					{inherit: <span class="hljs-string">'prime2'</span>,data:{block:<span class="hljs-number">1</span>}}
+				]
+			}]
+		},
+
+		{ <span class="hljs-comment">//Instructions trial, second round</span>
+			data: {blockStart:<span class="hljs-literal">true</span>},
+			inherit : <span class="hljs-string">"inst"</span>,
+			stimuli: [
+				{<span class="hljs-comment">//The instructions stimulus</span>
+					media:{html:<span class="hljs-string">'&lt;div&gt;&lt;p style="font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial"&gt;&lt;color="FFFFFF"&gt;&lt;br/&gt;Continue to the second round of this task. The rules are exactly the same:&lt;br/&gt;&lt;br/&gt;Concentrate on the drawing and rate it as more "pleasant" than average with the &lt;b&gt;I&lt;/b&gt; key, or more "unpleasant" than average with the &lt;b&gt;E&lt;/b&gt; key.&lt;br/&gt;&lt;br/&gt;Evaluate each Chinese drawing and not the image that appears before it. The images are sometimes distracting.&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style="font-size:14px; text-align:center; font-family:arial"&gt;Ready? Press the &lt;b&gt;space bar&lt;/b&gt; to begin.&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style="font-size:12px; text-align:center; font-family:arial"&gt;(round 2 of 3)&lt;/p&gt;&lt;/div&gt;'</span>}
+				}
+			]},
+		{ <span class="hljs-comment">//The presentation trials</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-45">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-45">&#182;</a>
+              </div>
+              <p>Repeat 40 times the trial. (20 times each combination)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			mixer: <span class="hljs-string">'random'</span>,
+			data : [{
+				mixer: <span class="hljs-string">'repeat'</span>,<span class="hljs-comment">// Repeat 40 times the trial. (20 times each combination)</span>
+				times: <span class="hljs-number">20</span>,
+				data : [
+					{inherit: <span class="hljs-string">'prime1'</span>,data:{block:<span class="hljs-number">2</span>}},
+					{inherit: <span class="hljs-string">'prime2'</span>,data:{block:<span class="hljs-number">2</span>}}
+				]
+			}]
+		},
+
+		{ <span class="hljs-comment">//Instructions trial, third round</span>
+			data: {blockStart:<span class="hljs-literal">true</span>},
+			inherit : <span class="hljs-string">"inst"</span>,
+			stimuli: [
+				{<span class="hljs-comment">//The instructions stimulus</span>
+					media:{html:<span class="hljs-string">'&lt;div&gt;&lt;p style="font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial"&gt;&lt;color="FFFFFF"&gt;&lt;br/&gt;And now to the last round of this task. The rules are exactly the same: &lt;br/&gt;&lt;br/&gt;Concentrate on the drawing and rate it as more "pleasant" than average with the &lt;b&gt;I&lt;/b&gt; key, or more "unpleasant" than average with the &lt;b&gt;E&lt;/b&gt; key.&lt;br&gt;&lt;br&gt;Evaluate each Chinese drawing and not the image that appears before it. The images are sometimes distracting.&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style="font-size:14px; text-align:center; font-family:arial"&gt;Ready? Press the &lt;b&gt;space bar&lt;/b&gt; to begin.&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style="font-size:12px; text-align:center; font-family:arial"&gt;(round 3 of 3)&lt;/p&gt;&lt;/div&gt;'</span>}
+				}]},
+		{ <span class="hljs-comment">//The presentation trials</span>
+			mixer: <span class="hljs-string">'random'</span>,
+			data : [{
+				mixer: <span class="hljs-string">'repeat'</span>,<span class="hljs-comment">// Repeat 40 times the trial. (20 times each combination)</span>
+				times: <span class="hljs-number">20</span>,
+				data : [
+					{inherit: <span class="hljs-string">'prime1'</span>,data:{block:<span class="hljs-number">3</span>}},
+					{inherit: <span class="hljs-string">'prime2'</span>,data:{block:<span class="hljs-number">3</span>}}
+				]
+			}]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-46">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-46">&#182;</a>
+              </div>
+              <p>user feedback</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {blockStart:<span class="hljs-literal">true</span>},
+			inherit: <span class="hljs-string">"inst"</span>,
+			layout: [],
+			stimuli: [],
+				customize: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+				<span class="hljs-keyword">var</span> trial = <span class="hljs-keyword">this</span>;
+				console.log(<span class="hljs-string">'computing AMP score..'</span>);<span class="hljs-comment">//printing to the console</span>
+				resetCounters();
+				console.log(API.getLogs());<span class="hljs-comment">//printing to the consol the log's array</span>
+				<span class="hljs-keyword">var</span> logs = API.getLogs();<span class="hljs-comment">//saving the logs</span>
+				computeAMPScore(logs);<span class="hljs-comment">// computing the AMP score</span>
+				<span class="hljs-keyword">var</span> feedback = <span class="hljs-string">'After '</span> + condition1 + <span class="hljs-string">', '</span>+AMPScorer.counter.prime1.category1+<span class="hljs-string">' of the responses were ‘pleasant’  and '</span>+ AMPScorer.counter.prime1.category2+<span class="hljs-string">' of the responses were ‘unpleasant’&lt;br&gt;After '</span> + condition2 + <span class="hljs-string">', '</span>+ AMPScorer.counter.prime2.category1+<span class="hljs-string">' of the responses were ‘pleasant’ and '</span>+ AMPScorer.counter.prime2.category2+<span class="hljs-string">' of the responses were ‘unpleasant’.'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-47">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-47">&#182;</a>
+              </div>
+              <p>report to the server</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				$.post(<span class="hljs-string">"/implicit/scorer"</span>, <span class="hljs-built_in">JSON</span>.stringify({feedback:feedback}));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-48">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-48">&#182;</a>
+              </div>
+              <p>show the score</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				<span class="hljs-keyword">var</span> media1 = {media:{html:<span class="hljs-string">'&lt;div&gt;&lt;p style="font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial"&gt;&lt;color="#FFFFFF"&gt;'</span> + feedback + <span class="hljs-string">'&lt;/p&gt;&lt;/div&gt;'</span>}};
+				trial.stimuli.push(media1);
+			}
+		},
+		{ <span class="hljs-comment">//Instructions trial, the end of the task, instruction what to do next</span>
+			data: {blockStart:<span class="hljs-literal">true</span>},
+			inherit : <span class="hljs-string">"inst"</span>,
+			stimuli: [
+				{<span class="hljs-comment">//The instructions stimulus</span>
+					media:{html:<span class="hljs-string">'&lt;div&gt;&lt;p style="style="font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial"&gt;&lt;color="#FFFFFF"&gt;You have completed the task. Press space for continue to next task.&lt;/p&gt;&lt;/div&gt;'</span>}
+				}
+			]
+		}
+	]); <span class="hljs-comment">// end sequence</span>
+
+	API.play();
+});</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

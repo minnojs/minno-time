@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+        <meta HTTP-EQUIV="Expires" CONTENT="0"></meta>
+        <meta HTTP-EQUIV="Pragma" CONTENT="no-cache"></meta>
+        <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache"></meta>
+        <meta name="viewport" content="user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1" />
+
+        <link type="text/css" rel="Stylesheet" href="css/reset.css"/>
+        <link type="text/css" rel="Stylesheet" href="css/styles.css"/>
+
+		<script>
+			// create log as a shortcut to console.log if possible, note that this is a global function!
+			try {
+				log = console.log;
+				log('Verify console.log');
+			}
+			catch(e) {
+				log = function(){};
+			}
+		</script>
+		<script src="js/libs/require.js?get=<?php echo time()?>"></script>
+
+		<script type="text/javascript">
+			function getParameterByName(name) {
+			    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+			    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+			        results = regex.exec(location.search);
+			    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+			}
+
+			require(['js/config'], function() {
+				require([getParameterByName('url') || '../examples/iat.js']);
+			});
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

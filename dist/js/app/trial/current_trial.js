@@ -1,0 +1,1 @@
+define([],function(){var e;return function(t){return t&&(e=t),e}});

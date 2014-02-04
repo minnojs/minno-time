@@ -1,0 +1,1 @@
+define(["underscore","./settings"],function(e,t){return function(n,r){var i;return e.isString(t.base_url)?i=t.base_url:e.isObject(t.base_url)&&(i=t.base_url[r]),i?i[i.length-1]!="/"&&(i+="/"):i="",i+n}});

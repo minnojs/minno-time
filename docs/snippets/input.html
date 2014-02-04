@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>input.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="inheritance.html">
+                inheritance.js
+              </a>
+            
+              
+              <a class="source" href="input.html">
+                input.js
+              </a>
+            
+              
+              <a class="source" href="interactions.html">
+                interactions.js
+              </a>
+            
+              
+              <a class="source" href="sequence.html">
+                sequence.js
+              </a>
+            
+              
+              <a class="source" href="settings.html">
+                settings.js
+              </a>
+            
+              
+              <a class="source" href="stimulus.html">
+                stimulus.js
+              </a>
+            
+              
+              <a class="source" href="touch.html">
+                touch.js
+              </a>
+            
+              
+              <a class="source" href="trial.html">
+                trial.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>input.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define([<span class="hljs-string">'app/API'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(API)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h3 id="input">input</h3>
+<p>The trial input attribute lists the input types that the player is familiar with.
+Each input element must include both a handle and an on propery. </br>
+The <strong>handle</strong> is the way we refer to this type of input inside the player (in the interaction section), it is basicly the name we give this input.
+The <strong>on</strong> parameter describes the specific input that triggers this element.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+	API.addSequence([</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <h5 id="keypressed">Keypressed</h5>
+<p>The keypressed input takes an additional property: <em>key</em>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			input: [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Key can take single characters.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				{handle:<span class="hljs-string">'end'</span>,on:<span class="hljs-string">'keypressed'</span>, key:<span class="hljs-string">'i'</span>},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Or key codes (69 is the key code for e).</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				{handle:<span class="hljs-string">'end'</span>,on:<span class="hljs-string">'keypressed'</span>, key:<span class="hljs-number">69</span>},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>And even arrays</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				{handle:<span class="hljs-string">'otherHandle'</span>,on:<span class="hljs-string">'keypressed'</span>, key:[<span class="hljs-string">'i'</span>,<span class="hljs-number">69</span>]}
+			],
+			layout: [{media :{word:<span class="hljs-string">'Click e or i to move on'</span>}}],
+			interactions: [
+				{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>This is where we tell the player to respond to the input.
+More about this in the propositions tutorial.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
+					actions: [{type:<span class="hljs-string">'endTrial'</span>}]
+				}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>There are several shortcuts for usefull keypresses that do not require the <em>key</em> paramater.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			input: [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Space</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				{handle:<span class="hljs-string">'end'</span>,on:<span class="hljs-string">'space'</span>},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Enter</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				{handle:<span class="hljs-string">'end'</span>,on:<span class="hljs-string">'enter'</span>},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Escape</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				{handle:<span class="hljs-string">'end'</span>,on:<span class="hljs-string">'esc'</span>}
+			],
+			layout: [{media :{word:<span class="hljs-string">'Click enter escape or space to move on'</span>}}],
+			interactions: [
+				{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>This is where we tell the player to respond to the input.
+More about this in the propositions tutorial.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
+					actions: [{type:<span class="hljs-string">'endTrial'</span>}]
+				}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <h5 id="click">Click</h5>
+<p>React to a click on an element.
+Takes either a class handle or an html element to present.
+In case an element is defined it is presented when the input is activated.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			input: [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p><strong>stimHandle</strong> is used to indicate stimuli with the appropriate Handle (in this case “myStimulus”).</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				{handle:<span class="hljs-string">'end'</span>,on:<span class="hljs-string">'click'</span>,stimHandle:<span class="hljs-string">'myStimulus'</span>},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p><strong>element</strong> allows you to insert an html (or even jquery) element for this interaction</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				{handle:<span class="hljs-string">'end'</span>,on:<span class="hljs-string">'click'</span>,element:<span class="hljs-string">'&lt;div&gt;bump&lt;/div&gt;'</span>}
+			],
+			layout: [{data:{handle:<span class="hljs-string">'myStimulus'</span>},media :{word:<span class="hljs-string">'Click me too!!'</span>}}],
+			interactions: [
+				{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>This is where we tell the player to respond to the input.
+More about this in the propositions tutorial.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
+					actions: [{type:<span class="hljs-string">'endTrial'</span>}]
+				}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <h5 id="timeout">Timeout</h5>
+<p>React after a set time.
+Takes a duration property in miliseconds. </br>
+This input is especialy usefell together with the removeInput action. (see the actions tutorial)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			input: [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>This trial will end after five seconds.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				{handle:<span class="hljs-string">'end'</span>, on: <span class="hljs-string">'timeout'</span>, duration: <span class="hljs-number">3000</span>}
+			],
+			layout: [{media :{word:<span class="hljs-string">'Wait just five seconds'</span>}}],
+			interactions: [
+				{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>This is where we tell the player to respond to the input.
+More about this in the propositions tutorial.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
+					actions: [{type:<span class="hljs-string">'endTrial'</span>}]
+				}
+			]
+		}
+	]);
+
+	API.play();
+});</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
