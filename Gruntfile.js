@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 			full: '/*!\n' +
 				' * <%= pkg.name %> v<%= pkg.version %>\n' +
 				' * <%= pkg.license %> License\n */' +
-				'/*\n'
+				'\n'
 		},
 
 		jshint: {
@@ -57,14 +57,14 @@ module.exports = function(grunt) {
 							include: "text!extensions/iat/jst/layout.jst", // include the template for the simpleLayout
 							exclude: ['app/API','underscore','jquery','extensions/dscore/Scorer','backbone']
 						}
-					]
-					/*
-					// This works in modernizr why not here?
+					],
+
+					// Add banner
 					wrap: {
-						start: '<%= banner.compact %>',
+						start: '<%= banner.full %>',
 						end: ''
 					}
-					*/
+
 
 				}
 			}
