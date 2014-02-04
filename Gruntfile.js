@@ -8,8 +8,8 @@ module.exports = function(grunt) {
 			compact: '/*! <%= pkg.name %> <%= pkg.version %> (Custom Build) | <%= pkg.license %> */',
 			full: '/*!\n' +
 				' * <%= pkg.name %> v<%= pkg.version %>\n' +
-				' * <%= pkg.license %> License\n */' +
-				'\n'
+				' * <%= pkg.license %> License\n' +
+				' */\n'
 		},
 
 		jshint: {
@@ -187,13 +187,6 @@ module.exports = function(grunt) {
 		});
 	});
 
-	// Default task(s).
-	grunt.registerTask('default', ['jshint']);
-
-	grunt.registerTask('init', ['userDir','docs']);
-
-	grunt.registerTask('server', ['express', 'watch','express-keepalive']);
-
 	// Documentation.
 	// Only run the user targets if the user directory exists
 	grunt.registerTask('docs', 'Building documentation', function(){
@@ -206,6 +199,15 @@ module.exports = function(grunt) {
 		grunt.task.run('docco', 'pipDirectory', 'jadeMarked');
 	});
 
+	// Default task(s).
+	grunt.registerTask('default', ['jshint']);
+	grunt.registerTask('server', ['express', 'watch','express-keepalive']);
+
 	// build production stuff
-	grunt.registerTask('build', ['requirejs','docs']);
+	grunt.registerTask('build', 'Building PIplayer', function(){
+		if (!grunt.option('site') && !grunt.file.isDir('user')) {
+			grunt.task.run('userDir');
+		}
+		grunt.task.run('requirejs','docs');
+	});
 };

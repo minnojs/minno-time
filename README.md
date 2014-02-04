@@ -56,4 +56,6 @@ All the data that is recorded by the player is sent to a URL of your choosing. T
 ### Building the project
 In order to build this project you should install [Node.js](http://nodejs.org/) and then run `npm install` in the root directory.
 
-We use [Grunt](http://gruntjs.com/) in order to automate tasks. `grunt build` should create a dist folder with the optimzed javascript, and a docs folder with documentation (in case you do not have the grunt client installed globaly, you can try to use `./node_modules/.bin/grunt build` instead).
+We use [Grunt](http://gruntjs.com/) in order to automate tasks. `grunt build` should create a dist folder with the optimzed javascript, and a docs folder with documentation. You can specifiy an alternative url for the player using `grunt build --player=path/to/my/player`. You can ask for the site version (as opposed to local version) of the documentation using `grunt build --site`.
+
+In case you do not have the grunt client installed globaly, you can try to use `./node_modules/.bin/grunt build` instead.

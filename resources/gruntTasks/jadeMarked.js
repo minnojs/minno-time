@@ -36,10 +36,12 @@ module.exports = function(grunt) {
 
 					// run this file through the jade template
 					src = template({
+						site: grunt.option('site'),
+						player: grunt.option('player') || "../../dist/index.html?url=", // by default use the current dist
 						tab: self.target,
 						content: src
 					});
-					console.log('Writing ' + filepath + ' ==> ' + file.dest);
+					grunt.log.writeln('Writing ' + filepath + ' ==> ' + file.dest);
 					grunt.file.write(file.dest, src);
 				}
 			});

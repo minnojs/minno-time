@@ -56,6 +56,8 @@ module.exports = function(grunt){
 							});
 
 						grunt.file.write(path.join(file.dest,'index.html'),template({
+							site: grunt.option('site'),
+							player: grunt.option('player') || "../../dist/index.html?url=", // by default use the current dist
 							dir: filepath,
 							files: files,
 							readme: readme

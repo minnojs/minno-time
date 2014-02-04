@@ -34,7 +34,7 @@ html
 						span.icon-bar
 						span.icon-bar
 						span.icon-bar
-					a.navbar-brand(href="/") PI player
+					a.navbar-brand(href="https://github.com/ProjectImplicit/PIPlayer") PI player
 
 				nav#navbar.navbar-collapse.bs-navbar-collapse(role="navigation")
 					ul.nav.navbar-nav
@@ -42,8 +42,9 @@ html
 						li: a(href="../snippets/index.html") Snippets
 						li: a(href="../examples/index.html") Examples
 						li: a(href="../tutorials/API.html") API
-						li: a(href="../user") Your Files
+						if !site
+							li: a(href="../user") Your Files
 					ul.nav.navbar-nav.navbar-right
-						li: a(href="") About
+						li: a(href="../tutorials/overview.html") About
 		div#main.container
 			block content
