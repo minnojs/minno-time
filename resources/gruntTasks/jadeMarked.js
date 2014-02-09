@@ -22,6 +22,7 @@ module.exports = function(grunt) {
 		var self = this;
 		var options = this.data;
 		var template = createTemplate(options.template);
+		var replaceObj = options.replace || {};
 
 		this.files.forEach(function(file){
 			// Warn on and remove invalid source files
@@ -31,13 +32,17 @@ module.exports = function(grunt) {
 				} else {
 					var src = grunt.file.read(filepath);
 
+					// replace all occurances of prop
+					for (var prop in replaceObj){
+						src = src.replace(prop, replaceObj[prop]);
+					}
+
 					// run this file through markdown
 					src = md(src);
 
 					// run this file through the jade template
 					src = template({
 						site: grunt.option('site'),
-						player: grunt.option('player') || "../../dist/index.html?url=", // by default use the current dist
 						tab: self.target,
 						content: src
 					});

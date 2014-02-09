@@ -112,6 +112,10 @@ module.exports = function(grunt) {
 		jadeMarked: {
 			tutorials : {
 				template: 'resources/templates/tutorials.jade',
+				replace: {
+					// by default use the current dist
+					'#{player}' : '../../<%= grunt.option("player") %>'
+				},
 				files: [
 					{
 						expand: true,					// Enable dynamic expansion.
@@ -169,8 +173,16 @@ module.exports = function(grunt) {
 			user:{
 				files: ['user/*.js'],
 				tasks: ['docco:user', 'pipDirectory:user']
+			},
+			tutorials:{
+				files: ['resources/tutorials/*.md'],
+				tasks: ['jadeMarked:tutorials']
 			}
 		}
+	});
+
+	grunt.option.init({
+		player: "dist/index.html?url=" // set the default player option
 	});
 
 	grunt.task.loadTasks('resources/gruntTasks');
@@ -201,7 +213,7 @@ module.exports = function(grunt) {
 
 	// Default task(s).
 	grunt.registerTask('default', ['jshint']);
-	grunt.registerTask('server', ['express', 'watch','express-keepalive']);
+	grunt.registerTask('server', ['express', 'watch:user','express-keepalive']);
 
 	// build production stuff
 	grunt.registerTask('build', 'Building PIplayer', function(){
