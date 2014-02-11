@@ -80,6 +80,10 @@ define(['underscore','./current_trial'],function(_,current_trial){
 					if (!proposition.value.apply(trial,[trial,inputData])) {
 						evaluation = false;
 					}
+					break;
+
+				default:
+					throw new Error('Unknown proposition type: ' + proposition.type);
 			}
 
 			isTrue = isTrue && (proposition.negate ? !evaluation : evaluation);
