@@ -43,7 +43,7 @@ define(["utils/pubsub","utils/interface/interface"],function(pubsub,input){
 			if (typeof options.handle == 'undefined') {
 				throw new Error('The trigger action requires a handle property');
 			}
-			pubsub.publish('trial:setInput',[{handle:options.handle,on:'timeout',duration:0}]);
+			pubsub.publish('trial:setInput',[{handle:options.handle,on:'timeout',duration:+options.duration || 0}]);
 		},
 
 		removeInput: function(options){

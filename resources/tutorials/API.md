@@ -277,8 +277,10 @@ Any attributes in the setter object will be coppied to the trial.data object.
 	```
 
 **trigger**:
-Immediately activate the input `handle` (this is equivilent to adding a timeout with duration set to 0).
+
+Activate the input `handle`. If duration is set, the activation happens after the duration. By default the input `handle` is triggered immediately.
 * `{type:'trigger',handle : 'now'}`
+* `{type:'trigger',handle : 'later',duration:250}`
 
 **setInput**:
 Set input listener (useful for adding timeouts), takes an `input` [object](#input-).
