@@ -9,7 +9,9 @@ define(['jquery','utils/pubsub','./evaluate','./action'],function($,pubsub,evalu
 	var interact = function(interactions,input_data){
 		$.each(interactions,function(key,row){
 			if (evaluate(row.propositions,input_data)) {
-				activate(row.actions,input_data);
+				// if this action includes endTrial we want to stop evalutation
+				// otherwise we might evaluate using data from the next trial by accident...
+				return activate(row.actions,input_data);
 			}
 		});
 	};
