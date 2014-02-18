@@ -69,7 +69,7 @@ define(['app/API'], function(API) {
 	// The redirect setting decides where to redirect the player at the end of the task.
 	// By default, the player simply refreshes the current page.
 	// This option is not used if the endTask hook is set.
-	API.addSettings('redirect','my.domain.ogr/next/');
+	API.addSettings('redirect','my.domain.org/next/');
 
 	// ### Meta data
 	/* Meta data */
