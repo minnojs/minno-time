@@ -64,8 +64,6 @@ module.exports = function(grunt) {
 						start: '<%= banner.full %>',
 						end: ''
 					}
-
-
 				}
 			}
 		},
@@ -114,7 +112,9 @@ module.exports = function(grunt) {
 				template: 'resources/templates/tutorials.jade',
 				replace: {
 					// by default use the current dist
-					'#{player}' : '../../<%= grunt.option("player") %>'
+					'#{player}' : '../../<%= grunt.option("player") %>',
+					// we keep the refrence to the md file so the connection is kept within github
+					'./API.md' : './API.html'
 				},
 				files: [
 					{
