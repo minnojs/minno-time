@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="en"></html><html><head><title>Project Implicit</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"><!-- If we ever need the js stuff...--><!--script(src="http://code.jquery.com/jquery-2.1.0.min.js")--><!--script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js")--><style>div#main {padding-top:50px}
+.sidenav {background-color: #F7F5FA;border-radius: 5px;margin-bottom: 30px;margin-top: 30px;padding-bottom: 10px;padding-top: 10px;text-shadow: 0 1px 0 #FFFFFF;}
+.sidenav.nav li > a {color: #999999;display: block;font-size: 13px;font-weight: 600;padding: 5px 20px;}
+.sidenav.nav li > a:hover {text-decoration:none;color: #563D7C;}
+.sidenav.nav .nav > li > a {font-weight: 500; padding: 3px 0px 3px 30px}
+
+
+.badge-js {background-color: #f89406;}
+.badge-js:hover {background-color: #c67605;}
+.badge-docco {background-color: #468847;}
+.badge-docco:hover {background-color: #356635;}
+</style><!-- Initialize highlight js (do we need this on every page?)--><link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css"><script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();
+
+</script></head><body><nav role="navigation" class="navbar navbar-inverse navbar-fixed-top"><div class="container"><div class="navbar-header"><button type="button" data-toggle="collapse" data-target="#navbar" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="https://github.com/ProjectImplicit/PIPlayer" class="navbar-brand">PI player</a></div><nav id="navbar" role="navigation" class="navbar-collapse bs-navbar-collapse"><ul class="nav navbar-nav"><li><a href="../tutorials/overview.html">Tutorial</a></li><li><a href="../snippets/index.html">Snippets</a></li><li><a href="../examples/index.html">Examples</a></li><li><a href="../tutorials/API.html">API</a></li></ul><ul class="nav navbar-nav navbar-right"><li><a href="../tutorials/overview.html">About</a></li></ul></nav></div></nav><div id="main" class="container"><div class="row"><div class="col-md-3"><ul class="nav affix-top sidenav"><li><a href="./overview.html">Overview</a></li><li><a href="./javascript.html">Javascript</a></li><li><a href="./hello.html">Hello world</a></li><li><a href="./slideshow.html">Slideshow</a></li><li><a href="javascript:void(0)">Stroop</a><ul class="nav"><li><a href="./stroop-setup.html">Setup</a></li><li><a href="./stroop-interactions.html">Interactions</a></li><li><a href="./stroop-inheritance.html">Inheritance</a></li><li><a href="./stroop-block.html">Block</a></li><li><a href="./stroop-task.html">Task</a></li></ul></li></ul></div><div class="col-md-9"><h2 id="stroop-small-interactions-small-">Stroop <small>Interactions</small></h2>
+<p>So far we created the very general way that the task looks. The next step is to create interactions that will make the player interactive. We will first set up the <code>input</code> and <code>stimuli</code> properties of the trial and then dig into <code>interactions</code>.</p>
+<p>We will keep extending the trial we started in the setup section. For now we will develope the <em>congruent</em> stimulus trial, later on we will show how to apply it to the <em>incongruent</em> trials as well.</p>
+<h3 id="input">Input</h3>
+<p>First we want to tell the player to listen for user input. The player has an internal event system that triggers each time a significant event happens. We need listeners that trigger internal events each time that an appropriate key is pressed. We will add a separate input listener for left (congruent) and right (incongruent) responses. They will use the <code>e</code> and <code>i</code> keys for left and right respectively. These listeners are sensitive to <code>keypressed</code> events, you can use any of the <a href="./API.html#input">other types of events</a> of course.</p>
+<p>Listeners are objects that are composed of (at least) two properties; <code>handle</code> and <code>on</code>. The <code>on</code> property defines what type of input we are going to listen to; in this case we listen for <code>keypressed</code> events, of specifically <code>e</code> or <code>i</code>. The <code>handle</code> properties defines the name of the internal event to be triggered. In this case we trigger the <em>congruent</em> event when <code>e</code> is pressed, and the <em>incongruent</em> event when <code>i</code> is pressed.</p>
+<pre><code class="lang-js">{
+    input: [
+        {handle:<span class="hljs-string">'congruent'</span>,on:<span class="hljs-string">'keypressed'</span>,key:<span class="hljs-string">'e'</span>},
+        {handle:<span class="hljs-string">'incongruent'</span>,on:<span class="hljs-string">'keypressed'</span>,key:<span class="hljs-string">'i'</span>}
+    ]
+}
+</code></pre>
+<h3 id="stimuli">Stimuli</h3>
+<p>The stimuli in the <code>layout</code> property are static; this means that interactions do not affect them. If we want stimuli to be interactive we put them into a separate array called <code>stimuli</code>. The advantage of this separation is that you never have to worry that you’re going to brake the canvas layout when creating interactions.</p>
+<p>We will very simply move the target stimulus into the <code>stimuli</code> property:</p>
+<pre><code class="lang-js">{
+    stimuli: [
+        {inherit:<span class="hljs-string">'congruent'</span>, handle:<span class="hljs-string">'target'</span>}
+    ]
+}
+</code></pre>
+<p>Note that we extend every stimulus we inherit with the (arbitrary) handle <code>&#39;target&#39;</code>, this is neccesary so that the various actions in <code>interactions</code> can know which stimulus we are refering to.</p>
+<h3 id="interactions">Interactions</h3>
+<p>The <code>interaction</code> property controls all the interactive parts of the trial. This is where you will have to carefuly describe exatcly what you want the player to <em>do</em>. We will start with an extremely simple set of interactions and slowly build up to a full fledged trial.</p>
+<p><code>interactions</code> holds an array of interaction-objects. Each of these objects has two properties: <code>propositions</code> and <code>actions</code>. <code>propositions</code> are a set of conditions that have to all be true in order for respective set of <code>actions</code> to be executed. Each of them consists in an array of objects. You can see the <a href="./API.md#interactions">API</a> for a complete list of propositions and actions.</p>
+<p>The proposition system is based on an internal event system. Each time a significan event happens (i.e. a <a href="#input">user input</a> is detected, or a timer runs out) an event is fired internaly. The propositions compare different data to the event handle (we will see how this works shortly). Each proposition has a <code>type</code> property that defines what to compare the event handle to.</p>
+<p>We will start with several basic interactions:</p>
+<p>Stimuli set into <code>stimuli</code> are hidden by default. The first interaction we deal with displays the target stimulus as soon as the trial starts. <code>begin</code> is a special event that is fired only once; when a trial starts. In order to listen to it we use the proposition object <code>{type:&#39;begin&#39;}</code>. In this case, the associated action is <code>showStim</code>; this action tells the player to display the a stimulus that has the handle <code>&#39;target&#39;</code> (you can recall that we extended the target stimulus with the handle <code>&#39;target&#39;</code>).]</p>
+<pre><code class="lang-js">{
+    propositions:[
+        {type:<span class="hljs-string">'begin'</span>}
+    ],
+    actions: [
+        {type:<span class="hljs-string">'showStim'</span>, handle: <span class="hljs-string">'target'</span>}
+    ]
+}
+</code></pre>
+<p>Next we will add interactions that deal with the response to the user interaction:</p>
+<p>First we will create the interaction for correct responses. The <code>inputEquals</code> proposition fires when the input handle (as <a href="#input">set</a> in the input object) is equal to the value in the <code>value</code> property. So in our trial the following action will activate once the <code>e</code> key is pressed. It activates three <a href="./API.md#interactions-actions">actions</a>.</p>
+<ul>
+<li>The <code>log</code> action logs the user response, including latency and other information about the trial.</li>
+<li>The <code>endTrial</code> action simply ends this trail and moves on to the next one.</li>
+<li>Each trial has a built in data object that can be preset when you create the trial (simply add a <code>data</code> property to the trial) and is saved each time you <code>log</code>. The <code>setTrialAttr</code> action merges the <code>setter</code> object into the trial data, adding any properties of the <code>setter</code> to the trials data object. In this case we set the trial with the score 1 that will signify for us a correct response.</li>
+</ul>
+<pre><code class="lang-js">{
+    propositions: [
+        {type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'congruent'</span>}
+    ],
+    actions: [
+        {type:<span class="hljs-string">'setTrialAttr'</span>, setter:{score:<span class="hljs-number">1</span>}},
+        {type:<span class="hljs-string">'log'</span>},
+        {type:<span class="hljs-string">'endTrial'</span>}
+    ]
+}
+</code></pre>
+<p>Now, lets create the interaction for incorrect responses. This interaction is almost identical to the previous one, with two key differences. First, it fires for <em>incongruent</em> stimuli. Second, the score set is <code>0</code> which for us signifies an error.</p>
+<pre><code class="lang-js">{
+    propositions: [
+        {type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'incongruent'</span>}
+    ],
+    actions: [
+        {type:<span class="hljs-string">'setTrialAttr'</span>, setter:{score:<span class="hljs-number">0</span>}},
+        {type:<span class="hljs-string">'log'</span>},
+        {type:<span class="hljs-string">'endTrial'</span>}
+    ]
+}
+</code></pre>
+<h3 id="all-together-now">All together now</h3>
+<p>So when we put the whole thing together it looks like this:</p>
+<pre><code class="lang-js">API.addSequence([
+    {
+        layout: [
+            {
+                media:<span class="hljs-string">'Congruent'</span>,
+                location:{left:<span class="hljs-number">1</span>,top:<span class="hljs-number">1</span>},
+                css:{color:<span class="hljs-string">'white'</span>,fontSize:<span class="hljs-string">'1.5em'</span>}
+            },
+            {
+                media:<span class="hljs-string">'Incongruent'</span>,
+                location:{right:<span class="hljs-number">1</span>,top:<span class="hljs-number">1</span>},
+                css:{color:<span class="hljs-string">'white'</span>,fontSize:<span class="hljs-string">'1.5em'</span>}
+            }
+        ],
+        input: [
+            {handle:<span class="hljs-string">'congruent'</span>,on:<span class="hljs-string">'keypressed'</span>,key:<span class="hljs-string">'e'</span>},
+            {handle:<span class="hljs-string">'incongruent'</span>,on:<span class="hljs-string">'keypressed'</span>,key:<span class="hljs-string">'i'</span>}
+        ],
+        stimuli:[
+            {inherit:<span class="hljs-string">'congruent'</span>, handle:<span class="hljs-string">'target'</span>}
+        ],
+        interactions: [
+            <span class="hljs-comment">// Display the target stimulus.</span>
+            {
+                propositions:[{type:<span class="hljs-string">'begin'</span>}],
+                actions: [{type:<span class="hljs-string">'showStim'</span>, handle: <span class="hljs-string">'target'</span>}]
+            },
+            <span class="hljs-comment">// Correct response actions</span>
+            {
+                propositions: [
+                    {type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'congruent'</span>}
+                ],
+                actions: [
+                    {type:<span class="hljs-string">'setTrialAttr'</span>, setter:{score:<span class="hljs-number">1</span>}},
+                    {type:<span class="hljs-string">'log'</span>},
+                    {type:<span class="hljs-string">'endTrial'</span>}
+                ]
+            },
+            <span class="hljs-comment">// Incorrect response actions</span>
+            {
+                propositions: [
+                    {type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'incongruent'</span>}
+                ],
+                actions: [
+                    {type:<span class="hljs-string">'setTrialAttr'</span>, setter:{score:<span class="hljs-number">0</span>}},
+                    {type:<span class="hljs-string">'log'</span>},
+                    {type:<span class="hljs-string">'endTrial'</span>}
+                ]
+            }
+        ]
+    }
+]);
+</code></pre>
+<p>You can download it <a href="../../resources/tutorials/js/stroop-interactions.js">here</a>. You can see it in action right <a href="../../dist/index.html?url=../resources/tutorials/js/stroop-interactions.js">here</a>.</p>
+<h3 id="epilogue-of-sorts-">Epilogue (of sorts)</h3>
+<p>We’ve created a single congruent trial for a Stroop task. The next natural step is to copy this trial and change every place where it refers to a congruent task into incongruent and presto! we have two trials ready for action. You can do that, and it would definately work, but there are several disadvantages to this approach. First, every change you want to make to the trial, you will have to make to every copy of the trial that you have. Second, in this simple use case we have only two types of trials, what happens if you have four types? or eight? or ten?</p>
+<p>The solution that the player offers for this problem is using inheritance, and we will get into it in the <a href="./stroop-inheritance.html">next</a> section.</p>
+</div></div></div></body></html>

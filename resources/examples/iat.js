@@ -2,8 +2,8 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 // This wrapper is neccesary in order to activate the API
 
 	// lets set the attibutes/concepts in one place so we can change them when we want
-	var attribute1 = 'Bad Words';
-	var attribute2 = 'Good Words';
+	var attribute1 = 'Good Words';
+	var attribute2 = 'Bad Words';
 	var concept1 = 'Black People';
 	var concept2 = 'White People';
 

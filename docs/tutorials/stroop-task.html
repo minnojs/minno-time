@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"></html><html><head><title>Project Implicit</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"><!-- If we ever need the js stuff...--><!--script(src="http://code.jquery.com/jquery-2.1.0.min.js")--><!--script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js")--><style>div#main {padding-top:50px}
+.sidenav {background-color: #F7F5FA;border-radius: 5px;margin-bottom: 30px;margin-top: 30px;padding-bottom: 10px;padding-top: 10px;text-shadow: 0 1px 0 #FFFFFF;}
+.sidenav.nav li > a {color: #999999;display: block;font-size: 13px;font-weight: 600;padding: 5px 20px;}
+.sidenav.nav li > a:hover {text-decoration:none;color: #563D7C;}
+.sidenav.nav .nav > li > a {font-weight: 500; padding: 3px 0px 3px 30px}
+
+
+.badge-js {background-color: #f89406;}
+.badge-js:hover {background-color: #c67605;}
+.badge-docco {background-color: #468847;}
+.badge-docco:hover {background-color: #356635;}
+</style><!-- Initialize highlight js (do we need this on every page?)--><link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css"><script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();
+
+</script></head><body><nav role="navigation" class="navbar navbar-inverse navbar-fixed-top"><div class="container"><div class="navbar-header"><button type="button" data-toggle="collapse" data-target="#navbar" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="https://github.com/ProjectImplicit/PIPlayer" class="navbar-brand">PI player</a></div><nav id="navbar" role="navigation" class="navbar-collapse bs-navbar-collapse"><ul class="nav navbar-nav"><li><a href="../tutorials/overview.html">Tutorial</a></li><li><a href="../snippets/index.html">Snippets</a></li><li><a href="../examples/index.html">Examples</a></li><li><a href="../tutorials/API.html">API</a></li></ul><ul class="nav navbar-nav navbar-right"><li><a href="../tutorials/overview.html">About</a></li></ul></nav></div></nav><div id="main" class="container"><div class="row"><div class="col-md-3"><ul class="nav affix-top sidenav"><li><a href="./overview.html">Overview</a></li><li><a href="./javascript.html">Javascript</a></li><li><a href="./hello.html">Hello world</a></li><li><a href="./slideshow.html">Slideshow</a></li><li><a href="javascript:void(0)">Stroop</a><ul class="nav"><li><a href="./stroop-setup.html">Setup</a></li><li><a href="./stroop-interactions.html">Interactions</a></li><li><a href="./stroop-inheritance.html">Inheritance</a></li><li><a href="./stroop-block.html">Block</a></li><li><a href="./stroop-task.html">Task</a></li></ul></li></ul></div><div class="col-md-9"><h2 id="stroop-small-task-small-">Stroop <small>Task</small></h2>
+<p>We’ve been slowly pulling the stroop task together, now is the time for a few last touches, just to get the feel for how things work.</p>
+<h3 id="inter-trial-interval">Inter trial interval</h3>
+<p>First we’ll add an inter trial interval (ITI). The way we are going to do this is by adding a set interval to the end of each trial. Instead of directly calling the <code>endTrial</code> action, we will trigger a timeout, and end the trial from it. While waiting for the trial to end we want to prevent users from responding again. Note that we only need to do this to the <em>base</em> trial, all other trials inherit everything from it…</p>
+<pre><code class="lang-js">{
+    interactions: [
+        <span class="hljs-comment">// Display the target stimulus.</span>
+        {
+            propositions:[{type:<span class="hljs-string">'begin'</span>}],
+            actions: [{type:<span class="hljs-string">'showStim'</span>, handle: <span class="hljs-string">'target'</span>}]
+        },
+        <span class="hljs-comment">// Correct response actions</span>
+        {
+            propositions: [
+                {type:<span class="hljs-string">'trialEquals'</span>,value:<span class="hljs-string">'group'</span>}
+            ],
+            actions: [
+                {type:<span class="hljs-string">'setTrialAttr'</span>, setter:{score:<span class="hljs-number">1</span>}},
+                {type:<span class="hljs-string">'log'</span>},
+                {type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'target'</span>},
+                {type:<span class="hljs-string">'removeInput'</span>,handle:[<span class="hljs-string">'congruent'</span>,<span class="hljs-string">'incongruent'</span>]},
+                {type:<span class="hljs-string">'trigger'</span>, handle:<span class="hljs-string">'end'</span>,duration:<span class="hljs-number">500</span>}
+            ]
+        },
+        <span class="hljs-comment">// Incorrect response actions</span>
+        {
+            propositions: [
+                {type:<span class="hljs-string">'trialEquals'</span>,value:<span class="hljs-string">'group'</span>,negate:<span class="hljs-literal">true</span>},
+                {type:<span class="hljs-string">'inputEquals'</span>,value:[<span class="hljs-string">'congruent'</span>,<span class="hljs-string">'incongruent'</span>]}
+            ],
+            actions: [
+                {type:<span class="hljs-string">'setTrialAttr'</span>, setter:{score:<span class="hljs-number">0</span>}},
+                {type:<span class="hljs-string">'log'</span>},
+                {type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'target'</span>},
+                {type:<span class="hljs-string">'removeInput'</span>,handle:[<span class="hljs-string">'congruent'</span>,<span class="hljs-string">'incongruent'</span>]},
+                {type:<span class="hljs-string">'trigger'</span>, handle:<span class="hljs-string">'end'</span>,duration:<span class="hljs-number">500</span>},
+            ]
+        },
+        <span class="hljs-comment">// End trial</span>
+        {
+            propositions: [{type:<span class="hljs-string">'inputEquals'</span>, value:<span class="hljs-string">'end'</span>}],
+            actions:[{type:<span class="hljs-string">'endTrial'</span>}]
+        }
+    ]
+}
+</code></pre>
+<p>We’ve added three actions to each of the responses. <code>hideStim</code> hides the target stimulus so that we see a blank screen as soon as a response is made. <code>removeInput</code> removes the two input listeners that have the handles <em>congruent</em> and <em>incongruent</em>, this prevents users from giving any further responses. <code>trigger</code> triggers an internal player event as if the user has commited an action. In this case, it triggers an event with the input handle <code>end</code> after a <code>duration</code> of 500 miliseconds.</p>
+<p>Furthermore, we’ve added an interaction that responds to the <code>end</code> event, that ends the trial. Note that the users can not trigger the <code>end</code> event directly, only through the events that were exposed to them using the <code>keypressed</code> input.</p>
+<h3 id="error-feedback">Error feedback</h3>
+<p>Lets push this paradigm a bit forward and add error feedback to our task.</p>
+<p>First we’ll create the error stimulus. This creates a stimulus that displays a red X at the bottom of the screen.</p>
+<pre><code class="lang-js">API.addStimulusSets(<span class="hljs-string">'error'</span>,[
+    {handle:<span class="hljs-string">'error'</span>,media:<span class="hljs-string">'X'</span>, css:{fontSize:<span class="hljs-string">'2em'</span>,color:<span class="hljs-string">'#FF0000'</span>}, location:{top:<span class="hljs-number">70</span>}}
+]);
+</code></pre>
+<p>Next, we need to add it to each of the <em>congruent</em> and <em>incongruent</em> trials. We can’t add it to the <em>base</em> trial because the specific trials make changes to <code>stimuli</code> and would overwrite it.</p>
+<pre><code class="lang-js">API.addTrialSets(<span class="hljs-string">'congruent'</span>,[{
+    inherit:<span class="hljs-string">'base'</span>,
+    data: {group:<span class="hljs-string">'congruent'</span>},
+    stimuli: [
+        {inherit:{type:<span class="hljs-string">'exRandom'</span>, set:<span class="hljs-string">'congruent'</span>}, handle:<span class="hljs-string">'target'</span>},
+        {inherit:<span class="hljs-string">'error'</span>}
+    ]
+}]);
+</code></pre>
+<p>Now that we have the error stimulus in place we can add the instruction how to display it. On incorrect responses we will display the error feedback, and trigger the ITI only after another 250 miliseconds.</p>
+<pre><code class="lang-js">{
+    interactions: [
+        <span class="hljs-comment">// Display the target stimulus.</span>
+        {
+            propositions:[{type:<span class="hljs-string">'begin'</span>}],
+            actions: [{type:<span class="hljs-string">'showStim'</span>, handle: <span class="hljs-string">'target'</span>}]
+        },
+        <span class="hljs-comment">// Correct response actions</span>
+        {
+            propositions: [
+                {type:<span class="hljs-string">'trialEquals'</span>,value:<span class="hljs-string">'group'</span>}
+            ],
+            actions: [
+                {type:<span class="hljs-string">'setTrialAttr'</span>, setter:{score:<span class="hljs-number">1</span>}},
+                {type:<span class="hljs-string">'log'</span>},
+                {type:<span class="hljs-string">'trigger'</span>, handle:<span class="hljs-string">'ITI'</span>}
+            ]
+        },
+        <span class="hljs-comment">// Incorrect response actions</span>
+        {
+            propositions: [
+                {type:<span class="hljs-string">'trialEquals'</span>,value:<span class="hljs-string">'group'</span>,negate:<span class="hljs-literal">true</span>},
+                {type:<span class="hljs-string">'inputEquals'</span>,value:[<span class="hljs-string">'congruent'</span>,<span class="hljs-string">'incongruent'</span>]}
+            ],
+            actions: [
+                {type:<span class="hljs-string">'setTrialAttr'</span>, setter:{score:<span class="hljs-number">0</span>}},
+                {type:<span class="hljs-string">'log'</span>},
+                {type:<span class="hljs-string">'showStim'</span>, handle:<span class="hljs-string">'error'</span>},
+                {type:<span class="hljs-string">'removeInput'</span>,handle:[<span class="hljs-string">'congruent'</span>,<span class="hljs-string">'incongruent'</span>]},
+                {type:<span class="hljs-string">'trigger'</span>, handle:<span class="hljs-string">'ITI'</span>, duration:<span class="hljs-number">500</span>}
+            ]
+        },
+        <span class="hljs-comment">// Inter trial interval</span>
+        {
+            propositions: [{type:<span class="hljs-string">'inputEquals'</span>, value:<span class="hljs-string">'ITI'</span>}],
+            actions:[
+                {type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'All'</span>},
+                {type:<span class="hljs-string">'removeInput'</span>,handle:[<span class="hljs-string">'congruent'</span>,<span class="hljs-string">'incongruent'</span>]},
+                {type:<span class="hljs-string">'trigger'</span>, handle:<span class="hljs-string">'end'</span>,duration:<span class="hljs-number">500</span>}
+            ]
+        },
+        <span class="hljs-comment">// End trial</span>
+        {
+            propositions: [{type:<span class="hljs-string">'inputEquals'</span>, value:<span class="hljs-string">'end'</span>}],
+            actions:[
+                {type:<span class="hljs-string">'endTrial'</span>}
+            ]
+        }
+    ]
+}
+</code></pre>
+<p>There are several changes done here to achieve this task.</p>
+<p>First, all the ITI actions have move into an interaction of their own, that is activated when <code>ITI</code> is triggered.
+Second, the correct response now triggers the ITI imidiately.
+Third, The incorrect resonse first displays the error feedback (<code>showStim</code>) and only after 500 miliseconds trigers the ITI.</p>
+<p>You should also note that the <code>hideStim</code> action within the ITI interaction uses the handle <code>&#39;All&#39;</code>. When you want to refer to all the stimuli in a trial you can use the handle <code>&#39;All&#39;</code> and all stimuli will be affected.</p>
+<p>You can download the code <a href="../../resources/tutorials/js/stroop-task.js">here</a>. You can see it in action right <a href="../../dist/index.html?url=../resources/tutorials/js/stroop-task.js">here</a>.</p>
+</div></div></div></body></html>

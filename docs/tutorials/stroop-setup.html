@@ -1,0 +1,82 @@
+<!DOCTYPE html><html lang="en"></html><html><head><title>Project Implicit</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"><!-- If we ever need the js stuff...--><!--script(src="http://code.jquery.com/jquery-2.1.0.min.js")--><!--script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js")--><style>div#main {padding-top:50px}
+.sidenav {background-color: #F7F5FA;border-radius: 5px;margin-bottom: 30px;margin-top: 30px;padding-bottom: 10px;padding-top: 10px;text-shadow: 0 1px 0 #FFFFFF;}
+.sidenav.nav li > a {color: #999999;display: block;font-size: 13px;font-weight: 600;padding: 5px 20px;}
+.sidenav.nav li > a:hover {text-decoration:none;color: #563D7C;}
+.sidenav.nav .nav > li > a {font-weight: 500; padding: 3px 0px 3px 30px}
+
+
+.badge-js {background-color: #f89406;}
+.badge-js:hover {background-color: #c67605;}
+.badge-docco {background-color: #468847;}
+.badge-docco:hover {background-color: #356635;}
+</style><!-- Initialize highlight js (do we need this on every page?)--><link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css"><script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();
+
+</script></head><body><nav role="navigation" class="navbar navbar-inverse navbar-fixed-top"><div class="container"><div class="navbar-header"><button type="button" data-toggle="collapse" data-target="#navbar" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="https://github.com/ProjectImplicit/PIPlayer" class="navbar-brand">PI player</a></div><nav id="navbar" role="navigation" class="navbar-collapse bs-navbar-collapse"><ul class="nav navbar-nav"><li><a href="../tutorials/overview.html">Tutorial</a></li><li><a href="../snippets/index.html">Snippets</a></li><li><a href="../examples/index.html">Examples</a></li><li><a href="../tutorials/API.html">API</a></li></ul><ul class="nav navbar-nav navbar-right"><li><a href="../tutorials/overview.html">About</a></li></ul></nav></div></nav><div id="main" class="container"><div class="row"><div class="col-md-3"><ul class="nav affix-top sidenav"><li><a href="./overview.html">Overview</a></li><li><a href="./javascript.html">Javascript</a></li><li><a href="./hello.html">Hello world</a></li><li><a href="./slideshow.html">Slideshow</a></li><li><a href="javascript:void(0)">Stroop</a><ul class="nav"><li><a href="./stroop-setup.html">Setup</a></li><li><a href="./stroop-interactions.html">Interactions</a></li><li><a href="./stroop-inheritance.html">Inheritance</a></li><li><a href="./stroop-block.html">Block</a></li><li><a href="./stroop-task.html">Task</a></li></ul></li></ul></div><div class="col-md-9"><h2 id="stroop-small-setup-small-">Stroop <small>Setup</small></h2>
+<p>Now that we have a few of the basic building blocks of the player available to us, lets start putting together a real task.</p>
+<p>We will create a task that demonstrates the stroop effect: When the name of a color (e.g. “blue”, “green,” or “red”) is printed in a color not denoted by the name (e.g., the word “red” printed in blue instead of red), naming the color of the word takes longer and is more prone to errors than when the color of the ink matches the name of the color. The effect is named after John Ridley Stroop who first published the effect in English in 1935.</p>
+<p>There is no scripted way that you are supposed to create a task, but we will break down the task in one way that we’ve found useful.</p>
+<h3 id="setup">Setup</h3>
+<p>The player has many many <a href="./API.html#settings">settings</a> that you can tinker with, we will use only one here.</p>
+<p>In order to set the default text size you can use the <code>canvas</code> <a href="./API.md#canvas">setting</a> like so:</p>
+<pre><code class="lang-js">API.addSettings(<span class="hljs-string">'canvas'</span>,{
+    textSize: <span class="hljs-number">5</span>
+});
+</code></pre>
+<p><code>textSize</code> controls the default font size in the canvas. It takes a single number that represents font size in percentage of the canvas height (similar to the CSS3 <code>vh</code> unit). From now on any time we use a relative fontSize (read: everytime we use <code>em</code> for fontSize), it will be relative to this size.</p>
+<h3 id="stimuli">Stimuli</h3>
+<p>Lets start with the thing that we already know how to do.</p>
+<p>We’ll create lists of the stimuli we are going to use. We have two groups of stimuli; <strong>congruent</strong> (words that say what color they are in), and <strong>incongruent</strong> (words that say a different color). We will create a separate set of stimuli for each of these groups. This will allow us to randomize and extend them later on.</p>
+<pre><code class="lang-js">API.addStimulusSets(<span class="hljs-string">'congruent'</span>,[
+    {media:<span class="hljs-string">'Red'</span>, css:{color:<span class="hljs-string">'#FF0000'</span>}},
+    {media:<span class="hljs-string">'Pink'</span>, css:{color:<span class="hljs-string">'#FFC0CB'</span>}},
+    {media:<span class="hljs-string">'Orange'</span>, css:{color:<span class="hljs-string">'#FFA500'</span>}},
+    {media:<span class="hljs-string">'Yellow'</span>, css:{color:<span class="hljs-string">'#FFFF00'</span>}},
+    {media:<span class="hljs-string">'Purple'</span>, css:{color:<span class="hljs-string">'#800080'</span>}},
+    {media:<span class="hljs-string">'Green'</span>, css:{color:<span class="hljs-string">'#008000'</span>}},
+    {media:<span class="hljs-string">'Blue'</span>, css:{color:<span class="hljs-string">'#0000FF'</span>}},
+    {media:<span class="hljs-string">'Brown'</span>, css:{color:<span class="hljs-string">'#8B4513'</span>}},
+    {media:<span class="hljs-string">'White'</span>, css:{color:<span class="hljs-string">'#FFFFFF'</span>}},
+    {media:<span class="hljs-string">'Grey'</span>, css:{color:<span class="hljs-string">'#A9A9A9'</span>}}
+]);
+
+API.addStimulusSets(<span class="hljs-string">'incongruent'</span>,[
+    {media:<span class="hljs-string">'Red'</span>, css:{color:<span class="hljs-string">'#008000'</span>}}, <span class="hljs-comment">// Green</span>
+    {media:<span class="hljs-string">'Pink'</span>, css:{color:<span class="hljs-string">'#0000FF'</span>}}, <span class="hljs-comment">// Blue</span>
+    {media:<span class="hljs-string">'Orange'</span>, css:{color:<span class="hljs-string">'#8B4513'</span>}},  <span class="hljs-comment">// Brown</span>
+    {media:<span class="hljs-string">'Yellow'</span>, css:{color:<span class="hljs-string">'#FFFFFF'</span>}}, <span class="hljs-comment">// White</span>
+    {media:<span class="hljs-string">'Purple'</span>, css:{color:<span class="hljs-string">'#A9A9A9'</span>}}, <span class="hljs-comment">// Grey</span>
+    {media:<span class="hljs-string">'Green'</span>, css:{color:<span class="hljs-string">'#FF0000'</span>}}, <span class="hljs-comment">// Red</span>
+    {media:<span class="hljs-string">'Blue'</span>, css:{color:<span class="hljs-string">'#FFC0CB'</span>}}, <span class="hljs-comment">// Pink</span>
+    {media:<span class="hljs-string">'Brown'</span>, css:{color:<span class="hljs-string">'#FFA500'</span>}}, <span class="hljs-comment">// Orange</span>
+    {media:<span class="hljs-string">'White'</span>, css:{color:<span class="hljs-string">'#FFFF00'</span>}}, <span class="hljs-comment">// Yellow</span>
+    {media:<span class="hljs-string">'Grey'</span>, css:{color:<span class="hljs-string">'#800080'</span>}} <span class="hljs-comment">// Purple</span>
+]);
+</code></pre>
+<p>The congruent words have the correct colors applied to them. You can see the true color of the incongruent words in the comments.</p>
+<p>Note also that we use the short cut to plain text media (simply settings a string), and not the full fledged media object (that would look like this: <code>{word:&#39;Red&#39;}</code>). You can of course use any type of <a href="./API.md#media">media</a> here.</p>
+<h3 id="layout">Layout</h3>
+<p>In the stroop task we sort words into two groups: congruent and incongruent. First things first, lets add labels to the task canvas so that it is clear where the user is sorting the stimuli to. We’ll add a two labels one to each of the upper corners of the canvas.</p>
+<p>By default stimuli are displayed at the center of the screen, if we want to display them at other locations, we use the <code>location</code> property of the <a href="./API.md#stimuli">stimulus object</a>. The location property takes an object with ditances from the border in precentages of the player canvase. Where <code>left:20</code> means that the left border of the stimulus should be 20% from the left of the canvas. You may define any of the <code>left</code>/<code>right</code>/<code>top</code>/<code>bottom</code> properties. In this case we’ll define the labels to be one percent of the canvas away from the borders just so they don’t colide.</p>
+<p>We also set the font color to white and the size of the labels to be 1.5 times of the default fontSize.</p>
+<pre><code class="lang-js">{
+    layout: [
+        {
+            media:<span class="hljs-string">'Congruent'</span>,
+            location:{left:<span class="hljs-number">1</span>,top:<span class="hljs-number">1</span>},
+            css:{color:<span class="hljs-string">'white'</span>,fontSize:<span class="hljs-string">'1.5em'</span>}
+        },
+        {
+            media:<span class="hljs-string">'Incongruent'</span>,
+            location:{right:<span class="hljs-number">1</span>,top:<span class="hljs-number">1</span>},
+            css:{color:<span class="hljs-string">'white'</span>,fontSize:<span class="hljs-string">'1.5em'</span>}
+        },
+        {inherit:<span class="hljs-string">'congruent'</span>}
+    ]
+}
+</code></pre>
+<p>For now, the target stimulus (the word with the color) is static, so we set it in <code>layout</code>. Setting the inherit property to a string name (like <code>&#39;congruent&#39;</code> as opposed to an <a href="./API.md#inheriting">inherit object</a>) tells the player to randomly pick a stimulus from the target set. In this case we inherit a random stimulus out of the <code>congruent</code> stimulus set.</p>
+<p><strong>Protip</strong>: You can use key codes instead of letters, that way you can use the left (37) and right (38) arrow keys instead of <code>e</code> and <code>i</code>.</p>
+<h3 id="your-turn-">Your turn!</h3>
+<p>You can see this task in action right <a href="../../dist/index.html?url=../resources/tutorials/js/stroop-setup.js">here</a>, download it and tinker from <a href="../../resources/tutorials/js/stroop-setup.js">here</a>. Try refreshing the page to see the target stimulus change.</p>
+<p>Try moving the labels so that they are located at the top and bottom of the canvas instead of at the corners.</p>
+</div></div></div></body></html>

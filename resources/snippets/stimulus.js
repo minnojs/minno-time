@@ -40,13 +40,12 @@ define(['app/API'], function(API) {
 				},
 				/* the top left stimulus begins here */
 
-
 				// In this case the media objects uses an **external html** file.
 				// (see documentation regarding how to use this as a javascript template)
 				/* the bottom left stimulus begins here */
 				{
 					location:{left:0,bottom:0},
-					media:{template:'../../tutorials/templates/bottom_left.html'}
+					media:{template:'../../resources/snippets/templates/bottom_left.html'}
 				},
 				/* the bottom left stimulus begins here */
 
@@ -67,7 +66,7 @@ define(['app/API'], function(API) {
 				// The size property allows you to control the image size (in percentage of canvas). By default it is set to 'auto'.
 				{
 					size: {height:75, width:'auto'},
-					media :{image:'../tutorials/images/learning.jpg'},
+					media :{image:'../resources/snippets/images/learning.jpg'},
 					// `nolog` allows you to control whether this stimulus will be logged (see the interactions section)
 					nolog:true
 				}

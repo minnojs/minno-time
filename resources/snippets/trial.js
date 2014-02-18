@@ -13,21 +13,21 @@ define(['app/API'], function(API) {
 		{
 			// The data property of the trial is used to keep user defined data regarding this trial.
 			// It can be used to keep track of trial types, blocks, score etc.
-			// It becomes incrementaly usefull with more advance features of the PIP
+			// It becomes incrementaly usefull with more advance features of the PIP.
 			data: {
 				myProperty: 'information',
 				myOtherProperty: 'more information'
 			},
 
-			// The input property of the trial is used to create the user interface
-			// In this case we tell the player to listen for clicks on the space Button.
+			// The input property of the trial is used to create the user interface.
+			// In this case we tell the player to listen for hits on the space key.
 			// Later on we will tell the player what to do when the space button is clicked.
 			input: [
 				{handle:'space',on:'space'}
 			],
 
-			// The layout property of the trial is used to display statick stimuli
-			// These stimuli are automaticaly displayed at the begining of a trial, and are not affected be user interactions
+			// The layout property of the trial is used to display statick stimuli.
+			// These stimuli are automaticaly displayed at the begining of a trial, and are not affected be user interactions.
 			// This property holds an array of stimuli objects, in this case the stimuli are set to display words in the top left and bottom right of the screen.
 			// We will learn more about Stimuli in a later tutorial.
 			layout:[

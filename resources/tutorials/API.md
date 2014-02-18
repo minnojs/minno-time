@@ -277,8 +277,10 @@ Any attributes in the setter object will be coppied to the trial.data object.
 	```
 
 **trigger**:
-Immediately activate the input `handle` (this is equivilent to adding a timeout with duration set to 0).
+
+Activate the input `handle`. If duration is set, the activation happens after the duration. By default the input `handle` is triggered immediately.
 * `{type:'trigger',handle : 'now'}`
+* `{type:'trigger',handle : 'later',duration:250}`
 
 **setInput**:
 Set input listener (useful for adding timeouts), takes an `input` [object](#input-).
@@ -322,7 +324,7 @@ Each element in the PIP (trial/stimulus/media) can inherit its attributes from a
 
 #### Sets
 
-The element sets are defined in the main task script under `trialSets`\`stimulusSets`\`mediaSets`. Or using using the API using `addMediaSets`/`addStimulusSets`/`addTrialSets`.
+The element sets are defined in the main task script under `trialSets`/`stimulusSets`/`mediaSets`. Or using using the API using `addMediaSets`/`addStimulusSets`/`addTrialSets`.
 
 Each set is simply an array of elements that can later be referred to as a base for new elements. Note that the name that you give the set (in the example, default or IAT) is the handle that you later use to refer to it.
 

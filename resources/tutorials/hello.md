@@ -1,6 +1,8 @@
 ## Hello world
 This section of the tutorial will walk you through creating your first task. We will create a simple task that says "Hello world". As we go, we will comment on several of the players features and explain some of the ways you can customize your player.
 
+You can download the whole task [here](../../resources/tutorials/js/hello.js). You can see it in action right [here](#{player}../resources/tutorials/js/hello.js).
+
 ### The wrapper
 Every PI player script is wrapped within a define function (You don't have to understand what it does, but if you are interested look up [requirejs](http://requirejs.org/)).
 
@@ -138,3 +140,8 @@ The `css` object can do  far more than this. If you want to know more you can ch
 Each interaction object has a `propositions` property that holds an array of true/false statements. Each one of these statements is evaluated for every player event (i.e. user input), if all the propositions are true for an event then all associated `actions` are executed. In this case we check if the input handle equals 'space'.
 
 Each intercation object also has an `actions` array that hold an array of actions to perform if all `propositions` are evaluated as true. In this case the only action is to end this trial.
+
+### Epilogue (of sorts)
+You've learnt how to create a single trial, and the different elements that compose it. The next stage is seeing how different trials come together to form a task.
+
+We will now go on to creating a simple slideshow.

@@ -1,12 +1,17 @@
 <!DOCTYPE html><html lang="en"></html><html><head><title>Project Implicit</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"><!-- If we ever need the js stuff...--><!--script(src="http://code.jquery.com/jquery-2.1.0.min.js")--><!--script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js")--><style>div#main {padding-top:50px}
 .sidenav {background-color: #F7F5FA;border-radius: 5px;margin-bottom: 30px;margin-top: 30px;padding-bottom: 10px;padding-top: 10px;text-shadow: 0 1px 0 #FFFFFF;}
+.sidenav.nav li > a {color: #999999;display: block;font-size: 13px;font-weight: 600;padding: 5px 20px;}
+.sidenav.nav li > a:hover {text-decoration:none;color: #563D7C;}
+.sidenav.nav .nav > li > a {font-weight: 500; padding: 3px 0px 3px 30px}
+
+
 .badge-js {background-color: #f89406;}
 .badge-js:hover {background-color: #c67605;}
 .badge-docco {background-color: #468847;}
 .badge-docco:hover {background-color: #356635;}
 </style><!-- Initialize highlight js (do we need this on every page?)--><link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css"><script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();
 
-</script></head><body><nav role="navigation" class="navbar navbar-inverse navbar-fixed-top"><div class="container"><div class="navbar-header"><button type="button" data-toggle="collapse" data-target="#navbar" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="https://github.com/ProjectImplicit/PIPlayer" class="navbar-brand">PI player</a></div><nav id="navbar" role="navigation" class="navbar-collapse bs-navbar-collapse"><ul class="nav navbar-nav"><li><a href="../tutorials/index.html">Tutorial</a></li><li><a href="../snippets/index.html">Snippets</a></li><li><a href="../examples/index.html">Examples</a></li><li><a href="../tutorials/API.html">API</a></li></ul><ul class="nav navbar-nav navbar-right"><li><a href="../tutorials/overview.html">About</a></li></ul></nav></div></nav><div id="main" class="container"><div class="row"><div class="col-md-3"><ul class="nav affix-top sidenav"><li><a href="./overview.html">Overview</a></li><li><a href="./javascript.html">Javascript</a></li><li><a href="./hello.html">Hello world</a></li><!--li: a(href='./API.md') Slideshow tutorial--></ul></div><div class="col-md-9"><h2 id="javascript">JavaScript</h2>
+</script></head><body><nav role="navigation" class="navbar navbar-inverse navbar-fixed-top"><div class="container"><div class="navbar-header"><button type="button" data-toggle="collapse" data-target="#navbar" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="https://github.com/ProjectImplicit/PIPlayer" class="navbar-brand">PI player</a></div><nav id="navbar" role="navigation" class="navbar-collapse bs-navbar-collapse"><ul class="nav navbar-nav"><li><a href="../tutorials/overview.html">Tutorial</a></li><li><a href="../snippets/index.html">Snippets</a></li><li><a href="../examples/index.html">Examples</a></li><li><a href="../tutorials/API.html">API</a></li></ul><ul class="nav navbar-nav navbar-right"><li><a href="../tutorials/overview.html">About</a></li></ul></nav></div></nav><div id="main" class="container"><div class="row"><div class="col-md-3"><ul class="nav affix-top sidenav"><li><a href="./overview.html">Overview</a></li><li><a href="./javascript.html">Javascript</a></li><li><a href="./hello.html">Hello world</a></li><li><a href="./slideshow.html">Slideshow</a></li><li><a href="javascript:void(0)">Stroop</a><ul class="nav"><li><a href="./stroop-setup.html">Setup</a></li><li><a href="./stroop-interactions.html">Interactions</a></li><li><a href="./stroop-inheritance.html">Inheritance</a></li><li><a href="./stroop-block.html">Block</a></li><li><a href="./stroop-task.html">Task</a></li></ul></li></ul></div><div class="col-md-9"><h2 id="javascript">JavaScript</h2>
 <p>PIP scripts are written using JavaScript; <a href="http://en.wikipedia.org/wiki/JavaScript">JavaScript</a> is a programing language that can be run by browsers (like Internet Explorer, Chrome or Safari). The PIP scripts do not require you to program any JavaScript but you should have a basic grasp of the basic syntax before we go on. If you know some basic JavaScript you can skip this section and go directly to the Hello world tutorial.</p>
 <p>The fundumental building blocks of javascript expressions are variables and literals (thirsty for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Values,_variables,_and_literals">more</a>?).</p>
 <h3 id="value-types">Value types</h3>
@@ -25,7 +30,7 @@
 </tr>
 <tr>
 <td>String</td>
-<td>&quot;Howdy&quot;, &#39;&#39; // a string is always wrapped in single or double parenthesis</td>
+<td>“Howdy”, ‘’ // a string is always wrapped in single or double parenthesis</td>
 </tr>
 <tr>
 <td>Logical (Boolean)</td>
@@ -46,42 +51,42 @@
 </tbody>
 </table>
 <h3 id="variables">Variables</h3>
-<p>Variables are symbolic names for values in your script. You can define variables using the keyword <code>var</code>; for example <code>var x=42</code> sets the value 42 into the variable <code>x</code>. Any time you want to refer to the value stored in a variable you can refer to the variable name instead. This can be extremely useful if you want to define a value at one point in your script and reuse it again and again (it has many other uses too of course...).</p>
-<pre><code class="lang-js">// Define variable
-var x = 17
-console.log(x)        // prints 17
+<p>Variables are symbolic names for values in your script. You can define variables using the keyword <code>var</code>; for example <code>var x=42</code> sets the value 42 into the variable <code>x</code>. Any time you want to refer to the value stored in a variable you can refer to the variable name instead. This can be extremely useful if you want to define a value at one point in your script and reuse it again and again (it has many other uses too of course…).</p>
+<pre><code class="lang-js"><span class="hljs-comment">// Define variable</span>
+<span class="hljs-keyword">var</span> x = <span class="hljs-number">17</span>
+console.log(x)        <span class="hljs-comment">// prints 17</span>
 
-// change variable value
-x = 343
-console.log(x)        // prints 343
+<span class="hljs-comment">// change variable value</span>
+x = <span class="hljs-number">343</span>
+console.log(x)        <span class="hljs-comment">// prints 343</span>
 </code></pre>
 <h3 id="comments">Comments</h3>
 <p>Comments are a way to keep your code documented (here is a tip for free - you will probably not remember what you were trying to do a week after you write a piece of code. Document everything!!).</p>
 <p>JavaScript has two types of comments; block comments and single line comments:</p>
-<pre><code class="lang-js">// a short, single-line comment
-console.log(123) // one line comments can come at the end of a line of script too
+<pre><code class="lang-js"><span class="hljs-comment">// a short, single-line comment</span>
+console.log(<span class="hljs-number">123</span>) <span class="hljs-comment">// one line comments can come at the end of a line of script too</span>
 
-/* this is a long, multi-line comment
+<span class="hljs-comment">/* this is a long, multi-line comment
      about my script. May it one day
-     be great. */
+     be great. */</span>
 </code></pre>
 <h3 id="array-literals">Array literals</h3>
 <p>Arrays are ordered lists of values, their elements may be any value types (including other arrays). Note that the elements within an array are separated with commas (learn <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">more</a>!.</p>
-<pre><code class="lang-js">// Define arr
-var arr = [1,3,5,7,11]
+<pre><code class="lang-js"><span class="hljs-comment">// Define arr</span>
+<span class="hljs-keyword">var</span> arr = [<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">5</span>,<span class="hljs-number">7</span>,<span class="hljs-number">11</span>]
 
-// Access arr elements
-console.log(arr[0])            // prints 1
-console.log(arr[3])            // prints 7
+<span class="hljs-comment">// Access arr elements</span>
+console.log(arr[<span class="hljs-number">0</span>])            <span class="hljs-comment">// prints 1</span>
+console.log(arr[<span class="hljs-number">3</span>])            <span class="hljs-comment">// prints 7</span>
 </code></pre>
 <h3 id="object-literals">Object literals</h3>
 <p>Object literals are lists of zero or more pairs of property names and associated values of an object, enclosed in curly braces (<code>{}</code>). The property name and values are separated using a colon <code>:</code>, subsequent pairs are separated using a semicolon <code>;</code>. Object property names can be any string, and can be accessed either using brackets <code>obj[&#39;propertyName&#39;]</code> or using dot(.) notation <code>obj.propertyName</code>.</p>
-<pre><code class="lang-js">// Define obj
-var obj = {name: &#39;John Ridley&#39;, family:&#39;Stroop&#39;}
+<pre><code class="lang-js"><span class="hljs-comment">// Define obj</span>
+<span class="hljs-keyword">var</span> obj = {name: <span class="hljs-string">'John Ridley'</span>, family:<span class="hljs-string">'Stroop'</span>}
 
-// Access obj properties
-console.log(obj.name)            // prints &#39;John Ridley&#39;
-console.log(obj[&#39;family&#39;])        // prints &#39;Stroop&#39;
+<span class="hljs-comment">// Access obj properties</span>
+console.log(obj.name)            <span class="hljs-comment">// prints 'John Ridley'</span>
+console.log(obj[<span class="hljs-string">'family'</span>])        <span class="hljs-comment">// prints 'Stroop'</span>
 </code></pre>
 <h3 id="functions">Functions</h3>
 <p>Functions are one of the fundamental building blocks in JavaScript. A function is a JavaScript procedure—a set of statements that performs a task or calculates a value.</p>
@@ -92,16 +97,16 @@ console.log(obj[&#39;family&#39;])        // prints &#39;Stroop&#39;
 <li>The JavaScript statements that define the function, enclosed in curly braces, <code>{}</code>.</li>
 </ul>
 <p>For example, the following code defines a simple function named square:</p>
-<pre><code class="lang-js">function square(number) {
-    return number * number;
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">square</span><span class="hljs-params">(number)</span> {</span>
+    <span class="hljs-keyword">return</span> number * number;
 }
 </code></pre>
 <p>Functions in JavaScript are a special type of object, this means that they can be stored as variables and passed as arguments. In order to activate the procedure stored within a function you use parenthesis notation <code>functionName(arguments)</code>, using the function previously defined:</p>
-<pre><code class="lang-js">console.log(square)                // prints the square function
-console.log(square(9))            // prints 81
+<pre><code class="lang-js">console.log(square)                <span class="hljs-comment">// prints the square function</span>
+console.log(square(<span class="hljs-number">9</span>))            <span class="hljs-comment">// prints 81</span>
 </code></pre>
 <p>(there is plenty <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions">more</a>!).</p>
 <h3 id="errors-and-debugging">Errors and debugging</h3>
-<p>When developing PIP scripts things don&#39;t always go as expected. Sometimes you might make an syntactical error, sometime you might misspell a PIP keyword. The browser always logs these errors and it can many times be useful to see them. All modern browsers have a console that allows you to see any errors that happens (if you are using firefox you should check out <a href="https://getfirebug.com/">firebug</a>).</p>
+<p>When developing PIP scripts things don’t always go as expected. Sometimes you might make an syntactical error, sometime you might misspell a PIP keyword. The browser always logs these errors and it can many times be useful to see them. All modern browsers have a console that allows you to see any errors that happens (if you are using firefox you should check out <a href="https://getfirebug.com/">firebug</a>).</p>
 <p>In case your script does not load, or gets stuck in the middle, open your console and see if you have any errors.</p>
 </div></div></div></body></html>
