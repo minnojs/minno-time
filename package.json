@@ -2,14 +2,17 @@
   "name": "PIPlayer",
   "version": "0.1.2",
   "description": "Project Implicit Player",
-  "main": "src/js/config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "grunt build",
+    "start": "grunt server",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "npm install grunt-contrib-watch"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/ProjectImplicit/PIPlayer.git"
   },
+  "bugs": "https://github.com/ProjectImplicit/PIPlayer/issues",
   "author": "Elad Zlotnick",
   "license": "",
   "devDependencies": {
@@ -19,12 +22,9 @@
     "grunt-contrib-jshint": "~0.6.1",
     "grunt-docco": "~0.3.1",
     "selenium-webdriver": "~2.39.0",
-    "grunt-express": "~1.2.1"
-  },
-  "dependencies": {
-    "express": "~3.4.8",
+    "grunt-express": "~1.2.1",
     "jade": "~1.1.5",
     "marked": "~0.3.0",
-    "grunt-contrib-watch": "~0.5.3"
+    "express": "~3.4.8"
   }
 }
