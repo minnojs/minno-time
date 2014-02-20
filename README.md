@@ -1,7 +1,7 @@
 # Project Implicit Player (PIP)
 
 PI Player builds and runs experiments with time-sensitive tasks over the Internet. It is written in JavaScript and is built to be extremely versatile and customizable.
-The scripts for the player are written as JavaScript objects. This format allows, writing simple and straightforward scripts using a constrained scripting language. The format also allows advanced users to easily create complex and dynamic scripts using in-line JavaScript.
+The scripts for the player are written as JavaScript objects. This format allows, writing simple and straightforward scripts using a constrained scripting language. The format also allows advanced users to easily create complex and dynamic scripts using in-line JavaScript. Full documentation may be found at [our site](http://projectimplicit.github.io/PIPlayer/docs/tutorials/API.html).
 
 ### Central Concepts
 The player treats each task as a **sequence** of **trials**.
@@ -56,6 +56,8 @@ All the data that is recorded by the player is sent to a URL of your choosing. T
 ### Building the project
 In order to build this project you should install [Node.js](http://nodejs.org/) and then run `npm install` in the root directory.
 
-We use [Grunt](http://gruntjs.com/) in order to automate tasks. `grunt build` should create a dist folder with the optimzed javascript, and a docs folder with documentation. You can specifiy an alternative url for the player using `grunt build --player=path/to/my/player`. You can ask for the site version (as opposed to local version) of the documentation using `grunt build --site`.
+Next run `npm run build` in order to build the site and optimize the player.
 
-In case you do not have the grunt client installed globaly, you can try to use `./node_modules/.bin/grunt build` instead.
+If you want to activate a simple local server run `npm start`.
+
+We use [Grunt](http://gruntjs.com/) in order to automate tasks. `grunt build` should create a dist folder with the optimzed javascript, and a docs folder with documentation. You can specifiy an alternative url for the player using `grunt build --player=path/to/my/player`. You can ask for the site version (as opposed to local version) of the documentation using `grunt build --site`.
