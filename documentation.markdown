@@ -98,19 +98,25 @@ Trials are responsible for organizing stimuli and interactions with the user.
 	],
 	interactions: [
 		{
-			propositions: [{type:'begin'}],
+			conditions: [{type:'begin'}],
 			actions: [{type:'hideStim',handle:'myStimHandle'}]
 		},
 		{
-			propositions: [{type:'stimEquals',value:'orientation'}],
-			actions: [{type:'showStim',handle:'myStim'},{type:'setInput',input:{handle:'time',on:'timeout',duration:300}}]
+			conditions: [{type:'inputEqualsStim',property:'orientation'}],
+			actions: [
+				{type:'showStim',handle:'myStim'},
+				{type:'setInput',input:{handle:'time',on:'timeout',duration:300}}
+			]
 		},
 		{
-			propositions: [{type:'stimEquals',value:'orientation',negate:true},{type:'inputEquals',value:'time',negate:true}],
+			conditions: [
+				{type:'inputEqualsStim',property:'orientation',negate:true},
+				{type:'inputEquals',value:'time',negate:true}
+			],
 			actions: [{type:'endTrial'}]
 		},
 		{
-			propositions: [{type:'inputEquals',value:'time'}],
+			conditions: [{type:'inputEquals',value:'time'}],
 			actions: [{type:'hideStim',handle:'myStim'}]
 		}
 	]
@@ -176,16 +182,16 @@ If it is set to `false` then the input will be used only on non touch devices.
 * `{handle: 'end',on: 'enter', touch:false}`
 
 #### Interactions
-Interactions are composed of propositions and actions. Every time an event is fired (any input including timeout or the begining of a trial) all the propositions are evaluated.
+Interactions are composed of conditions and actions. Every time an event is fired (any input including timeout or the begining of a trial) all the conditions are evaluated.
 
-The `interactions` array is composed of interaction objects, each holding an array of propositions and an array of actions.
-For each interaction object, if all the propositions are true, then all the actions are carried out.
+The `interactions` array is composed of interaction objects, each holding an array of conditions and an array of actions.
+For each interaction object, if all the conditions are true, then all the actions are carried out.
 
 ```js
 {
-	propositions: [
-		proposition1,
-		proposition2
+	conditions: [
+		condition1,
+		condition2
 	],
 	actions: [
 		action1,
@@ -193,11 +199,11 @@ For each interaction object, if all the propositions are true, then all the acti
 	]
 }
 ```
-#### Interactions: propositions
+#### Interactions: conditions
 
-Each proposition object has a `type` property that defines what type of evaluation to perform.
+Each condition object has a `type` property that defines what type of evaluation to perform.
 
-In addition, it has a `negate` property (false by default) that determines whether to activate the proposition when the evaluation is true or when it is false.
+In addition, it has a `negate` property (false by default) that determines whether to activate the condition when the evaluation is true or when it is false.
 
 **begin**:
 Automatically activated at the beginning of the trial, and is never fired again.
@@ -208,18 +214,18 @@ Check if the input `handle` equals to a static value, `value` may be either a st
 * `{type:'inputEquals',value:'enter'}`
 * `{type:'inputEquals',value:['left','right']}`
 
-**trialEquals**:
-Check if the input `handle` equals to the `value` property of trial.data
-* `{type:'trialEquals',value:'customAttribute'}`
+**inputEqualsTrial**:
+Check if the input `handle` equals to the `property` property of trial.data
+* `{type:'inputEqualsTrial',property:'customAttribute'}`
 
-**stimEquals**:
-Check if the input `handle` equals to the 'value' property of any one of the stimulus.data in this trial.
+**inputEqualsStim**:
+Check if the input `handle` equals to the 'property' property of any one of the stimulus.data in this trial.
 The optional attribute `handle` narrows the search down to stimuli fitting the `handle`
-* `{stimEquals:'trialEquals',value:"customAttribute"}`
-* `{stimEquals:'trialEquals',value:"customAttribute",handle:'myStimHandle'}`
+* `{type:'inputEqualsStim',property:"customAttribute"}`
+* `{type:'inputEqualsStim',property:"customAttribute",handle:'myStimHandle'}`
 
 **function**:
-It is also possible to create a custom proposition:
+It is also possible to create a custom condition:
 
 ```js
 {type:'function',value:function(trial,inputData){
@@ -227,17 +233,17 @@ It is also possible to create a custom proposition:
 }}
 ```
 
-It is possible to create complex propositions, the following proposition, for instance, is activated in case there is an input that is not equal to trial.data.customAttribute, and the input handle is not "time".
+It is possible to create complex conditions, the following condition, for instance, is activated in case there is an input that is not equal to trial.data.customAttribute, and the input handle is not "time".
 ```js
 [
-	{type:'trialEquals',value:'customAttribute',negate:true},
+	{type:'inputEqualsTrial',property:'customAttribute',negate:true},
 	{type:'inputEquals',value:'time',negate:true}
 ]
 ```
 
 #### Interactions: actions
 
-If all the propositions in a row of interactions are true, its actions will be executed.
+If all the conditions in a row of interactions are true, its actions will be executed.
 
 **showStim**:
 Display a stimulus, takes a stimulus `handle`. Use 'All' for all stimuli.

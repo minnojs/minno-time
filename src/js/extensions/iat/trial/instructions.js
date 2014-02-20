@@ -12,7 +12,7 @@ define(['underscore','../data/properties','../data/categories','./IATlayout'],fu
 			interactions: [
 				// display instructions
 				{
-					propositions: [{type:'begin'}],
+					conditions: [{type:'begin'}],
 					actions: [
 						{type:'showStim',handle:'All'}
 					]
@@ -20,7 +20,7 @@ define(['underscore','../data/properties','../data/categories','./IATlayout'],fu
 
 				// end after ITI
 				{
-					propositions: [{type:'inputEquals',value:'space'}],
+					conditions: [{type:'inputEquals',value:'space'}],
 					actions: [
 						{type:'hideStim',handle:'All'},
 						{type:'setInput',input:{handle:'endTrial', on:'timeout', duration: properties.post_instructions_interval || 0}}
@@ -28,7 +28,7 @@ define(['underscore','../data/properties','../data/categories','./IATlayout'],fu
 				},
 
 				{
-					propositions: [{type:'inputEquals',value:'endTrial'}],
+					conditions: [{type:'inputEquals',value:'endTrial'}],
 					actions: [
 						{type:'endTrial'}
 					]
@@ -36,7 +36,7 @@ define(['underscore','../data/properties','../data/categories','./IATlayout'],fu
 
 				// skip block
 				{
-					propositions: [{type:'inputEquals',value:'enter'}],
+					conditions: [{type:'inputEquals',value:'enter'}],
 					actions: [
 						{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
 						{type:'endTrial'}

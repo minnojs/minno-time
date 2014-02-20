@@ -89,7 +89,7 @@ define(['../data/properties'],function(properties){
 			});
 
 			interactions.push({
-				propositions: [
+				conditions: [
 					{type:'inputEquals',value:'timeout'}
 				],
 				actions:[

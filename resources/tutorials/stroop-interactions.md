@@ -35,17 +35,17 @@ Note that we extend every stimulus we inherit with the (arbitrary) handle `'targ
 ### Interactions
 The `interaction` property controls all the interactive parts of the trial. This is where you will have to carefuly describe exatcly what you want the player to *do*. We will start with an extremely simple set of interactions and slowly build up to a full fledged trial.
 
-`interactions` holds an array of interaction-objects. Each of these objects has two properties: `propositions` and `actions`. `propositions` are a set of conditions that have to all be true in order for respective set of `actions` to be executed. Each of them consists in an array of objects. You can see the [API](./API.md#interactions) for a complete list of propositions and actions.
+`interactions` holds an array of interaction-objects. Each of these objects has two properties: `conditions` and `actions`. `conditions` are a set of conditions that have to all be true in order for respective set of `actions` to be executed. Each of them consists in an array of objects. You can see the [API](./API.md#interactions) for a complete list of conditions and actions.
 
-The proposition system is based on an internal event system. Each time a significan event happens (i.e. a [user input](#input) is detected, or a timer runs out) an event is fired internaly. The propositions compare different data to the event handle (we will see how this works shortly). Each proposition has a `type` property that defines what to compare the event handle to.
+The condition system is based on an internal event system. Each time a significan event happens (i.e. a [user input](#input) is detected, or a timer runs out) an event is fired internaly. The conditions compare different data to the event handle (we will see how this works shortly). Each condition has a `type` property that defines what to compare the event handle to.
 
 We will start with several basic interactions:
 
-Stimuli set into `stimuli` are hidden by default. The first interaction we deal with displays the target stimulus as soon as the trial starts. `begin` is a special event that is fired only once; when a trial starts. In order to listen to it we use the proposition object `{type:'begin'}`. In this case, the associated action is `showStim`; this action tells the player to display the a stimulus that has the handle `'target'` (you can recall that we extended the target stimulus with the handle `'target'`).]
+Stimuli set into `stimuli` are hidden by default. The first interaction we deal with displays the target stimulus as soon as the trial starts. `begin` is a special event that is fired only once; when a trial starts. In order to listen to it we use the condition object `{type:'begin'}`. In this case, the associated action is `showStim`; this action tells the player to display the a stimulus that has the handle `'target'` (you can recall that we extended the target stimulus with the handle `'target'`).]
 
 ```js
 {
-	propositions:[
+	conditions:[
 		{type:'begin'}
 	],
 	actions: [
@@ -55,7 +55,7 @@ Stimuli set into `stimuli` are hidden by default. The first interaction we deal 
 ```
 Next we will add interactions that deal with the response to the user interaction:
 
-First we will create the interaction for correct responses. The `inputEquals` proposition fires when the input handle (as [set](#input) in the input object) is equal to the value in the `value` property. So in our trial the following action will activate once the `e` key is pressed. It activates three [actions](./API.md#interactions-actions).
+First we will create the interaction for correct responses. The `inputEquals` condition fires when the input handle (as [set](#input) in the input object) is equal to the value in the `value` property. So in our trial the following action will activate once the `e` key is pressed. It activates three [actions](./API.md#interactions-actions).
 
 * The `log` action logs the user response, including latency and other information about the trial.
 * The `endTrial` action simply ends this trail and moves on to the next one.
@@ -63,7 +63,7 @@ First we will create the interaction for correct responses. The `inputEquals` pr
 
 ```js
 {
-	propositions: [
+	conditions: [
 		{type:'inputEquals',value:'congruent'}
 	],
 	actions: [
@@ -78,7 +78,7 @@ Now, lets create the interaction for incorrect responses. This interaction is al
 
 ```js
 {
-	propositions: [
+	conditions: [
 		{type:'inputEquals',value:'incongruent'}
 	],
 	actions: [
@@ -117,12 +117,12 @@ API.addSequence([
 		interactions: [
 			// Display the target stimulus.
 			{
-				propositions:[{type:'begin'}],
+				conditions:[{type:'begin'}],
 				actions: [{type:'showStim', handle: 'target'}]
 			},
 			// Correct response actions
 			{
-				propositions: [
+				conditions: [
 					{type:'inputEquals',value:'congruent'}
 				],
 				actions: [
@@ -133,7 +133,7 @@ API.addSequence([
 			},
 			// Incorrect response actions
 			{
-				propositions: [
+				conditions: [
 					{type:'inputEquals',value:'incongruent'}
 				],
 				actions: [

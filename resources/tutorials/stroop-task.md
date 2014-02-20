@@ -10,13 +10,13 @@ First we'll add an inter trial interval (ITI). The way we are going to do this i
 	interactions: [
 		// Display the target stimulus.
 		{
-			propositions:[{type:'begin'}],
+			conditions:[{type:'begin'}],
 			actions: [{type:'showStim', handle: 'target'}]
 		},
 		// Correct response actions
 		{
-			propositions: [
-				{type:'trialEquals',value:'group'}
+			conditions: [
+				{type:'inputEqualsTrial',property:'group'}
 			],
 			actions: [
 				{type:'setTrialAttr', setter:{score:1}},
@@ -28,8 +28,8 @@ First we'll add an inter trial interval (ITI). The way we are going to do this i
 		},
 		// Incorrect response actions
 		{
-			propositions: [
-				{type:'trialEquals',value:'group',negate:true},
+			conditions: [
+				{type:'inputEqualsTrial',property:'group',negate:true},
 				{type:'inputEquals',value:['congruent','incongruent']}
 			],
 			actions: [
@@ -42,7 +42,7 @@ First we'll add an inter trial interval (ITI). The way we are going to do this i
 		},
 		// End trial
 		{
-			propositions: [{type:'inputEquals', value:'end'}],
+			conditions: [{type:'inputEquals', value:'end'}],
 			actions:[{type:'endTrial'}]
 		}
 	]
@@ -84,13 +84,13 @@ Now that we have the error stimulus in place we can add the instruction how to d
 	interactions: [
 		// Display the target stimulus.
 		{
-			propositions:[{type:'begin'}],
+			conditions:[{type:'begin'}],
 			actions: [{type:'showStim', handle: 'target'}]
 		},
 		// Correct response actions
 		{
-			propositions: [
-				{type:'trialEquals',value:'group'}
+			conditions: [
+				{type:'inputEqualsTrial',property:'group'}
 			],
 			actions: [
 				{type:'setTrialAttr', setter:{score:1}},
@@ -100,8 +100,8 @@ Now that we have the error stimulus in place we can add the instruction how to d
 		},
 		// Incorrect response actions
 		{
-			propositions: [
-				{type:'trialEquals',value:'group',negate:true},
+			conditions: [
+				{type:'inputEqualsTrial',property:'group',negate:true},
 				{type:'inputEquals',value:['congruent','incongruent']}
 			],
 			actions: [
@@ -114,7 +114,7 @@ Now that we have the error stimulus in place we can add the instruction how to d
 		},
 		// Inter trial interval
 		{
-			propositions: [{type:'inputEquals', value:'ITI'}],
+			conditions: [{type:'inputEquals', value:'ITI'}],
 			actions:[
 				{type:'hideStim',handle:'All'},
 				{type:'removeInput',handle:['congruent','incongruent']},
@@ -123,7 +123,7 @@ Now that we have the error stimulus in place we can add the instruction how to d
 		},
 		// End trial
 		{
-			propositions: [{type:'inputEquals', value:'end'}],
+			conditions: [{type:'inputEquals', value:'end'}],
 			actions:[
 				{type:'endTrial'}
 			]

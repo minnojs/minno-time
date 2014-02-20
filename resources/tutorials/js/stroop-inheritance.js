@@ -43,13 +43,13 @@ define(['app/API'], function(API) {
 		interactions: [
 			// Display the target stimulus.
 			{
-				propositions:[{type:'begin'}],
+				conditions:[{type:'begin'}],
 				actions: [{type:'showStim', handle: 'target'}]
 			},
 			// Correct response actions
 			{
-				propositions: [
-					{type:'trialEquals',value:'group'}
+				conditions: [
+					{type:'inputEqualsTrial',property:'group'}
 				],
 				actions: [
 					{type:'setTrialAttr', setter:{score:1}},
@@ -59,8 +59,8 @@ define(['app/API'], function(API) {
 			},
 			// Incorrect response actions
 			{
-				propositions: [
-					{type:'trialEquals',value:'group',negate:true},
+				conditions: [
+					{type:'inputEqualsTrial',property:'group',negate:true},
 					{type:'inputEquals',value:['congruent','incongruent']}
 				],
 				actions: [

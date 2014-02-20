@@ -13,13 +13,13 @@ define(['../data/properties'],function(properties){
 			// if we're not going to display any feedback, trigger the end action imidiately
 			if (!propertiesObj.active) {
 				interactions.push({
-					propositions: [{type:'inputEquals',value: FBtype}],
+					conditions: [{type:'inputEquals',value: FBtype}],
 					actions: [{type:'trigger',handle : 'remove_' + FBtype}]
 				});
 			} else {
 				// show feedback
 				interactions.push({
-					propositions: [{type:'inputEquals',value: FBtype}],
+					conditions: [{type:'inputEquals',value: FBtype}],
 					actions: [
 						{type:'showStim',handle : FBtype},
 						{type:'setInput',input:{handle:'remove_' + FBtype, on:'timeout', duration:propertiesObj.duration >= 0 ? propertiesObj.duration : 300}}
@@ -30,7 +30,7 @@ define(['../data/properties'],function(properties){
 			// end trial if this isn't an error or if we don't need to correct errors
 			if (FBtype !== 'error_feedback' || !properties.correct_errors) {
 				interactions.push({
-					propositions: [{type:'inputEquals',value: 'remove_' + FBtype}],
+					conditions: [{type:'inputEquals',value: 'remove_' + FBtype}],
 					actions: [
 						{type:'trigger',handle: 'end'}
 					]
@@ -40,7 +40,7 @@ define(['../data/properties'],function(properties){
 				// and the error feedback is temporary
 				if (propertiesObj.duration !== 'static') {
 					interactions.push({
-						propositions: [{type:'inputEquals',value: 'remove_' + FBtype}],
+						conditions: [{type:'inputEquals',value: 'remove_' + FBtype}],
 						actions: [
 							{type:'hideStim',handle : FBtype}
 						]

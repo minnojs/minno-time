@@ -6,7 +6,7 @@ define(['app/API'], function(API) {
 		input: [{handle:'space',on:'space'}],
 		layout: [{media :{word:'Hello world'}}],
 		interactions: [{
-			propositions: [{type:'inputEquals',value:'space'}],
+			conditions: [{type:'inputEquals',value:'space'}],
 			actions: [{type:'endTrial'}]
 		}]
 	}]);

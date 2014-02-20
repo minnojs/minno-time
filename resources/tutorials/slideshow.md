@@ -14,7 +14,7 @@ This is the trial that we already know from the *Hello world* tutorial:
 		css:{fontSize:'2em',color:'#D7685A'}
 	}],
 	interactions: [{
-		propositions: [{type:'inputEquals',value:'space'}],
+		conditions: [{type:'inputEquals',value:'space'}],
 		actions: [{type:'endTrial'}]
 	}]
 }
@@ -31,7 +31,7 @@ API.addSequence([
 			css:{fontSize:'2em',color:'#D7685A'}
 		}],
 		interactions: [{
-			propositions: [{type:'inputEquals',value:'space'}],
+			conditions: [{type:'inputEquals',value:'space'}],
 			actions: [{type:'endTrial'}]
 		}]
 	},
@@ -42,7 +42,7 @@ API.addSequence([
 			css:{fontSize:'2em',color:'#D7685A'}
 		}],
 		interactions: [{
-			propositions: [{type:'inputEquals',value:'space'}],
+			conditions: [{type:'inputEquals',value:'space'}],
 			actions: [{type:'endTrial'}]
 		}]
 	},
@@ -53,7 +53,7 @@ API.addSequence([
 			css:{fontSize:'2em',color:'#D7685A'}
 		}],
 		interactions: [{
-			propositions: [{type:'inputEquals',value:'space'}],
+			conditions: [{type:'inputEquals',value:'space'}],
 			actions: [{type:'endTrial'}]
 		}]
 	}
@@ -77,7 +77,7 @@ API.addTrialSets('slide',[{
 	input: [{handle:'space',on:'space'}],
 	layout: [{media :{word:'Hello world'}}],
 	interactions: [{
-		propositions: [{type:'inputEquals',value:'space'}],
+		conditions: [{type:'inputEquals',value:'space'}],
 		actions: [{type:'endTrial'}]
 	}]
 }])

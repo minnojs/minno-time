@@ -54,12 +54,12 @@ define(['app/API'], function(API) {
 			interactions: [
 				// Display the target stimulus.
 				{
-					propositions:[{type:'begin'}],
+					conditions:[{type:'begin'}],
 					actions: [{type:'showStim', handle: 'target'}]
 				},
 				// Correct response actions
 				{
-					propositions: [
+					conditions: [
 						{type:'inputEquals',value:'congruent'}
 					],
 					actions: [
@@ -70,7 +70,7 @@ define(['app/API'], function(API) {
 				},
 				// Incorrect response actions
 				{
-					propositions: [
+					conditions: [
 						{type:'inputEquals',value:'incongruent'}
 					],
 					actions: [
