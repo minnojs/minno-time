@@ -50,9 +50,12 @@ define(['underscore'],function(_){
 						stack = stack.concat(mix(value.data));
 					}
 					break;
-				default:
+				case undefined:
 					// the value is unwrapped, lets push it as it is.
 					stack.push(value);
+					break;
+				default:
+					throw new Error('Unknown wrapper ' + mixer);
 			}
 		});
 
