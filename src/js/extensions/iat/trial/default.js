@@ -12,13 +12,13 @@ define(['../data/properties','./input_decorator','./feedback_decorator'],functio
 			interactions: [
 				// begin trial : display stimulus imidiately
 				{
-					propositions: [{type:'begin'}],
+					conditions: [{type:'begin'}],
 					actions: [{type:'showStim',handle:'target'}]
 				},
 
 				// correct
 				{
-					propositions: [{type:'stimEquals',value:'side',handle:'target'}],				// check if the input handle is equal to the "side" attribute of stimulus.data
+					conditions: [{type:'inputEqualsStim',property:'side',handle:'target'}],				// check if the input handle is equal to the "side" attribute of stimulus.data
 					actions: [
 						{type:'removeInput',handle:['left','right','timeout']},
 						{type:'hideStim',handle:'error_feedback'},
@@ -30,7 +30,7 @@ define(['../data/properties','./input_decorator','./feedback_decorator'],functio
 				// end after ITI
 				// the end action is called by actions added within the feedback module (even if feedback is not activated)
 				{
-					propositions: [{type:'inputEquals',value:'end'}],
+					conditions: [{type:'inputEquals',value:'end'}],
 					actions: [
 						{type:'hideStim',handle:'All'},
 						{type:'setInput',input:{handle:'endTrial', on:'timeout', duration:properties.inter_trial_interval || 0}}
@@ -38,7 +38,7 @@ define(['../data/properties','./input_decorator','./feedback_decorator'],functio
 				},
 
 				{
-					propositions: [{type:'inputEquals',value:'endTrial'}],
+					conditions: [{type:'inputEquals',value:'endTrial'}],
 					actions: [
 						{type:'endTrial'}
 					]
@@ -46,7 +46,7 @@ define(['../data/properties','./input_decorator','./feedback_decorator'],functio
 
 				// skip block
 				{
-					propositions: [{type:'inputEquals',value:'enter'}],
+					conditions: [{type:'inputEquals',value:'enter'}],
 					actions: [
 						{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
 						{type:'endTrial'}
@@ -58,8 +58,8 @@ define(['../data/properties','./input_decorator','./feedback_decorator'],functio
 
 		// error interaction
 		var error = {
-			propositions: [
-				{type:'stimEquals',value:'side',handle:'target',negate:true},				// check if the input handle is unequal to the "side" attribute of stimulus.data
+			conditions: [
+				{type:'inputEqualsStim',property:'side',handle:'target',negate:true},				// check if the input handle is unequal to the "side" attribute of stimulus.data
 				{type:'inputEquals',value:['right','left']}									// make sure this is a click interaction
 			],
 			actions: [

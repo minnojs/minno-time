@@ -10,39 +10,39 @@ First we'll add an inter trial interval (ITI). The way we are going to do this i
 	interactions: [
 		// Display the target stimulus.
 		{
-			propositions:[{type:'begin'}],
+			conditions:[{type:'begin'}],
 			actions: [{type:'showStim', handle: 'target'}]
 		},
 		// Correct response actions
 		{
-			propositions: [
-				{type:'trialEquals',value:'group'}
+			conditions: [
+				{type:'inputEqualsTrial',property:'group'}
 			],
 			actions: [
 				{type:'setTrialAttr', setter:{score:1}},
 				{type:'log'},
 				{type:'hideStim',handle:'target'},
-				{type:'removeInput',handle:['congruent','incongruent']},
+				{type:'removeInput',handle:['red','blue','green']},
 				{type:'trigger', handle:'end',duration:500}
 			]
 		},
 		// Incorrect response actions
 		{
-			propositions: [
-				{type:'trialEquals',value:'group',negate:true},
-				{type:'inputEquals',value:['congruent','incongruent']}
+			conditions: [
+				{type:'inputEqualsTrial',property:'group',negate:true},
+				{type:'inputEquals',value:['red','blue','green']}
 			],
 			actions: [
 				{type:'setTrialAttr', setter:{score:0}},
 				{type:'log'},
 				{type:'hideStim',handle:'target'},
-				{type:'removeInput',handle:['congruent','incongruent']},
+				{type:'removeInput',handle:['red','blue','green']},
 				{type:'trigger', handle:'end',duration:500},
 			]
 		},
 		// End trial
 		{
-			propositions: [{type:'inputEquals', value:'end'}],
+			conditions: [{type:'inputEquals', value:'end'}],
 			actions:[{type:'endTrial'}]
 		}
 	]
@@ -50,7 +50,7 @@ First we'll add an inter trial interval (ITI). The way we are going to do this i
 ```
 
 
-We've added three actions to each of the responses. `hideStim` hides the target stimulus so that we see a blank screen as soon as a response is made. `removeInput` removes the two input listeners that have the handles *congruent* and *incongruent*, this prevents users from giving any further responses. `trigger` triggers an internal player event as if the user has commited an action. In this case, it triggers an event with the input handle `end` after a `duration` of 500 miliseconds.
+We've added three actions to each of the responses. `hideStim` hides the target stimulus so that we see a blank screen as soon as a response is made. `removeInput` removes the input listeners that have the handles *red*, *blue* and *green*, this prevents users from giving any further responses. `trigger` triggers an internal player event as if the user has committed an action. In this case, it triggers an event with the input handle `end` after a `duration` of 500 milliseconds.
 
 Furthermore, we've added an interaction that responds to the `end` event, that ends the trial. Note that the users can not trigger the `end` event directly, only through the events that were exposed to them using the `keypressed` input.
 
@@ -65,14 +65,14 @@ API.addStimulusSets('error',[
 ]);
 ```
 
-Next, we need to add it to each of the *congruent* and *incongruent* trials. We can't add it to the *base* trial because the specific trials make changes to `stimuli` and would overwrite it.
+Next, we need to add it to each of the specific color trials. We can't add it to the *base* trial because the specific color trials make changes to `stimuli` and would overwrite it.
 
 ```js
-API.addTrialSets('congruent',[{
+API.addTrialSets('red',[{
 	inherit:'base',
-	data: {group:'congruent'},
+	data: {group:'red'},
 	stimuli: [
-		{inherit:{type:'exRandom', set:'congruent'}, handle:'target'},
+		{inherit:{set:'red',type:'exRandom'}, handle:'target'},
 		{inherit:'error'}
 	]
 }]);
@@ -84,13 +84,13 @@ Now that we have the error stimulus in place we can add the instruction how to d
 	interactions: [
 		// Display the target stimulus.
 		{
-			propositions:[{type:'begin'}],
+			conditions:[{type:'begin'}],
 			actions: [{type:'showStim', handle: 'target'}]
 		},
 		// Correct response actions
 		{
-			propositions: [
-				{type:'trialEquals',value:'group'}
+			conditions: [
+				{type:'inputEqualsTrial',property:'group'}
 			],
 			actions: [
 				{type:'setTrialAttr', setter:{score:1}},
@@ -100,30 +100,30 @@ Now that we have the error stimulus in place we can add the instruction how to d
 		},
 		// Incorrect response actions
 		{
-			propositions: [
-				{type:'trialEquals',value:'group',negate:true},
-				{type:'inputEquals',value:['congruent','incongruent']}
+			conditions: [
+				{type:'inputEqualsTrial',property:'group',negate:true},
+				{type:'inputEquals',value:['red','blue','green']}
 			],
 			actions: [
 				{type:'setTrialAttr', setter:{score:0}},
 				{type:'log'},
 				{type:'showStim', handle:'error'},
-				{type:'removeInput',handle:['congruent','incongruent']},
+				{type:'removeInput',handle:['red','blue','green']},
 				{type:'trigger', handle:'ITI', duration:500}
 			]
 		},
 		// Inter trial interval
 		{
-			propositions: [{type:'inputEquals', value:'ITI'}],
+			conditions: [{type:'inputEquals', value:'ITI'}],
 			actions:[
 				{type:'hideStim',handle:'All'},
-				{type:'removeInput',handle:['congruent','incongruent']},
+				{type:'removeInput',handle:['red','blue','green']},
 				{type:'trigger', handle:'end',duration:500}
 			]
 		},
 		// End trial
 		{
-			propositions: [{type:'inputEquals', value:'end'}],
+			conditions: [{type:'inputEquals', value:'end'}],
 			actions:[
 				{type:'endTrial'}
 			]
@@ -135,8 +135,8 @@ Now that we have the error stimulus in place we can add the instruction how to d
 There are several changes done here to achieve this task.
 
 First, all the ITI actions have move into an interaction of their own, that is activated when `ITI` is triggered.
-Second, the correct response now triggers the ITI imidiately.
-Third, The incorrect resonse first displays the error feedback (`showStim`) and only after 500 miliseconds trigers the ITI.
+Second, the correct response now triggers the ITI immediately.
+Third, The incorrect response first displays the error feedback (`showStim`) and only after 500 milliseconds triggers the ITI.
 
 You should also note that the `hideStim` action within the ITI interaction uses the handle `'All'`. When you want to refer to all the stimuli in a trial you can use the handle `'All'` and all stimuli will be affected.
 

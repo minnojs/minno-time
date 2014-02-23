@@ -74,12 +74,12 @@ define(['app/API'], function(API) {
 
 			interactions: [
 				{
-					propositions: [{type:'begin'}],
+					conditions: [{type:'begin'}],
 					actions: [{type:'showStim',handle:'All'}]
 				},
 
 				{
-					propositions: [{type:'inputEquals',value:'space'}],
+					conditions: [{type:'inputEquals',value:'space'}],
 					actions: [{type:'endTrial'}]
 				}
 			]

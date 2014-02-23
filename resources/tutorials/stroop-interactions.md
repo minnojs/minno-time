@@ -1,51 +1,53 @@
 ## Stroop <small>Interactions</small>
 So far we created the very general way that the task looks. The next step is to create interactions that will make the player interactive. We will first set up the `input` and `stimuli` properties of the trial and then dig into `interactions`.
 
-We will keep extending the trial we started in the setup section. For now we will develope the *congruent* stimulus trial, later on we will show how to apply it to the *incongruent* trials as well.
+We will keep extending the trial we started in the setup section. For now we will develop the *red* stimulus trial, later on we will show how to apply it to the other trials as well.
 
 ### Input
-First we want to tell the player to listen for user input. The player has an internal event system that triggers each time a significant event happens. We need listeners that trigger internal events each time that an appropriate key is pressed. We will add a separate input listener for left (congruent) and right (incongruent) responses. They will use the `e` and `i` keys for left and right respectively. These listeners are sensitive to `keypressed` events, you can use any of the [other types of events](./API.md#input) of course.
+First we want to tell the player to listen for user input. The player has an internal event system that triggers each time a significant event happens. We need listeners that trigger internal events each time that an appropriate key is pressed. We will add a separate input listener for each color. They will use the `1`, `2` and `3` keys for red blue and green respectively. These listeners are sensitive to `keypressed` events, you can change them to any of the [other types of events](./API.md#input) of course.
 
-Listeners are objects that are composed of (at least) two properties; `handle` and `on`. The `on` property defines what type of input we are going to listen to; in this case we listen for `keypressed` events, of specifically `e` or `i`. The `handle` properties defines the name of the internal event to be triggered. In this case we trigger the *congruent* event when `e` is pressed, and the *incongruent* event when `i` is pressed.
+Listeners are objects that are composed of (at least) two properties; `handle` and `on`. The `on` property defines what type of input we are going to listen to; in this case we listen for `keypressed` events, of specifically `e` or `i`. The `handle` properties defines the name of the internal event to be triggered. In this case we trigger the *red* event when `1` is pressed, the *blue* event when `2` is pressed and so on.
 
 ```js
 {
 	input: [
-		{handle:'congruent',on:'keypressed',key:'e'},
-		{handle:'incongruent',on:'keypressed',key:'i'}
+		{handle:'red',on:'keypressed',key:'1'},
+		{handle:'blue',on:'keypressed',key:'2'},
+		{handle:'green',on:'keypressed',key:'3'}
 	]
 }
 ```
+**Protip**: You can use key codes instead of letters, that way you can use special keys like the left (37) and right (38) arrow keys (see [here](http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes) for a full list of key codes).
 
 ### Stimuli
-The stimuli in the `layout` property are static; this means that interactions do not affect them. If we want stimuli to be interactive we put them into a separate array called `stimuli`. The advantage of this separation is that you never have to worry that you're going to brake the canvas layout when creating interactions.
+The stimuli in the `layout` property are static; this means that interactions do not affect them. If we want stimuli to be interactive we put them into a separate array called `stimuli`. The advantage of this separation is that you never have to worry that you're going to break the canvas layout when creating interactions.
 
 We will very simply move the target stimulus into the `stimuli` property:
 
 ```js
 {
 	stimuli: [
-		{inherit:'congruent', handle:'target'}
+		{inherit:'red', handle:'target'}
 	]
 }
 ```
 
-Note that we extend every stimulus we inherit with the (arbitrary) handle `'target'`, this is neccesary so that the various actions in `interactions` can know which stimulus we are refering to.
+Note that we extend every stimulus we inherit with the (arbitrary) handle `'target'`, this is necessary so that the various actions in `interactions` can know which stimulus we are referring to.
 
 ### Interactions
-The `interaction` property controls all the interactive parts of the trial. This is where you will have to carefuly describe exatcly what you want the player to *do*. We will start with an extremely simple set of interactions and slowly build up to a full fledged trial.
+The `interaction` property controls all the interactive parts of the trial. This is where you will have to carefully describe exactly what you want the player to *do*. We will start with an extremely simple set of interactions and slowly build up to a full fledged trial.
 
-`interactions` holds an array of interaction-objects. Each of these objects has two properties: `propositions` and `actions`. `propositions` are a set of conditions that have to all be true in order for respective set of `actions` to be executed. Each of them consists in an array of objects. You can see the [API](./API.md#interactions) for a complete list of propositions and actions.
+`interactions` holds an array of interaction-objects. Each of these objects has two properties: `conditions` and `actions`. `conditions` are a set of propositions that have to all be true in order for respective set of `actions` to be executed. Each of them consists in an array of objects. You can see the [API](./API.md#interactions) for a complete list of conditions and actions.
 
-The proposition system is based on an internal event system. Each time a significan event happens (i.e. a [user input](#input) is detected, or a timer runs out) an event is fired internaly. The propositions compare different data to the event handle (we will see how this works shortly). Each proposition has a `type` property that defines what to compare the event handle to.
+The condition system is based on an internal event system. Each time a significant event happens (i.e. a [user input](#input) is detected, or a timer runs out) an event is fired internally. The conditions compare different data to the event handle (we will see how this works shortly). Each condition has a `type` property that defines what to compare the event handle to.
 
 We will start with several basic interactions:
 
-Stimuli set into `stimuli` are hidden by default. The first interaction we deal with displays the target stimulus as soon as the trial starts. `begin` is a special event that is fired only once; when a trial starts. In order to listen to it we use the proposition object `{type:'begin'}`. In this case, the associated action is `showStim`; this action tells the player to display the a stimulus that has the handle `'target'` (you can recall that we extended the target stimulus with the handle `'target'`).]
+Stimuli set into `stimuli` are hidden by default. The first interaction we deal with displays the target stimulus as soon as the trial starts. `begin` is a special event that is fired only once; when a trial starts. In order to listen to it we use the condition object `{type:'begin'}`. In this case, the associated action is `showStim`; this action tells the player to display the a stimulus that has the handle `'target'` (you can recall that we extended the target stimulus with the handle `'target'`).]
 
 ```js
 {
-	propositions:[
+	conditions:[
 		{type:'begin'}
 	],
 	actions: [
@@ -55,7 +57,7 @@ Stimuli set into `stimuli` are hidden by default. The first interaction we deal 
 ```
 Next we will add interactions that deal with the response to the user interaction:
 
-First we will create the interaction for correct responses. The `inputEquals` proposition fires when the input handle (as [set](#input) in the input object) is equal to the value in the `value` property. So in our trial the following action will activate once the `e` key is pressed. It activates three [actions](./API.md#interactions-actions).
+First we will create the interaction for correct response. The `inputEquals` condition fires when the input handle (as [set](#input) in the input object) is equal to the value in the `value` property. So in our trial the following action will activate once the `1` key is pressed. It activates three [actions](./API.md#interactions-actions).
 
 * The `log` action logs the user response, including latency and other information about the trial.
 * The `endTrial` action simply ends this trail and moves on to the next one.
@@ -63,8 +65,8 @@ First we will create the interaction for correct responses. The `inputEquals` pr
 
 ```js
 {
-	propositions: [
-		{type:'inputEquals',value:'congruent'}
+	conditions: [
+		{type:'inputEquals',value:'red'}
 	],
 	actions: [
 		{type:'setTrialAttr', setter:{score:1}},
@@ -74,12 +76,13 @@ First we will create the interaction for correct responses. The `inputEquals` pr
 }
 ```
 
-Now, lets create the interaction for incorrect responses. This interaction is almost identical to the previous one, with two key differences. First, it fires for *incongruent* stimuli. Second, the score set is `0` which for us signifies an error.
+Now, lets create the interaction for incorrect responses. This interaction is similar to the previous one, with two key differences. First, it fires only for non *red* responses. Second, the score set is `0` which for us signifies an error.
 
 ```js
 {
-	propositions: [
-		{type:'inputEquals',value:'incongruent'}
+	conditions: [
+		{type:'inputEquals',value:'red', negate:true},
+		{type:'inputEquals', value: ['red','blue','green']}
 	],
 	actions: [
 		{type:'setTrialAttr', setter:{score:0}},
@@ -88,6 +91,9 @@ Now, lets create the interaction for incorrect responses. This interaction is al
 	]
 }
 ```
+
+The change is to the incorrect response condition bears some more explanation. The first condition here is straight forward, it is the same as the correct answer condition, with the added `negate` property. `negate` causes the condition to activate only if it is incorrect. The second condition is needed in order to balance the first one. `negate` will cause the condition to activate on **any** event that is not *red*, this includes the `begin` event, and any other event that we may add later on. Therefore it is best practice to always limit negated conditions to specific input handles. In this case the condition means: any event that is a user response ("red" , "blue" or "green") but is not *red*.
+
 
 ### All together now
 So when we put the whole thing together it looks like this:
@@ -117,12 +123,12 @@ API.addSequence([
 		interactions: [
 			// Display the target stimulus.
 			{
-				propositions:[{type:'begin'}],
+				conditions:[{type:'begin'}],
 				actions: [{type:'showStim', handle: 'target'}]
 			},
 			// Correct response actions
 			{
-				propositions: [
+				conditions: [
 					{type:'inputEquals',value:'congruent'}
 				],
 				actions: [
@@ -133,7 +139,7 @@ API.addSequence([
 			},
 			// Incorrect response actions
 			{
-				propositions: [
+				conditions: [
 					{type:'inputEquals',value:'incongruent'}
 				],
 				actions: [

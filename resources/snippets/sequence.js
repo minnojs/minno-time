@@ -11,13 +11,13 @@ define(['app/API'], function(API) {
 			// First trial
 			input: [{handle:'space',on:'space'}],
 			layout: [{media :{word:'First trial'}}],
-			interactions: [{propositions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+			interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
 		},
 		{
 			// Second trial
 			input: [{handle:'space',on:'space'}],
 			layout: [{media :{word:'Second trial'}}],
-			interactions: [{propositions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+			interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
 		}
 		// #### Mixer objects
 		// In order to create more complex sequences you can use mixer objects. Mixer objects allow you to repeat and randomize trials. </br>
@@ -39,17 +39,17 @@ define(['app/API'], function(API) {
 				{
 					input: [{handle:'space',on:'space'}],
 					layout: [{media :{word:'Random 1'}}],
-					interactions: [{propositions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+					interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
 				},
 				{
 					input: [{handle:'space',on:'space'}],
 					layout: [{media :{word:'Random 2'}}],
-					interactions: [{propositions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+					interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
 				},
 				{
 					input: [{handle:'space',on:'space'}],
 					layout: [{media :{word:'Random 3'}}],
-					interactions: [{propositions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+					interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
 				}
 			]
 		},
@@ -65,7 +65,7 @@ define(['app/API'], function(API) {
 				{
 					input: [{handle:'space',on:'space'}],
 					layout: [{media :{word:'I am repeated !!'}}],
-					interactions: [{propositions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+					interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
 				}
 			]
 		},
@@ -73,7 +73,7 @@ define(['app/API'], function(API) {
 		// ##### Choose
 		{
 			// This mixer randomly chooses one or more trials
-			mixer : 'chose',
+			mixer : 'choose',
 			// The number of trials to choose (by default only one)
 			n : 1,
 			// The data property holds a sequence array from which the mixer picks trials.
@@ -81,17 +81,17 @@ define(['app/API'], function(API) {
 				{
 					input: [{handle:'space',on:'space'}],
 					layout: [{media :{word:'Choose only one (1)'}}],
-					interactions: [{propositions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+					interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
 				},
 				{
 					input: [{handle:'space',on:'space'}],
 					layout: [{media :{word:'Choose only one (2)'}}],
-					interactions: [{propositions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+					interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
 				},
 				{
 					input: [{handle:'space',on:'space'}],
 					layout: [{media :{word:'Choose only one (3)'}}],
-					interactions: [{propositions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+					interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
 				}
 
 			]
@@ -107,7 +107,7 @@ define(['app/API'], function(API) {
 				{
 					input: [{handle:'space',on:'space'}],
 					layout: [{media :{word:'Complex - may be before or after the pair'}}],
-					interactions: [{propositions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+					interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
 				},
 				// The wrapper mixer tells the sequencer to keep the data inside it together despite the randomization. It is analogous to parathesis in math. </br>
 				// In contrast, if we has a repeat mixer here, its content would be randomized.
@@ -117,12 +117,12 @@ define(['app/API'], function(API) {
 						{
 							input: [{handle:'space',on:'space'}],
 							layout: [{media :{word:'Pair 1'}}],
-							interactions: [{propositions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+							interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
 						},
 						{
 							input: [{handle:'space',on:'space'}],
 							layout: [{media :{word:'Pair 2'}}],
-							interactions: [{propositions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+							interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
 						}
 					]
 				}
@@ -133,7 +133,7 @@ define(['app/API'], function(API) {
 		{
 			input: [{handle:'space',on:'space'}],
 			layout: [{media :{word:'The End'}}],
-			interactions: [{propositions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+			interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
 		}
 	]);
 	/* this is where we close the sequence */

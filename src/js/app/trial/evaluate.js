@@ -1,45 +1,45 @@
 define(['underscore','./current_trial'],function(_,current_trial){
 	/*
-	 * gets a proposition array (or a single proposition) and evaluates it
+	 * gets a condition array (or a single condition) and evaluates it
 	 * returns true if all statements are true, false otherwise
 	 *
-	 * a single proposition looks like this:
+	 * a single condition looks like this:
 	 *
-	 *	proposition = {
-	 *		type : 'begin/inputEquals/trialEquals/stimEquals/function',
+	 *	condition = {
+	 *		type : 'begin/inputEquals/inputEqualsTrial/inputEqualsStim/function',
 	 *		value: 'right/trialAttribute/stimAttribute/customFunction',
 	 *		handle: 'stim handle' (optional in case we're targeting a stimulus)
 	 *	}
 	 *
 	 */
 
-	return function evaluate(propositions, inputData){
+	return function evaluate(conditions, inputData){
 
 
 		var trial = current_trial();
 
-		// make sure propositions is an array
-		propositions = _.isArray(propositions) ? propositions : [propositions];
+		// make sure conditions is an array
+		conditions = _.isArray(conditions) ? conditions : [conditions];
 
 		// the internal event
 		inputData = inputData || {};
 
-		// assume proposition is true
+		// assume condition is true
 		var isTrue = true;
 
-		// if this is a begin event, make sure we only run propositions that have begin in them
+		// if this is a begin event, make sure we only run conditions that have begin in them
 		if (inputData.type == 'begin') {
-			// check if this set of propositions has 'begin' in it
-			var has_begin = _.reduce(propositions, function(memo, row){return memo || row.type == 'begin';},false);
+			// check if this set of conditions has 'begin' in it
+			var has_begin = _.reduce(conditions, function(memo, row){return memo || row.type == 'begin';},false);
 			if (!has_begin){
 				return false;
 			}
 		}
 
-		// try to refute the proposition
-		_.each(propositions,function(proposition){
+		// try to refute the condition
+		_.each(conditions,function(condition){
 			var evaluation = true;
-			switch (proposition.type){
+			switch (condition.type){
 				case 'begin':
 					if (inputData.type !== 'begin') {
 						evaluation = false;
@@ -47,27 +47,27 @@ define(['underscore','./current_trial'],function(_,current_trial){
 					break;
 
 				case 'inputEquals' :
-					// make sure proposition.value is an array
-					_.isArray(proposition.value) || (proposition.value = [proposition.value]);
+					// make sure condition.value is an array
+					_.isArray(condition.value) || (condition.value = [condition.value]);
 
-					if (_.indexOf(proposition.value,inputData.handle) === -1) {
+					if (_.indexOf(condition.value,inputData.handle) === -1) {
 						evaluation = false;
 					}
 					break;
 
-				case 'trialEquals':
-					if (inputData.handle !== trial.data[proposition.value]) {
+				case 'inputEqualsTrial':
+					if (inputData.handle !== trial.data[condition.property]) {
 						evaluation = false;
 					}
 					break;
 
-				case 'stimEquals':
+				case 'inputEqualsStim':
 					// create search object
 					var searchObj = {};
-					if (proposition.handle){
-						searchObj['handle'] = proposition.handle;
+					if (condition.handle){
+						searchObj['handle'] = condition.handle;
 					}
-					searchObj[proposition.value] = inputData.handle;
+					searchObj[condition.property] = inputData.handle;
 
 					// are there stimuli answering this descriptions?
 					var result = trial._stimulus_collection.whereData(searchObj);
@@ -77,16 +77,16 @@ define(['underscore','./current_trial'],function(_,current_trial){
 					break;
 
 				case 'function' :
-					if (!proposition.value.apply(trial,[trial,inputData])) {
+					if (!condition.value.apply(trial,[trial,inputData])) {
 						evaluation = false;
 					}
 					break;
 
 				default:
-					throw new Error('Unknown proposition type: ' + proposition.type);
+					throw new Error('Unknown condition type: ' + condition.type);
 			}
 
-			isTrue = isTrue && (proposition.negate ? !evaluation : evaluation);
+			isTrue = isTrue && (condition.negate ? !evaluation : evaluation);
 		});
 
 		return isTrue;
