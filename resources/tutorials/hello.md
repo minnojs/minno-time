@@ -139,9 +139,9 @@ The `css` object can do  far more than this. If you want to know more you can ch
 
 Each interaction object has a `conditions` property that holds an array of true/false statements. Each one of these statements is evaluated for every player event (i.e. user input), if all the conditions are true for an event then all associated `actions` are executed. In this case we check if the input handle equals 'space'.
 
-Each intercation object also has an `actions` array that hold an array of actions to perform if all `conditions` are evaluated as true. In this case the only action is to end this trial.
+Each interaction object also has an `actions` array that hold an array of actions to perform if all `conditions` are evaluated as true. In this case the only action is to end this trial.
 
 ### Epilogue (of sorts)
-You've learnt how to create a single trial, and the different elements that compose it. The next stage is seeing how different trials come together to form a task.
+You've learned how to create a single trial, and the different elements that compose it. The next stage is seeing how different trials come together to form a task.
 
-We will now go on to creating a simple slideshow.
+We will now go on to creating a simple slide-show.

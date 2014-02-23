@@ -2,7 +2,7 @@
 This section of the tutorial will walk you through creating a slide show. We will create a simple task that displays a series of stimuli. In this tutorial we will learn how to utilize the sequence, and the very basics of inheritance.
 
 ### A simple slide show
-Tasks normaly include more than one trial. You will note that the sequence holds an array; any trials in the array will be activated sequentialy.
+Tasks normally include more than one trial. You will note that the sequence holds an array; any trials in the array will be activated sequentially.
 
 This is the trial that we already know from the *Hello world* tutorial:
 
@@ -65,10 +65,10 @@ You should try it! (don't forget the wrapper, and the activation function at the
 Download [here](../../resources/tutorials/js/slideshow1.js). You can see it in action right [here](#{player}../resources/tutorials/js/slideshow1.js).
 
 ### Basic inheritance
-Our task is becoming longer and harder to maintain. Imagine a slide show with 50 slides, it would be more than 500 lines of code long, and if we would want to make any changes to it we would have to go through each trial individualy and change it. This is where inheritance comes in. Inheritance allows you to create a prototype of a trial (or stimulus or media object), and extend it whenever you want. We will see how this works shortly, but first we need to learn a bit about sets.
+Our task is becoming longer and harder to maintain. Imagine a slide show with 50 slides, it would be more than 500 lines of code long, and if we would want to make any changes to it we would have to go through each trial individually and change it. This is where inheritance comes in. Inheritance allows you to create a prototype of a trial (or stimulus or media object), and extend it whenever you want. We will see how this works shortly, but first we need to learn a bit about sets.
 
 #### **Sets**
-[Sets](./API.md#sets)  are list of PIP objects (trials, stiumli or media objects). They are useful for two reasons; first of all they help you organize your code, secondly, you can only inherit/extend objects that reside in sets. We will focus on trial sets for now, but everything that applies to the applies to stimuli sets or media sets as well.
+[Sets](./API.md#sets)  are list of PIP objects (trials, stimuli or media objects). They are useful for two reasons; first of all they help you organize your code, secondly, you can only inherit/extend objects that reside in sets. We will focus on trial sets for now, but everything that applies to the applies to stimuli sets or media sets as well.
 
 You create trial sets using the `API.addTrialSets()` function. The simplest use of the function involves two arguments; the first is the set name, and the seconds is an array of objects to add to the set. The following code creates a trial set called *slide* and populates it with our "Hello world" trial.
 
@@ -101,7 +101,7 @@ But repeating slides is pretty boring. Why would we want to do that?
 
 There are several answers to that question but for now we will focus on one: **extending**. As soon as we've inherited a trial we can extend it by simply adding properties or overwriting existing ones. The model is quite simple. A child inherits all of its parents properties. any property that is added to it overrides any existing properties.
 
-Lets follow an example. Lets say the following object recides in the "parent" set.
+Lets follow an example. Lets say the following object resides in the "parent" set.
 
 ```js
 {

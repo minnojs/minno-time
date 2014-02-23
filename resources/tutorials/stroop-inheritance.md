@@ -1,8 +1,8 @@
 ## Stroop <small>Inheritance</small>
-This section of the tutorial deals with using the inheritance features of the player in order to keep comlex tasks as simple as possible.
+This section of the tutorial deals with using the inheritance features of the player in order to keep complex tasks as simple as possible.
 
 ### Data
-Before we dive into the actual practice of inheritance, it is important to understand the function and use of the trial's `data` property. The `data` property holds an object that keeps inforamation that has to do with this trial. Remeber that all the properties and values of `data` are arbitrary, and you can use them in any way that is convinient to you.
+Before we dive into the actual practice of inheritance, it is important to understand the function and use of the trial's `data` property. The `data` property holds an object that keeps information that has to do with this trial. Remember that all the properties and values of `data` are arbitrary, and you can use them in any way that is convenient to you.
 
 It is useful for several things. First, every time you [log](./API.md#interactions-actions) an event to the server, anything that is in you data object gets logged along with it. This means that if you want to mark the type of a trial it is convenient to do it from here, and then you will have access to it from you servers database. In this case we will set our trials *group* using the data object:
 
@@ -25,7 +25,7 @@ Furthermore, the data object may be used by player interactions. The condition `
 }
 ```
 
-Finaly, interactions may change the data object in real time, while the trial is running. `setTrialAttr` sets data into the data object. The following interaction sets the *score* property of the data object to *1* (go [here](./API.md#interactions-actions) to learn more about the `setTrialAttr` action).
+Finally, interactions may change the data object in real time, while the trial is running. `setTrialAttr` sets data into the data object. The following interaction sets the *score* property of the data object to *1* (go [here](./API.md#interactions-actions) to learn more about the `setTrialAttr` action).
 
 ```js
 {
@@ -39,29 +39,37 @@ Finaly, interactions may change the data object in real time, while the trial is
 ```
 
 ### Evolving the stroop trial
-The stroop has only two types of trials: one congruent, and the second incongruent. What we want to do is to create a base trial that has all the properties that they have in common and then evolve them from it.
+The stroop has several types of trials: one for each color. What we want to do is to create a base trial that has all the properties that they have in common and then evolve them from it.
 
-There are three essential differences between the two stroop trials. One is the stimulus set that they use, the second is the way they evaluate reponses (which response is correct), the third is the type of the trial as reported to the server. What we will do is create separate trials that hold these diffrences and inherit the base trial that has the rest of the trial specifications.
+There are three essential differences between stroop trials. One is the stimulus set that they use, the second is the way they evaluate responses (which response is correct), the third is the type of the trial as reported to the server. What we will do is create separate trials that hold these differences and inherit the base trial that has the rest of the trial specifications.
 
 ```js
-API.addTrialSets('congruent',[{
+API.addTrialSets('red',[{
 	inherit:'base',
-	data: {group:'congruent'},
+	data: {group:'red'},
 	stimuli: [
-		{inherit:'congruent', handle:'target'}
+		{inherit:'red', handle:'target'}
 	]
 }]);
 
-API.addTrialSets('incongruent',[{
+API.addTrialSets('blue',[{
 	inherit:'base',
-	data: {group:'incongruent'},
+	data: {group:'blue'},
 	stimuli: [
-		{inherit:'incongruent', handle:'target'}
+		{inherit:'blue', handle:'target'}
+	]
+}]);
+
+API.addTrialSets('green',[{
+	inherit:'base',
+	data: {group:'green'},
+	stimuli: [
+		{inherit:'green', handle:'target'}
 	]
 }]);
 ```
 
-We've created two trials here, one fore each of the trial types, and set them into `trialSets` so they can later be inherited themselves. Note that we haven't made any changes to the interactions. We will change the interactions in the base trial so that they depend on the trial type (as set in data *group*).
+We've created three trials here, one for each of the trial types (colors), and set them into `trialSets` so they can later be inherited themselves. Note that we haven't made any changes to the interactions. We will change the interactions in the base trial so that they depend on the trial type (as set in data *group*).
 
 ```js
 {
@@ -86,7 +94,7 @@ We've created two trials here, one fore each of the trial types, and set them in
 		{
 			conditions: [
 				{type:'inputEqualsTrial',property:'group',negate:true},
-				{type:'inputEquals',value:['congruent','incongruent']}
+				{type:'inputEquals',value:['red','blue','green']}
 			],
 			actions: [
 				{type:'setTrialAttr', setter:{score:0}},
@@ -98,17 +106,16 @@ We've created two trials here, one fore each of the trial types, and set them in
 }
 ```
 
-We made two changes to the interactions, to reflect the dependency on the trial type. The first change is in the correct response condition, where we compare the input handle to the data *group*. If they are the same then the answer is correct.
-
-The second change is to the incorrect response condition and it bears some more explanation. The first propostion is straight forward, it is the same as the correct answer condition, with the added `negate` property. `negate` causes the condition to activate only if it is incorrect. The second condition is needed in order to balance the first one. `negate` will cause the condition to activate on **any** event that is not the correct group, this includes the `begin` event, and any other event that we may add later. Therefore it is best practice to always limit negated conditions to specific input handles. In this case the condition means: any event that is a user response ("congruent" or "incongruent") but is not the correct answer.
+The primary change that we made is in evaluating the correct response. `inputEqualsTrial` compares the input handle to the (trial's) data property *group*. If they are the same then the answer is correct. The incorrect response answer reflects the same principle, only negated.
 
 ### Epilogue (of sorts)
 What we have left now, is to put the task together. Here we display a congruent and incongruent trial consequently.
 
 ```js
 API.addSequence([
-	{inherit:'congruent'},
-	{inherit:'incongruent'}
+	{inherit:'red'},
+	{inherit:'blue'},
+	{inherit:'green'}
 ]);
 ```
 
