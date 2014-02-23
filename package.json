@@ -1,6 +1,6 @@
 {
   "name": "PIPlayer",
-  "version": "0.1.3",
+  "version": "1.0.0",
   "description": "Project Implicit Player",
   "scripts": {
     "build": "grunt build",
