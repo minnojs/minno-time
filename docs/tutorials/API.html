@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"></html><html><head><title>Project Implicit</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"><!-- If we ever need the js stuff...--><!--script(src="http://code.jquery.com/jquery-2.1.0.min.js")--><!--script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js")--><style>div#main {padding-top:50px}
+<!DOCTYPE html><html lang="en"></html><html><head><title>Project Implicit</title><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"><!-- If we ever need the js stuff...--><!--script(src="http://code.jquery.com/jquery-2.1.0.min.js")--><!--script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js")--><style>div#main {padding-top:50px}
 .sidenav {background-color: #F7F5FA;border-radius: 5px;margin-bottom: 30px;margin-top: 30px;padding-bottom: 10px;padding-top: 10px;text-shadow: 0 1px 0 #FFFFFF;}
 .sidenav.nav li > a {color: #999999;display: block;font-size: 13px;font-weight: 600;padding: 5px 20px;}
 .sidenav.nav li > a:hover {text-decoration:none;color: #563D7C;}
@@ -91,19 +91,25 @@ By default nolog is set to false.</p>
     ],
     interactions: [
         {
-            propositions: [{type:<span class="hljs-string">'begin'</span>}],
+            conditions: [{type:<span class="hljs-string">'begin'</span>}],
             actions: [{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'myStimHandle'</span>}]
         },
         {
-            propositions: [{type:<span class="hljs-string">'stimEquals'</span>,value:<span class="hljs-string">'orientation'</span>}],
-            actions: [{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'myStim'</span>},{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'time'</span>,on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">300</span>}}]
+            conditions: [{type:<span class="hljs-string">'inputEqualsStim'</span>,property:<span class="hljs-string">'orientation'</span>}],
+            actions: [
+                {type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'myStim'</span>},
+                {type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'time'</span>,on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">300</span>}}
+            ]
         },
         {
-            propositions: [{type:<span class="hljs-string">'stimEquals'</span>,value:<span class="hljs-string">'orientation'</span>,negate:<span class="hljs-literal">true</span>},{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'time'</span>,negate:<span class="hljs-literal">true</span>}],
+            conditions: [
+                {type:<span class="hljs-string">'inputEqualsStim'</span>,property:<span class="hljs-string">'orientation'</span>,negate:<span class="hljs-literal">true</span>},
+                {type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'time'</span>,negate:<span class="hljs-literal">true</span>}
+            ],
             actions: [{type:<span class="hljs-string">'endTrial'</span>}]
         },
         {
-            propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'time'</span>}],
+            conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'time'</span>}],
             actions: [{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'myStim'</span>}]
         }
     ]
@@ -165,13 +171,13 @@ If it is set to <code>false</code> then the input will be used only on non touch
 <li><code>{handle: &#39;end&#39;,on: &#39;enter&#39;, touch:false}</code></li>
 </ul>
 <h4 id="interactions">Interactions</h4>
-<p>Interactions are composed of propositions and actions. Every time an event is fired (any input including timeout or the begining of a trial) all the propositions are evaluated.</p>
-<p>The <code>interactions</code> array is composed of interaction objects, each holding an array of propositions and an array of actions.
-For each interaction object, if all the propositions are true, then all the actions are carried out.</p>
+<p>Interactions are composed of conditions and actions. Every time an event is fired (any input including timeout or the begining of a trial) all the conditions are evaluated.</p>
+<p>The <code>interactions</code> array is composed of interaction objects, each holding an array of conditions and an array of actions.
+For each interaction object, if all the conditions are true, then all the actions are carried out.</p>
 <pre><code class="lang-js">{
-    propositions: [
-        proposition1,
-        proposition2
+    conditions: [
+        condition1,
+        condition2
     ],
     actions: [
         action1,
@@ -179,9 +185,9 @@ For each interaction object, if all the propositions are true, then all the acti
     ]
 }
 </code></pre>
-<h4 id="interactions-propositions">Interactions: propositions</h4>
-<p>Each proposition object has a <code>type</code> property that defines what type of evaluation to perform.</p>
-<p>In addition, it has a <code>negate</code> property (false by default) that determines whether to activate the proposition when the evaluation is true or when it is false.</p>
+<h4 id="interactions-conditions">Interactions: conditions</h4>
+<p>Each condition object has a <code>type</code> property that defines what type of evaluation to perform.</p>
+<p>In addition, it has a <code>negate</code> property (false by default) that determines whether to activate the condition when the evaluation is true or when it is false.</p>
 <p><strong>begin</strong>:
 Automatically activated at the beginning of the trial, and is never fired again.</p>
 <ul>
@@ -193,32 +199,32 @@ Check if the input <code>handle</code> equals to a static value, <code>value</co
 <li><code>{type:&#39;inputEquals&#39;,value:&#39;enter&#39;}</code></li>
 <li><code>{type:&#39;inputEquals&#39;,value:[&#39;left&#39;,&#39;right&#39;]}</code></li>
 </ul>
-<p><strong>trialEquals</strong>:
-Check if the input <code>handle</code> equals to the <code>value</code> property of trial.data</p>
+<p><strong>inputEqualsTrial</strong>:
+Check if the input <code>handle</code> equals to the <code>property</code> property of trial.data</p>
 <ul>
-<li><code>{type:&#39;trialEquals&#39;,value:&#39;customAttribute&#39;}</code></li>
+<li><code>{type:&#39;inputEqualsTrial&#39;,property:&#39;customAttribute&#39;}</code></li>
 </ul>
-<p><strong>stimEquals</strong>:
-Check if the input <code>handle</code> equals to the ‘value’ property of any one of the stimulus.data in this trial.
+<p><strong>inputEqualsStim</strong>:
+Check if the input <code>handle</code> equals to the ‘property’ property of any one of the stimulus.data in this trial.
 The optional attribute <code>handle</code> narrows the search down to stimuli fitting the <code>handle</code></p>
 <ul>
-<li><code>{stimEquals:&#39;trialEquals&#39;,value:&quot;customAttribute&quot;}</code></li>
-<li><code>{stimEquals:&#39;trialEquals&#39;,value:&quot;customAttribute&quot;,handle:&#39;myStimHandle&#39;}</code></li>
+<li><code>{type:&#39;inputEqualsTrial&#39;,property:&quot;customAttribute&quot;}</code></li>
+<li><code>{type:&#39;inputEqualsTrial&#39;,property:&quot;customAttribute&quot;,handle:&#39;myStimHandle&#39;}</code></li>
 </ul>
 <p><strong>function</strong>:
-It is also possible to create a custom proposition:</p>
+It is also possible to create a custom condition:</p>
 <pre><code class="lang-js">{type:<span class="hljs-string">'function'</span>,value:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(trial,inputData)</span>{</span>
     <span class="hljs-comment">// do your mojo here and return true or false</span>
 }}
 </code></pre>
-<p>It is possible to create complex propositions, the following proposition, for instance, is activated in case there is an input that is not equal to trial.data.customAttribute, and the input handle is not “time”.</p>
+<p>It is possible to create complex conditions, the following condition, for instance, is activated in case there is an input that is not equal to trial.data.customAttribute, and the input handle is not “time”.</p>
 <pre><code class="lang-js">[
-    {type:<span class="hljs-string">'trialEquals'</span>,value:<span class="hljs-string">'customAttribute'</span>,negate:<span class="hljs-literal">true</span>},
+    {type:<span class="hljs-string">'inputEqualsTrial'</span>,property:<span class="hljs-string">'customAttribute'</span>,negate:<span class="hljs-literal">true</span>},
     {type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'time'</span>,negate:<span class="hljs-literal">true</span>}
 ]
 </code></pre>
 <h4 id="interactions-actions">Interactions: actions</h4>
-<p>If all the propositions in a row of interactions are true, its actions will be executed.</p>
+<p>If all the conditions in a row of interactions are true, its actions will be executed.</p>
 <p><strong>showStim</strong>:
 Display a stimulus, takes a stimulus <code>handle</code>. Use ‘All’ for all stimuli.</p>
 <ul>

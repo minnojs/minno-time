@@ -88,7 +88,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		//Set what to do.
 		interactions: [
 		{
-			propositions: [{type:'begin'}],
+			conditions: [{type:'begin'}],
 			actions: [
 				{type:'showStim',handle:'primingImage'},// display the first stimulus
 				{type:'setInput',input:{handle:'primeOut',on:'timeout',duration:300}}
@@ -96,7 +96,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		},
 		// show target stim
 		{
-			propositions: [{type:'inputEquals',value:'primeOut'}], // on time out
+			conditions: [{type:'inputEquals',value:'primeOut'}], // on time out
 			actions: [
 				{type:'hideStim',handle:'primingImage'}, // hide the first stimulus
 				{type:'showStim',handle:'targetStim'}, // and show the second one
@@ -110,7 +110,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		},
 		// on time out
 		{
-			propositions: [{type:'inputEquals',value:'targetOut'}],
+			conditions: [{type:'inputEquals',value:'targetOut'}],
 			actions: [
 				{type:'removeInput',handle	:[category2,category1]},//only one respnse is possible
 				{type:'hideStim',handle:'targetStim'}, // hide the stimulus
@@ -121,7 +121,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		// there are 2 possible responses: "pleasant" and "unpleasant", here we handle these responses when the user answers
 		// matches the word value (correct response)
 		{
-			propositions: [{type:'stimEquals',value:'wordCategory'}],
+			conditions: [{type:'inputEqualsStim',property:'wordCategory'}],
 			actions: [
 				{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
 				{type:'removeInput',handle	:[category2,category1,'targetOut']}, //only one response is possible
@@ -130,12 +130,12 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		},
 				// there are 2 possible responses: "pleasant" and "unpleasant", here we handle with these responses when the user answer
 				// doesn't match the word value (incorrect response)
-				//this propositions are true only after incorrect response
+				//this conditions are true only after incorrect response
 				// handle incorrect response.
-				//this propositions are true only after incorrect response
+				//this conditions are true only after incorrect response
 		{
-			propositions: [
-				{type:'stimEquals',value:'wordCategory', negate:true},
+			conditions: [
+				{type:'inputEqualsStim',property:'wordCategory', negate:true},
 				{type:'inputEquals',value: [category1, category2]}
 			], // This is a category action - as opposed to some timeout.
 			actions: [
@@ -147,7 +147,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			]
 		},
 		{
-			propositions: [{type:'inputEquals',value:'showFix'}], //What to do when endTrial is called.
+			conditions: [{type:'inputEquals',value:'showFix'}], //What to do when endTrial is called.
 			actions: [
 				{type:'hideStim',handle:'All'},
 				{type:'showStim',handle:'blankScreen'}, //show blankScreen
@@ -156,14 +156,14 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		},
 		// skip block -> if you press 'enter' you will skip the current block.
 		{
-			propositions: [{type:'inputEquals',value:'enter'}],
+			conditions: [{type:'inputEquals',value:'enter'}],
 			actions: [
 				{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
 				{type:'endTrial'}
 				]
 		},
 		{
-			propositions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
+			conditions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
 			actions: [{type:'endTrial'}]
 		}
 			] // end interactions
@@ -461,11 +461,11 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			],
 			interactions: [
 				{ // begin trial
-					propositions: [{type:'begin'}],
+					conditions: [{type:'begin'}],
 					actions: [{type:'showStim',handle:'All'}] //Show the instructions
 				},
 				{
-					propositions: [{type:'inputEquals',value:'space'}], //What to do when space is pressed
+					conditions: [{type:'inputEquals',value:'space'}], //What to do when space is pressed
 					actions: [
 						{type:'hideStim',handle:'All'}, //Hide the instructions
 						{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:500}} //In 500ms: end the trial. In the mean time, we get a blank screen.
@@ -473,14 +473,14 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 				},
 					// skip block -> if you press 'enter' you will skip the current block.
 				{
-					propositions: [{type:'inputEquals',value:'enter'}],
+					conditions: [{type:'inputEquals',value:'enter'}],
 					actions: [
 						{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
 						{type:'endTrial'}
 					]
 				},
 				{
-					propositions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
+					conditions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
 					actions: [
 						{type:'endTrial'} //End the trial
 					]

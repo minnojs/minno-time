@@ -88,7 +88,7 @@ define(['app/API'], function(API) {
 			layout:[{media:{word:'Just a plain trial to show what we can do with settings'}}],
 			interactions: [
 				{
-					propositions: [{type:'inputEquals',value:'end'}],
+					conditions: [{type:'inputEquals',value:'end'}],
 					actions: [{type:'endTrial'}]
 				}
 			]

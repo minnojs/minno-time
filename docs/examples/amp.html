@@ -415,14 +415,14 @@ prime1/category1++</p>
             
             <div class="content"><div class='highlight'><pre>			interactions: [
 				{
-					propositions: [{type:<span class="hljs-string">'begin'</span>}],
+					conditions: [{type:<span class="hljs-string">'begin'</span>}],
 					actions: [
 						{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'primingImage'</span>},<span class="hljs-comment">// display the first stimulus=priming image</span>
 						{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'primeOut'</span>,on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">100</span>}} <span class="hljs-comment">//for 100 ms</span>
 					]
 				},
 				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'primeOut'</span>}], <span class="hljs-comment">// on time out</span>
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'primeOut'</span>}], <span class="hljs-comment">// on time out</span>
 					actions: [
 						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'primingImage'</span>}, <span class="hljs-comment">// hide the first stimulus</span>
 						{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'blankScreen'</span>}, <span class="hljs-comment">// and show the second one=the blank screen</span>
@@ -430,7 +430,7 @@ prime1/category1++</p>
 					]
 				},
 				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'blankOut'</span>}], <span class="hljs-comment">// on time out</span>
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'blankOut'</span>}], <span class="hljs-comment">// on time out</span>
 					actions: [
 						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'blankScreen'</span>}, <span class="hljs-comment">// hide the blank screen</span>
 						{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'targetStim'</span>}, <span class="hljs-comment">// and show the letter</span>
@@ -460,7 +460,7 @@ prime1/category1++</p>
 					]
 				},
 				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'targetOut'</span>}], <span class="hljs-comment">// on time out</span>
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'targetOut'</span>}], <span class="hljs-comment">// on time out</span>
 					actions: [
 						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'targetStim'</span>}, <span class="hljs-comment">// hide the letter</span>
 						{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'MaskScreen'</span>} <span class="hljs-comment">// and show the mask screen</span>
@@ -481,7 +481,7 @@ prime1/category1++</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
 					actions: [
 						{type:<span class="hljs-string">'goto'</span>, destination: <span class="hljs-string">'nextWhere'</span>, properties: {blockStart:<span class="hljs-literal">true</span>}},
 						{type:<span class="hljs-string">'endTrial'</span>}
@@ -499,11 +499,11 @@ prime1/category1++</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
-              <p>the  proposition: dont remove the mask upon timeout, wait until reaction</p>
+              <p>the  condition: dont remove the mask upon timeout, wait until reaction</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:category1}], <span class="hljs-comment">//pleasent response</span>
+            <div class="content"><div class='highlight'><pre>					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:category1}], <span class="hljs-comment">//pleasent response</span>
 					actions: [
 						{type:<span class="hljs-string">'setTrialAttr'</span>,setter:{score:<span class="hljs-string">'1'</span>}},
 						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'All'</span>},
@@ -527,7 +527,7 @@ prime1/category1++</p>
 					]
 				},
 				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:category2}], <span class="hljs-comment">//unpleasent response.</span>
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:category2}], <span class="hljs-comment">//unpleasent response.</span>
 					actions: [
 						{type:<span class="hljs-string">'setTrialAttr'</span>,setter:{score:<span class="hljs-string">'0'</span>}},
 						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'All'</span>},
@@ -537,7 +537,7 @@ prime1/category1++</p>
 					]
 				},
 				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'endTrial'</span>}], <span class="hljs-comment">//What to do when endTrial is called.</span>
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'endTrial'</span>}], <span class="hljs-comment">//What to do when endTrial is called.</span>
 					actions: [{type:<span class="hljs-string">'endTrial'</span>}]
 				}
 			] <span class="hljs-comment">// end interactions</span>
@@ -636,12 +636,12 @@ prime1/category1++</p>
             
             <div class="content"><div class='highlight'><pre>			interactions: [
 				{
-					propositions: [{type:<span class="hljs-string">'begin'</span>}],
+					conditions: [{type:<span class="hljs-string">'begin'</span>}],
 					actions: [{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'primingImage'</span>},<span class="hljs-comment">// display the first stimulus</span>
 					{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'primeOut'</span>,on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">125</span>}}]  <span class="hljs-comment">//display longer time in the example trial</span>
 				},
 				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'primeOut'</span>}], <span class="hljs-comment">// on time out</span>
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'primeOut'</span>}], <span class="hljs-comment">// on time out</span>
 					actions: [
 						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'primingImage'</span>}, <span class="hljs-comment">// hide the first stimulus</span>
 						{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'blankScreen'</span>}, <span class="hljs-comment">// and show the second one</span>
@@ -649,7 +649,7 @@ prime1/category1++</p>
 					]
 				},
 				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'blankOut'</span>}], <span class="hljs-comment">// on time out</span>
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'blankOut'</span>}], <span class="hljs-comment">// on time out</span>
 					actions: [
 						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'blankScreen'</span>}, <span class="hljs-comment">// hide the blank screen</span>
 						{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'targetStim'</span>}, <span class="hljs-comment">// and show the letter</span>
@@ -679,7 +679,7 @@ prime1/category1++</p>
 					]
 				},
 				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'targetOut'</span>}], <span class="hljs-comment">// on time out</span>
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'targetOut'</span>}], <span class="hljs-comment">// on time out</span>
 					actions: [
 						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'targetStim'</span>}, <span class="hljs-comment">// hide the first stimulus</span>
 						{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'MaskScreen'</span>} <span class="hljs-comment">// and show the mask screen</span>
@@ -696,11 +696,11 @@ prime1/category1++</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
-              <p>the proposition: dont remove the word upon timeout, wait until reaction</p>
+              <p>the condition: dont remove the word upon timeout, wait until reaction</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:category1}], <span class="hljs-comment">//pleasent response</span>
+            <div class="content"><div class='highlight'><pre>					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:category1}], <span class="hljs-comment">//pleasent response</span>
 					actions: [
 						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'All'</span>},
 						{type:<span class="hljs-string">'setTrialAttr'</span>,setter:{score:<span class="hljs-string">'1'</span>}},
@@ -711,7 +711,7 @@ prime1/category1++</p>
 				},
 
 				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:category2}], <span class="hljs-comment">//unpleasent response.</span>
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:category2}], <span class="hljs-comment">//unpleasent response.</span>
 					actions: [
 						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'All'</span>},
 						{type:<span class="hljs-string">'setTrialAttr'</span>,setter:{score:<span class="hljs-string">'0'</span>}},
@@ -735,7 +735,7 @@ prime1/category1++</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
 					actions: [
 						{type:<span class="hljs-string">'goto'</span>, destination: <span class="hljs-string">'nextWhere'</span>, properties: {blockStart:<span class="hljs-literal">true</span>}},
 						{type:<span class="hljs-string">'endTrial'</span>}
@@ -743,7 +743,7 @@ prime1/category1++</p>
 				},
 
 				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'endTrial'</span>}], <span class="hljs-comment">//What to do when endTrial is called.</span>
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'endTrial'</span>}], <span class="hljs-comment">//What to do when endTrial is called.</span>
 					actions: [{type:<span class="hljs-string">'endTrial'</span>}]
 				}
 			]
@@ -789,18 +789,18 @@ prime1/category1++</p>
 		],
 		interactions: [
 			{ <span class="hljs-comment">// begin trial</span>
-				propositions: [{type:<span class="hljs-string">'begin'</span>}],
+				conditions: [{type:<span class="hljs-string">'begin'</span>}],
 				actions: [{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'All'</span>}] <span class="hljs-comment">//Show the instructions, later use to show the user feedback</span>
 			},
 			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}], <span class="hljs-comment">//What to do when space is pressed</span>
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}], <span class="hljs-comment">//What to do when space is pressed</span>
 				actions: [
 					{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'All'</span>}, <span class="hljs-comment">//Hide the instructions</span>
 					{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'endTrial'</span>, on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">500</span>}} <span class="hljs-comment">//In 500ms: end the trial. In the mean time, we get a blank screen.</span>
 				]
 			},
 			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'endTrial'</span>}], <span class="hljs-comment">//What to do when endTrial is called.</span>
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'endTrial'</span>}], <span class="hljs-comment">//What to do when endTrial is called.</span>
 				actions: [
 					{type:<span class="hljs-string">'endTrial'</span>} <span class="hljs-comment">//End the trial</span>
 				]
@@ -820,7 +820,7 @@ prime1/category1++</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
 					actions: [
 						{type:<span class="hljs-string">'goto'</span>, destination: <span class="hljs-string">'nextWhere'</span>, properties: {blockStart:<span class="hljs-literal">true</span>}},
 						{type:<span class="hljs-string">'endTrial'</span>}

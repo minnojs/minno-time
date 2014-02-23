@@ -83,14 +83,14 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		interactions: [
 			// begin trial : display stimulus afte 1000ms
 			{
-				propositions: [{type:'begin'}],
+				conditions: [{type:'begin'}],
 				actions: [
 					{type:'showStim',handle:'blankScreen'},
 					{type:'setInput',input:{handle:'showMyStim', on:'timeout',duration:1000}}//show the stim 1000 ms after the beginin
 				]
 			},
 				{
-				propositions: [{type:'inputEquals',value:'showMyStim'}],
+				conditions: [{type:'inputEquals',value:'showMyStim'}],
 				actions: [
 					{type:'showStim',handle:'myStim'},
 					{type:'setInput',input:{handle: 'in',on:'centerTouch',touch:true}},
@@ -101,7 +101,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 			// error
 			{
-				propositions: [{type:'inputEquals',value:'targetOut'}],
+				conditions: [{type:'inputEquals',value:'targetOut'}],
 				actions: [
 					{type:'removeInput',handle:'in'},
 					{type:'showStim',handle:'error'},						// show error stimulus
@@ -113,7 +113,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 			// correct
 			{
-				propositions: [{type:'inputEquals',value:'in'}],
+				conditions: [{type:'inputEquals',value:'in'}],
 				actions: [
 					{type:'removeInput',handle:['in','targetOut']},
 					{type:'showStim', handle: 'correct'},
@@ -124,7 +124,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 			// end after ITI
 			{
-				propositions: [{type:'inputEquals',value:'end'}],
+				conditions: [{type:'inputEquals',value:'end'}],
 				actions: [
 					{type:'endTrial'}
 				]
@@ -132,7 +132,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 			// skip block
 			{
-				propositions: [{type:'inputEquals',value:'enter'}],
+				conditions: [{type:'inputEquals',value:'enter'}],
 				actions: [
 					{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
 					{type:'endTrial'}
@@ -154,14 +154,14 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		// user interactions
 		interactions: [
 			{
-				propositions: [{type:'begin'}],
+				conditions: [{type:'begin'}],
 				actions: [
 					{type:'showStim',handle:'blankScreen'},
 					{type:'setInput',input:{handle:'showMyStim', on:'timeout',duration:1000}}//show the stim 1000 ms after the beginin
 				]
 			},
 				{
-				propositions: [{type:'inputEquals',value:'showMyStim'}],
+				conditions: [{type:'inputEquals',value:'showMyStim'}],
 				actions: [
 					{type:'showStim',handle:'myStim'},
 					{type:'setInput',input:{handle: 'in',on:'centerTouch',touch:true}},
@@ -172,7 +172,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 			// correct
 			{
-				propositions: [{type:'inputEquals',value:'targetOut'}],
+				conditions: [{type:'inputEquals',value:'targetOut'}],
 				actions: [
 					{type:'removeInput',handle:'in'},
 					{type:'log'},
@@ -183,7 +183,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 			// error
 			{
-				propositions: [{type:'inputEquals',value:'in'}],
+				conditions: [{type:'inputEquals',value:'in'}],
 				actions: [
 					{type:'removeInput',handle:['in','targetOut']},
 					{type:'showStim', handle: 'error'},
@@ -195,7 +195,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 			// end after ITI
 			{
-				propositions: [{type:'inputEquals',value:'end'}],
+				conditions: [{type:'inputEquals',value:'end'}],
 				actions: [
 					{type:'endTrial'}
 				]
@@ -203,7 +203,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 			// skip block
 			{
-				propositions: [{type:'inputEquals',value:'enter'}],
+				conditions: [{type:'inputEquals',value:'enter'}],
 				actions: [
 					{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
 					{type:'endTrial'}
@@ -225,14 +225,14 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		// user interactions
 		interactions: [
 			{
-				propositions: [{type:'begin'}],
+				conditions: [{type:'begin'}],
 				actions: [
 					{type:'showStim',handle:'blankScreen'},
 					{type:'setInput',input:{handle:'showMyStim', on:'timeout',duration:1000}}//show the stim 1000 ms after the beginin
 				]
 			},
 				{
-				propositions: [{type:'inputEquals',value:'showMyStim'}],
+				conditions: [{type:'inputEquals',value:'showMyStim'}],
 				actions: [
 					{type:'showStim',handle:'myStim'},
 					{type:'setInput',input:{handle: 'in',on:'centerTouch',touch:true}},
@@ -243,7 +243,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 			// error
 			{
-				propositions: [{type:'inputEquals',value:'targetOut'}],
+				conditions: [{type:'inputEquals',value:'targetOut'}],
 				actions: [
 					{type:'removeInput',handle:'in'},
 					{type:'showStim',handle:'error'},// show error stimulus
@@ -255,7 +255,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 			// correct
 			{
-				propositions: [{type:'inputEquals',value:'in'}],
+				conditions: [{type:'inputEquals',value:'in'}],
 				actions: [
 					{type:'removeInput',handle:['in','targetOut']},
 					{type:'showStim', handle: 'correct'},											// hide everything
@@ -266,7 +266,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 			// end after ITI
 			{
-				propositions: [{type:'inputEquals',value:'end'}],
+				conditions: [{type:'inputEquals',value:'end'}],
 				actions: [
 					{type:'endTrial'}
 				]
@@ -274,7 +274,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 			// skip block
 			{
-				propositions: [{type:'inputEquals',value:'enter'}],
+				conditions: [{type:'inputEquals',value:'enter'}],
 				actions: [
 					{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
 					{type:'endTrial'}
@@ -296,14 +296,14 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		// user interactions
 		interactions: [
 			{
-				propositions: [{type:'begin'}],
+				conditions: [{type:'begin'}],
 				actions: [
 					{type:'showStim',handle:'blankScreen'},
 					{type:'setInput',input:{handle:'showMyStim', on:'timeout',duration:1000}}//show the stim 1000 ms after the beginin
 				]
 			},
 				{
-				propositions: [{type:'inputEquals',value:'showMyStim'}],
+				conditions: [{type:'inputEquals',value:'showMyStim'}],
 				actions: [
 					{type:'showStim',handle:'myStim'},
 					{type:'setInput',input:{handle: 'in',on:'centerTouch',touch:true}},
@@ -314,7 +314,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 			// correct
 			{
-				propositions: [{type:'inputEquals',value:'targetOut'}],
+				conditions: [{type:'inputEquals',value:'targetOut'}],
 				actions: [
 					{type:'removeInput',handle:'in'},
 					{type:'showStim',handle:'correct'},	// show error stimulus
@@ -325,7 +325,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 			// error
 			{
-				propositions: [{type:'inputEquals',value:'in'}],
+				conditions: [{type:'inputEquals',value:'in'}],
 				actions: [
 					{type:'removeInput',handle:['in','targetOut']},
 					{type:'showStim', handle: 'error'},
@@ -337,7 +337,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 			// end after ITI
 			{
-				propositions: [{type:'inputEquals',value:'end'}],
+				conditions: [{type:'inputEquals',value:'end'}],
 				actions: [
 					{type:'endTrial'}
 				]
@@ -345,7 +345,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 			// skip block
 			{
-				propositions: [{type:'inputEquals',value:'enter'}],
+				conditions: [{type:'inputEquals',value:'enter'}],
 				actions: [
 					{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
 					{type:'endTrial'}
@@ -373,7 +373,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			interactions: [
 				// display instructions
 				{
-					propositions: [{type:'begin'}],
+					conditions: [{type:'begin'}],
 					actions: [
 						{type:'showStim',handle:'All'}
 					]
@@ -381,13 +381,13 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 				// end trial
 				{
-					propositions: [{type:'inputEquals',value:'space'}],
+					conditions: [{type:'inputEquals',value:'space'}],
 					actions: [{type:'endTrial'}]
 				},
 
 				// skip block
 				{
-					propositions: [{type:'inputEquals',value:'enter'}],
+					conditions: [{type:'inputEquals',value:'enter'}],
 					actions: [
 						{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
 						{type:'endTrial'}

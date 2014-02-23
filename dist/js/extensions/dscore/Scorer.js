@@ -1,5 +1,5 @@
 /*!
- * PIPlayer v0.1.2
+ * PIPlayer v1.0.0
  *  License
  */
 

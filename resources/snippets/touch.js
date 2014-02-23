@@ -42,7 +42,7 @@ define(['app/API'], function(API) {
 
 			interactions: [
 				{
-					propositions: [{type:'inputEquals',value:'end'}],
+					conditions: [{type:'inputEquals',value:'end'}],
 					actions: [{type:'endTrial'}]
 				}
 			]

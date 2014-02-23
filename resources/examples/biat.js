@@ -52,14 +52,14 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		interactions: [
 			// Begin trial : display stimulus imidiately
 			{
-				propositions: [{type:'begin'}],
+				conditions: [{type:'begin'}],
 				actions: [{type:'showStim',handle:'targetStim'}]
 			},
 
 			// Error response handler
 			{
-				propositions: [
-					{type:'stimEquals',value:'side',negate:true}, // this is an error
+				conditions: [
+					{type:'inputEqualsStim',property:'side',negate:true}, // this is an error
 					{type:'inputEquals',value:['in','out']} // this is an in/out event (and not any timeout or something)
 				],
 				actions: [
@@ -70,7 +70,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 			// Correct response handler
 			{
-				propositions: [{type:'stimEquals',value:'side'}], // check if the input handle is equal to the "side" attribute of stimulus.data
+				conditions: [{type:'inputEqualsStim',property:'side'}], // check if the input handle is equal to the "side" attribute of stimulus.data
 				actions: [
 					{type:'removeInput',handle:['in','out']}, // don't allow any further input
 					{type:'hideStim', handle: 'All'}, // hide everything
@@ -81,7 +81,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 			// End trial (this is called after the ITI)
 			{
-				propositions: [{type:'inputEquals',value:'end'}],
+				conditions: [{type:'inputEquals',value:'end'}],
 				actions: [
 					{type:'endTrial'}
 				]
@@ -89,7 +89,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 			// Skip block
 			{
-				propositions: [{type:'inputEquals',value:'enter'}],
+				conditions: [{type:'inputEquals',value:'enter'}],
 				actions: [
 					{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
 					{type:'endTrial'}
@@ -212,7 +212,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		interactions: [
 			// Display instructions
 			{
-				propositions: [{type:'begin'}],
+				conditions: [{type:'begin'}],
 				actions: [
 					{type:'showStim',handle:'All'}
 				]
@@ -220,13 +220,13 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 			// End trial
 			{
-				propositions: [{type:'inputEquals',value:'space'}],
+				conditions: [{type:'inputEquals',value:'space'}],
 				actions: [{type:'endTrial'}]
 			},
 
 			// Skip block
 			{
-				propositions: [{type:'inputEquals',value:'enter'}],
+				conditions: [{type:'inputEquals',value:'enter'}],
 				actions: [
 					{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
 					{type:'endTrial'}

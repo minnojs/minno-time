@@ -210,8 +210,8 @@ Like the layout property the stimuli property holds an array of stimuli objects.
               </div>
               <p>The interaction property of the trial is responsible for any interactions the user has through the trial.
 Each interaction is composed of a propostition (a statement that is either true or false)
-And of action to execute in case the proposition is true.
-We will learn more about this section in the proposition and action tutorials.</p>
+And of action to execute in case the condition is true.
+We will learn more about this section in the condition and action tutorials.</p>
 
             </div>
             
@@ -233,8 +233,8 @@ We will learn more about this section in the proposition and action tutorials.</
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					<span class="hljs-comment">/* when we begin the trial (proposition) */</span>
-					propositions: [{type:<span class="hljs-string">'begin'</span>}],
+					<span class="hljs-comment">/* when we begin the trial (condition) */</span>
+					conditions: [{type:<span class="hljs-string">'begin'</span>}],
 					<span class="hljs-comment">/* show all stimuli (action) */</span>
 					actions: [{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'All'</span>}]
 				},</pre></div></div>
@@ -256,7 +256,7 @@ We will learn more about this section in the proposition and action tutorials.</
             
             <div class="content"><div class='highlight'><pre>				{
 					<span class="hljs-comment">/* when space is clicked */</span>
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
 					<span class="hljs-comment">/* end the trial */</span>
 					actions: [{type:<span class="hljs-string">'endTrial'</span>}]
 				}

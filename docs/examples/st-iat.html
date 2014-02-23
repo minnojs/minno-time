@@ -312,7 +312,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'begin'</span>}],
+				conditions: [{type:<span class="hljs-string">'begin'</span>}],
 				actions: [{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'myStim'</span>}]
 			},</pre></div></div>
             
@@ -330,8 +330,8 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [
-					{type:<span class="hljs-string">'stimEquals'</span>,value:<span class="hljs-string">'side'</span>,negate:<span class="hljs-literal">true</span>},								<span class="hljs-comment">// check if the input handle is unequal to the "side" attribute of stimulus.data</span>
+				conditions: [
+					{type:<span class="hljs-string">'inputEqualsStim'</span>,property:<span class="hljs-string">'side'</span>,negate:<span class="hljs-literal">true</span>},								<span class="hljs-comment">// check if the input handle is unequal to the "side" attribute of stimulus.data</span>
 					{type:<span class="hljs-string">'inputEquals'</span>,value:[<span class="hljs-string">'right'</span>,<span class="hljs-string">'left'</span>]}									<span class="hljs-comment">// make sure this is a click interaction</span>
 				],
 				actions: [
@@ -354,7 +354,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'stimEquals'</span>,value:<span class="hljs-string">'side'</span>}],								<span class="hljs-comment">// check if the input handle is equal to the "side" attribute of stimulus.data</span>
+				conditions: [{type:<span class="hljs-string">'inputEqualsStim'</span>,property:<span class="hljs-string">'side'</span>}],								<span class="hljs-comment">// check if the input handle is equal to the "side" attribute of stimulus.data</span>
 				actions: [
 					{type:<span class="hljs-string">'removeInput'</span>,handle:[<span class="hljs-string">'left'</span>,<span class="hljs-string">'right'</span>]},
 					{type:<span class="hljs-string">'hideStim'</span>, handle: <span class="hljs-string">'All'</span>},											<span class="hljs-comment">// hide everything</span>
@@ -377,7 +377,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'endTrial'</span>}
 				]
@@ -397,7 +397,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'goto'</span>, destination: <span class="hljs-string">'nextWhere'</span>, properties: {blockStart:<span class="hljs-literal">true</span>}},
 					{type:<span class="hljs-string">'endTrial'</span>}
@@ -477,7 +477,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [{type:<span class="hljs-string">'begin'</span>}],
+					conditions: [{type:<span class="hljs-string">'begin'</span>}],
 					actions: [
 						{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'All'</span>}
 					]
@@ -497,7 +497,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
 					actions: [{type:<span class="hljs-string">'endTrial'</span>}]
 				},</pre></div></div>
             
@@ -515,7 +515,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
 					actions: [
 						{type:<span class="hljs-string">'goto'</span>, destination: <span class="hljs-string">'nextWhere'</span>, properties: {blockStart:<span class="hljs-literal">true</span>}},
 						{type:<span class="hljs-string">'endTrial'</span>}

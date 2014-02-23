@@ -12,12 +12,12 @@ API.addSequence([
 	{
 		mixer: 'random',
 		data: [
-			{inherit:'congruent'},
-			{inherit:'congruent'},
-			{inherit:'congruent'},
-			{inherit:'incongruent'},
-			{inherit:'incongruent'},
-			{inherit:'incongruent'}
+			{inherit:'red'},
+			{inherit:'red'},
+			{inherit:'blue'},
+			{inherit:'blue'},
+			{inherit:'green'},
+			{inherit:'green'}
 		]
 	}
 ]);
@@ -27,12 +27,12 @@ You will notice that this sequence has only one object, that has two properties;
 
 ```js
 API.addSequence([
-	{inherit:'congruent'},
-	{inherit:'incongruent'},
-	{inherit:'incongruent'},
-	{inherit:'congruent'},
-	{inherit:'congruent'},
-	{inherit:'incongruent'}
+	{inherit:'red'},
+	{inherit:'green'},
+	{inherit:'blue'},
+	{inherit:'green'},
+	{inherit:'red'},
+	{inherit:'blue'}
 ]);
 ```
 
@@ -45,8 +45,9 @@ API.addSequence([
 		mixer: 'repeat',
 		times: 2,
 		data: [
-			{inherit:'congruent'},
-			{inherit:'incongruent'}
+			{inherit:'red'},
+			{inherit:'blue'},
+			{inherit:'green'}
 		]
 	}
 ]);
@@ -56,12 +57,12 @@ So that it is directly equivalent to
 
 ```js
 API.addSequence([
-	{inherit:'congruent'},
-	{inherit:'incongruent'},
-	{inherit:'congruent'},
-	{inherit:'incongruent'},
-	{inherit:'congruent'},
-	{inherit:'incongruent'}
+	{inherit:'red'},
+	{inherit:'blue'},
+	{inherit:'green'},
+	{inherit:'red'},
+	{inherit:'blue'},
+	{inherit:'green'}
 ]);
 ```
 
@@ -79,8 +80,9 @@ API.addSequence([
 				mixer: 'repeat',
 				times: 20,
 				data: [
-					{inherit:'congruent'},
-					{inherit:'incongruent'}
+					{inherit:'red'},
+					{inherit:'blue'},
+					{inherit:'green'}
 				]
 			}
 		]
@@ -89,27 +91,27 @@ API.addSequence([
 ```
 
 ### Exclusive random
-An additional issue that comes up is the order of stimuli do be presented. We used the mixer to randomize the order of trials, but the stimuli themselve are randomized when they are inherited from their respective stimulus sets. By default inheritance picks a random element out of the target set. But this way there is a chance that we pick the same element twice in a row, or not pick one of the elements at all. The player offers [additional types](./API.md#inheriting) of inheritance as well, in this case we will want to use `exRandom` which stands for exclusive random. Exclusive random makes sure to exclude each element that it picks out of the set, so that as long that their are element in the set that have not already been chosen it will pick from among them and not an element that has already been used.
+An additional issue that comes up is the order of stimuli do be presented. We used the mixer to randomize the order of trials, but the stimuli themselves are randomized when they are inherited from their respective stimulus sets. By default inheritance picks a random element out of the target set. But this way there is a chance that we pick the same element twice in a row, or not pick one of the elements at all. The player offers [additional types](./API.md#inheriting) of inheritance as well, in this case we will want to use `exRandom` which stands for exclusive random. Exclusive random makes sure to exclude each element that it picks out of the set, so that as long that their are element in the set that have not already been chosen it will pick from among them and not an element that has already been used.
 
 So far we have inherited the stimuli like this:
 
 ```js
-API.addTrialSets('congruent',[{
+API.addTrialSets('red',[{
 	inherit:'base',
-	data: {group:'congruent'},
+	data: {group:'red'},
 	stimuli: [
-		{inherit:'congruent', handle:'target'}
+		{inherit:'red', handle:'target'}
 	]
 }]);
 
 In order to use `exRandom`, all we have to do is this:
 
 ```js
-API.addTrialSets('congruent',[{
+API.addTrialSets('red',[{
 	inherit:'base',
-	data: {group:'congruent'},
+	data: {group:'red'},
 	stimuli: [
-		{inherit:{type:'exRandom', set:'congruent'}, handle:'target'}
+		{inherit:{set:'red',type:'exRandom'}, handle:'target'}
 	]
 }]);
 ```
@@ -117,6 +119,6 @@ API.addTrialSets('congruent',[{
 Instead of setting `inherit` with the set name, and inheriting randomly we set inherit an object that has two properties; `type` sets the type of inheritance to use (in this case `exRandom`), `set` defines which set should we inherit from.
 
 ### Epilogue (of sorts)
-What we have now is a whole block in a stroop task. There are two types of trials; *congruent* and *incongruent*, each repeating ten times at a random order (due to the mixer). There are ten distinct stimuli for each of the trials, each of them repeating only once (thanks to `exRandom`). This is already a fully functioning task. You can download the code [here](../../resources/tutorials/js/stroop-block.js). You can see it in action right [here](#{player}../resources/tutorials/js/stroop-block.js).
+What we have now is a whole block in a stroop task. There are three types of trials; *red*, *blue* and *green*, each repeating ten times at a random order (due to the mixer). There are ten distinct stimuli for each of the trials, each of them repeating only once (thanks to `exRandom`). This is already a fully functioning task. You can download the code [here](../../resources/tutorials/js/stroop-block.js). You can see it in action right [here](#{player}../resources/tutorials/js/stroop-block.js).
 
 The next [step](./stroop-task.html) for us is to flesh out the task a bit, make it more user friendly and easy on the eyes.

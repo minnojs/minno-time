@@ -4,63 +4,49 @@ define(['app/API'], function(API) {
 		textSize: 5
 	});
 
-	API.addStimulusSets('congruent',[
-		{media:'Red', css:{color:'#FF0000'}},
-		{media:'Pink', css:{color:'#FFC0CB'}},
-		{media:'Orange', css:{color:'#FFA500'}},
-		{media:'Yellow', css:{color:'#FFFF00'}},
-		{media:'Purple', css:{color:'#800080'}},
-		{media:'Green', css:{color:'#008000'}},
-		{media:'Blue', css:{color:'#0000FF'}},
-		{media:'Brown', css:{color:'#8B4513'}},
-		{media:'White', css:{color:'#FFFFFF'}},
-		{media:'Grey', css:{color:'#A9A9A9'}}
+	API.addStimulusSets('red',[
+		{media:'Red', css:{color:'red'}},
+		{media:'Blue', css:{color:'red'}},
+		{media:'Green', css:{color:'red'}}
 	]);
 
-	API.addStimulusSets('incongruent',[
-		{media:'Red', css:{color:'#008000'}}, // Green
-		{media:'Pink', css:{color:'#0000FF'}}, // Blue
-		{media:'Orange', css:{color:'#8B4513'}},  // Brown
-		{media:'Yellow', css:{color:'#FFFFFF'}}, // White
-		{media:'Purple', css:{color:'#A9A9A9'}}, // Grey
-		{media:'Green', css:{color:'#FF0000'}}, // Red
-		{media:'Blue', css:{color:'#FFC0CB'}}, // Pink
-		{media:'Brown', css:{color:'#FFA500'}}, // Orange
-		{media:'White', css:{color:'#FFFF00'}}, // Yellow
-		{media:'Grey', css:{color:'#800080'}} // Purple
+	API.addStimulusSets('blue',[
+		{media:'Red', css:{color:'blue'}},
+		{media:'Blue', css:{color:'blue'}},
+		{media:'Green', css:{color:'blue'}}
+	]);
+
+	API.addStimulusSets('green',[
+		{media:'Red', css:{color:'green'}},
+		{media:'Blue', css:{color:'green'}},
+		{media:'Green', css:{color:'green'}}
 	]);
 
 	API.addSequence([
 		{
 			layout: [
-				{
-					media:'Congruent',
-					location:{left:1,top:1},
-					css:{color:'white',fontSize:'1.5em'}
-				},
-				{
-					media:'Incongruent',
-					location:{right:1,top:1},
-					css:{color:'white',fontSize:'1.5em'}
-				}
+				{media:'1',location:{left:2,top:2},css:{background:'red',padding:'2%',fontSize:'1.5em'}},
+				{media:'2',location:{top:2},css:{background:'blue',padding:'2%',fontSize:'1.5em'}},
+				{media:'3',location:{right:2,top:2},css:{background:'green',padding:'2%',fontSize:'1.5em'}}
 			],
 			input: [
-				{handle:'congruent',on:'keypressed',key:'e'},
-				{handle:'incongruent',on:'keypressed',key:'i'}
+				{handle:'red',on:'keypressed',key:'1'},
+				{handle:'blue',on:'keypressed',key:'2'},
+				{handle:'green',on:'keypressed',key:'3'}
 			],
 			stimuli:[
-				{inherit:'congruent', handle:'target'}
+				{inherit:'red', handle:'target'}
 			],
 			interactions: [
 				// Display the target stimulus.
 				{
-					propositions:[{type:'begin'}],
+					conditions:[{type:'begin'}],
 					actions: [{type:'showStim', handle: 'target'}]
 				},
 				// Correct response actions
 				{
-					propositions: [
-						{type:'inputEquals',value:'congruent'}
+					conditions: [
+						{type:'inputEquals',value:'red'}
 					],
 					actions: [
 						{type:'setTrialAttr', setter:{score:1}},
@@ -70,8 +56,9 @@ define(['app/API'], function(API) {
 				},
 				// Incorrect response actions
 				{
-					propositions: [
-						{type:'inputEquals',value:'incongruent'}
+					conditions: [
+						{type:'inputEquals',value:'red', negate:true},
+						{type:'inputEquals', value: ['red','blue','green']}
 					],
 					actions: [
 						{type:'setTrialAttr', setter:{score:0}},

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"></html><html><head><title>Project Implicit</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"><!-- If we ever need the js stuff...--><!--script(src="http://code.jquery.com/jquery-2.1.0.min.js")--><!--script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js")--><style>div#main {padding-top:50px}
+<!DOCTYPE html><html lang="en"></html><html><head><title>Project Implicit</title><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"><!-- If we ever need the js stuff...--><!--script(src="http://code.jquery.com/jquery-2.1.0.min.js")--><!--script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js")--><style>div#main {padding-top:50px}
 .sidenav {background-color: #F7F5FA;border-radius: 5px;margin-bottom: 30px;margin-top: 30px;padding-bottom: 10px;padding-top: 10px;text-shadow: 0 1px 0 #FFFFFF;}
 .sidenav.nav li > a {color: #999999;display: block;font-size: 13px;font-weight: 600;padding: 5px 20px;}
 .sidenav.nav li > a:hover {text-decoration:none;color: #563D7C;}
@@ -14,7 +14,7 @@
 </script></head><body><nav role="navigation" class="navbar navbar-inverse navbar-fixed-top"><div class="container"><div class="navbar-header"><button type="button" data-toggle="collapse" data-target="#navbar" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="https://github.com/ProjectImplicit/PIPlayer" class="navbar-brand">PI player</a></div><nav id="navbar" role="navigation" class="navbar-collapse bs-navbar-collapse"><ul class="nav navbar-nav"><li><a href="../tutorials/overview.html">Tutorial</a></li><li><a href="../snippets/index.html">Snippets</a></li><li><a href="../examples/index.html">Examples</a></li><li><a href="../tutorials/API.html">API</a></li></ul><ul class="nav navbar-nav navbar-right"><li><a href="../tutorials/overview.html">About</a></li></ul></nav></div></nav><div id="main" class="container"><div class="row"><div class="col-md-3"><ul class="nav affix-top sidenav"><li><a href="./overview.html">Overview</a></li><li><a href="./javascript.html">Javascript</a></li><li><a href="./hello.html">Hello world</a></li><li><a href="./slideshow.html">Slideshow</a></li><li><a href="javascript:void(0)">Stroop</a><ul class="nav"><li><a href="./stroop-setup.html">Setup</a></li><li><a href="./stroop-interactions.html">Interactions</a></li><li><a href="./stroop-inheritance.html">Inheritance</a></li><li><a href="./stroop-block.html">Block</a></li><li><a href="./stroop-task.html">Task</a></li></ul></li></ul></div><div class="col-md-9"><h2 id="slide-show">Slide show</h2>
 <p>This section of the tutorial will walk you through creating a slide show. We will create a simple task that displays a series of stimuli. In this tutorial we will learn how to utilize the sequence, and the very basics of inheritance.</p>
 <h3 id="a-simple-slide-show">A simple slide show</h3>
-<p>Tasks normaly include more than one trial. You will note that the sequence holds an array; any trials in the array will be activated sequentialy.</p>
+<p>Tasks normally include more than one trial. You will note that the sequence holds an array; any trials in the array will be activated sequentially.</p>
 <p>This is the trial that we already know from the <em>Hello world</em> tutorial:</p>
 <pre><code class="lang-js">{
     input: [{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}],
@@ -23,7 +23,7 @@
         css:{fontSize:<span class="hljs-string">'2em'</span>,color:<span class="hljs-string">'#D7685A'</span>}
     }],
     interactions: [{
-        propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
+        conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
         actions: [{type:<span class="hljs-string">'endTrial'</span>}]
     }]
 }
@@ -37,7 +37,7 @@
             css:{fontSize:<span class="hljs-string">'2em'</span>,color:<span class="hljs-string">'#D7685A'</span>}
         }],
         interactions: [{
-            propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
+            conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
             actions: [{type:<span class="hljs-string">'endTrial'</span>}]
         }]
     },
@@ -48,7 +48,7 @@
             css:{fontSize:<span class="hljs-string">'2em'</span>,color:<span class="hljs-string">'#D7685A'</span>}
         }],
         interactions: [{
-            propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
+            conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
             actions: [{type:<span class="hljs-string">'endTrial'</span>}]
         }]
     },
@@ -59,7 +59,7 @@
             css:{fontSize:<span class="hljs-string">'2em'</span>,color:<span class="hljs-string">'#D7685A'</span>}
         }],
         interactions: [{
-            propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
+            conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
             actions: [{type:<span class="hljs-string">'endTrial'</span>}]
         }]
     }
@@ -68,15 +68,15 @@
 <p>You should try it! (don’t forget the wrapper, and the activation function at the end (<code>API.play()</code>)). Try adding another trial. Try changing the media or style of the stimuli.</p>
 <p>Download <a href="../../resources/tutorials/js/slideshow1.js">here</a>. You can see it in action right <a href="../../dist/index.html?url=../resources/tutorials/js/slideshow1.js">here</a>.</p>
 <h3 id="basic-inheritance">Basic inheritance</h3>
-<p>Our task is becoming longer and harder to maintain. Imagine a slide show with 50 slides, it would be more than 500 lines of code long, and if we would want to make any changes to it we would have to go through each trial individualy and change it. This is where inheritance comes in. Inheritance allows you to create a prototype of a trial (or stimulus or media object), and extend it whenever you want. We will see how this works shortly, but first we need to learn a bit about sets.</p>
+<p>Our task is becoming longer and harder to maintain. Imagine a slide show with 50 slides, it would be more than 500 lines of code long, and if we would want to make any changes to it we would have to go through each trial individually and change it. This is where inheritance comes in. Inheritance allows you to create a prototype of a trial (or stimulus or media object), and extend it whenever you want. We will see how this works shortly, but first we need to learn a bit about sets.</p>
 <h4 id="-sets-"><strong>Sets</strong></h4>
-<p><a href="./API.html#sets">Sets</a>  are list of PIP objects (trials, stiumli or media objects). They are useful for two reasons; first of all they help you organize your code, secondly, you can only inherit/extend objects that reside in sets. We will focus on trial sets for now, but everything that applies to the applies to stimuli sets or media sets as well.</p>
+<p><a href="./API.html#sets">Sets</a>  are list of PIP objects (trials, stimuli or media objects). They are useful for two reasons; first of all they help you organize your code, secondly, you can only inherit/extend objects that reside in sets. We will focus on trial sets for now, but everything that applies to the applies to stimuli sets or media sets as well.</p>
 <p>You create trial sets using the <code>API.addTrialSets()</code> function. The simplest use of the function involves two arguments; the first is the set name, and the seconds is an array of objects to add to the set. The following code creates a trial set called <em>slide</em> and populates it with our “Hello world” trial.</p>
 <pre><code class="lang-js">API.addTrialSets(<span class="hljs-string">'slide'</span>,[{
     input: [{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}],
     layout: [{media :{word:<span class="hljs-string">'Hello world'</span>}}],
     interactions: [{
-        propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
+        conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
         actions: [{type:<span class="hljs-string">'endTrial'</span>}]
     }]
 }])
@@ -93,7 +93,7 @@
 <h4 id="-extending-"><strong>Extending</strong></h4>
 <p>But repeating slides is pretty boring. Why would we want to do that?</p>
 <p>There are several answers to that question but for now we will focus on one: <strong>extending</strong>. As soon as we’ve inherited a trial we can extend it by simply adding properties or overwriting existing ones. The model is quite simple. A child inherits all of its parents properties. any property that is added to it overrides any existing properties.</p>
-<p>Lets follow an example. Lets say the following object recides in the “parent” set.</p>
+<p>Lets follow an example. Lets say the following object resides in the “parent” set.</p>
 <pre><code class="lang-js">{
     family: <span class="hljs-string">'Smith'</span>
 }

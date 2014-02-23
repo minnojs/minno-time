@@ -294,7 +294,7 @@ IAT.addSequence([
 		layout:[{media:{word:'Just a plain trial that will be added at the end of the sequence'}}],
 		interactions: [
 			{
-				propositions: [{type:'inputEquals',value:'end'}],
+				conditions: [{type:'inputEquals',value:'end'}],
 				actions: [{type:'endTrial'}]
 			}
 		]

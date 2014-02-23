@@ -281,14 +281,14 @@
             
             <div class="content"><div class='highlight'><pre>			interactions: [
 				{
-					propositions: [{type:<span class="hljs-string">'begin'</span>}],
+					conditions: [{type:<span class="hljs-string">'begin'</span>}],
 					actions: [
 						{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'primingImage'</span>},<span class="hljs-comment">// display the first stimulus</span>
 						{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'primeOut'</span>,on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">300</span>}}
 					]
 				},
 				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'primeOut'</span>}], <span class="hljs-comment">// on time out</span>
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'primeOut'</span>}], <span class="hljs-comment">// on time out</span>
 					actions: [
 						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'primingImage'</span>}, <span class="hljs-comment">// hide the first stimulus</span>
 						{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'targetStim'</span>},<span class="hljs-comment">// and show the second one</span></pre></div></div>
@@ -331,8 +331,8 @@ matches the word value (correct response)</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [
-						{type:<span class="hljs-string">'stimEquals'</span>,value:<span class="hljs-string">'wordCategory'</span>}],
+					conditions: [
+						{type:<span class="hljs-string">'inputEqualsStim'</span>,property:<span class="hljs-string">'wordCategory'</span>}],
 					actions: [
 						{type:<span class="hljs-string">'log'</span>}, <span class="hljs-comment">// here we call the log action. This is because we want to record the latency of this input (the latency of the response)</span>
 						{type:<span class="hljs-string">'removeInput'</span>,handle	:[category2,category1]},<span class="hljs-comment">//only one response is possible</span>
@@ -351,15 +351,15 @@ matches the word value (correct response)</p>
               </div>
               <p>there are 2 possible responses: “pleasent” and “unpleasent”, here we handle with these responses when the user answer
 doesn’t match the word value (incorrect response)
-this propositions are true only after incorrect response
+this conditions are true only after incorrect response
 handle incorrect response.
-this propositions are true only after incorrect response</p>
+this conditions are true only after incorrect response</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [
-						{type:<span class="hljs-string">'stimEquals'</span>,value:<span class="hljs-string">'wordCategory'</span>, negate:<span class="hljs-literal">true</span>},
+					conditions: [
+						{type:<span class="hljs-string">'inputEqualsStim'</span>,property:<span class="hljs-string">'wordCategory'</span>, negate:<span class="hljs-literal">true</span>},
 						{type:<span class="hljs-string">'inputEquals'</span>,value: [category1, category2]} <span class="hljs-comment">// This is a category action - as opposed to some timeout.</span>
 					],
 					actions: [
@@ -372,7 +372,7 @@ this propositions are true only after incorrect response</p>
 				},
 
 				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'showFix'</span>}], <span class="hljs-comment">//What to do when endTrial is called.</span>
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'showFix'</span>}], <span class="hljs-comment">//What to do when endTrial is called.</span>
 					actions: [
 						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'All'</span>},
 						{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'blankScreen'</span>}, <span class="hljs-comment">//show blankScreen</span>
@@ -395,14 +395,14 @@ this propositions are true only after incorrect response</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
 					actions: [
 						{type:<span class="hljs-string">'goto'</span>, destination: <span class="hljs-string">'nextWhere'</span>, properties: {blockStart:<span class="hljs-literal">true</span>}},
 						{type:<span class="hljs-string">'endTrial'</span>}
 					]
 				},
 				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'endTrial'</span>}], <span class="hljs-comment">//What to do when endTrial is called.</span>
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'endTrial'</span>}], <span class="hljs-comment">//What to do when endTrial is called.</span>
 					actions: [{type:<span class="hljs-string">'endTrial'</span>}]
 				}
 			] <span class="hljs-comment">// end interactions</span>
@@ -712,11 +712,11 @@ Twp categories of images, and two categories of words.</p>
 		],
 		interactions: [
 			{ <span class="hljs-comment">// begin trial</span>
-				propositions: [{type:<span class="hljs-string">'begin'</span>}],
+				conditions: [{type:<span class="hljs-string">'begin'</span>}],
 				actions: [{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'All'</span>}] <span class="hljs-comment">//Show the instructions</span>
 			},
 			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}], <span class="hljs-comment">//What to do when space is pressed</span>
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}], <span class="hljs-comment">//What to do when space is pressed</span>
 				actions: [
 					{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'All'</span>}, <span class="hljs-comment">//Hide the instructions</span>
 					{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'endTrial'</span>, on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">500</span>}} <span class="hljs-comment">//In 500ms: end the trial. In the mean time, we get a blank screen.</span>
@@ -737,14 +737,14 @@ Twp categories of images, and two categories of words.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
 					actions: [
 						{type:<span class="hljs-string">'goto'</span>, destination: <span class="hljs-string">'nextWhere'</span>, properties: {blockStart:<span class="hljs-literal">true</span>}},
 						{type:<span class="hljs-string">'endTrial'</span>}
 					]
 				},
 			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'endTrial'</span>}], <span class="hljs-comment">//What to do when endTrial is called.</span>
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'endTrial'</span>}], <span class="hljs-comment">//What to do when endTrial is called.</span>
 				actions: [
 					{type:<span class="hljs-string">'endTrial'</span>} <span class="hljs-comment">//End the trial</span>
 				]

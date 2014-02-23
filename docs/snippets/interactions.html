@@ -79,8 +79,8 @@
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
               <h3 id="interactions">Interactions</h3>
-<p>The <code>interactions</code> module of the PIP is composed of pairs of propositions and actions.
-Each interaction object has both a propositions and an actions property. </br></p>
+<p>The <code>interactions</code> module of the PIP is composed of pairs of conditions and actions.
+Each interaction object has both a conditions and an actions property. </br></p>
 
             </div>
             
@@ -94,7 +94,7 @@ Each interaction object has both a propositions and an actions property. </br></
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
               <pre><code>   {
-       propositions: [proposition1, proposition2],
+       conditions: [condition1, condition2],
        actions: [action1, action2]
    }
 </code></pre>
@@ -112,10 +112,10 @@ define([<span class="hljs-string">'app/API'</span>], <span class="hljs-function"
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <h3 id="propositions">Propositions</h3>
-<p><code>propositions</code> are sets of conditions that can be either true or false.
-Each time there is an event (any input or the begining of a trial) all the propositions are evaluated.
-In case all the propositions of an interaction are true, we execute all the <code>actions</code> associated with it.</p>
+              <h3 id="conditions">conditions</h3>
+<p><code>conditions</code> are sets of conditions that can be either true or false.
+Each time there is an event (any input or the begining of a trial) all the conditions are evaluated.
+In case all the conditions of an interaction are true, we execute all the <code>actions</code> associated with it.</p>
 
             </div>
             
@@ -132,7 +132,7 @@ In case all the propositions of an interaction are true, we execute all the <cod
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <h5 id="begin">begin</h5>
-<p>begin is a special proposition that gets automaticaly fired at the begining of each trial.
+<p>begin is a special condition that gets automaticaly fired at the begining of each trial.
 Use it to dispaly stimuli, and setup any time based action in your task.</p>
 
             </div>
@@ -172,7 +172,7 @@ Use it to dispaly stimuli, and setup any time based action in your task.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [
+					conditions: [
 						{</pre></div></div>
             
         </li>
@@ -184,7 +184,7 @@ Use it to dispaly stimuli, and setup any time based action in your task.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
-              <p>Set the proposition type</p>
+              <p>Set the condition type</p>
 
             </div>
             
@@ -208,7 +208,7 @@ Use it to dispaly stimuli, and setup any time based action in your task.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
 					actions: [{type:<span class="hljs-string">'endTrial'</span>}]
 				}
 			]
@@ -250,7 +250,7 @@ Use it to dispaly stimuli, and setup any time based action in your task.</p>
 			layout: [{media :{word:<span class="hljs-string">'[inputEquals]: Click e to move on'</span>}}],
 			interactions: [
 				{
-					propositions: [
+					conditions: [
 						{</pre></div></div>
             
         </li>
@@ -262,7 +262,7 @@ Use it to dispaly stimuli, and setup any time based action in your task.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
-              <p>Set the proposition type</p>
+              <p>Set the condition type</p>
 
             </div>
             
@@ -299,9 +299,9 @@ Pro tip: You can pass an array to the <code>value</code> property instead of jus
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
-              <h5 id="trialequals">trialEquals</h5>
+              <h5 id="inputequalstrial">inputEqualsTrial</h5>
 <p>Each trial has an optional data property that holds an array of user defined values.
-The <code>trialEquals</code> proposition compares the input handle with the contents of the “value” property of the current trials data property.</p>
+The <code>inputEqualsTrial</code> condition compares the input handle with the contents of the <code>property</code> property of the current trials data property.</p>
 
             </div>
             
@@ -325,10 +325,10 @@ The <code>trialEquals</code> proposition compares the input handle with the cont
 				{handle:<span class="hljs-string">'right'</span>,on:<span class="hljs-string">'keypressed'</span>, key:<span class="hljs-string">'i'</span>},
 				{handle:<span class="hljs-string">'left'</span>,on:<span class="hljs-string">'keypressed'</span>, key:<span class="hljs-string">'e'</span>}
 			],
-			layout: [{media :{word:<span class="hljs-string">'[trialEquals]: Click i to move on'</span>}}],
+			layout: [{media :{word:<span class="hljs-string">'[inputEqualsTrial]: Click i to move on'</span>}}],
 			interactions: [
 				{
-					propositions: [
+					conditions: [
 						{</pre></div></div>
             
         </li>
@@ -340,11 +340,11 @@ The <code>trialEquals</code> proposition compares the input handle with the cont
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
-              <p>Set the proposition type</p>
+              <p>Set the condition type</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>							type:<span class="hljs-string">'trialEquals'</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>							type:<span class="hljs-string">'inputEqualsTrial'</span>,</pre></div></div>
             
         </li>
         
@@ -360,7 +360,7 @@ in this case it will only be activated if the input handle is equal to ‘right�
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>							value:<span class="hljs-string">'leftOrRight'</span>
+            <div class="content"><div class='highlight'><pre>							property:<span class="hljs-string">'leftOrRight'</span>
 						}
 					],
 					actions: [{type:<span class="hljs-string">'endTrial'</span>}]
@@ -377,9 +377,9 @@ in this case it will only be activated if the input handle is equal to ‘right�
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
-              <h5 id="stimequals">stimEquals</h5>
+              <h5 id="inputequalsstim">inputEqualsStim</h5>
 <p>Each stimulus has an optional data property that holds an array of user defined values.
-The <code>stimEquals</code> proposition compares the input handle with the contents of the “value” property of the current stimulus data property.
+The <code>inputEqualsStim</code> condition compares the input handle with the contents of the <code>property</code> property of the current stimulus data property.
 Note that only stimuli in the stimuli property are checked, stimuli under layout are ignored!!</p>
 
             </div>
@@ -403,7 +403,7 @@ Note that only stimuli in the stimuli property are checked, stimuli under layout
 				{handle:<span class="hljs-string">'right'</span>,on:<span class="hljs-string">'keypressed'</span>, key:<span class="hljs-string">'i'</span>},
 				{handle:<span class="hljs-string">'left'</span>,on:<span class="hljs-string">'keypressed'</span>, key:<span class="hljs-string">'e'</span>}
 			],
-			stimuli: [{data:{handle:<span class="hljs-string">'myStim'</span> ,leftOrRight:<span class="hljs-string">'left'</span>}, media :{word:<span class="hljs-string">'[stimEquals]: Click e to move on'</span>}}],
+			stimuli: [{data:{handle:<span class="hljs-string">'myStim'</span> ,leftOrRight:<span class="hljs-string">'left'</span>}, media :{word:<span class="hljs-string">'[inputEqualsStim]: Click e to move on'</span>}}],
 			interactions: [</pre></div></div>
             
         </li>
@@ -420,7 +420,7 @@ Note that only stimuli in the stimuli property are checked, stimuli under layout
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [{type:<span class="hljs-string">'begin'</span>}],
+					conditions: [{type:<span class="hljs-string">'begin'</span>}],
 					actions: [{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'myStim'</span>}]
 				},</pre></div></div>
             
@@ -438,7 +438,7 @@ Note that only stimuli in the stimuli property are checked, stimuli under layout
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [
+					conditions: [
 						{</pre></div></div>
             
         </li>
@@ -450,11 +450,11 @@ Note that only stimuli in the stimuli property are checked, stimuli under layout
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
-              <p>Set the proposition type</p>
+              <p>Set the condition type</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>							type:<span class="hljs-string">'stimEquals'</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>							type:<span class="hljs-string">'inputEqualsStim'</span>,</pre></div></div>
             
         </li>
         
@@ -470,7 +470,7 @@ In this case it will only be activated if the input handle is equal to ‘right�
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>							value:<span class="hljs-string">'leftOrRight'</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>							property:<span class="hljs-string">'leftOrRight'</span>,</pre></div></div>
             
         </li>
         
@@ -482,7 +482,7 @@ In this case it will only be activated if the input handle is equal to ‘right�
                 <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>The handle tells the player to search for the triggering property only in stimuli with the ‘myStim’ handle.
-(You can ommit the handle property and the proposition activates if any of the stimuli fit the stimEquals criteria)</p>
+(You can ommit the handle property and the condition activates if any of the stimuli fit the inputEqualsStim criteria)</p>
 
             </div>
             
@@ -504,9 +504,9 @@ In this case it will only be activated if the input handle is equal to ‘right�
                 <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <h5 id="negate">Negate</h5>
-<p>Sometimes we want a proposition to be true only if a certain condition does NOT happen.
-In these cases we can use the negate property to reverse a proposition.
-(when using negate you should be carefull that the proposition doesn’t turn out true in unexpected situations, for instance - on the begin input, or when triggering various timeouts)</p>
+<p>Sometimes we want a condition to be true only if a certain condition does NOT happen.
+In these cases we can use the negate property to reverse a condition.
+(when using negate you should be carefull that the condition doesn’t turn out true in unexpected situations, for instance - on the begin input, or when triggering various timeouts)</p>
 
             </div>
             
@@ -516,10 +516,10 @@ In these cases we can use the negate property to reverse a proposition.
 				{handle:<span class="hljs-string">'right'</span>,on:<span class="hljs-string">'keypressed'</span>, key:<span class="hljs-string">'i'</span>},
 				{handle:<span class="hljs-string">'left'</span>,on:<span class="hljs-string">'keypressed'</span>, key:<span class="hljs-string">'e'</span>}
 			],
-			layout: [{media :{word:<span class="hljs-string">'[trialEquals+negate]: Click e to move on'</span>}}],
+			layout: [{media :{word:<span class="hljs-string">'[inputEqualsTrial+negate]: Click e to move on'</span>}}],
 			interactions: [
 				{
-					propositions: [</pre></div></div>
+					conditions: [</pre></div></div>
             
         </li>
         
@@ -535,8 +535,8 @@ In these cases we can use the negate property to reverse a proposition.
             </div>
             
             <div class="content"><div class='highlight'><pre>						{
-							type:<span class="hljs-string">'trialEquals'</span>,
-							value:<span class="hljs-string">'leftOrRight'</span>,
+							type:<span class="hljs-string">'inputEqualsTrial'</span>,
+							property:<span class="hljs-string">'leftOrRight'</span>,
 							negate: <span class="hljs-literal">true</span>
 						},</pre></div></div>
             
@@ -550,13 +550,12 @@ In these cases we can use the negate property to reverse a proposition.
                 <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>And does not equal to the begin either.
-(Without this part of the proposition the endTrial action would be fired upon the begin of the trial - which isn’t a right keypress)</p>
+(Without this part of the condition the endTrial action would be fired upon the begin of the trial - which isn’t a right keypress)</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>						{
-							type:<span class="hljs-string">'trialEquals'</span>,
-							value:<span class="hljs-string">'begin'</span>,
+							type:<span class="hljs-string">'begin'</span>,
 							negate:<span class="hljs-literal">true</span>
 						}
 					],
@@ -575,8 +574,8 @@ In these cases we can use the negate property to reverse a proposition.
                 <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <h3 id="actions">Actions</h3>
-<p>Each time there is an event (any input or the begining of a trial) all the propositions are evaluated.
-In case all the propositions of an interaction are true, we execute all the <code>actions</code> associated with it.</p>
+<p>Each time there is an event (any input or the begining of a trial) all the conditions are evaluated.
+In case all the conditions of an interaction are true, we execute all the <code>actions</code> associated with it.</p>
 
             </div>
             
@@ -623,7 +622,7 @@ It also saves the status of the stimuli into the displayed property of the stimu
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>, value:<span class="hljs-string">'show'</span>}],
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>, value:<span class="hljs-string">'show'</span>}],
 					actions: [</pre></div></div>
             
         </li>
@@ -682,7 +681,7 @@ In this case <code>type:&#39;setStimAttr&#39;</code> marks displayed as true.</p
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>, value:<span class="hljs-string">'hide'</span>}],
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>, value:<span class="hljs-string">'hide'</span>}],
 					actions: [</pre></div></div>
             
         </li>
@@ -739,7 +738,7 @@ In this case <code>type:&#39;setStimAttr&#39;</code> marks displayed as true.</p
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>, value:<span class="hljs-string">'end'</span>}],
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>, value:<span class="hljs-string">'end'</span>}],
 					actions: [</pre></div></div>
             
         </li>
@@ -800,7 +799,7 @@ You should note in particular the <code>type:&#39;log&#39;</code> action that is
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [{type:<span class="hljs-string">'begin'</span>}],
+					conditions: [{type:<span class="hljs-string">'begin'</span>}],
 					actions: [</pre></div></div>
             
         </li>
@@ -837,7 +836,7 @@ You should note in particular the <code>type:&#39;log&#39;</code> action that is
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>, value:<span class="hljs-string">'time'</span>}],
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>, value:<span class="hljs-string">'time'</span>}],
 					actions: [
 						{
 							type:<span class="hljs-string">'endTrial'</span>
@@ -877,7 +876,7 @@ On space click, remove listerner for the timeout, mark this trial as manualy ter
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
 					actions: [</pre></div></div>
             
         </li>
@@ -951,7 +950,7 @@ There are many types of goto destinations, refer to the documentation for a full
 			layout: [{media :{word:<span class="hljs-string">'[goto]: Click space to restart actions, escape to end task'</span>}}],
 			interactions: [
 				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'restart'</span>}],
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'restart'</span>}],
 					actions: [</pre></div></div>
             
         </li>
@@ -980,7 +979,7 @@ In this case <code>previousWhere</code> finds the first action trial which is ma
 					]
 				},
 				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
 					actions: [
 						{
 							type:<span class="hljs-string">'endTrial'</span>

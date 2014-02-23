@@ -318,7 +318,7 @@ This is where we set the rules for the player behaviour (cases and responses).</
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'begin'</span>}],
+				conditions: [{type:<span class="hljs-string">'begin'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'target'</span>}
 				]
@@ -353,7 +353,7 @@ This is where we set the rules for the player behaviour (cases and responses).</
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>				propositions: [{type:<span class="hljs-string">'stimEquals'</span>,value:<span class="hljs-string">'side'</span>}],</pre></div></div>
+            <div class="content"><div class='highlight'><pre>				conditions: [{type:<span class="hljs-string">'inputEqualsStim'</span>,property:<span class="hljs-string">'side'</span>}],</pre></div></div>
             
         </li>
         
@@ -410,9 +410,9 @@ But input handle is unequal to the “side” attribute of stimulus.data.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>				propositions: [
+            <div class="content"><div class='highlight'><pre>				conditions: [
 					{type:<span class="hljs-string">'inputEquals'</span>,value:[<span class="hljs-string">'right'</span>,<span class="hljs-string">'left'</span>]},
-					{type:<span class="hljs-string">'stimEquals'</span>,value:<span class="hljs-string">'side'</span>,negate:<span class="hljs-literal">true</span>}
+					{type:<span class="hljs-string">'inputEqualsStim'</span>,property:<span class="hljs-string">'side'</span>,negate:<span class="hljs-literal">true</span>}
 				],</pre></div></div>
             
         </li>
@@ -467,7 +467,7 @@ It allows us to pad each trial with an interval.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
+            <div class="content"><div class='highlight'><pre>				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'endTrial'</span>}
 				]
@@ -490,7 +490,7 @@ Note that every instruction block is marked with <code>blockStart:true</code> so
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'goto'</span>, destination: <span class="hljs-string">'nextWhere'</span>, properties: {blockStart:<span class="hljs-literal">true</span>}},
 					{type:<span class="hljs-string">'endTrial'</span>}
@@ -584,7 +584,7 @@ Note that every instruction block is marked with <code>blockStart:true</code> so
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'begin'</span>}],
+				conditions: [{type:<span class="hljs-string">'begin'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'All'</span>}
 				]
@@ -605,7 +605,7 @@ Note that every instruction block is marked with <code>blockStart:true</code> so
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
 				actions: [{type:<span class="hljs-string">'endTrial'</span>}]
 			},</pre></div></div>
             
@@ -626,7 +626,7 @@ Note that every instruction block is marked with <code>blockStart:true</code> so
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'goto'</span>, destination: <span class="hljs-string">'nextWhere'</span>, properties: {blockStart:<span class="hljs-literal">true</span>}},
 					{type:<span class="hljs-string">'endTrial'</span>}

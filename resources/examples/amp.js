@@ -117,14 +117,14 @@ define(['app/API'], function(API) {
 			//Set what to do.
 			interactions: [
 				{
-					propositions: [{type:'begin'}],
+					conditions: [{type:'begin'}],
 					actions: [
 						{type:'showStim',handle:'primingImage'},// display the first stimulus=priming image
 						{type:'setInput',input:{handle:'primeOut',on:'timeout',duration:100}} //for 100 ms
 					]
 				},
 				{
-					propositions: [{type:'inputEquals',value:'primeOut'}], // on time out
+					conditions: [{type:'inputEquals',value:'primeOut'}], // on time out
 					actions: [
 						{type:'hideStim',handle:'primingImage'}, // hide the first stimulus
 						{type:'showStim',handle:'blankScreen'}, // and show the second one=the blank screen
@@ -132,7 +132,7 @@ define(['app/API'], function(API) {
 					]
 				},
 				{
-					propositions: [{type:'inputEquals',value:'blankOut'}], // on time out
+					conditions: [{type:'inputEquals',value:'blankOut'}], // on time out
 					actions: [
 						{type:'hideStim',handle:'blankScreen'}, // hide the blank screen
 						{type:'showStim',handle:'targetStim'}, // and show the letter
@@ -150,7 +150,7 @@ define(['app/API'], function(API) {
 					]
 				},
 				{
-					propositions: [{type:'inputEquals',value:'targetOut'}], // on time out
+					conditions: [{type:'inputEquals',value:'targetOut'}], // on time out
 					actions: [
 						{type:'hideStim',handle:'targetStim'}, // hide the letter
 						{type:'showStim',handle:'MaskScreen'} // and show the mask screen
@@ -159,7 +159,7 @@ define(['app/API'], function(API) {
 
 				// skip block -> if you press 'enter' you will skip the current block.
 				{
-					propositions: [{type:'inputEquals',value:'enter'}],
+					conditions: [{type:'inputEquals',value:'enter'}],
 					actions: [
 						{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
 						{type:'endTrial'}
@@ -167,8 +167,8 @@ define(['app/API'], function(API) {
 				},
 
 				{//What to do upon response
-				//the  proposition: dont remove the mask upon timeout, wait until reaction
-					propositions: [{type:'inputEquals',value:category1}], //pleasent response
+				//the  condition: dont remove the mask upon timeout, wait until reaction
+					conditions: [{type:'inputEquals',value:category1}], //pleasent response
 					actions: [
 						{type:'setTrialAttr',setter:{score:'1'}},
 						{type:'hideStim',handle:'All'},
@@ -179,7 +179,7 @@ define(['app/API'], function(API) {
 					]
 				},
 				{
-					propositions: [{type:'inputEquals',value:category2}], //unpleasent response.
+					conditions: [{type:'inputEquals',value:category2}], //unpleasent response.
 					actions: [
 						{type:'setTrialAttr',setter:{score:'0'}},
 						{type:'hideStim',handle:'All'},
@@ -189,7 +189,7 @@ define(['app/API'], function(API) {
 					]
 				},
 				{
-					propositions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
+					conditions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
 					actions: [{type:'endTrial'}]
 				}
 			] // end interactions
@@ -237,12 +237,12 @@ define(['app/API'], function(API) {
 			//Set what to do.
 			interactions: [
 				{
-					propositions: [{type:'begin'}],
+					conditions: [{type:'begin'}],
 					actions: [{type:'showStim',handle:'primingImage'},// display the first stimulus
 					{type:'setInput',input:{handle:'primeOut',on:'timeout',duration:125}}]  //display longer time in the example trial
 				},
 				{
-					propositions: [{type:'inputEquals',value:'primeOut'}], // on time out
+					conditions: [{type:'inputEquals',value:'primeOut'}], // on time out
 					actions: [
 						{type:'hideStim',handle:'primingImage'}, // hide the first stimulus
 						{type:'showStim',handle:'blankScreen'}, // and show the second one
@@ -250,7 +250,7 @@ define(['app/API'], function(API) {
 					]
 				},
 				{
-					propositions: [{type:'inputEquals',value:'blankOut'}], // on time out
+					conditions: [{type:'inputEquals',value:'blankOut'}], // on time out
 					actions: [
 						{type:'hideStim',handle:'blankScreen'}, // hide the blank screen
 						{type:'showStim',handle:'targetStim'}, // and show the letter
@@ -268,15 +268,15 @@ define(['app/API'], function(API) {
 					]
 				},
 				{
-					propositions: [{type:'inputEquals',value:'targetOut'}], // on time out
+					conditions: [{type:'inputEquals',value:'targetOut'}], // on time out
 					actions: [
 						{type:'hideStim',handle:'targetStim'}, // hide the first stimulus
 						{type:'showStim',handle:'MaskScreen'} // and show the mask screen
 					]
 				},
 				{//What to do upon correct response
-				//the proposition: dont remove the word upon timeout, wait until reaction
-					propositions: [{type:'inputEquals',value:category1}], //pleasent response
+				//the condition: dont remove the word upon timeout, wait until reaction
+					conditions: [{type:'inputEquals',value:category1}], //pleasent response
 					actions: [
 						{type:'hideStim',handle:'All'},
 						{type:'setTrialAttr',setter:{score:'1'}},
@@ -287,7 +287,7 @@ define(['app/API'], function(API) {
 				},
 
 				{
-					propositions: [{type:'inputEquals',value:category2}], //unpleasent response.
+					conditions: [{type:'inputEquals',value:category2}], //unpleasent response.
 					actions: [
 						{type:'hideStim',handle:'All'},
 						{type:'setTrialAttr',setter:{score:'0'}},
@@ -299,7 +299,7 @@ define(['app/API'], function(API) {
 
 				// skip block -> if you press 'enter' you will skip the current block.
 				{
-					propositions: [{type:'inputEquals',value:'enter'}],
+					conditions: [{type:'inputEquals',value:'enter'}],
 					actions: [
 						{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
 						{type:'endTrial'}
@@ -307,7 +307,7 @@ define(['app/API'], function(API) {
 				},
 
 				{
-					propositions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
+					conditions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
 					actions: [{type:'endTrial'}]
 				}
 			]
@@ -341,25 +341,25 @@ define(['app/API'], function(API) {
 		],
 		interactions: [
 			{ // begin trial
-				propositions: [{type:'begin'}],
+				conditions: [{type:'begin'}],
 				actions: [{type:'showStim',handle:'All'}] //Show the instructions, later use to show the user feedback
 			},
 			{
-				propositions: [{type:'inputEquals',value:'space'}], //What to do when space is pressed
+				conditions: [{type:'inputEquals',value:'space'}], //What to do when space is pressed
 				actions: [
 					{type:'hideStim',handle:'All'}, //Hide the instructions
 					{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:500}} //In 500ms: end the trial. In the mean time, we get a blank screen.
 				]
 			},
 			{
-				propositions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
+				conditions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
 				actions: [
 					{type:'endTrial'} //End the trial
 				]
 			},
 			// skip block -> if you press 'enter' while the instructions is shown, you will skip the current block.
 				{
-					propositions: [{type:'inputEquals',value:'enter'}],
+					conditions: [{type:'inputEquals',value:'enter'}],
 					actions: [
 						{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
 						{type:'endTrial'}

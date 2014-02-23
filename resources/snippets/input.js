@@ -21,8 +21,8 @@ define(['app/API'], function(API) {
 			interactions: [
 				{
 					// This is where we tell the player to respond to the input.
-					// More about this in the propositions tutorial.
-					propositions: [{type:'inputEquals',value:'end'}],
+					// More about this in the conditions tutorial.
+					conditions: [{type:'inputEquals',value:'end'}],
 					actions: [{type:'endTrial'}]
 				}
 			]
@@ -41,8 +41,8 @@ define(['app/API'], function(API) {
 			interactions: [
 				{
 					// This is where we tell the player to respond to the input.
-					// More about this in the propositions tutorial.
-					propositions: [{type:'inputEquals',value:'end'}],
+					// More about this in the conditions tutorial.
+					conditions: [{type:'inputEquals',value:'end'}],
 					actions: [{type:'endTrial'}]
 				}
 			]
@@ -63,8 +63,8 @@ define(['app/API'], function(API) {
 			interactions: [
 				{
 					// This is where we tell the player to respond to the input.
-					// More about this in the propositions tutorial.
-					propositions: [{type:'inputEquals',value:'end'}],
+					// More about this in the conditions tutorial.
+					conditions: [{type:'inputEquals',value:'end'}],
 					actions: [{type:'endTrial'}]
 				}
 			]
@@ -83,8 +83,8 @@ define(['app/API'], function(API) {
 			interactions: [
 				{
 					// This is where we tell the player to respond to the input.
-					// More about this in the propositions tutorial.
-					propositions: [{type:'inputEquals',value:'end'}],
+					// More about this in the conditions tutorial.
+					conditions: [{type:'inputEquals',value:'end'}],
 					actions: [{type:'endTrial'}]
 				}
 			]

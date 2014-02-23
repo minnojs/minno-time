@@ -68,7 +68,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			// ##### At the begining of a trial
 			// Display the stimulus imidiately.
 			{
-				propositions: [{type:'begin'}],
+				conditions: [{type:'begin'}],
 				actions: [
 					{type:'showStim',handle:'target'}
 				]
@@ -78,7 +78,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			// The input handle (either left or right) should be equal to the stimulus.data.side attribute.
 			{
 				// If the input handle is equal to the "side" attribute of stimulus.data
-				propositions: [{type:'stimEquals',value:'side'}],
+				conditions: [{type:'inputEqualsStim',property:'side'}],
 				// * Don't allow any further interactions.
 				// * Hide all stimuli.
 				// * Log this trial.
@@ -95,9 +95,9 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			{
 				// If this is a click interaction.
 				// But input handle is unequal to the "side" attribute of stimulus.data.
-				propositions: [
+				conditions: [
 					{type:'inputEquals',value:['right','left']},
-					{type:'stimEquals',value:'side',negate:true}
+					{type:'inputEqualsStim',property:'side',negate:true}
 				],
 				// * Display error stimulus
 				// * Set the score to 1 (error).
@@ -112,7 +112,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			// It allows us to pad each trial with an interval.
 			{
 				// Trigger when input handle is "end".
-				propositions: [{type:'inputEquals',value:'end'}],
+				conditions: [{type:'inputEquals',value:'end'}],
 				actions: [
 					{type:'endTrial'}
 				]
@@ -123,7 +123,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			// It allows the user to skip a whole block all the way to the begining of the next block.
 			// Note that every instruction block is marked with `blockStart:true` so that `nextWhere` knows were to go.
 			{
-				propositions: [{type:'inputEquals',value:'enter'}],
+				conditions: [{type:'inputEquals',value:'enter'}],
 				actions: [
 					{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
 					{type:'endTrial'}
@@ -156,7 +156,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			// ##### At the begining of a trial
 			// Display the instructions imidiately.
 			{
-				propositions: [{type:'begin'}],
+				conditions: [{type:'begin'}],
 				actions: [
 					{type:'showStim',handle:'All'}
 				]
@@ -165,7 +165,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			// ##### End trial
 			// End the instructions as soon as space is clicked
 			{
-				propositions: [{type:'inputEquals',value:'space'}],
+				conditions: [{type:'inputEquals',value:'space'}],
 				actions: [{type:'endTrial'}]
 			},
 
@@ -174,7 +174,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			// It allows the user to skip a whole block all the way to the begining of the next block.
 			// Note that every instruction block is marked with `blockStart:true` so that `nextWhere` knows were to go.
 			{
-				propositions: [{type:'inputEquals',value:'enter'}],
+				conditions: [{type:'inputEquals',value:'enter'}],
 				actions: [
 					{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
 					{type:'endTrial'}

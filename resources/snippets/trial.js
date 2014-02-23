@@ -44,13 +44,13 @@ define(['app/API'], function(API) {
 
 			// The interaction property of the trial is responsible for any interactions the user has through the trial.
 			// Each interaction is composed of a propostition (a statement that is either true or false)
-			// And of action to execute in case the proposition is true.
-			// We will learn more about this section in the proposition and action tutorials.
+			// And of action to execute in case the condition is true.
+			// We will learn more about this section in the condition and action tutorials.
 			interactions: [
 				// 1. Display Stimulus
 				{
-					/* when we begin the trial (proposition) */
-					propositions: [{type:'begin'}],
+					/* when we begin the trial (condition) */
+					conditions: [{type:'begin'}],
 					/* show all stimuli (action) */
 					actions: [{type:'showStim',handle:'All'}]
 				},
@@ -58,7 +58,7 @@ define(['app/API'], function(API) {
 				// 2. End trial on space click
 				{
 					/* when space is clicked */
-					propositions: [{type:'inputEquals',value:'space'}],
+					conditions: [{type:'inputEquals',value:'space'}],
 					/* end the trial */
 					actions: [{type:'endTrial'}]
 				}

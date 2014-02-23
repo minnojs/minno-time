@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"></html><html><head><title>Project Implicit</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"><!-- If we ever need the js stuff...--><!--script(src="http://code.jquery.com/jquery-2.1.0.min.js")--><!--script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js")--><style>div#main {padding-top:50px}
+<!DOCTYPE html><html lang="en"></html><html><head><title>Project Implicit</title><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"><!-- If we ever need the js stuff...--><!--script(src="http://code.jquery.com/jquery-2.1.0.min.js")--><!--script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js")--><style>div#main {padding-top:50px}
 .sidenav {background-color: #F7F5FA;border-radius: 5px;margin-bottom: 30px;margin-top: 30px;padding-bottom: 10px;padding-top: 10px;text-shadow: 0 1px 0 #FFFFFF;}
 .sidenav.nav li > a {color: #999999;display: block;font-size: 13px;font-weight: 600;padding: 5px 20px;}
 .sidenav.nav li > a:hover {text-decoration:none;color: #563D7C;}
@@ -56,9 +56,9 @@ define([<span class="hljs-string">'app/API'</span>], <span class="hljs-function"
         }
     ],
     interactions: [
-        <span class="hljs-comment">// This is an interaction object (it has a proposition and an action)</span>
+        <span class="hljs-comment">// This is an interaction object (it has a condition and an action)</span>
         {
-            propositions: [
+            conditions: [
                 {type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}
             ],
             actions: [
@@ -99,10 +99,10 @@ define([<span class="hljs-string">'app/API'</span>], <span class="hljs-function"
 <p>The color attribute takes any valid css color. You can try the following: <code>&#39;#0000FF&#39;</code>, <code>&#39;#FFFFFF&#39;</code>, <code>&#39;#00FF00&#39;</code> or use <a href="http://html-color-codes.info/">this</a> site to find additional colors.</p>
 <p>The <code>css</code> object can do  far more than this. If you want to know more you can check out the full API on <a href="http://api.jquery.com/css/#css2"><jquery class="com"></jquery></a></p>
 <h4 id="-interactions-"><strong>interactions</strong></h4>
-<p><a href="./API.md#interactions">Interactions</a> are a grouping of <a href="./API.md#interactions-propositions"><code>propositions</code></a> (statements of truth) and <a href="./API.md#interactions-actions"><code>actions</code></a> to perform if (and only if) all propositions are true. We won’t really get into interactions here, but these are the basics:</p>
+<p><a href="./API.md#interactions">Interactions</a> are a grouping of <a href="./API.md#interactions-conditions"><code>conditions</code></a> (statements of truth) and <a href="./API.md#interactions-actions"><code>actions</code></a> to perform if (and only if) all conditions are true. We won’t really get into interactions here, but these are the basics:</p>
 <pre><code class="lang-js">[
     {
-        propositions: [
+        conditions: [
             {type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}
         ],
         actions: [
@@ -111,9 +111,9 @@ define([<span class="hljs-string">'app/API'</span>], <span class="hljs-function"
     }
 ]
 </code></pre>
-<p>Each interaction object has a <code>propositions</code> property that holds an array of true/false statements. Each one of these statements is evaluated for every player event (i.e. user input), if all the propositions are true for an event then all associated <code>actions</code> are executed. In this case we check if the input handle equals ‘space’.</p>
-<p>Each intercation object also has an <code>actions</code> array that hold an array of actions to perform if all <code>propositions</code> are evaluated as true. In this case the only action is to end this trial.</p>
+<p>Each interaction object has a <code>conditions</code> property that holds an array of true/false statements. Each one of these statements is evaluated for every player event (i.e. user input), if all the conditions are true for an event then all associated <code>actions</code> are executed. In this case we check if the input handle equals ‘space’.</p>
+<p>Each interaction object also has an <code>actions</code> array that hold an array of actions to perform if all <code>conditions</code> are evaluated as true. In this case the only action is to end this trial.</p>
 <h3 id="epilogue-of-sorts-">Epilogue (of sorts)</h3>
-<p>You’ve learnt how to create a single trial, and the different elements that compose it. The next stage is seeing how different trials come together to form a task.</p>
-<p>We will now go on to creating a simple slideshow.</p>
+<p>You’ve learned how to create a single trial, and the different elements that compose it. The next stage is seeing how different trials come together to form a task.</p>
+<p>We will now go on to creating a simple slide-show.</p>
 </div></div></div></body></html>

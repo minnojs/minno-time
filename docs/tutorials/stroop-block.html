@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"></html><html><head><title>Project Implicit</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"><!-- If we ever need the js stuff...--><!--script(src="http://code.jquery.com/jquery-2.1.0.min.js")--><!--script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js")--><style>div#main {padding-top:50px}
+<!DOCTYPE html><html lang="en"></html><html><head><title>Project Implicit</title><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"><!-- If we ever need the js stuff...--><!--script(src="http://code.jquery.com/jquery-2.1.0.min.js")--><!--script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js")--><style>div#main {padding-top:50px}
 .sidenav {background-color: #F7F5FA;border-radius: 5px;margin-bottom: 30px;margin-top: 30px;padding-bottom: 10px;padding-top: 10px;text-shadow: 0 1px 0 #FFFFFF;}
 .sidenav.nav li > a {color: #999999;display: block;font-size: 13px;font-weight: 600;padding: 5px 20px;}
 .sidenav.nav li > a:hover {text-decoration:none;color: #563D7C;}
@@ -20,24 +20,24 @@
     {
         mixer: <span class="hljs-string">'random'</span>,
         data: [
-            {inherit:<span class="hljs-string">'congruent'</span>},
-            {inherit:<span class="hljs-string">'congruent'</span>},
-            {inherit:<span class="hljs-string">'congruent'</span>},
-            {inherit:<span class="hljs-string">'incongruent'</span>},
-            {inherit:<span class="hljs-string">'incongruent'</span>},
-            {inherit:<span class="hljs-string">'incongruent'</span>}
+            {inherit:<span class="hljs-string">'red'</span>},
+            {inherit:<span class="hljs-string">'red'</span>},
+            {inherit:<span class="hljs-string">'blue'</span>},
+            {inherit:<span class="hljs-string">'blue'</span>},
+            {inherit:<span class="hljs-string">'green'</span>},
+            {inherit:<span class="hljs-string">'green'</span>}
         ]
     }
 ]);
 </code></pre>
 <p>You will notice that this sequence has only one object, that has two properties; <code>mixer</code> and <code>data</code>. All the trials per se are set inside the <code>data</code> attribute. This mixer object takes all the elements inside the <code>data</code> property and randomizes their order. The player then sets the trials into the sequence instead of the mixer object. So that the result of the previous code may be equivalent to this:</p>
 <pre><code class="lang-js">API.addSequence([
-    {inherit:<span class="hljs-string">'congruent'</span>},
-    {inherit:<span class="hljs-string">'incongruent'</span>},
-    {inherit:<span class="hljs-string">'incongruent'</span>},
-    {inherit:<span class="hljs-string">'congruent'</span>},
-    {inherit:<span class="hljs-string">'congruent'</span>},
-    {inherit:<span class="hljs-string">'incongruent'</span>}
+    {inherit:<span class="hljs-string">'red'</span>},
+    {inherit:<span class="hljs-string">'green'</span>},
+    {inherit:<span class="hljs-string">'blue'</span>},
+    {inherit:<span class="hljs-string">'green'</span>},
+    {inherit:<span class="hljs-string">'red'</span>},
+    {inherit:<span class="hljs-string">'blue'</span>}
 ]);
 </code></pre>
 <h3 id="expanding-the-sequence">Expanding the sequence</h3>
@@ -47,20 +47,21 @@
         mixer: <span class="hljs-string">'repeat'</span>,
         times: <span class="hljs-number">2</span>,
         data: [
-            {inherit:<span class="hljs-string">'congruent'</span>},
-            {inherit:<span class="hljs-string">'incongruent'</span>}
+            {inherit:<span class="hljs-string">'red'</span>},
+            {inherit:<span class="hljs-string">'blue'</span>},
+            {inherit:<span class="hljs-string">'green'</span>}
         ]
     }
 ]);
 </code></pre>
 <p>So that it is directly equivalent to</p>
 <pre><code class="lang-js">API.addSequence([
-    {inherit:<span class="hljs-string">'congruent'</span>},
-    {inherit:<span class="hljs-string">'incongruent'</span>},
-    {inherit:<span class="hljs-string">'congruent'</span>},
-    {inherit:<span class="hljs-string">'incongruent'</span>},
-    {inherit:<span class="hljs-string">'congruent'</span>},
-    {inherit:<span class="hljs-string">'incongruent'</span>}
+    {inherit:<span class="hljs-string">'red'</span>},
+    {inherit:<span class="hljs-string">'blue'</span>},
+    {inherit:<span class="hljs-string">'green'</span>},
+    {inherit:<span class="hljs-string">'red'</span>},
+    {inherit:<span class="hljs-string">'blue'</span>},
+    {inherit:<span class="hljs-string">'green'</span>}
 ]);
 </code></pre>
 <h3 id="puting-it-together">Puting it together</h3>
@@ -75,8 +76,9 @@
                 mixer: <span class="hljs-string">'repeat'</span>,
                 times: <span class="hljs-number">20</span>,
                 data: [
-                    {inherit:<span class="hljs-string">'congruent'</span>},
-                    {inherit:<span class="hljs-string">'incongruent'</span>}
+                    {inherit:<span class="hljs-string">'red'</span>},
+                    {inherit:<span class="hljs-string">'blue'</span>},
+                    {inherit:<span class="hljs-string">'green'</span>}
                 ]
             }
         ]
@@ -84,29 +86,29 @@
 ]);
 </code></pre>
 <h3 id="exclusive-random">Exclusive random</h3>
-<p>An additional issue that comes up is the order of stimuli do be presented. We used the mixer to randomize the order of trials, but the stimuli themselve are randomized when they are inherited from their respective stimulus sets. By default inheritance picks a random element out of the target set. But this way there is a chance that we pick the same element twice in a row, or not pick one of the elements at all. The player offers <a href="./API.md#inheriting">additional types</a> of inheritance as well, in this case we will want to use <code>exRandom</code> which stands for exclusive random. Exclusive random makes sure to exclude each element that it picks out of the set, so that as long that their are element in the set that have not already been chosen it will pick from among them and not an element that has already been used.</p>
+<p>An additional issue that comes up is the order of stimuli do be presented. We used the mixer to randomize the order of trials, but the stimuli themselves are randomized when they are inherited from their respective stimulus sets. By default inheritance picks a random element out of the target set. But this way there is a chance that we pick the same element twice in a row, or not pick one of the elements at all. The player offers <a href="./API.md#inheriting">additional types</a> of inheritance as well, in this case we will want to use <code>exRandom</code> which stands for exclusive random. Exclusive random makes sure to exclude each element that it picks out of the set, so that as long that their are element in the set that have not already been chosen it will pick from among them and not an element that has already been used.</p>
 <p>So far we have inherited the stimuli like this:</p>
-<pre><code class="lang-js">API.addTrialSets(<span class="hljs-string">'congruent'</span>,[{
+<pre><code class="lang-js">API.addTrialSets(<span class="hljs-string">'red'</span>,[{
     inherit:<span class="hljs-string">'base'</span>,
-    data: {group:<span class="hljs-string">'congruent'</span>},
+    data: {group:<span class="hljs-string">'red'</span>},
     stimuli: [
-        {inherit:<span class="hljs-string">'congruent'</span>, handle:<span class="hljs-string">'target'</span>}
+        {inherit:<span class="hljs-string">'red'</span>, handle:<span class="hljs-string">'target'</span>}
     ]
 }]);
 
 In order to use `exRandom`, all we have to <span class="hljs-keyword">do</span> is <span class="hljs-keyword">this</span>:
 
 ```js
-API.addTrialSets(<span class="hljs-string">'congruent'</span>,[{
+API.addTrialSets(<span class="hljs-string">'red'</span>,[{
     inherit:<span class="hljs-string">'base'</span>,
-    data: {group:<span class="hljs-string">'congruent'</span>},
+    data: {group:<span class="hljs-string">'red'</span>},
     stimuli: [
-        {inherit:{type:<span class="hljs-string">'exRandom'</span>, set:<span class="hljs-string">'congruent'</span>}, handle:<span class="hljs-string">'target'</span>}
+        {inherit:{set:<span class="hljs-string">'red'</span>,type:<span class="hljs-string">'exRandom'</span>}, handle:<span class="hljs-string">'target'</span>}
     ]
 }]);
 </code></pre>
 <p>Instead of setting <code>inherit</code> with the set name, and inheriting randomly we set inherit an object that has two properties; <code>type</code> sets the type of inheritance to use (in this case <code>exRandom</code>), <code>set</code> defines which set should we inherit from.</p>
 <h3 id="epilogue-of-sorts-">Epilogue (of sorts)</h3>
-<p>What we have now is a whole block in a stroop task. There are two types of trials; <em>congruent</em> and <em>incongruent</em>, each repeating ten times at a random order (due to the mixer). There are ten distinct stimuli for each of the trials, each of them repeating only once (thanks to <code>exRandom</code>). This is already a fully functioning task. You can download the code <a href="../../resources/tutorials/js/stroop-block.js">here</a>. You can see it in action right <a href="../../dist/index.html?url=../resources/tutorials/js/stroop-block.js">here</a>.</p>
+<p>What we have now is a whole block in a stroop task. There are three types of trials; <em>red</em>, <em>blue</em> and <em>green</em>, each repeating ten times at a random order (due to the mixer). There are ten distinct stimuli for each of the trials, each of them repeating only once (thanks to <code>exRandom</code>). This is already a fully functioning task. You can download the code <a href="../../resources/tutorials/js/stroop-block.js">here</a>. You can see it in action right <a href="../../dist/index.html?url=../resources/tutorials/js/stroop-block.js">here</a>.</p>
 <p>The next <a href="./stroop-task.html">step</a> for us is to flesh out the task a bit, make it more user friendly and easy on the eyes.</p>
 </div></div></div></body></html>

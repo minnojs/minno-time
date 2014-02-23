@@ -132,7 +132,7 @@ In this part of the tutorial we will see some advanced uses of the sequencer. </
             
             <div class="content"><div class='highlight'><pre>			input: [{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}],
 			layout: [{media :{word:<span class="hljs-string">'First trial'</span>}}],
-			interactions: [{propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
+			interactions: [{conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
 		},
 		{</pre></div></div>
             
@@ -151,7 +151,7 @@ In this part of the tutorial we will see some advanced uses of the sequencer. </
             
             <div class="content"><div class='highlight'><pre>			input: [{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}],
 			layout: [{media :{word:<span class="hljs-string">'Second trial'</span>}}],
-			interactions: [{propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
+			interactions: [{conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
 		}</pre></div></div>
             
         </li>
@@ -235,17 +235,17 @@ This mixer randomizes its sequence.</p>
 				{
 					input: [{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}],
 					layout: [{media :{word:<span class="hljs-string">'Random 1'</span>}}],
-					interactions: [{propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
+					interactions: [{conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
 				},
 				{
 					input: [{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}],
 					layout: [{media :{word:<span class="hljs-string">'Random 2'</span>}}],
-					interactions: [{propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
+					interactions: [{conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
 				},
 				{
 					input: [{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}],
 					layout: [{media :{word:<span class="hljs-string">'Random 3'</span>}}],
-					interactions: [{propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
+					interactions: [{conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
 				}
 			]
 		},</pre></div></div>
@@ -312,7 +312,7 @@ This mixer randomizes its sequence.</p>
 				{
 					input: [{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}],
 					layout: [{media :{word:<span class="hljs-string">'I am repeated !!'</span>}}],
-					interactions: [{propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
+					interactions: [{conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
 				}
 			]
 		},</pre></div></div>
@@ -345,7 +345,7 @@ This mixer randomizes its sequence.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>			mixer : <span class="hljs-string">'chose'</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>			mixer : <span class="hljs-string">'choose'</span>,</pre></div></div>
             
         </li>
         
@@ -379,17 +379,17 @@ This mixer randomizes its sequence.</p>
 				{
 					input: [{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}],
 					layout: [{media :{word:<span class="hljs-string">'Choose only one (1)'</span>}}],
-					interactions: [{propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
+					interactions: [{conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
 				},
 				{
 					input: [{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}],
 					layout: [{media :{word:<span class="hljs-string">'Choose only one (2)'</span>}}],
-					interactions: [{propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
+					interactions: [{conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
 				},
 				{
 					input: [{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}],
 					layout: [{media :{word:<span class="hljs-string">'Choose only one (3)'</span>}}],
-					interactions: [{propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
+					interactions: [{conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
 				}
 
 			]
@@ -456,7 +456,7 @@ This mixer randomizes its sequence.</p>
             <div class="content"><div class='highlight'><pre>				{
 					input: [{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}],
 					layout: [{media :{word:<span class="hljs-string">'Complex - may be before or after the pair'</span>}}],
-					interactions: [{propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
+					interactions: [{conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
 				},</pre></div></div>
             
         </li>
@@ -479,12 +479,12 @@ In contrast, if we has a repeat mixer here, its content would be randomized.</p>
 						{
 							input: [{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}],
 							layout: [{media :{word:<span class="hljs-string">'Pair 1'</span>}}],
-							interactions: [{propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
+							interactions: [{conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
 						},
 						{
 							input: [{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}],
 							layout: [{media :{word:<span class="hljs-string">'Pair 2'</span>}}],
-							interactions: [{propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
+							interactions: [{conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
 						}
 					]
 				}
@@ -507,7 +507,7 @@ In contrast, if we has a repeat mixer here, its content would be randomized.</p>
             <div class="content"><div class='highlight'><pre>		{
 			input: [{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}],
 			layout: [{media :{word:<span class="hljs-string">'The End'</span>}}],
-			interactions: [{propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
+			interactions: [{conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
 		}
 	]);
 	<span class="hljs-comment">/* this is where we close the sequence */</span>

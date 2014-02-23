@@ -17,9 +17,9 @@ define(['app/API'], function(API) {
 				}
 			],
 			interactions: [
-				// This is an interaction (it has a proposition and an action)
+				// This is an interaction (it has a condition and an action)
 				{
-					propositions: [
+					conditions: [
 						{type:'inputEquals',value:'space'}
 					],
 					actions: [

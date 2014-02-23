@@ -291,14 +291,14 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'begin'</span>}],
+				conditions: [{type:<span class="hljs-string">'begin'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'blankScreen'</span>},
 					{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'showMyStim'</span>, on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">1000</span>}}<span class="hljs-comment">//show the stim 1000 ms after the beginin</span>
 				]
 			},
 				{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'showMyStim'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'showMyStim'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'myStim'</span>},
 					{type:<span class="hljs-string">'setInput'</span>,input:{handle: <span class="hljs-string">'in'</span>,on:<span class="hljs-string">'centerTouch'</span>,touch:<span class="hljs-literal">true</span>}},
@@ -321,7 +321,7 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'targetOut'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'targetOut'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'removeInput'</span>,handle:<span class="hljs-string">'in'</span>},
 					{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'error'</span>},						<span class="hljs-comment">// show error stimulus</span>
@@ -345,7 +345,7 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'in'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'in'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'removeInput'</span>,handle:[<span class="hljs-string">'in'</span>,<span class="hljs-string">'targetOut'</span>]},
 					{type:<span class="hljs-string">'showStim'</span>, handle: <span class="hljs-string">'correct'</span>},
@@ -368,7 +368,7 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'endTrial'</span>}
 				]
@@ -388,7 +388,7 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'goto'</span>, destination: <span class="hljs-string">'nextWhere'</span>, properties: {blockStart:<span class="hljs-literal">true</span>}},
 					{type:<span class="hljs-string">'endTrial'</span>}
@@ -448,14 +448,14 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             
             <div class="content"><div class='highlight'><pre>		interactions: [
 			{
-				propositions: [{type:<span class="hljs-string">'begin'</span>}],
+				conditions: [{type:<span class="hljs-string">'begin'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'blankScreen'</span>},
 					{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'showMyStim'</span>, on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">1000</span>}}<span class="hljs-comment">//show the stim 1000 ms after the beginin</span>
 				]
 			},
 				{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'showMyStim'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'showMyStim'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'myStim'</span>},
 					{type:<span class="hljs-string">'setInput'</span>,input:{handle: <span class="hljs-string">'in'</span>,on:<span class="hljs-string">'centerTouch'</span>,touch:<span class="hljs-literal">true</span>}},
@@ -478,7 +478,7 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'targetOut'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'targetOut'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'removeInput'</span>,handle:<span class="hljs-string">'in'</span>},
 					{type:<span class="hljs-string">'log'</span>},
@@ -501,7 +501,7 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'in'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'in'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'removeInput'</span>,handle:[<span class="hljs-string">'in'</span>,<span class="hljs-string">'targetOut'</span>]},
 					{type:<span class="hljs-string">'showStim'</span>, handle: <span class="hljs-string">'error'</span>},
@@ -525,7 +525,7 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'endTrial'</span>}
 				]
@@ -545,7 +545,7 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'goto'</span>, destination: <span class="hljs-string">'nextWhere'</span>, properties: {blockStart:<span class="hljs-literal">true</span>}},
 					{type:<span class="hljs-string">'endTrial'</span>}
@@ -605,14 +605,14 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             
             <div class="content"><div class='highlight'><pre>		interactions: [
 			{
-				propositions: [{type:<span class="hljs-string">'begin'</span>}],
+				conditions: [{type:<span class="hljs-string">'begin'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'blankScreen'</span>},
 					{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'showMyStim'</span>, on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">1000</span>}}<span class="hljs-comment">//show the stim 1000 ms after the beginin</span>
 				]
 			},
 				{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'showMyStim'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'showMyStim'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'myStim'</span>},
 					{type:<span class="hljs-string">'setInput'</span>,input:{handle: <span class="hljs-string">'in'</span>,on:<span class="hljs-string">'centerTouch'</span>,touch:<span class="hljs-literal">true</span>}},
@@ -635,7 +635,7 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'targetOut'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'targetOut'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'removeInput'</span>,handle:<span class="hljs-string">'in'</span>},
 					{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'error'</span>},<span class="hljs-comment">// show error stimulus</span>
@@ -659,7 +659,7 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'in'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'in'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'removeInput'</span>,handle:[<span class="hljs-string">'in'</span>,<span class="hljs-string">'targetOut'</span>]},
 					{type:<span class="hljs-string">'showStim'</span>, handle: <span class="hljs-string">'correct'</span>},											<span class="hljs-comment">// hide everything</span>
@@ -682,7 +682,7 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'endTrial'</span>}
 				]
@@ -702,7 +702,7 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'goto'</span>, destination: <span class="hljs-string">'nextWhere'</span>, properties: {blockStart:<span class="hljs-literal">true</span>}},
 					{type:<span class="hljs-string">'endTrial'</span>}
@@ -762,14 +762,14 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             
             <div class="content"><div class='highlight'><pre>		interactions: [
 			{
-				propositions: [{type:<span class="hljs-string">'begin'</span>}],
+				conditions: [{type:<span class="hljs-string">'begin'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'blankScreen'</span>},
 					{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'showMyStim'</span>, on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">1000</span>}}<span class="hljs-comment">//show the stim 1000 ms after the beginin</span>
 				]
 			},
 				{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'showMyStim'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'showMyStim'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'myStim'</span>},
 					{type:<span class="hljs-string">'setInput'</span>,input:{handle: <span class="hljs-string">'in'</span>,on:<span class="hljs-string">'centerTouch'</span>,touch:<span class="hljs-literal">true</span>}},
@@ -792,7 +792,7 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'targetOut'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'targetOut'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'removeInput'</span>,handle:<span class="hljs-string">'in'</span>},
 					{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'correct'</span>},	<span class="hljs-comment">// show error stimulus</span>
@@ -815,7 +815,7 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'in'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'in'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'removeInput'</span>,handle:[<span class="hljs-string">'in'</span>,<span class="hljs-string">'targetOut'</span>]},
 					{type:<span class="hljs-string">'showStim'</span>, handle: <span class="hljs-string">'error'</span>},
@@ -839,7 +839,7 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'end'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'endTrial'</span>}
 				]
@@ -859,7 +859,7 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
+				conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
 				actions: [
 					{type:<span class="hljs-string">'goto'</span>, destination: <span class="hljs-string">'nextWhere'</span>, properties: {blockStart:<span class="hljs-literal">true</span>}},
 					{type:<span class="hljs-string">'endTrial'</span>}
@@ -926,7 +926,7 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [{type:<span class="hljs-string">'begin'</span>}],
+					conditions: [{type:<span class="hljs-string">'begin'</span>}],
 					actions: [
 						{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'All'</span>}
 					]
@@ -946,7 +946,7 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
 					actions: [{type:<span class="hljs-string">'endTrial'</span>}]
 				},</pre></div></div>
             
@@ -964,7 +964,7 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
             </div>
             
             <div class="content"><div class='highlight'><pre>				{
-					propositions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'enter'</span>}],
 					actions: [
 						{type:<span class="hljs-string">'goto'</span>, destination: <span class="hljs-string">'nextWhere'</span>, properties: {blockStart:<span class="hljs-literal">true</span>}},
 						{type:<span class="hljs-string">'endTrial'</span>}

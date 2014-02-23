@@ -1,21 +1,21 @@
 // ### Interactions
-// The `interactions` module of the PIP is composed of pairs of propositions and actions.
-// Each interaction object has both a propositions and an actions property. </br>
+// The `interactions` module of the PIP is composed of pairs of conditions and actions.
+// Each interaction object has both a conditions and an actions property. </br>
 
 //        {
-//            propositions: [proposition1, proposition2],
+//            conditions: [condition1, condition2],
 //            actions: [action1, action2]
 //        }
 
 define(['app/API'], function(API) {
-	// ### Propositions
-	// `propositions` are sets of conditions that can be either true or false.
-	// Each time there is an event (any input or the begining of a trial) all the propositions are evaluated.
-	// In case all the propositions of an interaction are true, we execute all the `actions` associated with it.
+	// ### conditions
+	// `conditions` are sets of conditions that can be either true or false.
+	// Each time there is an event (any input or the begining of a trial) all the conditions are evaluated.
+	// In case all the conditions of an interaction are true, we execute all the `actions` associated with it.
 
 	API.addSequence([
 		// ##### begin
-		// begin is a special proposition that gets automaticaly fired at the begining of each trial.
+		// begin is a special condition that gets automaticaly fired at the begining of each trial.
 		// Use it to dispaly stimuli, and setup any time based action in your task.
 		{
 			// &nbsp;
@@ -26,9 +26,9 @@ define(['app/API'], function(API) {
 			interactions: [
 				// This first interaction displays the stimulus
 				{
-					propositions: [
+					conditions: [
 						{
-							// Set the proposition type
+							// Set the condition type
 							type:'begin'
 						}
 					],
@@ -36,7 +36,7 @@ define(['app/API'], function(API) {
 				},
 				// The second interaction is responsible for moving on (more about this in the inputEquals section)
 				{
-					propositions: [{type:'inputEquals',value:'end'}],
+					conditions: [{type:'inputEquals',value:'end'}],
 					actions: [{type:'endTrial'}]
 				}
 			]
@@ -54,9 +54,9 @@ define(['app/API'], function(API) {
 			layout: [{media :{word:'[inputEquals]: Click e to move on'}}],
 			interactions: [
 				{
-					propositions: [
+					conditions: [
 						{
-							// Set the proposition type
+							// Set the condition type
 							type:'inputEquals',
 							// This action will only be activated if the input handle is 'left' </br>
 							// Pro tip: You can pass an array to the `value` property instead of just a handle name
@@ -68,9 +68,9 @@ define(['app/API'], function(API) {
 			]
 		},
 
-		// ##### trialEquals
+		// ##### inputEqualsTrial
 		// Each trial has an optional data property that holds an array of user defined values.
-		// The `trialEquals` proposition compares the input handle with the contents of the "value" property of the current trials data property.
+		// The `inputEqualsTrial` condition compares the input handle with the contents of the `property` property of the current trials data property.
 		{
 			// We set the leftOrRight property of trial data to 'right'
 			data: {leftOrRight: 'right'},
@@ -78,16 +78,16 @@ define(['app/API'], function(API) {
 				{handle:'right',on:'keypressed', key:'i'},
 				{handle:'left',on:'keypressed', key:'e'}
 			],
-			layout: [{media :{word:'[trialEquals]: Click i to move on'}}],
+			layout: [{media :{word:'[inputEqualsTrial]: Click i to move on'}}],
 			interactions: [
 				{
-					propositions: [
+					conditions: [
 						{
-							// Set the proposition type
-							type:'trialEquals',
+							// Set the condition type
+							type:'inputEqualsTrial',
 							// This action will only be activated if the input handle is equal to the leftOrRight property of the trial data.
 							// in this case it will only be activated if the input handle is equal to 'right'.
-							value:'leftOrRight'
+							property:'leftOrRight'
 						}
 					],
 					actions: [{type:'endTrial'}]
@@ -95,9 +95,9 @@ define(['app/API'], function(API) {
 			]
 		},
 
-		// ##### stimEquals
+		// ##### inputEqualsStim
 		// Each stimulus has an optional data property that holds an array of user defined values.
-		// The `stimEquals` proposition compares the input handle with the contents of the "value" property of the current stimulus data property.
+		// The `inputEqualsStim` condition compares the input handle with the contents of the `property` property of the current stimulus data property.
 		// Note that only stimuli in the stimuli property are checked, stimuli under layout are ignored!!
 		{
 			// &nbsp;
@@ -105,24 +105,24 @@ define(['app/API'], function(API) {
 				{handle:'right',on:'keypressed', key:'i'},
 				{handle:'left',on:'keypressed', key:'e'}
 			],
-			stimuli: [{data:{handle:'myStim' ,leftOrRight:'left'}, media :{word:'[stimEquals]: Click e to move on'}}],
+			stimuli: [{data:{handle:'myStim' ,leftOrRight:'left'}, media :{word:'[inputEqualsStim]: Click e to move on'}}],
 			interactions: [
 				// Just display the stimulus
 				{
-					propositions: [{type:'begin'}],
+					conditions: [{type:'begin'}],
 					actions: [{type:'showStim',handle:'myStim'}]
 				},
 				// End trial when the correct key is pressed
 				{
-					propositions: [
+					conditions: [
 						{
-							// Set the proposition type
-							type:'stimEquals',
+							// Set the condition type
+							type:'inputEqualsStim',
 							// This action will only be activated if the input handle is equal to the leftOrRight property of the stimulus data.
 							// In this case it will only be activated if the input handle is equal to 'right'.
-							value:'leftOrRight',
+							property:'leftOrRight',
 							// The handle tells the player to search for the triggering property only in stimuli with the 'myStim' handle.
-							// (You can ommit the handle property and the proposition activates if any of the stimuli fit the stimEquals criteria)
+							// (You can ommit the handle property and the condition activates if any of the stimuli fit the inputEqualsStim criteria)
 							handle:'myStim'
 						}
 					],
@@ -132,30 +132,29 @@ define(['app/API'], function(API) {
 		},
 
 		// ##### Negate
-		// Sometimes we want a proposition to be true only if a certain condition does NOT happen.
-		// In these cases we can use the negate property to reverse a proposition.
-		// (when using negate you should be carefull that the proposition doesn't turn out true in unexpected situations, for instance - on the begin input, or when triggering various timeouts)
+		// Sometimes we want a condition to be true only if a certain condition does NOT happen.
+		// In these cases we can use the negate property to reverse a condition.
+		// (when using negate you should be carefull that the condition doesn't turn out true in unexpected situations, for instance - on the begin input, or when triggering various timeouts)
 		{
 			data: {leftOrRight: 'right'},
 			input: [
 				{handle:'right',on:'keypressed', key:'i'},
 				{handle:'left',on:'keypressed', key:'e'}
 			],
-			layout: [{media :{word:'[trialEquals+negate]: Click e to move on'}}],
+			layout: [{media :{word:'[inputEqualsTrial+negate]: Click e to move on'}}],
 			interactions: [
 				{
-					propositions: [
+					conditions: [
 						// If input does not equal to the leftOrRight property
 						{
-							type:'trialEquals',
-							value:'leftOrRight',
+							type:'inputEqualsTrial',
+							property:'leftOrRight',
 							negate: true
 						},
 						// And does not equal to the begin either.
-						// (Without this part of the proposition the endTrial action would be fired upon the begin of the trial - which isn't a right keypress)
+						// (Without this part of the condition the endTrial action would be fired upon the begin of the trial - which isn't a right keypress)
 						{
-							type:'trialEquals',
-							value:'begin',
+							type:'begin',
 							negate:true
 						}
 					],
@@ -165,8 +164,8 @@ define(['app/API'], function(API) {
 		}
 
 		// ### Actions
-		// Each time there is an event (any input or the begining of a trial) all the propositions are evaluated.
-		// In case all the propositions of an interaction are true, we execute all the `actions` associated with it.
+		// Each time there is an event (any input or the begining of a trial) all the conditions are evaluated.
+		// In case all the conditions of an interaction are true, we execute all the `actions` associated with it.
 		,
 
 		// ##### Stimulus actions
@@ -185,7 +184,7 @@ define(['app/API'], function(API) {
 			interactions: [
 				// *Display the stimulus*
 				{
-					propositions: [{type:'inputEquals', value:'show'}],
+					conditions: [{type:'inputEquals', value:'show'}],
 					actions: [
 						// `type:'showStim'` displays a stimulus. `handle` defines which stimuli should be affected
 						{
@@ -205,7 +204,7 @@ define(['app/API'], function(API) {
 				},
 				// *Hide the stimulus*
 				{
-					propositions: [{type:'inputEquals', value:'hide'}],
+					conditions: [{type:'inputEquals', value:'hide'}],
 					actions: [
 						// `type:'hideStim'` displays a stimulus. `handle` defines which stimuli should be affected
 						{
@@ -223,7 +222,7 @@ define(['app/API'], function(API) {
 				},
 				// *End the trial*
 				{
-					propositions: [{type:'inputEquals', value:'end'}],
+					conditions: [{type:'inputEquals', value:'end'}],
 					actions: [
 						// `type:'endTrial'` ends a trial and moves us on.
 						{
@@ -246,7 +245,7 @@ define(['app/API'], function(API) {
 			interactions: [
 				// *Activate timeout at the begining* </br>
 				{
-					propositions: [{type:'begin'}],
+					conditions: [{type:'begin'}],
 					actions: [
 						// `type:'setInput'` creates a new input for this trial. `input` is a regular input object.
 						{
@@ -257,7 +256,7 @@ define(['app/API'], function(API) {
 				},
 				// *End trial on timeout*
 				{
-					propositions: [{type:'inputEquals', value:'time'}],
+					conditions: [{type:'inputEquals', value:'time'}],
 					actions: [
 						{
 							type:'endTrial'
@@ -271,7 +270,7 @@ define(['app/API'], function(API) {
 				// *End trial on click*</br>
 				// On space click, remove listerner for the timeout, mark this trial as manualy terminated, log it and end trial.
 				{
-					propositions: [{type:'inputEquals',value:'end'}],
+					conditions: [{type:'inputEquals',value:'end'}],
 					actions: [
 						// `type:'removeInput'` removes all inputs that have the `handle` handles.
 						{
@@ -307,7 +306,7 @@ define(['app/API'], function(API) {
 			layout: [{media :{word:'[goto]: Click space to restart actions, escape to end task'}}],
 			interactions: [
 				{
-					propositions: [{type:'inputEquals',value:'restart'}],
+					conditions: [{type:'inputEquals',value:'restart'}],
 					actions: [
 						// `destination` defines what type of goto this is, in this case go to the last trial that has all the properties in `properties`. </br>
 						// `properties` is an object to compare to the trial data. note that the properties will only compare to properties present in the raw sequence (before inheritance)! </br>
@@ -323,7 +322,7 @@ define(['app/API'], function(API) {
 					]
 				},
 				{
-					propositions: [{type:'inputEquals',value:'end'}],
+					conditions: [{type:'inputEquals',value:'end'}],
 					actions: [
 						{
 							type:'endTrial'

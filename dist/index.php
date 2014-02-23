@@ -26,7 +26,7 @@
 
 		<script type="text/javascript">
 			require(['js/config'], function() {
-				require(['../../resources/tutorials/js/stroop-trial']);
+				require(['../../examples/iat_component_long']);
 			});
 		</script>
 	</head>
