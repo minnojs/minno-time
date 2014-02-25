@@ -50,7 +50,7 @@ module.exports = function(grunt){
 							.map(function(file){
 								return {
 									name: file.substring(0,file.length-3),
-									js:path.join('..', filepath, file),
+									js:path.join('..', filepath, file).replace("\\", "/"), // if we don't replace backslashes, windows renders the urls incorrectly
 									docco: file.replace('.js','.html')
 								};
 							});
