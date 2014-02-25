@@ -10,10 +10,8 @@ app.get('/',function(req,res){
 	res.redirect('/docs/tutorials/overview.html');
 });
 
+// Cache images but not js for one day
+app.use('/resources/examples/images',express['static'](path.resolve('./resources/examples/images'),{maxAge:86400000}));
 app.use(express['static'](path.resolve('.')));
 
 module.exports = app;
-
-process.on('SIGTERM', function () {
-	console.log("Closing express");
-});

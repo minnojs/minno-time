@@ -137,7 +137,6 @@ module.exports = function(grunt) {
 				options: {
 					server: path.resolve('resources/server'),
 					livereload:true,
-					bases: [path.resolve('.')],
 					open: true
 				}
 			}
