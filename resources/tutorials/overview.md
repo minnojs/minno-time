@@ -1,7 +1,7 @@
 # Project Implicit Player (PIP)
 
 PI Player builds and runs experiments with time-sensitive tasks over the Internet. It is written in JavaScript and is built to be extremely versatile and customizable.
-The scripts for the player are written as JavaScript objects. This format allows, writing simple and straightforward scripts using a constrained scripting language. The format also allows advanced users to easily create complex and dynamic scripts using in-line JavaScript.
+Researchers can program their own studies by writing scripts in a language that PIP can understand. Those scripts are written as JavaScript objects. This format allows writing simple and straightforward scripts using a constrained scripting language. The format also allows advanced users to easily create complex and dynamic scripts using in-line JavaScript.
 
 ### Central Concepts
 The player treats each task as a **sequence** of **trials**.
