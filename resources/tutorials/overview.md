@@ -10,13 +10,13 @@ The player treats each task as a **sequence** of **trials**.
 
 * Control stimuli presentation
 * Evaluate user responses
-* Respond to user responses (give feedback, hide a stimulus, finish trial etc.)
+* Respond to user responses (give feedback, hide a stimulus, finish trial, etc.)
 
-Trials are implemented with a **Trial** object. The Trial object is responsible for anything that 'happens' in the trial (e.g., presentation of stimuli). The trial object uses several other objects, the most important of them are the **Stimulus** and the **Media** objects. **Media** objects are responsible for what we show the user (text, images or any other form of media). **Stimuli** objects are the how for the what of the media objects - they control the size, location etc. of their respective media. Each stimulus has one Media object. A Trial object may have multiple stimulus objects.
+Trials are implemented with a **Trial** object. The Trial object is responsible for anything that 'happens' in the trial (e.g., presentation of stimuli). The trial object uses several other objects, the most important of them are the **Stimulus** and the **Media** objects. **Media** objects are responsible for what we show the user (text, images or any other form of media). **Stimuli** objects are responsible for how we show the media objects. For instance, the **Stimulus** objects controls the size and location of the presentation of a media object. Each stimulus includes one Media object. A Trial object may have multiple stimulus objects (to allow you showing a few different stimuli in the same trial).
 
 Trials, Stimuli and Media are the main building blocks of your task. Often, you will want to group them into **Sets**. The Sets are used to organize and randomize their members.
 
-There cannot be more than one trial at a time, and each trial can change just about anything in the player's behavior. The player supports a powerful system for the generation and randomization of trial **sequences**.
+There cannot be more than one trial at a time, and each trial can change just about anything in the player's behavior. To program a task you need to define the trial **sequences**.
 
 * Trials within a sequence may be duplicated, reordered and randomly selected.
 * Trials can be created by inheriting some features from another trial.
@@ -30,3 +30,6 @@ Once your script is ready all you have to do is to call it from within the playe
 
 ### Collecting the data
 All the data that is recorded by the player is sent to a URL of your choosing. Tasks may vary greatly so we give you the flexibility to send whatever data you need and process it however you see fit.
+
+### Learn how to use PIP
+This was only a short overview of the player. There are many ways to learn how to use it. We recommend you first see some examples for code. Start with the [hello world example](hello.md). Then, to understand better the syntax used in that example, read a little about [Javascript objects](javascript.md).
