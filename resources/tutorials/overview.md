@@ -32,6 +32,10 @@ Once your script is ready all you have to do is to call it from within the playe
 All the data that is recorded by the player is sent to a URL of your choosing. Tasks may vary greatly so we give you the flexibility to send whatever data you need and process it however you see fit.
 
 ### Learn how to use PIP
-This was only a short overview of the player. There are many ways to learn how to use it. We recommend you first see some examples for code. Start with the [hello world example](hello.md). Then, to understand better the syntax used in that example, read a little about [Javascript objects](javascript.md). Now go back to the [hello world example](hello.md) or continue to the [slideshow example](slideshow.md). 
+This was only a short overview of the player. There are many ways to learn how to use it. 
+We recommend you first see some examples for code. Start with the [hello world example](hello.md). Then, to understand better the syntax used in that example, read a little about [Javascript objects](javascript.md). Now go back to the [hello world example](hello.md) or continue to the [slideshow example](slideshow.md). 
+
 Next, if you can, download and [install](install.md) a local version of a server that can run PIP scripts. When you launch that server it will take to the page you're reading right now. 
-We recommend that you next read and experience our Stroop tutorial, which will take you from [setup](stroop-setup.md) to the [complete task](stroop-task.md) is a few steps. While reading the Stroop tutorial, we recommend that you slowly improve your own [mystroop.js file](js/mystroop.js), and create your own version of each of the scripts you'll see throughout that tutorial. 
+We recommend that you next read and experience our Stroop tutorial, which will take you from [setup](stroop-setup.md) to the [complete task](stroop-task.md) is a few steps. 
+
+While reading the Stroop tutorial, we recommend that you slowly improve your own [mystroop.js file](js/mystroop.js), and create your own version of each of the scripts you'll see throughout that tutorial. 
