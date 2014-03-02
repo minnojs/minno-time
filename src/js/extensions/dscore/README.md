@@ -151,4 +151,6 @@ The `Scorer.addSetings` function may be used in order to create feedback message
 
 `tooFast` is the feedback in case there were too many fast trials.
 
+`notEnough` is the feedback in case we don't have enough correct responses to compute the score.
+
 `MessageDef` is an array cutoff scores and messages for interpreting the results.
