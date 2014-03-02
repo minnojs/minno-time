@@ -10,16 +10,19 @@
 define(['jquery','./trial/trial_sets','./stimulus/stimulus_sets','./media/media_sets'],function($,trialSets,stimulusSets,mediaSets){
 
 	var customize = function customize(source){
-		// check for a custome function and run it if it exists
+		// check for a custom function and run it if it exists
 		if (typeof source.customize === 'function'){
 			source.customize.apply(source, [source]);
 			// remove customize function so that it gets called only once (don't delete because - performance)
-			source.customize = null;
+			//source.customize = null;
 		}
 		return source;
 	};
 
-	var inflate = function(source,type){
+	// @param source - object to inflate
+	// @param type - trial stimulus or media
+	// @param recursive - whether this is a recursive call or not
+	var inflate = function(source,type, recursive){
 
 		var sets
 			, inherit
@@ -36,7 +39,7 @@ define(['jquery','./trial/trial_sets','./stimulus/stimulus_sets','./media/media_
 
 		// if we do not need to inherit anything, simply return source
 		if (!source.inherit) {
-			customize(source);
+			!recursive && customize(source);
 			return source;
 		}
 
@@ -48,11 +51,12 @@ define(['jquery','./trial/trial_sets','./stimulus/stimulus_sets','./media/media_
 			throw new Error('Unknown '+ type +'Set: ' + inherit.set);
 		}
 
-		// get parent
-		parent = inflate(sets[inherit.set].inherit(inherit),type);
+		// get parent (recursively)
+		parent = inflate(sets[inherit.set].inherit(inherit),type, true);
 
 		// create inflated child
 		child = $.extend(true,{},source);
+
 		$.each(parent, function(key, value){
 			// if this key is not set yet, copy it out of the parent (choose the copy method according to the type of data)
 			if (!child[key]){
@@ -76,8 +80,9 @@ define(['jquery','./trial/trial_sets','./stimulus/stimulus_sets','./media/media_
 			child.data = $.extend(true, {}, parent.data, child.data);
 		}
 
-		// personal customization functions
-		customize(child);
+		// Personal customization functions - only if this is the last iteration of inflate
+		// This way the customize function gets called only once.
+		!recursive && customize(child);
 
 		// return inflated trial
 		return child;
