@@ -18,7 +18,7 @@ module.exports = function(grunt){
 				if (!grunt.file.exists(filepath)) {
 					grunt.log.warn('Source file "' + filepath + '" not found.');
 				} else {
-					var task = require(filepath);
+					var task = require(path.resolve(filepath));
 					// should we attempt to run the tests in paralel?
 					if (options.paralel){
 						test.runParalel(task,options.browsers);
