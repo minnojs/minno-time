@@ -1,9 +1,11 @@
 /*
  * The grunt task that runs our selenium test
  */
+
+var path = require('path');
 module.exports = function(grunt){
 	grunt.registerMultiTask('test','Run selenium tests',function(){
-		var test = require('./test/runner');
+		var test = require(path.resolve('./test/runner'));
 		var done = this.async();
 		var options = this.data;
 
