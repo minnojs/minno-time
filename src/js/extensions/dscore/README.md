@@ -134,6 +134,7 @@ The `Scorer.addSetings` function may be used in order to create feedback message
 	Scorer.addSettings('message',{
 		manyErrors: "Not enough correct responses",
 		tooFast: "Too many fast trials",
+		notEnough: "Not enough correct responses",
 		MessageDef: [
 			{ cut:'-0.65', message:'Your data suggest a strong implicit preference for Black People compared to White People' },
 			{ cut:'-0.35', message:'Your data suggest a moderate implicit preference for Black People compared to White People.' },

@@ -807,9 +807,9 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		],
 		parcelVar : "parcel",
 		parcelValue : ['first'],
-		fastRT : 1, //Below this reaction time, the latency is considered extremely fast.
-		maxFastTrialsRate : 1, //Above this % of extremely fast responses within a condition, the participant is considered too fast.
-		minRT : 4, //Below this latency
+		fastRT : 150, //Below this reaction time, the latency is considered extremely fast.
+		maxFastTrialsRate : 0.1, //Above this % of extremely fast responses within a condition, the participant is considered too fast.
+		minRT : 400, //Below this latency
 		maxRT : 10000, //above this
 		errorLatency : {use:"latency", penalty:600, useForSTD:true},//ignore error respones
 		postSettings : {score:"score",msg:"feedback",url:"/implicit/scorer"}
@@ -817,9 +817,6 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 	// scorrer messages
 	Scorer.addSettings('message',{
-		manyErrors: "duck1",
-		tooFast: "duck2",
-		notEnough: "duck3",
 		MessageDef: [
 			{ cut:'-0.65', message:'Your data suggest a strong implicit preference for Black People compared to White People' },
 			{ cut:'-0.35', message:'Your data suggest a moderate implicit preference for Black People compared to White People.' },
