@@ -1,19 +1,20 @@
 define(['jquery','underscore'],function($,_){
 
-	var msgCat = {
-		mesCatArray:[]
+	var messages = {
+		MessageDef:[],
+		manyErrors: "Too many errors",
+		tooFast: "Too many fast trials",
+		notEnough: "Not enough correct responses"
 	};
 
-	$.extend(msgCat,{
-
+	var msgMan = {
 		setMsgObject: function(Obj){
-			this.mesCatArray = Obj.MessageDef;
-
+			$.extend(messages,Obj);
 		},
 
-		getMsg: function(score){
+		getScoreMsg: function(score){
 
-			var array = this.mesCatArray;
+			var array = messages.MessageDef;
 			var scoreNum = parseFloat(score);
 		//	console.log('entering getMsg'+scoreNum);
 		//	console.log(array);
@@ -41,8 +42,12 @@ define(['jquery','underscore'],function($,_){
 				rightMsg = obj.message;
 			}
 			return rightMsg;
-		}
-	});
+		},
 
-	return msgCat;
+		getMessage: function getMessage(type){
+			return messages[type];
+		}
+	};
+
+	return msgMan;
 });

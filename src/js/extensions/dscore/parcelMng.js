@@ -1,4 +1,4 @@
-define(['jquery','app/API','underscore'],function($,API,_){
+define(['jquery','app/API','underscore','./msgMan'],function($,API,_, msgMan){
 
 
 	var parcelMng= {};
@@ -106,7 +106,7 @@ define(['jquery','app/API','underscore'],function($,API,_){
 				});
 			}
 			if ( (trialsUnder/totalScoredTrials) > maxFastTrialsRate){
-				parcelMng.scoreData.errorMessage = "Too many fast trials";
+				parcelMng.scoreData.errorMessage = msgMan.getMessage('tooFast');
 
 			}
 
@@ -126,7 +126,7 @@ define(['jquery','app/API','underscore'],function($,API,_){
 
 			var maxErrorParcelRate = compute.maxErrorParcelRate;
 			if (totalErrorTrials/totalTrials > maxErrorParcelRate){
-				parcelMng.scoreData.errorMessage = "Too many errors";
+				parcelMng.scoreData.errorMessage = msgMan.getMessage('manyErrors');
 
 			}
 
@@ -272,8 +272,7 @@ define(['jquery','app/API','underscore'],function($,API,_){
 
 			});
 			if (numCond1 <= 2 || numCond2 <= 2){
-				parcelMng.scoreData.errorMessage = "Not enough correct responses";
-
+				parcelMng.scoreData.errorMessage = msgMan.getMessage("notEnough");
 			}
 			if (numCond1 !== 0) {
 				avgCon1 = avgCon1/numCond1;
@@ -473,7 +472,7 @@ define(['jquery','app/API','underscore'],function($,API,_){
 	//		console.log('starting scoreParcel');
 			var sd = Math.sqrt(p.variance);
 			if (sd === 0){
-				parcelMng.scoreData.errorMessage = "Not enough correct responses";
+				parcelMng.scoreData.errorMessage = msgMan.getMessage("notEnough");
 				p.score = p.diff;
 			} else {
 				p.score = p.diff/sd;

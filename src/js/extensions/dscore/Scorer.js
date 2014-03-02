@@ -1,4 +1,4 @@
-define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],function($,API,_,computeData,msgMan,parcelMng){
+define(['jquery','app/API','underscore','./computeD','./msgMan','./parcelMng'],function($,API,_,computeData,msgMan,parcelMng){
 	var Scorer = {};
 
 //comment
@@ -7,8 +7,8 @@ define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],f
 
 /*  Function: Void addSettings.
 	Input: settings object.
-	Output: set the settings in computeD  object or msgCat according to input
-	Description: Settings for computeD or msgCat
+	Output: set the settings in computeD  object or msgMan according to input
+	Description: Settings for computeD or msgMan
 
 */
 		addSettings: function(type,Obj){
@@ -106,7 +106,7 @@ define(['jquery','app/API','underscore','./computeD','./msgCat','./parcelMng'],f
 
 		// get message according to user input
 		getFBMsg: function(DScore){
-			var msg = msgMan.getMsg(DScore);
+			var msg = msgMan.getScoreMsg(DScore);
 			return msg;
 		}
 
