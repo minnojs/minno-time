@@ -18,13 +18,13 @@ define(['jquery','utils/pubsub','./evaluate','./action'],function($,pubsub,evalu
 
 	return {
 		activate : function(interactions){
-			// start by checking for "begin" actions
-			interact(interactions,{type:'begin', latency:0});
-
 			// subscribe to input and interact with each input
 			pubsub.subscribe('input',subscriptionStack,function(input_data){
 				interact(interactions,input_data);
 			});
+
+			// start by checking for "begin" actions (must be after subscribing!)
+			interact(interactions,{type:'begin', latency:0});
 		},
 		disable : function(){
 			// unsubscribe from all interactions
