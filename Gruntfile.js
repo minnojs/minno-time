@@ -114,7 +114,7 @@ module.exports = function(grunt) {
 					// by default use the current dist
 					'#{player}' : '../../<%= grunt.option("player") %>',
 					// we keep the refrence to the md file so the connection is kept within github
-					'./API.md' : './API.html'
+					//'./API.md' : './API.html'
 				},
 				files: [
 					{
@@ -213,6 +213,7 @@ module.exports = function(grunt) {
 	// Default task(s).
 	grunt.registerTask('default', ['jshint']);
 	grunt.registerTask('server', ['express', 'watch:user','express-keepalive']);
+	grunt.registerTask('tutorials', ['express', 'watch:tutorials','express-keepalive']);
 
 	// build production stuff
 	grunt.registerTask('build', 'Building PIplayer', function(){

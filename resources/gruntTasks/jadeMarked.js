@@ -23,6 +23,7 @@ module.exports = function(grunt) {
 		var options = this.data;
 		var template = createTemplate(options.template);
 		var replaceObj = options.replace || {};
+		var mdToHtml = /(\[[^\]]+\]\([^\)]+)\.md((#[^\)]+)?\))/g;
 
 		this.files.forEach(function(file){
 			// Warn on and remove invalid source files
@@ -36,6 +37,10 @@ module.exports = function(grunt) {
 					for (var prop in replaceObj){
 						src = src.replace(prop, replaceObj[prop]);
 					}
+
+					// Replace all links that refer to ".md" with ".html"
+					// This is good so that the links work naturaly in github too
+					src = src.replace(mdToHtml,"$1.html$2");
 
 					// run this file through markdown
 					src = md(src);
