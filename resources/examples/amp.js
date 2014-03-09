@@ -700,9 +700,9 @@ define(['app/API'], function(API) {
 			stimuli: [],
 				customize: function(){
 				var trial = this;
-				console.log('computing AMP score..');//printing to the console
+				//console.log('computing AMP score..');//printing to the console
 				resetCounters();
-				console.log(API.getLogs());//printing to the consol the log's array
+				//console.log(API.getLogs());//printing to the consol the log's array
 				var logs = API.getLogs();//saving the logs
 				computeAMPScore(logs);// computing the AMP score
 				var feedback = 'After ' + condition1 + ', '+AMPScorer.counter.prime1.category1+' of the responses were ‘pleasant’  and '+ AMPScorer.counter.prime1.category2+' of the responses were ‘unpleasant’<br>After ' + condition2 + ', '+ AMPScorer.counter.prime2.category1+' of the responses were ‘pleasant’ and '+ AMPScorer.counter.prime2.category2+' of the responses were ‘unpleasant’.';

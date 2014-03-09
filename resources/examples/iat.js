@@ -742,6 +742,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			data: {blockStart:true},
 			stimuli: [],
 			customize: function(){
+				/* global console */
 				var trial = this;
 				var DScoreObj, media;
 

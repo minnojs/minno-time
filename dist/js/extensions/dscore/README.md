@@ -1,12 +1,12 @@
-# Project Implicit Scorer Component 
+# Project Implicit Scorer Component
 
 The Scorer component of the PIP responsible for computing the score for the trials that runs in the PIP. The score is used to present the user with the corresponding message and is also posted to the Implicit servers.
-In order to compute the score the trials are divided to parcels, the score for each parcel is computed and then the scores are averaged. 
+In order to compute the score the trials are divided to parcels, the score for each parcel is computed and then the scores are averaged.
 
 ### How to Use
 
-In the main IAT file enter the settings for the scorer according to the options coverd in 'compute settings'. 
-In the main IAT get the score and the message from the scorer similiar to the folowing:
+In the main IAT file enter the settings for the scorer according to the options covered in 'compute settings'.
+In the main IAT get the score and the message from the scorer similar to the following:
 
 ```
 DScoreObj = Scorer.computeD();
@@ -49,9 +49,9 @@ actions: [
 * condVar -		   The variable that indicate the condition.
 * cond1VarValues - An array with the values of the condVar that will comprise of condition 1 in the comparison.
 * cond2VarValues - An array with the values of the condVar that will comprise of condition 2 in the comparison.
-* parcelVar -	   A variable that indicate the name for the parcels, usually it would be 'parcel'. 
-* parcelValue -    An array with the values for the parcels, when building the experiment sign for each trial the parcel it 	
-				   belongs to, make sure that each parcel has trials that belong to condition 1 and condition 2. 
+* parcelVar -	   A variable that indicate the name for the parcels, usually it would be 'parcel'.
+* parcelValue -    An array with the values for the parcels, when building the experiment sign for each trial the parcel it
+				   belongs to, make sure that each parcel has trials that belong to condition 1 and condition 2.
 
 Example:
 
@@ -89,13 +89,13 @@ In the API:
 
 ```
 
-* fastRT : A variabel that indicates the latency that beyond it the latency is considred too fast. If the number of trials that 		   are too fast are above then maxFastTrialsRate (next variable) then an error would be generated and saved. (
+* fastRT : A variable that indicates the latency that beyond it the latency is considered too fast. If the number of trials that 		   are too fast are above then maxFastTrialsRate (next variable) then an error would be generated and saved. (
 		   calculation will continue thou).
 * maxFastTrialsRate : Above this % of extremely fast responses within a condition, the participant is considered too fast.
 * minRT : Only trials that have latency between minRT and maxRT will be calculated.
 * maxRT : Only trials that have latency between minRT and maxRT will be calculated.
 * maxErrorParcelRate: If the % of error trials are greater than this value then an error would be generated and saved.
-* errorLatency : An object that help determine the behavior of the scorer related to error trials. 
+* errorLatency : An object that help determine the behavior of the scorer related to error trials.
 				 this objects hold three variables:
 				 use - can have three values: 'latency','false' and 'penalty'.
 					 latency -  is the default, when set the scorer will use trials that are error in its calculations.
@@ -107,24 +107,50 @@ In the API:
 Example
 ```
 Scorer.addSettings('compute',{
-	
+
 		fastRT : 150, //Below this reaction time, the latency is considered extremely fast.
-		maxFastTrialsRate : 0.1, 
-		minRT : 400, 
+		maxFastTrialsRate : 0.1,
+		minRT : 400,
 		maxRT : 10000, //above this
-		errorLatency : {use:"latency", penalty:600, useForSTD:true},//ignore error respones
+		errorLatency : {use:"latency", penalty:600, useForSTD:true},//ignore error responses
 
 		....
 
 ```
+
 * postSettings : Used to determine the url and variable to send to the implicit server.
 
 Example:
 
 ```
-
 postSettings : {score:"score",msg:"feedback",url:"/implicit/scorer"}
-
-
-
 ```
+
+### Messages
+
+The `Scorer.addSetings` function may be used in order to create feedback messages too.
+
+```js
+	Scorer.addSettings('message',{
+		manyErrors: "Not enough correct responses",
+		tooFast: "Too many fast trials",
+		notEnough: "Not enough correct responses",
+		MessageDef: [
+			{ cut:'-0.65', message:'Your data suggest a strong implicit preference for Black People compared to White People' },
+			{ cut:'-0.35', message:'Your data suggest a moderate implicit preference for Black People compared to White People.' },
+			{ cut:'-0.15', message:'Your data suggest a slight implicit preference for Black People compared to White People.' },
+			{ cut:'0', message:'Your data suggest little to no difference in implicit preference between Black People and White People.' },
+			{ cut:'0.15', message:'Your data suggest a slight implicit preference for White People compared to Black People' },
+			{ cut:'0.35', message:'Your data suggest a moderate implicit preference for White People compared to Black People' },
+			{ cut:'0.65', message:'Your data suggest a strong implicit preference for White People compared to Black People' }
+		]
+	});
+```
+
+`manyErrors` is the feedback in case the user did not give enough correct responses.
+
+`tooFast` is the feedback in case there were too many fast trials.
+
+`notEnough` is the feedback in case we don't have enough correct responses to compute the score.
+
+`MessageDef` is an array cutoff scores and messages for interpreting the results.

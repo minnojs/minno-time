@@ -1363,13 +1363,7 @@ example</p>
 			layout: [],
 			stimuli: [],
 				customize: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-				<span class="hljs-keyword">var</span> trial = <span class="hljs-keyword">this</span>;
-				console.log(<span class="hljs-string">'computing AMP score..'</span>);<span class="hljs-comment">//printing to the console</span>
-				resetCounters();
-				console.log(API.getLogs());<span class="hljs-comment">//printing to the consol the log's array</span>
-				<span class="hljs-keyword">var</span> logs = API.getLogs();<span class="hljs-comment">//saving the logs</span>
-				computeAMPScore(logs);<span class="hljs-comment">// computing the AMP score</span>
-				<span class="hljs-keyword">var</span> feedback = <span class="hljs-string">'After '</span> + condition1 + <span class="hljs-string">', '</span>+AMPScorer.counter.prime1.category1+<span class="hljs-string">' of the responses were ‘pleasant’  and '</span>+ AMPScorer.counter.prime1.category2+<span class="hljs-string">' of the responses were ‘unpleasant’&lt;br&gt;After '</span> + condition2 + <span class="hljs-string">', '</span>+ AMPScorer.counter.prime2.category1+<span class="hljs-string">' of the responses were ‘pleasant’ and '</span>+ AMPScorer.counter.prime2.category2+<span class="hljs-string">' of the responses were ‘unpleasant’.'</span>;</pre></div></div>
+				<span class="hljs-keyword">var</span> trial = <span class="hljs-keyword">this</span>;</pre></div></div>
             
         </li>
         
@@ -1380,11 +1374,11 @@ example</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-47">&#182;</a>
               </div>
-              <p>report to the server</p>
+              <p>console.log(‘computing AMP score..’);//printing to the console</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>				$.post(<span class="hljs-string">"/implicit/scorer"</span>, <span class="hljs-built_in">JSON</span>.stringify({feedback:feedback}));</pre></div></div>
+            <div class="content"><div class='highlight'><pre>				resetCounters();</pre></div></div>
             
         </li>
         
@@ -1394,6 +1388,38 @@ example</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-48">&#182;</a>
+              </div>
+              <p>console.log(API.getLogs());//printing to the consol the log’s array</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				<span class="hljs-keyword">var</span> logs = API.getLogs();<span class="hljs-comment">//saving the logs</span>
+				computeAMPScore(logs);<span class="hljs-comment">// computing the AMP score</span>
+				<span class="hljs-keyword">var</span> feedback = <span class="hljs-string">'After '</span> + condition1 + <span class="hljs-string">', '</span>+AMPScorer.counter.prime1.category1+<span class="hljs-string">' of the responses were ‘pleasant’  and '</span>+ AMPScorer.counter.prime1.category2+<span class="hljs-string">' of the responses were ‘unpleasant’&lt;br&gt;After '</span> + condition2 + <span class="hljs-string">', '</span>+ AMPScorer.counter.prime2.category1+<span class="hljs-string">' of the responses were ‘pleasant’ and '</span>+ AMPScorer.counter.prime2.category2+<span class="hljs-string">' of the responses were ‘unpleasant’.'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-49">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-49">&#182;</a>
+              </div>
+              <p>report to the server</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				$.post(<span class="hljs-string">"/implicit/scorer"</span>, <span class="hljs-built_in">JSON</span>.stringify({feedback:feedback}));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-50">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-50">&#182;</a>
               </div>
               <p>show the score</p>
 

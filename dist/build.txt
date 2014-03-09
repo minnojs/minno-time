@@ -64,7 +64,7 @@ js/app/API.js
 js/extensions/dscore/Scorer.js
 ----------------
 js/extensions/dscore/computeD.js
-js/extensions/dscore/msgCat.js
+js/extensions/dscore/msgMan.js
 js/extensions/dscore/parcelMng.js
 js/extensions/dscore/Scorer.js
 

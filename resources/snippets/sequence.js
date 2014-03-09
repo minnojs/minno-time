@@ -183,6 +183,7 @@ define(['app/API'], function(API) {
 
 		// We log the results of the mixer into the console (click F12 to Open Developer Tools - in Firefox requires Firebug extension.) </br>
 		// Now you can check to see if the order is what you intend.
+		/* global console */
 		console.log(mixer(sequence));
 	});
 

@@ -11,7 +11,7 @@
 .badge-docco:hover {background-color: #356635;}
 </style><!-- Initialize highlight js (do we need this on every page?)--><link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css"><script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();
 
-</script></head><body><nav role="navigation" class="navbar navbar-inverse navbar-fixed-top"><div class="container"><div class="navbar-header"><button type="button" data-toggle="collapse" data-target="#navbar" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="https://github.com/ProjectImplicit/PIPlayer" class="navbar-brand">PI player</a></div><nav id="navbar" role="navigation" class="navbar-collapse bs-navbar-collapse"><ul class="nav navbar-nav"><li><a href="../tutorials/overview.html">Tutorial</a></li><li><a href="../snippets/index.html">Snippets</a></li><li><a href="../examples/index.html">Examples</a></li><li><a href="../tutorials/API.html">API</a></li></ul><ul class="nav navbar-nav navbar-right"><li><a href="../tutorials/overview.html">About</a></li></ul></nav></div></nav><div id="main" class="container"><div class="row"><div class="col-md-3"><ul class="nav affix-top sidenav"><li><a href="./overview.html">Overview</a></li><li><a href="./javascript.html">Javascript</a></li><li><a href="./hello.html">Hello world</a></li><li><a href="./slideshow.html">Slideshow</a></li><li><a href="javascript:void(0)">Stroop</a><ul class="nav"><li><a href="./stroop-setup.html">Setup</a></li><li><a href="./stroop-interactions.html">Interactions</a></li><li><a href="./stroop-inheritance.html">Inheritance</a></li><li><a href="./stroop-block.html">Block</a></li><li><a href="./stroop-task.html">Task</a></li></ul></li></ul></div><div class="col-md-9"><h2 id="hello-world">Hello world</h2>
+</script></head><body><nav role="navigation" class="navbar navbar-inverse navbar-fixed-top"><div class="container"><div class="navbar-header"><button type="button" data-toggle="collapse" data-target="#navbar" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="https://github.com/ProjectImplicit/PIPlayer" class="navbar-brand">PI player</a></div><nav id="navbar" role="navigation" class="navbar-collapse bs-navbar-collapse"><ul class="nav navbar-nav"><li><a href="../tutorials/overview.html">Tutorial</a></li><li><a href="../snippets/index.html">Snippets</a></li><li><a href="../examples/index.html">Examples</a></li><li><a href="../tutorials/API.html">API</a></li></ul><ul class="nav navbar-nav navbar-right"><li><a href="../tutorials/overview.html">About</a></li></ul></nav></div></nav><div id="main" class="container"><div class="row"><div class="col-md-3"><ul class="nav affix-top sidenav"><li><a href="./overview.html">Overview</a></li><li><a href="./install.html">Install</a></li><li><a href="./javascript.html">Javascript</a></li><li><a href="./hello.html">Hello world</a></li><li><a href="./slideshow.html">Slideshow</a></li><li><a href="javascript:void(0)">Stroop</a><ul class="nav"><li><a href="./stroop-setup.html">Setup</a></li><li><a href="./stroop-interactions.html">Interactions</a></li><li><a href="./stroop-inheritance.html">Inheritance</a></li><li><a href="./stroop-block.html">Block</a></li><li><a href="./stroop-task.html">Task</a></li></ul></li></ul></div><div class="col-md-9"><h2 id="hello-world">Hello world</h2>
 <p>This section of the tutorial will walk you through creating your first task. We will create a simple task that says “Hello world”. As we go, we will comment on several of the players features and explain some of the ways you can customize your player.</p>
 <p>You can download the whole task <a href="../../resources/tutorials/js/hello.js">here</a>. You can see it in action right <a href="../../dist/index.html?url=../resources/tutorials/js/hello.js">here</a>.</p>
 <h3 id="the-wrapper">The wrapper</h3>
@@ -28,7 +28,7 @@ define([<span class="hljs-string">'app/API'</span>], <span class="hljs-function"
 </code></pre>
 <p>The wrapper creates the <code>API</code> object for you. The <code>API</code> object is the instrument that we will use to create and run tasks.</p>
 <h3 id="the-task-structure">The task structure</h3>
-<p>Each task is composed of one or more trials, that are activated sequentially. We set trials into the player using a function called <a href="./API.html#add-sequence"><code>API.addSequence</code></a> that accepts an array of trials as its argument. After adding any trials that you like all that is left is activating the player by calling <a href="API.md#play"><code>API.play</code></a>:</p>
+<p>Each task is composed of one or more trials, that are activated sequentially. We set trials into the player using a function called <a href="./API.html#add-sequence"><code>API.addSequence</code></a> that accepts an array of trials as its argument. After adding any trials that you like all that is left is activating the player by calling <a href="API.html#play"><code>API.play</code></a>:</p>
 <pre><code class="lang-js">define([<span class="hljs-string">'app/API'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(API)</span> {</span>
     API.addSequence([
         <span class="hljs-comment">/*
@@ -42,7 +42,7 @@ define([<span class="hljs-string">'app/API'</span>], <span class="hljs-function"
 </code></pre>
 <p>In the following section we will start to see how to populate the trial sequence, later on we will see that <code>API</code> exposes many additional functions that allow us to further customize the player.</p>
 <h3 id="hello-world">Hello world</h3>
-<p>Lets populate the sequence with a simple trial. The following trial displays the words “Hello world” at the center of the screen, and ends when you press <code>space</code>.</p>
+<p>Let’s populate the sequence with a simple trial. The following trial displays the words “Hello world” at the center of the screen, and ends when you press <code>space</code>.</p>
 <pre><code class="lang-js">{
     input: [
         <span class="hljs-comment">// This is an input object</span>
@@ -68,24 +68,24 @@ define([<span class="hljs-string">'app/API'</span>], <span class="hljs-function"
     ]
 }
 </code></pre>
-<p>Lets see what we’ve got here. The trial uses three keywords <code>input</code>, <code>layout</code> and <code>interaction</code>. Each one of them holds an array with one object. We will now go through each of these sections and explain how they work.</p>
+<p>Let’s see what we’ve got here. The trial uses three keywords <code>input</code>, <code>layout</code> and <code>interaction</code>. Each one of them holds an array with one object. We will now go through each of these sections and explain how they work.</p>
 <h4 id="-input-"><strong>input</strong></h4>
-<p>The <code>input</code> keyword is responsible for user input, it holds an array of input objects. Full documentation can be found <a href="./API.md#input">here</a>.</p>
+<p>The <code>input</code> keyword defines the input we expect the participant to use, it holds an array of input objects. Full documentation can be found <a href="./API.html#input">here</a>.</p>
 <pre><code class="lang-json">[
     {handle:&#39;space&#39;, on:&#39;space&#39;}
 ]
 </code></pre>
-<p>Input objects mediate between user input and the player. Each input object must include both a <code>handle</code> and an <code>on</code> property. The <code>handle</code> property defines how this input will be called from within the player. The <code>on</code> property defines what type of input this object listens to.</p>
+<p>Each input object must include both a <code>handle</code> and an <code>on</code> property. The <code>handle</code> property defines the name of this  input. Other parts of the script can then refer to this input using this name (e.g., check whether the input was activated). The <code>on</code> property defines what type of input this object listens to.</p>
 <p>In this case, we created a input object that listens to the “space keypressed” event (<code>on:&#39;space&#39;</code>), and triggers an event called “space” (<code>handle:&#39;space&#39;</code>). We will use the event name later on in the <code>interactions</code> section.</p>
-<p>The player supports <a href="./API.md#input">many</a> types of input, at this stage we will only review <code>keypressed</code>. <code>keypressed</code> creates an input listener for simple keyboard interactions, for our purpose we will learn how to listen to a specific keypress. The following code creates a listener for the <code>&#39;e&#39;</code> key being pressed:</p>
+<p>The player supports <a href="./API.html#input">many</a> types of input, at this stage we will only review <code>keypressed</code>. <code>keypressed</code> creates an input listener for simple keyboard interactions, for our purpose we will learn how to listen to a specific keypress. The following code creates a listener for the <code>&#39;e&#39;</code> key being pressed:</p>
 <pre><code class="lang-js">[
     {handle:<span class="hljs-string">'space'</span>, on:<span class="hljs-string">'keypressed'</span>, key:<span class="hljs-string">'e'</span>}
 ]
 </code></pre>
-<p>Note that the event type is now <code>keypressed</code> and we added an additional property to the object, <code>key</code> now defines what type of keypressed triggers this event. Note that the name that we give the event is absolutely arbitrary, so we can leave the handle as <code>&#39;space&#39;</code> and everything keeps working (try replacing the old input object with this one, see what happens. Then try creating an object that responds to the <code>&#39;i&#39;</code> key being pressed).</p>
+<p>Note that the event type is now <code>keypressed</code> and we added an additional property to the object, <code>key</code> which defines what type of keypressed triggers this event. Note that the name that we give the event is absolutely arbitrary, so we can leave the handle as <code>&#39;space&#39;</code> and everything keeps working. However, it is generally a good practice to use meaningful names (e.g., <code>&#39;key_e&#39;</code>). You can try replacing the old input object with this one, and see what happens. Then try creating an object that responds to the <code>&#39;i&#39;</code> key being pressed.</p>
 <h4 id="-layout-"><strong>layout</strong></h4>
 <p>The <code>layout</code> keyword is responsible for the static stimuli in the trial. Any stimuli that are set into the <code>layout</code> array will be displayed automatically at the beginning of the trial.</p>
-<p><a href="./API.md#stimuli">Stimuli</a> are complex objects, and we’ll get more deeply into them, but for now this will suffice:</p>
+<p><a href="./API.html#stimuli">Stimuli</a> are complex objects, and we’ll get more deeply into them, but for now this will suffice:</p>
 <pre><code class="lang-js">[
     {
         media :{word:<span class="hljs-string">'Hello world'</span>},
@@ -94,12 +94,12 @@ define([<span class="hljs-string">'app/API'</span>], <span class="hljs-function"
 ]
 </code></pre>
 <p>This stimulus displays the words “Hello world” at the center of the player canvas.</p>
-<p>Stimulus objects hold a <a href="./API.md#media"><code>media</code></a> object to display, and relevant data regarding how to display it. This particular stimulus sets the style for the media using the <code>css</code> property. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS">CSS</a> is the language used by browsers to describe styles on the web. Using the stimulus <code>css</code> property we can control css in any way we want. In this case we use the css object to set the <em>font size</em> and <em>color</em> of the stimulus.</p>
+<p>Stimulus objects hold a <a href="./API.html#media"><code>media</code></a> object to display, and relevant data regarding how to display it. This particular stimulus sets the style for the media using the <code>css</code> property. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS">CSS</a> is the language used by browsers to describe styles on the web. Using the stimulus <code>css</code> property we can control css in any way we want. In this case we use the css object to set the <em>font size</em> and <em>color</em> of the stimulus.</p>
 <p>The font size of this stimulus is set to <code>2em</code>. <code>em</code> is a css size unit, <code>1em</code> is the standard font size, <code>2em</code> is twice that size and so on (you can use fractions too). So that the text displayed by this stimulus is double the default text size.</p>
 <p>The color attribute takes any valid css color. You can try the following: <code>&#39;#0000FF&#39;</code>, <code>&#39;#FFFFFF&#39;</code>, <code>&#39;#00FF00&#39;</code> or use <a href="http://html-color-codes.info/">this</a> site to find additional colors.</p>
 <p>The <code>css</code> object can do  far more than this. If you want to know more you can check out the full API on <a href="http://api.jquery.com/css/#css2"><jquery class="com"></jquery></a></p>
 <h4 id="-interactions-"><strong>interactions</strong></h4>
-<p><a href="./API.md#interactions">Interactions</a> are a grouping of <a href="./API.md#interactions-conditions"><code>conditions</code></a> (statements of truth) and <a href="./API.md#interactions-actions"><code>actions</code></a> to perform if (and only if) all conditions are true. We won’t really get into interactions here, but these are the basics:</p>
+<p><a href="./API.html#interactions">Interactions</a> are a grouping of <a href="./API.html#interactions-conditions"><code>conditions</code></a> (statements of truth) and <a href="./API.html#interactions-actions"><code>actions</code></a> to perform if (and only if) all conditions are true. We won’t really get into interactions here, but these are the basics:</p>
 <pre><code class="lang-js">[
     {
         conditions: [

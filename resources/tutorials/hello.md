@@ -40,7 +40,7 @@ In the following section we will start to see how to populate the trial sequence
 
 
 ### Hello world
-Lets populate the sequence with a simple trial. The following trial displays the words "Hello world" at the center of the screen, and ends when you press `space`.
+Let's populate the sequence with a simple trial. The following trial displays the words "Hello world" at the center of the screen, and ends when you press `space`.
 
 ```js
 {
@@ -69,11 +69,11 @@ Lets populate the sequence with a simple trial. The following trial displays the
 }
 ```
 
-Lets see what we've got here. The trial uses three keywords `input`, `layout` and `interaction`. Each one of them holds an array with one object. We will now go through each of these sections and explain how they work.
+Let's see what we've got here. The trial uses three keywords `input`, `layout` and `interaction`. Each one of them holds an array with one object. We will now go through each of these sections and explain how they work.
 
 #### **input**
 
-The `input` keyword is responsible for user input, it holds an array of input objects. Full documentation can be found [here](./API.md#input).
+The `input` keyword defines the input we expect the participant to use, it holds an array of input objects. Full documentation can be found [here](./API.md#input).
 
 ```json
 [
@@ -81,7 +81,7 @@ The `input` keyword is responsible for user input, it holds an array of input ob
 ]
 ```
 
-Input objects mediate between user input and the player. Each input object must include both a `handle` and an `on` property. The `handle` property defines how this input will be called from within the player. The `on` property defines what type of input this object listens to.
+Each input object must include both a `handle` and an `on` property. The `handle` property defines the name of this  input. Other parts of the script can then refer to this input using this name (e.g., check whether the input was activated). The `on` property defines what type of input this object listens to.
 
 In this case, we created a input object that listens to the "space keypressed" event (`on:'space'`), and triggers an event called "space" (`handle:'space'`). We will use the event name later on in the `interactions` section.
 
@@ -93,7 +93,7 @@ The player supports [many](./API.md#input) types of input, at this stage we will
 ]
 ```
 
-Note that the event type is now `keypressed` and we added an additional property to the object, `key` now defines what type of keypressed triggers this event. Note that the name that we give the event is absolutely arbitrary, so we can leave the handle as `'space'` and everything keeps working (try replacing the old input object with this one, see what happens. Then try creating an object that responds to the `'i'` key being pressed).
+Note that the event type is now `keypressed` and we added an additional property to the object, `key` which defines what type of keypressed triggers this event. Note that the name that we give the event is absolutely arbitrary, so we can leave the handle as `'space'` and everything keeps working. However, it is generally a good practice to use meaningful names (e.g., `'key_e'`). You can try replacing the old input object with this one, and see what happens. Then try creating an object that responds to the `'i'` key being pressed.
 
 #### **layout**
 

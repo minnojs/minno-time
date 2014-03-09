@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="en"></html><html><head><title>Project Implicit</title><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"><!-- If we ever need the js stuff...--><!--script(src="http://code.jquery.com/jquery-2.1.0.min.js")--><!--script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js")--><style>div#main {padding-top:50px}
+.sidenav {background-color: #F7F5FA;border-radius: 5px;margin-bottom: 30px;margin-top: 30px;padding-bottom: 10px;padding-top: 10px;text-shadow: 0 1px 0 #FFFFFF;}
+.sidenav.nav li > a {color: #999999;display: block;font-size: 13px;font-weight: 600;padding: 5px 20px;}
+.sidenav.nav li > a:hover {text-decoration:none;color: #563D7C;}
+.sidenav.nav .nav > li > a {font-weight: 500; padding: 3px 0px 3px 30px}
+
+
+.badge-js {background-color: #f89406;}
+.badge-js:hover {background-color: #c67605;}
+.badge-docco {background-color: #468847;}
+.badge-docco:hover {background-color: #356635;}
+</style><!-- Initialize highlight js (do we need this on every page?)--><link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css"><script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();
+
+</script></head><body><nav role="navigation" class="navbar navbar-inverse navbar-fixed-top"><div class="container"><div class="navbar-header"><button type="button" data-toggle="collapse" data-target="#navbar" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="https://github.com/ProjectImplicit/PIPlayer" class="navbar-brand">PI player</a></div><nav id="navbar" role="navigation" class="navbar-collapse bs-navbar-collapse"><ul class="nav navbar-nav"><li><a href="../tutorials/overview.html">Tutorial</a></li><li><a href="../snippets/index.html">Snippets</a></li><li><a href="../examples/index.html">Examples</a></li><li><a href="../tutorials/API.html">API</a></li></ul><ul class="nav navbar-nav navbar-right"><li><a href="../tutorials/overview.html">About</a></li></ul></nav></div></nav><div id="main" class="container"><div class="row"><div class="col-md-3"><ul class="nav affix-top sidenav"><li><a href="./overview.html">Overview</a></li><li><a href="./install.html">Install</a></li><li><a href="./javascript.html">Javascript</a></li><li><a href="./hello.html">Hello world</a></li><li><a href="./slideshow.html">Slideshow</a></li><li><a href="javascript:void(0)">Stroop</a><ul class="nav"><li><a href="./stroop-setup.html">Setup</a></li><li><a href="./stroop-interactions.html">Interactions</a></li><li><a href="./stroop-inheritance.html">Inheritance</a></li><li><a href="./stroop-block.html">Block</a></li><li><a href="./stroop-task.html">Task</a></li></ul></li></ul></div><div class="col-md-9"><h2 id="installing-pip">Installing PIP</h2>
+<p>The project implicit player is an open source project and its source code is available on <a href="https://github.com/ProjectImplicit/PIPlayer">Github</a>. You may use it freely under the terms of the license. This page will explain the basics of getting the player to work.</p>
+<h3 id="local-installation">Local installation</h3>
+<p>The player comes with a simple server that allows you to run it from your local machine. This server includes this tutorial, and lets you easily create and test tasks of your own. It does <em>not</em> save the data gathered from the player (but see the <a href="#public-installation">next section</a> about that).</p>
+<p>In order to install the player localy you have to install <a href="http://nodejs.org/">Node.js</a>. <strong>Node.js</strong> is a software platform for server-side and network applications. It is currently used by a number of large companies including LinkedIn, Microsoft, Yahoo!, Walmart and PayPal. And can be run off any of the popular operating systems.</p>
+<h4 id="installing-">Installing:</h4>
+<ul>
+<li>Download and install <a href="http://nodejs.org/">Node.js</a>.</li>
+<li>Download the player from <a href="https://github.com/ProjectImplicit/PIPlayer/archive/master.zip">Github</a>.</li>
+<li>Unzip the player into the directory of your choice.</li>
+<li>Open a terminal (a text interface):<ul>
+<li>On Windows, click the Start button, select All Programs, click Accessories, and then click Command Prompt.</li>
+<li>On Mac, click Finder, select Applications, then choose utilities and Double click on terminal.</li>
+<li>On Ubuntu you can click ctrl+alt+T.</li>
+</ul>
+</li>
+<li>Browse to the folder were you downloaded the player.</li>
+<li>Insert the following commands into the terminal: (You should see a long list of responses after each of these - it may take a few minutes…)<ul>
+<li><code>npm install</code></li>
+<li><code>npm build</code></li>
+</ul>
+</li>
+<li>When these commands have gone through - thats it, you’ve installed the player.</li>
+</ul>
+<p>If you have a git client then you may want to clone the player directly instead of downloading it:</p>
+<pre><code class="lang-bash">git clone https://github.com/ProjectImplicit/PIPlayer .
+</code></pre>
+<h4 id="activating">Activating</h4>
+<p>Once you have installed the player, each time you want to activate the player all you have to do is run the following command: <code>npm start</code> from the player directory.</p>
+<p>You will find that a browser window opens with the tutorials site, only this time from your local machine.</p>
+<p>Beside serving the player and the tutorials, the local server gives you an easy interface for working with your local files. You will find a directory named <code>user</code> in your player directory. It starts out with a copy of each of the files used in the tutorials (you can freely delete them if you like), and you can add any files that you like to that.</p>
+<p>You will notice a new tab in the navigation bar on the top: <strong>Your Files</strong>. This tab gives you access to a directory listing of all the scripts within your <code>user</code> directory. You will be able to see a list of any syntax errors that you may have within your files as well as the buttons allowing you to view the file or downlad it.</p>
+<h3 id="public-installation">Public installation</h3>
+<p>The back-end for recording the player data is not open source yet (if you want to write a back-end, thats great! we’d love to cooperate).</p>
+<p>If you want to use the player within you own application you should use the files within <code>dist</code> and fit <code>index.html</code> to your needs. The idea is that the inner <code>require</code> takes the URL to your script (relative to the js folder - so it may be easier for you to give it absolute URLs).</p>
+<pre><code class="lang-js"><span class="hljs-built_in">require</span>([<span class="hljs-string">'js/config'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+    <span class="hljs-built_in">require</span>([<span class="hljs-string">'path/to/your/script'</span>]);
+});
+</code></pre>
+<p>Integrating the player into a back-end requires the server side to parse and store the player’s logs. (See <a href="./API.html#logging">API</a>).</p>
+</div></div></div></body></html>
