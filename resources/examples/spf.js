@@ -438,6 +438,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},
 			stimuli: [],
 			customize: function(){
+				/* global console */
 				var trial = this;
 				console.log('calling Scorer');
 				var DScoreObj = Scorer.computeD();

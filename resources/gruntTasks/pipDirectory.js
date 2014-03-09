@@ -58,6 +58,7 @@ module.exports = function(grunt){
 										undef: true,
 										unused: true,
 										es3:true,
+										laxcomma: true,
 										globals: {
 											define: false,
 											require: false

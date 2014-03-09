@@ -446,6 +446,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			data: {blockStart:true},
 			stimuli: [],
 			customize: function(){
+				/* global console */
 				var DScoreObj, DScore, FBMsg;
 				var trial = this;
 
