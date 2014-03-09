@@ -180,9 +180,10 @@ module.exports = function(grunt) {
 		}
 	});
 
-	grunt.option.init({
-		player: "dist/index.html?url=" // set the default player option
-	});
+	// can't use init because it overides command line arguments
+	if (!grunt.option('player')){
+		grunt.option('player', "dist/index.html?url="); // set the default player option
+	}
 
 	grunt.task.loadTasks('resources/gruntTasks');
 	grunt.loadNpmTasks('grunt-docco');
