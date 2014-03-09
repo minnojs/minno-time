@@ -16,6 +16,9 @@ define(['jquery','./action_list'],function($,action_list){
 		// marks whether this is the final action to take
 		var continueActions = true;
 
+		if (!actions){
+			throw new Error("There is an interaction without actions!!");
+		}
 		actions = $.isArray(actions) ? actions : [actions];
 
 		$.each(actions,function(index,action){

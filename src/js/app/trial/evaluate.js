@@ -18,6 +18,10 @@ define(['underscore','./current_trial'],function(_,current_trial){
 
 		var trial = current_trial();
 
+		if (!conditions){
+			throw new Error("There is an interaction without conditions!!");
+		}
+
 		// make sure conditions is an array
 		conditions = _.isArray(conditions) ? conditions : [conditions];
 
