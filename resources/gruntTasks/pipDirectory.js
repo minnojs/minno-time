@@ -6,6 +6,7 @@ var path = require('path');
 var jade = require('jade');
 var md = require('marked');
 var fs = require('fs');
+var jshint = require('./libs/jshint');
 
 module.exports = function(grunt){
 	// create template()
@@ -51,7 +52,17 @@ module.exports = function(grunt){
 								return {
 									name: file.substring(0,file.length-3),
 									js:path.join('..', filepath, file).replace("\\", "/"), // if we don't replace backslashes, windows renders the urls incorrectly
-									docco: file.replace('.js','.html')
+									docco: file.replace('.js','.html'),
+									// get jshint errors (the actual reporter is built into the template)
+									jshint: jshint([path.join(filepath, file)],{
+										undef: true,
+										unused: true,
+										es3:true,
+										globals: {
+											define: false,
+											require: false
+										}
+									})
 								};
 							});
 
