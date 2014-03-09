@@ -308,6 +308,10 @@ Resets trial timer. The latency of any events from here on (including the curren
 Log this action. Pushes this action into the logging stack so that it is later sent to the server (you can set how the player logs an action using the [logger settings](#logger-))
 * `{type:'log'}`
 
+**custom**
+Run a custom function. This action is intended to for use by experienced users that want to tinker with the inner workings of the player - use at your own risk! The `fn` property takes a custom function. The function takes two arguments: options is the action object itself, the second is the event data object.
+* `{type:'custom',fn:function(options,eventData){}}`
+
 **goto**:
 Responsible for the next trial we go to. This action will be executed only after the trial ends, you will probably want to follow it with an endTrial action.
 

@@ -78,7 +78,19 @@ define(["utils/pubsub","utils/interface/interface"],function(pubsub,input){
 
 		log: function(options,eventData){
 			pubsub.publish('log',[options,eventData]);
+		},
+
+		/*
+		 * Custom
+		 */
+
+		custom: function(options,eventData){
+			if (typeof options.fn != 'function') {
+				throw new Error('The custom action requires a fn propery');
+			}
+			options.fn.apply(null, [options,eventData]);
 		}
+
 	};
 
 	return actions;
