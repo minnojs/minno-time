@@ -94,6 +94,8 @@ console.log(square(9))			// prints 81
 (there is plenty [more](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions)!).
 
 ### Errors and debugging
-When developing PIP scripts things don't always go as expected. Sometimes you might make an syntactical error, sometime you might misspell a PIP keyword. The browser always logs these errors and it can many times be useful to see them. All modern browsers have a console that allows you to see any errors that happens (if you are using firefox you should check out [firebug](https://getfirebug.com/)).
+When developing PIP scripts things don't always go as expected. Sometimes you might make an syntactical error, sometime you might misspell a PIP keyword. The browser always logs these errors and it can many times be useful to see them. All modern browsers have a console that allows you to see any errors that happens (if you are using firefox you should check out [firebug](https://getfirebug.com/)). Most browsers use `F12` as a shortcut that displays the console, if that doesn't work for you check out your browsers menus, you should be looking for a **Web Developer** or **Developer Tools** menu under tools or options.
 
 In case your script does not load, or gets stuck in the middle, open your console and see if you have any errors.
+
+The [local server](install.md) gives you an additional, extremely powerful, tool. It uses [jshint](http://jshint.com/) to evaluate your code and can many time point out syntax errors that are difficult to recognize.
