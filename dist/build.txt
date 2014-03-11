@@ -33,6 +33,7 @@ js/utils/pubsub.js
 js/utils/is_touch.js
 js/utils/interface/bindings/click.js
 js/utils/interface/bindings/keypressed.js
+js/utils/interface/bindings/keyup.js
 js/utils/timeout.js
 js/utils/simpleRandomize.js
 js/utils/interface/bindings/timeout.js

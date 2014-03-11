@@ -1,0 +1,1 @@
+define(["jquery"],function(e){var t=function(t){var n=e.isArray(t.key)?t.key:[t.key],r="keyup.interface."+t.handle,i=e.map(n,function(e){return typeof e=="string"?e.toUpperCase().charCodeAt(0):e});this.on=function(t){e(document).on(r,function(n){e.inArray(n.which,i)!==-1&&t(n,"keyup")})},this.off=function(){e(document).off(r)}};return function(n,r){e.extend(n,new t(r))}});

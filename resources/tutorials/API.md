@@ -140,6 +140,11 @@ Each input object must include both a `handle` and an `on` property.
 * `{handle: 'enter',on: 'keypressed',key:13}`
 * `{handle: 'enter',on: 'keypressed',key:[13,'a']}`
 
+**keyup**: Takes a `key` property that may either be a key code, a one letter string, or an array of keys.
+* `{handle: 'enter',on: 'keypressed',key:'a'}`
+* `{handle: 'enter',on: 'keypressed',key:13}`
+* `{handle: 'enter',on: 'keypressed',key:[13,'a']}`
+
 **click**: Takes either a stimulus handle (`stimHandle`) or an html element (`element`) to present, in case an element is defined it is presented as soon as the input is activated.
 * `{handle:'right',on:'click',element:$('<div>',css:{})}`
 * `{handle:'right',on:'click',stimHandle:'myStimHandle'}`
@@ -213,15 +218,34 @@ Check if the input `handle` equals to a static value, `value` may be either a st
 * `{type:'inputEquals',value:'enter'}`
 * `{type:'inputEquals',value:['left','right']}`
 
+**inputEqualsGlobal**
+Check if the input `handle` equals to the `property` property of the global object.
+* `{type:'inputEqualsGlobal',property:'customAttribute'}`
+
 **inputEqualsTrial**:
 Check if the input `handle` equals to the `property` property of trial.data
 * `{type:'inputEqualsTrial',property:'customAttribute'}`
 
 **inputEqualsStim**:
-Check if the input `handle` equals to the 'property' property of any one of the stimulus.data in this trial.
-The optional attribute `handle` narrows the search down to stimuli fitting the `handle`
+Check if the input `handle` equals to the `property` property of any one of the stimulus.data in this trial.
+The optional property `handle` narrows the search down to stimuli fitting the `handle`
 * `{type:'inputEqualsTrial',property:"customAttribute"}`
 * `{type:'inputEqualsTrial',property:"customAttribute",handle:'myStimHandle'}`
+
+**globalEquals**:
+Check if the input `handle` equals to the `property` property of the global object.
+* `{type:'globalEquals',value:'enter'}`
+
+**globalEqualsTrial**:
+Check if the global property `globalProp` equals to the trial.data property `trialProp`.
+* `{type:'globalEqualsTrial',globalProp:'customAttribute', trialProp:'otherCustomAttribute'}`
+
+**globalEqualsStim**:
+Check if the global property `globalProp` equals to the `stimProp` property of any one of the stimulus.data in this trial.
+The optional property `handle` narrows the search down to stimuli fitting the `handle`
+* `{type:'globalEqualsTrial',globalProp:'customAttribute', stimProp:'otherCustomAttribute'}`
+* `{type:'globalEqualsTrial',globalProp:'customAttribute', stimProp:'otherCustomAttribute', handle:'myStimHandle'}`
+
 
 **function**:
 It is also possible to create a custom condition:
@@ -282,8 +306,20 @@ Any attributes in the setter object will be coppied to the trial.data object.
 	}
 	```
 
-**trigger**:
+**setGlobalAttr**:
+Set a global object property, takes a `setter` object or function.
+Any attributes in the setter object will be coppied into the global object.
+* `{type:'setGlobalAttr',setter:{myAttr:'myValue',myOtherAttr:'myOtherValue'}`
+* The setter function:
 
+	```js
+	{type:'setGlobalAttr',setter:function(globalObject){
+		// do your mojo here :)
+		// globalObject is the global object...
+	}
+	```
+
+**trigger**:
 Activate the input `handle`. If duration is set, the activation happens after the duration. By default the input `handle` is triggered immediately.
 * `{type:'trigger',handle : 'now'}`
 * `{type:'trigger',handle : 'later',duration:250}`
@@ -757,6 +793,10 @@ The API object exposes several helper function to help you organize your script.
 **addScript**:
 Allows pushing a whole script to the player:
 * `API.addScript(script);`
+
+**addGlobal**
+Allows extending the global object:
+* `API.addGlobal(object);`
 
 **addSettings**:
 `API.addSettings` allows you to add settings to your script.

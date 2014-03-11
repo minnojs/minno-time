@@ -128,6 +128,12 @@ Each input object must include both a <code>handle</code> and an <code>on</code>
 <li><code>{handle: &#39;enter&#39;,on: &#39;keypressed&#39;,key:13}</code></li>
 <li><code>{handle: &#39;enter&#39;,on: &#39;keypressed&#39;,key:[13,&#39;a&#39;]}</code></li>
 </ul>
+<p><strong>keyup</strong>: Takes a <code>key</code> property that may either be a key code, a one letter string, or an array of keys.</p>
+<ul>
+<li><code>{handle: &#39;enter&#39;,on: &#39;keypressed&#39;,key:&#39;a&#39;}</code></li>
+<li><code>{handle: &#39;enter&#39;,on: &#39;keypressed&#39;,key:13}</code></li>
+<li><code>{handle: &#39;enter&#39;,on: &#39;keypressed&#39;,key:[13,&#39;a&#39;]}</code></li>
+</ul>
 <p><strong>click</strong>: Takes either a stimulus handle (<code>stimHandle</code>) or an html element (<code>element</code>) to present, in case an element is defined it is presented as soon as the input is activated.</p>
 <ul>
 <li><code>{handle:&#39;right&#39;,on:&#39;click&#39;,element:$(&#39;&lt;div&gt;&#39;,css:{})}</code></li>
@@ -199,17 +205,39 @@ Check if the input <code>handle</code> equals to a static value, <code>value</co
 <li><code>{type:&#39;inputEquals&#39;,value:&#39;enter&#39;}</code></li>
 <li><code>{type:&#39;inputEquals&#39;,value:[&#39;left&#39;,&#39;right&#39;]}</code></li>
 </ul>
+<p><strong>inputEqualsGlobal</strong>
+Check if the input <code>handle</code> equals to the <code>property</code> property of the global object.</p>
+<ul>
+<li><code>{type:&#39;inputEqualsGlobal&#39;,property:&#39;customAttribute&#39;}</code></li>
+</ul>
 <p><strong>inputEqualsTrial</strong>:
 Check if the input <code>handle</code> equals to the <code>property</code> property of trial.data</p>
 <ul>
 <li><code>{type:&#39;inputEqualsTrial&#39;,property:&#39;customAttribute&#39;}</code></li>
 </ul>
 <p><strong>inputEqualsStim</strong>:
-Check if the input <code>handle</code> equals to the ‘property’ property of any one of the stimulus.data in this trial.
-The optional attribute <code>handle</code> narrows the search down to stimuli fitting the <code>handle</code></p>
+Check if the input <code>handle</code> equals to the <code>property</code> property of any one of the stimulus.data in this trial.
+The optional property <code>handle</code> narrows the search down to stimuli fitting the <code>handle</code></p>
 <ul>
 <li><code>{type:&#39;inputEqualsTrial&#39;,property:&quot;customAttribute&quot;}</code></li>
 <li><code>{type:&#39;inputEqualsTrial&#39;,property:&quot;customAttribute&quot;,handle:&#39;myStimHandle&#39;}</code></li>
+</ul>
+<p><strong>globalEquals</strong>:
+Check if the input <code>handle</code> equals to the <code>property</code> property of the global object.</p>
+<ul>
+<li><code>{type:&#39;globalEquals&#39;,value:&#39;enter&#39;}</code></li>
+</ul>
+<p><strong>globalEqualsTrial</strong>:
+Check if the global property <code>globalProp</code> equals to the trial.data property <code>trialProp</code>.</p>
+<ul>
+<li><code>{type:&#39;globalEqualsTrial&#39;,globalProp:&#39;customAttribute&#39;, trialProp:&#39;otherCustomAttribute&#39;}</code></li>
+</ul>
+<p><strong>globalEqualsStim</strong>:
+Check if the global property <code>globalProp</code> equals to the <code>stimProp</code> property of any one of the stimulus.data in this trial.
+The optional property <code>handle</code> narrows the search down to stimuli fitting the <code>handle</code></p>
+<ul>
+<li><code>{type:&#39;globalEqualsTrial&#39;,globalProp:&#39;customAttribute&#39;, stimProp:&#39;otherCustomAttribute&#39;}</code></li>
+<li><code>{type:&#39;globalEqualsTrial&#39;,globalProp:&#39;customAttribute&#39;, stimProp:&#39;otherCustomAttribute&#39;, handle:&#39;myStimHandle&#39;}</code></li>
 </ul>
 <p><strong>function</strong>:
 It is also possible to create a custom condition:</p>
@@ -265,8 +293,21 @@ Any attributes in the setter object will be coppied to the trial.data object.</p
 </code></pre>
 </li>
 </ul>
-<p><strong>trigger</strong>:</p>
-<p>Activate the input <code>handle</code>. If duration is set, the activation happens after the duration. By default the input <code>handle</code> is triggered immediately.</p>
+<p><strong>setGlobalAttr</strong>:
+Set a global object property, takes a <code>setter</code> object or function.
+Any attributes in the setter object will be coppied into the global object.</p>
+<ul>
+<li><code>{type:&#39;setGlobalAttr&#39;,setter:{myAttr:&#39;myValue&#39;,myOtherAttr:&#39;myOtherValue&#39;}</code></li>
+<li><p>The setter function:</p>
+<pre><code class="lang-js">  {type:<span class="hljs-string">'setGlobalAttr'</span>,setter:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(globalObject)</span>{</span>
+      <span class="hljs-comment">// do your mojo here :)</span>
+      <span class="hljs-comment">// globalObject is the global object...</span>
+  }
+</code></pre>
+</li>
+</ul>
+<p><strong>trigger</strong>:
+Activate the input <code>handle</code>. If duration is set, the activation happens after the duration. By default the input <code>handle</code> is triggered immediately.</p>
 <ul>
 <li><code>{type:&#39;trigger&#39;,handle : &#39;now&#39;}</code></li>
 <li><code>{type:&#39;trigger&#39;,handle : &#39;later&#39;,duration:250}</code></li>
@@ -665,6 +706,11 @@ The basic format for accessing the API is as follows:</p>
 Allows pushing a whole script to the player:</p>
 <ul>
 <li><code>API.addScript(script);</code></li>
+</ul>
+<p><strong>addGlobal</strong>
+Allows extending the global object:</p>
+<ul>
+<li><code>API.addGlobal(object);</code></li>
 </ul>
 <p><strong>addSettings</strong>:
 <code>API.addSettings</code> allows you to add settings to your script.

@@ -139,7 +139,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>Set urls for images and templates</p>
+              <p>Set URLs for images and templates</p>
 
             </div>
             
@@ -157,7 +157,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>Logging url</p>
+              <p>Logging URL</p>
 
             </div>
             
@@ -208,7 +208,7 @@ Note that it is lacking a <code>layout</code> property and <code>stimuli</code> 
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>Set the <strong>interface</strong> (‘e’ for left, ‘i’ for right, ‘enter’ to skip block).
-Note that throught this task we support touch.</p>
+Note that throughout this task we support touch.</p>
 
             </div>
             
@@ -244,7 +244,7 @@ Note that throught this task we support touch.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
-              <p>Begin trial : display stimulus imidiately</p>
+              <p>Begin trial : display stimulus immediately</p>
 
             </div>
             
@@ -262,18 +262,17 @@ Note that throught this task we support touch.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
-              <p>Error response handler</p>
+              <p>Correct response handler</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				conditions: [
-					{type:<span class="hljs-string">'inputEqualsStim'</span>,property:<span class="hljs-string">'side'</span>,negate:<span class="hljs-literal">true</span>}, <span class="hljs-comment">// this is an error</span>
-					{type:<span class="hljs-string">'inputEquals'</span>,value:[<span class="hljs-string">'in'</span>,<span class="hljs-string">'out'</span>]} <span class="hljs-comment">// this is an in/out event (and not any timeout or something)</span>
-				],
+				conditions: [{type:<span class="hljs-string">'inputEqualsStim'</span>,property:<span class="hljs-string">'side'</span>}], <span class="hljs-comment">// check if the input handle is equal to the "side" attribute of stimulus.data</span>
 				actions: [
-					{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'error'</span>}, <span class="hljs-comment">// show error stimulus</span>
-					{type:<span class="hljs-string">'setTrialAttr'</span>, setter:{score:<span class="hljs-number">1</span>}} <span class="hljs-comment">// set the score to 1</span>
+					{type:<span class="hljs-string">'removeInput'</span>,handle:[<span class="hljs-string">'in'</span>,<span class="hljs-string">'out'</span>]}, <span class="hljs-comment">// don't allow any further input</span>
+					{type:<span class="hljs-string">'hideStim'</span>, handle: <span class="hljs-string">'All'</span>}, <span class="hljs-comment">// hide everything</span>
+					{type:<span class="hljs-string">'log'</span>}, <span class="hljs-comment">// log this trial</span>
+					{type:<span class="hljs-string">'trigger'</span>,handle:<span class="hljs-string">'end'</span>,duration:<span class="hljs-number">250</span>} <span class="hljs-comment">// Wait for the ITI then trigger the end trial action.</span>
 				]
 			},</pre></div></div>
             
@@ -286,17 +285,18 @@ Note that throught this task we support touch.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
-              <p>Correct response handler</p>
+              <p>Error response handler</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>			{
-				conditions: [{type:<span class="hljs-string">'inputEqualsStim'</span>,property:<span class="hljs-string">'side'</span>}], <span class="hljs-comment">// check if the input handle is equal to the "side" attribute of stimulus.data</span>
+				conditions: [
+					{type:<span class="hljs-string">'inputEqualsStim'</span>,property:<span class="hljs-string">'side'</span>,negate:<span class="hljs-literal">true</span>}, <span class="hljs-comment">// this is an error</span>
+					{type:<span class="hljs-string">'inputEquals'</span>,value:[<span class="hljs-string">'in'</span>,<span class="hljs-string">'out'</span>]} <span class="hljs-comment">// this is an in/out event (and not any timeout or something)</span>
+				],
 				actions: [
-					{type:<span class="hljs-string">'removeInput'</span>,handle:[<span class="hljs-string">'in'</span>,<span class="hljs-string">'out'</span>]}, <span class="hljs-comment">// don't allow any further input</span>
-					{type:<span class="hljs-string">'hideStim'</span>, handle: <span class="hljs-string">'All'</span>}, <span class="hljs-comment">// hide everything</span>
-					{type:<span class="hljs-string">'log'</span>}, <span class="hljs-comment">// log this trial</span>
-					{type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'end'</span>, on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">250</span>}} <span class="hljs-comment">// Wait for the ITI then trigger the end trial trial action.</span>
+					{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'error'</span>}, <span class="hljs-comment">// show error stimulus</span>
+					{type:<span class="hljs-string">'setTrialAttr'</span>, setter:{score:<span class="hljs-number">1</span>}} <span class="hljs-comment">// set the score to 1</span>
 				]
 			},</pre></div></div>
             
@@ -373,8 +373,8 @@ Note that throught this task we support touch.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>		category1attribute1:{
+			inherit: <span class="hljs-string">'Default'</span>,
 			data: {condition: category1 + <span class="hljs-string">'+'</span> + attribute1,parcel:<span class="hljs-string">'first'</span>},
-
 			layout: [
 				{inherit:{type:<span class="hljs-string">'byData'</span>,set:<span class="hljs-string">'layout'</span>,data:<span class="hljs-string">'out'</span>}},
 				{inherit:{type:<span class="hljs-string">'byData'</span>,set:<span class="hljs-string">'layout'</span>,data:<span class="hljs-string">'in'</span>}},
@@ -382,9 +382,6 @@ Note that throught this task we support touch.</p>
 				{inherit:{type:<span class="hljs-string">'byData'</span>,set:<span class="hljs-string">'layout'</span>,data:<span class="hljs-string">'separator'</span>}},
 				{inherit:{type:<span class="hljs-string">'byData'</span>,set:<span class="hljs-string">'layout'</span>,data:<span class="hljs-string">'bottom'</span>},media:attribute1}
 			],
-
-			inherit: <span class="hljs-string">'Default'</span>,
-
 			stimuli: [
 				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'category1_attribute1'</span>}},
 				{inherit:{type:<span class="hljs-string">'random'</span>,set:<span class="hljs-string">'feedback'</span>}}
@@ -405,6 +402,7 @@ Note that throught this task we support touch.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>		category1attribute1Practice:[{
+			inherit: <span class="hljs-string">'Default'</span>,
 			data: {condition: category1 + <span class="hljs-string">'+'</span> + attribute1},
 			layout: [
 				{inherit:{type:<span class="hljs-string">'byData'</span>,set:<span class="hljs-string">'layout'</span>,data:<span class="hljs-string">'out'</span>}},
@@ -413,7 +411,6 @@ Note that throught this task we support touch.</p>
 				{inherit:{type:<span class="hljs-string">'byData'</span>,set:<span class="hljs-string">'layout'</span>,data:<span class="hljs-string">'separator'</span>}},
 				{inherit:{type:<span class="hljs-string">'byData'</span>,set:<span class="hljs-string">'layout'</span>,data:<span class="hljs-string">'bottom'</span>},media:attribute1}
 			],
-			inherit: <span class="hljs-string">'Default'</span>,
 			stimuli: [
 				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'practice_category1'</span>}},
 				{inherit:{type:<span class="hljs-string">'random'</span>,set:<span class="hljs-string">'feedback'</span>}}
@@ -463,6 +460,7 @@ Note that throught this task we support touch.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>		category2attribute1Practice:[{
+			inherit: <span class="hljs-string">'Default'</span>,
 			data: {condition: category2 + <span class="hljs-string">'+'</span> + attribute1},
 			layout: [
 				{inherit:{type:<span class="hljs-string">'byData'</span>,set:<span class="hljs-string">'layout'</span>,data:<span class="hljs-string">'out'</span>}},
@@ -471,7 +469,6 @@ Note that throught this task we support touch.</p>
 				{inherit:{type:<span class="hljs-string">'byData'</span>,set:<span class="hljs-string">'layout'</span>,data:<span class="hljs-string">'separator'</span>}},
 				{inherit:{type:<span class="hljs-string">'byData'</span>,set:<span class="hljs-string">'layout'</span>,data:<span class="hljs-string">'bottom'</span>},media:attribute1}
 			],
-			inherit: <span class="hljs-string">'Default'</span>,
 			stimuli: [
 				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'practice_category2'</span>}},
 				{inherit:{type:<span class="hljs-string">'random'</span>,set:<span class="hljs-string">'feedback'</span>}}
@@ -492,6 +489,7 @@ Note that throught this task we support touch.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>		practiceBlock:[{
+			inherit: <span class="hljs-string">'Default'</span>,
 			data: {condition: <span class="hljs-string">'example'</span>},
 			layout: [
 				{inherit:{type:<span class="hljs-string">'byData'</span>,set:<span class="hljs-string">'layout'</span>,data:<span class="hljs-string">'out'</span>}},
@@ -500,7 +498,6 @@ Note that throught this task we support touch.</p>
 				{inherit:{type:<span class="hljs-string">'byData'</span>,set:<span class="hljs-string">'layout'</span>,data:<span class="hljs-string">'separator'</span>}},
 				{inherit:{type:<span class="hljs-string">'byData'</span>,set:<span class="hljs-string">'layout'</span>,data:<span class="hljs-string">'bottom'</span>},media:attribute1}
 			],
-			inherit: <span class="hljs-string">'Default'</span>,
 			stimuli: [
 				{inherit:{type:<span class="hljs-string">'exRandom'</span>,set:<span class="hljs-string">'example'</span>}},
 				{inherit:{type:<span class="hljs-string">'random'</span>,set:<span class="hljs-string">'feedback'</span>}}
@@ -518,7 +515,7 @@ Note that throught this task we support touch.</p>
                 <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <h3 id="default-introduction-trial">Default Introduction trial</h3>
-<p>This trial holds the basic structure for all instruction trials. It will be extended (by inheritance) inside the sequence.</p>
+<p>This trial holds the basic structure for all instruction trials. It will be extended (by inheritance) within the sequence.</p>
 
             </div>
             
@@ -533,7 +530,7 @@ Note that throught this task we support touch.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
-              <p>Generic introduction trial, to be inherited by all other inroduction trials</p>
+              <p>Generic introduction trial, to be inherited by all other introduction trials.</p>
 
             </div>
             
@@ -593,9 +590,7 @@ Note that throught this task we support touch.</p>
             
             <div class="content"><div class='highlight'><pre>			{
 				conditions: [{type:<span class="hljs-string">'begin'</span>}],
-				actions: [
-					{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'All'</span>}
-				]
+				actions: [{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'All'</span>}]
 			},</pre></div></div>
             
         </li>
@@ -713,7 +708,7 @@ There are two types of trials: trials where category1 is focal, and trials where
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
-              <p>The <code>data</code> property is especialy important here. <code>data.side</code> lets the player know what the correct categorization is for this trial.
+              <p>The <code>data</code> property is especially important here. <code>data.side</code> lets the player know what the correct categorization is for this trial.
 <code>data.handle</code> allows us to focus actions (i.e. show/hide) at this specific stimulus.</p>
 
             </div>
@@ -781,7 +776,7 @@ There are two types of trials: trials where category1 is focal, and trials where
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
-              <p>This stimulus set is used for giving feedback, in this case only the error notification</p>
+              <p>This stimulus set is used for giving feedback, in this case only the error notification.</p>
 
             </div>
             
@@ -799,7 +794,7 @@ There are two types of trials: trials where category1 is focal, and trials where
                 <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>One central place to define all layout components.
-Note that top/bottom do not have a media property. They hold the category/attribute, and their media is set individualy within the trials.</p>
+Note that top/bottom do not have a media property. They hold the category/attribute, and their media is set individually within the trials.</p>
 
             </div>
             
@@ -2177,13 +2172,8 @@ Note that top/bottom do not have a media property. They hold the category/attrib
 			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},
 			stimuli: [],
 			customize: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-				<span class="hljs-comment">/* global console */</span>
 				<span class="hljs-keyword">var</span> DScoreObj, FBMsg, DScore;
-				<span class="hljs-keyword">var</span> trial = <span class="hljs-keyword">this</span>;
-				console.log(<span class="hljs-string">'calling Scorer'</span>);
-				DScoreObj = Scorer.computeD();
-				<span class="hljs-keyword">var</span> DScore1 = DScoreObj.DScore;
-				console.log(DScore1);</pre></div></div>
+				<span class="hljs-keyword">var</span> trial = <span class="hljs-keyword">this</span>;</pre></div></div>
             
         </li>
         
@@ -2194,17 +2184,12 @@ Note that top/bottom do not have a media property. They hold the category/attrib
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-102">&#182;</a>
               </div>
-              <p>////second call to score//////</p>
+              <p>////First call to score//////</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>				Scorer.addSettings(<span class="hljs-string">'compute'</span>,{
-					parcelValue : [<span class="hljs-string">'second'</span>]
-				});
-
-				console.log(<span class="hljs-string">'calling Scorer for the second time'</span>);
-				DScoreObj = Scorer.computeD();
-				<span class="hljs-keyword">var</span> DScore2 = DScoreObj.DScore;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>				DScoreObj = Scorer.computeD();
+				<span class="hljs-keyword">var</span> DScore1 = DScoreObj.DScore;</pre></div></div>
             
         </li>
         
@@ -2215,16 +2200,16 @@ Note that top/bottom do not have a media property. They hold the category/attrib
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-103">&#182;</a>
               </div>
-              <p>////third call to score//////</p>
+              <p>////Second call to score//////</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>				Scorer.addSettings(<span class="hljs-string">'compute'</span>,{
-					parcelValue : [<span class="hljs-string">'third'</span>]
+					parcelValue : [<span class="hljs-string">'second'</span>]
 				});
-				console.log(<span class="hljs-string">'calling Scorer for the third time'</span>);
+
 				DScoreObj = Scorer.computeD();
-				<span class="hljs-keyword">var</span> DScore3 = DScoreObj.DScore;</pre></div></div>
+				<span class="hljs-keyword">var</span> DScore2 = DScoreObj.DScore;</pre></div></div>
             
         </li>
         
@@ -2235,18 +2220,16 @@ Note that top/bottom do not have a media property. They hold the category/attrib
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-104">&#182;</a>
               </div>
-              <p>////fourth call to score//////</p>
+              <p>////Third call to score//////</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>				Scorer.addSettings(<span class="hljs-string">'compute'</span>,{
-					parcelValue : [<span class="hljs-string">'fourth'</span>]
+					parcelValue : [<span class="hljs-string">'third'</span>]
 				});
-				console.log(<span class="hljs-string">'calling Scorer for the fourth time'</span>);
-				DScoreObj = Scorer.computeD();
-				<span class="hljs-keyword">var</span> DScore4 = DScoreObj.DScore;
 
-				<span class="hljs-keyword">if</span>((!<span class="hljs-built_in">isNaN</span>(DScore2)) &amp;&amp; (!<span class="hljs-built_in">isNaN</span>(DScore2)) &amp;&amp; (!<span class="hljs-built_in">isNaN</span>(DScore3)) &amp;&amp; (!<span class="hljs-built_in">isNaN</span>(DScore4))){</pre></div></div>
+				DScoreObj = Scorer.computeD();
+				<span class="hljs-keyword">var</span> DScore3 = DScoreObj.DScore;</pre></div></div>
             
         </li>
         
@@ -2257,32 +2240,15 @@ Note that top/bottom do not have a media property. They hold the category/attrib
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-105">&#182;</a>
               </div>
-              <p>avrage the 4 scores</p>
+              <p>////Fourth call to score//////</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>					DScore = (<span class="hljs-built_in">parseFloat</span>(DScore1) + <span class="hljs-built_in">parseFloat</span>(DScore2) + <span class="hljs-built_in">parseFloat</span>(DScore3) + <span class="hljs-built_in">parseFloat</span>(DScore4))/<span class="hljs-number">4</span>;
-					console.log(DScore);
-					<span class="hljs-keyword">if</span>(<span class="hljs-built_in">isNaN</span>(DScore)){
-						FBMsg = DScoreObj.errorMessage;
-					}
-					<span class="hljs-keyword">else</span>{
-						FBMsg = Scorer.getFBMsg(DScore);
-						}
-					console.log(FBMsg);
-				}
-				<span class="hljs-keyword">else</span>{
-					FBMsg = DScoreObj.errorMessage;
-					DScore = <span class="hljs-string">""</span>;
-					console.log(DScore);
-					console.log(FBMsg);
-
-				}
-				<span class="hljs-keyword">var</span> media = {css:{color:<span class="hljs-string">'black'</span>},media:{html:<span class="hljs-string">'&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt; '</span>+FBMsg+<span class="hljs-string">'&lt;br&gt;The Score is:'</span>+DScore+<span class="hljs-string">'&lt;/p&gt;&lt;/div&gt;'</span>}};
-				trial.stimuli.push(media);
-				Scorer.postToServer(DScore,FBMsg,<span class="hljs-string">"score"</span>,<span class="hljs-string">"feedback"</span>);
-			}
-		},</pre></div></div>
+            <div class="content"><div class='highlight'><pre>				Scorer.addSettings(<span class="hljs-string">'compute'</span>,{
+					parcelValue : [<span class="hljs-string">'fourth'</span>]
+				});
+				DScoreObj = Scorer.computeD();
+				<span class="hljs-keyword">var</span> DScore4 = DScoreObj.DScore;</pre></div></div>
             
         </li>
         
@@ -2293,22 +2259,11 @@ Note that top/bottom do not have a media property. They hold the category/attrib
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-106">&#182;</a>
               </div>
-              <p>Instructions trial, the end of the task, instruction what to do next</p>
+              <p>If all scores are numbers</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>		{
-			data: {blockStart:<span class="hljs-literal">true</span>},
-			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},
-			stimuli: [
-				{<span class="hljs-comment">// The instructions stimulus</span>
-					data : {<span class="hljs-string">'handle'</span>:<span class="hljs-string">'instStim'</span>},
-					css: {color:<span class="hljs-string">'black'</span>},
-					media:{html:<span class="hljs-string">'&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt;You have completed the study&lt;br/&gt;&lt;br/&gt;Thank you very much for your participation.&lt;br/&gt;&lt;br/&gt; Press "space" for continue to next task.&lt;/p&gt;&lt;/div&gt;'</span>}
-				}
-			]
-		}
-	]);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>				<span class="hljs-keyword">if</span>((!<span class="hljs-built_in">isNaN</span>(DScore2)) &amp;&amp; (!<span class="hljs-built_in">isNaN</span>(DScore2)) &amp;&amp; (!<span class="hljs-built_in">isNaN</span>(DScore3)) &amp;&amp; (!<span class="hljs-built_in">isNaN</span>(DScore4))){</pre></div></div>
             
         </li>
         
@@ -2319,7 +2274,78 @@ Note that top/bottom do not have a media property. They hold the category/attrib
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-107">&#182;</a>
               </div>
-              <p>the Scorer that computes the user feedback</p>
+              <p>Average the 4 scores</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>					DScore = (<span class="hljs-built_in">parseFloat</span>(DScore1) + <span class="hljs-built_in">parseFloat</span>(DScore2) + <span class="hljs-built_in">parseFloat</span>(DScore3) + <span class="hljs-built_in">parseFloat</span>(DScore4))/<span class="hljs-number">4</span>;
+					<span class="hljs-keyword">if</span>(<span class="hljs-built_in">isNaN</span>(DScore)){
+						FBMsg = DScoreObj.errorMessage;
+					}
+					<span class="hljs-keyword">else</span>{
+						FBMsg = Scorer.getFBMsg(DScore);
+					}
+				}
+				<span class="hljs-keyword">else</span>{
+					FBMsg = DScoreObj.errorMessage;
+					DScore = <span class="hljs-string">""</span>;
+				}
+				<span class="hljs-keyword">var</span> media = {css:{color:<span class="hljs-string">'black'</span>},media:{html:<span class="hljs-string">'&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt; '</span>+FBMsg+<span class="hljs-string">'&lt;br&gt;The Score is:'</span>+DScore+<span class="hljs-string">'&lt;/p&gt;&lt;/div&gt;'</span>}};
+				trial.stimuli.push(media);
+				Scorer.postToServer(DScore,FBMsg,<span class="hljs-string">"score"</span>,<span class="hljs-string">"feedback"</span>);
+			}
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-108">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-108">&#182;</a>
+              </div>
+              <p>Instructions trial, the end of the task, instruction what to do next.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{
+			data: {blockStart:<span class="hljs-literal">true</span>},
+			inherit: {set:<span class="hljs-string">'introduction'</span>, type:<span class="hljs-string">'byData'</span>, data: {block:<span class="hljs-string">'generic'</span>}},
+			stimuli: [
+				{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-109">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-109">&#182;</a>
+              </div>
+              <p>The instructions stimulus</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>					data : {<span class="hljs-string">'handle'</span>:<span class="hljs-string">'instStim'</span>},
+					css: {color:<span class="hljs-string">'black'</span>},
+					media:{html:<span class="hljs-string">'&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt;You have completed the study&lt;br/&gt;&lt;br/&gt;Thank you very much for your participation.&lt;br/&gt;&lt;br/&gt; Press "space" for continue to next task.&lt;/p&gt;&lt;/div&gt;'</span>}
+				}
+			]
+		}
+	]);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-110">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-110">&#182;</a>
+              </div>
+              <p>Settings for the Scorer that computes the user feedback.</p>
 
             </div>
             
@@ -2330,11 +2356,11 @@ Note that top/bottom do not have a media property. They hold the category/attrib
         </li>
         
         
-        <li id="section-108">
+        <li id="section-111">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-108">&#182;</a>
+                <a class="pilcrow" href="#section-111">&#182;</a>
               </div>
               <p>condition 1</p>
 
@@ -2347,11 +2373,11 @@ Note that top/bottom do not have a media property. They hold the category/attrib
         </li>
         
         
-        <li id="section-109">
+        <li id="section-112">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-109">&#182;</a>
+                <a class="pilcrow" href="#section-112">&#182;</a>
               </div>
               <p>condition 2</p>
 
@@ -2373,11 +2399,11 @@ Note that top/bottom do not have a media property. They hold the category/attrib
         </li>
         
         
-        <li id="section-110">
+        <li id="section-113">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-110">&#182;</a>
+                <a class="pilcrow" href="#section-113">&#182;</a>
               </div>
               <p>Recode latencies faster than 400ms to 400, and latencies slower than 2000ms to 2000 (perhaps not supported by Ben’s computeD function; need to ask him to update the function to support that).
 Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me know if not supported by Ben’s function because we can use an alternative rule here).</p>
@@ -2398,7 +2424,6 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
 			{ cut:<span class="hljs-string">'0.65'</span>, message:<span class="hljs-string">'Your data suggest a strong implicit preference for White People compared to Black People'</span> }
 		]
 	});
-
 
 	API.play();
 });</pre></div></div>
