@@ -551,6 +551,10 @@ Repeats the element in `data` `times` times.
 Randomizes the order of elements in `data`.
 * `{mixer:'random', data: [trial1,trial2]}`
 
+**weightedRandom**:
+Picks a single element using a weighted random algorithm. Each element in `data` is given the appropriate weight from `weights`. In the example trial2 has four times the probability of being picked as trial1.
+* `{mixer:'weightedRandom', weights: [0.2,0.8], data: [trial1,trial2]}`
+
 **choose**:
 Picks `n` random elements from `data` (by default the chooser picks one element).
 * `{mixer:'pick', data: [trial1,trial2]}` pick one of these two trials
