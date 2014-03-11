@@ -19,13 +19,13 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		borderColor: 'black'
 	});
 
-	// Set urls for images and templates
+	// Set URLs for images and templates
 	API.addSettings('base_url',{
 		image : '../resources/examples/images',
 		template : '../../resources/examples/BIAT'
 	});
 
-	// Logging url
+	// Logging URL
 	API.addSettings('logger',{
 		pulse: 20,
 		url : '/implicit/PiPlayerApplet'
@@ -39,7 +39,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		data: {score:0},
 
 		// Set the **interface** ('e' for left, 'i' for right, 'enter' to skip block).
-		// Note that throught this task we support touch.
+		// Note that throughout this task we support touch.
 		input: [
 			{handle:'enter',on:'enter'},
 			{handle:'out',on:'keypressed',key:'e'},
@@ -50,10 +50,21 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 		// User **interactions**
 		interactions: [
-			// Begin trial : display stimulus imidiately
+			// Begin trial : display stimulus immediately
 			{
 				conditions: [{type:'begin'}],
 				actions: [{type:'showStim',handle:'targetStim'}]
+			},
+
+			// Correct response handler
+			{
+				conditions: [{type:'inputEqualsStim',property:'side'}], // check if the input handle is equal to the "side" attribute of stimulus.data
+				actions: [
+					{type:'removeInput',handle:['in','out']}, // don't allow any further input
+					{type:'hideStim', handle: 'All'}, // hide everything
+					{type:'log'}, // log this trial
+					{type:'trigger',handle:'end',duration:250} // Wait for the ITI then trigger the end trial action.
+				]
 			},
 
 			// Error response handler
@@ -65,17 +76,6 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 				actions: [
 					{type:'showStim',handle:'error'}, // show error stimulus
 					{type:'setTrialAttr', setter:{score:1}} // set the score to 1
-				]
-			},
-
-			// Correct response handler
-			{
-				conditions: [{type:'inputEqualsStim',property:'side'}], // check if the input handle is equal to the "side" attribute of stimulus.data
-				actions: [
-					{type:'removeInput',handle:['in','out']}, // don't allow any further input
-					{type:'hideStim', handle: 'All'}, // hide everything
-					{type:'log'}, // log this trial
-					{type:'setInput',input:{handle:'end', on:'timeout',duration:250}} // Wait for the ITI then trigger the end trial trial action.
 				]
 			},
 
@@ -103,8 +103,8 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 	API.addTrialSets({
 		// category1/attribute1 trial
 		category1attribute1:{
+			inherit: 'Default',
 			data: {condition: category1 + '+' + attribute1,parcel:'first'},
-
 			layout: [
 				{inherit:{type:'byData',set:'layout',data:'out'}},
 				{inherit:{type:'byData',set:'layout',data:'in'}},
@@ -112,9 +112,6 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 				{inherit:{type:'byData',set:'layout',data:'separator'}},
 				{inherit:{type:'byData',set:'layout',data:'bottom'},media:attribute1}
 			],
-
-			inherit: 'Default',
-
 			stimuli: [
 				{inherit:{type:'exRandom',set:'category1_attribute1'}},
 				{inherit:{type:'random',set:'feedback'}}
@@ -123,6 +120,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 		// category1/attribute1 practice trial
 		category1attribute1Practice:[{
+			inherit: 'Default',
 			data: {condition: category1 + '+' + attribute1},
 			layout: [
 				{inherit:{type:'byData',set:'layout',data:'out'}},
@@ -131,7 +129,6 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 				{inherit:{type:'byData',set:'layout',data:'separator'}},
 				{inherit:{type:'byData',set:'layout',data:'bottom'},media:attribute1}
 			],
-			inherit: 'Default',
 			stimuli: [
 				{inherit:{type:'exRandom',set:'practice_category1'}},
 				{inherit:{type:'random',set:'feedback'}}
@@ -157,6 +154,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 		// category2/attribute1 practice trial
 		category2attribute1Practice:[{
+			inherit: 'Default',
 			data: {condition: category2 + '+' + attribute1},
 			layout: [
 				{inherit:{type:'byData',set:'layout',data:'out'}},
@@ -165,7 +163,6 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 				{inherit:{type:'byData',set:'layout',data:'separator'}},
 				{inherit:{type:'byData',set:'layout',data:'bottom'},media:attribute1}
 			],
-			inherit: 'Default',
 			stimuli: [
 				{inherit:{type:'exRandom',set:'practice_category2'}},
 				{inherit:{type:'random',set:'feedback'}}
@@ -174,6 +171,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 
 		// practice block
 		practiceBlock:[{
+			inherit: 'Default',
 			data: {condition: 'example'},
 			layout: [
 				{inherit:{type:'byData',set:'layout',data:'out'}},
@@ -182,7 +180,6 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 				{inherit:{type:'byData',set:'layout',data:'separator'}},
 				{inherit:{type:'byData',set:'layout',data:'bottom'},media:attribute1}
 			],
-			inherit: 'Default',
 			stimuli: [
 				{inherit:{type:'exRandom',set:'example'}},
 				{inherit:{type:'random',set:'feedback'}}
@@ -191,9 +188,9 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 	});
 
 	// ### Default Introduction trial
-	// This trial holds the basic structure for all instruction trials. It will be extended (by inheritance) inside the sequence.
+	// This trial holds the basic structure for all instruction trials. It will be extended (by inheritance) within the sequence.
 	API.addTrialSets("introduction", {
-		// Generic introduction trial, to be inherited by all other inroduction trials
+		// Generic introduction trial, to be inherited by all other introduction trials.
 		data: {block: 'generic'},
 
 		// Create user interface (just click space to move on...)
@@ -213,9 +210,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			// Display instructions
 			{
 				conditions: [{type:'begin'}],
-				actions: [
-					{type:'showStim',handle:'All'}
-				]
+				actions: [{type:'showStim',handle:'All'}]
 			},
 
 			// End trial
@@ -250,7 +245,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		// The trial stimuli.
 		// There are two types of trials: trials where category1 is focal, and trials where category2 is focal.
 		category1_attribute1 : [
-			// The `data` property is especialy important here. `data.side` lets the player know what the correct categorization is for this trial.
+			// The `data` property is especially important here. `data.side` lets the player know what the correct categorization is for this trial.
 			// `data.handle` allows us to focus actions (i.e. show/hide) at this specific stimulus.
 			{data:{side:'in', handle:'targetStim', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}},
 			{data:{side:'out', handle:'targetStim', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}},
@@ -282,13 +277,13 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			{data:{side:'in', handle:'targetStim', alias:category2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category2'}}}
 		],
 
-		// This stimulus set is used for giving feedback, in this case only the error notification
+		// This stimulus set is used for giving feedback, in this case only the error notification.
 		feedback : [
 			{handle:'error', location: {top: 80}, css:{color:'red','font-size':'4em'}, media: {word:'X'}, nolog:true}
 		],
 
 		// One central place to define all layout components.
-		// Note that top/bottom do not have a media property. They hold the category/attribute, and their media is set individualy within the trials.
+		// Note that top/bottom do not have a media property. They hold the category/attribute, and their media is set individually within the trials.
 		layout: [
 			{data:{handle:'out'},location:{left:5,top:3},media:{word:'out: e'}, css:{color:'black','font-size':'1em'}},
 			{data:{handle:'in'},location:{right:5,top:3},media:{word:'in: i'}, css:{color:'black','font-size':'1em'}},
@@ -844,54 +839,48 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 				/* global console */
 				var DScoreObj, FBMsg, DScore;
 				var trial = this;
-				console.log('calling Scorer');
+
+				//////First call to score//////
 				DScoreObj = Scorer.computeD();
 				var DScore1 = DScoreObj.DScore;
-				console.log(DScore1);
 
-				//////second call to score//////
+				//////Second call to score//////
 				Scorer.addSettings('compute',{
 					parcelValue : ['second']
 				});
 
-				console.log('calling Scorer for the second time');
 				DScoreObj = Scorer.computeD();
 				var DScore2 = DScoreObj.DScore;
 
-				//////third call to score//////
+				//////Third call to score//////
 				Scorer.addSettings('compute',{
 					parcelValue : ['third']
 				});
-				console.log('calling Scorer for the third time');
+
 				DScoreObj = Scorer.computeD();
 				var DScore3 = DScoreObj.DScore;
 
-				//////fourth call to score//////
+				//////Fourth call to score//////
 				Scorer.addSettings('compute',{
 					parcelValue : ['fourth']
 				});
-				console.log('calling Scorer for the fourth time');
 				DScoreObj = Scorer.computeD();
 				var DScore4 = DScoreObj.DScore;
 
+				// If all scores are numbers
 				if((!isNaN(DScore2)) && (!isNaN(DScore2)) && (!isNaN(DScore3)) && (!isNaN(DScore4))){
-					//avrage the 4 scores
+					//Average the 4 scores
 					DScore = (parseFloat(DScore1) + parseFloat(DScore2) + parseFloat(DScore3) + parseFloat(DScore4))/4;
-					console.log(DScore);
 					if(isNaN(DScore)){
 						FBMsg = DScoreObj.errorMessage;
 					}
 					else{
 						FBMsg = Scorer.getFBMsg(DScore);
-						}
-					console.log(FBMsg);
+					}
 				}
 				else{
 					FBMsg = DScoreObj.errorMessage;
 					DScore = "";
-					console.log(DScore);
-					console.log(FBMsg);
-
 				}
 				var media = {css:{color:'black'},media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};
 				trial.stimuli.push(media);
@@ -899,12 +888,13 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			}
 		},
 
-		// Instructions trial, the end of the task, instruction what to do next
+		// Instructions trial, the end of the task, instruction what to do next.
 		{
 			data: {blockStart:true},
 			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},
 			stimuli: [
-				{// The instructions stimulus
+				{
+					// The instructions stimulus
 					data : {'handle':'instStim'},
 					css: {color:'black'},
 					media:{html:'<div><p style="font-size:28px"><color="#FFFAFA">You have completed the study<br/><br/>Thank you very much for your participation.<br/><br/> Press "space" for continue to next task.</p></div>'}
@@ -913,7 +903,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		}
 	]);
 
-	//the Scorer that computes the user feedback
+	// Settings for the Scorer that computes the user feedback.
 	Scorer.addSettings('compute',{
 		ErrorVar:'score',
 		condVar:"condition",
@@ -950,7 +940,6 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			{ cut:'0.65', message:'Your data suggest a strong implicit preference for White People compared to Black People' }
 		]
 	});
-
 
 	API.play();
 });
