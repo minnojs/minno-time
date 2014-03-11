@@ -56,8 +56,8 @@ define(['underscore'],function(_){
 					break;
 				case 'repeat' :
 					mixed = mix(value.data,true);
-					result = shallow ? mixed : mix(mixed);		// if this is top level lets open all those wrappers now
 					for (i = 0; i < value.times; i++) {
+						result = shallow ? mixed : mix(mixed);		// if this is top level lets open all those wrappers now
 						stack = stack.concat(result);
 					}
 					break;
