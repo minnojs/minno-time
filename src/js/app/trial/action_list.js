@@ -1,4 +1,4 @@
-define(["utils/pubsub","utils/interface/interface"],function(pubsub,input){
+define(['underscore',"utils/pubsub","utils/interface/interface", 'app/task/script'],function(_,pubsub,input,script){
 	var actions = {
 		/*
 		 * Stimulus actions
@@ -81,14 +81,29 @@ define(["utils/pubsub","utils/interface/interface"],function(pubsub,input){
 		},
 
 		/*
-		 * Custom
+		 * Misc
 		 */
+
+		setGlobalAttr: function(options){
+			switch (typeof options.setter){
+				case 'function':
+					options.setter.apply(null,[script.global, options]);
+					break;
+				case 'object':
+					_.extend(script.global, options.setter);
+					break;
+				default:
+					throw new Error('setGlobalAttr requires a "setter" property');
+			}
+
+
+		},
 
 		custom: function(options,eventData){
 			if (typeof options.fn != 'function') {
 				throw new Error('The custom action requires a fn propery');
 			}
-			options.fn.apply(null, [options,eventData]);
+			options.fn.apply(null, [options,eventData,script.global]);
 		}
 
 	};

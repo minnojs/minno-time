@@ -8,13 +8,13 @@ define(['jquery','./task/script','app/task/main_view','app/task/parser','app/seq
 	// the API object
 	var API = {};
 
-	// we allow activating the player only  once (otherwise we cause all sorts of terible problems: double parsing, pubsub clashes etc.)
-	// this var follows wether we've already activated the player
+	// We allow activating the player only  once (otherwise we cause all sorts of terrible problems: double parsing, pubsub clashes etc.).
+	// This var follows whether we've already activated the player.
 	var player_activated = false;
 
 	/*
 	 * add set function
-	 * type: pertains to the type of set we're adding (should be hord coded in the API)
+	 * type: pertains to the type of set we're adding (should be hard coded in the API)
 	 * set: set name, or full set object
 	 * setObj: in case set was a name - the set to add
 	 *
@@ -76,9 +76,15 @@ define(['jquery','./task/script','app/task/main_view','app/task/parser','app/seq
 			return this;
 		},
 
+		// extend global object
+		addGlobal: function(obj){
+			$.extend(true,script.global,obj);
+			return this;
+		},
+
 		// push a whole script
-		addScript: function(json){
-			$.extend(true,script,json);
+		addScript: function(obj){
+			$.extend(true,script,obj);
 			return this;
 		},
 

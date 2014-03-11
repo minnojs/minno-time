@@ -1,4 +1,4 @@
-define(['underscore','./current_trial'],function(_,current_trial){
+define(['underscore','app/task/script','./current_trial'],function(_,script,current_trial){
 	/*
 	 * gets a condition array (or a single condition) and evaluates it
 	 * returns true if all statements are true, false otherwise
@@ -15,7 +15,7 @@ define(['underscore','./current_trial'],function(_,current_trial){
 
 	return function evaluate(conditions, inputData){
 
-
+		var global = script.global;
 		var trial = current_trial();
 
 		if (!conditions){
@@ -42,6 +42,7 @@ define(['underscore','./current_trial'],function(_,current_trial){
 
 		// try to refute the condition
 		_.each(conditions,function(condition){
+			var searchObj, result;
 			var evaluation = true;
 			switch (condition.type){
 				case 'begin':
@@ -67,14 +68,60 @@ define(['underscore','./current_trial'],function(_,current_trial){
 
 				case 'inputEqualsStim':
 					// create search object
-					var searchObj = {};
+					searchObj = {};
 					if (condition.handle){
 						searchObj['handle'] = condition.handle;
 					}
 					searchObj[condition.property] = inputData.handle;
 
 					// are there stimuli answering this descriptions?
-					var result = trial._stimulus_collection.whereData(searchObj);
+					result = trial._stimulus_collection.whereData(searchObj);
+					if (result.length === 0) {
+						evaluation = false;
+					}
+					break;
+
+				case 'inputEqualsGlobal':
+					if (typeof condition.property == 'undefined'){
+						throw new Error('inputEqualsGlobal requires both "property" to be defined');
+					}
+					if (inputData.handle !== global[condition.property]){
+						evaluation = false;
+					}
+					break;
+
+				case 'globalEquals':
+					if (typeof condition.property == 'undefined' || typeof condition.value == 'undefined'){
+						throw new Error('globalEquals requires both "property" and "value" to be defined');
+					}
+					if (condition.value !== global[condition.property]){
+						evaluation = false;
+					}
+					break;
+
+				case 'globalEqualsTrial':
+					if (typeof condition.globalProp == 'undefined' || typeof condition.trialProp == 'undefined'){
+						throw new Error('globalEqualsTrial requires both "globalProp" and "trialProp" to be defined');
+					}
+					if (global[condition.globalProp] !== trial.data[condition.trialProp]) {
+						evaluation = false;
+					}
+					break;
+
+				case 'globalEqualsStim':
+					if (typeof condition.globalProp == 'undefined' || typeof condition.stimProp == 'undefined'){
+						throw new Error('globalEqualsStim requires both "globalProp" and "stimProp" to be defined');
+					}
+
+					// create search object
+					searchObj = {};
+					if (condition.handle){
+						searchObj['handle'] = condition.handle;
+					}
+					searchObj[condition.stimProp] = global[condition.globalProp];
+
+					// are there stimuli answering this descriptions?
+					result = trial._stimulus_collection.whereData(searchObj);
 					if (result.length === 0) {
 						evaluation = false;
 					}

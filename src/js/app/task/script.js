@@ -3,6 +3,7 @@
  */
 
 define({
+	global:{},
 	settings: {
 		canvas: {
 			maxWidth: 800,
