@@ -1,4 +1,4 @@
-define(['jquery','./bindings/click', './bindings/keypressed', './bindings/timeout'], function($,click, keypressed, timeout){
+define(['jquery','./bindings/click', './bindings/keypressed', './bindings/keyup','./bindings/timeout'], function($,click, keypressed,keyup, timeout){
 	/*
 	 * this function decorates a listener object with on and off functions
 	 * it takes listener (the object) and the binding definitions as parameters
@@ -24,6 +24,10 @@ define(['jquery','./bindings/click', './bindings/keypressed', './bindings/timeou
 			 */
 			case 'keypressed'	:
 				keypressed(listener, definitions);
+				break;
+
+			case 'keyup'		:
+				keyup(listener, definitions);
 				break;
 
 			case 'click'		:

@@ -1,24 +1,18 @@
 define(['jquery'],function($){
 
 	/*
-	 * key pressed listener
-	 * reqires key
+	 * key up listener
+	 * reqires definitions.key
 	 *
 	 * key can be either charCode or string.
 	 * or an array of charCode/strings.
 	 */
 
-	// we monitor all key up events so that we trigger only once per key down
-	var keyDownArr = [];
-	$(document).on("keyup.keypressed",function(e){
-		keyDownArr[e.which] = false; // unset flag to prevent multi pressing of a key
-	});
-
 	// creates an object that is capable of activating a keypressed event and removing it
-	var Keypressed = function(definitions){
+	var Keyup = function(definitions){
 		// make sure key is array
 		var key = $.isArray(definitions.key) ? definitions.key : [definitions.key];
-		var eventName = "keydown.interface." + definitions.handle;
+		var eventName = "keyup.interface." + definitions.handle;
 
 		// accept both keyCode and the key itself
 		var target = $.map(key,function(value){
@@ -28,9 +22,8 @@ define(['jquery'],function($){
 		// attach listener
 		this.on = function(callback){
 			$(document).on(eventName,function(e){
-				if (!keyDownArr[e.which] && $.inArray(e.which,target) != -1) {
-					keyDownArr[e.which] = true; // set flag to prevent multi pressing of a key
-					callback(e,'keydown');
+				if ($.inArray(e.which,target) !== -1) {
+					callback(e,'keyup');
 				}
 			});
 		};
@@ -44,7 +37,7 @@ define(['jquery'],function($){
 
 	return function(listener,definitions){
 		// decorate listener with new keypressed
-		$.extend(listener,new Keypressed(definitions));
+		$.extend(listener,new Keyup(definitions));
 	};
 
 });
