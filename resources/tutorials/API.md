@@ -308,6 +308,10 @@ Resets trial timer. The latency of any events from here on (including the curren
 Log this action. Pushes this action into the logging stack so that it is later sent to the server (you can set how the player logs an action using the [logger settings](#logger-))
 * `{type:'log'}`
 
+**custom**
+Run a custom function. This action is intended to for use by experienced users that want to tinker with the inner workings of the player - use at your own risk! The `fn` property takes a custom function. The function takes two arguments: options is the action object itself, the second is the event data object.
+* `{type:'custom',fn:function(options,eventData){}}`
+
 **goto**:
 Responsible for the next trial we go to. This action will be executed only after the trial ends, you will probably want to follow it with an endTrial action.
 
@@ -546,6 +550,10 @@ Repeats the element in `data` `times` times.
 **random**:
 Randomizes the order of elements in `data`.
 * `{mixer:'random', data: [trial1,trial2]}`
+
+**weightedRandom**:
+Picks a single element using a weighted random algorithm. Each element in `data` is given the appropriate weight from `weights`. In the example trial2 has four times the probability of being picked as trial1.
+* `{mixer:'weightedRandom', weights: [0.2,0.8], data: [trial1,trial2]}`
 
 **choose**:
 Picks `n` random elements from `data` (by default the chooser picks one element).

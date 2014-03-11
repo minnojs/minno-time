@@ -296,6 +296,11 @@ Log this action. Pushes this action into the logging stack so that it is later s
 <ul>
 <li><code>{type:&#39;log&#39;}</code></li>
 </ul>
+<p><strong>custom</strong>
+Run a custom function. This action is intended to for use by experienced users that want to tinker with the inner workings of the player - use at your own risk! The <code>fn</code> property takes a custom function. The function takes two arguments: options is the action object itself, the second is the event data object.</p>
+<ul>
+<li><code>{type:&#39;custom&#39;,fn:function(options,eventData){}}</code></li>
+</ul>
 <p><strong>goto</strong>:
 Responsible for the next trial we go to. This action will be executed only after the trial ends, you will probably want to follow it with an endTrial action.</p>
 <p>The <code>destination</code> property defines what type of goto this is (default is “next”).</p>
@@ -498,6 +503,11 @@ Repeats the element in <code>data</code> <code>times</code> times.</p>
 Randomizes the order of elements in <code>data</code>.</p>
 <ul>
 <li><code>{mixer:&#39;random&#39;, data: [trial1,trial2]}</code></li>
+</ul>
+<p><strong>weightedRandom</strong>:
+Picks a single element using a weighted random algorithm. Each element in <code>data</code> is given the appropriate weight from <code>weights</code>. In the example trial2 has four times the probability of being picked as trial1.</p>
+<ul>
+<li><code>{mixer:&#39;weightedRandom&#39;, weights: [0.2,0.8], data: [trial1,trial2]}</code></li>
 </ul>
 <p><strong>choose</strong>:
 Picks <code>n</code> random elements from <code>data</code> (by default the chooser picks one element).</p>
