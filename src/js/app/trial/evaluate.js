@@ -90,6 +90,15 @@ define(['underscore','app/task/script','./current_trial'],function(_,script,curr
 					}
 					break;
 
+				case 'trialEquals':
+					if (typeof condition.property == 'undefined' || typeof condition.value == 'undefined'){
+						throw new Error('trialEquals requires both "property" and "value" to be defined');
+					}
+					if (condition.value !== trial.data[condition.property]){
+						evaluation = false;
+					}
+					break;
+
 				case 'globalEquals':
 					if (typeof condition.property == 'undefined' || typeof condition.value == 'undefined'){
 						throw new Error('globalEquals requires both "property" and "value" to be defined');

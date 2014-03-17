@@ -232,9 +232,13 @@ The optional property `handle` narrows the search down to stimuli fitting the `h
 * `{type:'inputEqualsTrial',property:"customAttribute"}`
 * `{type:'inputEqualsTrial',property:"customAttribute",handle:'myStimHandle'}`
 
+**trialEquals**:
+Check if the `property` property of the trial.data object equals to `value`.
+* `{type:'trialEquals',property:'customProperty', value:'someValue'}`
+
 **globalEquals**:
-Check if the input `handle` equals to the `property` property of the global object.
-* `{type:'globalEquals',value:'enter'}`
+Check if the `property` property of the global object equals to `value`.
+* `{type:'globalEquals',property:'customProperty', value:'someValue'}`
 
 **globalEqualsTrial**:
 Check if the global property `globalProp` equals to the trial.data property `trialProp`.
