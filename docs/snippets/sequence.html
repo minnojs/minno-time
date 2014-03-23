@@ -111,7 +111,7 @@ In this part of the tutorial we will see some advanced uses of the sequencer. </
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
               <h4 id="multiple-trials">Multiple trials</h4>
-<p>The sequence is an array of trials. you can sequentialy add in as many trials as you want</p>
+<p>The sequence is an array of trials. you can sequentially add in as many trials as you want</p>
 
             </div>
             
@@ -404,7 +404,7 @@ This mixer randomizes its sequence.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
-              <h5 id="complex-randomization-wrapper-">Complex Randomization (wrapper)</h5>
+              <h5 id="weighted-random">Weighted Random</h5>
 
             </div>
             
@@ -419,11 +419,11 @@ This mixer randomizes its sequence.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
-              <p>This mixer randomizes its sequence</p>
+              <p>The weighted random mixer chooses an element from <code>data</code> with specific weights for each entry.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>			mixer : <span class="hljs-string">'random'</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>			mixer : <span class="hljs-string">'weightedRandom'</span>,</pre></div></div>
             
         </li>
         
@@ -434,11 +434,11 @@ This mixer randomizes its sequence.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
-              <p>The data property holds a sequence array to be randomized.</p>
+              <p>The weights of the elements. The numbers in this array are the relative weights of each respective element in data.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>			data : [</pre></div></div>
+            <div class="content"><div class='highlight'><pre>			weights: [<span class="hljs-number">0.2</span>,<span class="hljs-number">0.8</span>],</pre></div></div>
             
         </li>
         
@@ -449,7 +449,79 @@ This mixer randomizes its sequence.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
-              <p>This trial is randomized normaly</p>
+              <p>The data property holds a sequence array to be randomized.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			data : [
+				{
+					input: [{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}],
+					layout: [{media :{word:<span class="hljs-string">'Random 1 (20%)'</span>}}],
+					interactions: [{conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
+				},
+				{
+					input: [{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}],
+					layout: [{media :{word:<span class="hljs-string">'Random 2 (80%)'</span>}}],
+					interactions: [{conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
+				}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <h5 id="wrapper-blocks-within-randomize-">Wrapper (blocks within randomize)</h5>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>This mixer randomizes its sequence</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			mixer : <span class="hljs-string">'random'</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>The data property holds a sequence array to be randomized.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			data : [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>This trial is randomized normally</p>
 
             </div>
             
@@ -462,13 +534,13 @@ This mixer randomizes its sequence.</p>
         </li>
         
         
-        <li id="section-23">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
-              <p>The wrapper mixer tells the sequencer to keep the data inside it together despite the randomization. It is analogous to parathesis in math. </br>
+              <p>The wrapper mixer tells the sequencer to keep the data inside it together despite the randomization. It is analogous to parenthesis in math. </br>
 In contrast, if we has a repeat mixer here, its content would be randomized.</p>
 
             </div>
@@ -494,11 +566,108 @@ In contrast, if we has a repeat mixer here, its content would be randomized.</p>
         </li>
         
         
-        <li id="section-24">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <h5 id="wrapper-randomization-within-repeat-">Wrapper (randomization within repeat)</h5>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>This mixer repeats its sequence.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			mixer : <span class="hljs-string">'repeat'</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>Two times.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			times: <span class="hljs-number">2</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>The data property holds a sequence array to be repeated.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			data : [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>The wrapper mixer tells the sequencer to deffer the randomization until after the repeat</br>
+In contrast, if we didn’t have the wrapper the randomizer would be run only once, and we would always randomize the same sequence.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				{
+					mixer: <span class="hljs-string">'wrapper'</span>,
+					data: [
+						{
+							mixer:<span class="hljs-string">'random'</span>,
+							data: [
+								{
+									input: [{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}],
+									layout: [{media :{word:<span class="hljs-string">'First Stim'</span>}}],
+									interactions: [{conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
+								},
+								{
+									input: [{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}],
+									layout: [{media :{word:<span class="hljs-string">'Second Stim'</span>}}],
+									interactions: [{conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],actions: [{type:<span class="hljs-string">'endTrial'</span>}]}]
+								}
+							]
+						}
+					]
+				}
+			]
+		},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <h5 id="the-end">The End</h5>
 
@@ -517,16 +686,16 @@ In contrast, if we has a repeat mixer here, its content would be randomized.</p>
         </li>
         
         
-        <li id="section-25">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <h3 id="pro-tip">Pro tip</h3>
 <p><em>This section goes beyond the normal scope of the PIP, and is intended for use by advanced users only.</em> </br>
-The sequencer allows for many complex configurations. There are times that you want a quick easy way to test that the sequence you created realy does what it is supposed to.
-The proper way to do that is to create a mock sequence and check that it is mixed correcty. </br>
+The sequencer allows for many complex configurations. There are times that you want a quick easy way to test that the sequence you created really does what it is supposed to.
+The proper way to do that is to create a mock sequence and check that it is mixed correctly. </br>
 Following is such an example. </br></p>
 
             </div>
@@ -534,11 +703,11 @@ Following is such an example. </br></p>
         </li>
         
         
-        <li id="section-26">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <p>Require the mixer function</p>
 
@@ -550,14 +719,16 @@ Following is such an example. </br></p>
         </li>
         
         
-        <li id="section-27">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
-              <p>create a sequence using numbers (or strings) instead of trials.
-you may use all the regular mixer objects.</p>
+              <p>Create a sequence using numbers (or strings) instead of trials.
+You may use all the regular mixer objects.
+This sequence creates an array of four sets of numbers.
+Each one of these begins with a <code>1</code>, ends with a <code>9</code>, and has all the digits between <code>2</code> and <code>8</code> randomized between them.</p>
 
             </div>
             
@@ -565,34 +736,49 @@ you may use all the regular mixer objects.</p>
 			{
 				mixer : <span class="hljs-string">'repeat'</span>,
 				times : <span class="hljs-number">4</span>,
-				data : [
-					{
-						mixer: <span class="hljs-string">'random'</span>,
+				data : [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <p>Parse the wrapper only <strong>after</strong> repeating.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>					{
+						mixer: <span class="hljs-string">'wrapper'</span>,
 						data: [
 							{
-								mixer : <span class="hljs-string">'repeat'</span>,
-								times : <span class="hljs-number">4</span>,
+								mixer : <span class="hljs-string">'wrapper'</span>,
 								data : [
+									<span class="hljs-number">1</span>,
 									{
 										mixer: <span class="hljs-string">'random'</span>,</pre></div></div>
             
         </li>
         
         
-        <li id="section-28">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <p>Note that we use numbers instead of trials here. This allows us to follow the order that this mixer follows.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>										data: [
-											<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>
+											<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>
 										] <span class="hljs-comment">/* end random data */</span>
-									}
+									},
+									<span class="hljs-number">9</span>
 								] <span class="hljs-comment">/* end repeat data */</span>
 							}
 						] <span class="hljs-comment">/* end random data */</span>
@@ -604,11 +790,11 @@ you may use all the regular mixer objects.</p>
         </li>
         
         
-        <li id="section-29">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>We log the results of the mixer into the console (click F12 to Open Developer Tools - in Firefox requires Firebug extension.) </br>
 Now you can check to see if the order is what you intend.</p>
@@ -618,7 +804,6 @@ Now you can check to see if the order is what you intend.</p>
             <div class="content"><div class='highlight'><pre>		<span class="hljs-comment">/* global console */</span>
 		console.log(mixer(sequence));
 	});
-
 
 });
 <span class="hljs-comment">/* don't forget to close the define wrapper */</span></pre></div></div>

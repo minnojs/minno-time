@@ -232,9 +232,13 @@ The optional property `handle` narrows the search down to stimuli fitting the `h
 * `{type:'inputEqualsTrial',property:"customAttribute"}`
 * `{type:'inputEqualsTrial',property:"customAttribute",handle:'myStimHandle'}`
 
+**trialEquals**:
+Check if the `property` property of the trial.data object equals to `value`.
+* `{type:'trialEquals',property:'customProperty', value:'someValue'}`
+
 **globalEquals**:
-Check if the input `handle` equals to the `property` property of the global object.
-* `{type:'globalEquals',value:'enter'}`
+Check if the `property` property of the global object equals to `value`.
+* `{type:'globalEquals',property:'customProperty', value:'someValue'}`
 
 **globalEqualsTrial**:
 Check if the global property `globalProp` equals to the trial.data property `trialProp`.
@@ -540,30 +544,36 @@ A sequence can look something like this (don't get scared it's simpler than it l
 
 ```js
 [
-	// the first trial to present
+	// The first trial to present.
 	firstTrial,
 
-	// repeat the structure inside 10 time (so we get 40 trials)
+	// Repeat the structure inside 10 time (so we get 40 trials)
 	{
 		mixer: 'repeat',
 		times: 10,
 		data: [
-			// randomize the order of the four trials within
+			// Delay the mixing of these elements until after the `repeat`.
 			{
-				mixer: 'random',
+				mixer: 'wrapper',
 				data: [
 					trial1,
-					trial2,
-					// when randomizing, treat these two trials as one block so they are never separated
+					// Randomize the order of the trials within.
 					{
-						mixer: 'wrapper',
+						mixer: 'random',
 						data: [
-							trial3,
-							trial4
+							trial2,
+							// Keep trial 3 and 4 together.
+							{
+								mixer: 'wrapper',
+								data: [
+									trial3,
+									trial4
+								]
+							}
 						]
-					} // end wrapper
+					} // end random
 				]
-			} // end random
+			} // end wrapper
 		]
 	}, // end repeat
 
@@ -571,13 +581,11 @@ A sequence can look something like this (don't get scared it's simpler than it l
 	lastTrial
 ]
 ```
-This sequence has an opening and ending trial.
+This sequence has an opening and ending trial (`firstTrial` and `lastTrial`).
 Between them them we repeat a set of four trials ten times.
-The order of the four trials is randomized.
-But trials three and four are wrapped together and therefore always stay consecutive.
-(In this case the trials will be repeated after randomization, so that )
+The order of the four trials is randomized, so that `trial1` always comes first and the order of the following trials are randomized but `trial3` and `trial4` are wrapped together and therefore always stay consecutive.
 
-We support four mixer types.
+We support several mixer types.
 
 **repeat**:
 Repeats the element in `data` `times` times.
@@ -588,7 +596,7 @@ Randomizes the order of elements in `data`.
 * `{mixer:'random', data: [trial1,trial2]}`
 
 **weightedRandom**:
-Picks a single element using a weighted random algorithm. Each element in `data` is given the appropriate weight from `weights`. In the example trial2 has four times the probability of being picked as trial1.
+Picks a single element using a weighted random algorithm. Each element in `data` is given the appropriate weight from `weights`. In the following example trial2 has four times the probability of being picked as trial1.
 * `{mixer:'weightedRandom', weights: [0.2,0.8], data: [trial1,trial2]}`
 
 **choose**:
@@ -597,7 +605,7 @@ Picks `n` random elements from `data` (by default the chooser picks one element)
 * `{mixer:'pick', n:2, data: [trial1,trial2,trial3]}` pick two of these three trials
 
 **wrapper**:
-In case we want to treat a set of elements as one block (when randomizing) we can put them in a wrapper
+The wrapper mixer serves a sort of parenthesis for the mixer. It has two primary functions; first, in case you want to keep a set of elements as a block (when randomizing) simply wrap them and they'll stay together. Second, when repeating a `random` mixer, the mixer first randomizes the content of the inner mixer and only then repeats it. If you want the randomization to be deferred until after the repeat all you have to do is wrap it in a wrapper.
 * `{mixer:'wrapper', data: [trial1,trial2]}`
 
 

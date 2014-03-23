@@ -222,10 +222,15 @@ The optional property <code>handle</code> narrows the search down to stimuli fit
 <li><code>{type:&#39;inputEqualsTrial&#39;,property:&quot;customAttribute&quot;}</code></li>
 <li><code>{type:&#39;inputEqualsTrial&#39;,property:&quot;customAttribute&quot;,handle:&#39;myStimHandle&#39;}</code></li>
 </ul>
-<p><strong>globalEquals</strong>:
-Check if the input <code>handle</code> equals to the <code>property</code> property of the global object.</p>
+<p><strong>trialEquals</strong>:
+Check if the <code>property</code> property of the trial.data object equals to <code>value</code>.</p>
 <ul>
-<li><code>{type:&#39;globalEquals&#39;,value:&#39;enter&#39;}</code></li>
+<li><code>{type:&#39;trialEquals&#39;,property:&#39;customProperty&#39;, value:&#39;someValue&#39;}</code></li>
+</ul>
+<p><strong>globalEquals</strong>:
+Check if the <code>property</code> property of the global object equals to <code>value</code>.</p>
+<ul>
+<li><code>{type:&#39;globalEquals&#39;,property:&#39;customProperty&#39;, value:&#39;someValue&#39;}</code></li>
 </ul>
 <p><strong>globalEqualsTrial</strong>:
 Check if the global property <code>globalProp</code> equals to the trial.data property <code>trialProp</code>.</p>
@@ -498,30 +503,36 @@ You may insert such an object at any place within the sequence and it will be re
 <p>The <code>data</code> property holds an array of elements (either trials or mixer objects).</p>
 <p>A sequence can look something like this (don’t get scared it’s simpler than it looks):</p>
 <pre><code class="lang-js">[
-    <span class="hljs-comment">// the first trial to present</span>
+    <span class="hljs-comment">// The first trial to present.</span>
     firstTrial,
 
-    <span class="hljs-comment">// repeat the structure inside 10 time (so we get 40 trials)</span>
+    <span class="hljs-comment">// Repeat the structure inside 10 time (so we get 40 trials)</span>
     {
         mixer: <span class="hljs-string">'repeat'</span>,
         times: <span class="hljs-number">10</span>,
         data: [
-            <span class="hljs-comment">// randomize the order of the four trials within</span>
+            <span class="hljs-comment">// Delay the mixing of these elements until after the `repeat`.</span>
             {
-                mixer: <span class="hljs-string">'random'</span>,
+                mixer: <span class="hljs-string">'wrapper'</span>,
                 data: [
                     trial1,
-                    trial2,
-                    <span class="hljs-comment">// when randomizing, treat these two trials as one block so they are never separated</span>
+                    <span class="hljs-comment">// Randomize the order of the trials within.</span>
                     {
-                        mixer: <span class="hljs-string">'wrapper'</span>,
+                        mixer: <span class="hljs-string">'random'</span>,
                         data: [
-                            trial3,
-                            trial4
+                            trial2,
+                            <span class="hljs-comment">// Keep trial 3 and 4 together.</span>
+                            {
+                                mixer: <span class="hljs-string">'wrapper'</span>,
+                                data: [
+                                    trial3,
+                                    trial4
+                                ]
+                            }
                         ]
-                    } <span class="hljs-comment">// end wrapper</span>
+                    } <span class="hljs-comment">// end random</span>
                 ]
-            } <span class="hljs-comment">// end random</span>
+            } <span class="hljs-comment">// end wrapper</span>
         ]
     }, <span class="hljs-comment">// end repeat</span>
 
@@ -529,12 +540,10 @@ You may insert such an object at any place within the sequence and it will be re
     lastTrial
 ]
 </code></pre>
-<p>This sequence has an opening and ending trial.
+<p>This sequence has an opening and ending trial (<code>firstTrial</code> and <code>lastTrial</code>).
 Between them them we repeat a set of four trials ten times.
-The order of the four trials is randomized.
-But trials three and four are wrapped together and therefore always stay consecutive.
-(In this case the trials will be repeated after randomization, so that )</p>
-<p>We support four mixer types.</p>
+The order of the four trials is randomized, so that <code>trial1</code> always comes first and the order of the following trials are randomized but <code>trial3</code> and <code>trial4</code> are wrapped together and therefore always stay consecutive.</p>
+<p>We support several mixer types.</p>
 <p><strong>repeat</strong>:
 Repeats the element in <code>data</code> <code>times</code> times.</p>
 <ul>
@@ -546,7 +555,7 @@ Randomizes the order of elements in <code>data</code>.</p>
 <li><code>{mixer:&#39;random&#39;, data: [trial1,trial2]}</code></li>
 </ul>
 <p><strong>weightedRandom</strong>:
-Picks a single element using a weighted random algorithm. Each element in <code>data</code> is given the appropriate weight from <code>weights</code>. In the example trial2 has four times the probability of being picked as trial1.</p>
+Picks a single element using a weighted random algorithm. Each element in <code>data</code> is given the appropriate weight from <code>weights</code>. In the following example trial2 has four times the probability of being picked as trial1.</p>
 <ul>
 <li><code>{mixer:&#39;weightedRandom&#39;, weights: [0.2,0.8], data: [trial1,trial2]}</code></li>
 </ul>
@@ -557,7 +566,7 @@ Picks <code>n</code> random elements from <code>data</code> (by default the choo
 <li><code>{mixer:&#39;pick&#39;, n:2, data: [trial1,trial2,trial3]}</code> pick two of these three trials</li>
 </ul>
 <p><strong>wrapper</strong>:
-In case we want to treat a set of elements as one block (when randomizing) we can put them in a wrapper</p>
+The wrapper mixer serves a sort of parenthesis for the mixer. It has two primary functions; first, in case you want to keep a set of elements as a block (when randomizing) simply wrap them and they’ll stay together. Second, when repeating a <code>random</code> mixer, the mixer first randomizes the content of the inner mixer and only then repeats it. If you want the randomization to be deferred until after the repeat all you have to do is wrap it in a wrapper.</p>
 <ul>
 <li><code>{mixer:&#39;wrapper&#39;, data: [trial1,trial2]}</code></li>
 </ul>
