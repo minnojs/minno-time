@@ -6,7 +6,7 @@ define(['app/API'], function(API) {
 
 	API.addSequence([
 		// #### Multiple trials
-		// The sequence is an array of trials. you can sequentialy add in as many trials as you want
+		// The sequence is an array of trials. you can sequentially add in as many trials as you want
 		{
 			// First trial
 			input: [{handle:'space',on:'space'}],
@@ -97,19 +97,40 @@ define(['app/API'], function(API) {
 			]
 		},
 
-		// ##### Complex Randomization (wrapper)
+		// ##### Weighted Random
+		{
+			// The weighted random mixer chooses an element from `data` with specific weights for each entry.
+			mixer : 'weightedRandom',
+			// The weights of the elements. The numbers in this array are the relative weights of each respective element in data.
+			weights: [0.2,0.8],
+			// The data property holds a sequence array to be randomized.
+			data : [
+				{
+					input: [{handle:'space',on:'space'}],
+					layout: [{media :{word:'Random 1 (20%)'}}],
+					interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+				},
+				{
+					input: [{handle:'space',on:'space'}],
+					layout: [{media :{word:'Random 2 (80%)'}}],
+					interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+				}
+			]
+		},
+
+		// ##### Wrapper (blocks within randomize)
 		{
 			// This mixer randomizes its sequence
 			mixer : 'random',
 			// The data property holds a sequence array to be randomized.
 			data : [
-				// This trial is randomized normaly
+				// This trial is randomized normally
 				{
 					input: [{handle:'space',on:'space'}],
 					layout: [{media :{word:'Complex - may be before or after the pair'}}],
 					interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
 				},
-				// The wrapper mixer tells the sequencer to keep the data inside it together despite the randomization. It is analogous to parathesis in math. </br>
+				// The wrapper mixer tells the sequencer to keep the data inside it together despite the randomization. It is analogous to parenthesis in math. </br>
 				// In contrast, if we has a repeat mixer here, its content would be randomized.
 				{
 					mixer: 'wrapper',
@@ -129,6 +150,40 @@ define(['app/API'], function(API) {
 			]
 		},
 
+		// ##### Wrapper (randomization within repeat)
+		{
+			// This mixer repeats its sequence.
+			mixer : 'repeat',
+			// Two times.
+			times: 2,
+			// The data property holds a sequence array to be repeated.
+			data : [
+				// The wrapper mixer tells the sequencer to deffer the randomization until after the repeat</br>
+				// In contrast, if we didn't have the wrapper the randomizer would be run only once, and we would always randomize the same sequence.
+				{
+					mixer: 'wrapper',
+					data: [
+						{
+							mixer:'random',
+							data: [
+								{
+									input: [{handle:'space',on:'space'}],
+									layout: [{media :{word:'First Stim'}}],
+									interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+								},
+								{
+									input: [{handle:'space',on:'space'}],
+									layout: [{media :{word:'Second Stim'}}],
+									interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+
+
 		// ##### The End
 		{
 			input: [{handle:'space',on:'space'}],
@@ -144,35 +199,39 @@ define(['app/API'], function(API) {
 
 	// ### Pro tip
 	// *This section goes beyond the normal scope of the PIP, and is intended for use by advanced users only.* </br>
-	// The sequencer allows for many complex configurations. There are times that you want a quick easy way to test that the sequence you created realy does what it is supposed to.
-	// The proper way to do that is to create a mock sequence and check that it is mixed correcty. </br>
+	// The sequencer allows for many complex configurations. There are times that you want a quick easy way to test that the sequence you created really does what it is supposed to.
+	// The proper way to do that is to create a mock sequence and check that it is mixed correctly. </br>
 	// Following is such an example. </br>
 
 	// Require the mixer function
 	require(['utils/mixer'], function(mixer) {
 		var sequence;
 
-		// create a sequence using numbers (or strings) instead of trials.
-		// you may use all the regular mixer objects.
+		// Create a sequence using numbers (or strings) instead of trials.
+		// You may use all the regular mixer objects.
+		// This sequence creates an array of four sets of numbers.
+		// Each one of these begins with a `1`, ends with a `9`, and has all the digits between `2` and `8` randomized between them.
 		sequence = [
 			{
 				mixer : 'repeat',
 				times : 4,
 				data : [
+					// Parse the wrapper only **after** repeating.
 					{
-						mixer: 'random',
+						mixer: 'wrapper',
 						data: [
 							{
-								mixer : 'repeat',
-								times : 4,
+								mixer : 'wrapper',
 								data : [
+									1,
 									{
 										mixer: 'random',
 										// Note that we use numbers instead of trials here. This allows us to follow the order that this mixer follows.
 										data: [
-											1,2,3,4,5,6,7,8
+											2,3,4,5,6,7,8
 										] /* end random data */
-									}
+									},
+									9
 								] /* end repeat data */
 							}
 						] /* end random data */
@@ -186,7 +245,6 @@ define(['app/API'], function(API) {
 		/* global console */
 		console.log(mixer(sequence));
 	});
-
 
 });
 /* don't forget to close the define wrapper */
