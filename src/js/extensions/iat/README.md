@@ -266,11 +266,12 @@ define(['extensions/iat/PIcomponent'],function(IAT){
 });
 ```
 
-In order to tweak the settings of the scorer you can use the following properties:
+In order to tweak the settings of the scorer you can set the following properties using `setProperties`:
 
 `scorerObj`: Holds the same object that is normally used to setup the scorer (everything has defaults, of course).
 
 `scorerMessage`: Holds an array of message objects, the same one normally set into messageDef when setting up the scorer.
+
 
 To read more about the scorer see [here](/src/js/extensions/dscore/README.md)
 

@@ -41,7 +41,7 @@ define(['underscore','extensions/dscore/Scorer','./properties','./categories'],f
 
 		// activate scorer
 		scorer.addSettings('compute',_.defaults(properties.scorerObj || {},computeDefaults));
-		scorer.addSettings('message', {messageDef: properties.scorerMessage || messageDefaults});
+		scorer.addSettings('message', {MessageDef: properties.scorerMessage || messageDefaults});
 
 		return scorer;
 	};

@@ -15,25 +15,24 @@ define(['jquery','underscore'],function($,_){
 		getScoreMsg: function(score){
 
 			var array = messages.MessageDef;
+			if (!$.isArray(array)){
+				throw new Error('You must define a "MessageDef" array.');
+			}
+
 			var scoreNum = parseFloat(score);
-		//	console.log('entering getMsg'+scoreNum);
-		//	console.log(array);
 			var cut = null;
 			var msg = null;
 			var rightMsg = 'error: msg was not set';
 			var set = false;
-			//var count =0;
-			//var msgIndex=0;
+
+			// @TODO repleace this whole section with a "_.find()" or something.
 			_.each(array, function(val) {
 				cut = parseFloat(val.cut);
 				msg = val.message;
-			//	console.log(cut);
-			//	console.log(msg);
 				if (scoreNum<=cut && !set){
 					rightMsg = msg;
 					set = true;
 				}
-
 			});
 
 			if (!set){
