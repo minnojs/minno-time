@@ -60,7 +60,7 @@ define(['./properties'],function(properties){
 		addBlock(v2,{block:3,part:6,trials:getTrials(3,20),twoRows:true});
 		addBlock(v2,{block:4,part:7,trials:getTrials(4,40),twoRows:true});
 
-		return properties.randomize_order ?
+		return !properties.randomize_order ?
 			v1
 			: [
 				{
@@ -90,7 +90,7 @@ define(['./properties'],function(properties){
 		addBlock(v2,{block:1,part:4,trials:getTrials(1,30),twoRows:false});
 		addBlock(v2,{block:3,part:5,trials:getTrials(3,50),twoRows:true});
 
-		return properties.randomize_order ?
+		return !properties.randomize_order ?
 			v1
 			: [
 				{
@@ -102,7 +102,6 @@ define(['./properties'],function(properties){
 				}
 			];
 	}
-
 
 	return function sequence(){
 		return properties.IATversion == 'short' ? shortIAT() : longIAT();
