@@ -10,7 +10,7 @@ define(['underscore', '../data/properties','../data/categories'],function(_, pro
 
 		// for each side
 		_.each(map, function(type,side){
-			var categoryStim = {media:{template:'layout.jst'}, data:{separatorColor:properties.separatorColor}}
+			var categoryStim = {media:{template:'layout.jst'}, data:{separatorColor:properties.separatorColor, separatorSize: properties.separatorSize}}
 				, data = categoryStim.data;
 
 			switch (side){

@@ -193,6 +193,8 @@ IAT.setProperties({
 
 `separatorColor`: Controls the color of the title separator. It is used only in the simple layout scheme (default: 'black').
 
+`separatorSize`: Controls the size of the title separator. It is used only in the simple layout scheme (default: '1em').
+
 `separator`: The separator object allows you to control the appearance of the category title separator. It is used only in the advanced layout scheme. By default:
 
 ```js

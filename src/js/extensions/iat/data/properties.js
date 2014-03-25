@@ -62,6 +62,7 @@ define([],function(){
 		simpleLayout: true,
 
 		separatorColor: 'black', // the separator color (for simple_layout)
+		separatorSize: '1em', // the separator size (for simple_layout)
 
 		// category seperator (for the advanced layout)
 		separator: {
