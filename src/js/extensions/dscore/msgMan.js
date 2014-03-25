@@ -15,7 +15,7 @@ define(['jquery','underscore'],function($,_){
 		getScoreMsg: function(score){
 
 			var array = messages.MessageDef;
-			if (!$.isArray(array)){
+			if (!array || !array.length){
 				throw new Error('You must define a "MessageDef" array.');
 			}
 
