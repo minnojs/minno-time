@@ -34,7 +34,7 @@ define([],function(){
 		randomize_order: true, // switch blocks 1/5 and 34/67
 		IATversion: 'long', // Takes 'long'\'short'. default: 'long'
 
-		inter_trial_interval: 500,
+		inter_trial_interval: 250,
 		post_instructions_interval: 500,
 
 		// do we make the user correct errors? default: true
