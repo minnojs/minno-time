@@ -82,6 +82,10 @@ define(['jquery','./task/script','app/task/main_view','app/task/parser','app/seq
 			return this;
 		},
 
+		getGlobal: function(){
+			return script.global;
+		},
+
 		// push a whole script
 		addScript: function(obj){
 			$.extend(true,script,obj);

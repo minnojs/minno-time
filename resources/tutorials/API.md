@@ -488,14 +488,14 @@ You may also use a custom function to pick your element.
 #### Customization
 
 Each trial/stimulus/media can also have a customize method, this method is called once the element is inherited but before it is activated.
-It accepts one argument: the source object on which it is called (in this case the appropriate trial object). The source object is also the context for the function.
+It accepts two arguments: the source object on which it is called (in this case the appropriate trial object), and the global object. The source object is also the context for the function.
 The example shows how you can use customize to push a stimulus into the trial, this allows us to generate stim1 dynamicaly.
 
 ```js
 {
 	inherit: 'something',
 	stimuli: [], // note that their are no stimuli yet!
-	customize : function(trialSource){
+	customize : function(trialSource, globalObject){
 		// push a stimulus into the stimulus array
 		trialSource.stimuli.push(stim1);
 	}
@@ -802,13 +802,49 @@ The API object exposes several helper function to help you organize your script.
 Allows pushing a whole script to the player:
 * `API.addScript(script);`
 
+**getScript**:
+Returns the whole player script:
+* `API.addScript();`
+
 **addGlobal**
 Allows extending the global object:
 * `API.addGlobal(object);`
 
+	For instance if the current global object looks like this:
+
+	```js
+	var globalObject = {
+		name: 'Sándor Ferenczi',
+		score: '90'
+	}
+	```
+
+	Then the following script:
+	```js
+	API.addGlobal({
+		score: '100',
+		done: true
+	})
+	```
+
+	Will leave the global object as
+	```js
+	var globalObject = {
+		name: 'Sándor Ferenczi',
+		score: '100',
+		done: true
+	}
+	```
+
+**getGlobal**:
+Returns the global object:
+* `API.getGlobal();`
+
 **addSettings**:
 `API.addSettings` allows you to add settings to your script.
+
 You may add a whole settings section:
+
 ```js
 API.addSettings({
 	canvas: {},

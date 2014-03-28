@@ -7,12 +7,12 @@
  *
  * the function returns an inflated script object (to be parsed by the constuctors)
  */
-define(['jquery','./trial/trial_sets','./stimulus/stimulus_sets','./media/media_sets'],function($,trialSets,stimulusSets,mediaSets){
+define(['jquery','./trial/trial_sets','./stimulus/stimulus_sets','./media/media_sets', 'app/task/script'],function($,trialSets,stimulusSets,mediaSets, script){
 
 	var customize = function customize(source){
 		// check for a custom function and run it if it exists
 		if (typeof source.customize === 'function'){
-			source.customize.apply(source, [source]);
+			source.customize.apply(source, [source, script.global]);
 			// remove customize function so that it gets called only once (don't delete because - performance)
 			//source.customize = null;
 		}
