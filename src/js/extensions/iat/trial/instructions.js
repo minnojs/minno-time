@@ -81,7 +81,7 @@ define(['underscore','../data/properties','../data/categories','./IATlayout'],fu
 			settings = settingsArr[i] || {};
 			// default trial
 			trial = {
-				data: {block:i},
+				data: {part:i},
 				layout: layout(i),
 				inherit: {set:'instructions', type:'byData', data: {block:'generic'}}
 			};
