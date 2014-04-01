@@ -16,7 +16,7 @@ define(['./properties'],function(properties){
 
 		// push instructions
 		sequenceArr.push({
-			data: {part:blockObj.part, block:blockObj.part, IATversion:properties.IATversion, blockStart:true},
+			data: {part:blockObj.part, block:blockObj.block, IATversion:properties.IATversion, blockStart:true},
 			inherit: {set:'instructions', type:'byData', data: {part:blockObj.part}}
 		});
 
@@ -27,12 +27,12 @@ define(['./properties'],function(properties){
 			data : !blockObj.twoRows ?
 				// if we have one row
 				[
-					{inherit : {type:'byData', data:{part:blockObj.part}, set:'IAT'}}
+					{inherit : {type:'byData', data:{part:blockObj.part}, set:'IAT'}, data: {block:blockObj.block}}
 				]
 				// if we have two rows
 				: [
-					{inherit : {type:'byData', data:{part:blockObj.part,row:1}, set:'IAT'}},
-					{inherit : {type:'byData', data:{part:blockObj.part,row:2}, set:'IAT'}}
+					{inherit : {type:'byData', data:{part:blockObj.part,row:1}, set:'IAT'}, data: {block:blockObj.block}},
+					{inherit : {type:'byData', data:{part:blockObj.part,row:2}, set:'IAT'}, data: {block:blockObj.block}}
 				]
 		});
 	};
