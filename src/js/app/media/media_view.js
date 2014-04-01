@@ -42,7 +42,9 @@ define(['jquery', 'backbone','app/task/main_view'], function($, Backbone,main_vi
                     this.$el.css("visibility", "visible");
 					this.$el[0].src =  this.options.image + '#' + Math.random();
                 } else {
-                    this.$el[0].src =  this.options.image;
+                    // Firefox requires to explicitly empty the "src" before resetting it.
+                    this.$el[0].src = "";
+                    this.$el[0].src = this.options.image;
 					this.$el.css("visibility", "visible");
                 }
 
