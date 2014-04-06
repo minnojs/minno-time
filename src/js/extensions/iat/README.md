@@ -149,7 +149,7 @@ IAT.setProperties({
 
 **Debug**
 
-`DEBUG`: Set to true in order to activate the skip block feature (skip block when you click ``esc + ` ``). By default this is set to false.
+`DEBUG`: Set to true in order to activate the skip block feature (skip block when you click `esc + enter`). By default this is set to false.
 
 **Stimulus properties** (modifiers for the target stimuli)
 

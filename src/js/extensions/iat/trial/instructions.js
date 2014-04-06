@@ -38,7 +38,7 @@ define(['underscore','../data/properties','../data/categories','./IATlayout'],fu
 				{
 					conditions: [{type:'inputEquals',value:'skip1'}],
 					actions: [
-						{type:'setInput',input:{handle:'skip2',on:'keypressed',key:192}}
+						{type:'setInput',input:{handle:'skip2',on:'enter'}}
 					]
 				},
 				// skip:

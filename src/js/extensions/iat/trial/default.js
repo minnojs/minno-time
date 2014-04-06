@@ -49,7 +49,7 @@ define(['../data/properties','./input_decorator','./feedback_decorator'],functio
 				{
 					conditions: [{type:'inputEquals',value:'skip1'}],
 					actions: [
-						{type:'setInput',input:{handle:'skip2',on:'keypressed',key:192}}
+						{type:'setInput',input:{handle:'skip2',on:'enter'}}
 					]
 				},
 				// skip:
