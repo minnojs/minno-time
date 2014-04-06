@@ -36,12 +36,20 @@ define(['jquery','underscore'],function($,_){
 
 			media.displayType = 'element';
 			media.type = 'html';
-			media.el = $(_.template(template,context || {}));
+			try {
+				media.el = $(_.template(template,context || {}));
+			} catch(e){
+				throw new Error('Templates must be wrapped in an html element such as <span></span>. ' + media.inlineTemplate + ' is invalid');
+			}
 		}
 		else if (media.inlineTemplate) {
 			media.displayType = 'element';
 			media.type = 'html';
-			media.el = $(_.template(media.inlineTemplate,context || {}));
+			try {
+				media.el = $(_.template(media.inlineTemplate,context || {}));
+			} catch(e){
+				throw new Error('Templates must be wrapped in an html element such as <span></span>. ' + media.inlineTemplate + ' is invalid');
+			}
 		}
 		else {
 			return false; // this is not a supported html type
