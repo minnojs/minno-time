@@ -249,7 +249,7 @@ IAT.setInstructions(1, {
 
 The first argument (parameter) to the `IAT.setInstructions` function is the block number. You may modify the instructions for any of the seven blocks (simply call the function for each block you want to modify).
 
-The second argument to `IAT.setCategory` is the instructions object.
+The second argument to `IAT.setInstructions` is the instructions object.
 
 `media`: Controls the content of the instruction block. It accepts a regular PIP [media object](/documentation.markdown#media).
 
@@ -258,7 +258,7 @@ The second argument to `IAT.setCategory` is the instructions object.
 `extend`: Extends the instructions trial. Accepts an object to extend the trial with (this is an advanced feature, it can be used to attach a scorer or all sorts of hooks)
 
 ### The PI component
-The IAT component is an extension of the basic IAT component.
+The PI IAT component is an extension of the basic IAT component.
 It shares all capabilities of the basic IAT component with the default urls used on PI, added functionality of the dscore extension.
 In order to activate the component use the following wrapper:
 
