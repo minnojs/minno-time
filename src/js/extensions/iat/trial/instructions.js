@@ -5,8 +5,7 @@ define(['underscore','../data/properties','../data/categories','./IATlayout'],fu
 			data: {block:'generic'},
 			// create user interface (just click to move on...)
 			input: [
-				{handle:'space',on:'space'},
-				{handle:'enter',on:'enter'}
+				{handle:'space',on:'space'}
 			],
 
 			interactions: [
@@ -35,8 +34,16 @@ define(['underscore','../data/properties','../data/categories','./IATlayout'],fu
 				},
 
 				// skip block
+				// activate skipping:
 				{
-					conditions: [{type:'inputEquals',value:'enter'}],
+					conditions: [{type:'inputEquals',value:'skip1'}],
+					actions: [
+						{type:'setInput',input:{handle:'skip2',on:'keypressed',key:192}}
+					]
+				},
+				// skip:
+				{
+					conditions: [{type:'inputEquals',value:'skip2'}],
 					actions: [
 						{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
 						{type:'endTrial'}
@@ -44,6 +51,10 @@ define(['underscore','../data/properties','../data/categories','./IATlayout'],fu
 				}
 			]
 		};
+
+		if (properties.DEBUG){
+			generic.input.push({handle:'skip1',on:'keypressed', key: 27});
+		}
 
 		// if touch is active add the touch input
 		if (!properties.notouch){

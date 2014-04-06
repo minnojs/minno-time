@@ -45,8 +45,16 @@ define(['../data/properties','./input_decorator','./feedback_decorator'],functio
 				},
 
 				// skip block
+				// activate skipping:
 				{
-					conditions: [{type:'inputEquals',value:'enter'}],
+					conditions: [{type:'inputEquals',value:'skip1'}],
+					actions: [
+						{type:'setInput',input:{handle:'skip2',on:'keypressed',key:192}}
+					]
+				},
+				// skip:
+				{
+					conditions: [{type:'inputEquals',value:'skip2'}],
 					actions: [
 						{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
 						{type:'endTrial'}

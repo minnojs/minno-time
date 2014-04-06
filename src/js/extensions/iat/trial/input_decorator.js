@@ -7,7 +7,7 @@ define(['../data/properties'],function(properties){
 		// skip trial input
 		// ***********************************************************************************
 		if (properties.DEBUG){
-			input.push({handle:'enter',on:'enter'});
+			input.push({handle:'skip1',on:'keypressed', key:27});
 		}
 
 		// left input
