@@ -75,15 +75,21 @@ define(['underscore','../data/properties','../data/categories','./IATlayout'],fu
 			, instructionsArr = [generic]
 			, trial
 			, stimulus
-			, settings;
+			, settings
+			// The layout should depend on part and not on block.
+			, customize = function(){
+				this.layout = layout(this.data.part);
+			};
+
 
 		for (var i = 1; i <= 7; i++){
 			settings = settingsArr[i] || {};
 			// default trial
 			trial = {
-				data: {part:i},
-				layout: layout(i),
-				inherit: {set:'instructions', type:'byData', data: {block:'generic'}}
+				data: {block:i},
+				//layout: layout(i),
+				inherit: {set:'instructions', type:'byData', data: {block:'generic'}},
+				customize: customize
 			};
 
 			// default stimulus

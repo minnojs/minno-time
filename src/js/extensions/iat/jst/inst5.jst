@@ -4,8 +4,13 @@
 	</p>
 	<br/>
 	Watch out, the labels have changed position!<br/>
-	Put a left finger on the <b>E</b> key for <font color="<%= trialData.concept2Color || '#0000FF' %>"><%= trialData.concept2 %></font> images.<br/>
-	Put a right finger on the <b>I</b> key for <font color="<%= trialData.concept1Color || '#0000FF' %>"><%= trialData.concept1 %></font> images.<br/>
+	<% if (trialData.part === trialData.block){ %>
+		Put a left finger on the <b>E</b> key for <font color="<%= trialData.concept2Color || '#0000FF' %>"><%= trialData.concept2 %></font> images.<br/>
+		Put a right finger on the <b>I</b> key for <font color="<%= trialData.concept1Color || '#0000FF' %>"><%= trialData.concept1 %></font> images.<br/>
+	<% } else { %>
+		Put a left finger on the <b>E</b> key for <font color="<%= trialData.concept1Color || '#0000FF' %>"><%= trialData.concept1 %></font> images.<br/>
+		Put a right finger on the <b>I</b> key for <font color="<%= trialData.concept2Color || '#0000FF' %>"><%= trialData.concept2 %></font> images.<br/>
+	<% } %>
 	<br/>
 	<u>Go as fast as you can</u> while being accurate.<br/>
 	<br/>

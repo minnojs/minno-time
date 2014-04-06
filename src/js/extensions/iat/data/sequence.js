@@ -17,7 +17,7 @@ define(['./properties'],function(properties){
 		// push instructions
 		sequenceArr.push({
 			data: {part:blockObj.part, block:blockObj.block, IATversion:properties.IATversion, blockStart:true},
-			inherit: {set:'instructions', type:'byData', data: {part:blockObj.part}}
+			inherit: {set:'instructions', type:'byData', data: {block:blockObj.block}}
 		});
 
 		// push block trials
