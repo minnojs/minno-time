@@ -149,7 +149,7 @@ IAT.setProperties({
 
 **Debug**
 
-`DEBUG`: Set to true in order to activate the skip block feature (skip block when you click ENTER). By default this is set to false.
+`DEBUG`: Set to true in order to activate the skip block feature (skip block when you click `esc + enter`). By default this is set to false.
 
 **Stimulus properties** (modifiers for the target stimuli)
 
@@ -192,6 +192,8 @@ IAT.setProperties({
 `simpleLayout`: Which layout interface should the player use (see "Category Layout" above for details). Accept true for simpleLayout or false for advanced (default:true).
 
 `separatorColor`: Controls the color of the title separator. It is used only in the simple layout scheme (default: 'black').
+
+`separatorSize`: Controls the size of the title separator. It is used only in the simple layout scheme (default: '1em').
 
 `separator`: The separator object allows you to control the appearance of the category title separator. It is used only in the advanced layout scheme. By default:
 
@@ -247,7 +249,7 @@ IAT.setInstructions(1, {
 
 The first argument (parameter) to the `IAT.setInstructions` function is the block number. You may modify the instructions for any of the seven blocks (simply call the function for each block you want to modify).
 
-The second argument to `IAT.setCategory` is the instructions object.
+The second argument to `IAT.setInstructions` is the instructions object.
 
 `media`: Controls the content of the instruction block. It accepts a regular PIP [media object](/documentation.markdown#media).
 
@@ -256,7 +258,7 @@ The second argument to `IAT.setCategory` is the instructions object.
 `extend`: Extends the instructions trial. Accepts an object to extend the trial with (this is an advanced feature, it can be used to attach a scorer or all sorts of hooks)
 
 ### The PI component
-The IAT component is an extension of the basic IAT component.
+The PI IAT component is an extension of the basic IAT component.
 It shares all capabilities of the basic IAT component with the default urls used on PI, added functionality of the dscore extension.
 In order to activate the component use the following wrapper:
 
@@ -266,11 +268,12 @@ define(['extensions/iat/PIcomponent'],function(IAT){
 });
 ```
 
-In order to tweak the settings of the scorer you can use the following properties:
+In order to tweak the settings of the scorer you can set the following properties using `setProperties`:
 
 `scorerObj`: Holds the same object that is normally used to setup the scorer (everything has defaults, of course).
 
 `scorerMessage`: Holds an array of message objects, the same one normally set into messageDef when setting up the scorer.
+
 
 To read more about the scorer see [here](/src/js/extensions/dscore/README.md)
 

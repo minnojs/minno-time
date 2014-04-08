@@ -463,12 +463,12 @@ You may also use a custom function to pick your element.</p>
 </code></pre>
 <h4 id="customization">Customization</h4>
 <p>Each trial/stimulus/media can also have a customize method, this method is called once the element is inherited but before it is activated.
-It accepts one argument: the source object on which it is called (in this case the appropriate trial object). The source object is also the context for the function.
+It accepts two arguments: the source object on which it is called (in this case the appropriate trial object), and the global object. The source object is also the context for the function.
 The example shows how you can use customize to push a stimulus into the trial, this allows us to generate stim1 dynamicaly.</p>
 <pre><code class="lang-js">{
     inherit: <span class="hljs-string">'something'</span>,
     stimuli: [], <span class="hljs-comment">// note that their are no stimuli yet!</span>
-    customize : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(trialSource)</span>{</span>
+    customize : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(trialSource, globalObject)</span>{</span>
         <span class="hljs-comment">// push a stimulus into the stimulus array</span>
         trialSource.stimuli.push(stim1);
     }
@@ -716,14 +716,44 @@ Allows pushing a whole script to the player:</p>
 <ul>
 <li><code>API.addScript(script);</code></li>
 </ul>
+<p><strong>getScript</strong>:
+Returns the whole player script:</p>
+<ul>
+<li><code>API.addScript();</code></li>
+</ul>
 <p><strong>addGlobal</strong>
 Allows extending the global object:</p>
 <ul>
-<li><code>API.addGlobal(object);</code></li>
+<li><p><code>API.addGlobal(object);</code></p>
+<p>  For instance if the current global object looks like this:</p>
+<pre><code class="lang-js">  <span class="hljs-keyword">var</span> globalObject = {
+      name: <span class="hljs-string">'Sándor Ferenczi'</span>,
+      score: <span class="hljs-string">'90'</span>
+  }
+</code></pre>
+<p>  Then the following script:</p>
+<pre><code class="lang-js">  API.addGlobal({
+      score: <span class="hljs-string">'100'</span>,
+      done: <span class="hljs-literal">true</span>
+  })
+</code></pre>
+<p>  Will leave the global object as</p>
+<pre><code class="lang-js">  <span class="hljs-keyword">var</span> globalObject = {
+      name: <span class="hljs-string">'Sándor Ferenczi'</span>,
+      score: <span class="hljs-string">'100'</span>,
+      done: <span class="hljs-literal">true</span>
+  }
+</code></pre>
+</li>
+</ul>
+<p><strong>getGlobal</strong>:
+Returns the global object:</p>
+<ul>
+<li><code>API.getGlobal();</code></li>
 </ul>
 <p><strong>addSettings</strong>:
-<code>API.addSettings</code> allows you to add settings to your script.
-You may add a whole settings section:</p>
+<code>API.addSettings</code> allows you to add settings to your script.</p>
+<p>You may add a whole settings section:</p>
 <pre><code class="lang-js">API.addSettings({
     canvas: {},
     logger: {}
