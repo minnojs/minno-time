@@ -80,11 +80,11 @@ define(['jquery','app/API','underscore','./computeD','./msgMan','./parcelMng'],f
 			//return computeData;
 		},
 
-/*  Function: Void postToServer.
+/*
+	Function: Void postToServer.
 	Input: score, a message a key to be used.
 	Output: Ajax send to server.
 	Description: post to server the score and the message.
-
 */
 
 		postToServer: function(score,msg,scoreKey,msgKey){
@@ -98,9 +98,15 @@ define(['jquery','app/API','underscore','./computeD','./msgMan','./parcelMng'],f
 				msgKey = postSettings.msg;
 			}
 			var data = {};
-			data[scoreKey] =score;
+			data[scoreKey] = score;
 			data[msgKey] = msg;
 
+			return $.post(url,JSON.stringify(data));
+		},
+
+		dynamicPost: function(data){
+			var postSettings = computeData.postSettings || {};
+			var url = postSettings.url;
 			return $.post(url,JSON.stringify(data));
 		},
 
