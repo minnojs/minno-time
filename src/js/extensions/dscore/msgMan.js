@@ -2,9 +2,9 @@ define(['jquery','underscore'],function($,_){
 
 	var messages = {
 		MessageDef:[],
-		manyErrors: "Too many errors",
-		tooFast: "Too many fast trials",
-		notEnough: "Not enough correct responses"
+		manyErrors: "There were too many errors made to determine a result.",
+		tooFast: "There were too many fast trials to determine a result.",
+		notEnough: "There were not enough trials to determine a result."
 	};
 
 	var msgMan = {
