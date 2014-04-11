@@ -13,11 +13,11 @@ define(['underscore','extensions/dscore/Scorer','./properties','./categories'],f
 			condVar:"condition",
 			//condition 1
 			cond1VarValues: [
-				attribute1 + ',' + concept1 + '/' + attribute2 + ',' + concept2
+				attribute1 + '/' + concept1 + ',' + attribute2 + '/' + concept2
 			],
 			//condition 2
 			cond2VarValues: [
-				attribute1 + ',' + concept2 + '/' + attribute2 + ',' + concept1
+				attribute1 + '/' + concept2 + ',' + attribute2 + '/' + concept1
 			],
 			parcelVar : "parcel",
 			parcelValue : ['first'],
