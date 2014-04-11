@@ -71,6 +71,8 @@ define([],function(){
 			css : {fontSize:'1.2em'} // optional
 		},
 
+		endMedia: undefined, // if you want to replace the message at the end of the task, you can use this property... just set any media you like.
+
 		pulse: 20,
 
 		images_base_url: "",

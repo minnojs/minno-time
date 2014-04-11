@@ -106,7 +106,13 @@ define(['./properties'],function(properties){
 	}
 
 	return function sequence(){
-		return properties.IATversion == 'short' ? shortIAT() : longIAT();
+		var sequenceArr = properties.IATversion == 'short' ? shortIAT() : longIAT();
+		sequenceArr.push({
+			data: {blockStart:true},
+			inherit: {set:'instructions', type:'byData', data: {block:'last'}}
+		});
+
+		return sequenceArr;
 	};
 
 });

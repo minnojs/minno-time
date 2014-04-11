@@ -65,16 +65,31 @@ define(['underscore','../data/properties','../data/categories','./IATlayout'],fu
 	}
 
 
-/*
-	var last = {
+
+	var last =  {
 		data: {block:'last'},
-		inherit: {set:'instructions', type:'byData', data: {block:'generic'}},
-		stimuli: [{
-			inherit:'instructions',
-			media: {template:'last.jst'}
-		}]
+		// create user interface (just click to move on...)
+		input: [
+			{handle:'space',on:'space'}
+		],
+
+		interactions: [
+			// display instructions
+			{
+				conditions: [{type:'begin'}],
+				actions: [
+					{type:'showStim',handle:'All'}
+				]
+			},
+
+			// end
+			{
+				conditions: [{type:'inputEquals',value:'space'}],
+				actions: [{type:'endTrial'}]
+			}
+		],
+		stimuli: []
 	};
-*/
 
 	// this array will hold any user defined settings
 	var settingsArr = [];
@@ -128,6 +143,14 @@ define(['underscore','../data/properties','../data/categories','./IATlayout'],fu
 			// set category colors (mainly for the simple_layout)
 			generic.data[categoryType + 'Color'] = category.titleColor;
 		});
+
+		last.stimuli.push({
+			inherit:'instructions',
+			media: properties.endMedia || {html:'<div><p style="font-size:1.4em"><color="#FFFAFA">You have completed this task<br/><br/>Thank you very much for your participation.<br/><br/> Press "space" in order to continue.</p></div>'}
+		});
+
+		instructionsArr.push(last);
+
 
 		return instructionsArr;
 	} // end build instructions
