@@ -21,9 +21,10 @@ define(['jquery','app/API','underscore','./msgMan'],function($,API,_, msgMan){
 		Init: function(compute){
 
 			var data = API.getLogs();
-		//	console.log(data);
 			parcelMng.parcelArray = [];
 			parcelMng.scoreData = {};
+
+			// get settings
 			var AnalyzedVar = compute.AnalyzedVar;
 			var error = compute.ErrorVar;
 			var parcelVar = compute.parcelVar;
@@ -31,6 +32,8 @@ define(['jquery','app/API','underscore','./msgMan'],function($,API,_, msgMan){
 			var min = compute.minRT;
 			var max = compute.maxRT;
 			var fastRT= compute.fastRT;
+
+			// set counters
 			var totalScoredTrials = 0;
 			var trialsUnder = 0;
 			var totalTrials=0;
@@ -65,8 +68,7 @@ define(['jquery','app/API','underscore','./msgMan'],function($,API,_, msgMan){
 				});
 				parcelMng.checkErrors(totalTrials,totalErrorTrials,compute);
 				parcelMng.parcelArray[0] = p;
-			}else{
-
+			} else {
 				_.each (parcels, function(parcelName,index) {// per parcel from parcelValue
 					//set variables calculated per parcel
 					totalTrials =0;
@@ -79,9 +81,9 @@ define(['jquery','app/API','underscore','./msgMan'],function($,API,_, msgMan){
 					///////////////////////////////////
 					_.each (data, function (value) {//loop per object in logger
 						var trialParcelName = value.data[parcelVar];
-					//	console.log(value.data);
-						if (trialParcelName == parcelName){// if this trial belongs tp parcel
-					//		console.log('enter loop');
+
+						// if this trial belongs to parcel
+						if (trialParcelName == parcelName){
 							if (value[AnalyzedVar]>=min && value[AnalyzedVar]<=max){
 								totalTrials++;
 								if (value.data[error] == 1) {
@@ -236,7 +238,6 @@ define(['jquery','app/API','underscore','./msgMan'],function($,API,_, msgMan){
 */
 
 		avgParcel: function(p,compute){
-
 			var trialIData = p.trialIData;
 			var condVar = compute.condVar;
 			var cond1 = compute.cond1VarValues;
@@ -260,6 +261,7 @@ define(['jquery','app/API','underscore','./msgMan'],function($,API,_, msgMan){
 				var dataCond = data[condVar];
 				var diff1 = parcelMng.checkArray(dataCond,cond1);
 				var diff2 = parcelMng.checkArray(dataCond,cond2);
+
 				if (diff1) {
 					numCond1++;
 					avgCon1 += AnVar;
@@ -287,11 +289,6 @@ define(['jquery','app/API','underscore','./msgMan'],function($,API,_, msgMan){
 				p.avgBoth = avgBoth/numBoth;
 			}
 			parcelMng.addPenalty(p,compute);
-			// console.log('finished parcel: '+p.name);
-			// console.log('Avg1 is: '+p.avgCon1);
-			// console.log('Avg2 is: '+p.avgCon2);
-			// console.log('AvgBoth is: '+p.avgBoth);
-			// console.log('--------------------');
 		},
 
 /*  Function: Void checkArray.
@@ -330,11 +327,9 @@ define(['jquery','app/API','underscore','./msgMan'],function($,API,_, msgMan){
 */
 
 		varianceAll: function(compute){
-	//		console.log('starting varianceAll');
 			_.each (parcelMng.parcelArray, function (value) {
 				parcelMng.varianceParcel(value,compute);
 			});
-	//		console.log(parcelMng.parcelArray);
 		},
 
 /*  Function: Void varianceParcel.
@@ -344,14 +339,11 @@ define(['jquery','app/API','underscore','./msgMan'],function($,API,_, msgMan){
 
 */
 		varianceParcel: function(p,compute){
-	//		console.log('starting varianceParcel');
 			var AnalyzedVar = compute.AnalyzedVar;
 			var trialIData = p.trialIData;
 			var cond1 = compute.cond1VarValues;
 			var cond2 = compute.cond2VarValues;
 			var condVar = compute.condVar;
-			//var dataLength = trialIData.length;
-			//var variance=0;
 			var avg = p.avgBoth;
 			var d = 0;
 			var x2 = 0;
@@ -407,10 +399,6 @@ define(['jquery','app/API','underscore','./msgMan'],function($,API,_, msgMan){
 
 			});
 			p.variance = x2/(pooledData.length-1);
-			// console.log('finished variance parcel: '+p.name);
-			// console.log('variance: '+p.variance);
-			// console.log('--------------------');
-
 		},
 
 /*  Function: Void diffAll.
@@ -450,7 +438,6 @@ define(['jquery','app/API','underscore','./msgMan'],function($,API,_, msgMan){
 
 */
 		scoreAll: function(compute){
-	//		console.log('starting scoreAll');
 			var dAvg = 0;
 			_.each (parcelMng.parcelArray, function (value) {
 				parcelMng.scoreParcel(value,compute);

@@ -70,7 +70,7 @@ define(['../data/categories','./default', './instructions','./IATlayout'],functi
 
 			// block4 (same as 3)
 			{
-				data: {part:4, row:1, condition: attribute1 + '/' + concept1 + ',' + attribute2 + '/' + concept2, parcel:'first'},
+				data: {part:4, row:1, condition: attribute1 + '/' + concept1 + ',' + attribute2 + '/' + concept2, parcel:'second'},
 				layout: layout(4),
 				inherit: 'Default',
 				stimuli: [
@@ -83,7 +83,7 @@ define(['../data/categories','./default', './instructions','./IATlayout'],functi
 			},
 
 			{
-				data: {part:4, row:2, condition: attribute1 + '/' + concept1 + ',' + attribute2 + '/' + concept2, parcel:'first'},
+				data: {part:4, row:2, condition: attribute1 + '/' + concept1 + ',' + attribute2 + '/' + concept2, parcel:'second'},
 				layout: layout(4),
 				inherit: 'Default',
 				stimuli: [
@@ -137,7 +137,7 @@ define(['../data/categories','./default', './instructions','./IATlayout'],functi
 
 			// block7  (same as 6)
 			{
-				data: {part:7, row:1, condition: attribute1 + '/' + concept2 + ',' + attribute2 + '/' + concept1, parcel:'first'},
+				data: {part:7, row:1, condition: attribute1 + '/' + concept2 + ',' + attribute2 + '/' + concept1, parcel:'second'},
 				layout: layout(7),
 				inherit: 'Default',
 				stimuli: [
@@ -150,7 +150,7 @@ define(['../data/categories','./default', './instructions','./IATlayout'],functi
 			},
 
 			{
-				data: {part:7, row:2, condition: attribute1 + '/' + concept2 + ',' + attribute2 + '/' + concept1,parcel:'first'},
+				data: {part:7, row:2, condition: attribute1 + '/' + concept2 + ',' + attribute2 + '/' + concept1,parcel:'second'},
 				layout: layout(7),
 				inherit: 'Default',
 				stimuli: [

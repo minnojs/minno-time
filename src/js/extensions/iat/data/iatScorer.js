@@ -3,7 +3,7 @@ define(['underscore','extensions/dscore/Scorer','./properties','./categories'],f
 	return function(){
 		// get category names
 		var attribute1 = categories.attribute1.name
-			, attribute2 = categories.attribute1.name
+			, attribute2 = categories.attribute2.name
 			, concept1 = categories.concept1.name
 			, concept2 = categories.concept2.name;
 
@@ -20,7 +20,7 @@ define(['underscore','extensions/dscore/Scorer','./properties','./categories'],f
 				attribute1 + '/' + concept2 + ',' + attribute2 + '/' + concept1
 			],
 			parcelVar : "parcel",
-			parcelValue : ['first'],
+			parcelValue : ['first','second'],
 			fastRT : 150, //Below this reaction time, the latency is considered extremely fast.
 			maxFastTrialsRate : 0.1, //Above this % of extremely fast responses within a condition, the participant is considered too fast.
 			minRT : 400, //Below this latency
