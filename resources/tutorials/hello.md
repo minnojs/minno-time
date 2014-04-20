@@ -99,12 +99,12 @@ Note also that the name that we give the event is absolutely arbitrary, so we ca
 
 #### **layout**
 
-The `layout` keyword is responsible for stimuli that are presented throughout the trial. Any stimuli that are set into the `layout` array will be displayed automatically from the beginning of the trial until its end.
+The `layout` object is responsible for stimuli that are presented during the whole trial. All the stimuli that are set into the `layout` array will be displayed automatically from the beginning of the trial until its end. (We use a different object, named `stimuli` to define stimuli that are displayed only for a part of the trial. We will learn about the `stimuli` object in more advanced examples).
 
-The layout is an array of objects. Each object represents a stimulus. [Stimuli](./API.md#stimuli) are complex objects, and we'll learn more about them in more advanced examples. For now, let's start with a simple example:
+The layout is an array of objects. Each object represents a stimulus. The [stimulus object](./API.md#stimuli) is a complex objects, and we'll learn more about it in more advanced examples. For now, let's start with a simple example:
 
 ```js
-[//This opens an array of stimuli objects to show in the layout.
+[//This opens an array of stimulus objects to show in the layout.
 	{//Each object is a stimulus object.
 		media :{word:'Hello world'}, //Media defines what to show
 		css:{fontSize:'2em',color:'#FF0000'} //css defines its style.
@@ -112,7 +112,7 @@ The layout is an array of objects. Each object represents a stimulus. [Stimuli](
 ]
 ```
 
-This stimulus displays the words "Hello world" at the center of the player canvas.
+This stimulus displays the words "Hello world" at the center of the player's canvas.
 
 Stimulus objects hold a [`media`](./API.md#media) object to display, and relevant data regarding how to display it. This particular stimulus sets the style for the media using the `css` property. [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) is the language used by browsers to describe styles. Using the stimulus `css` property we can control css in any way we want. In this case we use the css object to set the *font size* and *color* of the stimulus.
 
@@ -120,7 +120,7 @@ The font size of this stimulus is set to `2em`. `em` is a css size unit, `1em` i
 
 The color attribute accepts any valid css color. You can try the following: `'#0000FF'`, `'#FFFFFF'`, `'#00FF00'` or use [this](http://html-color-codes.info/) site to find additional colors.
 
-The `css` object can do far more than this. If you want to know more you can check out the full API on [<jquery class="com"></jquery>](http://api.jquery.com/css/#css2)
+The `css` object can do far more than this. If you want to know more you can check out the full API  [`here`](http://api.jquery.com/css/#css2)
 
 #### **interactions**
 
@@ -139,9 +139,10 @@ The `css` object can do far more than this. If you want to know more you can che
 ]
 ```
 
-Each interaction object has a `conditions` property that holds an array of true/false statements. Each one of these statements is evaluated for every player event (i.e. user input), if all the conditions are true for an event then all associated `actions` are executed. In this case we check if the input handle equals 'space'.
+Each interaction object has a `conditions` property and an `actions` property. The `conditions` property is an array of condition objects. Each condition objects defines a condition that can be true of false. For instance, the condition in the example above is that the name (i.e., handle) of currently active input is 'space'. This condition is true only when the participant hits space (that is what we defined in the input section). There are a few other possible conditions that can be defined, and we will learn about them in more advanced examples (to see the full list of conditions, see [here](./API.md#interactions-conditions)).
+If all the condition objects in the conditions array are true, then all the actions in the `actions` array are executed. 
 
-Each interaction object also has an `actions` array that hold an array of actions to perform if all `conditions` are evaluated as true. In this case the only action is to end this trial.
+The `actions` array holds an array of actions to perform if all `conditions` are evaluated as true. In this case the only action is to end this trial. We will learn about other forms of actions in more advanced examples (to see the full list of conditions, see [here](./API.md#interactions-actions)).
 
 ###Detailed recap
 Here is the whole code again, with comments that explain each and every line. Before you read those comments, it might be good to look at the simple not-commented code [here](../../resources/tutorials/js/hello.js), and try again to understand what you see. Whenever you have a question about a line in the code, have a look at that line in the heavily commented code below:
