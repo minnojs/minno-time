@@ -135,6 +135,8 @@ IAT.setProperties({
 
 `trialsPerBlock`: Set the number of trials per block. Accepts a hash of block number:trial count. For example: `{1:40,5:40}`, sets block 1 and 5 to have 40 trials. By default, the long IAT's number of trials are: `{1:20,2:20,3:20,4:40,5:40,6:20,7:40}` and the short IAT's numbers are `{1:20,2:20,3:50,4:30,5:50}`.
 
+`endMedia`: Set the message for the end of the task. simply set in any media that you like...
+
 **URLs**
 
 `post_url`: Defines the url to send any data gathered by the IAT.
@@ -255,7 +257,7 @@ The second argument to `IAT.setInstructions` is the instructions object.
 
 `css`: Controls the CSS for the instruction block. Accepts a jQuery CSS object.
 
-`extend`: Extends the instructions trial. Accepts an object to extend the trial with (this is an advanced feature, it can be used to attach a scorer or all sorts of hooks)
+`extend`: Extends the instructions trial. Accepts an object to extend the trial with (this is an advanced feature, it can be used to attach a scorer or all sorts of hooks).
 
 ### The PI component
 The PI IAT component is an extension of the basic IAT component.

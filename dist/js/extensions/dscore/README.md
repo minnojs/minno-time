@@ -132,9 +132,9 @@ The `Scorer.addSetings` function may be used in order to create feedback message
 
 ```js
 	Scorer.addSettings('message',{
-		manyErrors: "Not enough correct responses",
-		tooFast: "Too many fast trials",
-		notEnough: "Not enough correct responses",
+		manyErrors: "There were too many errors made to determine a result.",
+		tooFast: "There were too many fast trials to determine a result.",
+		notEnough: "There were not enough trials to determine a result."
 		MessageDef: [
 			{ cut:'-0.65', message:'Your data suggest a strong implicit preference for Black People compared to White People' },
 			{ cut:'-0.35', message:'Your data suggest a moderate implicit preference for Black People compared to White People.' },
@@ -154,3 +154,27 @@ The `Scorer.addSetings` function may be used in order to create feedback message
 `notEnough` is the feedback in case we don't have enough correct responses to compute the score.
 
 `MessageDef` is an array cutoff scores and messages for interpreting the results.
+
+
+### Posting to the server.
+
+There are two ways to post the scorer data to the server.
+
+The preferable method is using the scorer function `dynamicPost`. This function takes an object, jsonifies it, and sends it to the server. It returns a jQuery deferred so you can do anything that you like after it finishes.
+
+```js
+// Compute score
+var DScoreObj = scorer.computeD();
+// Post to the server
+scorer.dynamicPost({
+	score: DScoreObj.DScore,
+	feedback: DScoreObj.FBMsg
+}).always(function(){top.location.href = "/my/next/url/";});
+```
+
+The deprecated method is using the scorer function `postToServer(score,msg,scoreKey,msgKey)`. This function takes four arguments:
+
+* score - The task score (required).
+* msg - The resulting message (required).
+* scoreKey - The key for the score data (optional, uses the score settings `score` by default).
+* msgKey -  The key for the message data (optional, uses the score settings `msg` by default).

@@ -562,8 +562,8 @@ Picks a single element using a weighted random algorithm. Each element in <code>
 <p><strong>choose</strong>:
 Picks <code>n</code> random elements from <code>data</code> (by default the chooser picks one element).</p>
 <ul>
-<li><code>{mixer:&#39;pick&#39;, data: [trial1,trial2]}</code> pick one of these two trials</li>
-<li><code>{mixer:&#39;pick&#39;, n:2, data: [trial1,trial2,trial3]}</code> pick two of these three trials</li>
+<li><code>{mixer:&#39;choose&#39;, data: [trial1,trial2]}</code> pick one of these two trials</li>
+<li><code>{mixer:&#39;choose&#39;, n:2, data: [trial1,trial2,trial3]}</code> pick two of these three trials</li>
 </ul>
 <p><strong>wrapper</strong>:
 The wrapper mixer serves a sort of parenthesis for the mixer. It has two primary functions; first, in case you want to keep a set of elements as a block (when randomizing) simply wrap them and they’ll stay together. Second, when repeating a <code>random</code> mixer, the mixer first randomizes the content of the inner mixer and only then repeats it. If you want the randomization to be deferred until after the repeat all you have to do is wrap it in a wrapper.</p>
