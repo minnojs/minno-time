@@ -601,8 +601,8 @@ Picks a single element using a weighted random algorithm. Each element in `data`
 
 **choose**:
 Picks `n` random elements from `data` (by default the chooser picks one element).
-* `{mixer:'pick', data: [trial1,trial2]}` pick one of these two trials
-* `{mixer:'pick', n:2, data: [trial1,trial2,trial3]}` pick two of these three trials
+* `{mixer:'choose', data: [trial1,trial2]}` pick one of these two trials
+* `{mixer:'choose', n:2, data: [trial1,trial2,trial3]}` pick two of these three trials
 
 **wrapper**:
 The wrapper mixer serves a sort of parenthesis for the mixer. It has two primary functions; first, in case you want to keep a set of elements as a block (when randomizing) simply wrap them and they'll stay together. Second, when repeating a `random` mixer, the mixer first randomizes the content of the inner mixer and only then repeats it. If you want the randomization to be deferred until after the repeat all you have to do is wrap it in a wrapper.
