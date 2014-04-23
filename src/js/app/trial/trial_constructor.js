@@ -84,7 +84,11 @@ define(function(require){
 
 			// subscribe to remove input
 			pubsub.subscribe("trial:removeInput",this._pubsubStack,function(handleList){
-				input.remove(handleList);
+				if (handleList == 'All' || _.include(handleList,'All')){
+					input.destroy();
+				} else {
+					input.remove(handleList);
+				}
 			});
 
 			// subscribe to goto
