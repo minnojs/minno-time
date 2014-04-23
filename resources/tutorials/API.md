@@ -332,9 +332,11 @@ Activate the input `handle`. If duration is set, the activation happens after th
 Set input listener (useful for adding timeouts), takes an `input` [object](#input-).
 * `{type:'setInput',input:{handle:'time',on:'timeout',duration:300}}`
 
-**removeInput**: Remove input listener, takes an input `handle` or an array of input handles
+**removeInput**:
+Remove input listener, takes an input `handle` or an array of input handles. The special keyword `All` removes all listeners. **Warning** you must add listeners after using removeInput:All, or else the player will get stuck. This command removes triggers as well as regular input listeners.
 * `{type:'removeInput',handle : 'time'}`
 * `{type:'removeInput',handle : ['time','left']}`
+* `{type:'removeInput',handle : 'All'}`
 
 **resetTimer**:
 Resets trial timer. The latency of any events from here on (including the current one) will be calculated back to the reset instead of the begining of the trial.
