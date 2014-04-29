@@ -111,7 +111,7 @@ define(['jquery','./bindings/click', './bindings/keypressed', './bindings/keyup'
 				break;
 
 			default:
-				throw new Error("Unknown interface element " + definitions.handle);
+				throw new Error("Unknown interface element " + on);
 
 		}
 		return true;
