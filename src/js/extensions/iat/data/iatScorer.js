@@ -33,10 +33,10 @@ define(['underscore','extensions/dscore/Scorer','./properties','./categories'],f
 			{ cut:'-0.65', message:'Your data suggest a strong implicit preference for ' + concept2 + ' compared to ' + concept1 },
 			{ cut:'-0.35', message:'Your data suggest a moderate implicit preference for ' + concept2 + ' compared to ' + concept1 },
 			{ cut:'-0.15', message:'Your data suggest a slight implicit preference for ' + concept2 + ' compared to ' + concept1 },
-			{ cut:'0', message:'Your data suggest little to no difference in implicit preference between ' + concept2 + ' and ' + concept1 },
-			{ cut:'0.15', message:'Your data suggest a slight implicit preference for ' + concept1 + ' compared to ' + concept2 },
-			{ cut:'0.35', message:'Your data suggest a moderate implicit preference for ' + concept1 + ' compared to ' + concept2 },
-			{ cut:'0.65', message:'Your data suggest a strong implicit preference for ' + concept1 + ' compared to ' + concept2 }
+			{ cut:'0.15', message:'Your data suggest little to no difference in implicit preference between ' + concept2 + ' and ' + concept1 },
+			{ cut:'0.35', message:'Your data suggest a slight implicit preference for ' + concept1 + ' compared to ' + concept2 },
+			{ cut:'0.65', message:'Your data suggest a moderate implicit preference for ' + concept1 + ' compared to ' + concept2 },
+			{ cut:'3', message:'Your data suggest a strong implicit preference for ' + concept1 + ' compared to ' + concept2 }
 		];
 
 		// activate scorer
