@@ -139,10 +139,10 @@ The `Scorer.addSetings` function may be used in order to create feedback message
 			{ cut:'-0.65', message:'Your data suggest a strong implicit preference for Black People compared to White People' },
 			{ cut:'-0.35', message:'Your data suggest a moderate implicit preference for Black People compared to White People.' },
 			{ cut:'-0.15', message:'Your data suggest a slight implicit preference for Black People compared to White People.' },
-			{ cut:'0', message:'Your data suggest little to no difference in implicit preference between Black People and White People.' },
-			{ cut:'0.15', message:'Your data suggest a slight implicit preference for White People compared to Black People' },
-			{ cut:'0.35', message:'Your data suggest a moderate implicit preference for White People compared to Black People' },
-			{ cut:'0.65', message:'Your data suggest a strong implicit preference for White People compared to Black People' }
+			{ cut:'0.15', message:'Your data suggest little to no difference in implicit preference between Black People and White People.' },
+			{ cut:'0.35', message:'Your data suggest a slight implicit preference for White People compared to Black People' },
+			{ cut:'0.65', message:'Your data suggest a moderate implicit preference for White People compared to Black People' },
+			{ cut:'5', message:'Your data suggest a strong implicit preference for White People compared to Black People' }
 		]
 	});
 ```
@@ -153,7 +153,7 @@ The `Scorer.addSetings` function may be used in order to create feedback message
 
 `notEnough` is the feedback in case we don't have enough correct responses to compute the score.
 
-`MessageDef` is an array cutoff scores and messages for interpreting the results.
+`MessageDef` is an array cutoff scores and messages for interpreting the results. Scores that fall between two cutoffs will be associated with the cutoff above them. Scores below the lowest cutoff will be associated with the lowest cutoff. Scores above the highest cutoff cause trouble! set your cutoff high enough so it is impossible to happen. 
 
 
 ### Posting to the server.

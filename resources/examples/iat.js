@@ -762,10 +762,10 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 						{ cut:'-0.65', message:'Your data suggest a strong implicit preference for Black People compared to White People' },
 						{ cut:'-0.35', message:'Your data suggest a moderate implicit preference for Black People compared to White People.' },
 						{ cut:'-0.15', message:'Your data suggest a slight implicit preference for Black People compared to White People.' },
-						{ cut:'0', message:'Your data suggest little to no difference in implicit preference between Black People and White People.' },
-						{ cut:'0.15', message:'Your data suggest a slight implicit preference for White People compared to Black People' },
-						{ cut:'0.35', message:'Your data suggest a moderate implicit preference for White People compared to Black People' },
-						{ cut:'0.65', message:'Your data suggest a strong implicit preference for White People compared to Black People' }
+						{ cut:'0.15', message:'Your data suggest little to no difference in implicit preference between Black People and White People.' },
+						{ cut:'0.35', message:'Your data suggest a slight implicit preference for White People compared to Black People' },
+						{ cut:'0.65', message:'Your data suggest a moderate implicit preference for White People compared to Black People' },
+						{ cut:'5', message:'Your data suggest a strong implicit preference for White People compared to Black People' }
 					]
 				});
 				DScoreObj = Scorer.computeD();
@@ -822,10 +822,10 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			{ cut:'-0.65', message:'Your data suggest a strong implicit preference for Black People compared to White People' },
 			{ cut:'-0.35', message:'Your data suggest a moderate implicit preference for Black People compared to White People.' },
 			{ cut:'-0.15', message:'Your data suggest a slight implicit preference for Black People compared to White People.' },
-			{ cut:'0', message:'Your data suggest little to no difference in implicit preference between Black People and White People.' },
-			{ cut:'0.15', message:'Your data suggest a slight implicit preference for White People compared to Black People' },
-			{ cut:'0.35', message:'Your data suggest a moderate implicit preference for White People compared to Black People' },
-			{ cut:'0.65', message:'Your data suggest a strong implicit preference for White People compared to Black People' }
+			{ cut:'0.15', message:'Your data suggest little to no difference in implicit preference between Black People and White People.' },
+			{ cut:'0.35', message:'Your data suggest a slight implicit preference for White People compared to Black People' },
+			{ cut:'0.65', message:'Your data suggest a moderate implicit preference for White People compared to Black People' },
+			{ cut:'5', message:'Your data suggest a strong implicit preference for White People compared to Black People' }
 		]
 	});
 
