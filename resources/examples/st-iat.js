@@ -64,10 +64,10 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 			{ cut:'-0.65', message:'Your data suggest strong positive automatic attitude toward Black People.' },
 			{ cut:'-0.35', message:'Your data suggest moderate positive automatic attitude toward Black People.' },
 			{ cut:'-0.15', message:'Your data suggest weak positive automatic attitude toward Black People.' },
-			{ cut:'0', message:'Your data suggest neutral automatic attitude toward Black People.' },
-			{ cut:'0.15', message:'Your data suggest weak negative automatic attitude toward Black People.' },
-			{ cut:'0.35', message:'Your data suggest moderate negative automatic attitude toward Black People.' },
-			{ cut:'0.65', message:'Your data suggest strong negative automatic attitude toward Black People.' }
+			{ cut:'0.15', message:'Your data suggest neutral automatic attitude toward Black People.' },
+			{ cut:'0.35', message:'Your data suggest weak negative automatic attitude toward Black People.' },
+			{ cut:'0.65', message:'Your data suggest moderate negative automatic attitude toward Black People.' },
+			{ cut:'5', message:'Your data suggest strong negative automatic attitude toward Black People.' }
 		]
 	});
 

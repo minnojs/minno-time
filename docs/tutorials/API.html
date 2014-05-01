@@ -322,10 +322,12 @@ Set input listener (useful for adding timeouts), takes an <code>input</code> <a 
 <ul>
 <li><code>{type:&#39;setInput&#39;,input:{handle:&#39;time&#39;,on:&#39;timeout&#39;,duration:300}}</code></li>
 </ul>
-<p><strong>removeInput</strong>: Remove input listener, takes an input <code>handle</code> or an array of input handles</p>
+<p><strong>removeInput</strong>:
+Remove input listener, takes an input <code>handle</code> or an array of input handles. The special keyword <code>All</code> removes all listeners. <strong>Warning</strong> you must add listeners after using removeInput:All, or else the player will get stuck. This command removes triggers as well as regular input listeners.</p>
 <ul>
 <li><code>{type:&#39;removeInput&#39;,handle : &#39;time&#39;}</code></li>
 <li><code>{type:&#39;removeInput&#39;,handle : [&#39;time&#39;,&#39;left&#39;]}</code></li>
+<li><code>{type:&#39;removeInput&#39;,handle : &#39;All&#39;}</code></li>
 </ul>
 <p><strong>resetTimer</strong>:
 Resets trial timer. The latency of any events from here on (including the current one) will be calculated back to the reset instead of the begining of the trial.</p>
