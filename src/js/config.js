@@ -9,13 +9,13 @@ require.config({
   // 3rd party script alias names (Easier to type "jquery" than "libs/jquery-1.7.2.min")
   paths: {
 		//plugins
-		"text": "libs/text",
+		text: ['//cdnjs.cloudflare.com/ajax/libs/require-text/2.0.3/text.min', "libs/text"],
 
 		// Core Libraries
-		"jquery": "libs/jquery",
-		"underscore": "libs/lodash",
-		"backbone": "libs/backbone",
-    "JSON": "libs/json2"
+		jquery: ["//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min","libs/jquery"],
+		underscore: ["//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.1.0/lodash.min","libs/lodash"],
+		backbone: ['//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min', "libs/backbone"],
+    JSON: "libs/json2"
   },
 
   // Sets the configuration for your third party scripts that are not AMD compatible
@@ -30,7 +30,8 @@ require.config({
           "exports": "Backbone"  //attaches "Backbone" to the window object
       }
 
-  } // end Shim Configuration
+  }, // end Shim Configuration
+  deps: ['jquery', 'JSON', 'backbone', 'underscore']
 });
 
 // we enforceDefine in order to catch IE errors, therefore main.js has to use a define.

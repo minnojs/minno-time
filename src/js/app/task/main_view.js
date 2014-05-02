@@ -2,7 +2,6 @@
  * The main view, responsible for managing the canvas
  */
 define(['backbone','jquery','./adjust_canvas','app/task/script','text!templates/loading.html'], function(Backbone, $, adjust_canvas,script,loadingTpl){
-
 	var docReady = $.Deferred(); // document ready deferred, so we can continue only after activation has culminated
 	var View = Backbone.View.extend({
 
