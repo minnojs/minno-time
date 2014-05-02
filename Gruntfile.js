@@ -30,6 +30,10 @@ module.exports = function(grunt) {
 					dir: "dist",
 					appDir: 'src',
 					baseUrl: 'js',
+					generateSourceMaps: true,
+					preserveLicenseComments: false,
+					optimize: 'uglify2',
+
 					//optimize:'none', // toggle this for fast optimized debuging
 
 					// Tells Require.js to look at main.js for all shim and path configurations
