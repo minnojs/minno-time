@@ -33,6 +33,13 @@ module.exports = function(grunt) {
 					generateSourceMaps: true,
 					preserveLicenseComments: false,
 					optimize: 'uglify2',
+					paths: {
+						text: 'libs/text',
+						underscore: 'empty:',
+						backbone: 'empty:',
+						jquery: 'empty:',
+						JSON: 'empty:'
+					},
 
 					//optimize:'none', // toggle this for fast optimized debuging
 
