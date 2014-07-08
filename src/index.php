@@ -26,7 +26,7 @@
 
 		<script type="text/javascript">
 			require(['js/config'], function() {
-				require(['../../examples/iat_component_long']);
+				require(['../../resources/examples/iat_component_long']);
 			});
 		</script>
 	</head>
