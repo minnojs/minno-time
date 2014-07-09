@@ -63,7 +63,5 @@ If you want to activate a simple local server run `npm start`.
 We use [Grunt](http://gruntjs.com/) in order to automate tasks. `grunt build` should create a dist folder with the optimzed javascript, and a docs folder with documentation. You can specifiy an alternative url for the player using `grunt build --player=path/to/my/player`. You can ask for the site version (as opposed to local version) of the documentation using `grunt build --site`.
 
 ### Using PIPlayer in your own project
-You can use PIPlayer in your own project by adding it as a Bower dependency. `bower install PIPlayer`.  Please see Bower documentation for additional details on how to setup and use Bower.
+You can use PIPlayer in your own project by adding it as a Bower dependency. `bower install PIPlayer`.  Please see Bower documentation for additional details on how to setup and use bower.
  
-A note on Bower Dependencies:
- Dependencies should list backbone, jquery, json2, require, among others, but these are loaded by grunt presently, and placed in the dist folder. There are plugins to manage dependencies across grunt and bower. There is a good question on this here:  stackoverflow.com/questions/21198977/difference-between-grunt-npm-and-bower-package-json-vs-bower-json  That suggests that node dependencies are placed in package.json, and other dependencies (jquery etc... should be in the bower.json file).",
