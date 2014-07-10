@@ -1,0 +1,20 @@
+{
+    "name": "PIPlayer",
+    "version": "0.1.4",
+    "main":"dist/js/require.js",
+    "ignore": [
+    	      "bower.json",
+	      "docs",
+	      "Gruntfile.js",
+	      "node_modules",
+	      "package.json",
+	      "README.md",
+	      "resources",
+	      "src",
+	      "test",
+	      "user"    
+    ],
+    "dependencies": {
+    }
+    
+}
