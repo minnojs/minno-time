@@ -4,6 +4,14 @@ module.exports = function(grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+		bump: {
+			// https://github.com/vojtajina/grunt-bump
+			options: {
+				files:			['package.json', 'bower.json'],
+				updateConfigs:	['pkg'],
+				push: false
+			}
+		},
 		banner: {
 			compact: '/*! <%= pkg.name %> <%= pkg.version %> (Custom Build) | <%= pkg.license %> */',
 			full: '/*!\n' +
@@ -30,11 +38,12 @@ module.exports = function(grunt) {
 					dir: "dist",
 					appDir: 'src',
 					baseUrl: 'js',
+					skipDirOptimize: true, // so that we don't run into problems with node.js files form the bundles. also makes things faster...
 					generateSourceMaps: true,
 					preserveLicenseComments: false,
 					optimize: 'uglify2',
 					paths: {
-						text: 'libs/text',
+						text: '../libs/requirejs-text/text',
 						underscore: 'empty:',
 						backbone: 'empty:',
 						jquery: 'empty:',
@@ -195,6 +204,7 @@ module.exports = function(grunt) {
 	}
 
 	grunt.task.loadTasks('resources/gruntTasks');
+	grunt.loadNpmTasks('grunt-bump');
 	grunt.loadNpmTasks('grunt-docco');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');

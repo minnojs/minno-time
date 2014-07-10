@@ -1,20 +1,24 @@
 {
-    "name": "PIPlayer",
-    "version": "0.1.4",
-    "main":"dist/js/require.js",
-    "ignore": [
-    	      "bower.json",
-	      "docs",
-	      "Gruntfile.js",
-	      "node_modules",
-	      "package.json",
-	      "README.md",
-	      "resources",
-	      "src",
-	      "test",
-	      "user"    
-    ],
-    "dependencies": {
-    }
-    
+  "name": "PIPlayer",
+  "version": "0.2.0",
+  "main": "dist/index.html",
+  "ignore": [
+    "bower.json",
+    "docs",
+    "Gruntfile.js",
+    "node_modules",
+    "package.json",
+    "README.md",
+    "resources",
+    "test",
+    "user"
+  ],
+  "devDependencies": {
+    "requirejs": "~2.1.14",
+    "lodash": "~2.1.0",
+    "requirejs-text": "~2.0.12",
+    "backbone": "1.0.0",
+    "json2": "*",
+    "jquery": "components/jquery#~1.10.2"
+  }
 }
