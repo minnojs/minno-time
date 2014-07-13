@@ -8,6 +8,7 @@ module.exports = function(grunt) {
 			// https://github.com/vojtajina/grunt-bump
 			options: {
 				files:			['package.json', 'bower.json'],
+				commitFiles:	['package.json', 'bower.json'],
 				updateConfigs:	['pkg'],
 				push: false
 			}
