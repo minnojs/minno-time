@@ -22,6 +22,7 @@ define(['underscore','models/set'],function(_,Set){
 		function sets(setArr){
 			_.each(setArr,function(value,key){
 				setStack[key] = new Set(value);
+				setStack[key].name = key;
 			});
 
 			return setStack;
