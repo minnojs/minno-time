@@ -16,20 +16,22 @@ define(['jquery'], function($){
 
 			switch (type) {
 				case 'template':
-					try {
-						require(['text!' + src], function(){
-							deferred.resolve();
-						});
-					} catch(err) {
+					require(['text!' + src], function(){
+						deferred.resolve();
+					}, function(){
 						throw new Error('Template not found: ' + src);
-					}
+					});
 					break;
 				case 'image':
 					/* falls through */
 				default :
 					var img = new Image();	// create img object
 					$(img).on('load',function(){deferred.resolve();}); // resolve deferred on load
-					$(img).on('error',function(){throw new Error('Image not found: "' + src + '"');}); // reject deferred on error
+					$(img).one('error',function(){
+						img.src = "";
+						img.src = src;
+						$(img).on('error', function(){throw new Error('Image not found: "' + src + '"');});
+					}); // reject deferred on error
 					img.src = src;
 					break;
 			}
