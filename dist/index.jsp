@@ -22,9 +22,9 @@
         <link type="text/css" rel="Stylesheet" href="css/styles.css"/>
 
 		<!--[if lt IE 8]>
-			<script src="libs/json2/json2.js"></script>
+			<script src="../bower_components/json2/json2.js"></script>
 		<![endif]-->
-		<script src="libs/requirejs/require.js"></script>
+		<script src="../bower_components/requirejs/require.js"></script>
 
 		<script>
 			require(['js/config'], function() {

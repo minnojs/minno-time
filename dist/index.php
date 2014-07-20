@@ -24,13 +24,13 @@
 		</script>
 
 		<!--[if lt IE 8]>
-			<script src="libs/json2/json2.js"></script>
+			<script src="../bower_components/json2/json2.js"></script>
 		<![endif]-->
-		<script src="libs/requirejs/require.js"></script>
+		<script src="../bower_components/requirejs/require.js"></script>
 
 		<script type="text/javascript">
 			require(['js/config'], function() {
-				require(['../../resources/examples/iat_component_long']);
+				require(['../../resources/examples/iat']);
 			});
 		</script>
 	</head>

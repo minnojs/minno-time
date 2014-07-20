@@ -59,7 +59,7 @@ define(["backbone","underscore"], function(Backbone, _) {
 			return	element.attributes;
 		},
 
-		inherit: function(definitions){
+		getInherited: function(definitions){
 			// if this is a function, return it with the set as "this"
 			if (_.isFunction(definitions.type)) {
                 return definitions.type.call(this,definitions);
@@ -75,6 +75,20 @@ define(["backbone","underscore"], function(Backbone, _) {
 				default:
 					return this.random();
 			}
+		},
+
+		inherit: function(definitions){
+			if (!this.length){
+				throw new Error('You attempted to inherit from an empty set ({' + this.name + '})');
+			}
+
+			var result = this.getInherited(definitions);
+
+			if (!result){
+				throw new Error('You tried to inherit from {' + this.name + '} but an appropriate element was not found');
+			}
+
+			return result;
 		}
 
 	});

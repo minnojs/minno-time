@@ -44,7 +44,7 @@ module.exports = function(grunt) {
 					preserveLicenseComments: false,
 					optimize: 'uglify2',
 					paths: {
-						text: '../libs/requirejs-text/text',
+						text: '../../bower_components/requirejs-text/text',
 						underscore: 'empty:',
 						backbone: 'empty:',
 						jquery: 'empty:',
