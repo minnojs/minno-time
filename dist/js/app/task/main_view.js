@@ -31,7 +31,12 @@ define(['backbone','jquery','./adjust_canvas','app/task/script','text!templates/
 				if (settings.css) {self.$el.css(settings.css);}
 
 				// append to body and render
-				self.$el.appendTo('body');
+				if ($('[pi-player]').length){
+					$('[pi-player]').empty().append(self.$el);
+				} else {
+					self.$el.appendTo('body');
+				}
+
 				self.render();
 				docReady.resolve();
 			});

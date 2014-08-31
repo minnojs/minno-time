@@ -31,3 +31,4 @@ define(['jquery','app/task/settings'],function($, settings){
 
 	return send;
 });
+
