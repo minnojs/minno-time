@@ -706,8 +706,11 @@ canvas: {
 }
 ```
 
+`width`:
+If width is set, then the canvas size is set to a constant width (set the hight using the `proportions` property).
+
 `maxWidth`:
-The maximum width (in pixels) that the canvas may reach. By default it is set to 500px.
+The maximum width (in pixels) that the canvas may reach. By default it is set to 500px (note that if `width`  is set, then this property is ignored and the canvas size stays static).
 
 `proportions`:
 Responsible for the shape of the canvas. You can set it either as a number or an object. By default it is set to `0.8`.

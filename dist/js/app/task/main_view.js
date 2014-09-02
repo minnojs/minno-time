@@ -14,7 +14,7 @@ define(['backbone','jquery','./adjust_canvas','app/task/script','text!templates/
 		},
 
 		render: function(){
-			this.adjustCanvas();
+			this.adjustCanvas(true);
 			return this;
 		},
 

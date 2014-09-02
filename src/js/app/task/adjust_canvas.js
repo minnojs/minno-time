@@ -5,7 +5,7 @@
 define(['jquery','app/task/script','app/trial/current_trial'],function($, script, trial){
 
 	// the function to be used by the main view
-	var adjust_canvas = function adjust_canvas(){
+	function adjust_canvas(init){
 		var self = this;
 		// get canvas settings
 		var settings = script.settings.canvas || {};
@@ -19,30 +19,44 @@ define(['jquery','app/task/script','app/trial/current_trial'],function($, script
 				}
 				proportions = settings.proportions.height/settings.proportions.width; // if proportions are an object they should include width and height
 			} else {
-				proportions = settings.proportions;
+				proportions = settings.proportions || 0.8; // by default proportions are 0.8
 			}
 		}
 
 		// we put this in a time out because of a latency of orientation change on android devices
-		setTimeout(function(){
+		setTimeout(resize,init ? 0 : 500); // end timeout
+
+		function resize(){
 			var height, width;
 
-			// get current screen size
-			var screenSize = {
-				width: $(window).innerWidth(),
-				height: $(window).innerHeight()
-			};
+			// static canvas size
+			if (settings.width){
+				// if this is not init, we've already set screen size, so don't mess around
+				if (!init){
+					return true;
+				}
 
-			var maxHeight = screenSize.height;
-			var maxWidth = Math.min(settings.maxWidth, screenSize.width);
+				width = settings.width;
+				height = width*proportions;
 
-			// calculate the correct size for this screen size
-			if (maxHeight > proportions * maxWidth) {
-				height = maxWidth*proportions;
-				width = maxWidth;
-			} else {
-				height = maxHeight;
-				width = maxHeight/proportions;
+			} else { // dynamic canvas size
+				// get current screen size
+				var screenSize = {
+					width: $(window).innerWidth(),
+					height: $(window).innerHeight()
+				};
+
+				var maxHeight = screenSize.height;
+				var maxWidth = Math.min(settings.maxWidth, screenSize.width);
+
+				// calculate the correct size for this screen size
+				if (maxHeight > proportions * maxWidth) {
+					height = maxWidth*proportions;
+					width = maxWidth;
+				} else {
+					height = maxHeight;
+					width = maxHeight/proportions;
+				}
 			}
 
 			// remove border width and top margin from calculated width (can't depend on cool box styles yet...)
@@ -55,7 +69,7 @@ define(['jquery','app/task/script','app/trial/current_trial'],function($, script
 			self.$el.height(height);
 			self.$el.css('font-size',height*(settings.textSize || 3)/100);
 
-			// refreash all stimuli (we don't want to do this before we have trials)
+			// refresh all stimuli (we don't want to do this before we have trials)
 			if (trial()) {
 				trial()._layout_collection.refresh();
 				trial()._stimulus_collection.refresh();
@@ -63,8 +77,7 @@ define(['jquery','app/task/script','app/trial/current_trial'],function($, script
 
 			// scroll to top of window (hides some of the mess on the top of mobile devices)
 			window.scrollTo(0, 1);
-
-		},500); // end timeout
+		}
 	};
 
 	return adjust_canvas;
