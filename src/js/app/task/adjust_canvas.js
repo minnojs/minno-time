@@ -78,7 +78,7 @@ define(['jquery','app/task/script','app/trial/current_trial'],function($, script
 			// scroll to top of window (hides some of the mess on the top of mobile devices)
 			window.scrollTo(0, 1);
 		}
-	};
+	}
 
 	return adjust_canvas;
 });

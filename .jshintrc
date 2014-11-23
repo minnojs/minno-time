@@ -10,7 +10,7 @@
         "require": false
     },
     "immed": true,
-    "latedef": true,
+    "latedef": "nofunc",
     "laxcomma": true,
     "newcap": true,
     "noarg": true,
