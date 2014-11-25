@@ -17,7 +17,7 @@
     "requirejs": "~2.1.14",
     "lodash": "~2.1.0",
     "requirejs-text": "~2.0.12",
-    "backbone": "1.0.0",
+    "backbone": "1.1.2",
     "json2": "*",
     "jquery": "components/jquery#~1.10.2"
   }
