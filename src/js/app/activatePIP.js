@@ -14,11 +14,21 @@ define(function(require){
 		global = require('./global');
 
 
-	function activate(script){
+	function activate(script, done){
+
+		// set default done function
+		var settings = script.settings || (script.settings = {});
+		settings.$done = done || function dfltDone(){
+			window.location.href = settings.redirect || window.location.href;
+		};
+
 
 		// init global
 		var glob = global(global());
 		var name = script.name || 'anonymous PIP';
+
+
+
 
 		// warn of recurring task name
 		if (glob[name] && console.warn){
