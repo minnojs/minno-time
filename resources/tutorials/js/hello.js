@@ -1,5 +1,8 @@
 /* The script wrapper */
-define(['app/API'], function(API) {
+define(['app/API'], function(APIconstructor) {
+
+	var API = new APIconstructor();
+
 
 	// ### Hello world
 
@@ -31,6 +34,6 @@ define(['app/API'], function(API) {
 	]);
 
 	// #### Activate the player
-	API.play();
+	return API.script;
 });
 /* don't forget to close the define wrapper */

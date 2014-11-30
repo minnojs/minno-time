@@ -1,4 +1,6 @@
-define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
+define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
+
+	var API = new APIConstructor('plainIAT');
 
 	var attribute1 = 'Unpleasant';
 	var attribute2 = 'Pleasant';
@@ -502,5 +504,5 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		}
 	]);
 
-	API.play();
+	return API.script;
 });

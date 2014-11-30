@@ -9,6 +9,7 @@
         "define": false,
         "require": false
     },
+    "-W099": true,
     "immed": true,
     "latedef": "nofunc",
     "laxcomma": true,

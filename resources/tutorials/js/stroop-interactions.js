@@ -1,4 +1,7 @@
-define(['app/API'], function(API) {
+define(['app/API'], function(APIconstructor) {
+
+	var API = new APIconstructor('stroop');
+
 
 	API.addSettings('canvas',{
 		textSize: 5
@@ -71,6 +74,6 @@ define(['app/API'], function(API) {
 	]);
 
 	// #### Activate the player
-	API.play();
+	return API.script;
 });
 /* don't forget to close the define wrapper */

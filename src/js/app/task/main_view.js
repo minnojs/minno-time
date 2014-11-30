@@ -8,6 +8,7 @@ define(['backbone','jquery','./adjust_canvas','app/task/script','text!templates/
 		id: 'canvas',
 
 		initialize: function(){
+
 			this.activate = $.proxy(this.activate,this);
 			this.render = $.proxy(this.render,this);
 			$(window).on('orientationchange resize', $.proxy(this.adjustCanvas,this));
@@ -20,7 +21,7 @@ define(['backbone','jquery','./adjust_canvas','app/task/script','text!templates/
 
 		activate: function(){
 			var self = this;
-			var settings = script.settings.canvas || {};
+			var settings = script().settings.canvas || {};
 
 			$(document).ready(function(){
 				// canvas decorations

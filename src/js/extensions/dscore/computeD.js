@@ -1,5 +1,5 @@
 
-define(['jquery','app/API'],function($,API){
+define(['jquery','app/global'],function($,globalGetter){
 
 
 		var computeD = {
@@ -32,7 +32,7 @@ define(['jquery','app/API'],function($,API){
 			},
 
 			setDataArray: function(){
-				this.dataArray = API.getLogs();
+				this.dataArray = globalGetter().current.logs;
 			}
 		});
 

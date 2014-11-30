@@ -1,6 +1,9 @@
 /* global $ */
 //This example creates an amp task.
-define(['app/API'], function(API) {
+define(['app/API'], function(APIconstructor) {
+
+	var API = new APIconstructor();
+
 	var category1 = 'Pleasent';
 	var category2 = 'Unpleasent';
 	var condition1= "white";
@@ -725,5 +728,5 @@ define(['app/API'], function(API) {
 		}
 	]); // end sequence
 
-	API.play();
+	return API.script;
 });

@@ -43,7 +43,9 @@
 
 		<script type="text/javascript">
 			require(['js/config'], function() {
-				require([getParameterByName('url') || '../resources/examples/iat.js']);
+				require(['app/activatePIP', getParameterByName('url') || '../resources/examples/iat.js'], function(activatePIP, script){
+					activatePIP(script);
+				});
 			});
 		</script>
 	</body>

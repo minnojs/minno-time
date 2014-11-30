@@ -1,135 +1,152 @@
-/*
- * The player API
- * used to set the script object and run the player
- * will be exported to window
- */
-define(['jquery','./task/script','app/task/main_view','app/task/parser','app/sequencer/player', 'app/task/log/log_stack'],function($,script,main,parse,play,logStack){
-	// the API object
-	var API = {};
+define(function(require){
 
-	// We allow activating the player only  once (otherwise we cause all sorts of terrible problems: double parsing, pubsub clashes etc.).
-	// This var follows whether we've already activated the player.
-	var player_activated = false;
+	var _ = require('underscore');
 
-	/*
-	 * add set function
-	 * type: pertains to the type of set we're adding (should be hard coded in the API)
-	 * set: set name, or full set object
-	 * setObj: in case set was a name - the set to add
-	 *
-	 * use examples:
-	 * function('trial',{
-	 *   intro: [intro1, intro2],
-	 *   Default: [defaultTrial]
-	 * })
-	 * function('trial','intro',[intro1, intro2])
-	 * function('trial','Default',defaultTrial)
-	 *
+	/**
+	 * Constructor for PIPlayer script creator
+	 * @return {Object}		Script creator
 	 */
-	function add_set(type, set, setObj){
-		// get the sets we want to extend (or create them)
-		var targetSets = script[type + "Sets"] || (script[type + "Sets"] = {});
+	function API(name){
+		this.script = {
+			global: {}, // the real global should be extended with this
+			current: {}, // this is the actual namespace for this PIP
+			trialSets: {},
+			stimulusSets: {},
+			mediaSets: {},
+			sequence: []
+		};
 
-		// if we get an explicit object, simply extend the set
-		if (typeof set != "string") {
-			$.extend(true, targetSets,set);
-		}
+		this.script.name = name || 'anonymous PIP';
 
-		// if we got a named object
-		else {
-			// make sure the objects to add are wrapped in an array
-			$.isArray(setObj) || (setObj = [setObj]);
-			// if this is a whole set merge it into the existing set (or create a new one)
-			targetSets[set] = targetSets[set] ? $.merge(targetSets[set], setObj) : setObj;
-		}
+		this.settings = this.script.settings = {
+			canvas: {
+				maxWidth: 800,
+				proportions: 0.8
+			},
+			hooks: {}
+		};
 	}
 
-	$.extend(API, {
-		// settings
-		addSettings: function(settings, settingsObj){
-			script.settings || (script.settings = {});
-			if (typeof settings != "string"){
-				$.extend(true, script.settings ,settings);
-			} else {
-				if ($.isPlainObject(script.settings[settings])){
-					$.extend(true, script.settings[settings], settingsObj);
-				} else {
-					script.settings[settings] = settingsObj;
-				}
-			}
-			return this;
-		},
+	_.extend(API.prototype, {
 
 		// add set function
-		addTrialSets: function(set,setObj){add_set('trial',set,setObj); return this;},
-		addStimulusSets: function(set,setObj){add_set('stimulus',set,setObj);return this;},
-		addMediaSets: function(set,setObj){add_set('media',set,setObj);return this;},
+		addTrialSets: add_set('trial'),
+		addStimulusSets: add_set('stimulus'),
+		addMediaSets: add_set('media'),
 
-		// add sequence
-		addSequence: function(sequence){
-			// make sure the sequence is an array
-			$.isArray(sequence) || (sequence = [sequence]);
-			// set sequence
-			script.sequence = script.sequence ? $.merge(script.sequence, sequence) : sequence;
+		// settings
+		addSettings: function(name, settingsObj){
+			var settings;
+
+			if (_.isPlainObject(settingsObj)){
+				settings = this.settings[name] = this.settings[name] || {};
+				_.extend(settings, settingsObj);
+			} else {
+				this.settings[name] = settingsObj;
+			}
 
 			return this;
 		},
 
-		// extend global object
-		addGlobal: function(obj){
-			$.extend(true,script.global,obj);
+		addSequence: function(sequence){
+			var script = this.script;
+			_.isArray(sequence) || (sequence = [sequence]);
+
+			script.sequence = script.sequence.concat(sequence);
+
 			return this;
+		},
+
+		addGlobal: function(global){
+			if (!_.isPlainObject(global)){
+				throw new Error('global must be an object');
+			}
+			_.merge(this.global(), global);
 		},
 
 		getGlobal: function(){
-			return script.global;
+			return window.piGlobal;
+		},
+
+		addCurrent: function(current){
+			if (!_.isPlainObject(current)){
+				throw new Error('current must be an object');
+			}
+			_.merge(this.script.current, current);
+		},
+
+		getCurrent: function(){
+			return this.script.current;
 		},
 
 		// push a whole script
 		addScript: function(obj){
-			$.extend(true,script,obj);
-			return this;
+			_.merge(this.script,obj);
 		},
 
 		// returns script (for debuging probably)
 		getScript: function(){
-			return script;
+			return this.script;
 		},
 
 		getLogs: function(){
-			return logStack;
+			return this.script.current.logs;
 		},
 
 		// run the player, returns deferred
 		play: function(){
-
-			// make sure this is the first time we're playing this sequence
-			if (player_activated) {
-				throw new Error('Player has already been activated. You can only call API.play() once per session');
-			}
-			player_activated = true;
-
-			var parseDef = parse();
-
-			// activate main view and then display the loading screen
-			main
-				.activate()
-				.docReady()
-				.done(function(){
-					main
-						.loading(parseDef) // activate loading screen
-						.done(function(){
-							main.empty(); // remove the loading screen
-							play(); // activate task
-						})
-						.fail(function(src){
-							throw new Error('loading resource failed, do something about it! (you can start by checking the error log, you are probably reffering to the wrong url - ' + src +')');
-						});
-				});
-
-			return this;
+			throw new Error('you should return API.script instead of calling API.play()!!');
 		}
+
 	});
 
 	return API;
+
+	 /**
+	  * Create a function that adds sets of a scpecific type
+	  * @param {String} type  	The type of set setter to create
+	  * @returns {Function} 	A setter object
+	  */
+	function add_set(type){
+
+		/**
+		 * Adds a set to the targetSet
+		 * @param {String, Object} set    	Either full set object, or the name of this setArr
+		 * @param {Array} setArr 			An array of objects for this set
+		 * @returns {Object} The API object
+		 *
+		 * use examples:
+		 * fn({
+		 *   intro: [intro1, intro2],
+		 *   Default: [defaultTrial]
+		 * })
+		 * fn('intro',[intro1, intro2])
+		 * fn('Default',defaultTrial)
+		 *
+		 */
+		function setSetter(set, setArr){
+			// get the sets we want to extend (or create them)
+			var targetSets = this.script[type + "Sets"] || (this.script[type + "Sets"] = {});
+
+			var i;
+			// if we get an explicit object, simply extend the set
+			if (_.isPlainObject(set)) {
+				_.merge(targetSets, set);
+			}
+
+			// if we got a named object
+			else {
+				// make sure the objects to add are wrapped in an array
+				_.isArray(setArr) || (setArr = [setArr]);
+				targetSets[set] || (targetSets[set] = []);
+
+				// merge the objects into the targetSet
+				for (i=0;i<setArr.length; i++){
+					targetSets[set].push(setArr[i]);
+				}
+			}
+		}
+
+		return setSetter;
+	}
 });

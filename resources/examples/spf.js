@@ -1,5 +1,6 @@
-define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
+define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 
+	var API = new APIConstructor();
 	var attribute1 = 'Good Words';
 	var attribute2 = 'Bad Words';
 	var category1 = 'Black People';
@@ -463,5 +464,5 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		}
 	]);
 
-	API.play();
+	return API.script;
 });

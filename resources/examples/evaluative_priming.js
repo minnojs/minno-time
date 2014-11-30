@@ -1,4 +1,7 @@
-define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
+define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
+
+	var API = new APIConstructor();
+
 	var category1 = 'Pleasent';
 	var category2 = 'Unpleasent';
 
@@ -483,5 +486,5 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		}
 	]);
 
-	API.play();
+	return API.script;
 });

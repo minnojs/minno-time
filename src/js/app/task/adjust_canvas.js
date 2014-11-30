@@ -2,13 +2,13 @@
  * adjust canvas according to window size and settings
  * this module is built to be part of the main view
  */
-define(['jquery','app/task/script','app/trial/current_trial'],function($, script, trial){
+define(['jquery','app/task/settings','app/trial/current_trial'],function($, settingsGetter, trial){
 
 	// the function to be used by the main view
 	function adjust_canvas(init){
 		var self = this;
 		// get canvas settings
-		var settings = script.settings.canvas || {};
+		var settings = settingsGetter('canvas') || {};
 
 		// calculate proportions (as height/width)
 		var proportions;

@@ -1,4 +1,5 @@
 define(['jquery','app/API','underscore','./computeD','./msgMan','./parcelMng'],function($,API,_,computeData,msgMan,parcelMng){
+	window.console || (window.console = {log: $.noop, error: $.noop});
 	var Scorer = {};
 
 //comment

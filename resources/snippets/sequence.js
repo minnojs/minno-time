@@ -1,4 +1,7 @@
-define(['app/API'], function(API) {
+define(['app/API'], function(APIconstructor) {
+
+	var API = new APIconstructor();
+
 
 	// ### The trial sequence
 	// The heart of any PIP script is the sequence.
@@ -193,10 +196,6 @@ define(['app/API'], function(API) {
 	]);
 	/* this is where we close the sequence */
 
-	API.play();
-
-
-
 	// ### Pro tip
 	// *This section goes beyond the normal scope of the PIP, and is intended for use by advanced users only.* </br>
 	// The sequencer allows for many complex configurations. There are times that you want a quick easy way to test that the sequence you created really does what it is supposed to.
@@ -245,6 +244,8 @@ define(['app/API'], function(API) {
 		/* global console */
 		console.log(mixer(sequence));
 	});
+
+	return API.script;
 
 });
 /* don't forget to close the define wrapper */

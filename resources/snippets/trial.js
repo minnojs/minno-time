@@ -1,7 +1,9 @@
 // All PIP source files are wrapped inside define function
 // This function gives you access to the API object that we use to build the various tasks
 // If you want to know more about this, you can read up about AMD and check out http://requirejs.org/
-define(['app/API'], function(API) {
+define(['app/API'], function(APIconstructor) {
+
+	var API = new APIconstructor();
 
 	// ### The trial sequence
 	// The heart of any PIP script is the sequence.
@@ -68,6 +70,6 @@ define(['app/API'], function(API) {
 	]);
 	/* this is where we close the sequence */
 
-	API.play();
+	return API.script;
 });
 /* don't forget to close the require wrapper */

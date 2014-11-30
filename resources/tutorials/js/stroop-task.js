@@ -1,5 +1,7 @@
 /* The script wrapper */
-define(['app/API'], function(API) {
+define(['app/API'], function(APIconstructor) {
+
+	var API = new APIconstructor();
 
 	API.addSettings('canvas',{
 		textSize: 5

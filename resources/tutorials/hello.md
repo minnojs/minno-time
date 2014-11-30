@@ -8,12 +8,14 @@ PIP's scripts are usually a single JavaScript file. The script is wrapped within
 
 ```js
 /* The script wrapper */
-define(['app/API'], function(API) {
+define(['app/API'], function(APIconstructor) {
+	var API = new APIconstructor();
 
 	/*
 		Your script comes here...
 	*/
 
+	return API.script;
 });
 /* don't forget to close the wrapper */
 ```
@@ -24,7 +26,10 @@ The wrapper creates the `API` object for you. The `API` object is the instrument
 Each task is composed of one or more trials, that are activated sequentially. We set trials into the player using a function called [`API.addSequence`](./API.md#add-sequence) that accepts an array of trials as its argument. After adding any trials that you like all that is left is activating the player by calling [`API.play`](API.md#play):
 
 ```js
-define(['app/API'], function(API) {
+define(['app/API'], function(APIconstructor) {
+
+	var API = new APIconstructor();
+
 	API.addSequence([
 		/*
 			This is where you input all your trials.
@@ -32,7 +37,7 @@ define(['app/API'], function(API) {
 		*/
 	]);
 
-	API.play();
+	return API.script;
 });
 ```
 
@@ -149,7 +154,10 @@ Here is the whole code again, with comments that explain each and every line. Be
 
 ```js
 /* The script wrapper */
-define(['app/API'], function(API) {
+define(['app/API'], function(APIconstructor) {
+
+	var API = new APIconstructor();
+
 	//The whole script is inside a function. 
 	//The function accepts an API object. 
 	//We use the API object to set the task.
@@ -205,7 +213,7 @@ define(['app/API'], function(API) {
 	//When the user hit space, we ended the trial (this was done with an interaction object).
 
 	// Activate the player. This will play the trial sequence. In our case, it will play a single trial.
-	API.play();
+	return API.script;
 }); //Close the define wrapper.
 ```
 

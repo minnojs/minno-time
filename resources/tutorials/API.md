@@ -795,9 +795,12 @@ The API is a javascript object that is used to activate the PIP.
 The basic format for accessing the API is as follows:
 
 ```js
-define(['app/API'], function(API) {
+define(['app/API'], function(APIconstructor) {
+	var API = new APIconstructor();
+
 	API.addScript(script);
-	API.play();
+	
+	return API.script;
 });
 ```
 
@@ -809,11 +812,12 @@ Allows pushing a whole script to the player:
 
 **getScript**:
 Returns the whole player script:
-* `API.addScript();`
+* `API.getScript();`
 
-**addGlobal**
-Allows extending the global object:
+**addGlobal, addCurrent**
+Allows extending the global or current objects respectively:
 * `API.addGlobal(object);`
+* `API.addCurrent(object);`
 
 	For instance if the current global object looks like this:
 
@@ -841,9 +845,10 @@ Allows extending the global object:
 	}
 	```
 
-**getGlobal**:
-Returns the global object:
+**getGlobal, getCurrent**:
+Returns the global or current object respectively:
 * `API.getGlobal();`
+* `API.getCurrent();`
 
 **addSettings**:
 `API.addSettings` allows you to add settings to your script.
@@ -899,10 +904,6 @@ And part of a set:
 ```js
 API.addSequence(trial2);
 ```
-
-**play**:
-Run your task (this function should be run after creating the reset of your script)
-* `API.play();`
 
 **getScript**:
 Returns the script that you've built so far. Useful mainly for debugging:

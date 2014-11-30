@@ -1,5 +1,7 @@
 // # Brief IAT
-define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
+define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
+
+	var API = new APIConstructor();
 
 	// Preset the attribute and category names
 	var attribute1 = 'Pleasant';
@@ -940,5 +942,5 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		]
 	});
 
-	API.play();
+	return API.script;
 });

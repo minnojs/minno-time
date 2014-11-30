@@ -1,9 +1,10 @@
-define(['underscore','./settings'],function(_,settings){
+define(['underscore','./settings'],function(_,settingsGetter){
 	/*
 	 * build the url for this src (add the generic base_url)
 	 */
 
 	return function(url, type){
+		var settings = settingsGetter();
 		var base_url;
 
 		// the base url setting may be either a string, or an object with the type as a field

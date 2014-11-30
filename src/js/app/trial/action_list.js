@@ -1,4 +1,4 @@
-define(['underscore',"utils/pubsub","utils/interface/interface", 'app/task/script'],function(_,pubsub,input,script){
+define(['underscore',"utils/pubsub","utils/interface/interface", 'app/global'],function(_,pubsub,input,global){
 	var actions = {
 		/*
 		 * Stimulus actions
@@ -87,10 +87,10 @@ define(['underscore',"utils/pubsub","utils/interface/interface", 'app/task/scrip
 		setGlobalAttr: function(options){
 			switch (typeof options.setter){
 				case 'function':
-					options.setter.apply(null,[script.global, options]);
+					options.setter.apply(null,[global(), options]);
 					break;
 				case 'object':
-					_.extend(script.global, options.setter);
+					_.extend(global(), options.setter);
 					break;
 				default:
 					throw new Error('setGlobalAttr requires a "setter" property');
@@ -103,7 +103,7 @@ define(['underscore',"utils/pubsub","utils/interface/interface", 'app/task/scrip
 			if (typeof options.fn != 'function') {
 				throw new Error('The custom action requires a fn propery');
 			}
-			options.fn.apply(null, [options,eventData,script.global]);
+			options.fn.apply(null, [options,eventData,global()]);
 		}
 
 	};

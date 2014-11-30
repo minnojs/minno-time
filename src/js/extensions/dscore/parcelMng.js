@@ -1,4 +1,4 @@
-define(['jquery','app/API','underscore','./msgMan'],function($,API,_, msgMan){
+define(['jquery','app/global','underscore','./msgMan'],function($,globalGetter,_, msgMan){
 
 
 	var parcelMng= {};
@@ -20,7 +20,7 @@ define(['jquery','app/API','underscore','./msgMan'],function($,API,_, msgMan){
 */
 		Init: function(compute){
 
-			var data = API.getLogs();
+			var data = globalGetter().current.logs;
 			parcelMng.parcelArray = [];
 			parcelMng.scoreData = {};
 
@@ -554,4 +554,3 @@ define(['jquery','app/API','underscore','./msgMan'],function($,API,_, msgMan){
 	return parcelMng;
 
 });
-

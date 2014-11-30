@@ -1,5 +1,7 @@
-define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
+define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 // This wrapper is neccesary in order to activate the API
+
+	var API = new APIConstructor();
 
 	// lets set the attibutes/concepts in one place so we can change them when we want
 	var attribute1 = 'Good Words';
@@ -749,7 +751,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 				console.log('calling Scorer');
 				DScoreObj = Scorer.computeD();
 
-				media = {css:{color:'black'},media:{html:'<div><p style="font-size:12px"><color="#FFFAFA"> '+DScoreObj.FBMsg+'<br>The Score is:'+DScoreObj.DScore+'</p></div>'}};
+				media = {css:{color:'black'},media:{html:'<div><p style="font-size:12px;color:#FFFAFA"> '+DScoreObj.FBMsg+'<br>The Score is:'+DScoreObj.DScore+'</p></div>'}};
 				trial.stimuli.push(media);
 				Scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score1","feedback1");
 
@@ -769,10 +771,9 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 					]
 				});
 				DScoreObj = Scorer.computeD();
-				media = {css:{color:'black'},media:{html:'<h1><div><p style="font-size:12px"><color="#FFFAFA"> '+DScoreObj.FBMsg+'<br>The Score is:'+DScoreObj.DScore+'</p></div>'}};
+				media = {css:{color:'black'},media:{html:'<h1><div><p style="font-size:12px;color=#FFFAFA>'+DScoreObj.FBMsg+'<br>The Score is:'+DScoreObj.DScore+'</p></div>'}};
 				trial.stimuli.push(media);
 				Scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score1","feedback1");
-
 			}
 		},
 
@@ -782,7 +783,7 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 				{//The instructions stimulus
 					data : {'handle':'instStim'},
 					css: {color:'black'},
-					media:{html:'<div><p style="font-size:28px"><color="#FFFAFA">You have completed the study<br/><br/>Thank you very much for your participation.<br/><br/> Press "space" for continue to next task.</p></div>'}
+					media:{html:'<div><p style="font-size:28px;color:#FFFAFA">You have completed the study<br/><br/>Thank you very much for your participation.<br/><br/> Press "space" to continue to next task.</p></div>'}
 				}
 			]
 		}
@@ -829,5 +830,5 @@ define(['app/API','extensions/dscore/Scorer'], function(API,Scorer) {
 		]
 	});
 
-	API.play();
+	return API.script;
 });

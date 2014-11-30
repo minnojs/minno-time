@@ -1,5 +1,8 @@
 /* The script wrapper */
-define(['app/API'], function(API) {
+define(['app/API'], function(APIconstructor) {
+
+	var API = new APIconstructor();
+
 
 	API.addSequence([
 		{
@@ -28,5 +31,5 @@ define(['app/API'], function(API) {
 		}
 	]);
 
-	API.play();
+	return API.script;
 });
