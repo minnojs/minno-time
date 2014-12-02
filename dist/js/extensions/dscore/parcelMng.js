@@ -1,7 +1,5 @@
 define(['jquery','underscore','./msgMan'],function($,_, msgMan){
 
-	// use the real global in order to preven problems with dependencies
-	var global = window.piGlobal;
 	var parcelMng= {};
 
 
@@ -20,6 +18,8 @@ define(['jquery','underscore','./msgMan'],function($,_, msgMan){
 
 */
 		Init: function(compute){
+			// use the real global in order to preven problems with dependencies
+			var global = window.piGlobal;
 
 			var data = global.current.logs;
 			parcelMng.parcelArray = [];
