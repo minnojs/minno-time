@@ -11,6 +11,7 @@ define(function(){
 
     // 3rd party script alias names (Easier to type "jquery" than "libs/jquery-1.7.2.min")
     paths: {
+      pipAPI: 'app/API',
       //plugins
       text: ['//cdnjs.cloudflare.com/ajax/libs/require-text/2.0.3/text.min', "../../bower_components/requirejs-text/text"],
 
@@ -19,6 +20,14 @@ define(function(){
       underscore: ["//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.1.0/lodash.min","../../bower_components/lodash/dist/lodash.min"],
       backbone: ['//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min', "../../bower_components/backbone/backbone-min"]
     },
+
+    packages:[
+      {
+        name: 'pipScorer',
+        location: 'extensions/dscore',
+        main: 'Scorer'
+      }
+    ],
 
     deps: ['jquery', 'backbone', 'underscore']
   });

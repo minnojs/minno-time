@@ -1,6 +1,7 @@
-define(['jquery','app/global','underscore','./msgMan'],function($,globalGetter,_, msgMan){
+define(['jquery','underscore','./msgMan'],function($,_, msgMan){
 
-
+	// use the real global in order to preven problems with dependencies
+	var global = window.piGlobal;
 	var parcelMng= {};
 
 
@@ -20,7 +21,7 @@ define(['jquery','app/global','underscore','./msgMan'],function($,globalGetter,_
 */
 		Init: function(compute){
 
-			var data = globalGetter().current.logs;
+			var data = global.current.logs;
 			parcelMng.parcelArray = [];
 			parcelMng.scoreData = {};
 
