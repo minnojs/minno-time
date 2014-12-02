@@ -3,7 +3,10 @@
   "version": "0.2.3",
   "main": "dist/index.html",
   "ignore": [
-    "bower.json",
+    ".gitattributes",
+    ".gitignore",
+    ".jshintrc",
+    "bower_components",
     "docs",
     "Gruntfile.js",
     "node_modules",
@@ -15,7 +18,7 @@
   ],
   "devDependencies": {
     "requirejs": "~2.1.14",
-    "lodash": "~2.1.0",
+    "lodash": "2.4.1",
     "requirejs-text": "~2.0.12",
     "backbone": "1.1.2",
     "json2": "*",

@@ -36,3 +36,4 @@ nbproject
 node_modules
 docs
 user
+bower_components/underscore
