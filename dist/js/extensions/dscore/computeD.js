@@ -1,5 +1,6 @@
 
-define(['jquery','app/API'],function($,API){
+define(['jquery'],function($){
+
 
 
 		var computeD = {
@@ -32,7 +33,10 @@ define(['jquery','app/API'],function($,API){
 			},
 
 			setDataArray: function(){
-				this.dataArray = API.getLogs();
+				// use the real global in order to preven problems with dependencies
+				var global = window.piGlobal;
+
+				this.dataArray = global.current.logs;
 			}
 		});
 

@@ -16,17 +16,18 @@
   "author": "Elad Zlotnick",
   "license": "",
   "devDependencies": {
+    "express": "~3.4.8",
     "grunt": "~0.4.3",
+    "grunt-bump": "0.0.14",
     "grunt-cli": "~0.1.9",
-    "grunt-contrib-requirejs": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.1",
+    "grunt-contrib-requirejs": "~0.4.1",
+    "grunt-contrib-sass": "^0.8.1",
     "grunt-docco": "~0.3.1",
-    "selenium-webdriver": "~2.39.0",
     "grunt-express": "~1.2.1",
     "jade": "~1.1.5",
-    "marked": "~0.3.0",
-    "express": "~3.4.8",
     "jshint": "^2.4.4",
-    "grunt-bump": "0.0.14"
+    "marked": "~0.3.0",
+    "selenium-webdriver": "~2.39.0"
   }
 }

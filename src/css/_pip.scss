@@ -1,0 +1,28 @@
+[pi-player] {
+
+    -webkit-touch-callout: none; /* disable callout, image save panel */
+    -webkit-tap-highlight-color: transparent; /* "turn off" link highlight */
+
+    /* disable cut copy paste */
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+[pi-player] #canvas {
+    height: 400px;
+    width: 500px;
+    position: relative;
+    border: 5px solid white;
+    margin: auto;
+    margin-top:10px;
+    -webkit-text-size-adjust: none;
+}
+
+[pi-player] .stimulus {
+	position:absolute;
+	text-align:center;
+	overflow: hidden;
+}

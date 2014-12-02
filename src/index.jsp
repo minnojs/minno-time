@@ -18,8 +18,7 @@
         <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache"></meta>
         <meta name="viewport" content="user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, width=device-width, height=device-height" />
 
-        <link type="text/css" rel="Stylesheet" href="css/reset.css"/>
-        <link type="text/css" rel="Stylesheet" href="css/styles.css"/>
+        <link type="text/css" rel="Stylesheet" href="css/main.css"/>
 
 		<style type="text/css">
 			/* http://www.sitepoint.com/css3-responsive-centered-image/ */

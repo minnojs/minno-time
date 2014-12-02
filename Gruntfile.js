@@ -29,6 +29,16 @@ module.exports = function(grunt) {
 			}
 		},
 
+		sass: {
+			options: {
+				loadPath: ['src/css'],
+				style: 'compressed'
+			},
+			dist: {
+				files: {'src/css/main.css':'src/css/main.scss'}
+			}
+		},
+
 		/**
 		 * r.js optimizer
 		 */
@@ -43,6 +53,7 @@ module.exports = function(grunt) {
 					generateSourceMaps: true,
 					preserveLicenseComments: false,
 					optimize: 'uglify2',
+					fileExclusionRegExp: /\.scss$/,
 					paths: {
 						text: '../../bower_components/requirejs-text/text',
 						underscore: 'empty:',
@@ -211,6 +222,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-express');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-sass');
 
 	// copy all js files from the tutorials into the user directory
 	grunt.registerTask('userDir','Creating user directory', function(){
@@ -241,6 +253,6 @@ module.exports = function(grunt) {
 		if (!grunt.option('site') && !grunt.file.isDir('user')) {
 			grunt.task.run('userDir');
 		}
-		grunt.task.run('requirejs','docs');
+		grunt.task.run('requirejs','sass','docs');
 	});
 };

@@ -1,4 +1,4 @@
-define(['underscore','app/task/script','./current_trial'],function(_,script,current_trial){
+define(['underscore','app/global','./current_trial'],function(_,globalGetter,current_trial){
 	/*
 	 * gets a condition array (or a single condition) and evaluates it
 	 * returns true if all statements are true, false otherwise
@@ -15,7 +15,7 @@ define(['underscore','app/task/script','./current_trial'],function(_,script,curr
 
 	return function evaluate(conditions, inputData){
 
-		var global = script.global;
+		var global = globalGetter();
 		var trial = current_trial();
 
 		if (!conditions){

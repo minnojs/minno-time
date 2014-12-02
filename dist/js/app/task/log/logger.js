@@ -9,13 +9,13 @@ define(function(require){
 		, trial = require('app/trial/current_trial')
 		, settings = require('app/task/settings')
 		, post = require('./post')
-		, logStack = require('./log_stack');
+		, logStackGetter = require('./log_stack');
 
 	// counter for the last time we sent (it holds the last length for which we sent)
 	var lastSend = 0;
 	var postDef = $.Deferred().resolve(); // a defered to follow all posting
 
-	var defaultLogger = function(trialData, inputData, actionData,logStack){
+	function defaultLogger(trialData, inputData, actionData,logStack){
 
 		var stimList = this._stimulus_collection.get_stimlist();
 		var mediaList = this._stimulus_collection.get_medialist();
@@ -30,14 +30,15 @@ define(function(require){
 			media: mediaList,
 			data: trialData
 		};
-	};
+	}
 
 	/*
 	 * Send all logs since lastSend
 	 * @returns $.Deferred
 	 */
-	var sendChunk = function(){
+	function sendChunk(){
 		var logChunk; // the log chunk we want to send right now
+		var logStack = logStackGetter();
 
 		// if  we've already sent everything,  we don't need to do anything
 		if (logStack.length - lastSend <= 0) {
@@ -50,14 +51,15 @@ define(function(require){
 			lastSend = logStack.length;
 			return $.when(postDef, post(logChunk));
 		}
-	};
+	}
 
 	/*
 	 * create log row and push it into log stack
 	 */
 	pubsub.subscribe('log',function(options, input_data){
+		var logStack = logStackGetter();
 		// get settings
-		var logger = settings.logger || {};
+		var logger = settings().logger || {};
 		// get the logger function
 		var callback = logger.logger ? logger.logger : defaultLogger;
 
@@ -68,14 +70,15 @@ define(function(require){
 	});
 
 	/*
-	 * send logstack to server, but only if it is full
+	 * send logStack to server, but only if it is full
 	 * The end task send is activated directly using the send function
 	 */
 	pubsub.subscribe('log:send',function(){
+		var logStack = logStackGetter();
 		// get pulse size
-		var pulse = settings.logger && settings.logger.pulse;
+		var pulse = settings().logger && settings().logger.pulse;
 
-		// if logstack is full, lets send it
+		// if logStack is full, lets send it
 		if (pulse && logStack.length - lastSend >= pulse) {
 			sendChunk();
 		}

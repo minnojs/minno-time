@@ -1,7 +1,6 @@
-define(['jquery', './media_view','../inflator','utils/html','app/task/build_url','app/task/script'], function($, Media,inflate,html,build_url,script) {
+define(['jquery', './media_view','../inflator','utils/html','app/task/build_url','app/global'], function($, Media,inflate,html,build_url,global) {
 
 	return function(mediaObject,model){
-		var global = script.global;
 
 		if (typeof mediaObject == 'string'){
 			mediaObject = {word:mediaObject};
@@ -30,7 +29,7 @@ define(['jquery', './media_view','../inflator','utils/html','app/task/build_url'
 		definitions.model = model;
 
 		html(definitions,{
-			global: global,
+			global: global(),
 			trialData: model.trial.data,
 			stimulusData: model.get('data')
 		});

@@ -10,7 +10,8 @@ define(['jquery', 'backbone','app/task/main_view'], function($, Backbone,main_vi
     var View = Backbone.View.extend({
 
         // build element according to simulus
-        initialize: function(){
+        initialize: function(options){
+            this.options = options || {}; // needed since backbone v1.1.0
 
             this.$el
                 .addClass('stimulus')

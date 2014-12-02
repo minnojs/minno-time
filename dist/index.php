@@ -7,33 +7,20 @@
         <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache"></meta>
         <meta name="viewport" content="user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, width=device-width, height=device-height" />
 
-        <link type="text/css" rel="Stylesheet" href="css/reset.css"/>
-        <link type="text/css" rel="Stylesheet" href="css/styles.css"/>
-
-		<style type="text/css">
-			/* http://www.sitepoint.com/css3-responsive-centered-image/ */
-			img.pi-logo {position: absolute;max-width: 80%;top: 50%;left: 50%;margin-left: -32px;margin-top: -32px;border-radius: 3px;}
-			img.pi-logo:empty {margin: auto;-webkit-transform: translate(-50%, -50%);-moz-transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);-o-transform: translate(-50%, -50%);transform: translate(-50%, -50%);}
-			@media screen and (orientation: portrait) {img.pi-logo { max-width: 90%; }}
-			@media screen and (orientation: landscape) {img.pi-logo { max-height: 90%; }}
-		</style>
-
-	</head>
-
-	<body>
-		<div pi-player>
-			<img class="pi-logo" src="img/loader.gif" />
-		</div>
+        <link type="text/css" rel="Stylesheet" href="css/main.css"/>
 
 		<!--[if lt IE 8]>
-			<script src="../bower_components/json2/json2.js"></script>
+			<script src="libs/json2/json2.js"></script>
 		<![endif]-->
-		<script src="../bower_components/requirejs/require.js"></script>
+		<script src="libs/requirejs/require.js"></script>
 
 		<script type="text/javascript">
 			require(['js/config'], function() {
-				require(['../resources/examples/iat.js']);
+				require(['../../resources/examples/iat_component_long']);
 			});
 		</script>
+	</head>
+
+	<body>
 	</body>
 </html>

@@ -4,7 +4,7 @@
 
 define(function(require){
 	// load dependancies
-	var script = require('app/task/script');
+	var scriptGetter = require('app/task/script');
 	var trialSets = require('../trial/trial_sets');
 	var stimulusSets = require('../stimulus/stimulus_sets');
 	var mediaSets = require('../media/media_sets');
@@ -13,6 +13,8 @@ define(function(require){
 	var preload = require('../sequencer/sequencePreload');
 
 	return function(){
+		var script = scriptGetter();
+
 		// load component sets
 		if (script.trialSets) {
 			trialSets(script.trialSets);
