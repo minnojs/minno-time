@@ -1,6 +1,7 @@
-define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
+define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 
 	var API = new APIConstructor();
+	var scorer = new Scorer();
 	var category1 = 'Pleasant';
 	var category2 = 'Unpleasant';
 
@@ -48,8 +49,8 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 			};
 		}
 	});
-	//the Scorer that compute the user feedback
-	Scorer.addSettings('compute',{
+	//the scorer that compute the user feedback
+	scorer.addSettings('compute',{
 		ErrorVar:'score',
 		condVar:"condition",
 		cond1VarValues: ["Old black People / Unpleasant"], //condition 1
@@ -63,7 +64,7 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 		errorLatency : {use:"false", penalty:600, useForSTD:true}//ignore error respones
 	});
 
-	Scorer.addSettings('message',{
+	scorer.addSettings('message',{
 		MessageDef: [
 			{ cut:'-0.2', message:'Your data suggest an Automatic negative attitude toward old black people' },//D < -0.2
 			{ cut:'0.2', message:'Your data suggest Neutral automatic attitude toward old black people' },// -0.2 <= D <= 0.2
@@ -589,68 +590,68 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 				/* global console */
 				var trial = this;
 				var DScoreObj;
-				console.log('calling Scorer');
-				DScoreObj = Scorer.computeD();
+				console.log('calling scorer');
+				DScoreObj = scorer.computeD();
 				var media1 = DScoreObj.FBMsg+' The Score is: '+DScoreObj.DScore;
-				Scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score1","feedback1");
+				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score1","feedback1");
 
 				//////second call to score//////
-				Scorer.addSettings('compute',{
+				scorer.addSettings('compute',{
 					parcelValue : ['second'],
 					cond1VarValues: ["Old white People / Unpleasant"], //condition 1
 					cond2VarValues: ["Old white People / Pleasant"] //condition 2
 
 				});
-				Scorer.addSettings('message',{
+				scorer.addSettings('message',{
 					MessageDef: [
 						{ cut:'-0.2', message:'Your data suggest an Automatic negative attitude toward old white people' },//D < -0.2
 						{ cut:'0.2', message:'Your data suggest Neutral automatic attitude toward old white people' },// -0.2 <= D <= 0.2
 						{ cut:'5', message:'Your data suggest an Automatic positive attitude toward old white people' }// D > 0.2 (and D<=2)
 					]
 				});
-				console.log('calling Scorer for the second time');
-				DScoreObj = Scorer.computeD();
+				console.log('calling scorer for the second time');
+				DScoreObj = scorer.computeD();
 				var media2 = DScoreObj.FBMsg+' The Score is: '+DScoreObj.DScore;
-				Scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score2","feedback2");
+				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score2","feedback2");
 
 				//////third call to score//////
-				Scorer.addSettings('compute',{
+				scorer.addSettings('compute',{
 					parcelValue : ['third'],
 					cond1VarValues: ["Young black People / Unpleasant"], //condition 1
 					cond2VarValues: ["Young black People / Pleasant"] //condition 2
 
 				});
-				Scorer.addSettings('message',{
+				scorer.addSettings('message',{
 					MessageDef: [
 						{ cut:'-0.2', message:'Your data suggest an Automatic negative attitude young black people' },//D < -0.2
 						{ cut:'0.2', message:'Your data suggest Neutral automatic attitude toward young black people' },// -0.2 <= D <= 0.2
 						{ cut:'5', message:'Your data suggest an Automatic positive attitude toward young black people' }// D > 0.2 (and D<=2)
 					]
 				});
-				console.log('calling Scorer for the third time');
-				DScoreObj = Scorer.computeD();
+				console.log('calling scorer for the third time');
+				DScoreObj = scorer.computeD();
 				var media3 = DScoreObj.FBMsg+' The Score is: '+DScoreObj.DScore;
-				Scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score3","feedback3");
+				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score3","feedback3");
 
 				//////fourth call to score//////
-				Scorer.addSettings('compute',{
+				scorer.addSettings('compute',{
 					parcelValue : ['fourth'],
 					cond1VarValues: ["Young white People / Unpleasant"], //condition 1
 					cond2VarValues: ["Young white People / Pleasant"] //condition 2
 
 				});
-				Scorer.addSettings('message',{
+				scorer.addSettings('message',{
 					MessageDef: [
 						{ cut:'-0.2', message:'Your data suggest an Automatic negative attitude young white people' },//D < -0.2
 						{ cut:'0.2', message:'Your data suggest Neutral automatic attitude toward young white people' },// -0.2 <= D <= 0.2
 						{ cut:'5', message:'Your data suggest an Automatic positive attitude toward young white people' }// D > 0.2 (and D<=2)
 					]
 				});
-				console.log('calling Scorer for the fourth time');
-				DScoreObj = Scorer.computeD();
+				console.log('calling scorer for the fourth time');
+				DScoreObj = scorer.computeD();
 				var media = {css:{color:'black'},media:{html:'<h1><div><p style="font-size:24px"><color="#FFFAFA"> '+media1+ '<br/>'+media2+ '<br/>'+media3+ '<br/>'+DScoreObj.FBMsg+' The Score is:'+DScoreObj.DScore+'</p></div>'}};
 				trial.stimuli.push(media);
-				Scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score4","feedback4");
+				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score4","feedback4");
 
 			}
 		},

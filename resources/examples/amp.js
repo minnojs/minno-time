@@ -1,6 +1,6 @@
 /* global $ */
 //This example creates an amp task.
-define(['app/API'], function(APIconstructor) {
+define(['pipAPI'], function(APIconstructor) {
 
 	var API = new APIconstructor();
 

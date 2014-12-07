@@ -5,11 +5,17 @@ In order to compute the score the trials are divided to parcels, the score for e
 
 ### How to Use
 
+Create instance of the scorer:
+
+```js
+var scorer = new Scorer();
+```
+
 In the main IAT file enter the settings for the scorer according to the options covered in 'compute settings'.
 In the main IAT get the score and the message from the scorer similar to the following:
 
 ```
-DScoreObj = Scorer.computeD();
+DScoreObj = scorer.computeD();
 media = {css:{color:'black'},media:{html:'<h1><div><p style="font-size:12px"><color="#FFFAFA"> '+DScoreObj.FBMsg+'<br>The Score is:'+DScoreObj.DScore+'</p></div>'}};
 
 ```
@@ -26,7 +32,7 @@ Example:
 
 in the settings:
 ```
-Scorer.addSettings('compute',{
+scorer.addSettings('compute',{
 		ErrorVar:'score',
 		condVar:"condition",
 		.......
@@ -58,7 +64,7 @@ Example:
 ```
 Setting the Scorer:
 
-Scorer.addSettings('compute',{
+scorer.addSettings('compute',{
 		...
 
 		parcelVar : "parcel",
@@ -106,7 +112,7 @@ In the API:
 
 Example
 ```
-Scorer.addSettings('compute',{
+scorer.addSettings('compute',{
 
 		fastRT : 150, //Below this reaction time, the latency is considered extremely fast.
 		maxFastTrialsRate : 0.1,
@@ -128,10 +134,10 @@ postSettings : {score:"score",msg:"feedback",url:"/implicit/scorer"}
 
 ### Messages
 
-The `Scorer.addSetings` function may be used in order to create feedback messages too.
+The `scorer.addSetings` function may be used in order to create feedback messages too.
 
 ```js
-	Scorer.addSettings('message',{
+	scorer.addSettings('message',{
 		manyErrors: "There were too many errors made to determine a result.",
 		tooFast: "There were too many fast trials to determine a result.",
 		notEnough: "There were not enough trials to determine a result."

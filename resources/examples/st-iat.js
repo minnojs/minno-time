@@ -1,6 +1,7 @@
-define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
+define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 
 	var API = new APIConstructor('plainIAT');
+	var scorer = new Scorer();
 
 	var attribute1 = 'Unpleasant';
 	var attribute2 = 'Pleasant';
@@ -39,8 +40,8 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 		url : '/implicit/PiPlayerApplet'
 	});
 
-	//the Scorer that computes the user feedback
-	Scorer.addSettings('compute',{
+	//the scorer that computes the user feedback
+	scorer.addSettings('compute',{
 		ErrorVar:'score',
 		condVar:"condition",
 		//condition 1
@@ -61,7 +62,7 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 		postSettings : {score:"score",msg:"feedback",url:"/implicit/scorer"}
 	});
 
-	Scorer.addSettings('message',{ /**chack*/
+	scorer.addSettings('message',{ /**chack*/
 		MessageDef: [
 			{ cut:'-0.65', message:'Your data suggest strong positive automatic attitude toward Black People.' },
 			{ cut:'-0.35', message:'Your data suggest moderate positive automatic attitude toward Black People.' },
@@ -453,15 +454,15 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 				var trial = this;
 
 
-				DScoreObj = Scorer.computeD();
+				DScoreObj = scorer.computeD();
 				var DScore1= DScoreObj.DScore;
 
 					//////second call to score//////
-				Scorer.addSettings('compute',{
+				scorer.addSettings('compute',{
 					parcelValue : ['second']
 				});
 
-				DScoreObj = Scorer.computeD();
+				DScoreObj = scorer.computeD();
 				var DScore2 = DScoreObj.DScore;
 
 					//avrage the scores
@@ -474,7 +475,7 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 						FBMsg = DScoreObj.errorMessage;
 						}
 						else{
-						FBMsg = Scorer.getFBMsg(DScore);
+						FBMsg = scorer.getFBMsg(DScore);
 						}
 						console.log(FBMsg);
 
@@ -487,7 +488,7 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 
 				var media = {css:{color:'black'},media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};
 				trial.stimuli.push(media);
-				Scorer.postToServer(DScore,FBMsg,"score1","feedback1");
+				scorer.postToServer(DScore,FBMsg,"score1","feedback1");
 			}
 		},
 

@@ -2,6 +2,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 // This wrapper is neccesary in order to activate the API
 
 	var API = new APIConstructor();
+	var scorer = new Scorer();
 
 	// lets set the attibutes/concepts in one place so we can change them when we want
 	var attribute1 = 'Good Words';
@@ -748,18 +749,18 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 				var trial = this;
 				var DScoreObj, media;
 
-				console.log('calling Scorer');
-				DScoreObj = Scorer.computeD();
+				console.log('calling scorer');
+				DScoreObj = scorer.computeD();
 
 				media = {css:{color:'black'},media:{html:'<div><p style="font-size:12px;color:#FFFAFA"> '+DScoreObj.FBMsg+'<br>The Score is:'+DScoreObj.DScore+'</p></div>'}};
 				trial.stimuli.push(media);
-				Scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score1","feedback1");
+				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score1","feedback1");
 
 				//////second call to score//////
-				Scorer.addSettings('compute',{
+				scorer.addSettings('compute',{
 					parcelValue : ['second']
 				});
-				Scorer.addSettings('message',{
+				scorer.addSettings('message',{
 					MessageDef: [
 						{ cut:'-0.65', message:'Your data suggest a strong implicit preference for Black People compared to White People' },
 						{ cut:'-0.35', message:'Your data suggest a moderate implicit preference for Black People compared to White People.' },
@@ -770,10 +771,10 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 						{ cut:'5', message:'Your data suggest a strong implicit preference for White People compared to Black People' }
 					]
 				});
-				DScoreObj = Scorer.computeD();
+				DScoreObj = scorer.computeD();
 				media = {css:{color:'black'},media:{html:'<h1><div><p style="font-size:12px;color=#FFFAFA>'+DScoreObj.FBMsg+'<br>The Score is:'+DScoreObj.DScore+'</p></div>'}};
 				trial.stimuli.push(media);
-				Scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score1","feedback1");
+				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score1","feedback1");
 			}
 		},
 
@@ -789,14 +790,14 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 		}
 	]);
 
-	// ### The Scorer
+	// ### The scorer
 	/*
-		The Scorer
+		The scorer
 		***********************************************************
 	*/
 
 	// setting scorer settings
-	Scorer.addSettings('compute',{
+	scorer.addSettings('compute',{
 		ErrorVar:'score',
 		condVar:"condition",
 		//condition 1
@@ -818,7 +819,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 	});
 
 	// scorrer messages
-	Scorer.addSettings('message',{
+	scorer.addSettings('message',{
 		MessageDef: [
 			{ cut:'-0.65', message:'Your data suggest a strong implicit preference for Black People compared to White People' },
 			{ cut:'-0.35', message:'Your data suggest a moderate implicit preference for Black People compared to White People.' },

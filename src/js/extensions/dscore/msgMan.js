@@ -1,4 +1,4 @@
-define(['jquery','underscore'],function($,_){
+define(['underscore'],function(_){
 
 	var messages = {
 		MessageDef:[],
@@ -7,14 +7,25 @@ define(['jquery','underscore'],function($,_){
 		notEnough: "There were not enough trials to determine a result."
 	};
 
-	var msgMan = {
+	function Message(){
+		// setup default local messages
+		this.messages = _.extend({}, messages);
+	}
+
+	_.extend(Message.prototype, {
+
+		/**
+		 * Setup custom local messages
+		 * @param {Object} Obj 	messages object
+		 */
 		setMsgObject: function(Obj){
-			$.extend(messages,Obj);
+			_.extend(this.messages,Obj);
 		},
 
 		getScoreMsg: function(score){
 
-			var array = messages.MessageDef;
+			var array = this.messages.MessageDef;
+
 			if (!array || !array.length){
 				throw new Error('You must define a "MessageDef" array.');
 			}
@@ -40,13 +51,14 @@ define(['jquery','underscore'],function($,_){
 				var obj = array[length-1];
 				rightMsg = obj.message;
 			}
+
 			return rightMsg;
 		},
 
 		getMessage: function getMessage(type){
-			return messages[type];
+			return this.messages[type];
 		}
-	};
+	});
 
-	return msgMan;
+	return Message;
 });

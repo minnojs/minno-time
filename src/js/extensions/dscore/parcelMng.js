@@ -1,12 +1,12 @@
-define(['jquery','underscore','./msgMan'],function($,_, msgMan){
+define(['underscore'],function(_){
 
-	var parcelMng= {};
+	function ParcelMng(msgMan){
+		this.parcelArray = []; // Holds parcel array
+		this.scoreData = {}; // Holds score and error message
+		this.msgMan = msgMan;
+	}
 
-
-	$.extend(parcelMng, {
-
-		parcelArray: [], // Holds parcel array
-		scoreData: {},	// Holds score and error message
+	_.extend(ParcelMng.prototype, {
 
 /*  Method: Void Init
 	Input: Uses logs from API
@@ -18,12 +18,15 @@ define(['jquery','underscore','./msgMan'],function($,_, msgMan){
 
 */
 		Init: function(compute){
-			// use the real global in order to preven problems with dependencies
+			var parcelMng = this;
+			var msgMan = this.msgMan;
+			// use the real global in order to prevent problems with dependencies
 			var global = window.piGlobal;
 
 			var data = global.current.logs;
 			parcelMng.parcelArray = [];
 			parcelMng.scoreData = {};
+			parcelMng.msgMan = msgMan;
 
 			// get settings
 			var AnalyzedVar = compute.AnalyzedVar;
@@ -109,16 +112,15 @@ define(['jquery','underscore','./msgMan'],function($,_, msgMan){
 				});
 			}
 			if ( (trialsUnder/totalScoredTrials) > maxFastTrialsRate){
-				parcelMng.scoreData.errorMessage = msgMan.getMessage('tooFast');
+				parcelMng.scoreData.errorMessage = this.msgMan.getMessage('tooFast');
 
 			}
 
-		//	console.log('finished init the parcelArray is:');
-		//	console.log(parcelMng.parcelArray);
-		//	console.log('--------------------');
 		},
 
-/*  Method: Void checkErrors
+/*
+	private
+	Method: Void checkErrors
 	Input: totalTrials,totalErrorTrials and compute object.
 	Output: Sets scoreData with error message if relevant.
 	Description: Helper method to check for errors according to maxErrorParcelRate from compute object.
@@ -129,7 +131,7 @@ define(['jquery','underscore','./msgMan'],function($,_, msgMan){
 
 			var maxErrorParcelRate = compute.maxErrorParcelRate;
 			if (totalErrorTrials/totalTrials > maxErrorParcelRate){
-				parcelMng.scoreData.errorMessage = msgMan.getMessage('manyErrors');
+				this.scoreData.errorMessage = this.msgMan.getMessage('manyErrors');
 
 			}
 
@@ -167,8 +169,6 @@ define(['jquery','underscore','./msgMan'],function($,_, msgMan){
 					return true;
 				}
 			}
-
-
 		},
 
 /*  Function: Void addPenalty.
@@ -181,9 +181,11 @@ define(['jquery','underscore','./msgMan'],function($,_, msgMan){
 
 		addPenalty: function(p,compute){
 			var errorLatency = compute.errorLatency;
+			var parcelMng = this;
 
 
 			if (errorLatency.use == 'penalty'){
+
 				var penalty = parseFloat(errorLatency.penalty);
 				var ErrorVar = compute.ErrorVar;
 				var AnalyzedVar = compute.AnalyzedVar;
@@ -225,13 +227,16 @@ define(['jquery','underscore','./msgMan'],function($,_, msgMan){
 */
 
 		avgAll: function(compute){
+			var parcelMng = this;
 			_.each(parcelMng.parcelArray, function (value) {
 				parcelMng.avgParcel(value,compute);
 			});
 		},
 
 
-/*  Function: Void avgParcel.
+/*
+	private
+	Function: Void avgParcel.
 	Input: compute object, parcel.
 	Output: setting avgCon1 and avgCon2 in parcel.
 	Description: Set average for condition 1 trials and for condition 2 trials in the parcel.
@@ -239,6 +244,7 @@ define(['jquery','underscore','./msgMan'],function($,_, msgMan){
 */
 
 		avgParcel: function(p,compute){
+			var parcelMng = this;
 			var trialIData = p.trialIData;
 			var condVar = compute.condVar;
 			var cond1 = compute.cond1VarValues;
@@ -275,7 +281,7 @@ define(['jquery','underscore','./msgMan'],function($,_, msgMan){
 
 			});
 			if (numCond1 <= 2 || numCond2 <= 2){
-				parcelMng.scoreData.errorMessage = msgMan.getMessage("notEnough");
+				parcelMng.scoreData.errorMessage = this.msgMan.getMessage("notEnough");
 			}
 			if (numCond1 !== 0) {
 				avgCon1 = avgCon1/numCond1;
@@ -300,7 +306,6 @@ define(['jquery','underscore','./msgMan'],function($,_, msgMan){
 */
 
 		checkArray: function(conFromData,con){
-
 			for(var i=0; i<con.length; i++){
 				var condition = con[i];
 				if (condition == conFromData ){
@@ -308,16 +313,7 @@ define(['jquery','underscore','./msgMan'],function($,_, msgMan){
 				}
 			}
 
-		return false;
-
-			// var res;
-
-			// res = _.find(con,function(conFromData){
-			// return true;
-
-			// });
-			// return res==conFromData;
-
+			return false;
 		},
 
 /*  Function: Void varianceAll.
@@ -328,6 +324,7 @@ define(['jquery','underscore','./msgMan'],function($,_, msgMan){
 */
 
 		varianceAll: function(compute){
+			var parcelMng = this;
 			_.each (parcelMng.parcelArray, function (value) {
 				parcelMng.varianceParcel(value,compute);
 			});
@@ -340,6 +337,7 @@ define(['jquery','underscore','./msgMan'],function($,_, msgMan){
 
 */
 		varianceParcel: function(p,compute){
+			var parcelMng = this;
 			var AnalyzedVar = compute.AnalyzedVar;
 			var trialIData = p.trialIData;
 			var cond1 = compute.cond1VarValues;
@@ -402,35 +400,6 @@ define(['jquery','underscore','./msgMan'],function($,_, msgMan){
 			p.variance = x2/(pooledData.length-1);
 		},
 
-/*  Function: Void diffAll.
-	Input: compute object.
-	Output: diff variabel.
-	Description: Loop over the pacels and set diff variable
-	that stores the diffrance between the averages of conditions.
-
-
-		diffAll: function(compute){
-			console.log('starting diffAll');
-			_.each (parcelMng.parcelArray, function (value,index) {
-				parcelMng.diffParcel(value,compute);
-			});
-
-		},
-
-/*  Function: Void diffParcel.
-	Input: compute object, parcel.
-	Output: setting avgCon1 and avgCon2
-	Description: Set average for condition 1 trials and for condition 2 trials in the parcel.
-
-
-		diffParcel: function(p,compute){
-			console.log('starting diffParcel');
-			p.diff = p.avgCon1 - p.avgCon2;
-			console.log('finished diff parcel: '+p.name);
-			console.log('diff: '+p.diff);
-			console.log('--------------------');
-
-		},
 
 /*  Function: Void scoreAll.
 	Input: compute object.
@@ -439,119 +408,37 @@ define(['jquery','underscore','./msgMan'],function($,_, msgMan){
 
 */
 		scoreAll: function(compute){
+			var parcelMng = this;
 			var dAvg = 0;
 			_.each (parcelMng.parcelArray, function (value) {
 				parcelMng.scoreParcel(value,compute);
 				dAvg +=  value.score;
-
 			});
 			var score = (dAvg/(parcelMng.parcelArray.length));
 			parcelMng.scoreData.score = score.toFixed(2);
 
 		},
 
-/*  Function: Void scoreParcel.
+/*
+	private
+	Function: Void scoreParcel.
 	Input: compute object, parcel.
 	Output: score variable in parcel
 	Description: Calculate the score for the parcel.
 
 */
 		scoreParcel: function(p){
-	//		console.log('starting scoreParcel');
+			var parcelMng = this;
 			var sd = Math.sqrt(p.variance);
 			if (sd === 0){
-				parcelMng.scoreData.errorMessage = msgMan.getMessage("notEnough");
+				parcelMng.scoreData.errorMessage = this.msgMan.getMessage("notEnough");
 				p.score = p.diff;
 			} else {
 				p.score = p.diff/sd;
 			}
-			// console.log('finished score parcel: '+p.name);
-			// console.log('score: '+p.score);
-			// console.log('--------------------');
-
-		},
-
-/*  Function: Void simulateOldCode.
-	Input:
-	Output:
-	Description: For debug seimulate old scorer.
-
-*/
-		//for QA purposes only!!
-		simulateOldCode: function(compute){
-
-			//require
-			var results = [];
-			var rb = [2,3,5,6];
-			var cond1 = compute.cond1VarValues;
-			var cond2 = compute.cond2VarValues;
-			var condVar = compute.condVar;
-			var ErrorVar = compute.ErrorVar;
-			var AnalyzedVar = compute.AnalyzedVar;
-			var parcelA = parcelMng.parcelArray[0];
-			var parcelB = parcelMng.parcelArray[1];
-			var trialsA = parcelA.trialIData;
-			var trialsB = parcelB.trialIData;
-
-
-				//console.log('cond1 diff: ' + diff1.length );
-
-			_.each (trialsA, function (value) {
-				var data = value.data;
-				var dataCond = data[condVar];
-				var diff1 = parcelMng.checkArray(dataCond,cond1);
-				var diff2 = parcelMng.checkArray(dataCond,cond2);
-				//var diff1 = ( _(data[condVar]).difference(cond1) );//block 2
-				//var diff2 = ( _(data[condVar]).difference(cond2) );//block 5
-				var trial = {};
-				if (diff1){
-					trial.block = rb[0];
-					trial.lat = value[AnalyzedVar];
-					trial.err = data[ErrorVar];
-
-				} else {
-					if (diff2){
-						trial.block = rb[2];
-						trial.lat = value[AnalyzedVar];
-						trial.err = data[ErrorVar];
-					}
-				}
-				results.push(trial);
-
-			});
-			_.each (trialsB, function (value) {
-				var data = value.data;
-				var dataCond = data[condVar];
-				var diff1 = parcelMng.checkArray(dataCond,cond1);
-				var diff2 = parcelMng.checkArray(dataCond,cond2);
-				//var diff1 = ( _(data[condVar]).difference(cond1) );//block 3
-				//var diff2 = ( _(data[condVar]).difference(cond2) );//block 6
-				var trial = {};
-				if (diff1){
-					trial.block = rb[1];
-					trial.lat = value[AnalyzedVar];
-					trial.err = data[ErrorVar];
-
-				} else {
-					if (diff2){
-					trial.block = rb[3];
-					trial.lat = value[AnalyzedVar];
-					trial.err = data[ErrorVar];
-
-					}
-				}
-				results.push(trial);
-
-			});
-
-
-
-			var score = parcelMng.scoreTask(results,rb);
-			return score;
-
 		}
+
 	});
 
-	return parcelMng;
-
+	return ParcelMng;
 });

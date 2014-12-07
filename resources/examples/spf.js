@@ -1,6 +1,7 @@
-define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
+define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 
 	var API = new APIConstructor();
+	var scorer = new Scorer();
 	var attribute1 = 'Good Words';
 	var attribute2 = 'Bad Words';
 	var category1 = 'Black People';
@@ -52,8 +53,8 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 
     });
 
-	//the Scorer that computes the user feedback
-	Scorer.addSettings('compute',{
+	//the scorer that computes the user feedback
+	scorer.addSettings('compute',{
 		ErrorVar:'score',
 		condVar:"condition",
 		cond1VarValues: [category1 + '+' + attribute1,category2 + '+' + attribute2], //condition 1
@@ -67,7 +68,7 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 		errorLatency : {use:"false", penalty:600, useForSTD:true}//ignore error respones
 	});
 
-	Scorer.addSettings('message',{
+	scorer.addSettings('message',{
 		MessageDef: [
 			{ cut:'-0.3', message:'Your data suggest an automatic preference for black people over white people.' },//D < -0.3
 			{ cut:'0.3', message:'Your data suggest no or slight difference in your preference between white people and black people.' },// -0.3 <= D <= 0.3
@@ -441,17 +442,17 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 			customize: function(){
 				/* global console */
 				var trial = this;
-				console.log('calling Scorer');
-				var DScoreObj = Scorer.computeD();
+				console.log('calling scorer');
+				var DScoreObj = scorer.computeD();
 				var DScore = DScoreObj.DScore;//compute the Dscore
 				var FBMsg = DScoreObj.errorMessage;
 				if(!isNaN(DScore)){
-					FBMsg = Scorer.getFBMsg(DScore);//the user feedback
+					FBMsg = scorer.getFBMsg(DScore);//the user feedback
 				}
 				console.log('DScore='+DScore+ " FBMsg="+FBMsg);
 				var media = {media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};
 				trial.stimuli.push(media);//show the user feedback
-				Scorer.postToServer(DScore,FBMsg,"score","feedback");
+				scorer.postToServer(DScore,FBMsg,"score","feedback");
 			}
 		},
 		{

@@ -1,6 +1,7 @@
-define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
+define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 
 	var API = new APIConstructor('plainIAT');
+	var scorer = new Scorer();
 
 	var attribute1 = 'Pleasant';
 	var attribute2 = 'Unpleasant';
@@ -29,8 +30,8 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 		url : '/implicit/PiPlayerApplet'
 	});
 
-	//the Scorer that computes the user feedback
-	Scorer.addSettings('compute',{
+	//the scorer that computes the user feedback
+	scorer.addSettings('compute',{
 		ErrorVar:'score',
 		condVar:"condition",
 		//condition 1
@@ -55,7 +56,7 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 
 	});
 
-	Scorer.addSettings('message',{
+	scorer.addSettings('message',{
 		MessageDef: [
 			{ cut:'-0.65', message:'Your data suggest a strong implicit preference for Black People compared to White People' },
 			{ cut:'-0.35', message:'Your data suggest a moderate implicit preference for Black People compared to White People.' },
@@ -1019,39 +1020,39 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 			customize: function(){
 				/* global console */
 				var trial = this;
-				console.log('calling Scorer');
+				console.log('calling scorer');
 				var DScoreObj, DScore, FBMsg;
-				DScoreObj = Scorer.computeD();
+				DScoreObj = scorer.computeD();
 				var DScore1 = DScoreObj.DScore;
 				console.log(DScore1);
 
 				//////second call to score//////
-				Scorer.addSettings('compute',{
+				scorer.addSettings('compute',{
 					parcelValue : ['second']
 				});
 
-				console.log('calling Scorer for the second time');
-				DScoreObj = Scorer.computeD();
+				console.log('calling scorer for the second time');
+				DScoreObj = scorer.computeD();
 				var DScore2 = DScoreObj.DScore;
 				console.log(DScore2);
 
 
 				//////third call to score//////
-				Scorer.addSettings('compute',{
+				scorer.addSettings('compute',{
 					parcelValue : ['third']
 				});
-				console.log('calling Scorer for the third time');
-				DScoreObj = Scorer.computeD();
+				console.log('calling scorer for the third time');
+				DScoreObj = scorer.computeD();
 				var DScore3 = DScoreObj.DScore;
 				console.log(DScore3);
 
 
 				//////fourth call to score//////
-				Scorer.addSettings('compute',{
+				scorer.addSettings('compute',{
 					parcelValue : ['fourth']
 				});
-				console.log('calling Scorer for the fourth time');
-				DScoreObj = Scorer.computeD();
+				console.log('calling scorer for the fourth time');
+				DScoreObj = scorer.computeD();
 				var DScore4 = DScoreObj.DScore;
 				console.log(DScore4);
 
@@ -1063,7 +1064,7 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 						FBMsg = DScoreObj.errorMessage;
 					}
 					else{
-						FBMsg = Scorer.getFBMsg(DScore);
+						FBMsg = scorer.getFBMsg(DScore);
 						}
 					console.log(FBMsg);
 				}
@@ -1076,7 +1077,7 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 				console.log(FBMsg);
 				var media = {css:{color:'black'},media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};
 				trial.stimuli.push(media);
-				Scorer.postToServer(DScore,FBMsg,"score","feedback");
+				scorer.postToServer(DScore,FBMsg,"score","feedback");
 
 
 			}

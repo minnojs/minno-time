@@ -1,6 +1,9 @@
-define(['underscore','extensions/dscore/Scorer','./properties','./categories'],function(_,scorer,properties,categories){
+define(['underscore','pipScorer','./properties','./categories'],function(_,Scorer,properties,categories){
 
 	return function(){
+
+		var scorer = new Scorer();
+
 		// get category names
 		var attribute1 = categories.attribute1.name
 			, attribute2 = categories.attribute2.name

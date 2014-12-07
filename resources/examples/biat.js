@@ -1,7 +1,8 @@
 // # Brief IAT
-define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
+define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 
 	var API = new APIConstructor();
+	var scorer = new Scorer();
 
 	// Preset the attribute and category names
 	var attribute1 = 'Pleasant';
@@ -842,30 +843,30 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 				var trial = this;
 
 				//////First call to score//////
-				DScoreObj = Scorer.computeD();
+				DScoreObj = scorer.computeD();
 				var DScore1 = DScoreObj.DScore;
 
 				//////Second call to score//////
-				Scorer.addSettings('compute',{
+				scorer.addSettings('compute',{
 					parcelValue : ['second']
 				});
 
-				DScoreObj = Scorer.computeD();
+				DScoreObj = scorer.computeD();
 				var DScore2 = DScoreObj.DScore;
 
 				//////Third call to score//////
-				Scorer.addSettings('compute',{
+				scorer.addSettings('compute',{
 					parcelValue : ['third']
 				});
 
-				DScoreObj = Scorer.computeD();
+				DScoreObj = scorer.computeD();
 				var DScore3 = DScoreObj.DScore;
 
 				//////Fourth call to score//////
-				Scorer.addSettings('compute',{
+				scorer.addSettings('compute',{
 					parcelValue : ['fourth']
 				});
-				DScoreObj = Scorer.computeD();
+				DScoreObj = scorer.computeD();
 				var DScore4 = DScoreObj.DScore;
 
 				// If all scores are numbers
@@ -876,7 +877,7 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 						FBMsg = DScoreObj.errorMessage;
 					}
 					else{
-						FBMsg = Scorer.getFBMsg(DScore);
+						FBMsg = scorer.getFBMsg(DScore);
 					}
 				}
 				else{
@@ -885,7 +886,7 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 				}
 				var media = {css:{color:'black'},media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};
 				trial.stimuli.push(media);
-				Scorer.postToServer(DScore,FBMsg,"score","feedback");
+				scorer.postToServer(DScore,FBMsg,"score","feedback");
 			}
 		},
 
@@ -904,8 +905,8 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 		}
 	]);
 
-	// Settings for the Scorer that computes the user feedback.
-	Scorer.addSettings('compute',{
+	// Settings for the scorer that computes the user feedback.
+	scorer.addSettings('compute',{
 		ErrorVar:'score',
 		condVar:"condition",
 		//condition 1
@@ -930,7 +931,7 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 
 	});
 
-	Scorer.addSettings('message',{
+	scorer.addSettings('message',{
 		MessageDef: [
 			{ cut:'-0.65', message:'Your data suggest a strong implicit preference for Black People compared to White People' },
 			{ cut:'-0.35', message:'Your data suggest a moderate implicit preference for Black People compared to White People.' },

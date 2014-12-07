@@ -1,6 +1,7 @@
-define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
+define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 
 	var API = new APIConstructor();
+	var scorer = new Scorer();
 
 	var category1 = 'Pleasent';
 	var category2 = 'Unpleasent';
@@ -51,8 +52,8 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 
     });
 
-	//the Scorer that compute the user feedback
-	Scorer.addSettings('compute',{
+	//the scorer that compute the user feedback
+	scorer.addSettings('compute',{
 		ErrorVar:'score',
 		condVar:"trialCategories",
 		cond1VarValues: ["Black People/Bad Words","White People/Good Words"], //condition 1
@@ -66,7 +67,7 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 		errorLatency : {use:"false", penalty:600, useForSTD:true}//ignore error respones
 	});
 
-	Scorer.addSettings('message',{
+	scorer.addSettings('message',{
 		MessageDef: [
 			{ cut:'-0.3', message:'Your data suggest an automatic preference for black people over white people.' },//D < -0.3
 			{ cut:'0.3', message:'Your data suggest no or slight difference in your preference between white people and black people.' },// -0.3 <= D <= 0.3
@@ -465,9 +466,9 @@ define(['app/API','extensions/dscore/Scorer'], function(APIConstructor,Scorer) {
 			customize: function(){
 				/* global console */
 				var trial = this;
-				console.log('calling Scorer');
-				var DScore = Scorer.computeD();//compute the Dscore
-				var FBMsg = Scorer.getFBMsg(DScore);//the user feedback
+				console.log('calling scorer');
+				var DScore = scorer.computeD();//compute the Dscore
+				var FBMsg = scorer.getFBMsg(DScore);//the user feedback
 				console.log('DScore='+DScore+ " FBMsg="+FBMsg);
 				var media = {media:{html:'<div><p style="font-size:28px"><color="#FFFFFF"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};
 				trial.stimuli.push(media);//show the user feedback
