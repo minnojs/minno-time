@@ -62,6 +62,14 @@ module.exports = function(grunt) {
 						JSON: 'empty:'
 					},
 
+				    packages:[
+				      {
+				        name: 'pipScorer',
+				        location: 'extensions/dscore',
+				        main: 'Scorer'
+				      }
+				    ],
+
 					//optimize:'none', // toggle this for fast optimized debuging
 
 					// Tells Require.js to look at main.js for all shim and path configurations
@@ -72,12 +80,10 @@ module.exports = function(grunt) {
 					// backbone must always be excluded as it is not an AMD module and we enforceDefine in config.js
 					modules: [
 						{
-							name: "app/API",
-							exclude: ['underscore','jquery','backbone']
+							name: "app/activatePIP"
 						},
 						{
-							name: "extensions/dscore/Scorer",
-							exclude: ["app/API",'underscore','jquery','backbone']
+							name: "pipScorer"
 						},
 						{
 							name: "extensions/iat/component",
