@@ -31,7 +31,7 @@ js/extensions/iat/trial/trials.js
 js/extensions/iat/stimuli/stimuli.js
 js/extensions/iat/data/sequence.js
 js/extensions/iat/component.js
-/Users/eladzlot/PIPlayer/bower_components/requirejs-text/text.js
+/home/eladzlot/public_html/pip/bower_components/requirejs-text/text.js
 text!extensions/iat/jst/layout.jst
 
 js/extensions/iat/PIcomponent.js
@@ -53,5 +53,5 @@ js/extensions/iat/data/sequence.js
 js/extensions/iat/component.js
 js/extensions/iat/data/iatScorer.js
 js/extensions/iat/PIcomponent.js
-/Users/eladzlot/PIPlayer/bower_components/requirejs-text/text.js
+/home/eladzlot/public_html/pip/bower_components/requirejs-text/text.js
 text!extensions/iat/jst/layout.jst

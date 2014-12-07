@@ -248,11 +248,25 @@ module.exports = function(grunt) {
 	grunt.registerTask('server', ['express', 'watch:user','express-keepalive']);
 	grunt.registerTask('tutorials', ['express', 'watch:tutorials','express-keepalive']);
 
+	grunt.registerTask('updatePIindex', function () {
+        var indexFile = "src/piindex.jsp";
+        var version = grunt.file.readJSON('package.json').version;
+
+        if (!grunt.file.exists(indexFile)) {
+            grunt.log.error("file " + indexFile + " not found");
+            return false;//return false to abort the execution
+        }
+
+        var file = grunt.file.read(indexFile);//get file as json object
+        file = file.replace(/<base href="((?!">).)*">/,'<base href="<%= getBase + "/implicit/common/all/js/pip/' + version + '/dist/" %>">');
+        grunt.file.write(indexFile, file);
+    });
+
 	// build production stuff
 	grunt.registerTask('build', 'Building PIplayer', function(){
 		if (!grunt.option('site') && !grunt.file.isDir('user')) {
 			grunt.task.run('userDir');
 		}
-		grunt.task.run('requirejs','sass','docs');
+		grunt.task.run('updatePIindex','requirejs','sass','docs');
 	});
 };
