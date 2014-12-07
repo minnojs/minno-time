@@ -66,6 +66,15 @@ define(function(require){
 		// add row to log stack
 		var trialObj = trial();
 		var row = callback.apply(trialObj,[trialObj.data, input_data, options,logStack]);
+
+		if (logger.meta){
+			if ($.isPlainObject(logger.meta)){
+				$.extend(row, logger.meta);
+			} else {
+				throw new Error ('LOGGER: logger.meta must be an object but instead was a ' + typeof logger.meta);
+			}
+		}
+
 		logStack.push(row);
 	});
 

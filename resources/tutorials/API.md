@@ -657,6 +657,9 @@ If pulse is not set (or is set to 0) the player will send all data at the end of
 `fullpath`:
 When using the media path to log media elements (for images and templates), should we use the full path or just the filename (`false` by default)
 
+`meta`:
+An object that is used to extend each logged row. This is useful in case you want to add some global data to the posts (such as server generated user id, or task name).
+
 `logger`:
 Accepts a function to replace the existing logging function. (don't touch this if you don't **realy** know what you're doing).
 The logger function is called each time a log action is triggered (see interactions: actions [log](#interactions-actions)).
