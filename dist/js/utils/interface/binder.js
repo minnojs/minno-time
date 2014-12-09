@@ -111,7 +111,7 @@ define(['jquery','./bindings/click', './bindings/keypressed', './bindings/keyup'
 				break;
 
 			default:
-				throw new Error("Unknown interface element " + on);
+				throw new Error('You have an input element without a recognized "on" property: ' + on);
 
 		}
 		return true;
