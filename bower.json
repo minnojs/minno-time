@@ -1,7 +1,7 @@
 {
   "name": "PIPlayer",
   "version": "0.2.3",
-  "main": "dist/index.html",
+  "main": ["dist/js/app/activatePIP", "dist/js/app/API"],
   "ignore": [
     ".gitattributes",
     ".gitignore",
