@@ -39,9 +39,11 @@
 		<![endif]-->
 		<script src="../bower_components/requirejs/require.js"></script>
 
-		<script>
+		<script type="text/javascript">
 			require(['js/config'], function() {
-				require(['<%= script %>']);
+				require(['activatePIP', '<%= script %>'], function(activatePIP, script){
+					activatePIP(script);
+				});
 			});
 		</script>
 	</body>

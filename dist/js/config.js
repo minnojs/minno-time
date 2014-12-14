@@ -11,7 +11,7 @@ define(function(){
 
     // 3rd party script alias names (Easier to type "jquery" than "libs/jquery-1.7.2.min")
     paths: {
-      pipAPI: 'app/API',
+      pipAPI: 'API',
       //plugins
       text: ['//cdnjs.cloudflare.com/ajax/libs/require-text/2.0.3/text.min', "../../bower_components/requirejs-text/text"],
 

@@ -80,7 +80,7 @@ module.exports = function(grunt) {
 					// backbone must always be excluded as it is not an AMD module and we enforceDefine in config.js
 					modules: [
 						{
-							name: "app/activatePIP",
+							name: "activatePIP",
 							include: ['pipScorer', 'pipAPI']
 						},
 						{

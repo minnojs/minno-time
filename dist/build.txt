@@ -3,7 +3,7 @@ css/main.css
 ----------------
 css/main.css
 
-js/app/activatePIP.js
+js/activatePIP.js
 ----------------
 js/app/task/script.js
 js/app/task/settings.js
@@ -56,12 +56,12 @@ js/app/task/log/post.js
 js/app/task/log/log_stack.js
 js/app/task/log/logger.js
 js/app/sequencer/player.js
-js/app/activatePIP.js
+js/activatePIP.js
 js/extensions/dscore/computeD.js
 js/extensions/dscore/msgMan.js
 js/extensions/dscore/parcelMng.js
 js/extensions/dscore/Scorer.js
-js/app/API.js
+js/API.js
 
 js/extensions/dscore/Scorer.js
 ----------------

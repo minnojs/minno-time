@@ -7,11 +7,11 @@
 define(function(require){
 
 	var _ = require('underscore'),
-		mainScript = require('./task/script'),
+		mainScript = require('app/task/script'),
 		main = require('app/task/main_view'),
 		parse = require('app/task/parser'),
 		play = require('app/sequencer/player'),
-		global = require('./global');
+		global = require('app/global');
 
 
 	function activate(script, done){
@@ -26,9 +26,6 @@ define(function(require){
 		// init global
 		var glob = global(global());
 		var name = script.name || 'anonymous PIP';
-
-
-
 
 		// warn of recurring task name
 		if (glob[name] && console.warn){
