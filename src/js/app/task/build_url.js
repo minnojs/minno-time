@@ -16,6 +16,11 @@ define(['underscore','./settings'],function(_,settingsGetter){
 			}
 		}
 
+		// it this is a dataUrl type of image, we don't need to append the baseurl
+		if (type == 'image' && /^data:image/.test(url)){
+			return url;
+		}
+
 		// make sure base url is set, and add trailing slash if needed
 		if (!base_url) {
 			base_url="";
