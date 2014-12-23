@@ -8,6 +8,7 @@
 define(['jquery','underscore'],function($,_){
 
 	var html = function(media, context){
+		var def = $.Deferred();
 
 		if (media.word) {
 			media.displayType = 'element';
@@ -17,7 +18,12 @@ define(['jquery','underscore'],function($,_){
 		else if (media.image) {
 			media.displayType = 'element';
 			media.type = 'image';
-			media.el = $('<img>',{src:media.image});
+
+			media.promise = def.promise();
+
+			media.el = $('<img>')
+				.on('load', function(){def.resolve();})
+				.attr('src', media.image);
 		}
 		else if (media.jquery) {
 			media.displayType = 'element';
