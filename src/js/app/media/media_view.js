@@ -20,10 +20,7 @@ define(['jquery', 'backbone','app/task/main_view'], function($, Backbone,main_vi
                 .css(this.model.get('css'))
                 .appendTo(canvas);
 
-            // This is needed in order to preload images correctly on Safari
-            // hopefully this will solve aditional chaching problems in the future
-            $.when(this.options.promise)                // when the media is ready
-                .then($.proxy(this.render, this));      // apply render in the appropriate context
+            this.render();
         },
 
         // we keep all stimuli appended to the canvas so that the render function can apply to them

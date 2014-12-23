@@ -6,9 +6,10 @@ define(['jquery'], function($){
 	var defStack = [];				// an array holding all the deferreds
 	var stackDone = 0;				// the number of sources we have completed downloading
 	var allDone = $.Deferred();		// General deferred, notifies upon source completion
+	var images = {};
 
 	// load a single source
-	var load = function(src, type){
+	function load(src, type){
 		type = type || 'image';
 		// if we haven't loaded this yet
 		if ($.inArray(src, srcStack) == -1) {
@@ -33,6 +34,7 @@ define(['jquery'], function($){
 						$(img).on('error', function(){throw new Error('Image not found: "' + src + '"');});
 					}); // reject deferred on error
 					img.src = src;
+					images[src] = img;
 					break;
 			}
 
@@ -53,11 +55,15 @@ define(['jquery'], function($){
 		}
 		// the source was already loaded
 		return false;
-	};
+	}
 
 	return {
 		// loads a single source
 		add: load,
+
+		getImage: function(url){
+			return images[url];
+		},
 
 		activate: function(){
 			// fail or reject allDone according to our defStack
