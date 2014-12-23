@@ -15,6 +15,11 @@ define(['underscore','./settings'],function(_,settings){
 			}
 		}
 
+		// don't use base url when using dataUrls
+		if (type == 'image' && /^data:image/.test(url)){
+			return url;
+		}
+
 		// make sure base url is set, and add trailing slash if needed
 		if (!base_url) {
 			base_url="";
