@@ -151,12 +151,15 @@ define(function(require){
 		},
 
 		name: function(){
+			// if we have an alias ues it
 			if (this.data.alias) {
-				// if we have an alias ues it
 				return this.data.alias;
 			}
-			if (this.inherit && this.inherit.set) {
-				// otherwise try using the set we inherited from
+			// otherwise try using the set we inherited from
+			if (_.isString(this.inherit)){
+				return this.inherit;
+			}
+			if (_.isPlainObject(this.inherit)){
 				return this.inherit.set;
 			}
 			return false; // we're out of options here
