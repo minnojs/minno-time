@@ -9,6 +9,7 @@ js/app/task/script.js
 js/app/task/settings.js
 js/app/trial/current_trial.js
 js/app/task/adjust_canvas.js
+js/app/task/canvasConstructor.js
 /home/eladzlot/public_html/pip/bower_components/requirejs-text/text.js
 text!templates/loading.html
 js/app/task/main_view.js

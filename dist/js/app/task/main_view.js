@@ -1,7 +1,16 @@
 /*
  * The main view, responsible for managing the canvas
  */
-define(['backbone','jquery','underscore','./adjust_canvas','app/task/script','text!templates/loading.html'], function(Backbone, $, _, adjust_canvas,script,loadingTpl){
+define(function(require){
+
+	var Backbone = require('backbone')
+		, $ = require('jquery')
+		, _ = require('underscore')
+		, adjust_canvas = require('./adjust_canvas')
+		, canvas = require('./canvasConstructor')
+		,script = require('app/task/script')
+		,loadingTpl = require('text!templates/loading.html');
+
 
 	var View = Backbone.View.extend({
 
@@ -11,7 +20,7 @@ define(['backbone','jquery','underscore','./adjust_canvas','app/task/script','te
 			_.bindAll(this, ['activate','render','destroy']);
 
 			this.deferred = $.Deferred();
-			this.deferred.promise().then(this.destroy);
+			this.deferred.promise().always(this.destroy);
 
 			$(window).on('orientationchange.pip resize.pip', $.proxy(this.adjustCanvas,this));
 		},
@@ -23,16 +32,23 @@ define(['backbone','jquery','underscore','./adjust_canvas','app/task/script','te
 
 		activate: function(){
 			var self = this;
-			var settings = script().settings.canvas || {};
+			var canvasSettings = script().settings.canvas || {};
 			var docReady = $.Deferred(); // document ready deferred, so we can continue only after activation has culminated
 
 			$(document).ready(function(){
-				// canvas decorations
-				if (settings.background) {$('body').css('background-color',settings.background);}
-				if (settings.canvasBackground) {self.$el.css('background-color',settings.canvasBackground);}
-				if (settings.borderColor) {self.$el.css('border-color',settings.borderColor);}
-				if (settings.borderWidth) {self.$el.css('border-width',settings.borderWidth);}
-				if (settings.css) {self.$el.css(settings.css);}
+
+				var map = {
+					background 			: {element: $('body'), property: 'backgroundColor'},
+					canvasBackground	: {element: self.$el, property:'backgroundColor'},
+					borderColor			: {element: self.$el, property:'borderColor'},
+					borderWidth			: {element: self.$el, property:'borderWidth'}
+				};
+
+				// settings activator
+				var off = canvas(map, _.pick(canvasSettings,['background','canvasBackground','borderColor','borderWidth']));
+				self.deferred.promise().always(off);
+
+				canvasSettings.css && self.$el.css(canvasSettings.css);
 
 				// append to body and render
 				if ($('[pi-player]').length){
