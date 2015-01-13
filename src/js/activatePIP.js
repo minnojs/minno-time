@@ -16,13 +16,6 @@ define(function(require){
 
 	function activate(script, done){
 
-		// set default done function
-		var settings = script.settings || (script.settings = {});
-		settings.$done = done || function dfltDone(){
-			window.location.href = settings.redirect || window.location.href;
-		};
-
-
 		// init global
 		var glob = global(global());
 		var name = script.name || 'anonymous PIP';
@@ -44,7 +37,6 @@ define(function(require){
 		// activate main view and then display the loading screen
 		main
 			.activate()
-			.docReady()
 			.done(function(){
 				main
 					.loading(parseDef) // activate loading screen
@@ -55,6 +47,12 @@ define(function(require){
 					.fail(function(src){
 						throw new Error('loading resource failed, do something about it! (you can start by checking the error log, you are probably reffering to the wrong url - ' + src +')');
 					});
+			});
+
+		return main.deferred.promise()
+			.then(done || function dfltDone(){
+				var redirect = script.settings && script.settings.redirect;
+				window.location.href = redirect || window.location.href;
 			});
 	}
 

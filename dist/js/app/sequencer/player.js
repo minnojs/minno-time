@@ -6,7 +6,8 @@ define(function(require){
 		, Trial				= require('app/trial/trial_constructor')
 		, logger			= require('app/task/log/logger')
 		, settingsGetter	= require('app/task/settings')
-		, pubsub			= require('utils/pubsub');
+		, pubsub			= require('utils/pubsub')
+		, main 				= require('app/task/main_view');
 
 	/*
 	 * the function that plays the source sequence
@@ -60,6 +61,8 @@ define(function(require){
 			// push trial into the trial sequence
 			trialSequence.add(trial);
 		} else {
+			// @TODO: this realy shouldn't be here. this whole function is responsible for too many things...
+			//
 			// post any data that hasn't been posted yet.
 			// and then proceed to the end task hook or to redirect
 			logger()
@@ -67,7 +70,9 @@ define(function(require){
 					var hooks = settingsGetter('hooks') || {};
 					return $.when(hooks.endTask && hooks.endTask());
 				})
-				.always(settingsGetter('$done'));
+				.always(function(){
+					main.deferred.resolve();
+				});
 		}
 	}
 

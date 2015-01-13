@@ -1,17 +1,19 @@
 /*
  * The main view, responsible for managing the canvas
  */
-define(['backbone','jquery','./adjust_canvas','app/task/script','text!templates/loading.html'], function(Backbone, $, adjust_canvas,script,loadingTpl){
-	var docReady = $.Deferred(); // document ready deferred, so we can continue only after activation has culminated
+define(['backbone','jquery','underscore','./adjust_canvas','app/task/script','text!templates/loading.html'], function(Backbone, $, _, adjust_canvas,script,loadingTpl){
+
 	var View = Backbone.View.extend({
 
 		id: 'canvas',
 
 		initialize: function(){
+			_.bindAll(this, ['activate','render','destroy']);
 
-			this.activate = $.proxy(this.activate,this);
-			this.render = $.proxy(this.render,this);
-			$(window).on('orientationchange resize', $.proxy(this.adjustCanvas,this));
+			this.deferred = $.Deferred();
+			this.deferred.promise().then(this.destroy);
+
+			$(window).on('orientationchange.pip resize.pip', $.proxy(this.adjustCanvas,this));
 		},
 
 		render: function(){
@@ -22,6 +24,7 @@ define(['backbone','jquery','./adjust_canvas','app/task/script','text!templates/
 		activate: function(){
 			var self = this;
 			var settings = script().settings.canvas || {};
+			var docReady = $.Deferred(); // document ready deferred, so we can continue only after activation has culminated
 
 			$(document).ready(function(){
 				// canvas decorations
@@ -42,11 +45,13 @@ define(['backbone','jquery','./adjust_canvas','app/task/script','text!templates/
 				docReady.resolve();
 			});
 
-			return this;
+			return docReady;
 		},
 
 		// display loading page
 		loading: function(parseDef){
+			var $bar;
+
 			// if loading has already finished lets skip the loading page
 			if (parseDef.state() != "pending"){
 				return parseDef;
@@ -55,7 +60,7 @@ define(['backbone','jquery','./adjust_canvas','app/task/script','text!templates/
 			// display the loading template
 			this.$el.html(loadingTpl);
 
-			var $bar = this.$('.meter span');
+			$bar = this.$('.meter span');
 
 			return parseDef
 				.progress(function(done, remaining){
@@ -68,8 +73,10 @@ define(['backbone','jquery','./adjust_canvas','app/task/script','text!templates/
 			this.$el.empty();
 		},
 
-		docReady: function(){
-			return docReady;
+		destroy: function(){
+			$(window).off('.pip');
+			this.remove();
+			this.unbind();
 		},
 
 		// sets canvas size (used also for refreshing upon orientation change)
