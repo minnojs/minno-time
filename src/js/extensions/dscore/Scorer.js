@@ -56,7 +56,7 @@ define(['jquery','./computeD','./msgMan','./parcelMng'],function($,ComputeData,M
 			var scoreData = {};
 
 			if (scoreObj.errorMessage === undefined || scoreObj.errorMessage === null){
-				scoreData.FBMsg = Scorer.getFBMsg(scoreObj.score);
+				scoreData.FBMsg = this.getFBMsg(scoreObj.score);
 				scoreData.DScore = scoreObj.score;
 			}else{
 				scoreData.FBMsg = scoreObj.errorMessage;
