@@ -5,7 +5,10 @@
  *		takes a media object such as {word: 'Morning'} (we do our best for the object to have only one property)
  *		the context is the object used for templating
  */
-define(['jquery','underscore', 'utils/preloader'],function($,_, preload){
+define(function(require) {
+	var $ = require('jquery')
+		, _ = require('underscore')
+		,  preload = require('utils/preloader');
 
 	var html = function(media, context){
 

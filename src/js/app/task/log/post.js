@@ -2,9 +2,11 @@
  * Send log chunk
  * returns a function that takes data and sends it to the server after appending any meta data
  */
-define(['jquery','app/task/settings'],function($, settingsGetter){
+define(function(require){
+	var $ = require('jquery')
+		, settingsGetter = require('app/task/settings');
 
-	var send = function(data){
+	function send(data){
 		var settings = settingsGetter();
 		var url = settings.logger && settings.logger.url
 			, deff = $.Deferred();
@@ -28,7 +30,7 @@ define(['jquery','app/task/settings'],function($, settingsGetter){
 		});
 
 		return deff;
-	};
+	}
 
 	return send;
 });

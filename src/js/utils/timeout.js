@@ -1,4 +1,4 @@
-define(["underscore"],function(_){
+define(function(require){
 
 	/*
 	 * timeout
@@ -13,6 +13,8 @@ define(["underscore"],function(_){
 	 * http://stackoverflow.com/questions/6875625/does-javascript-provide-a-high-resolution-timer/6875666#6875666
 	 * http://www.websanova.com/blog/javascript/how-to-write-an-accurate-game-timer-in-javascript#.UmZ1PHh4uak
 	 */
+
+	var _ = require('underscore');
 
 	return function timeout(){
 		var time = arguments[0];

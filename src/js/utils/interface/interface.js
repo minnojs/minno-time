@@ -1,4 +1,9 @@
-define(['jquery','./listener', '../is_touch','../now'],function($,Listener,is_touch_device,now){
+define(function(require){
+	var $ = require('jquery')
+		, Listener = require('./listener')
+		, is_touch_device = require('../is_touch')
+		, now = require('../now');
+
 
 	/*
 	 * adds and removes listeners from the stack

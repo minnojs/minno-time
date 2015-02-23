@@ -1,4 +1,6 @@
-define(['./stimulus_model', '../inflator'], function(Stim_model,inflate) {
+define(function(require){
+	var Stim_model = require('./stimulus_model')
+		, inflate = require('../inflator');
 
 	return function Stimulus_constructor(modelData, options){
 

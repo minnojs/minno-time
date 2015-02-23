@@ -1,4 +1,5 @@
-define(['underscore'],function(_){
+define(function(require){
+	var _ = require('underscore');
 
 	var messages = {
 		MessageDef:[],

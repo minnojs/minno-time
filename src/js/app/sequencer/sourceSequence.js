@@ -1,7 +1,9 @@
-define(['models/collection','underscore'],function(Collection,_){
-	var collection = new Collection();
+define(function(require){
+	var _ = require('underscore')
+		, Collection = require('models/collection')
+		, collection = new Collection();
 
-	var hasFit = function compare(data, properties){
+	function hasFit(data, properties){
 
 		// if the data does not have one of the properties - this is not a fit
 		for (var prop in properties){
@@ -11,7 +13,7 @@ define(['models/collection','underscore'],function(Collection,_){
 		}
 		// by default this is a fit
 		return true;
-	};
+	}
 
 	// extend the collection with goto functions
 	_.extend(collection,{

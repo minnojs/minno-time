@@ -1,4 +1,6 @@
-define(["backbone","underscore"], function(Backbone, _) {
+define(function(require) {
+	var _ = require('underscore')
+		, Backbone = require('backbone');
 
 	// ***********  prototypal inheritance  ***********
 	// use example: newObject = Object.create(oldObject);

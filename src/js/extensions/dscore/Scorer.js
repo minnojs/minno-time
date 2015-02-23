@@ -1,5 +1,9 @@
-define(['jquery','./computeD','./msgMan','./parcelMng'],function($,ComputeData,MsgMan,ParcelMng){
+define(function(require){
 
+	var $ = require('jquery')
+		, ComputeData = require('./computeD')
+		, MsgMan = require('./msgMan')
+		, ParcelMng = require('./parcelMng');
 
 	// Description: make sure console.log is safe among all browsers.
 	// js hint thinks that console is read only - and its correct except where it doesn't exist...  this is how we tell it to ignore these lines

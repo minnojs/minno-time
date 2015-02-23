@@ -1,4 +1,6 @@
-define(["backbone","underscore"], function(Backbone, _) {
+define(function(require) {
+	var _ = require('underscore')
+		, Backbone = require('backbone');
 
 	var Model = Backbone.Collection.extend({
 		// holds a list of the next members to call if we're using the exclusive randomisation

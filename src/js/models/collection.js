@@ -1,7 +1,9 @@
-define(['underscore'],function(_){
+define(function(require){
 	/*
 	 * The constructor for an Array wrapper
 	 */
+
+	var _ = require('underscore');
 
 	var Collection = function Collection () {
 		this.collection = [];
