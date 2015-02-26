@@ -1,4 +1,10 @@
-define(['jquery', './media_view','../inflator','utils/html','app/task/build_url','app/global'], function($, Media,inflate,html,build_url,global) {
+define(function(require) {
+	var $ = require('jquery')
+		, Media = require('./media_view')
+		,inflate = require('../inflator')
+		,html = require('utils/html')
+		,build_url = require('app/task/build_url')
+		,global = require('app/global');
 
 	return function(mediaObject,model){
 

@@ -1,5 +1,11 @@
-define(['jquery','./bindings/click', './bindings/keypressed', './bindings/keyup','./bindings/timeout'], function($,click, keypressed,keyup, timeout){
-	/*
+define(function(require){
+	var $ = require('jquery')
+		, click = require('./bindings/click')
+		, keypressed = require('./bindings/keypressed')
+		, keyup = require('./bindings/keyup')
+		, timeout = require('./bindings/timeout');
+
+ 	/*
 	 * this function decorates a listener object with on and off functions
 	 * it takes listener (the object) and the binding definitions as parameters
 	 *

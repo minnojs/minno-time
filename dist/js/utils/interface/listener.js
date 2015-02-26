@@ -1,5 +1,7 @@
-define(['./binder','./triggerEvent'],function(binder,trigger){
+define(function(require){
 
+	var binder = require('./binder')
+		, trigger = require('./triggerEvent');
 	/*
 	 * listener constructor
 	 */

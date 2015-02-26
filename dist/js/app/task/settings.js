@@ -1,7 +1,9 @@
 /*
  * simply take settings out of the script
  */
-define(['./script'],function(script){
+define(function(require){
+
+	var script = require('./script');
 
 	/**
 	 * get settings from script

@@ -5,7 +5,8 @@
  *	If it is a function return its result using the context
  *	Otherwise simply return the properties
  */
-define(['underscore'],function(_){
+define(function(require){
+	var _ = require('underscore');
 
 	var randomize = function simpleRandomize(properties, context){
 

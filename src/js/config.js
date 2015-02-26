@@ -17,7 +17,7 @@ define(function(){
 
       // Core Libraries
       jquery: ["//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min","../../bower_components/jquery/jquery.min"],
-      underscore: ["//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.1.0/lodash.min","../../bower_components/lodash/dist/lodash.min"],
+      underscore: ['https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.1.0/lodash.compat.min','../../bower_components/lodash/dist/lodash.compat.min'],
       backbone: ['//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min', "../../bower_components/backbone/backbone-min"]
     },
 

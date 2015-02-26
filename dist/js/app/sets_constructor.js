@@ -11,7 +11,9 @@
  * }
  *
  */
-define(['underscore','models/set'],function(_,Set){
+define(function(require){
+	var _ = require('underscore');
+	var Set = require('models/set');
 	// the constructor
 	function Set_constructor(){
 		// the (private) set stack

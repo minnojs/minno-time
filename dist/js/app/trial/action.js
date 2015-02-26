@@ -1,4 +1,4 @@
-define(['jquery','./action_list'],function($,action_list){
+define(function(require){
 	/*
 	 * accepts an array of actions (or a single action)
 	 * and applies them
@@ -11,6 +11,9 @@ define(['jquery','./action_list'],function($,action_list){
 	 * @param eventData: eventData object
 	 * @returns Boolean continueActions: whether this action stops further action activations
 	 */
+
+	var $ = require('jquery')
+		, action_list = require('./action_list');
 
 	return function(actions,eventData){
 		// marks whether this is the final action to take

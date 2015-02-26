@@ -1,4 +1,7 @@
-define(['backbone','underscore','app/stimulus/stimulus_constructor'],function(Backbone,_,stimModel){
+define(function(require){
+	var _ = require('underscore')
+		, Backbone = require('backbone')
+		, stimModel = require('app/stimulus/stimulus_constructor');
 
 	var Collection = Backbone.Collection.extend({
 		model:stimModel,

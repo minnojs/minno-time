@@ -7,7 +7,12 @@
  *
  * the function returns an inflated script object (to be parsed by the constuctors)
  */
-define(['jquery','./trial/trial_sets','./stimulus/stimulus_sets','./media/media_sets', './global'],function($,trialSets,stimulusSets,mediaSets, global){
+define(function(require){
+	var $ = require('jquery')
+		,trialSets = require('./trial/trial_sets')
+		,stimulusSets = require('./stimulus/stimulus_sets')
+		,mediaSets = require('./media/media_sets')
+		, global = require('./global');
 
 	var customize = function customize(source){
 		// check for a custom function and run it if it exists

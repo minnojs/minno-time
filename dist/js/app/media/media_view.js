@@ -3,7 +3,9 @@
  *
  */
 
-define(['jquery', 'backbone','app/task/main_view'], function($, Backbone,main_view){
+define(function(require){
+    var Backbone = require('backbone'),
+        main_view = require('app/task/main_view');
 
     var canvas = main_view.$el;
 
