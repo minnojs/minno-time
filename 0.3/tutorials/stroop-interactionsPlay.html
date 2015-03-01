@@ -121,7 +121,6 @@
 		<p>You can play around with stroop-interactions.js right here. All you need to do is change the script and then click the activate button.</p>
 	
 
-
 			</div>
 		</div>
 
@@ -148,39 +147,39 @@
 // We will keep extending the trial we started in the setup section.
 // For now we will develop the *red* stimulus trial, later on we will show how to apply it to the other trials as well.
 
-define(['pipAPI'], function(APIconstructor) {
+define([&#39;pipAPI&#39;], function(APIconstructor) {
 
-	var API = new APIconstructor('stroop');
+	var API = new APIconstructor(&#39;stroop&#39;);
 
 
-	API.addSettings('canvas',{
+	API.addSettings(&#39;canvas&#39;,{
 		textSize: 5
 	});
 
-	API.addStimulusSets('red',[
-		{media:'Red', css:{color:'red'}},
-		{media:'Blue', css:{color:'red'}},
-		{media:'Green', css:{color:'red'}}
+	API.addStimulusSets(&#39;red&#39;,[
+		{media:&#39;Red&#39;, css:{color:&#39;red&#39;}},
+		{media:&#39;Blue&#39;, css:{color:&#39;red&#39;}},
+		{media:&#39;Green&#39;, css:{color:&#39;red&#39;}}
 	]);
 
-	API.addStimulusSets('blue',[
-		{media:'Red', css:{color:'blue'}},
-		{media:'Blue', css:{color:'blue'}},
-		{media:'Green', css:{color:'blue'}}
+	API.addStimulusSets(&#39;blue&#39;,[
+		{media:&#39;Red&#39;, css:{color:&#39;blue&#39;}},
+		{media:&#39;Blue&#39;, css:{color:&#39;blue&#39;}},
+		{media:&#39;Green&#39;, css:{color:&#39;blue&#39;}}
 	]);
 
-	API.addStimulusSets('green',[
-		{media:'Red', css:{color:'green'}},
-		{media:'Blue', css:{color:'green'}},
-		{media:'Green', css:{color:'green'}}
+	API.addStimulusSets(&#39;green&#39;,[
+		{media:&#39;Red&#39;, css:{color:&#39;green&#39;}},
+		{media:&#39;Blue&#39;, css:{color:&#39;green&#39;}},
+		{media:&#39;Green&#39;, css:{color:&#39;green&#39;}}
 	]);
 
 	API.addSequence([
 		{
 			layout: [
-				{media:'1',location:{left:2,top:2},css:{background:'red',padding:'2%',fontSize:'1.5em'}},
-				{media:'2',location:{top:2},css:{background:'blue',padding:'2%',fontSize:'1.5em'}},
-				{media:'3',location:{right:2,top:2},css:{background:'green',padding:'2%',fontSize:'1.5em'}}
+				{media:&#39;1&#39;,location:{left:2,top:2},css:{background:&#39;red&#39;,padding:&#39;2%&#39;,fontSize:&#39;1.5em&#39;}},
+				{media:&#39;2&#39;,location:{top:2},css:{background:&#39;blue&#39;,padding:&#39;2%&#39;,fontSize:&#39;1.5em&#39;}},
+				{media:&#39;3&#39;,location:{right:2,top:2},css:{background:&#39;green&#39;,padding:&#39;2%&#39;,fontSize:&#39;1.5em&#39;}}
 			],
 
 			// ### Input
@@ -196,9 +195,9 @@ define(['pipAPI'], function(APIconstructor) {
 			// In this case we trigger the *red* event when `1` is pressed, the *blue* event when `2` is pressed and so on.
 
 			input: [
-				{handle:'red',on:'keypressed',key:'1'},
-				{handle:'blue',on:'keypressed',key:'2'},
-				{handle:'green',on:'keypressed',key:'3'}
+				{handle:&#39;red&#39;,on:&#39;keypressed&#39;,key:&#39;1&#39;},
+				{handle:&#39;blue&#39;,on:&#39;keypressed&#39;,key:&#39;2&#39;},
+				{handle:&#39;green&#39;,on:&#39;keypressed&#39;,key:&#39;3&#39;}
 			],
 
 			// **Protip**: You can use key codes instead of letters, that way you can use special keys like the left (37) and right (38) arrow keys
@@ -207,15 +206,15 @@ define(['pipAPI'], function(APIconstructor) {
 			// ### Stimuli
 			// The stimuli in the `layout` property are static; this means that interactions do not affect them.
 			// If we want stimuli to be interactive we put them into a separate array called `stimuli`.
-			// The advantage of this separation is that you never have to worry that you're going to break the canvas layout when creating interactions.
+			// The advantage of this separation is that you never have to worry that you&#39;re going to break the canvas layout when creating interactions.
 
 			// We will very simply move the target stimulus into the `stimuli` property:
 
 			stimuli:[
-				{inherit:'red', handle:'target'}
+				{inherit:&#39;red&#39;, handle:&#39;target&#39;}
 			],
 
-			// Note that we extend every stimulus we inherit with the (arbitrary) handle `'target'`,
+			// Note that we extend every stimulus we inherit with the (arbitrary) handle `&#39;target&#39;`,
 			// this is necessary so that the various actions in `interactions` can know which stimulus we are referring to.
 
 			// ### Interactions
@@ -238,20 +237,20 @@ define(['pipAPI'], function(APIconstructor) {
 			// Stimuli set into `stimuli` are hidden by default.
 
 			// The first interaction we deal with displays the target stimulus as soon as the trial starts.
-			// `begin` is a special event that is fired only once; when a trial starts. In order to listen to it we use the condition object `{type:'begin'}`.
-			// In this case, the associated action is `showStim`; this action tells the player to display the a stimulus that has the handle `'target'`
-			// (you can recall that we extended the target stimulus with the handle `'target'`).]
+			// `begin` is a special event that is fired only once; when a trial starts. In order to listen to it we use the condition object `{type:&#39;begin&#39;}`.
+			// In this case, the associated action is `showStim`; this action tells the player to display the a stimulus that has the handle `&#39;target&#39;`
+			// (you can recall that we extended the target stimulus with the handle `&#39;target&#39;`).]
 
 			// Stimuli set into `stimuli` are hidden by default.
 			// The first interaction we deal with displays the target stimulus as soon as the trial starts.
-			// `begin` is a special event that is fired only once; when a trial starts. In order to listen to it we use the condition object `{type:'begin'}`.
-			// In this case, the associated action is `showStim`; this action tells the player to display the a stimulus that has the handle `'target'`
-			// (you can recall that we extended the target stimulus with the handle `'target'`).]
+			// `begin` is a special event that is fired only once; when a trial starts. In order to listen to it we use the condition object `{type:&#39;begin&#39;}`.
+			// In this case, the associated action is `showStim`; this action tells the player to display the a stimulus that has the handle `&#39;target&#39;`
+			// (you can recall that we extended the target stimulus with the handle `&#39;target&#39;`).]
 
 			interactions: [
 				{
-					conditions:[{type:'begin'}],
-					actions: [{type:'showStim', handle: 'target'}]
+					conditions:[{type:&#39;begin&#39;}],
+					actions: [{type:&#39;showStim&#39;, handle: &#39;target&#39;}]
 				},
 
 				// Next we will add interactions that deal with the response to the user interaction:
@@ -266,12 +265,12 @@ define(['pipAPI'], function(APIconstructor) {
 
 				{
 					conditions: [
-						{type:'inputEquals',value:'red'}
+						{type:&#39;inputEquals&#39;,value:&#39;red&#39;}
 					],
 					actions: [
-						{type:'setTrialAttr', setter:{score:1}},
-						{type:'log'},
-						{type:'endTrial'}
+						{type:&#39;setTrialAttr&#39;, setter:{score:1}},
+						{type:&#39;log&#39;},
+						{type:&#39;endTrial&#39;}
 					]
 				},
 
@@ -281,13 +280,13 @@ define(['pipAPI'], function(APIconstructor) {
 
 				{
 					conditions: [
-						{type:'inputEquals',value:'red', negate:true},
-						{type:'inputEquals', value: ['red','blue','green']}
+						{type:&#39;inputEquals&#39;,value:&#39;red&#39;, negate:true},
+						{type:&#39;inputEquals&#39;, value: [&#39;red&#39;,&#39;blue&#39;,&#39;green&#39;]}
 					],
 					actions: [
-						{type:'setTrialAttr', setter:{score:0}},
-						{type:'log'},
-						{type:'endTrial'}
+						{type:&#39;setTrialAttr&#39;, setter:{score:0}},
+						{type:&#39;log&#39;},
+						{type:&#39;endTrial&#39;}
 					]
 				}
 
@@ -296,7 +295,7 @@ define(['pipAPI'], function(APIconstructor) {
 				// `negate` causes the condition to activate only if it is incorrect. The second condition is needed in order to balance the first one.
 				// `negate` will cause the condition to activate on **any** event that is not *red*, this includes the `begin` event, and any other event that we may add later on.
 				// Therefore it is best practice to always limit negated conditions to specific input handles.
-				// In this case the condition means: any event that is a user response ("red" , "blue" or "green") but is not *red*.
+				// In this case the condition means: any event that is a user response (&quot;red&quot; , &quot;blue&quot; or &quot;green&quot;) but is not *red*.
 			]
 		}
 	]); // end sequence
@@ -306,7 +305,7 @@ define(['pipAPI'], function(APIconstructor) {
 });
 
 // ### Epilogue (of sorts)
-// We've created a single congruent trial for a Stroop task.
+// We&#39;ve created a single congruent trial for a Stroop task.
 // The next natural step is to copy this trial and change every place where it refers to a congruent task into incongruent and presto! we have two trials ready for action.
 // You can do that, and it would definately work, but there are several disadvantages to this approach.
 // First, every change you want to make to the trial, you will have to make to every copy of the trial that you have.
@@ -335,7 +334,8 @@ define(['pipAPI'], function(APIconstructor) {
 		    		win = null;
 		    	}
 
-		    	win = window.open('../static/playquest.html', 'questionnaire');
+		    	win = window.open('../static/playpip.html', 'pip');
+		    	win.focus();
 
 		    	win.onload = function(){
 		    		// first set the unload listener

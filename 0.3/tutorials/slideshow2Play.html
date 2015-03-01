@@ -121,7 +121,6 @@
 		<p>You can play around with slideshow2.js right here. All you need to do is change the script and then click the activate button.</p>
 	
 
-
 			</div>
 		</div>
 
@@ -142,38 +141,38 @@
 
    		<div id="editor">
 /* The script wrapper */
-define(['pipAPI'], function(APIconstructor) {
+define([&#39;pipAPI&#39;], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
 
 	// Create a trial set with the hello world trial
-	API.addTrialSets('slide',[{
-		input: [{handle:'space',on:'space'}],
-		layout: [{media :{word:'Hello world'}}],
+	API.addTrialSets(&#39;slide&#39;,[{
+		input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+		layout: [{media :{word:&#39;Hello world&#39;}}],
 		interactions: [{
-			conditions: [{type:'inputEquals',value:'space'}],
-			actions: [{type:'endTrial'}]
+			conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],
+			actions: [{type:&#39;endTrial&#39;}]
 		}]
 	}]);
 
 	// Create the sequence (Each trial extends the slide and overwrites the layout property)
 	API.addSequence([
 		{
-			inherit:'slide',
-			layout: [{media :{word:'This'}}]
+			inherit:&#39;slide&#39;,
+			layout: [{media :{word:&#39;This&#39;}}]
 		},
 		{
-			inherit:'slide',
-			layout: [{media :{word:'is'}}]
+			inherit:&#39;slide&#39;,
+			layout: [{media :{word:&#39;is&#39;}}]
 		},
 		{
-			inherit:'slide',
-			layout: [{media :{word:'even'}}]
+			inherit:&#39;slide&#39;,
+			layout: [{media :{word:&#39;even&#39;}}]
 		},
 		{
-			inherit:'slide',
-			layout: [{media :{word:'Cooler!!'}}]
+			inherit:&#39;slide&#39;,
+			layout: [{media :{word:&#39;Cooler!!&#39;}}]
 		}
 	]);
 
@@ -202,7 +201,8 @@ define(['pipAPI'], function(APIconstructor) {
 		    		win = null;
 		    	}
 
-		    	win = window.open('../static/playquest.html', 'questionnaire');
+		    	win = window.open('../static/playpip.html', 'pip');
+		    	win.focus();
 
 		    	win.onload = function(){
 		    		// first set the unload listener

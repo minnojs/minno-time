@@ -7,7 +7,6 @@
 	{% else %}
 		<p>You can play around with {{ data.basename }}.js right here. All you need to do is change the script and then click the activate button.</p>
 	{% endif %}
-
 {% endblock %}
 
 {% block head %}
@@ -64,7 +63,7 @@
 		</div>
 
    		<div id="editor">
-{% include data.filepath with data only %}
+{{ data.filecontents }}
 		</div>
 
 		<script>
@@ -87,7 +86,8 @@
 		    		win = null;
 		    	}
 
-		    	win = window.open('../static/playquest.html', 'questionnaire');
+		    	win = window.open('../static/playpip.html', 'pip');
+		    	win.focus();
 
 		    	win.onload = function(){
 		    		// first set the unload listener
@@ -117,4 +117,4 @@
 	    	}
 
 		</script>
-{% endblock %}
+{% endblock content %}

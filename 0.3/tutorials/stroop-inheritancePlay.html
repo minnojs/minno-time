@@ -121,7 +121,6 @@
 		<p>You can play around with stroop-inheritance.js right here. All you need to do is change the script and then click the activate button.</p>
 	
 
-
 			</div>
 		</div>
 
@@ -144,7 +143,7 @@
 // This section of the tutorial deals with using the inheritance features of the player in order to keep complex tasks as simple as possible.
 
 // ### Data
-// Before we dive into the actual practice of inheritance, it is important to understand the function and use of the trial's `data` property.
+// Before we dive into the actual practice of inheritance, it is important to understand the function and use of the trial&#39;s `data` property.
 // The `data` property holds an object that keeps information that has to do with this trial.
 // Remember that all the properties and values of `data` are arbitrary, and you can use them in any way that is convenient to you.
 
@@ -155,19 +154,19 @@
 
 // ```js
 // {
-// 	data:{group:'congruent'}
+// 	data:{group:&#39;congruent&#39;}
 // }
 // ```
 
 // Furthermore, the data object may be used by player interactions.
-// The condition `inputEqualsTrial` compares the input handle to a specified property of the trial's data object.
+// The condition `inputEqualsTrial` compares the input handle to a specified property of the trial&#39;s data object.
 // This means that we can create interactions that behave a bit differently as a function of trial type as defined in the data object.
 // The following interaction fires when the input handle is equal to the *group* property of the data object:
 
 // ```js
 // {
 // 	conditions: [
-// 		{type:'inputEqualsTrial',property:'group'}
+// 		{type:&#39;inputEqualsTrial&#39;,property:&#39;group&#39;}
 // 	],
 // 	actions: [
 // 		/* Some cool stuff of you own design */
@@ -185,17 +184,17 @@
 // 		/* The conditions of your choice */
 // 	],
 // 	actions: [
-// 		{type:'setTrialAttr', setter:{score:1}}
+// 		{type:&#39;setTrialAttr&#39;, setter:{score:1}}
 // 	]
 // }
 // ```
 
-define(['pipAPI'], function(APIconstructor) {
+define([&#39;pipAPI&#39;], function(APIconstructor) {
 
-	var API = new APIconstructor('stroop');
+	var API = new APIconstructor(&#39;stroop&#39;);
 
 
-	API.addSettings('canvas',{
+	API.addSettings(&#39;canvas&#39;,{
 		textSize: 5
 	});
 
@@ -208,22 +207,22 @@ define(['pipAPI'], function(APIconstructor) {
 	// the third is the type of the trial as reported to the server.
 	// What we will do is create separate trials that hold these differences and inherit the base trial that has the rest of the trial specifications.
 
-	API.addStimulusSets('red',[
-		{media:'Red', css:{color:'red'}},
-		{media:'Blue', css:{color:'red'}},
-		{media:'Green', css:{color:'red'}}
+	API.addStimulusSets(&#39;red&#39;,[
+		{media:&#39;Red&#39;, css:{color:&#39;red&#39;}},
+		{media:&#39;Blue&#39;, css:{color:&#39;red&#39;}},
+		{media:&#39;Green&#39;, css:{color:&#39;red&#39;}}
 	]);
 
-	API.addStimulusSets('blue',[
-		{media:'Red', css:{color:'blue'}},
-		{media:'Blue', css:{color:'blue'}},
-		{media:'Green', css:{color:'blue'}}
+	API.addStimulusSets(&#39;blue&#39;,[
+		{media:&#39;Red&#39;, css:{color:&#39;blue&#39;}},
+		{media:&#39;Blue&#39;, css:{color:&#39;blue&#39;}},
+		{media:&#39;Green&#39;, css:{color:&#39;blue&#39;}}
 	]);
 
-	API.addStimulusSets('green',[
-		{media:'Red', css:{color:'green'}},
-		{media:'Blue', css:{color:'green'}},
-		{media:'Green', css:{color:'green'}}
+	API.addStimulusSets(&#39;green&#39;,[
+		{media:&#39;Red&#39;, css:{color:&#39;green&#39;}},
+		{media:&#39;Blue&#39;, css:{color:&#39;green&#39;}},
+		{media:&#39;Green&#39;, css:{color:&#39;green&#39;}}
 	]);
 
 	// ### Evolving the stroop trial (trials)
@@ -231,78 +230,78 @@ define(['pipAPI'], function(APIconstructor) {
 	// We create a base trial that will be the base for anything further that we do.
 
 	// The primary change that we made is in evaluating the correct response.
-	// `inputEqualsTrial` compares the input handle to the (trial's) data property *group*.
+	// `inputEqualsTrial` compares the input handle to the (trial&#39;s) data property *group*.
 	// If they are the same then the answer is correct. The incorrect response answer reflects the same principle, only negated.
 
 
-	API.addTrialSets('base',[{
+	API.addTrialSets(&#39;base&#39;,[{
 		input: [
-			{handle:'red',on:'keypressed',key:'1'},
-			{handle:'blue',on:'keypressed',key:'2'},
-			{handle:'green',on:'keypressed',key:'3'}
+			{handle:&#39;red&#39;,on:&#39;keypressed&#39;,key:&#39;1&#39;},
+			{handle:&#39;blue&#39;,on:&#39;keypressed&#39;,key:&#39;2&#39;},
+			{handle:&#39;green&#39;,on:&#39;keypressed&#39;,key:&#39;3&#39;}
 		],
 		layout: [
-			{media:'1',location:{left:2,top:2},css:{background:'red',padding:'2%',fontSize:'1.5em'}},
-			{media:'2',location:{top:2},css:{background:'blue',padding:'2%',fontSize:'1.5em'}},
-			{media:'3',location:{right:2,top:2},css:{background:'green',padding:'2%',fontSize:'1.5em'}}
+			{media:&#39;1&#39;,location:{left:2,top:2},css:{background:&#39;red&#39;,padding:&#39;2%&#39;,fontSize:&#39;1.5em&#39;}},
+			{media:&#39;2&#39;,location:{top:2},css:{background:&#39;blue&#39;,padding:&#39;2%&#39;,fontSize:&#39;1.5em&#39;}},
+			{media:&#39;3&#39;,location:{right:2,top:2},css:{background:&#39;green&#39;,padding:&#39;2%&#39;,fontSize:&#39;1.5em&#39;}}
 		],
 		interactions: [
 			/* Display the target stimulus. */
 			{
-				conditions:[{type:'begin'}],
-				actions: [{type:'showStim', handle: 'target'}]
+				conditions:[{type:&#39;begin&#39;}],
+				actions: [{type:&#39;showStim&#39;, handle: &#39;target&#39;}]
 			},
 			/* Correct response actions */
 			{
 				conditions: [
-					{type:'inputEqualsTrial',property:'group'}
+					{type:&#39;inputEqualsTrial&#39;,property:&#39;group&#39;}
 				],
 				actions: [
-					{type:'setTrialAttr', setter:{score:1}},
-					{type:'log'},
-					{type:'endTrial'}
+					{type:&#39;setTrialAttr&#39;, setter:{score:1}},
+					{type:&#39;log&#39;},
+					{type:&#39;endTrial&#39;}
 				]
 			},
 			/* Incorrect response actions */
 			{
 				conditions: [
-					{type:'inputEqualsTrial',property:'group',negate:true},
-					{type:'inputEquals',value:['red','blue','green']}
+					{type:&#39;inputEqualsTrial&#39;,property:&#39;group&#39;,negate:true},
+					{type:&#39;inputEquals&#39;,value:[&#39;red&#39;,&#39;blue&#39;,&#39;green&#39;]}
 				],
 				actions: [
-					{type:'setTrialAttr', setter:{score:0}},
-					{type:'log'},
-					{type:'endTrial'}
+					{type:&#39;setTrialAttr&#39;, setter:{score:0}},
+					{type:&#39;log&#39;},
+					{type:&#39;endTrial&#39;}
 				]
 			}
 		]
 	}]);
 
-	// We've created three trials here, one for each of the trial types (colors), and set them into `trialSets` so they can later be inherited themselves.
-	// Note that we haven't made any changes to the interactions.
+	// We&#39;ve created three trials here, one for each of the trial types (colors), and set them into `trialSets` so they can later be inherited themselves.
+	// Note that we haven&#39;t made any changes to the interactions.
 	// We will change the interactions in the base trial so that they depend on the trial type (as set in data *group*).
 
-	API.addTrialSets('red',[{
-		inherit:'base',
-		data: {group:'red'},
+	API.addTrialSets(&#39;red&#39;,[{
+		inherit:&#39;base&#39;,
+		data: {group:&#39;red&#39;},
 		stimuli: [
-			{inherit:'red', handle:'target'}
+			{inherit:&#39;red&#39;, handle:&#39;target&#39;}
 		]
 	}]);
 
-	API.addTrialSets('blue',[{
-		inherit:'base',
-		data: {group:'blue'},
+	API.addTrialSets(&#39;blue&#39;,[{
+		inherit:&#39;base&#39;,
+		data: {group:&#39;blue&#39;},
 		stimuli: [
-			{inherit:'blue', handle:'target'}
+			{inherit:&#39;blue&#39;, handle:&#39;target&#39;}
 		]
 	}]);
 
-	API.addTrialSets('green',[{
-		inherit:'base',
-		data: {group:'green'},
+	API.addTrialSets(&#39;green&#39;,[{
+		inherit:&#39;base&#39;,
+		data: {group:&#39;green&#39;},
 		stimuli: [
-			{inherit:'green', handle:'target'}
+			{inherit:&#39;green&#39;, handle:&#39;target&#39;}
 		]
 	}]);
 
@@ -310,9 +309,9 @@ define(['pipAPI'], function(APIconstructor) {
 	// What we have left now, is to put the task together. Here we display a congruent and incongruent trial consequently.
 
 	API.addSequence([
-		{inherit:'red'},
-		{inherit:'blue'},
-		{inherit:'green'}
+		{inherit:&#39;red&#39;},
+		{inherit:&#39;blue&#39;},
+		{inherit:&#39;green&#39;}
 	]);
 
 	// We can go ahead now, and create our tasks manually by inserting trials at any order that we want, but that would be static and hard to maintain.
@@ -344,7 +343,8 @@ define(['pipAPI'], function(APIconstructor) {
 		    		win = null;
 		    	}
 
-		    	win = window.open('../static/playquest.html', 'questionnaire');
+		    	win = window.open('../static/playpip.html', 'pip');
+		    	win.focus();
 
 		    	win.onload = function(){
 		    		// first set the unload listener

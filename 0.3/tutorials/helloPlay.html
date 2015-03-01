@@ -121,7 +121,6 @@
 		<p>You can play around with hello.js right here. All you need to do is change the script and then click the activate button.</p>
 	
 
-
 			</div>
 		</div>
 
@@ -142,7 +141,7 @@
 
    		<div id="editor">
 /* The script wrapper */
-define(['pipAPI'], function(APIconstructor) {
+define([&#39;pipAPI&#39;], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
@@ -153,23 +152,23 @@ define(['pipAPI'], function(APIconstructor) {
 	API.addSequence([
 		{
 			input: [
-				{handle:'space',on:'space'}
+				{handle:&#39;space&#39;,on:&#39;space&#39;}
 			],
 			layout: [
 				// This is a stimulus object
 				{
-					media :{word:'Hello world'},
-					css:{fontSize:'2em',color:'#D7685A'}
+					media :{word:&#39;Hello world&#39;},
+					css:{fontSize:&#39;2em&#39;,color:&#39;#D7685A&#39;}
 				}
 			],
 			interactions: [
 				// This is an interaction (it has a condition and an action)
 				{
 					conditions: [
-						{type:'inputEquals',value:'space'}
+						{type:&#39;inputEquals&#39;,value:&#39;space&#39;}
 					],
 					actions: [
-						{type:'endTrial'}
+						{type:&#39;endTrial&#39;}
 					]
 				}
 			]
@@ -179,7 +178,7 @@ define(['pipAPI'], function(APIconstructor) {
 	// #### Activate the player
 	return API.script;
 });
-/* don't forget to close the define wrapper */
+/* don&#39;t forget to close the define wrapper */
 		</div>
 
 		<script>
@@ -202,7 +201,8 @@ define(['pipAPI'], function(APIconstructor) {
 		    		win = null;
 		    	}
 
-		    	win = window.open('../static/playquest.html', 'questionnaire');
+		    	win = window.open('../static/playpip.html', 'pip');
+		    	win.focus();
 
 		    	win.onload = function(){
 		    		// first set the unload listener

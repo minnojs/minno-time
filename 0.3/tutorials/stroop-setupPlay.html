@@ -121,7 +121,6 @@
 		<p>You can play around with stroop-setup.js right here. All you need to do is change the script and then click the activate button.</p>
 	
 
-
 			</div>
 		</div>
 
@@ -145,13 +144,13 @@
 // lets start putting together a real task.
 
 // We will create a task that demonstrates the stroop effect:
-// When the name of a color (e.g. "blue", "green," or "red") is printed in a color not denoted by the name (e.g., the word "red" printed in blue instead of red),
+// When the name of a color (e.g. &quot;blue&quot;, &quot;green,&quot; or &quot;red&quot;) is printed in a color not denoted by the name (e.g., the word &quot;red&quot; printed in blue instead of red),
 // naming the color of the word takes longer and is more prone to errors than when the color of the ink matches the name of the color.
 // The effect is named after John Ridley Stroop who first published the effect in English in 1935.
 
-// There is no scripted way that you are supposed to create a task, but we will break down the task in one way that we've found useful.
+// There is no scripted way that you are supposed to create a task, but we will break down the task in one way that we&#39;ve found useful.
 
-define(['pipAPI'], function(APIconstructor) {
+define([&#39;pipAPI&#39;], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
@@ -160,7 +159,7 @@ define(['pipAPI'], function(APIconstructor) {
 
 	// In order to set the default text size you can use the `canvas` [setting](./API.html#canvas) like so:
 
-	API.addSettings('canvas',{
+	API.addSettings(&#39;canvas&#39;,{
 		textSize: 5
 	});
 
@@ -171,33 +170,33 @@ define(['pipAPI'], function(APIconstructor) {
 	// ### Stimuli
 	// Lets start with the thing that we already know how to do.
 
-	// We'll create lists of the stimuli we are going to use.
+	// We&#39;ll create lists of the stimuli we are going to use.
 	// We have three groups of stimuli; **red**, **blue** and **green**.
 	// We will create a separate set of stimuli for each of these groups.
 	// These sets will allow us to randomize and extend them later on.
 
-	API.addStimulusSets('red',[
-		{media:'Red', css:{color:'red'}},
-		{media:'Blue', css:{color:'red'}},
-		{media:'Green', css:{color:'red'}}
+	API.addStimulusSets(&#39;red&#39;,[
+		{media:&#39;Red&#39;, css:{color:&#39;red&#39;}},
+		{media:&#39;Blue&#39;, css:{color:&#39;red&#39;}},
+		{media:&#39;Green&#39;, css:{color:&#39;red&#39;}}
 	]);
 
-	API.addStimulusSets('blue',[
-		{media:'Red', css:{color:'blue'}},
-		{media:'Blue', css:{color:'blue'}},
-		{media:'Green', css:{color:'blue'}}
+	API.addStimulusSets(&#39;blue&#39;,[
+		{media:&#39;Red&#39;, css:{color:&#39;blue&#39;}},
+		{media:&#39;Blue&#39;, css:{color:&#39;blue&#39;}},
+		{media:&#39;Green&#39;, css:{color:&#39;blue&#39;}}
 	]);
 
-	API.addStimulusSets('green',[
-		{media:'Red', css:{color:'green'}},
-		{media:'Blue', css:{color:'green'}},
-		{media:'Green', css:{color:'green'}}
+	API.addStimulusSets(&#39;green&#39;,[
+		{media:&#39;Red&#39;, css:{color:&#39;green&#39;}},
+		{media:&#39;Blue&#39;, css:{color:&#39;green&#39;}},
+		{media:&#39;Green&#39;, css:{color:&#39;green&#39;}}
 	]);
 
 	// All the stimuli in each set have the same color, each stimulus in the set has a distinct name.
 
 	// Note also that we use the shortcut to plain text media (simply settings a string),
-	// and not the full fledged media object (that would look like this: `{word:'Red'}`).
+	// and not the full fledged media object (that would look like this: `{word:&#39;Red&#39;}`).
 	// You can of course use any type of [media](./API.md#media) here.
 
 // ### Layout
@@ -205,14 +204,14 @@ define(['pipAPI'], function(APIconstructor) {
 
 // In the stroop task we sort words by their colors.
 // First things first, lets add labels to the task canvas so that it is clear what the user is sorting the stimuli to.
-// We'll add three labels, one for each of the colors we are using.
+// We&#39;ll add three labels, one for each of the colors we are using.
 
 // By default stimuli are displayed at the center of the screen, if we want to display them at other locations,
 // we use the `location` property of the [stimulus object](./API.md#stimuli).
 // The location property takes an object with distances from the border in percentages of the player canvas.
 // Where `left:20` means that the left border of the stimulus should be 20% from the left of the canvas.
 // You may define any of the `left`/`right`/`top`/`bottom` properties.
-// In this case we'll define the labels to be two percent of the canvas away from the borders just so they don't collide.
+// In this case we&#39;ll define the labels to be two percent of the canvas away from the borders just so they don&#39;t collide.
 
 // We use the `css` property to control the style of the labels.
 // We set the `background` color to the appropriate color and the `fontSize` of the labels to be 1.5 times of the default fontSize.
@@ -222,21 +221,21 @@ define(['pipAPI'], function(APIconstructor) {
 		{
 			layout: [
 				{
-					media:'1',
+					media:&#39;1&#39;,
 					location:{left:2,top:2},
-					css:{background:'red',padding:'2%',fontSize:'1.5em'}
+					css:{background:&#39;red&#39;,padding:&#39;2%&#39;,fontSize:&#39;1.5em&#39;}
 				},
 				{
-					media:'2',
+					media:&#39;2&#39;,
 					location:{top:2},
-					css:{background:'blue',padding:'2%',fontSize:'1.5em'}
+					css:{background:&#39;blue&#39;,padding:&#39;2%&#39;,fontSize:&#39;1.5em&#39;}
 				},
 				{
-					media:'3',
+					media:&#39;3&#39;,
 					location:{right:2,top:2},
-					css:{background:'green',padding:'2%',fontSize:'1.5em'}
+					css:{background:&#39;green&#39;,padding:&#39;2%&#39;,fontSize:&#39;1.5em&#39;}
 				},
-				{inherit:'red'}
+				{inherit:&#39;red&#39;}
 			],
 			input: [],
 			interactions: []
@@ -246,7 +245,7 @@ define(['pipAPI'], function(APIconstructor) {
 	// #### Return the script
 	return API.script;
 });
-/* don't forget to close the define wrapper */
+/* don&#39;t forget to close the define wrapper */
 		</div>
 
 		<script>
@@ -269,7 +268,8 @@ define(['pipAPI'], function(APIconstructor) {
 		    		win = null;
 		    	}
 
-		    	win = window.open('../static/playquest.html', 'questionnaire');
+		    	win = window.open('../static/playpip.html', 'pip');
+		    	win.focus();
 
 		    	win.onload = function(){
 		    		// first set the unload listener

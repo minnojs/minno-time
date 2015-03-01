@@ -121,7 +121,6 @@
 		<p>You can play around with touch.js right here. All you need to do is change the script and then click the activate button.</p>
 	
 
-
 			</div>
 		</div>
 
@@ -144,7 +143,7 @@
 // # Touch devices
 // There are several changes required for support of touch devices.
 // This tutorial will show you how to fully support them in you tasks.
-define(['pipAPI'], function(APIconstructor) {
+define([&#39;pipAPI&#39;], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
@@ -156,15 +155,15 @@ define(['pipAPI'], function(APIconstructor) {
 			// If it is set to true then the input will be used only in touch devices.
 			// If it is set to false then the input will be used only in non touch devices.
 			input: [
-				// This input will be available on touch devices too (mostly, it won't be available for lack of keyboard though)
-				{handle:'end', on:'space'},
+				// This input will be available on touch devices too (mostly, it won&#39;t be available for lack of keyboard though)
+				{handle:&#39;end&#39;, on:&#39;space&#39;},
 
 				// But these will be available only on touch devices.
 
 				// There are several touch targeted input shortcuts that you can use (they work for non touch devices too though).
-				// These are `rightTouch`, `leftTouch`, `topTouch` and `bottomTouch`. </br>
-				{handle:'end',on:'rightTouch', touch:true},
-				{handle:'end',on:'leftTouch', touch: true}
+				// These are `rightTouch`, `leftTouch`, `topTouch` and `bottomTouch`. &lt;/br&gt;
+				{handle:&#39;end&#39;,on:&#39;rightTouch&#39;, touch:true},
+				{handle:&#39;end&#39;,on:&#39;leftTouch&#39;, touch: true}
 			],
 
 			// ##### touchMedia
@@ -175,20 +174,20 @@ define(['pipAPI'], function(APIconstructor) {
 			layout:[
 				{
 					location:{top:20},
-					media:{word:'this will always be here'}
+					media:{word:&#39;this will always be here&#39;}
 				},
 				{
 					location:{bottom:20},
-					media:{word:'Only on regular'},
-					touchMedia:{word:'Only on touch'}
+					media:{word:&#39;Only on regular&#39;},
+					touchMedia:{word:&#39;Only on touch&#39;}
 				}
 			],
 
 
 			interactions: [
 				{
-					conditions: [{type:'inputEquals',value:'end'}],
-					actions: [{type:'endTrial'}]
+					conditions: [{type:&#39;inputEquals&#39;,value:&#39;end&#39;}],
+					actions: [{type:&#39;endTrial&#39;}]
 				}
 			]
 		}
@@ -219,7 +218,8 @@ define(['pipAPI'], function(APIconstructor) {
 		    		win = null;
 		    	}
 
-		    	win = window.open('../static/playquest.html', 'questionnaire');
+		    	win = window.open('../static/playpip.html', 'pip');
+		    	win.focus();
 
 		    	win.onload = function(){
 		    		// first set the unload listener

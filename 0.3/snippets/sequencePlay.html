@@ -121,7 +121,6 @@
 		<p>You can play around with sequence.js right here. All you need to do is change the script and then click the activate button.</p>
 	
 
-
 			</div>
 		</div>
 
@@ -141,36 +140,36 @@
 		</div>
 
    		<div id="editor">
-define(['pipAPI'], function(APIconstructor) {
+define([&#39;pipAPI&#39;], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
 
 	// ### The trial sequence
 	// The heart of any PIP script is the sequence.
-	// In this part of the tutorial we will see some advanced uses of the sequencer. </br>
+	// In this part of the tutorial we will see some advanced uses of the sequencer. &lt;/br&gt;
 
 	API.addSequence([
 		// #### Multiple trials
 		// The sequence is an array of trials. you can sequentially add in as many trials as you want
 		{
 			// First trial
-			input: [{handle:'space',on:'space'}],
-			layout: [{media :{word:'First trial'}}],
-			interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+			input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+			layout: [{media :{word:&#39;First trial&#39;}}],
+			interactions: [{conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],actions: [{type:&#39;endTrial&#39;}]}]
 		},
 		{
 			// Second trial
-			input: [{handle:'space',on:'space'}],
-			layout: [{media :{word:'Second trial'}}],
-			interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+			input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+			layout: [{media :{word:&#39;Second trial&#39;}}],
+			interactions: [{conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],actions: [{type:&#39;endTrial&#39;}]}]
 		}
 		// #### Mixer objects
-		// In order to create more complex sequences you can use mixer objects. Mixer objects allow you to repeat and randomize trials. </br>
-		// Each mixer object has a mixer property that defines what type of mixer it is, and a data property that holds a sequence array to be mixed. This means that the sequence may include any number of trials and/or mixer objects.</br>
+		// In order to create more complex sequences you can use mixer objects. Mixer objects allow you to repeat and randomize trials. &lt;/br&gt;
+		// Each mixer object has a mixer property that defines what type of mixer it is, and a data property that holds a sequence array to be mixed. This means that the sequence may include any number of trials and/or mixer objects.&lt;/br&gt;
 
 		//        {
-		//            mixer: 'mixer-type',
+		//            mixer: &#39;mixer-type&#39;,
 		//            data: [task1, task2]
 		//        }
 		,
@@ -179,23 +178,23 @@ define(['pipAPI'], function(APIconstructor) {
 		{
 			// The mixer property tells the sequence what sort of mixer object this is.
 			// This mixer randomizes its sequence.
-			mixer : 'random',
+			mixer : &#39;random&#39;,
 			// The data property holds a sequence array to be randomized. These trials will be inserted into the sequence in a random order.
 			data : [
 				{
-					input: [{handle:'space',on:'space'}],
-					layout: [{media :{word:'Random 1'}}],
-					interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+					input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+					layout: [{media :{word:&#39;Random 1&#39;}}],
+					interactions: [{conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],actions: [{type:&#39;endTrial&#39;}]}]
 				},
 				{
-					input: [{handle:'space',on:'space'}],
-					layout: [{media :{word:'Random 2'}}],
-					interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+					input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+					layout: [{media :{word:&#39;Random 2&#39;}}],
+					interactions: [{conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],actions: [{type:&#39;endTrial&#39;}]}]
 				},
 				{
-					input: [{handle:'space',on:'space'}],
-					layout: [{media :{word:'Random 3'}}],
-					interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+					input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+					layout: [{media :{word:&#39;Random 3&#39;}}],
+					interactions: [{conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],actions: [{type:&#39;endTrial&#39;}]}]
 				}
 			]
 		},
@@ -203,15 +202,15 @@ define(['pipAPI'], function(APIconstructor) {
 		// ##### Repeat
 		{
 			// This mixer repeats the trials in the data property.
-			mixer : 'repeat',
+			mixer : &#39;repeat&#39;,
 			// The repeat mixer requires the times property that defines how many times to repeat the trials.
 			times : 3,
 			// The data property holds a sequence array to be repeated.
 			data : [
 				{
-					input: [{handle:'space',on:'space'}],
-					layout: [{media :{word:'I am repeated !!'}}],
-					interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+					input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+					layout: [{media :{word:&#39;I am repeated !!&#39;}}],
+					interactions: [{conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],actions: [{type:&#39;endTrial&#39;}]}]
 				}
 			]
 		},
@@ -219,25 +218,25 @@ define(['pipAPI'], function(APIconstructor) {
 		// ##### Choose
 		{
 			// This mixer randomly chooses one or more trials
-			mixer : 'choose',
+			mixer : &#39;choose&#39;,
 			// The number of trials to choose (by default only one)
 			n : 1,
 			// The data property holds a sequence array from which the mixer picks trials.
 			data : [
 				{
-					input: [{handle:'space',on:'space'}],
-					layout: [{media :{word:'Choose only one (1)'}}],
-					interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+					input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+					layout: [{media :{word:&#39;Choose only one (1)&#39;}}],
+					interactions: [{conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],actions: [{type:&#39;endTrial&#39;}]}]
 				},
 				{
-					input: [{handle:'space',on:'space'}],
-					layout: [{media :{word:'Choose only one (2)'}}],
-					interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+					input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+					layout: [{media :{word:&#39;Choose only one (2)&#39;}}],
+					interactions: [{conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],actions: [{type:&#39;endTrial&#39;}]}]
 				},
 				{
-					input: [{handle:'space',on:'space'}],
-					layout: [{media :{word:'Choose only one (3)'}}],
-					interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+					input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+					layout: [{media :{word:&#39;Choose only one (3)&#39;}}],
+					interactions: [{conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],actions: [{type:&#39;endTrial&#39;}]}]
 				}
 
 			]
@@ -246,20 +245,20 @@ define(['pipAPI'], function(APIconstructor) {
 		// ##### Weighted Random
 		{
 			// The weighted random mixer chooses an element from `data` with specific weights for each entry.
-			mixer : 'weightedRandom',
+			mixer : &#39;weightedRandom&#39;,
 			// The weights of the elements. The numbers in this array are the relative weights of each respective element in data.
 			weights: [0.2,0.8],
 			// The data property holds a sequence array to be randomized.
 			data : [
 				{
-					input: [{handle:'space',on:'space'}],
-					layout: [{media :{word:'Random 1 (20%)'}}],
-					interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+					input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+					layout: [{media :{word:&#39;Random 1 (20%)&#39;}}],
+					interactions: [{conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],actions: [{type:&#39;endTrial&#39;}]}]
 				},
 				{
-					input: [{handle:'space',on:'space'}],
-					layout: [{media :{word:'Random 2 (80%)'}}],
-					interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+					input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+					layout: [{media :{word:&#39;Random 2 (80%)&#39;}}],
+					interactions: [{conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],actions: [{type:&#39;endTrial&#39;}]}]
 				}
 			]
 		},
@@ -267,29 +266,29 @@ define(['pipAPI'], function(APIconstructor) {
 		// ##### Wrapper (blocks within randomize)
 		{
 			// This mixer randomizes its sequence
-			mixer : 'random',
+			mixer : &#39;random&#39;,
 			// The data property holds a sequence array to be randomized.
 			data : [
 				// This trial is randomized normally
 				{
-					input: [{handle:'space',on:'space'}],
-					layout: [{media :{word:'Complex - may be before or after the pair'}}],
-					interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+					input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+					layout: [{media :{word:&#39;Complex - may be before or after the pair&#39;}}],
+					interactions: [{conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],actions: [{type:&#39;endTrial&#39;}]}]
 				},
-				// The wrapper mixer tells the sequencer to keep the data inside it together despite the randomization. It is analogous to parenthesis in math. </br>
+				// The wrapper mixer tells the sequencer to keep the data inside it together despite the randomization. It is analogous to parenthesis in math. &lt;/br&gt;
 				// In contrast, if we has a repeat mixer here, its content would be randomized.
 				{
-					mixer: 'wrapper',
+					mixer: &#39;wrapper&#39;,
 					data: [
 						{
-							input: [{handle:'space',on:'space'}],
-							layout: [{media :{word:'Pair 1'}}],
-							interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+							input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+							layout: [{media :{word:&#39;Pair 1&#39;}}],
+							interactions: [{conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],actions: [{type:&#39;endTrial&#39;}]}]
 						},
 						{
-							input: [{handle:'space',on:'space'}],
-							layout: [{media :{word:'Pair 2'}}],
-							interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+							input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+							layout: [{media :{word:&#39;Pair 2&#39;}}],
+							interactions: [{conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],actions: [{type:&#39;endTrial&#39;}]}]
 						}
 					]
 				}
@@ -299,28 +298,28 @@ define(['pipAPI'], function(APIconstructor) {
 		// ##### Wrapper (randomization within repeat)
 		{
 			// This mixer repeats its sequence.
-			mixer : 'repeat',
+			mixer : &#39;repeat&#39;,
 			// Two times.
 			times: 2,
 			// The data property holds a sequence array to be repeated.
 			data : [
-				// The wrapper mixer tells the sequencer to deffer the randomization until after the repeat</br>
-				// In contrast, if we didn't have the wrapper the randomizer would be run only once, and we would always randomize the same sequence.
+				// The wrapper mixer tells the sequencer to deffer the randomization until after the repeat&lt;/br&gt;
+				// In contrast, if we didn&#39;t have the wrapper the randomizer would be run only once, and we would always randomize the same sequence.
 				{
-					mixer: 'wrapper',
+					mixer: &#39;wrapper&#39;,
 					data: [
 						{
-							mixer:'random',
+							mixer:&#39;random&#39;,
 							data: [
 								{
-									input: [{handle:'space',on:'space'}],
-									layout: [{media :{word:'First Stim'}}],
-									interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+									input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+									layout: [{media :{word:&#39;First Stim&#39;}}],
+									interactions: [{conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],actions: [{type:&#39;endTrial&#39;}]}]
 								},
 								{
-									input: [{handle:'space',on:'space'}],
-									layout: [{media :{word:'Second Stim'}}],
-									interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+									input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+									layout: [{media :{word:&#39;Second Stim&#39;}}],
+									interactions: [{conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],actions: [{type:&#39;endTrial&#39;}]}]
 								}
 							]
 						}
@@ -332,21 +331,21 @@ define(['pipAPI'], function(APIconstructor) {
 
 		// ##### The End
 		{
-			input: [{handle:'space',on:'space'}],
-			layout: [{media :{word:'The End'}}],
-			interactions: [{conditions: [{type:'inputEquals',value:'space'}],actions: [{type:'endTrial'}]}]
+			input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+			layout: [{media :{word:&#39;The End&#39;}}],
+			interactions: [{conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],actions: [{type:&#39;endTrial&#39;}]}]
 		}
 	]);
 	/* this is where we close the sequence */
 
 	// ### Pro tip
-	// *This section goes beyond the normal scope of the PIP, and is intended for use by advanced users only.* </br>
+	// *This section goes beyond the normal scope of the PIP, and is intended for use by advanced users only.* &lt;/br&gt;
 	// The sequencer allows for many complex configurations. There are times that you want a quick easy way to test that the sequence you created really does what it is supposed to.
-	// The proper way to do that is to create a mock sequence and check that it is mixed correctly. </br>
-	// Following is such an example. </br>
+	// The proper way to do that is to create a mock sequence and check that it is mixed correctly. &lt;/br&gt;
+	// Following is such an example. &lt;/br&gt;
 
 	// Require the mixer function
-	require(['utils/mixer'], function(mixer) {
+	require([&#39;utils/mixer&#39;], function(mixer) {
 		var sequence;
 
 		// Create a sequence using numbers (or strings) instead of trials.
@@ -355,19 +354,19 @@ define(['pipAPI'], function(APIconstructor) {
 		// Each one of these begins with a `1`, ends with a `9`, and has all the digits between `2` and `8` randomized between them.
 		sequence = [
 			{
-				mixer : 'repeat',
+				mixer : &#39;repeat&#39;,
 				times : 4,
 				data : [
 					// Parse the wrapper only **after** repeating.
 					{
-						mixer: 'wrapper',
+						mixer: &#39;wrapper&#39;,
 						data: [
 							{
-								mixer : 'wrapper',
+								mixer : &#39;wrapper&#39;,
 								data : [
 									1,
 									{
-										mixer: 'random',
+										mixer: &#39;random&#39;,
 										// Note that we use numbers instead of trials here. This allows us to follow the order that this mixer follows.
 										data: [
 											2,3,4,5,6,7,8
@@ -382,7 +381,7 @@ define(['pipAPI'], function(APIconstructor) {
 			}
 		];
 
-		// We log the results of the mixer into the console (click F12 to Open Developer Tools - in Firefox requires Firebug extension.) </br>
+		// We log the results of the mixer into the console (click F12 to Open Developer Tools - in Firefox requires Firebug extension.) &lt;/br&gt;
 		// Now you can check to see if the order is what you intend.
 		/* global console */
 		console.log(mixer(sequence));
@@ -391,7 +390,7 @@ define(['pipAPI'], function(APIconstructor) {
 	return API.script;
 
 });
-/* don't forget to close the define wrapper */
+/* don&#39;t forget to close the define wrapper */
 		</div>
 
 		<script>
@@ -414,7 +413,8 @@ define(['pipAPI'], function(APIconstructor) {
 		    		win = null;
 		    	}
 
-		    	win = window.open('../static/playquest.html', 'questionnaire');
+		    	win = window.open('../static/playpip.html', 'pip');
+		    	win.focus();
 
 		    	win.onload = function(){
 		    		// first set the unload listener
