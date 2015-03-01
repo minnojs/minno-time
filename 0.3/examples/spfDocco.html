@@ -59,13 +59,13 @@
 				<nav class="collapse navbar-collapse bs-navbar-collapse">
 					<ul class="nav navbar-nav">
 						<li>
-							<a href="projectimplicit.github.io/PIquest/">piQuest</a>
+							<a href="/PIquest/">piQuest</a>
 						</li>
 						<li>
-							<a href="projectimplicit.github.io/PIquest/">piManager</a>
+							<a href="/PIquest/">piManager</a>
 						</li>
 						<li class="active">
-							<a href="../pip/overview.html">piManager</a>
+							<a href="../pip/overview.html">piPlayer</a>
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
