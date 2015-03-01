@@ -1,1 +1,0 @@
-define(["models/collection","underscore"],function(e,t){var n=new e,r=function(t,n){for(var r in n)if(n[r]!==t[r])return!1;return!0};return t.extend(n,{nextWhere:function(t){while(this.next())if(r(this.current().data||{},t))break;return this.current()},lastWhere:function(t){while(this.previous())if(r(this.current().data||{},t))break;return this.current()}}),n});

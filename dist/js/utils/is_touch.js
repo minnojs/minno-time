@@ -1,1 +1,0 @@
-define([],function(){return"ontouchstart"in window?!0:!1});

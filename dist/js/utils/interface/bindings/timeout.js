@@ -1,1 +1,0 @@
-define(["utils/timeout","utils/simpleRandomize"],function(e,t){return function(n,r){var i=function(){var n=t(r.duration)||0,i;return{on:function(t){i=e(n,function(){t({},"timeout")})},off:function(){clearTimeout(i)}}}();n.on=i.on,n.off=i.off}});

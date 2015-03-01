@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+
+		<!-- Meta, title, CSS, favicons, etc. -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="Bootstrap, a sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.">
+		<meta name="keywords" content="HTML, CSS, JS, JavaScript, framework, bootstrap, front-end, frontend, web development">
+		<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+
+		<title>piPlayer &middot; V0.3</title>
+
+		
+		<!-- Bootstrap core CSS -->
+		<link href="../../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/sunburst.min.css" rel="stylesheet">
+		<link href="../css/style.css" rel="stylesheet">
+		<style type="text/css">
+			pre {display:block;overflow-x:auto;padding:0.5em;background:#000;color:#f8f8f8;-webkit-text-size-adjust:none}
+			table {padding: 0;}
+			table tr {border-top: 1px solid #cccccc;background-color: white;margin: 0;padding: 0;}
+			table tr:nth-child(2n) {background-color: #f8f8f8;}
+			table tr th {font-weight: bold;border: 1px solid #cccccc;text-align: left;margin: 0;padding: 6px 13px;}
+			table tr td {border: 1px solid #cccccc;text-align: left;margin: 0;padding: 6px 13px;}
+			table tr th :first-child, table tr td :first-child {margin-top: 0;}
+			table tr th :last-child, table tr td :last-child {margin-bottom: 0;}
+		</style>
+		
+
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+		<!-- Favicons -->
+		<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+		<link rel="icon" href="../favicon.ico">
+
+	</head>
+
+	<body>
+		<a id="skippy" class="sr-only sr-only-focusable" href="#content"><div class="container"><span class="skiplink-text">Skip to main content</span></div></a>
+
+		<!-- Docs master nav -->
+		<header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
+			<div class="container">
+				<div class="navbar-header">
+					<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a href="../../" class="navbar-brand">Project Implicit</a>
+				</div>
+				<nav class="collapse navbar-collapse bs-navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li>
+							<a href="projectimplicit.github.io/PIquest/">piQuest</a>
+						</li>
+						<li>
+							<a href="projectimplicit.github.io/PIquest/">piManager</a>
+						</li>
+						<li class="active">
+							<a href="../pip/overview.html">piManager</a>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="https://github.com/ProjectImplicit/PIPlayer">Github</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+
+		<div id="content" class="bs-docs-header">
+			<div class="container">
+				
+	<h1>Overview</h1>
+	<p>PI Player builds and runs experiments with time-sensitive tasks over the Internet.</p>
+
+			</div>
+		</div>
+
+		<div class="container bs-docs-container">
+			<div class="row">
+				<div class="col-md-9" role="main">
+					
+	<p>PI Player builds and runs experiments with time-sensitive tasks over the Internet. It is written in JavaScript and is built to be extremely versatile and customizable.
+Researchers can program their own studies by writing scripts in a language that PIP can understand. Those scripts are written as JavaScript objects. This format allows writing simple and straightforward scripts using a constrained scripting language. The format also allows advanced users to easily create complex and dynamic scripts using in-line JavaScript.</p>
+<h3 id="central-concepts">Central Concepts</h3>
+<p>The player treats each task as a <strong>sequence</strong> of <strong>trials</strong>.</p>
+<p><strong>Trials</strong> do three things:</p>
+<ul>
+<li>Control stimuli presentation</li>
+<li>Evaluate user responses</li>
+<li>Respond to user responses (give feedback, hide a stimulus, finish trial, etc.)</li>
+</ul>
+<p>Trials are implemented with a <strong>Trial</strong> object. The Trial object is responsible for anything that ‘happens’ in the trial (e.g., presentation of stimuli). The trial object uses several other objects, the most important of them are the <strong>Stimulus</strong> and the <strong>Media</strong> objects. <strong>Media</strong> objects are responsible for what we show the user (text, images or any other form of media). <strong>Stimuli</strong> objects are responsible for how we show the media objects. For instance, the <strong>Stimulus</strong> objects controls the size and location of the presentation of a media object. Each stimulus includes one Media object. A Trial object may have multiple stimulus objects (to allow you showing a few different stimuli in the same trial).</p>
+<p>Trials, Stimuli and Media are the main building blocks of your task. Often, you will want to group them into <strong>Sets</strong>. The Sets are used to organize and randomize their members.</p>
+<p>There cannot be more than one trial at a time, and each trial can change just about anything in the player’s behavior. To program a task you need to define the trial <strong>sequences</strong>.</p>
+<ul>
+<li>Trials within a sequence may be duplicated, reordered and randomly selected.</li>
+<li>Trials can be created by inheriting some features from another trial.</li>
+<li>Trials may be randomly selected from custom lists (sets).</li>
+</ul>
+<h3 id="creating-a-task">Creating a Task</h3>
+<p>When creating a task you first create your building blocks. You create prototypes for each trial type you intend to use and create sets of stimuli for later use. Next, you drop the building blocks into the sequence; at this stage you decide on the global structure of your task and create the exact randomization that you want.</p>
+<p>Once your script is ready all you have to do is to call it from within the player index page.</p>
+<h3 id="collecting-the-data">Collecting the data</h3>
+<p>All the data that is recorded by the player is sent to a URL of your choosing. Tasks may vary greatly so we give you the flexibility to send whatever data you need and process it however you see fit.</p>
+<h3 id="learn-how-to-use-pip">Learn how to use PIP</h3>
+<p>This was only a short overview of the player. There are many ways to learn how to use it.
+We recommend you first see some code examples. Start with the <a href="./hello.md">hello world example</a>. Then, to understand better the syntax used in that example, read a little about <a href="./javascript.md">Javascript objects</a>. Next, go back to the <a href="./hello.md">hello world example</a> or continue to the <a href="./slideshow.md">slideshow example</a> to see that you understand PIP code more clearly.</p>
+<p>Next, we recommend that you read and experience our Stroop tutorial, which will take you from <a href="./stroop-setup.md">setup</a> to the <a href="./stroop-task.md">complete task</a> in a few steps. If you can, download and <a href="./install.md">install</a> a local version of a server that can run PIP scripts. When you launch that server it will take you to the page you’re reading right now. Read the Stroop tutorial on your local machnie.</p>
+<p>While reading the Stroop tutorial, we recommend that you slowly improve your own stroop files, and create your own version of each of the scripts you’ll see throughout that tutorial. You will find a copy of each of the steps in the tutorial inside your user direcory. Try to make minor changes in each step of the task. That will help you make sure you understand what each part of the code does.</p>
+
+
+				</div>
+
+				<div class="col-md-3" role="complementary">
+					<nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm">
+
+						
+
+						
+
+						<ul class="nav bs-docs-sidenav">
+
+							
+							<li class=" active ">
+								<a href="../tutorials/overview.html">Overview</a>
+							</li>
+						
+							
+							<li class="">
+								<a href="../tutorials/install.html">Install</a>
+							</li>
+						
+							
+							<li class="">
+								<a href="../tutorials/javascript.html">Javascript</a>
+							</li>
+						
+							
+							<li class="">
+								<a href="../tutorials/hello.html">Hello World</a>
+							</li>
+						
+							
+							<li class="">
+								<a href="../tutorials/slideshow.html">Slide show</a>
+							</li>
+						
+							<li>
+								<a href="javascript:void(0)">Stroop</a>
+								<ul class="nav">
+									
+							<li class="">
+								<div>
+									<a href="../tutorials/stroop-setupDocco.html">Setup</a>
+									<a href="../tutorials/stroop-setup.js" download="../tutorials/stroop-setup.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../tutorials/stroop-setupPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../tutorials/stroop-interactionsDocco.html">Interactions</a>
+									<a href="../tutorials/stroop-interactions.js" download="../tutorials/stroop-interactions.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../tutorials/stroop-interactionsPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../tutorials/stroop-inheritanceDocco.html">inheritance</a>
+									<a href="../tutorials/stroop-inheritance.js" download="../tutorials/stroop-inheritance.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../tutorials/stroop-inheritancePlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../tutorials/stroop-blockDocco.html">Blocks</a>
+									<a href="../tutorials/stroop-block.js" download="../tutorials/stroop-block.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../tutorials/stroop-blockPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../tutorials/stroop-taskDocco.html">Task</a>
+									<a href="../tutorials/stroop-task.js" download="../tutorials/stroop-task.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../tutorials/stroop-taskPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+								</ul>
+							</li>
+							<li>
+								<a href="../examples/README.html">Examples</a>
+								<ul class="nav">
+									
+							<li class="">
+								<div>
+									<a href="../examples/iatDocco.html">IAT</a>
+									<a href="../examples/iat.js" download="../examples/iat.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../examples/iatPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../examples/ampDocco.html">AMP</a>
+									<a href="../examples/amp.js" download="../examples/amp.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../examples/ampPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../examples/biatDocco.html">BIAT</a>
+									<a href="../examples/biat.js" download="../examples/biat.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../examples/biatPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../examples/gnatDocco.html">GNAT</a>
+									<a href="../examples/gnat.js" download="../examples/gnat.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../examples/gnatPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../examples/spfDocco.html">SPF</a>
+									<a href="../examples/spf.js" download="../examples/spf.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../examples/spfPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../examples/st-iatDocco.html">ST-IAT</a>
+									<a href="../examples/st-iat.js" download="../examples/st-iat.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../examples/st-iatPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../examples/evaluative_primingDocco.html">Evaluative priming</a>
+									<a href="../examples/evaluative_priming.js" download="../examples/evaluative_priming.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../examples/evaluative_primingPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../examples/evaluative_priming2Docco.html">Evaluative priming 2</a>
+									<a href="../examples/evaluative_priming2.js" download="../examples/evaluative_priming2.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../examples/evaluative_priming2Play.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+								</ul>
+							</li>
+							<li>
+								<a href="../snippets/README.html">Snippets</a>
+								<ul class="nav">
+									
+							<li class="">
+								<div>
+									<a href="../snippets/inheritanceDocco.html">Inheritance</a>
+									<a href="../snippets/inheritance.js" download="../snippets/inheritance.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../snippets/inheritancePlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../snippets/inputDocco.html">Input</a>
+									<a href="../snippets/input.js" download="../snippets/input.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../snippets/inputPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../snippets/interactionsDocco.html">Interactions</a>
+									<a href="../snippets/interactions.js" download="../snippets/interactions.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../snippets/interactionsPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../snippets/sequenceDocco.html">Sequence</a>
+									<a href="../snippets/sequence.js" download="../snippets/sequence.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../snippets/sequencePlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../snippets/settingsDocco.html">Settings</a>
+									<a href="../snippets/settings.js" download="../snippets/settings.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../snippets/settingsPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../snippets/stimulusDocco.html">Stimulus</a>
+									<a href="../snippets/stimulus.js" download="../snippets/stimulus.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../snippets/stimulusPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../snippets/touchDocco.html">Touch</a>
+									<a href="../snippets/touch.js" download="../snippets/touch.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../snippets/touchPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../snippets/trialDocco.html">Trial</a>
+									<a href="../snippets/trial.js" download="../snippets/trial.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../snippets/trialPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+								</ul>
+							</li>
+							
+							<li class="">
+								<a href="API.html">API</a>
+							</li>
+						
+							
+							<li class="">
+								<a href="playground.html">Playground</a>
+							</li>
+						
+						</ul>
+						<!-- <a class="back-to-top" href="#top">
+							Back to top
+						</a> -->
+					</nav>
+				</div>
+			</div>
+		</div>
+
+		<!-- Footer
+		================================================== -->
+		<footer class="bs-docs-footer" role="contentinfo">
+			<div class="container">
+				<p>Created by Project Implicit for the benefit of all.</p>
+				<!-- <p>Code licensed under <a href="https://github.com/twbs/bootstrap/blob/master/LICENSE" target="_blank">MIT</a>, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p> -->
+				<ul class="bs-docs-footer-links text-muted">
+					<li>Currently v0.0.27</li>
+					<li>&middot;</li>
+					<li><a href="https://github.com/ProjectImplicit/PIquest">GitHub</a></li>
+					<li>&middot;</li>
+					<li><a href="https://github.com/ProjectImplicit/PIquest/releases">Releases</a></li>
+				</ul>
+			</div>
+		</footer>
+
+	</body>
+</html>

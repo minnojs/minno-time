@@ -1,1 +1,0 @@
-define(["jquery","./action_list"],function(e,t){return function(n,r){var i=!0;if(!n)throw new Error("There is an interaction without actions!!");return n=e.isArray(n)?n:[n],e.each(n,function(e,n){if(!t[n.type])throw new Error("unknown action: "+n.type);n.type==="endTrial"&&(i=!1),t[n.type](n,r)}),i}});

@@ -1,0 +1,7 @@
+{
+  "name": "pipdox",
+  "dependencies": {
+    "bootstrap": "~3.3.2",
+    "ace-builds": "~1.1.8"
+  }
+}

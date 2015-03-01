@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+
+		<!-- Meta, title, CSS, favicons, etc. -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="Bootstrap, a sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.">
+		<meta name="keywords" content="HTML, CSS, JS, JavaScript, framework, bootstrap, front-end, frontend, web development">
+		<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+
+		<title>piPlayer &middot; V0.3</title>
+
+		
+		<!-- Bootstrap core CSS -->
+		<link href="../../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/sunburst.min.css" rel="stylesheet">
+		<link href="../css/style.css" rel="stylesheet">
+		<style type="text/css">
+			pre {display:block;overflow-x:auto;padding:0.5em;background:#000;color:#f8f8f8;-webkit-text-size-adjust:none}
+			table {padding: 0;}
+			table tr {border-top: 1px solid #cccccc;background-color: white;margin: 0;padding: 0;}
+			table tr:nth-child(2n) {background-color: #f8f8f8;}
+			table tr th {font-weight: bold;border: 1px solid #cccccc;text-align: left;margin: 0;padding: 6px 13px;}
+			table tr td {border: 1px solid #cccccc;text-align: left;margin: 0;padding: 6px 13px;}
+			table tr th :first-child, table tr td :first-child {margin-top: 0;}
+			table tr th :last-child, table tr td :last-child {margin-bottom: 0;}
+		</style>
+		
+
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+		<!-- Favicons -->
+		<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+		<link rel="icon" href="../favicon.ico">
+
+	</head>
+
+	<body>
+		<a id="skippy" class="sr-only sr-only-focusable" href="#content"><div class="container"><span class="skiplink-text">Skip to main content</span></div></a>
+
+		<!-- Docs master nav -->
+		<header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
+			<div class="container">
+				<div class="navbar-header">
+					<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a href="../../" class="navbar-brand">Project Implicit</a>
+				</div>
+				<nav class="collapse navbar-collapse bs-navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li>
+							<a href="projectimplicit.github.io/PIquest/">piQuest</a>
+						</li>
+						<li>
+							<a href="projectimplicit.github.io/PIquest/">piManager</a>
+						</li>
+						<li class="active">
+							<a href="../pip/overview.html">piManager</a>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="https://github.com/ProjectImplicit/PIPlayer">Github</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+
+		<div id="content" class="bs-docs-header">
+			<div class="container">
+				
+	<h1>Stroop-setup</h1>
+	<p>Documentation for stroop-setup.js </p>
+
+			</div>
+		</div>
+
+		<div class="container bs-docs-container">
+			<div class="row">
+				<div class="col-md-9" role="main">
+					
+	
+		<p>Now that we have a few of the basic building blocks of the player available to us,
+lets start putting together a real task.</p>
+
+
+		
+	
+		<p>We will create a task that demonstrates the stroop effect:
+When the name of a color (e.g. “blue”, “green,” or “red”) is printed in a color not denoted by the name (e.g., the word “red” printed in blue instead of red),
+naming the color of the word takes longer and is more prone to errors than when the color of the ink matches the name of the color.
+The effect is named after John Ridley Stroop who first published the effect in English in 1935.</p>
+
+
+		
+	
+		<p>There is no scripted way that you are supposed to create a task, but we will break down the task in one way that we’ve found useful.</p>
+
+
+		
+		  <div class='highlight'><pre>
+define([<span class="hljs-string">'pipAPI'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(APIconstructor)</span> </span>{
+
+	<span class="hljs-keyword">var</span> API = <span class="hljs-keyword">new</span> APIconstructor();</pre></div>
+		
+	
+		<h3 id="setup">Setup</h3>
+<p>The player has many many <a href="./API.html#settings">settings</a> that you can tinker with, we will use only one here.</p>
+
+
+		
+	
+		<p>In order to set the default text size you can use the <code>canvas</code> <a href="./API.html#canvas">setting</a> like so:</p>
+
+
+		
+		  <div class='highlight'><pre>
+	API.addSettings(<span class="hljs-string">'canvas'</span>,{
+		textSize: <span class="hljs-number">5</span>
+	});</pre></div>
+		
+	
+		<p><code>textSize</code> controls the default font size in the canvas.
+It takes a single number that represents font size in percentage of the canvas height (similar to the CSS3 <code>vh</code> unit).
+From now on any time we use a relative fontSize (read: every time we use <code>em</code> for fontSize), it will be relative to this size.</p>
+
+
+		
+	
+		<h3 id="stimuli">Stimuli</h3>
+<p>Lets start with the thing that we already know how to do.</p>
+
+
+		
+	
+		<p>We’ll create lists of the stimuli we are going to use.
+We have three groups of stimuli; <strong>red</strong>, <strong>blue</strong> and <strong>green</strong>.
+We will create a separate set of stimuli for each of these groups.
+These sets will allow us to randomize and extend them later on.</p>
+
+
+		
+		  <div class='highlight'><pre>
+	API.addStimulusSets(<span class="hljs-string">'red'</span>,[
+		{media:<span class="hljs-string">'Red'</span>, css:{color:<span class="hljs-string">'red'</span>}},
+		{media:<span class="hljs-string">'Blue'</span>, css:{color:<span class="hljs-string">'red'</span>}},
+		{media:<span class="hljs-string">'Green'</span>, css:{color:<span class="hljs-string">'red'</span>}}
+	]);
+
+	API.addStimulusSets(<span class="hljs-string">'blue'</span>,[
+		{media:<span class="hljs-string">'Red'</span>, css:{color:<span class="hljs-string">'blue'</span>}},
+		{media:<span class="hljs-string">'Blue'</span>, css:{color:<span class="hljs-string">'blue'</span>}},
+		{media:<span class="hljs-string">'Green'</span>, css:{color:<span class="hljs-string">'blue'</span>}}
+	]);
+
+	API.addStimulusSets(<span class="hljs-string">'green'</span>,[
+		{media:<span class="hljs-string">'Red'</span>, css:{color:<span class="hljs-string">'green'</span>}},
+		{media:<span class="hljs-string">'Blue'</span>, css:{color:<span class="hljs-string">'green'</span>}},
+		{media:<span class="hljs-string">'Green'</span>, css:{color:<span class="hljs-string">'green'</span>}}
+	]);</pre></div>
+		
+	
+		<p>All the stimuli in each set have the same color, each stimulus in the set has a distinct name.</p>
+
+
+		
+	
+		<p>Note also that we use the shortcut to plain text media (simply settings a string),
+and not the full fledged media object (that would look like this: <code>{word:&#39;Red&#39;}</code>).
+You can of course use any type of <a href="./API.md#media">media</a> here.</p>
+
+
+		
+	
+		<h3 id="layout">Layout</h3>
+<p>We will start by composing the stroop trial.</p>
+
+
+		
+	
+		<p>In the stroop task we sort words by their colors.
+First things first, lets add labels to the task canvas so that it is clear what the user is sorting the stimuli to.
+We’ll add three labels, one for each of the colors we are using.</p>
+
+
+		
+	
+		<p>By default stimuli are displayed at the center of the screen, if we want to display them at other locations,
+we use the <code>location</code> property of the <a href="./API.md#stimuli">stimulus object</a>.
+The location property takes an object with distances from the border in percentages of the player canvas.
+Where <code>left:20</code> means that the left border of the stimulus should be 20% from the left of the canvas.
+You may define any of the <code>left</code>/<code>right</code>/<code>top</code>/<code>bottom</code> properties.
+In this case we’ll define the labels to be two percent of the canvas away from the borders just so they don’t collide.</p>
+
+
+		
+	
+		<p>We use the <code>css</code> property to control the style of the labels.
+We set the <code>background</code> color to the appropriate color and the <code>fontSize</code> of the labels to be 1.5 times of the default fontSize.
+The <code>padding</code> property is used to set the size of the labels background (more about padding <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/box_model">here</a>).</p>
+
+
+		
+		  <div class='highlight'><pre>
+	API.addSequence([
+		{
+			layout: [
+				{
+					media:<span class="hljs-string">'1'</span>,
+					location:{left:<span class="hljs-number">2</span>,top:<span class="hljs-number">2</span>},
+					css:{background:<span class="hljs-string">'red'</span>,padding:<span class="hljs-string">'2%'</span>,fontSize:<span class="hljs-string">'1.5em'</span>}
+				},
+				{
+					media:<span class="hljs-string">'2'</span>,
+					location:{top:<span class="hljs-number">2</span>},
+					css:{background:<span class="hljs-string">'blue'</span>,padding:<span class="hljs-string">'2%'</span>,fontSize:<span class="hljs-string">'1.5em'</span>}
+				},
+				{
+					media:<span class="hljs-string">'3'</span>,
+					location:{right:<span class="hljs-number">2</span>,top:<span class="hljs-number">2</span>},
+					css:{background:<span class="hljs-string">'green'</span>,padding:<span class="hljs-string">'2%'</span>,fontSize:<span class="hljs-string">'1.5em'</span>}
+				},
+				{inherit:<span class="hljs-string">'red'</span>}
+			],
+			input: [],
+			interactions: []
+		}
+	]);</pre></div>
+		
+	
+		<h4 id="return-the-script">Return the script</h4>
+
+
+		
+		  <div class='highlight'><pre>	<span class="hljs-keyword">return</span> API.script;
+});
+<span class="hljs-comment">/* don't forget to close the define wrapper */</span></pre></div>
+		
+	
+
+				</div>
+
+				<div class="col-md-3" role="complementary">
+					<nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm">
+
+						
+
+						
+
+						<ul class="nav bs-docs-sidenav">
+
+							
+							<li class="">
+								<a href="../tutorials/overview.html">Overview</a>
+							</li>
+						
+							
+							<li class="">
+								<a href="../tutorials/install.html">Install</a>
+							</li>
+						
+							
+							<li class="">
+								<a href="../tutorials/javascript.html">Javascript</a>
+							</li>
+						
+							
+							<li class="">
+								<a href="../tutorials/hello.html">Hello World</a>
+							</li>
+						
+							
+							<li class="">
+								<a href="../tutorials/slideshow.html">Slide show</a>
+							</li>
+						
+							<li>
+								<a href="javascript:void(0)">Stroop</a>
+								<ul class="nav">
+									
+							<li class=" active ">
+								<div>
+									<a href="../tutorials/stroop-setupDocco.html">Setup</a>
+									<a href="../tutorials/stroop-setup.js" download="../tutorials/stroop-setup.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../tutorials/stroop-setupPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../tutorials/stroop-interactionsDocco.html">Interactions</a>
+									<a href="../tutorials/stroop-interactions.js" download="../tutorials/stroop-interactions.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../tutorials/stroop-interactionsPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../tutorials/stroop-inheritanceDocco.html">inheritance</a>
+									<a href="../tutorials/stroop-inheritance.js" download="../tutorials/stroop-inheritance.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../tutorials/stroop-inheritancePlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../tutorials/stroop-blockDocco.html">Blocks</a>
+									<a href="../tutorials/stroop-block.js" download="../tutorials/stroop-block.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../tutorials/stroop-blockPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../tutorials/stroop-taskDocco.html">Task</a>
+									<a href="../tutorials/stroop-task.js" download="../tutorials/stroop-task.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../tutorials/stroop-taskPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+								</ul>
+							</li>
+							<li>
+								<a href="../examples/README.html">Examples</a>
+								<ul class="nav">
+									
+							<li class="">
+								<div>
+									<a href="../examples/iatDocco.html">IAT</a>
+									<a href="../examples/iat.js" download="../examples/iat.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../examples/iatPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../examples/ampDocco.html">AMP</a>
+									<a href="../examples/amp.js" download="../examples/amp.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../examples/ampPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../examples/biatDocco.html">BIAT</a>
+									<a href="../examples/biat.js" download="../examples/biat.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../examples/biatPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../examples/gnatDocco.html">GNAT</a>
+									<a href="../examples/gnat.js" download="../examples/gnat.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../examples/gnatPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../examples/spfDocco.html">SPF</a>
+									<a href="../examples/spf.js" download="../examples/spf.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../examples/spfPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../examples/st-iatDocco.html">ST-IAT</a>
+									<a href="../examples/st-iat.js" download="../examples/st-iat.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../examples/st-iatPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../examples/evaluative_primingDocco.html">Evaluative priming</a>
+									<a href="../examples/evaluative_priming.js" download="../examples/evaluative_priming.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../examples/evaluative_primingPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../examples/evaluative_priming2Docco.html">Evaluative priming 2</a>
+									<a href="../examples/evaluative_priming2.js" download="../examples/evaluative_priming2.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../examples/evaluative_priming2Play.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+								</ul>
+							</li>
+							<li>
+								<a href="../snippets/README.html">Snippets</a>
+								<ul class="nav">
+									
+							<li class="">
+								<div>
+									<a href="../snippets/inheritanceDocco.html">Inheritance</a>
+									<a href="../snippets/inheritance.js" download="../snippets/inheritance.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../snippets/inheritancePlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../snippets/inputDocco.html">Input</a>
+									<a href="../snippets/input.js" download="../snippets/input.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../snippets/inputPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../snippets/interactionsDocco.html">Interactions</a>
+									<a href="../snippets/interactions.js" download="../snippets/interactions.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../snippets/interactionsPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../snippets/sequenceDocco.html">Sequence</a>
+									<a href="../snippets/sequence.js" download="../snippets/sequence.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../snippets/sequencePlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../snippets/settingsDocco.html">Settings</a>
+									<a href="../snippets/settings.js" download="../snippets/settings.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../snippets/settingsPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../snippets/stimulusDocco.html">Stimulus</a>
+									<a href="../snippets/stimulus.js" download="../snippets/stimulus.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../snippets/stimulusPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../snippets/touchDocco.html">Touch</a>
+									<a href="../snippets/touch.js" download="../snippets/touch.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../snippets/touchPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+									
+							<li class="">
+								<div>
+									<a href="../snippets/trialDocco.html">Trial</a>
+									<a href="../snippets/trial.js" download="../snippets/trial.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
+									<a href="../snippets/trialPlay.html" target="_blank" title="Play"><span class="glyphicon glyphicon-play-circle"></span></a>
+								</div>
+							</li>
+						
+								</ul>
+							</li>
+							
+							<li class="">
+								<a href="API.html">API</a>
+							</li>
+						
+							
+							<li class="">
+								<a href="playground.html">Playground</a>
+							</li>
+						
+						</ul>
+						<!-- <a class="back-to-top" href="#top">
+							Back to top
+						</a> -->
+					</nav>
+				</div>
+			</div>
+		</div>
+
+		<!-- Footer
+		================================================== -->
+		<footer class="bs-docs-footer" role="contentinfo">
+			<div class="container">
+				<p>Created by Project Implicit for the benefit of all.</p>
+				<!-- <p>Code licensed under <a href="https://github.com/twbs/bootstrap/blob/master/LICENSE" target="_blank">MIT</a>, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p> -->
+				<ul class="bs-docs-footer-links text-muted">
+					<li>Currently v0.0.27</li>
+					<li>&middot;</li>
+					<li><a href="https://github.com/ProjectImplicit/PIquest">GitHub</a></li>
+					<li>&middot;</li>
+					<li><a href="https://github.com/ProjectImplicit/PIquest/releases">Releases</a></li>
+				</ul>
+			</div>
+		</footer>
+
+	</body>
+</html>

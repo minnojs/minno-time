@@ -12,6 +12,7 @@
 *.sass-cache
 
 # OS or Editor folders
+.tmp
 .DS_Store
 ._*
 Thumbs.db
@@ -21,6 +22,8 @@ Thumbs.db
 .tmproj
 *.esproj
 nbproject
+
+# Sublime
 *.sublime-project
 *.sublime-workspace
 
@@ -29,8 +32,6 @@ nbproject
 .komodotools
 
 # Folders to ignore
-.hg
-.svn
-.CVS
-.idea
 node_modules
+bower_components/underscore
+dist/build.txt

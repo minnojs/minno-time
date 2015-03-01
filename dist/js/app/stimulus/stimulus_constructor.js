@@ -1,1 +1,0 @@
-define(["./stimulus_model","../inflator"],function(e,t){return function(r,i){var s=t(r,"stimulus");return s.source=r,new e(s,i)}});

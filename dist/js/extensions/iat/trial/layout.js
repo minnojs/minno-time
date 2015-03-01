@@ -1,1 +1,0 @@
-define(["underscore","../data/properties","../stimuli/separator","../stimuli/category"],function(e,t,n,r){var i=function(s){var o=[];return e.each(s,function(i,s){var u=2;e.each(i,function(i,a){var f,l;a>0&&e.isObject(t.separator)&&(f=new n(s,u),o.push(f),u+=t.separator.height||4),l=new r(i,s,u),o.push(l),u+=l.height})}),o};return i});

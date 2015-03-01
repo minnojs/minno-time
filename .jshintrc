@@ -1,0 +1,39 @@
+{
+	"browser": true,
+	"curly": true,
+	"eqnull": true,
+	"es3": true,
+	"evil": true,
+	"expr": true,
+	"globals": {
+		"define": false,
+		"require": false,
+		"requirejs": false,
+
+		"angular": false,
+
+		"after": false,
+		"afterEach": false,
+		"before": false,
+		"beforeEach": false,
+		"browser": false,
+		"browserTrigger": false,
+		"describe": false,
+		"expect": false,
+		"inject": false,
+		"it": false,
+		"jasmine": false,
+		"spyOn": false
+
+	},
+	"immed": true,
+	"latedef": "nofunc",
+	"laxcomma": true,
+	"newcap": true,
+	"noarg": true,
+	"node": true,
+	"sub": true,
+	"trailing": true,
+	"undef": true,
+	"unused": true
+}
