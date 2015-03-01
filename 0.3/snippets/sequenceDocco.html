@@ -65,7 +65,7 @@
 							<a href="/PIquest/">piManager</a>
 						</li>
 						<li class="active">
-							<a href="../pip/overview.html">piPlayer</a>
+							<a href="javascript:void(0);">piPlayer</a>
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
