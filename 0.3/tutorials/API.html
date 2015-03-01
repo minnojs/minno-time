@@ -69,7 +69,7 @@
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="https://github.com/ProjectImplicit/PIPlayer">Github</a></li>
+						<li><a href="#">Github</a></li>
 					</ul>
 				</nav>
 			</div>
