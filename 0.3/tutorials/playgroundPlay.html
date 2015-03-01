@@ -13,6 +13,7 @@
 		<title>piPlayer &middot; V0.3</title>
 
 		
+	
 		<!-- Bootstrap core CSS -->
 		<link href="../../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/sunburst.min.css" rel="stylesheet">
@@ -28,6 +29,43 @@
 			table tr th :last-child, table tr td :last-child {margin-bottom: 0;}
 		</style>
 		
+	<script src="../../bower_components/ace-builds/src-min/ace.js" type="text/javascript" charset="utf-8"></script>
+	<style type="text/css" media="screen">
+	    #editor {
+	    	margin-top: 1em;
+	        border-radius: 4px 4px 0;
+	        border: 1px solid #ddd;
+	        height: 80vh;
+	        font-size: 14px;
+	    }
+
+		/* IE8 only */
+		@media \0screen {
+		    #editor {height:80px;}
+		}
+
+		@-webkit-keyframes fadeIn {
+		  0% {opacity: 0;}
+		  20% {opacity: 1;}
+		  80% {opacity: 1;}
+		  100% {opacity: 0;}
+		}
+
+		@keyframes fadeIn {
+		  0% {opacity: 0;}
+		  20% {opacity: 1;}
+		  80% {opacity: 1;}
+		  100% {opacity: 0;}
+		}
+
+		.fadeIn {
+		  	-webkit-animation-name: fadeIn;
+		    animation-name: fadeIn;
+		    animation-duration: 6s;
+			opacity:0;
+		}
+	</style>
+
 
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
@@ -78,8 +116,11 @@
 		<div id="content" class="bs-docs-header">
 			<div class="container">
 				
-	<h1>Slideshow2</h1>
-	<p>Documentation for slideshow2.js </p>
+	<h1>Playground</h1>
+	
+		<p>You can play around in the playground right here. All you need to do is change the script and then click the activate button.</p>
+	
+
 
 			</div>
 		</div>
@@ -88,57 +129,100 @@
 			<div class="row">
 				<div class="col-md-9" role="main">
 					
-	
-		
+		<p>
+			<button class="btn btn-default btn-lg btn-block" onclick="window.click(event)" type="button">Activate</button>
+		</p>
 
-		
-		  <div class='highlight'><pre><span class="hljs-comment">/* The script wrapper */</span>
-define([<span class="hljs-string">'pipAPI'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(APIconstructor)</span> </span>{
+		<div id="success" role="alert" class="alert alert-success" style="display:none">
+			<strong>Well Done!</strong> The task has been successfully completed.
+		</div>
+		<div id="error" role="alert" class="alert alert-danger" style="display:none">
+			<strong>Oh Snap!</strong> Something went wrong with the task. Why don't you fix it and try again?
+		</div>
 
-	<span class="hljs-keyword">var</span> API = <span class="hljs-keyword">new</span> APIconstructor();</pre></div>
-		
-	
-		<p>Create a trial set with the hello world trial</p>
+   		<div id="editor">
+define(['pipAPI'], function(APIconstructor) {
 
+	var API = new APIconstructor();
 
-		
-		  <div class='highlight'><pre>	API.addTrialSets(<span class="hljs-string">'slide'</span>,[{
-		input: [{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}],
-		layout: [{media :{word:<span class="hljs-string">'Hello world'</span>}}],
-		interactions: [{
-			conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
-			actions: [{type:<span class="hljs-string">'endTrial'</span>}]
-		}]
-	}]);</pre></div>
-		
-	
-		<p>Create the sequence (Each trial extends the slide and overwrites the layout property)</p>
-
-
-		
-		  <div class='highlight'><pre>	API.addSequence([
+	API.addSequence([
 		{
-			inherit:<span class="hljs-string">'slide'</span>,
-			layout: [{media :{word:<span class="hljs-string">'This'</span>}}]
-		},
-		{
-			inherit:<span class="hljs-string">'slide'</span>,
-			layout: [{media :{word:<span class="hljs-string">'is'</span>}}]
-		},
-		{
-			inherit:<span class="hljs-string">'slide'</span>,
-			layout: [{media :{word:<span class="hljs-string">'even'</span>}}]
-		},
-		{
-			inherit:<span class="hljs-string">'slide'</span>,
-			layout: [{media :{word:<span class="hljs-string">'Cooler!!'</span>}}]
+			input: [
+				{handle:'space',on:'space'}
+			],
+			layout: [
+				{
+					media :{word:'Hello world'},
+					css:{fontSize:'2em',color:'#D7685A'}
+				}
+			],
+			interactions: [
+				{
+					conditions: [
+						{type:'inputEquals',value:'space'}
+					],
+					actions: [
+						{type:'endTrial'}
+					]
+				}
+			]
 		}
 	]);
 
-	<span class="hljs-keyword">return</span> API.script;
-});</pre></div>
-		
-	
+	return API.script;
+});
+		</div>
+
+		<script>
+		    var editor = ace.edit("editor");
+		    editor.setTheme("ace/theme/monokai");
+		    editor.getSession().setMode("ace/mode/javascript");
+		    editor.setOption("showPrintMargin", false);
+		    var win;
+		    var feedbackId = 'success';
+
+		    function click(event){
+		    	event.target.blur();
+
+		    	// assume the feedback is success
+				feedbackId = 'success';
+
+				// clean out open window
+		    	if (win){
+		    		win.close();
+		    		win = null;
+		    	}
+
+		    	win = window.open('../static/playquest.html', 'questionnaire');
+
+		    	win.onload = function(){
+		    		// first set the unload listener
+					win.addEventListener('unload', function(event) {
+						var el = document.getElementById(feedbackId);
+						window.focus();
+						fade(el);
+					});
+
+					// then activate the player (this ensures that when )
+					win.piActivate(editor.getValue());
+		    	};
+		    }
+
+	    	window.addEventListener('error', function(e){
+	    		console.error(e);
+	    		feedbackId = 'error';
+	    	});
+
+	    	function fade(el){
+				el.style.display = 'block';
+				el.classList.add('fadeIn');
+				setTimeout(function(){
+					el.style.display = 'none';
+					el.classList.remove('fadeIn');
+				}, 6000);
+	    	}
+
+		</script>
 
 				</div>
 

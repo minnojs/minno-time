@@ -78,8 +78,8 @@
 		<div id="content" class="bs-docs-header">
 			<div class="container">
 				
-	<h1>Slideshow2</h1>
-	<p>Documentation for slideshow2.js </p>
+	<h1>Docco.swig</h1>
+	<p>Documentation for docco.swig.js </p>
 
 			</div>
 		</div>
@@ -88,56 +88,6 @@
 			<div class="row">
 				<div class="col-md-9" role="main">
 					
-	
-		
-
-		
-		  <div class='highlight'><pre><span class="hljs-comment">/* The script wrapper */</span>
-define([<span class="hljs-string">'pipAPI'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(APIconstructor)</span> </span>{
-
-	<span class="hljs-keyword">var</span> API = <span class="hljs-keyword">new</span> APIconstructor();</pre></div>
-		
-	
-		<p>Create a trial set with the hello world trial</p>
-
-
-		
-		  <div class='highlight'><pre>	API.addTrialSets(<span class="hljs-string">'slide'</span>,[{
-		input: [{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}],
-		layout: [{media :{word:<span class="hljs-string">'Hello world'</span>}}],
-		interactions: [{
-			conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
-			actions: [{type:<span class="hljs-string">'endTrial'</span>}]
-		}]
-	}]);</pre></div>
-		
-	
-		<p>Create the sequence (Each trial extends the slide and overwrites the layout property)</p>
-
-
-		
-		  <div class='highlight'><pre>	API.addSequence([
-		{
-			inherit:<span class="hljs-string">'slide'</span>,
-			layout: [{media :{word:<span class="hljs-string">'This'</span>}}]
-		},
-		{
-			inherit:<span class="hljs-string">'slide'</span>,
-			layout: [{media :{word:<span class="hljs-string">'is'</span>}}]
-		},
-		{
-			inherit:<span class="hljs-string">'slide'</span>,
-			layout: [{media :{word:<span class="hljs-string">'even'</span>}}]
-		},
-		{
-			inherit:<span class="hljs-string">'slide'</span>,
-			layout: [{media :{word:<span class="hljs-string">'Cooler!!'</span>}}]
-		}
-	]);
-
-	<span class="hljs-keyword">return</span> API.script;
-});</pre></div>
-		
 	
 
 				</div>
@@ -387,7 +337,7 @@ define([<span class="hljs-string">'pipAPI'</span>], <span class="hljs-function">
 						
 							
 							<li class="">
-								<a href="playgroundPlay.html">Playground</a>
+								<a href="playground.html">Playground</a>
 							</li>
 						
 						</ul>

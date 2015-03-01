@@ -6,7 +6,7 @@ var path = require('path');
 var exec = require('child_process').exec;
 // var debug = require('gulp-debug');
 
-var pagesPath = 'src/[0-9].[0-9]/{tutorials,examples,snippets}/';
+var pagesPath = 'src/[0-9].[0-9]/{tutorials,examples,snippets,static}/';
 
 gulp.task('clean', function(cb){
 	var del = require('del');
@@ -73,6 +73,8 @@ gulp.task('build:js', function(){
 		.pipe(clone())
 		.pipe(data(function(file){
 			return {
+				filepath: file.path,
+				basename: path.basename(file.path,'.js'),
 				dirname: path.dirname(file.path).match(/[^\/]*$/)[0] // only the last segment of the dirname
 			};
 		}))
