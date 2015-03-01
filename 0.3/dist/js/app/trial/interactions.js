@@ -1,9 +1,15 @@
-define(['jquery','utils/pubsub','./evaluate','./action'],function($,pubsub,evaluate,activate){
+define(function(require){
 	/*
 	 * Organizer for the interaction function
 	 * Allows to subscribe and unsubscribe
 	 *
 	 */
+
+	var $ = require('jquery')
+		, pubsub = require('utils/pubsub')
+		, evaluate = require('./evaluate')
+		, activate = require('./action');
+
 	var subscriptionStack = [];
 
 	var interact = function(interactions,input_data){

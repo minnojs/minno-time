@@ -1,4 +1,6 @@
-define(['underscore'],function(_){
+define(function(require){
+
+	var _ = require('underscore');
 
 	function ParcelMng(msgMan){
 		this.parcelArray = []; // Holds parcel array

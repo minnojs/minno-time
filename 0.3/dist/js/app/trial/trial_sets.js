@@ -2,6 +2,7 @@
  * The trial sets objects.
  * (see documentation in the constructor)
  */
-define(['../sets_constructor'],function(Sets){
+define(function(require){
+	var Sets = require('../sets_constructor');
 	return new Sets();
 });

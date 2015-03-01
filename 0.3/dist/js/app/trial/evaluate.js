@@ -1,17 +1,23 @@
-define(['underscore','app/global','./current_trial'],function(_,globalGetter,current_trial){
-	/*
-	 * gets a condition array (or a single condition) and evaluates it
-	 * returns true if all statements are true, false otherwise
-	 *
-	 * a single condition looks like this:
-	 *
-	 *	condition = {
-	 *		type : 'begin/inputEquals/inputEqualsTrial/inputEqualsStim/function',
-	 *		value: 'right/trialAttribute/stimAttribute/customFunction',
-	 *		handle: 'stim handle' (optional in case we're targeting a stimulus)
-	 *	}
-	 *
-	 */
+/*
+ * gets a condition array (or a single condition) and evaluates it
+ * returns true if all statements are true, false otherwise
+ *
+ * a single condition looks like this:
+ *
+ *	condition = {
+ *		type : 'begin/inputEquals/inputEqualsTrial/inputEqualsStim/function',
+ *		value: 'right/trialAttribute/stimAttribute/customFunction',
+ *		handle: 'stim handle' (optional in case we're targeting a stimulus)
+ *	}
+ *
+ */
+
+define(function(require){
+
+	var _ = require('underscore')
+		, globalGetter = require('app/global')
+		, current_trial = require('./current_trial');
+
 
 	return function evaluate(conditions, inputData){
 

@@ -2,6 +2,6 @@
  * detects touch devices
  */
 
-define([],function(){
+define(function(){
 	return !!('ontouchstart' in window) ? true : false;
 });

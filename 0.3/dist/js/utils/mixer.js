@@ -1,4 +1,6 @@
-define(['underscore'],function(_){
+define(function(require){
+
+	var _ = require('underscore');
 
 	/*
 	 * mixes an array according to mix objects

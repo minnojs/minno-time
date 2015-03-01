@@ -3,6 +3,7 @@
 # get base dir so that we source from the correct location
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
+
 # get absolute path to the base repository
 DIR=$(readlink -f $DIR/..)
 
@@ -15,7 +16,7 @@ source "$DIR/scripts/git-ffwd-update.sh" || error_exit "$LINENO: could not updat
 git pull --tags
 
 # clean
-rm -rf "$DIR/scripts/../0.0" || error_exit "$LINENO: could not remove 0.0"
+rm -rf "$DIR/0.3" || error_exit "$LINENO: could not remove 0.3"
 
 # get piQuest source
 source "$DIR/scripts/getSource.sh" || error_exit "$LINENO: could not get piQuest source."

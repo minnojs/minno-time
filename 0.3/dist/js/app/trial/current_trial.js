@@ -1,4 +1,4 @@
-define([],function(){
+define(function(){
 	/*
 	 * holds a "global" instance of the current trial so we don't have to pass it on blindly.
 	 *

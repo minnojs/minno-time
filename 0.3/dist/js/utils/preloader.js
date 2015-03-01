@@ -1,7 +1,9 @@
 /*
  * media preloader
  */
-define(['jquery'], function($){
+define(function(require){
+	var $ = require('jquery');
+
 	var srcStack = [];				// an array holding all our sources
 	var defStack = [];				// an array holding all the deferreds
 	var stackDone = 0;				// the number of sources we have completed downloading

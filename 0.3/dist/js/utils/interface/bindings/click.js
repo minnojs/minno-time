@@ -1,4 +1,6 @@
-define(['jquery','utils/is_touch'],function($,is_touch_device){
+define(function(require){
+	var $ = require('jquery')
+		, is_touch_device = require('utils/is_touch');
 
 	/*
 	 * takes care of click events

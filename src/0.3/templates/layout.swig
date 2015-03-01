@@ -149,8 +149,8 @@
 									{{ example("Trial", "../snippets/trial", data.basename) }}
 								</ul>
 							</li>
-							{{ navitem("API", "API", data.basename) }}
-							{{ navitem("Playground", "playgroundPlay", data.basename) }}
+							{{ navitem("API", "../tutorials/API", data.basename) }}
+							{{ navitem("Playground", "../tutorials/playgroundPlay", data.basename) }}
 						</ul>
 						<!-- <a class="back-to-top" href="#top">
 							Back to top

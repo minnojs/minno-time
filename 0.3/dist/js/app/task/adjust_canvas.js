@@ -2,7 +2,11 @@
  * adjust canvas according to window size and settings
  * this module is built to be part of the main view
  */
-define(['jquery','app/task/settings','app/trial/current_trial'],function($, settingsGetter, trial){
+define(function(require){
+
+	var $ = require('jquery')
+		, settingsGetter = require('app/task/settings')
+		, trial = require('app/trial/current_trial');
 
 	// the function to be used by the main view
 	function adjust_canvas(init){

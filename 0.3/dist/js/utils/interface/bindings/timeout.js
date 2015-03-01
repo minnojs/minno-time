@@ -1,4 +1,6 @@
-define(['utils/timeout','utils/simpleRandomize'],function(timeout, randomize){
+define(function(require){
+	var timeout = require('utils/timeout')
+		, randomize = require('utils/simpleRandomize');
 
 	/*
 	 * timeout listenter

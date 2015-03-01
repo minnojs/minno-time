@@ -1,5 +1,11 @@
-define(['underscore',"utils/pubsub","utils/interface/interface", 'app/global'],function(_,pubsub,input,global){
-	var actions = {
+define(function(require){
+
+	var _ = require('underscore')
+		, pubsub = require('utils/pubsub')
+		, input = require('utils/interface/interface')
+		, global = require('app/global');
+
+ 	var actions = {
 		/*
 		 * Stimulus actions
 		 *

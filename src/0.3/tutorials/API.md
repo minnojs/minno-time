@@ -1,3 +1,8 @@
+---
+title: API
+description: All the little details...
+---
+
 # Player manual
 
 ### Definitions
@@ -798,7 +803,7 @@ The API is a javascript object that is used to activate the PIP.
 The basic format for accessing the API is as follows:
 
 ```js
-define(['pipAPI'], function(APIconstructor) {
+define(['app/API'], function(APIconstructor) {
 	var API = new APIconstructor();
 
 	API.addScript(script);

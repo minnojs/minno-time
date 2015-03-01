@@ -1,4 +1,6 @@
-define(['utils/pubsub'],function(pubsub){
+define(function(require){
+	var pubsub = require('utils/pubsub');
+
 	/*
 	 * manages publishing the event
 	 */

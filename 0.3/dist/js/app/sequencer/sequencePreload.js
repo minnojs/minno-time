@@ -1,7 +1,10 @@
 /*
  * gets all media that needs preloading and preloads it
  */
-define(['underscore','utils/preloader','app/task/build_url'],function(_,preload,build_url){
+define(function(require){
+	var _ = require('underscore')
+		,preload = require('utils/preloader')
+		,build_url = require('app/task/build_url');
 
 	var loadMedia = function(media){
 		// if this is an image, preload it

@@ -1,5 +1,5 @@
 /* global performance */
-define([],function(){
+define(function(){
 
 	var nowFn;
 
