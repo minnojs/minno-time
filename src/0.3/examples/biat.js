@@ -25,7 +25,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 	// Set URLs for images and templates
 	API.addSettings('base_url',{
 		image : '../../images',
-		template : '../../../resources/BIAT'
+		template : '../../../../resources/BIAT'
 	});
 
 	// Logging URL
