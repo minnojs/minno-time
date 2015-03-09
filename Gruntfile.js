@@ -97,64 +97,6 @@ module.exports = function(grunt) {
 			}
 		},
 
-		docco: {
-			// https://oncletom.io/2013/dynamic-grunt-targets-using-templates/
-			examples: {
-				src: ['resources/examples/*.js'],
-				options: {
-					output: 'docs/examples/'
-				}
-			},
-			snippets:{
-				src: ['resources/snippets/*.js'],
-				options: {
-					output: 'docs/snippets/'
-				}
-			},
-			user:{
-				src: ['user/*.js'],
-				options: {
-					output: 'docs/user/'
-				}
-			}
-		},
-
-		pipDirectory: {
-			examples: {
-				src: 'resources/examples/',
-				dest:'docs/examples'
-			},
-			snippets: {
-				src: 'resources/snippets/',
-				dest:'docs/snippets'
-			},
-			user: {
-				src: 'user',
-				dest:'docs/user'
-			}
-		},
-
-
-		// custom grunt task (resources/gruntTasks/jadeMarked.js)
-		jadeMarked: {
-			tutorials : {
-				template: 'resources/templates/tutorials.jade',
-				replace: {
-					// by default use the current dist
-					'#{player}' : '../../<%= grunt.option("player") %>'
-				},
-				files: [
-					{
-						expand: true,					// Enable dynamic expansion.
-						cwd: 'resources/tutorials',
-						src: ['*.md'],					// Actual pattern(s) to match.
-						dest: 'docs/tutorials/',		// Destination path prefix.
-						ext: '.html'					// Dest filepaths will have this extension.
-					}
-				]
-			}
-		},
-
 		express: {
 			options: {
 				port: 3000,
@@ -193,17 +135,6 @@ module.exports = function(grunt) {
 					{browserName: 'safari',platform: "OS X 10.8"}
 				]
 			}
-		},
-
-		watch: {
-			user:{
-				files: ['user/*.js'],
-				tasks: ['docco:user', 'pipDirectory:user']
-			},
-			tutorials:{
-				files: ['resources/tutorials/*.md'],
-				tasks: ['jadeMarked:tutorials']
-			}
 		}
 	});
 
@@ -221,29 +152,9 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-sass');
 
-	// copy all js files from the tutorials into the user directory
-	grunt.registerTask('userDir','Creating user directory', function(){
-		grunt.file.expandMapping('*.js', 'user/',{cwd:'resources/tutorials/js/'}).forEach(function(file){
-			grunt.file.copy(file.src, file.dest);
-		});
-	});
-
-	// Documentation.
-	// Only run the user targets if the user directory exists
-	grunt.registerTask('docs', 'Building documentation', function(){
-		// if the user directory does not exist, remove the user tasks from the config file...
-		if (!grunt.file.isDir('user')) {
-			delete grunt.config.getRaw('docco').user;
-			delete grunt.config.getRaw('pipDirectory').user;
-		}
-
-		grunt.task.run('docco', 'pipDirectory', 'jadeMarked');
-	});
-
 	// Default task(s).
 	grunt.registerTask('default', ['jshint']);
 	grunt.registerTask('server', ['express', 'watch:user','express-keepalive']);
-	grunt.registerTask('tutorials', ['express', 'watch:tutorials','express-keepalive']);
 
 	grunt.registerTask('updatePIindex', function () {
         var indexFile = "src/piindex.jsp";
@@ -261,9 +172,6 @@ module.exports = function(grunt) {
 
 	// build production stuff
 	grunt.registerTask('build', 'Building PIplayer', function(){
-		if (!grunt.option('site') && !grunt.file.isDir('user')) {
-			grunt.task.run('userDir');
-		}
-		grunt.task.run('updatePIindex','requirejs','sass','docs');
+		grunt.task.run('updatePIindex','requirejs','sass');
 	});
 };
