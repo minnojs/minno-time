@@ -64,7 +64,7 @@ define(function(require){
 		add: load,
 
 		getImage: function(url){
-			return images[url];
+			return images[url].cloneNode();
 		},
 
 		activate: function(){

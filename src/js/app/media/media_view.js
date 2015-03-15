@@ -5,6 +5,7 @@
 
 define(function(require){
     var Backbone = require('backbone'),
+        _ = require('underscore'),
         main_view = require('app/task/main_view');
 
     var canvas = main_view.$el;
@@ -32,7 +33,18 @@ define(function(require){
         render: function(){
             // these are the things that need recalibrating on refresh
             this.size();
-            this.place();
+
+            // if the element does not have a width it is meaningless to place it at this stage
+            if (this.$el.width()){
+                this.place();
+            } else {
+                // this is probably an image that hasn't been loaded yet
+                // we need to defer "place" because safari needs time to load images
+                // the preloader makes sure that the image is already in cache
+                // but it appears that safari requires another round of the call stack before loading the image...
+                _.defer(_.bind(this.place, this));
+            }
+
             return this;
         },
 
