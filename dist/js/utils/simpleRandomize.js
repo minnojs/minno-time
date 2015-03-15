@@ -8,7 +8,7 @@
 define(function(require){
 	var _ = require('underscore');
 
-	var randomize = function simpleRandomize(properties, context){
+	function simpleRandomize(properties, context){
 
 		if (_.isArray(properties)) {
 			var index = Math.floor(Math.random()*properties.length);
@@ -20,7 +20,7 @@ define(function(require){
 		}
 
 		// this must be after the test for arrays and functions, because they are considered objects too
-		if (_.isObject(properties)) {
+		if (_.isPlainObject(properties)) {
 			if (!_.isNumber(properties.min) || !_.isNumber(properties.max) || properties.min > properties.max) {
 				throw new Error('randomization objects need both a max and a minimum property, also max has to be larger than min');
 			}
@@ -29,7 +29,7 @@ define(function(require){
 
 		// if this is not a randomization object simply return
 		return properties;
-	};
+	}
 
-	return randomize;
+	return simpleRandomize;
 });

@@ -10,9 +10,9 @@ define(function(require){
 		this.script = {
 			global: {}, // the real global should be extended with this
 			current: {}, // this is the actual namespace for this PIP
-			trialSets: {},
-			stimulusSets: {},
-			mediaSets: {},
+			trialSets: [],
+			stimulusSets: [],
+			mediaSets: [],
 			sequence: []
 		};
 
@@ -125,26 +125,38 @@ define(function(require){
 		 *
 		 */
 		function setSetter(set, setArr){
+
 			// get the sets we want to extend (or create them)
-			var targetSets = this.script[type + "Sets"] || (this.script[type + "Sets"] = {});
+			var targetSets = this.script[type + "Sets"] || (this.script[type + "Sets"] = []);
+			var list;
 
-			var i;
-			// if we get an explicit object, simply extend the set
 			if (_.isPlainObject(set)) {
-				_.merge(targetSets, set);
+				list = _(set)
+					// for each set of elements
+					.map(function(value, key){
+						// add the set name to each key
+						_.each(value, function(v){v.set = key;});
+						return value; // return the set
+					})
+					.flatten() // flatten all sets to a single array
+					.value();
 			}
 
-			// if we got a named object
-			else {
-				// make sure the objects to add are wrapped in an array
-				_.isArray(setArr) || (setArr = [setArr]);
-				targetSets[set] || (targetSets[set] = []);
-
-				// merge the objects into the targetSet
-				for (i=0;i<setArr.length; i++){
-					targetSets[set].push(setArr[i]);
-				}
+			if (_.isArray(set)){
+				list = set;
 			}
+
+			if (_.isString(set)){
+				list = _.isArray(setArr) ? setArr : [setArr];
+				list = _.map(list, function(value){
+					value.set = set;
+					return value;
+				});
+
+			}
+
+			// merge the list into the targetSet
+			targetSets.push.apply(targetSets, list);
 		}
 
 		return setSetter;
