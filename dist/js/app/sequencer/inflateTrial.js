@@ -4,7 +4,6 @@ define(function(require){
 	var globalGetter 		= require('../global');
 	var sequenceGetter		= require('./taskSequence');
 	var db 					= require('./database');
-	var req 				= require('require');
 	var buildUrl 			= require('../task/build_url');
 
 	function inflateTrial(destination, properties){
@@ -49,7 +48,7 @@ define(function(require){
 		}
 
 		if (val.template){
-			val.inlineTemplate = req('text!' + buildUrl(val.template, 'template'));
+			val.inlineTemplate = requirejs('text!' + buildUrl(val.template, 'template'));
 			val.inlineTemplate = _.template(val.inlineTemplate)(context);
 			val.template = null;
 		}

@@ -19,7 +19,7 @@ define(function(require){
 
 			switch (type) {
 				case 'template':
-					require(['text!' + src], function(){
+					requirejs(['text!' + src], function(){
 						deferred.resolve();
 					}, function(){
 						throw new Error('Template not found: ' + src);
