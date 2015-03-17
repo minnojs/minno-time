@@ -1,13 +1,12 @@
 define(function(require){
-	var Stim_model = require('./stimulus_model')
-		, inflate = require('../inflator');
+	var Stim_model = require('./stimulus_model');
 
-	return function Stimulus_constructor(modelData, options){
+	return function Stimulus_constructor(source, options){
 
-		// inflate trial source
-		var data = inflate(modelData,'stimulus');
+		var data = source;
 		// keep source for later use
-		data.source = modelData;
+		// @TODO probably depracated
+		data.source = source;
 
 		return new Stim_model(data, options);
 	};

@@ -18,7 +18,7 @@
   ],
   "devDependencies": {
     "requirejs": "~2.1.14",
-    "lodash": "2.4.1",
+    "lodash-compat": "3.5.0",
     "requirejs-text": "~2.0.12",
     "backbone": "1.1.2",
     "json2": "*",

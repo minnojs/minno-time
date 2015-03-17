@@ -7,10 +7,11 @@
  */
 define(function(require) {
 	var $ = require('jquery')
-		, _ = require('underscore')
 		,  preload = require('utils/preloader');
 
-	var html = function(media, context){
+	function html(media){
+		// all templateing is done within the inflate trial function and the sequencer
+		var template = media.html || media.template || media.inlineTemplate;
 
 		if (media.word) {
 			media.displayType = 'element';
@@ -27,37 +28,18 @@ define(function(require) {
 			media.type = 'jquery';
 			media.el = media.jquery;
 		}
-		else if (media.html) {
-			media.displayType = 'element';
-			media.type = 'html';
-			media.el = $(_.template(media.html,context || {}));
-		}
-		else if (media.template) {
-			// the template should be already loaded through the preloading module - we load it synchronously here.
-			// see https://github.com/jrburke/requirejs/wiki/Upgrading-to-RequireJS-2.1#enforcing-async-require-
-			var template = require('text!' + media.template);
-
+		else if (template) { // html | template | inlineTemplate
 			media.displayType = 'element';
 			media.type = 'html';
 			try {
-				media.el = $(_.template(template,context || {}));
-			} catch(e){
-				throw new Error('Templates must be wrapped in an html element such as <span></span>. ' + media.inlineTemplate + ' is invalid');
+				media.el = $(template);
+			} catch (e) {
+				throw new Error('HTML must be wrapped in an html element such as <span></span>. ' + template + ' is invalid');
 			}
-		}
-		else if (media.inlineTemplate) {
-			media.displayType = 'element';
-			media.type = 'html';
-			try {
-				media.el = $(_.template(media.inlineTemplate,context || {}));
-			} catch(e){
-				throw new Error('Templates must be wrapped in an html element such as <span></span>. ' + media.inlineTemplate + ' is invalid');
-			}
-		}
-		else {
+		} else {
 			return false; // this is not a supported html type
 		}
-	};
+	}
 
 	return html;
 

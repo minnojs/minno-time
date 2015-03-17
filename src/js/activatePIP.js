@@ -29,7 +29,7 @@ define(function(require){
 		glob[name] = glob.current = (_.isPlainObject(script.current) ? script.current : {});
 		glob.current.logs || (glob.current.logs = []); // init logs object
 
-		// set the main script
+		// set the main script as a global
 		mainScript(script);
 
 		var parseDef = parse();
@@ -42,7 +42,7 @@ define(function(require){
 					.loading(parseDef) // activate loading screen
 					.done(function(){
 						main.empty(); // remove the loading screen
-						play(); // activate task
+						play('next',{}); // activate task
 					})
 					.fail(function(src){
 						throw new Error('loading resource failed, do something about it! (you can start by checking the error log, you are probably reffering to the wrong url - ' + src +')');

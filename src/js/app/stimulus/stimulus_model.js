@@ -21,7 +21,8 @@ define(function(require) {
 
 			// pick the correct media according to if this is a touch device
 			var mediaSource = is_touch && this.get('touchMedia') ? this.get('touchMedia') : this.get('media');
-			// take the media source and inflate it into a full fledged view
+
+			// take the media source and build it into a full fledged view
 			this.media = new MediaView(mediaSource,this);
 
 		},

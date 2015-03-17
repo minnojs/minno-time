@@ -7,23 +7,16 @@ define(function(require){
 	var Stimuli = require('app/stimulus/stimulus_collection');
 	var interactions = require('./interactions');
 	var global_trial = require('./current_trial');
-	var inflate = require('../inflator');
 	var main = require('app/task/main_view');
 	var counter = 0;
 
-	var Trial = function(trialData){
-
-		// inflate trial source
-		var data = inflate(trialData,'trial');
-
-		// extend trial with inflated data @todo maybe get rid of this, we have al the info in _source anyway
-		_.extend(this, data);
-
+	// data is already fully inflated
+	function Trial(source){
 		// make sure we always have a data container
-		this.data || (this.data = {});
+		this.data || (this.data = source.data || {});
 
 		// keep source for later use
-		this._source = data;
+		this._source = source;
 
 		// create a uniqueId for this trial
 		this._id = _.uniqueId('trial_');
@@ -31,15 +24,15 @@ define(function(require){
 
 		// make sure we have all our stuff :)
 		//if (!this.input) throw new Error('Input module not defined');
-		if (!this.interactions) {
+		if (!source.interactions) {
 			throw new Error('Interactions not defined');
 		}
 
 		// add layout stimuli
-		this._layout_collection = new Stimuli(this.layout || [],{trial:this});
+		this._layout_collection = new Stimuli(source.layout || [],{trial:this});
 
 		// add main stimuli
-		this._stimulus_collection = new Stimuli(this.stimuli  || [],{trial:this});
+		this._stimulus_collection = new Stimuli(source.stimuli  || [],{trial:this});
 
 		// subscription stack
 		this._pubsubStack = [];
@@ -51,7 +44,7 @@ define(function(require){
 
 		// the trial deferred (used to follow when the trial ends)
 		this.deferred = $.Deferred();
-	};
+	}
 
 	_.extend(Trial.prototype,{
 
@@ -97,7 +90,7 @@ define(function(require){
 			});
 
 			// activate input
-			input.add(this.input || []);
+			input.add(this._source.input || []);
 
 			// activate stimuli
 			this._stimulus_collection.activate();
@@ -106,7 +99,7 @@ define(function(require){
 			input.resetTimer();
 
 			// listen for interaction
-			interactions.activate(this.interactions);
+			interactions.activate(this._source.interactions);
 
 			// return the trial deferred
 			return this.deferred.promise();
@@ -156,11 +149,11 @@ define(function(require){
 				return this.data.alias;
 			}
 			// otherwise try using the set we inherited from
-			if (_.isString(this.inherit)){
-				return this.inherit;
+			if (_.isString(this._source.inherit)){
+				return this._source.inherit;
 			}
-			if (_.isPlainObject(this.inherit)){
-				return this.inherit.set;
+			if (_.isPlainObject(this._source.inherit)){
+				return this._source.inherit.set;
 			}
 			return false; // we're out of options here
 		}
