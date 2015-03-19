@@ -10,7 +10,7 @@ js/app/task/settings.js
 js/app/trial/current_trial.js
 js/app/task/adjust_canvas.js
 js/app/task/canvasConstructor.js
-/home/eladzlot/public_html/pip/bower_components/requirejs-text/text.js
+/Users/eladzlot/PIPlayer/bower_components/requirejs-text/text.js
 text!templates/loading.html
 js/app/task/main_view.js
 js/utils/database/mixer/mixer.js
@@ -42,6 +42,7 @@ js/app/task/parser.js
 js/utils/pubsub.js
 js/utils/is_touch.js
 js/utils/interface/bindings/click.js
+js/utils/interface/bindings/mouseEvents.js
 js/utils/interface/bindings/keypressed.js
 js/utils/interface/bindings/keyup.js
 js/utils/timeout.js
@@ -50,7 +51,7 @@ js/utils/interface/bindings/timeout.js
 js/utils/interface/binder.js
 js/utils/interface/triggerEvent.js
 js/utils/interface/listener.js
-js/utils/now.js
+js/utils/interface/now.js
 js/utils/interface/interface.js
 js/models/model.js
 js/app/media/media_view.js

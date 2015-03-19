@@ -1,6 +1,7 @@
 define(function(require){
 	var $ = require('jquery')
 		, click = require('./bindings/click')
+		, mouseEvents = require('./bindings/mouseEvents')
 		, keypressed = require('./bindings/keypressed')
 		, keyup = require('./bindings/keyup')
 		, timeout = require('./bindings/timeout');
@@ -38,6 +39,14 @@ define(function(require){
 
 			case 'click'		:
 				click(listener,definitions);
+				break;
+
+			case 'mouseenter'	:
+				mouseEvents('mouseenter', listener,definitions);
+				break;
+
+			case 'mouseleave'	:
+				mouseEvents('mouseleave', listener,definitions);
 				break;
 
 			case 'timeout'		:

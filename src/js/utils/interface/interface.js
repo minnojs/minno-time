@@ -1,8 +1,8 @@
 define(function(require){
-	var $ = require('jquery')
+	var _ = require('underscore')
 		, Listener = require('./listener')
 		, is_touch_device = require('../is_touch')
-		, now = require('../now');
+		, now = require('./now');
 
 
 	/*
@@ -42,9 +42,9 @@ define(function(require){
 			var definitionsArr = $.isArray(definitions) ? definitions : [definitions];
 
 			// for each definitions object create a listener
-			$.each(definitionsArr,function(key,definition){
+			_.forEach(definitionsArr,function(definition){
 				// if this listener is targeted specificaly at a touch\!touch device
-				if (typeof definition.touch != 'undefined') {
+				if (!_.isUndefined(definition.touch)) {
 					// if needed, skip this listener
 					if (is_touch_device && !definition.touch) {
 						return true;
@@ -62,14 +62,14 @@ define(function(require){
 
 		// remove listeners
 		remove: function(handleList){
-			handleList = $.isArray(handleList ) ? handleList  : [handleList ];
+			handleList = _.isArray(handleList ) ? handleList  : [handleList ];
 
 			// go through the listener stack and remove any listeners that fit the handle list
 			// note that we do this in reverse so that the index does not change
 			for (var i = listenerStack.length - 1; i >= 0 ; i--){
 				var listener = listenerStack[i];
 
-				if ($.inArray(listener.handle, handleList) != -1){
+				if (_.indexOf(listener.handle, handleList) != -1){
 					listener.off();
 					listenerStack.splice(i,1);
 				}
