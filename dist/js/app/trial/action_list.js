@@ -101,8 +101,6 @@ define(function(require){
 				default:
 					throw new Error('setGlobalAttr requires a "setter" property');
 			}
-
-
 		},
 
 		custom: function(options,eventData){
@@ -110,6 +108,22 @@ define(function(require){
 				throw new Error('The custom action requires a fn propery');
 			}
 			options.fn.apply(null, [options,eventData,global()]);
+		},
+
+		canvas: function(options){
+			var $canvas = require('app/task/main_view').$el;
+			var canvas = require('app/task/canvasConstructor');
+			var trial = require('app/trial/current_trial')();
+			var map = {
+				background 			: {element: $('body'), property: 'backgroundColor'},
+				canvasBackground	: {element: $canvas, property:'backgroundColor'},
+				borderColor			: {element: $canvas, property:'borderColor'},
+				borderWidth			: {element: $canvas, property:'borderWidth'}
+			};
+
+			// settings activator
+			var off = canvas(map, _.pick(options,['background','canvasBackground','borderColor','borderWidth']));
+			trial.deferred.promise().always(off);
 		}
 
 	};

@@ -41,6 +41,14 @@ define(function(require){
 				click(listener,definitions);
 				break;
 
+			case 'mouseup'	:
+				mouseEvents('mouseup', listener,definitions);
+				break;
+
+			case 'mousedown'	:
+				mouseEvents('mousedown', listener,definitions);
+				break;
+
 			case 'mouseenter'	:
 				mouseEvents('mouseenter', listener,definitions);
 				break;

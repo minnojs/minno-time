@@ -372,6 +372,10 @@ Resets trial timer. The latency of any events from here on (including the curren
 *Speaks for itself (note that any actions that come after this is called may not work properly).
 * `{type:'endTrial'}`
 
+**canvas**:
+Change canvas style using any of the following properties (see [settings](#canvas)): `background`, `canvasBackground`, `borderColor`, `borderWidth`.
+* `{type:'canvas', background:'blue'}`
+
 **log**:
 Log this action. Pushes this action into the logging stack so that it is later sent to the server (you can set how the player logs an action using the [logger settings](#logger-))
 * `{type:'log'}`
