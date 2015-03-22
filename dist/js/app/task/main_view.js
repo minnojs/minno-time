@@ -22,7 +22,15 @@ define(function(require){
 			this.deferred = $.Deferred();
 			this.deferred.promise().always(this.destroy);
 
-			$(window).on('orientationchange.pip resize.pip', $.proxy(this.adjustCanvas,this));
+			/**
+			 * Adjust canvas listener
+			 * @type {[type]}
+			 */
+			var adjust = _.bind(this.adjustCanvas,this);
+			$(window).on('orientationchange.pip resize.pip', adjust);
+			this.deferred.promise().always(function(){
+				$(window).off('orientationchange.pip resize.pip', adjust);
+			});
 		},
 
 		render: function(){
