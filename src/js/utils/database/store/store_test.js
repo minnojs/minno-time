@@ -19,6 +19,7 @@ define(['../databaseModule'],function(){
 			store.create('nameSpace');
 			expect(store.store.nameSpace).toEqual(jasmine.any(Collection));
 			expect(store.store.nameSpace.length).toBe(0);
+			expect(store.store.nameSpace.namespace).toBe("nameSpace");
 		}));
 
 		it('should throw an error if trying to recreate an existing nameSpace', function(){

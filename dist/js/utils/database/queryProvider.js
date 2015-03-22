@@ -44,7 +44,8 @@ define(['underscore'],function(_){
 			// pick by type
 			// ****************************
 
-			var seed = query.seed || query.set;
+			// the default seed is namespace specific just to minimize the situations where seeds clash across namespaces
+			var seed = query.seed || ('$' + collection.namespace + query.set);
 			var length = coll.length;
 			var repeat = query.repeat;
 			var at;

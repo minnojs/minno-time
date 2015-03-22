@@ -96,6 +96,11 @@ define(function(require){
 		// run the player, returns deferred
 		play: function(){
 			throw new Error('you should return API.script instead of calling API.play()!!');
+		},
+
+		post: function(url, obj){
+			var $ = require('jquery');
+			$.post(url, obj);
 		}
 
 	});

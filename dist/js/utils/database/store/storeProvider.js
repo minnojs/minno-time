@@ -17,6 +17,7 @@ define(['underscore'],function(_){
 					throw new Error('The name space ' + nameSpace + ' already exists');
 				}
 				this.store[nameSpace] = new Collection();
+				this.store[nameSpace].namespace = nameSpace;
 			},
 
 			read: function read(nameSpace){

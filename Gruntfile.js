@@ -53,7 +53,7 @@ module.exports = function(grunt) {
 					generateSourceMaps: true,
 					preserveLicenseComments: false,
 					optimize: 'uglify2',
-					fileExclusionRegExp: /\.scss$/,
+					fileExclusionRegExp: /(\.scss|\.md|_test\.js)$/,
 					paths: {
 						text: '../../bower_components/requirejs-text/text',
 						underscore: 'empty:',
