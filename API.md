@@ -159,7 +159,7 @@ Each input object must include both a `handle` and an `on` property.
 * `{handle: 'enter',on: 'keypressed',key:13}`
 * `{handle: 'enter',on: 'keypressed',key:[13,'a']}`
 
-**click**: Takes either a stimulus handle (`stimHandle`) or an html element (`element`) to present, in case an element is defined it is presented as soon as the input is activated.
+**click**: Takes either a stimulus handle (`stimHandle`) or an html element (`element`). The input is activated when the user clicks the stimulus or the html element. In case an element is defined it is presented as soon as the input is activated.
 * `{handle:'right',on:'click',element:$('<div>',css:{})}`
 * `{handle:'right',on:'click',stimHandle:'myStimHandle'}`
 
