@@ -43,7 +43,8 @@ define(function(require){
 			var parent
 				// create child
 				, child = _.cloneDeep(source)
-				, err;
+				, err
+				, inheritObj = child.inherit;
 
 
 			// no inheritance
@@ -58,11 +59,11 @@ define(function(require){
 
 			// get parent
 			// ***********************************
-			parent = query(source.inherit, coll, randomizer);
+			parent = query(inheritObj, coll, randomizer);
 
 			// if inherit target was not found
 			if (!parent){
-				err = new Error('Query failed, object (' + JSON.stringify(source.inherit) +	') not found.');
+				err = new Error('Query failed, object (' + JSON.stringify(inheritObj) +	') not found.');
 				$console('query').error(err);
 				throw err;
 			}
@@ -78,12 +79,38 @@ define(function(require){
 
 			// extending the child
 			// ***********************************
+			if (inheritObj.merge && !_.isArray(inheritObj.merge)){
+				throw new Error('Inheritance error: inherit.merge must be an array.');
+			}
 
 			// start inflating child (we have to extend selectively...)
 			_.each(parent, function(value, key){
+				var childProp, parentProp;
 				// if this key is not set yet, copy it out of the parent
 				if (!(key in child)){
 					child[key] = _.isFunction(value) ? value : _.cloneDeep(value);
+					return;
+				}
+
+				// if we have a merge array,
+				if (_.indexOf(inheritObj.merge, key) != -1){
+					childProp = child[key];
+					parentProp = value;
+
+					if (_.isArray(childProp)){
+						if (!_.isArray(parentProp)){
+							throw new Error('Inheritance error: You tried merging an array with an non array (for "' + key + '")');
+						}
+						child[key] = childProp.concat(parentProp);
+					}
+
+					if (_.isPlainObject(childProp)){
+						if (!_.isPlainObject(parentProp)){
+							throw new Error('Inheritance error: You tried merging an object with an non object (for "' + key + '")');
+						}
+						_.extend(childProp, parentProp);
+					}
+
 				}
 			});
 

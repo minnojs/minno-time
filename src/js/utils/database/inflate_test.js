@@ -132,6 +132,34 @@ define(['./databaseModule'],function(){
 			expect(result.a).toBe(undefined);
 		});
 
+		describe(': merge', function(){
+			it('should merge arrays', function(){
+				inflate({inherit:{merge:['a']}, a:[1]},[{a:[2]}]);
+				expect(result.a).toEqual([1,2]);
+			});
+
+			it('should merge objects', function(){
+				inflate({inherit:{merge:['a']}, a:{a:1}},[{a:{b:2}}]);
+				expect(result.a).toEqual({a:1,b:2});
+			});
+
+			it('should throw if merge is not an array', function(){
+				expect(function(){
+					inflate({inherit:{merge:'a'}},[{}]);
+				}).toThrow();
+			});
+
+			it('should throw if parent and child are not of the same type', function(){
+				expect(function(){
+					inflate({inherit:{merge:'a'}, a:[]},[{a:{}}]);
+				}).toThrow();
+
+				expect(function(){
+					inflate({inherit:{merge:'a'}, a:{}},[{a:''}]);
+				}).toThrow();
+			});
+		});
+
 		it('should extend data any way (child gets precedence)', function(){
 			inflate({inherit:true, data:{a:1}}, [{data:{a:2, b:2}}]);
 			expect(result.data.a).toBe(1);

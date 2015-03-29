@@ -58,12 +58,39 @@ define(['underscore','./mixerModule', '../randomize/randomizeModuleMock'],functi
 				})).toEqual([1,2]);
 			});
 
-			it('should return the data in a random element randomized', function(){
-				expect(mixer({
-					mixer:'random',
-					data: [1,2,3]
-				})).toEqual([3,2,1]);
+			describe(': random', function(){
+				it('should return the data in a random element randomized', function(){
+					expect(mixer({
+						mixer:'random',
+						data: [1,2,3]
+					})).toEqual([3,2,1]);
+				});
+
+				it('should mix all elements before randomizing', function(){
+					expect(mixer({
+						mixer:'random',
+						data: [1,2,{mixer:'repeat', times:2, data:[3]}]
+					})).toEqual([3, 3,2,1]);
+				});
+
+				it('should not mix wrappers', function(){
+					var wrapper = {mixer:'wrapper', data:[3,4]};
+					expect(mixer({
+						mixer:'random',
+						data: [1,2,wrapper]
+					})).toEqual([wrapper,2,1]);
+				});
+
+				it('should recursively mix (real use case)', function(){
+					expect(mixer({
+						mixer:'random',
+						data: [0,{mixer:'repeat', times:2, data:[1,2]},3]
+					})).toEqual([3,2, 1,2,1,0]);
+
+				});
+
 			});
+
 
 			it('should choose n || 1 random elements', function(){
 				expect(mixer({

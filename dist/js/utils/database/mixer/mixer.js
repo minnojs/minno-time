@@ -56,9 +56,22 @@ define(['underscore'],function(_){
 					return result;
 			},
 
-			random: function(obj){
+			// randomize any elements
+			random: function(obj, context){
+
+				function randomDeepMixer(sequence){
+					return _.reduce(sequence, function(arr,value){
+						if (_.isPlainObject(value) && 'mixer' in value && value.mixer != 'wrapper'){
+							var seq = mix(value, context);
+							return arr.concat(seq);
+						} else {
+							return arr.concat([value]);
+						}
+					}, []);
+				}
+
 				var sequence = obj.data || [];
-				return shuffle(sequence);
+				return shuffle(randomDeepMixer(sequence));
 			},
 
 			choose: function(obj){
