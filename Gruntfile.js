@@ -6,10 +6,12 @@ module.exports = function(grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 		bump: {
 			// https://github.com/vojtajina/grunt-bump
+			// https://github.com/vojtajina/grunt-bump
 			options: {
-				files:			['package.json', 'bower.json'],
-				commitFiles:	['package.json', 'bower.json'],
+				files:			['package.json'],
+				commitMessage:	'chore: release v%VERSION%',
 				updateConfigs:	['pkg'],
+				commitFiles:	['package.json','CHANGELOG.md', 'dist/**/*', 'src/piindex.jsp'],
 				push: false
 			}
 		},
