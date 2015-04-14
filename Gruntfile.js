@@ -156,6 +156,14 @@ module.exports = function(grunt) {
 	grunt.registerTask('default', ['jshint']);
 	grunt.registerTask('server', ['express', 'watch:user','express-keepalive']);
 
+	grunt.registerTask('version', 'Advancing version', function(type){
+		grunt.task.run([
+			"bump:" + (type || 'patch') + ":bump-only",
+			'build',
+			'bump-commit'
+		]);
+	});
+
 	grunt.registerTask('updatePIindex', function () {
         var indexFile = "src/piindex.jsp";
         var version = grunt.file.readJSON('package.json').version;
