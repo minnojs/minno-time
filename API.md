@@ -244,10 +244,6 @@ Check if the input `handle` equals to a static value, `value` may be either a st
 * `{type:'inputEquals',value:'enter'}`
 * `{type:'inputEquals',value:['left','right']}`
 
-**inputEqualsGlobal**
-Check if the input `handle` equals to the `property` property of the global object.
-* `{type:'inputEqualsGlobal',property:'customAttribute'}`
-
 **inputEqualsTrial**:
 Check if the input `handle` equals to the `property` property of trial.data
 * `{type:'inputEqualsTrial',property:'customAttribute'}`
@@ -261,6 +257,10 @@ The optional property `handle` narrows the search down to stimuli fitting the `h
 **trialEquals**:
 Check if the `property` property of the trial.data object equals to `value`.
 * `{type:'trialEquals',property:'customProperty', value:'someValue'}`
+
+**inputEqualsGlobal**
+Check if the input `handle` equals to the `property` property of the global object.
+* `{type:'inputEqualsGlobal',property:'customAttribute'}`
 
 **globalEquals**:
 Check if the `property` property of the global object equals to `value`.
@@ -276,6 +276,23 @@ The optional property `handle` narrows the search down to stimuli fitting the `h
 * `{type:'globalEqualsTrial',globalProp:'customAttribute', stimProp:'otherCustomAttribute'}`
 * `{type:'globalEqualsTrial',globalProp:'customAttribute', stimProp:'otherCustomAttribute', handle:'myStimHandle'}`
 
+**inputEqualsCurrent**
+Check if the input `handle` equals to the `property` property of the current object.
+* `{type:'inputEqualsCurrent',property:'customAttribute'}`
+
+**currentEquals**:
+Check if the `property` property of the current object equals to `value`.
+* `{type:'currentEquals',property:'customProperty', value:'someValue'}`
+
+**currentEqualsTrial**:
+Check if the current property `currentProp` equals to the trial.data property `trialProp`.
+* `{type:'currentEqualsTrial',currentProp:'customAttribute', trialProp:'otherCustomAttribute'}`
+
+**currentEqualsStim**:
+Check if the current property `currentProp` equals to the `stimProp` property of any one of the stimulus.data in this trial.
+The optional property `handle` narrows the search down to stimuli fitting the `handle`
+* `{type:'currentEqualsTrial',currentProp:'customAttribute', stimProp:'otherCustomAttribute'}`
+* `{type:'currentEqualsTrial',currentProp:'customAttribute', stimProp:'otherCustomAttribute', handle:'myStimHandle'}`
 
 **function**:
 It is also possible to create a custom condition:
