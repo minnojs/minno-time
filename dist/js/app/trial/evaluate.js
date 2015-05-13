@@ -22,6 +22,7 @@ define(function(require){
 	return function evaluate(conditions, inputData){
 
 		var global = globalGetter();
+		var current = global.current || {};
 		var trial = current_trial();
 
 		if (!conditions){
@@ -87,20 +88,20 @@ define(function(require){
 					}
 					break;
 
-				case 'inputEqualsGlobal':
-					if (typeof condition.property == 'undefined'){
-						throw new Error('inputEqualsGlobal requires both "property" to be defined');
-					}
-					if (inputData.handle !== global[condition.property]){
-						evaluation = false;
-					}
-					break;
-
 				case 'trialEquals':
 					if (typeof condition.property == 'undefined' || typeof condition.value == 'undefined'){
 						throw new Error('trialEquals requires both "property" and "value" to be defined');
 					}
 					if (condition.value !== trial.data[condition.property]){
+						evaluation = false;
+					}
+					break;
+
+				case 'inputEqualsGlobal':
+					if (typeof condition.property == 'undefined'){
+						throw new Error('inputEqualsGlobal requires "property" to be defined');
+					}
+					if (inputData.handle !== global[condition.property]){
 						evaluation = false;
 					}
 					break;
@@ -134,6 +135,52 @@ define(function(require){
 						searchObj['handle'] = condition.handle;
 					}
 					searchObj[condition.stimProp] = global[condition.globalProp];
+
+					// are there stimuli answering this descriptions?
+					result = trial._stimulus_collection.whereData(searchObj);
+					if (result.length === 0) {
+						evaluation = false;
+					}
+					break;
+
+				case 'inputEqualsCurrent':
+					if (typeof condition.property == 'undefined'){
+						throw new Error('inputEqualsCurrent requires "property" to be defined');
+					}
+					if (inputData.handle !== current[condition.property]){
+						evaluation = false;
+					}
+					break;
+
+				case 'currentEquals':
+					if (typeof condition.property == 'undefined' || typeof condition.value == 'undefined'){
+						throw new Error('currentEquals requires both "property" and "value" to be defined');
+					}
+					if (condition.value !== current[condition.property]){
+						evaluation = false;
+					}
+					break;
+
+				case 'currentEqualsTrial':
+					if (typeof condition.currentProp == 'undefined' || typeof condition.trialProp == 'undefined'){
+						throw new Error('currentEqualsTrial requires both "currentProp" and "trialProp" to be defined');
+					}
+					if (current[condition.currentProp] !== trial.data[condition.trialProp]) {
+						evaluation = false;
+					}
+					break;
+
+				case 'currentEqualsStim':
+					if (typeof condition.currentProp == 'undefined' || typeof condition.stimProp == 'undefined'){
+						throw new Error('currentEqualsStim requires both "currentProp" and "stimProp" to be defined');
+					}
+
+					// create search object
+					searchObj = {};
+					if (condition.handle){
+						searchObj['handle'] = condition.handle;
+					}
+					searchObj[condition.stimProp] = current[condition.currentProp];
 
 					// are there stimuli answering this descriptions?
 					result = trial._stimulus_collection.whereData(searchObj);
