@@ -29,10 +29,10 @@ define(function(require){
 		}
 
 		// add layout stimuli
-		this._layout_collection = new Stimuli(source.layout || [],{trial:this});
+		this._layout_collection = new Stimuli(arrayWrap(source.layout),{trial:this});
 
 		// add main stimuli
-		this._stimulus_collection = new Stimuli(source.stimuli  || [],{trial:this});
+		this._stimulus_collection = new Stimuli(arrayWrap(source.stimuli),{trial:this});
 
 		// subscription stack
 		this._pubsubStack = [];
@@ -90,7 +90,7 @@ define(function(require){
 			});
 
 			// activate input
-			input.add(this._source.input || []);
+			input.add(arrayWrap(this._source.input));
 
 			// activate stimuli
 			this._stimulus_collection.activate();
@@ -158,6 +158,11 @@ define(function(require){
 			return false; // we're out of options here
 		}
 	});
+
+	function arrayWrap(arr){
+		if (!arr){return [];}
+		return _.isArray(arr) ? arr : [arr];
+	}
 
 	return Trial;
 });
