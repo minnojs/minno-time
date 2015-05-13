@@ -33,8 +33,8 @@ define(['./templateModule'], function(){
 
 		beforeEach(module('template'));
 		beforeEach(inject(function(templateObj){
-			template = function(a){
-				return templateObj(a, {page:{test:432},dunk:234});
+			template = function(a, options){
+				return templateObj(a, {page:{test:432},dunk:234}, options);
 			};
 		}));
 
@@ -49,6 +49,14 @@ define(['./templateModule'], function(){
 			expect(function(){template(obj);}).not.toThrow();
 		});
 
+
+		it('should deep expand any objects in obj.deepTemplate', function(){
+			var obj = {arr:['<%= page.test %>'], obj:{a:'<%= dunk %>'},undeep:['<%= dunk %>'], deepTemplate:['obj', 'arr']};
+			var res = template(obj, {deep:true});
+			expect(res.obj.a).toBe('234');
+			expect(res.arr[0]).toBe('432');
+			expect(res.undeep[0]).not.toBe('432');
+		});
 	});
 
 });
