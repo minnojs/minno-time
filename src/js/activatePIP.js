@@ -19,11 +19,6 @@ define(function(require){
 		var glob = global(global());
 		var name = script.name || 'anonymous PIP';
 
-		// warn of recurring task name
-		if (glob[name] && console.warn){
-			console.warn('The task "' + name + '" already exists. Overwriting it...');
-		}
-
 		// create local namespace
 		glob[name] = glob.current = (_.isPlainObject(script.current) ? script.current : {});
 		glob.current.logs || (glob.current.logs = []); // init logs object

@@ -31,6 +31,19 @@ String getBase = getProtocol+"://"+getDomain;
         <meta HTTP-EQUIV="Pragma" CONTENT="no-cache"></meta>
         <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache"></meta>
         <meta name="viewport" content="user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, width=device-width, height=device-height" />
+		<% if (org.uva.Implicit.IS_PRODUCTION == "true") {%>
+			<script>
+				(function(_,e,rr,s){_errs=[s];var c=_.onerror;_.onerror=function(){var a=arguments;_errs.push(a);
+				c&&c.apply(this,a)};var b=function(){var c=e.createElement(rr),b=e.getElementsByTagName(rr)[0];
+				c.src="//beacon.errorception.com/"+s+".js";c.async=!0;b.parentNode.insertBefore(c,b)};
+				_.addEventListener?_.addEventListener("load",b,!1):_.attachEvent("onload",b)})
+				(window,document,"script","55530734a1b3d51609003d1c");
+				_errs.meta = {
+					script: '<%= script %>',
+					session: '<%= session.getId() %>'
+				}
+			</script>
+		<% } %>
 
         <link type="text/css" rel="Stylesheet" href="css/reset.css"/>
         <link type="text/css" rel="Stylesheet" href="css/styles.css"/>
