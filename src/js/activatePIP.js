@@ -15,7 +15,6 @@ define(function(require){
 
 
 	function activate(script, done){
-
 		// init global
 		var glob = global(global());
 		var name = script.name || 'anonymous PIP';

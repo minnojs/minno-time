@@ -39,7 +39,7 @@ define(function(require){
 
 			var interfaceObj = this;
 			// make sure definitions is set as an array
-			var definitionsArr = $.isArray(definitions) ? definitions : [definitions];
+			var definitionsArr = _.isArray(definitions) ? definitions : [definitions];
 
 			// for each definitions object create a listener
 			_.forEach(definitionsArr,function(definition){
@@ -78,11 +78,9 @@ define(function(require){
 
 		// remove all listeners
 		destroy: function(){
-
 			// destroy each listener
-			for (var i in listenerStack){
-				listenerStack[i].destroy();
-			}
+			_.invoke(listenerStack,'destroy');
+
 			// empty stack
 			listenerStack = [];
 		}
