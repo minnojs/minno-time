@@ -9,7 +9,7 @@ define(function(require){
 	// js hint thinks that console is read only - and its correct except where it doesn't exist...  this is how we tell it to ignore these lines
 	/* jshint -W020 */
 	!!window.console || (console = {log: $.noop, error: $.noop});
-	console.log || (console.log = function(){});
+	console.log || (console.log = $.noop);
 	/* jshint +W020 */
 
 
