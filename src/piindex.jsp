@@ -40,7 +40,10 @@ String getBase = getProtocol+"://"+getDomain;
 				(window,document,"script","55530734a1b3d51609003d1c");
 				_errs.meta = {
 					script: '<%= script %>',
-					session: '<%= session.getId() %>'
+					session: '<%= studySession.getId() %>',
+					taskId: '<%= studySession.getCurrentTask().getId() %>',
+					studyId: '<%= studySession.getStudy().getId() %>',
+					app: 'pip'
 				}
 			</script>
 		<% } %>
