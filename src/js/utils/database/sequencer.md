@@ -1,19 +1,22 @@
-* [Overview ](#overview)
-* [The mixer ](#mixer)
+### Table of contents
+
+- [Overview](#overview)
+- [Mixer](#mixer)
     - [Mixer types](#mixer-types)
     - [Conditions](#conditions)
     - [Operators](#operators)
     - [Aggregation](#aggregation)
-* [Variables](#variables)
-* [Templates](#templates)
-* [Inheritance ](#inheritance)
+- [Variables](#variables)
+- [Templates](#templates)
+- [Inheritance](#inheritance)
     - [Sets](#sets)
     - [Inheriting](#inheriting)
     - [Merge](#merge)
-    - [Types](#type)
+    - [Type](#type)
     - [Repeat](#repeat)
-    - [Seeds](#seed)    
-    - [Customize](#customize)
+    - [Seed](#seed)
+    - [Customization](#customization)
+
 
 ### Overview
 
@@ -262,23 +265,6 @@ Tasks add any data that they log into their task object. For instance, piQuest m
 One of the ways to create dynamic questionnaires is using templates. Templates are a format that allows you to dynamically generate settings for your questions. You can replace any non-object setting from within your elements with a template, and it will be rendered according to the [environmental variables](#variables) (The exception to this rule is the `inherit` setting that cannot use templates).
 
 A template is a string that has a section of the form `<%= %>` in it. Within these brackets you can write any Javascript that you like and it will be evaluated and printed out. The player uses [lodash templates](http://lodash.com/docs#template) internally, you can look them up to see all the possible uses.
-
-By default the templater affects only strings set directly into your elements. If you want to template strings that are within sub arrays or objects, you can use the deepTemplate property of the element to tell the templater which properties to deep expand.
-
-```js
-// by default answers won't be templated
-var element = {    
-    stem: '<%= global.foo %>'
-    answers: ['<%= global.bar %>']
-}
-
-// add "deepTemplate" in order for it to be templated
-var element = {
-    deepTemplate: ['answers'],
-    stem: '<%= global.foo %>'
-    answers: ['<%= global.thing %>']
-}
-```
 
 The main use of templates is probably accessing local and global variables. For instance, in order to print the global variable "name", you could create a template that looks like this: `My name is <%= global.name%>`.
 

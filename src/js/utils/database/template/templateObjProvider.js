@@ -7,30 +7,34 @@ define(function(require){
 
 		function templateObj(obj, context, options){
 			options || (options = {});
-			var deepTemplate = obj.deepTemplate;
+			var result = {};
+			var skip = options.skip || [];
 
 			_.forEach(obj, function(value,key,obj){
-				obj[key] = expand(value, context, {deep: _.includes(deepTemplate, key)});
+				if (!_.includes(skip, key)){
+					result[key] = expand(value, context);
+				} else {
+					result[key] = obj[key];
+				}
 			});
 
-			return obj;
+			return result;
 		}
 
 		return templateObj;
 
-		function expand(value, context, options){
-			var deep = options && options.deep;
+		function expand(value, context){
 
 			if (_.isString(value)){
 				return filter(value, context);
 			}
 
-			if (deep && _.isArray(value)){
-				return _.map(value, _.bind(expand, null, _, context, options));
+			if (_.isArray(value)){
+				return _.map(value, _.bind(expand, null, _, context));
 			}
 
-			if (deep && _.isPlainObject(value)){
-				return _.mapValues(value, _.bind(expand, null, _, context, options));
+			if (_.isPlainObject(value)){
+				return _.mapValues(value, _.bind(expand, null, _, context));
 			}
 
 			return value;

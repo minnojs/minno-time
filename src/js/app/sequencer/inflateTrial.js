@@ -13,7 +13,7 @@ define(function(require){
 		var source;
 
 		sequence.go(destination, properties, context);
-		source = sequence.current(context);
+		source = sequence.current(context, {skip:['layout','stimuli']});
 
 		if (!source){
 			return;
@@ -62,7 +62,7 @@ define(function(require){
 	function buildStim(stim){
 		var context = this;
 
-		stim = db.inflate('stimulus', stim, context);
+		stim = db.inflate('stimulus', stim, context, {skip:['media','touchMedia']});
 		buildMedia(stim, 'media', context);
 		buildMedia(stim, 'touchMedia', context);
 		context.stimulusData = null;

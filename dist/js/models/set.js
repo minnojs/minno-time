@@ -46,7 +46,6 @@ define(function(require) {
 		// if the handle is not an abject compare to data.handle
 		byData: function(definitions){
 			if (_.isUndefined(definitions.data)) {
-				console.log(definitions);
 				throw new Error("A data property must by defined for byData");
 			}
 

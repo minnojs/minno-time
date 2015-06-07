@@ -61,7 +61,7 @@ define(function(require){
 			if (!_.isPlainObject(global)){
 				throw new Error('global must be an object');
 			}
-			_.merge(this.global(), global);
+			_.merge(this.getGlobal(), global);
 		},
 
 		getGlobal: function(){

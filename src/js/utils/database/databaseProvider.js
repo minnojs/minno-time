@@ -23,7 +23,7 @@ define(function(require){
 				coll.add(query);
 			},
 
-			inflate: function(namespace, query, context){
+			inflate: function(namespace, query, context, options){
 				var coll = this.getColl(namespace);
 
 				// inflate
@@ -35,7 +35,7 @@ define(function(require){
 				if (!query.$templated || query.regenerateTemplate){
 					context[namespace + 'Data'] = query.$inflated.data || {};
 					context[namespace + 'Meta'] = query.$meta;
-					query.$templated = templateObj(query.$inflated, context);
+					query.$templated = templateObj(query.$inflated, context, options);
 				}
 
 				return query.$templated;

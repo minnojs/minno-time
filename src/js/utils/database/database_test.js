@@ -72,7 +72,7 @@ define(['underscore', './databaseModule'],function(_){
 			it('should template if query has not been templated', function(){
 				var obj = {};
 				db.inflate('ns', obj, 'context');
-				expect(templateSpy).toHaveBeenCalledWith(obj.$inflated,'context');
+				expect(templateSpy).toHaveBeenCalledWith(obj.$inflated,'context', undefined);
 			});
 
 			it('should extend the context with metaData and elmData', function(){
@@ -119,7 +119,7 @@ define(['underscore', './databaseModule'],function(_){
 			var context = {context:1};
 			var obj = {obj:2};
 			create([obj]).next().current(context);
-			expect(db.inflate).toHaveBeenCalledWith('test', obj, context);
+			expect(db.inflate).toHaveBeenCalledWith('test', obj, context, undefined);
 		});
 
 		it('should support next/prev', function(){

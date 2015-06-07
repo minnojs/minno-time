@@ -16,6 +16,8 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 		***********************************************************
 	*/
 
+	API.addGlobal({flag:12341234});
+
 	// set the canvas size
 	API.addSettings('canvas',{
 		maxWidth: 800,
@@ -406,7 +408,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 		// Here we control only the general way that the layout appears.
 		// The mechanics inside the templates and the fact that we set the proper data in all trials allow us to use the same stimuli for the layout of all the trials.
 		layout: [
-			{data:{handle:'left'},location:{left:0,top:0},css:{color:'white',fontSize:'2em'},media:{template:'left.jst'}},
+			{data:{handle:'left'},location:{left:0,top:0},css:{color:'white',fontSize:'2em'},medias:{template:'left.jst'}, media:'1234 <%= stimulusData.handle %>'},
 			{data:{handle:'right'}, location:{left:'auto',right:0,top:0},css:{color:'white',fontSize:'2em'},media:{template:'right.jst'}}
 		]
 	});

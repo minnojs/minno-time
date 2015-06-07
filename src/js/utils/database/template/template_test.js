@@ -50,12 +50,18 @@ define(['./templateModule'], function(){
 		});
 
 
-		it('should deep expand any objects in obj.deepTemplate', function(){
-			var obj = {arr:['<%= page.test %>'], obj:{a:'<%= dunk %>'},undeep:['<%= dunk %>'], deepTemplate:['obj', 'arr']};
-			var res = template(obj, {deep:true});
+		it('should deep expand all objects & arrays', function(){
+			var obj = {arr:['<%= page.test %>'], obj:{a:'<%= dunk %>'}};
+			var res = template(obj);
 			expect(res.obj.a).toBe('234');
 			expect(res.arr[0]).toBe('432');
-			expect(res.undeep[0]).not.toBe('432');
+		});
+
+		it('should not expand objects in options.exclude', function(){
+			var obj = {arr:['<%= page.test %>'], obj:{a:'<%= dunk %>'}};
+			var res = template(obj, {skip:['arr','obj']});
+			expect(res.obj.a).not.toBe('234');
+			expect(res.arr[0]).not.toBe('432');
 		});
 	});
 

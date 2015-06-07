@@ -37,7 +37,7 @@ define(function(require){
 			 * @param  {[type]} context [description]
 			 * @return {[type]}         [description]
 			 */
-			current: function(context){
+			current: function(context, options){
 				context || (context = {});
 				// must returned an element or undefined
 				var obj = this.mixerSequence.current(context);
@@ -47,20 +47,20 @@ define(function(require){
 					return obj;
 				}
 
-				return this.db.inflate(this.namespace, obj, context);
+				return this.db.inflate(this.namespace, obj, context, options);
 			},
 
 			/**
 			 * Returns an array of elements, created by proceeding through the whole sequence.
 			 * @return {[type]} [description]
 			 */
-			all: function(context){
+			all: function(context, options){
 				var sequence = [];
 
-				var el = this.next().current(context);
+				var el = this.next().current(context, options);
 				while (el){
 					sequence.push(el);
-					el = this.next().current(context);
+					el = this.next().current(context, options);
 				}
 
 				return sequence;
