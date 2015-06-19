@@ -1,13 +1,13 @@
 define(function(require){
 
 	var $					= require('jquery')
-		, sourceSequence	= require('./sourceSequence')
-		, trialSequence		= require('./trialSequence')
 		, Trial				= require('app/trial/trial_constructor')
 		, logger			= require('app/task/log/logger')
 		, settingsGetter	= require('app/task/settings')
 		, pubsub			= require('utils/pubsub')
-		, main 				= require('app/task/main_view');
+		, main 				= require('app/task/main_view')
+		, inflateTrial 		= require('./inflateTrial');
+
 
 	/*
 	 * the function that plays the source sequence
@@ -15,39 +15,14 @@ define(function(require){
 
 	// check if we have another trial, if so plays it, if not ends the task
 	function nextTrial(destination, properties){
-		var source
-			, trial;
 
-		// get next trial
-		switch (destination){
-			case 'nextWhere':
-				source = sourceSequence.nextWhere(properties);
-				break;
-			case 'previousWhere':
-				source = sourceSequence.lastWhere(properties);
-				break;
-			case 'current':
-				source = sourceSequence.current();
-				break;
-			case 'first':
-				source = sourceSequence.first();
-				break;
-			case 'last':
-				source = sourceSequence.last();
-				break;
-			case 'end':
-				source = sourceSequence.end();
-				break;
-			case 'next' :
-				/* falls through */
-			default:
-				source = sourceSequence.next(); // get the next trial, in case there are no more trials, returns undefined
-		}
+		var source = inflateTrial(destination, properties);
+		var trial;
 
 		// if we have another trial play it (next() both returns the next trial and sets it as current)
 		if (source) {
 			// create new trial and activate it
-			trial = new Trial(sourceSequence.current());
+			trial = new Trial(source);
 			trial
 				.activate()								// activate the trial
 				.done(function(){
@@ -57,9 +32,6 @@ define(function(require){
 
 			// let everyone know that we are ready to go
 			pubsub.publish("trial:activated",[trial]);
-
-			// push trial into the trial sequence
-			trialSequence.add(trial);
 		} else {
 			// @TODO: this realy shouldn't be here. this whole function is responsible for too many things...
 			//
@@ -77,4 +49,5 @@ define(function(require){
 	}
 
 	return nextTrial;
+
 });

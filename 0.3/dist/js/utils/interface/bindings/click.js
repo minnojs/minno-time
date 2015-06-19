@@ -26,15 +26,13 @@ define(function(require){
 
 	return function(listener,definitions){
 		var eventName = is_touch_device ? 'touchstart' : 'mousedown';
-
-		var existingElement = definitions.element ? false : true;	// does this click refer to an existing element?
-		var $element = $(definitions.element);						// @todo: may be overwritten for multiple elements. rewrite as closure.
+		var $element = definitions.element ? $(definitions.element) : false;
 
 		listener.on = function(callback){
 			var activateCallback = function(e){ callback(e,eventName); };
 
 			// If we're binding to an existing element, bind to its appropriate handle
-			if (existingElement){
+			if ($element){
 				$(document).on(eventName + '.interface','[data-handle="'+definitions.stimHandle + '"]', activateCallback);
 			} else {
 				// the element to attach
@@ -46,7 +44,7 @@ define(function(require){
 		};
 
 		listener.off = function(){
-			if (existingElement){
+			if ($element){
 				$(document).off(eventName + '.interface','[data-handle="'+definitions.stimHandle + '"]');
 			} else {
 				$element.remove();									// this also removes any attached events

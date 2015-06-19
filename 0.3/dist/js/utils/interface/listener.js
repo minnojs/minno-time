@@ -5,7 +5,7 @@ define(function(require){
 	/*
 	 * listener constructor
 	 */
-	return function Listener(definitions, interfaceObj){
+	function Listener(definitions, interfaceObj){
 
 		// set listener handle
 		this.handle = definitions.handle;
@@ -21,5 +21,7 @@ define(function(require){
 		// for now the destroyer simply unbinds the event
 		this.destroy = this.off;
 	};
+
+	return Listener;
 
 });

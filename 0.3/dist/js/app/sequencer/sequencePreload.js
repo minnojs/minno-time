@@ -6,7 +6,7 @@ define(function(require){
 		,preload = require('utils/preloader')
 		,build_url = require('app/task/build_url');
 
-	var loadMedia = function(media){
+	function loadMedia(media){
 		// if this is an image, preload it
 		if (!_.isUndefined(media.image)) {
 			preload.add(build_url(media.image, 'image'),'image');
@@ -14,7 +14,7 @@ define(function(require){
 		if (!_.isUndefined(media.template)) {
 			preload.add(build_url(media.template,'template'),'template');
 		}
-	};
+	}
 
 	var loadStimulus = function(stimulus) {
 		if (stimulus.media) {
@@ -45,24 +45,18 @@ define(function(require){
 		});
 	};
 
-	var loadScript = function(script){
+	function loadScript(script){
 		// load media sets
-		_.each(script.mediaSets || [], function(set){
-			_.each(set,loadMedia);
-		});
+		_.each(script.mediaSets || [], loadMedia);
 
 		// load stimsets
-		_.each(script.stimulusSets || [], function(set){
-			_.each(set,loadStimulus);
-		});
+		_.each(script.stimulusSets || [], loadStimulus);
 
 		// load trialsets
-		_.each(script.trialSets || [], function(set){
-			_.each(set,loadTrial);
-		});
+		_.each(script.trialSets || [], loadTrial);
 
 		loadSequence(script.sequence);
-	}; // load script
+	} // load script
 
 	// accepts a piece of script and a type
 	// @param script: a piece of script

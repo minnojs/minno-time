@@ -32,6 +32,7 @@ define(function(require){
 
 		function resize(){
 			var height, width;
+			var $canvas = self.$el;
 
 			// static canvas size
 			if (settings.width){
@@ -51,7 +52,7 @@ define(function(require){
 				};
 
 				var maxHeight = screenSize.height;
-				var maxWidth = Math.min(settings.maxWidth, screenSize.width);
+				var maxWidth = Math.min(settings.maxWidth, screenSize.width, $canvas.parent().innerWidth());
 
 				// calculate the correct size for this screen size
 				if (maxHeight > proportions * maxWidth) {
@@ -65,13 +66,13 @@ define(function(require){
 
 			// remove border width and top margin from calculated width (can't depend on cool box styles yet...)
 			// we compute only margin-top because of a difference calculating margins between chrome + IE and firefox + mobile
-			height -= parseInt(self.$el.css('border-top-width'),10) + parseInt(self.$el.css('border-bottom-width'),10) + parseInt(self.$el.css('margin-top'),10);
-			width -= parseInt(self.$el.css('border-left-width'),10) + parseInt(self.$el.css('border-right-width'),10);
+			height -= parseInt($canvas.css('border-top-width'),10) + parseInt($canvas.css('border-bottom-width'),10) + parseInt($canvas.css('margin-top'),10);
+			width -= parseInt($canvas.css('border-left-width'),10) + parseInt($canvas.css('border-right-width'),10);
 
 			// reset canvas size
-			self.$el.width(width);
-			self.$el.height(height);
-			self.$el.css('font-size',height*(settings.textSize || 3)/100);
+			$canvas.width(width);
+			$canvas.height(height);
+			$canvas.css('font-size',height*(settings.textSize || 3)/100);
 
 			// refresh all stimuli (we don't want to do this before we have trials)
 			if (trial()) {

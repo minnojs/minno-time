@@ -21,7 +21,8 @@ define(function(require) {
 
 			// pick the correct media according to if this is a touch device
 			var mediaSource = is_touch && this.get('touchMedia') ? this.get('touchMedia') : this.get('media');
-			// take the media source and inflate it into a full fledged view
+
+			// take the media source and build it into a full fledged view
 			this.media = new MediaView(mediaSource,this);
 
 		},
@@ -108,21 +109,18 @@ define(function(require) {
 			if (attr.data.alias) {return attr.data.alias;} // if we have an alias ues it
 			if (attr.inherit && attr.inherit.set) {return attr.inherit.set;} // otherwise try using the set we inherited from
 			if (attr.handle) {return attr.handle;} // otherwise use handle
-			return false; // we're out of options here
+			return 'Anonymous Stimulus'; // we're out of options here
 		},
 
 		mediaName: function(){
-			var media = this.media.options.source;
+			var media = this.media.options;
 			var fullpath = settings.logger && settings.logger.fullpath; // should we use the full path or just the file name
-
 			if (media.alias) {return media.alias;} // if we have an alias ues it
 			for (var prop in media) {
 				if (prop != 'inherit') {
-					if (_.contains(['image','template'],prop) && !fullpath) {
-                        return media[prop].replace(/^.*[\\\/]/, '');
-					} else {
-                        return media[prop];
-                    }
+					if (_.contains(['image','template'],prop)) {
+                        return fullpath ? media[prop] : media[prop].replace(/^.*[\\\/]/, '');
+					}
 				}
 			}
 		}
