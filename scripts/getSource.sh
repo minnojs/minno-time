@@ -80,4 +80,5 @@ do
 
 	######## quest ########
 	copy_api $LATESTTAG "resources/tutorials/API.md" "$DIR/src/0.3/examples/API.md"
+	copy_api $LATESTTAG "src/js/extensions/dscore/README.md" "$DIR/src/0.3/tutorials/scorer.md"
 done

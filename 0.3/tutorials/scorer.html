@@ -81,8 +81,8 @@
 		<div id="content" class="bs-docs-header">
 			<div class="container">
 				
-	<h1>Trial</h1>
-	<p>Documentation for trial.js </p>
+	<h1>API</h1>
+	<p>All the little details...</p>
 
 			</div>
 		</div>
@@ -91,130 +91,266 @@
 			<div class="row">
 				<div class="col-md-9" role="main">
 					
-	
-		<p>All PIP source files are wrapped inside define function
-This function gives you access to the API object that we use to build the various tasks
-If you want to know more about this, you can read up about AMD and check out <a href="http://requirejs.org/">http://requirejs.org/</a></p>
-
-
-		
-		  <div class='highlight'><pre>define([<span class="hljs-string">'pipAPI'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(APIconstructor)</span> </span>{
-
-	<span class="hljs-keyword">var</span> API = <span class="hljs-keyword">new</span> APIconstructor();</pre></div>
-		
-	
-		<h3 id="the-trial-sequence">The trial sequence</h3>
-<p>The heart of any PIP script is the sequence.
-Sequences are arrays of Trial objects. In this part of the tutorial we will see a simple sequence encompasing a single trial.</p>
-
-
-		
-		  <div class='highlight'><pre>
-	API.addSequence([</pre></div>
-		
-	
-		<h4 id="trial-structure">Trial structure</h4>
-
-
-		
-		  <div class='highlight'><pre>		<span class="hljs-comment">/* the trial begins here */</span>
-		{</pre></div>
-		
-	
-		<p>The data property of the trial is used to keep user defined data regarding this trial.
-It can be used to keep track of trial types, blocks, score etc.
-It becomes incrementaly usefull with more advance features of the PIP.</p>
-
-
-		
-		  <div class='highlight'><pre>			data: {
-				myProperty: <span class="hljs-string">'information'</span>,
-				myOtherProperty: <span class="hljs-string">'more information'</span>
-			},</pre></div>
-		
-	
-		<p>The input property of the trial is used to create the user interface.
-In this case we tell the player to listen for hits on the space key.
-Later on we will tell the player what to do when the space button is clicked.</p>
-
-
-		
-		  <div class='highlight'><pre>			input: [
-				{handle:<span class="hljs-string">'space'</span>,on:<span class="hljs-string">'space'</span>}
-			],</pre></div>
-		
-	
-		<p>The layout property of the trial is used to display statick stimuli.
-These stimuli are automaticaly displayed at the begining of a trial, and are not affected be user interactions.
-This property holds an array of stimuli objects, in this case the stimuli are set to display words in the top left and bottom right of the screen.
-We will learn more about Stimuli in a later tutorial.</p>
-
-
-		
-		  <div class='highlight'><pre>			layout:[
-				{location:{left:<span class="hljs-number">0</span>,top:<span class="hljs-number">0</span>},media:{word:<span class="hljs-string">'top left'</span>}},
-				{location:{left:<span class="hljs-string">'auto'</span>,right:<span class="hljs-number">0</span>,top:<span class="hljs-string">'auto'</span>,bottom:<span class="hljs-number">0</span>},media:{word:<span class="hljs-string">'bottom right'</span>}}
-			],</pre></div>
-		
-	
-		<p>The stimuli property of the trial holds stimuli that are dynamicaly displayed durring the trial.
-These trials are not displayed by default, and can be affected by user interactions.
-Like the layout property the stimuli property holds an array of stimuli objects.</p>
-
-
-		
-		  <div class='highlight'><pre>			stimuli: [
-				{media :{word:<span class="hljs-string">'Hello world'</span>}}
-			],</pre></div>
-		
-	
-		<p>The interaction property of the trial is responsible for any interactions the user has through the trial.
-Each interaction is composed of a propostition (a statement that is either true or false)
-And of action to execute in case the condition is true.
-We will learn more about this section in the condition and action tutorials.</p>
-
-
-		
-		  <div class='highlight'><pre>			interactions: [</pre></div>
-		
-	
-		<ol>
-<li>Display Stimulus</li>
-</ol>
-
-
-		
-		  <div class='highlight'><pre>				{
-					<span class="hljs-comment">/* when we begin the trial (condition) */</span>
-					conditions: [{type:<span class="hljs-string">'begin'</span>}],
-					<span class="hljs-comment">/* show all stimuli (action) */</span>
-					actions: [{type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'All'</span>}]
-				},</pre></div>
-		
-	
-		<ol>
-<li>End trial on space click</li>
-</ol>
-
-
-		
-		  <div class='highlight'><pre>				{
-					<span class="hljs-comment">/* when space is clicked */</span>
-					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'space'</span>}],
-					<span class="hljs-comment">/* end the trial */</span>
-					actions: [{type:<span class="hljs-string">'endTrial'</span>}]
-				}
-			]
-		}
-		<span class="hljs-comment">/* The trial ends here */</span>
-	]);
-	<span class="hljs-comment">/* this is where we close the sequence */</span>
-
-	<span class="hljs-keyword">return</span> API.script;
+	<p>The Scorer component of the PIP is an implementation of the D-score algorithm for computing IAT scores. The scorer allows creating an appropriate feedback message for the users, as well as logging them to the server.
+In order to compute the score the trials are divided to parcels, the score for each parcel is computed and then the scores are averaged.</p>
+<h3 id="table-of-contents">Table of contents</h3>
+<ul>
+<li><a href="#how-to-use">How to Use</a></li>
+<li><a href="#settings-compute">Settings: compute</a><ul>
+<li><a href="#parcels">Parcels</a></li>
+<li><a href="#errorlatency">errorLatency</a></li>
+</ul>
+</li>
+<li><a href="#settings-message">Settings: message</a></li>
+<li><a href="#posting-to-the-server">Posting to the server.</a><ul>
+<li><a href="#dynamicpost">dynamicPost</a></li>
+<li><a href="#posttoserver">postToServer</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="how-to-use">How to Use</h3>
+<p>Create instance of the scorer:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> scorer = <span class="hljs-keyword">new</span> Scorer();
+</code></pre>
+<p>Set the settings for the scorer as covered in <a href="#settings-compute">compute</a>, and <a href="#settings-message">messages</a>.</p>
+<p>The scorer has two sets of settings; <a href="#settings-compute">compute</a>, and <a href="#settings-message">messages</a>. The first has to do with the way the score is computed, the second allows you to customize the feedback messages that the scorer creates. Each takes an object with an assortment of properties as described below.
+You can set the different settings using the following commands:</p>
+<pre><code class="lang-js">scorer.addSettings(<span class="hljs-string">'compute'</span>,computeObj);
+scorer.addSettings(<span class="hljs-string">'message'</span>,messageObj);
+</code></pre>
+<p>Get the score and the message from the scorer (make sure that you do this in a function that is called at the end of the PIP task, after the scores are collected);</p>
+<pre><code class="lang-js">DScoreObj = scorer.computeD();
+</code></pre>
+<h3 id="settings-compute">Settings: compute</h3>
+<p>The compute settings affects the way that the final score is computed. In order to use it you set an object into the compute setting. The available properties are described below.</p>
+<pre><code class="lang-js">scorer.addSettings(<span class="hljs-string">'compute'</span>,{
+    property : value
 });
-<span class="hljs-comment">/* don't forget to close the require wrapper */</span></pre></div>
-		
-	
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AnalyzedVar</td>
+<td>Which variable to analyze. Defaulted to ‘latency’.</td>
+</tr>
+<tr>
+<td>ErrorVar</td>
+<td>Which data property marks the trial as an error trial (default: ‘score’). 1 is considered an error, 0 no error.</td>
+</tr>
+<tr>
+<td>condVar</td>
+<td>The variable that indicate the condition (default: ‘condition’).</td>
+</tr>
+<tr>
+<td>cond1VarValues</td>
+<td>An array with the values of the condVar that will comprise of condition 1 in the comparison.</td>
+</tr>
+<tr>
+<td>cond2VarValues</td>
+<td>An array with the values of the condVar that will comprise of condition 2 in the comparison.</td>
+</tr>
+<tr>
+<td>parcelVar</td>
+<td>A variable that indicate the name for the parcels (default: ‘parcel’).</td>
+</tr>
+<tr>
+<td>parcelValue</td>
+<td>An array with the values for the parcels. When building the experiment mark each trial with the parcel it belongs to, make sure that each parcel has trials that belong to both to condition 1 and condition 2.</td>
+</tr>
+<tr>
+<td>fastRT</td>
+<td>A variable that indicates the latency limit beyond which the latency is considered too fast. (also see the <code>maxFastTrialsRate</code> property)</td>
+</tr>
+<tr>
+<td>maxFastTrialsRate</td>
+<td>The percentage of fast trials we are willing to tolerate. Above this % of extremely fast responses within a condition, the participant is considered too fast. If the number of trials that are too fast is too hight then an error message will be generated and saved (calculation will continue though).</td>
+</tr>
+<tr>
+<td>minRT</td>
+<td>Only trials that have latency between minRT and maxRT will be calculated.</td>
+</tr>
+<tr>
+<td>maxRT</td>
+<td>Only trials that have latency between minRT and maxRT will be calculated.</td>
+</tr>
+<tr>
+<td>maxErrorParcelRate</td>
+<td>If the % of error trials are greater than this value then an error will be generated and saved.</td>
+</tr>
+<tr>
+<td>errorLatency</td>
+<td>An object that determines the behavior of the scorer n relation to error trials. The object has three properties: <code>use</code>, <code>latency</code> and <code>useForSTD</code>. See documentation <a href="#errorLatency">below</a>.</td>
+</tr>
+<tr>
+<td>postSettings</td>
+<td>An object used to determine the url and variable to send to the implicit server when any of the post methods are used. It has three properties; <code>score</code>: the default key to which the score is set. <code>msg</code>: the default key to which the message is set. <code>url</code>: the url to which the data is sent. More about posting <a href="#posting-to-the-server">here</a>.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="parcels">Parcels</h4>
+<p>First we set up the parcels:</p>
+<pre><code class="lang-js">scorer.addSettings(<span class="hljs-string">'compute'</span>,{
+        ...
+        parcelVar : <span class="hljs-string">"parcel"</span>,
+        parcelValue : [<span class="hljs-string">'first'</span>,<span class="hljs-string">'second'</span>],
+        ...
+});
+</code></pre>
+<p>Then set up the assorted trial parcels.</p>
+<pre><code class="lang-js">    {
+        data: {parcel:<span class="hljs-string">'first'</span> ...},
+        ...
+    },
+    {
+        data: {parcel:<span class="hljs-string">'second'</span> ...},
+        ...
+    }
+</code></pre>
+<p>Each parcel will be computed separately, and the final score will be the average of all parcels.</p>
+<h4 id="errorlatency">errorLatency</h4>
+<p>The <code>errorLatency</code> property takes an object with the following properties.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>use</td>
+<td>May have three values: <code>latency</code> (the default): the scorer will include error trials. <code>false</code>: the scorer will ignore error trials. <code>penalty</code>: the scorer will add a penalty to the the latency of error trials (see penalty property).</td>
+</tr>
+<tr>
+<td>penalty</td>
+<td>The penalty that will be added to error trials if <code>use</code>is set to ‘penalty’.</td>
+</tr>
+<tr>
+<td>useForSTD</td>
+<td>If true error trials will be used in calculations of variance.</td>
+</tr>
+</tbody>
+</table>
+<p>The following examples shows a setting that penalizes mistakes by 600ms, and includes them in variance calculations.</p>
+<pre><code>scorer.addSettings(<span class="hljs-string">'compute'</span>,{
+        ....
+        errorLatency : {use:<span class="hljs-string">"penalty"</span>, penalty:<span class="hljs-number">600</span>, useForSTD:<span class="hljs-literal">true</span>},
+        ....
+}
+</code></pre><h3 id="settings-message">Settings: message</h3>
+<p>The message setting affects the feedback messages that the scorer produces. In order to use it you set an object into the message setting. The available properties are described below.</p>
+<pre><code class="lang-js">scorer.addSettings(<span class="hljs-string">'message'</span>,{
+    property : value
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>manyErrors</td>
+<td>The feedback in case the user did not give enough correct responses.</td>
+</tr>
+<tr>
+<td>tooFast</td>
+<td>The feedback in case there were too many fast trials.</td>
+</tr>
+<tr>
+<td>notEnough</td>
+<td>The feedback in case we don’t have enough correct responses to compute the score.</td>
+</tr>
+<tr>
+<td>MessageDef</td>
+<td>An array of cutoff scores and messages for interpreting the results. Scores that fall between two cutoffs will be associated with the cutoff above them. Scores below the lowest cutoff will be associated with the lowest cutoff. Scores above the highest cutoff cause trouble! set your cutoff high enough so that this never happens.</td>
+</tr>
+</tbody>
+</table>
+<p>For example:</p>
+<pre><code class="lang-js">    scorer.addSettings(<span class="hljs-string">'message'</span>,{
+        manyErrors: <span class="hljs-string">"There were too many errors made to determine a result."</span>,
+        tooFast: <span class="hljs-string">"There were too many fast trials to determine a result."</span>,
+        notEnough: <span class="hljs-string">"There were not enough trials to determine a result."</span>
+        MessageDef: [
+            { cut:<span class="hljs-string">'-0.65'</span>, message:<span class="hljs-string">'strong preference left'</span> },
+            { cut:<span class="hljs-string">'-0.35'</span>, message:<span class="hljs-string">'moderate preference left'</span> },
+            { cut:<span class="hljs-string">'-0.15'</span>, message:<span class="hljs-string">'slight preference left'</span> },
+            { cut:<span class="hljs-string">'0.15'</span>, message:<span class="hljs-string">'little to no preference'</span> },
+            { cut:<span class="hljs-string">'0.35'</span>, message:<span class="hljs-string">'slight preference right'</span> },
+            { cut:<span class="hljs-string">'0.65'</span>, message:<span class="hljs-string">'moderate preference right'</span> },
+            { cut:<span class="hljs-string">'5'</span>, message:<span class="hljs-string">'strong preference right'</span> }
+        ]
+    });
+</code></pre>
+<h3 id="posting-to-the-server-">Posting to the server.</h3>
+<p>The scorer offers two methods for posting scorer data to the server. The preferable method is using the scorer function <code>dynamicPost</code>. We keep the deprecated function <code>postToServer</code> only for backward compatibility.</p>
+<p>You can and should set the post settings in the <code>postSettings</code> property of the <a href="#settings-compute">compute setting</a>. Most notably, that is where you set the target URL.</p>
+<pre><code class="lang-js">scorer.addSettings(<span class="hljs-string">'compute'</span>,{
+    postSettings : {score:<span class="hljs-string">"score"</span>,msg:<span class="hljs-string">"feedback"</span>,url:<span class="hljs-string">"/implicit/scorer"</span>}
+});
+</code></pre>
+<h4 id="dynamicpost">dynamicPost</h4>
+<p>This function takes an object, jsonifies it, and sends it to the server. It returns a jQuery promise so you can do anything that you like after it finishes.</p>
+<pre><code class="lang-js"><span class="hljs-comment">// Compute score</span>
+<span class="hljs-keyword">var</span> DScoreObj = scorer.computeD();
+<span class="hljs-comment">// Post to the server</span>
+scorer.dynamicPost({
+    score: DScoreObj.DScore,
+    feedback: DScoreObj.FBMsg
+}).always(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{ <span class="hljs-comment">// always run the following code, even if the post failed.</span>
+    top.location.href = <span class="hljs-string">"/my/next/url/"</span>;
+});
+</code></pre>
+<h4 id="posttoserver">postToServer</h4>
+<p>This method is deprecated. Use <a href="#dynamicpost">dynamicPost</a> instead.</p>
+<p>If you need to use it anyway, The syntax is like so:</p>
+<pre><code class="lang-js"><span class="hljs-comment">// Compute score</span>
+<span class="hljs-keyword">var</span> DScoreObj = scorer.computeD();
+<span class="hljs-keyword">var</span> score = DScoreObj.DScore,
+<span class="hljs-keyword">var</span> feedback = DScoreObj.FBMsg
+<span class="hljs-keyword">var</span> score = <span class="hljs-string">'score'</span>;
+<span class="hljs-keyword">var</span> msg = <span class="hljs-string">'feedback'</span>;
+
+<span class="hljs-comment">// post to server</span>
+scorer.postToServer(score, msg, scoreKey, msgKey);
+</code></pre>
+<p>Where the arguments are as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>score</td>
+<td>The task score (required).</td>
+</tr>
+<tr>
+<td>msg</td>
+<td>The feedback message (required).</td>
+</tr>
+<tr>
+<td>scoreKey</td>
+<td>The key for the score data (optional, uses the <code>postSettings</code> property <code>score</code> by default).</td>
+</tr>
+<tr>
+<td>msgKey</td>
+<td>The key for the message data (optional, uses the <code>postSettings</code> property <code>msg</code> by default).</td>
+</tr>
+</tbody>
+</table>
+
 
 				</div>
 
@@ -446,7 +582,7 @@ We will learn more about this section in the condition and action tutorials.</p>
 							</li>
 						
 									
-							<li class=" active ">
+							<li class="">
 								<div>
 									<a href="../snippets/trialDocco.html">Trial</a>
 									<a href="../snippets/trial.js" download="../snippets/trial.js" title="Download"><span class="glyphicon glyphicon-download"></span></a>
@@ -462,7 +598,7 @@ We will learn more about this section in the condition and action tutorials.</p>
 							</li>
 						
 							
-							<li class="">
+							<li class=" active ">
 								<a href="../tutorials/scorer.html">Scorer</a>
 							</li>
 						
