@@ -143,7 +143,7 @@
 		
 		  <div class='highlight'><pre>	API.addSettings(<span class="hljs-string">'base_url'</span>,{
 		image : <span class="hljs-string">'../../images'</span>,
-		template : <span class="hljs-string">'../../../../resources/IAT'</span>
+		template : <span class="hljs-string">'../../../resources/IAT'</span>
 	});</pre></div>
 		
 	
@@ -1166,40 +1166,44 @@ block 4 instructions</p>
 			data: {blockStart:<span class="hljs-literal">true</span>},
 			stimuli: [],
 			customize: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-				<span class="hljs-comment">/* global console */</span>
 				<span class="hljs-keyword">var</span> trial = <span class="hljs-keyword">this</span>;
-				<span class="hljs-keyword">var</span> DScoreObj, media;
+				<span class="hljs-keyword">var</span> DScoreObj, media;</pre></div>
+		
+	
+		<p>First parcel</p>
 
-				<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'calling scorer'</span>);
+
+		
+		  <div class='highlight'><pre>				scorer.addSettings(<span class="hljs-string">'compute'</span>,{
+					parcelValue : [<span class="hljs-string">'first'</span>]
+				});
+
 				DScoreObj = scorer.computeD();
 
 				media = {css:{color:<span class="hljs-string">'black'</span>},media:{html:<span class="hljs-string">'&lt;div&gt;&lt;p style="font-size:12px;color:#FFFAFA"&gt; '</span>+DScoreObj.FBMsg+<span class="hljs-string">'&lt;br&gt;The Score is:'</span>+DScoreObj.DScore+<span class="hljs-string">'&lt;/p&gt;&lt;/div&gt;'</span>}};
 				trial.stimuli.push(media);
-				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,<span class="hljs-string">"score1"</span>,<span class="hljs-string">"feedback1"</span>);</pre></div>
+				scorer.dynamicPost({
+					score1: DScoreObj.DScore,
+					feedback1: DScoreObj.FBMsg
+				});</pre></div>
 		
 	
-		<p>////second call to score//////</p>
+		<p>Second parcel</p>
 
 
 		
 		  <div class='highlight'><pre>				scorer.addSettings(<span class="hljs-string">'compute'</span>,{
 					parcelValue : [<span class="hljs-string">'second'</span>]
 				});
-				scorer.addSettings(<span class="hljs-string">'message'</span>,{
-					MessageDef: [
-						{ cut:<span class="hljs-string">'-0.65'</span>, message:<span class="hljs-string">'Your data suggest a strong implicit preference for Black People compared to White People'</span> },
-						{ cut:<span class="hljs-string">'-0.35'</span>, message:<span class="hljs-string">'Your data suggest a moderate implicit preference for Black People compared to White People.'</span> },
-						{ cut:<span class="hljs-string">'-0.15'</span>, message:<span class="hljs-string">'Your data suggest a slight implicit preference for Black People compared to White People.'</span> },
-						{ cut:<span class="hljs-string">'0.15'</span>, message:<span class="hljs-string">'Your data suggest little to no difference in implicit preference between Black People and White People.'</span> },
-						{ cut:<span class="hljs-string">'0.35'</span>, message:<span class="hljs-string">'Your data suggest a slight implicit preference for White People compared to Black People'</span> },
-						{ cut:<span class="hljs-string">'0.65'</span>, message:<span class="hljs-string">'Your data suggest a moderate implicit preference for White People compared to Black People'</span> },
-						{ cut:<span class="hljs-string">'5'</span>, message:<span class="hljs-string">'Your data suggest a strong implicit preference for White People compared to Black People'</span> }
-					]
-				});
+
 				DScoreObj = scorer.computeD();
 				media = {css:{color:<span class="hljs-string">'black'</span>},media:{html:<span class="hljs-string">'&lt;h1&gt;&lt;div&gt;&lt;p style="font-size:12px;color=#FFFAFA&gt;'</span>+DScoreObj.FBMsg+<span class="hljs-string">'&lt;br&gt;The Score is:'</span>+DScoreObj.DScore+<span class="hljs-string">'&lt;/p&gt;&lt;/div&gt;'</span>}};
 				trial.stimuli.push(media);
-				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,<span class="hljs-string">"score1"</span>,<span class="hljs-string">"feedback1"</span>);
+				scorer.dynamicPost({
+					score1: DScoreObj.DScore,
+					feedback1: DScoreObj.FBMsg
+				});
+
 			}
 		},
 
@@ -1251,18 +1255,23 @@ block 4 instructions</p>
 		  <div class='highlight'><pre>		cond2VarValues: [
 			attribute1 + <span class="hljs-string">','</span> + concept2 + <span class="hljs-string">'/'</span> + attribute2 + <span class="hljs-string">','</span> + concept1
 		],
-		parcelVar : <span class="hljs-string">"parcel"</span>,
-		parcelValue : [<span class="hljs-string">'first'</span>],
-		fastRT : <span class="hljs-number">150</span>, <span class="hljs-comment">//Below this reaction time, the latency is considered extremely fast.</span>
+		parcelVar : <span class="hljs-string">"parcel"</span>,</pre></div>
+		
+	
+		<p>parcelValue : [‘first’], ==&gt; we set the parcels individually because we want two separate computations</p>
+
+
+		
+		  <div class='highlight'><pre>		fastRT : <span class="hljs-number">150</span>, <span class="hljs-comment">//Below this reaction time, the latency is considered extremely fast.</span>
 		maxFastTrialsRate : <span class="hljs-number">0.1</span>, <span class="hljs-comment">//Above this % of extremely fast responses within a condition, the participant is considered too fast.</span>
-		minRT : <span class="hljs-number">400</span>, <span class="hljs-comment">//Below this latency</span>
-		maxRT : <span class="hljs-number">10000</span>, <span class="hljs-comment">//above this</span>
+		minRT : <span class="hljs-number">400</span>,
+		maxRT : <span class="hljs-number">10000</span>,
 		errorLatency : {use:<span class="hljs-string">"latency"</span>, penalty:<span class="hljs-number">600</span>, useForSTD:<span class="hljs-literal">true</span>},<span class="hljs-comment">//ignore error respones</span>
 		postSettings : {score:<span class="hljs-string">"score"</span>,msg:<span class="hljs-string">"feedback"</span>,url:<span class="hljs-string">"/implicit/scorer"</span>}
 	});</pre></div>
 		
 	
-		<p>scorrer messages</p>
+		<p>scorer messages</p>
 
 
 		

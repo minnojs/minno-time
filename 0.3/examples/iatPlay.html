@@ -170,7 +170,7 @@ define([&#39;pipAPI&#39;,&#39;pipScorer&#39;], function(APIConstructor,Scorer) {
 	// setting the base urls for images and templates
 	API.addSettings(&#39;base_url&#39;,{
 		image : &#39;../../images&#39;,
-		template : &#39;../../../../resources/IAT&#39;
+		template : &#39;../../../resources/IAT&#39;
 	});
 
 	// setting the way the logger works (how often we send data to the server and the url for the data)
@@ -890,36 +890,36 @@ define([&#39;pipAPI&#39;,&#39;pipScorer&#39;], function(APIConstructor,Scorer) {
 			data: {blockStart:true},
 			stimuli: [],
 			customize: function(){
-				/* global console */
 				var trial = this;
 				var DScoreObj, media;
 
-				console.log(&#39;calling scorer&#39;);
+				// First parcel
+				scorer.addSettings(&#39;compute&#39;,{
+					parcelValue : [&#39;first&#39;]
+				});
+
 				DScoreObj = scorer.computeD();
 
 				media = {css:{color:&#39;black&#39;},media:{html:&#39;&lt;div&gt;&lt;p style=&quot;font-size:12px;color:#FFFAFA&quot;&gt; &#39;+DScoreObj.FBMsg+&#39;&lt;br&gt;The Score is:&#39;+DScoreObj.DScore+&#39;&lt;/p&gt;&lt;/div&gt;&#39;}};
 				trial.stimuli.push(media);
-				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,&quot;score1&quot;,&quot;feedback1&quot;);
+				scorer.dynamicPost({
+					score1: DScoreObj.DScore,
+					feedback1: DScoreObj.FBMsg
+				});
 
-				//////second call to score//////
+				// Second parcel
 				scorer.addSettings(&#39;compute&#39;,{
 					parcelValue : [&#39;second&#39;]
 				});
-				scorer.addSettings(&#39;message&#39;,{
-					MessageDef: [
-						{ cut:&#39;-0.65&#39;, message:&#39;Your data suggest a strong implicit preference for Black People compared to White People&#39; },
-						{ cut:&#39;-0.35&#39;, message:&#39;Your data suggest a moderate implicit preference for Black People compared to White People.&#39; },
-						{ cut:&#39;-0.15&#39;, message:&#39;Your data suggest a slight implicit preference for Black People compared to White People.&#39; },
-						{ cut:&#39;0.15&#39;, message:&#39;Your data suggest little to no difference in implicit preference between Black People and White People.&#39; },
-						{ cut:&#39;0.35&#39;, message:&#39;Your data suggest a slight implicit preference for White People compared to Black People&#39; },
-						{ cut:&#39;0.65&#39;, message:&#39;Your data suggest a moderate implicit preference for White People compared to Black People&#39; },
-						{ cut:&#39;5&#39;, message:&#39;Your data suggest a strong implicit preference for White People compared to Black People&#39; }
-					]
-				});
+
 				DScoreObj = scorer.computeD();
 				media = {css:{color:&#39;black&#39;},media:{html:&#39;&lt;h1&gt;&lt;div&gt;&lt;p style=&quot;font-size:12px;color=#FFFAFA&gt;&#39;+DScoreObj.FBMsg+&#39;&lt;br&gt;The Score is:&#39;+DScoreObj.DScore+&#39;&lt;/p&gt;&lt;/div&gt;&#39;}};
 				trial.stimuli.push(media);
-				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,&quot;score1&quot;,&quot;feedback1&quot;);
+				scorer.dynamicPost({
+					score1: DScoreObj.DScore,
+					feedback1: DScoreObj.FBMsg
+				});
+
 			}
 		},
 
@@ -954,16 +954,16 @@ define([&#39;pipAPI&#39;,&#39;pipScorer&#39;], function(APIConstructor,Scorer) {
 			attribute1 + &#39;,&#39; + concept2 + &#39;/&#39; + attribute2 + &#39;,&#39; + concept1
 		],
 		parcelVar : &quot;parcel&quot;,
-		parcelValue : [&#39;first&#39;],
+		// parcelValue : [&#39;first&#39;], ==&gt; we set the parcels individually because we want two separate computations
 		fastRT : 150, //Below this reaction time, the latency is considered extremely fast.
 		maxFastTrialsRate : 0.1, //Above this % of extremely fast responses within a condition, the participant is considered too fast.
-		minRT : 400, //Below this latency
-		maxRT : 10000, //above this
+		minRT : 400,
+		maxRT : 10000,
 		errorLatency : {use:&quot;latency&quot;, penalty:600, useForSTD:true},//ignore error respones
 		postSettings : {score:&quot;score&quot;,msg:&quot;feedback&quot;,url:&quot;/implicit/scorer&quot;}
 	});
 
-	// scorrer messages
+	// scorer messages
 	scorer.addSettings(&#39;message&#39;,{
 		MessageDef: [
 			{ cut:&#39;-0.65&#39;, message:&#39;Your data suggest a strong implicit preference for Black People compared to White People&#39; },
