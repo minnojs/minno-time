@@ -27,19 +27,6 @@ Media are the objects that we display. We currently support five types of media:
 * Image: `{image: 'some/url/image.png}`
 * Jquery elements:` {jquery: $('<div>',{text: 'anything you want' })}`
 * HTML: `{html: "<div>any html</div>"}`
-* Template:
-    * `{template: 'some/url/template.html'}` takes the url of a template file
-    * `{inlineTemplate: '<span><%= trialData.name ?></span>'}` takes the literal text of a template
-
-    Templates may include any valid html and [underscore template formating](http://documentcloud.github.com/underscore/#template). (Note: you should always wrap your template inside a single html element).
-
-    Stimuli are passed the trial and stimulus data attributes as "trialData" and "stimulusData" so that you can call:
-    ```HTML
-    <div>
-        <%= trialData.name %>
-        <span> <%= stimulusData.handle %> </span>
-    </div>
-    ```
 
 If you insert a string instead of a media object the player treats it as if it was Plain text.
 The folowing two media definitions have the same outcome:`'Wiki'`, `{word:'Wiki'}`

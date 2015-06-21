@@ -57,17 +57,20 @@ define(function(require){
 			parcelMng.scoreAll(computeData);
 
 			var scoreObj = parcelMng.scoreData;
-			var scoreData = {};
 
 			if (scoreObj.errorMessage === undefined || scoreObj.errorMessage === null){
-				scoreData.FBMsg = this.getFBMsg(scoreObj.score);
-				scoreData.DScore = scoreObj.score;
+				return {
+					FBMsg : this.getFBMsg(scoreObj.score),
+					DScore : scoreObj.score,
+					error: false
+				};
 			}else{
-				scoreData.FBMsg = scoreObj.errorMessage;
-				scoreData.DScore = "";
+				return {
+					FBMsg : scoreObj.errorMessage,
+					DScore : '',
+					error: true
+				};
 			}
-
-			return scoreData;
 		},
 
 		/**
