@@ -25,7 +25,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 	// Set URLs for images and templates
 	API.addSettings('base_url',{
 		image : '../../images',
-		template : '../../../../resources/BIAT'
+		template : '../../../resources/BIAT'
 	});
 
 	// Logging URL
@@ -843,6 +843,9 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 				var trial = this;
 
 				//////First call to score//////
+				scorer.addSettings('compute',{
+					parcelValue : ['first']
+				});
 				DScoreObj = scorer.computeD();
 				var DScore1 = DScoreObj.DScore;
 
@@ -850,7 +853,6 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 				scorer.addSettings('compute',{
 					parcelValue : ['second']
 				});
-
 				DScoreObj = scorer.computeD();
 				var DScore2 = DScoreObj.DScore;
 
@@ -858,7 +860,6 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 				scorer.addSettings('compute',{
 					parcelValue : ['third']
 				});
-
 				DScoreObj = scorer.computeD();
 				var DScore3 = DScoreObj.DScore;
 
@@ -870,23 +871,22 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 				var DScore4 = DScoreObj.DScore;
 
 				// If all scores are numbers
-				if((!isNaN(DScore2)) && (!isNaN(DScore2)) && (!isNaN(DScore3)) && (!isNaN(DScore4))){
+				if ((DScore1 !== '') && (DScore2 !== '') && (DScore3 !== '') && (DScore4 !== '')){
 					//Average the 4 scores
 					DScore = (parseFloat(DScore1) + parseFloat(DScore2) + parseFloat(DScore3) + parseFloat(DScore4))/4;
-					if(isNaN(DScore)){
-						FBMsg = DScoreObj.errorMessage;
-					}
-					else{
-						FBMsg = scorer.getFBMsg(DScore);
-					}
+					FBMsg = scorer.getFBMsg(DScore);
+				} else {
+					DScore = '';
+					FBMsg = 'An error has occurred';
 				}
-				else{
-					FBMsg = DScoreObj.errorMessage;
-					DScore = "";
-				}
+
 				var media = {css:{color:'black'},media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};
 				trial.stimuli.push(media);
-				scorer.postToServer(DScore,FBMsg,"score","feedback");
+				scorer.dynamicPost({
+					score: DScoreObj.DScore,
+					feedback: DScoreObj.FBMsg
+				});
+
 			}
 		},
 

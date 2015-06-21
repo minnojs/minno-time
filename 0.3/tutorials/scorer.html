@@ -119,8 +119,35 @@ You can set the different settings using the following commands:</p>
 scorer.addSettings(<span class="hljs-string">'message'</span>,messageObj);
 </code></pre>
 <p>Get the score and the message from the scorer (make sure that you do this in a function that is called at the end of the PIP task, after the scores are collected);</p>
-<pre><code class="lang-js">DScoreObj = scorer.computeD();
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> DScoreObj = scorer.computeD();
 </code></pre>
+<h3 id="computed">computeD</h3>
+<p>The computeD function activates the scorer and returns an object with the score and feedback message.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> DScoreObj = scorer.computeD();
+</code></pre>
+<p>The DscoreObj has the following properties:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dscore</td>
+<td>The computed score for this task (if an error was encountered the score will be an empty string).</td>
+</tr>
+<tr>
+<td>FBMsg</td>
+<td>The feedback message (either a score message or an error message).</td>
+</tr>
+<tr>
+<td>error</td>
+<td>(true or false) whether an error has happened.</td>
+</tr>
+</tbody>
+</table>
 <h3 id="settings-compute">Settings: compute</h3>
 <p>The compute settings affects the way that the final score is computed. In order to use it you set an object into the compute setting. The available properties are described below.</p>
 <pre><code class="lang-js">scorer.addSettings(<span class="hljs-string">'compute'</span>,{

@@ -690,12 +690,11 @@ Twp categories of images, and two categories of words.</p>
 			inherit: <span class="hljs-string">"inst"</span>,
 			stimuli: [],
 			customize: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-				<span class="hljs-comment">/* global console */</span>
 				<span class="hljs-keyword">var</span> trial = <span class="hljs-keyword">this</span>;
-				<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'calling scorer'</span>);
-				<span class="hljs-keyword">var</span> DScore = scorer.computeD();<span class="hljs-comment">//compute the Dscore</span>
-				<span class="hljs-keyword">var</span> FBMsg = scorer.getFBMsg(DScore);<span class="hljs-comment">//the user feedback</span>
-				<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'DScore='</span>+DScore+ <span class="hljs-string">" FBMsg="</span>+FBMsg);
+				<span class="hljs-keyword">var</span> DScoreObj = scorer.computeD();
+				<span class="hljs-keyword">var</span> DScore = DScoreObj.Dscore;
+				<span class="hljs-keyword">var</span> FBMsg = DScoreObj.FBMsg;
+
 				<span class="hljs-keyword">var</span> media = {media:{html:<span class="hljs-string">'&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFFFF"&gt; '</span>+FBMsg+<span class="hljs-string">'&lt;br&gt;The Score is:'</span>+DScore+<span class="hljs-string">'&lt;/p&gt;&lt;/div&gt;'</span>}};
 				trial.stimuli.push(media);<span class="hljs-comment">//show the user feedback</span>
 			}

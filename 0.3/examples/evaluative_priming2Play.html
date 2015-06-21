@@ -198,24 +198,12 @@ define([&#39;pipAPI&#39;,&#39;pipScorer&#39;], function(APIConstructor,Scorer) {
 	scorer.addSettings(&#39;compute&#39;,{
 		ErrorVar:&#39;score&#39;,
 		condVar:&quot;condition&quot;,
-		cond1VarValues: [&quot;Old black People / Unpleasant&quot;], //condition 1
-		cond2VarValues: [&quot;Old black People / Pleasant&quot;], //condition 2
 		parcelVar : &quot;parcel&quot;,
-		parcelValue : [&#39;first&#39;],
 		fastRT : 150, //Below this reaction time, the latency is considered extremely fast.
 		maxFastTrialsRate : 0.1, //Above this % of extremely fast responses within a condition, the participant is considered too fast.
 		minRT : 150, //Below this latency
 		maxRT : 5000, //above this
 		errorLatency : {use:&quot;false&quot;, penalty:600, useForSTD:true}//ignore error respones
-	});
-
-	scorer.addSettings(&#39;message&#39;,{
-		MessageDef: [
-			{ cut:&#39;-0.2&#39;, message:&#39;Your data suggest an Automatic negative attitude toward old black people&#39; },//D &lt; -0.2
-			{ cut:&#39;0.2&#39;, message:&#39;Your data suggest Neutral automatic attitude toward old black people&#39; },// -0.2 &lt;= D &lt;= 0.2
-			{ cut:&#39;5&#39;, message:&#39;Your data suggest an Automatic positive attitude toward old black people&#39; }// D &gt; 0.2 (and D&lt;=2)
-		]
-
 	});
 
 	//Define the basic trial (the prsentation of the images and words)
@@ -732,20 +720,36 @@ define([&#39;pipAPI&#39;,&#39;pipScorer&#39;], function(APIConstructor,Scorer) {
 			inherit: &quot;inst&quot;,
 			stimuli: [],
 			customize: function(){
-				/* global console */
 				var trial = this;
 				var DScoreObj;
-				console.log(&#39;calling scorer&#39;);
+
+				//////first call to score//////
+				scorer.addSettings(&#39;compute&#39;,{
+					parcelValue : [&#39;first&#39;],
+					cond1VarValues: [&quot;Old black People / Unpleasant&quot;], //condition 1
+					cond2VarValues: [&quot;Old black People / Pleasant&quot;] //condition 2
+				});
+				scorer.addSettings(&#39;message&#39;,{
+					MessageDef: [
+						{ cut:&#39;-0.2&#39;, message:&#39;Your data suggest an Automatic negative attitude toward old black people&#39; },//D &lt; -0.2
+						{ cut:&#39;0.2&#39;, message:&#39;Your data suggest Neutral automatic attitude toward old black people&#39; },// -0.2 &lt;= D &lt;= 0.2
+						{ cut:&#39;5&#39;, message:&#39;Your data suggest an Automatic positive attitude toward old black people&#39; }// D &gt; 0.2 (and D&lt;=2)
+					]
+				});
+
 				DScoreObj = scorer.computeD();
-				var media1 = DScoreObj.FBMsg+&#39; The Score is: &#39;+DScoreObj.DScore;
-				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,&quot;score1&quot;,&quot;feedback1&quot;);
+				var media1 = DScoreObj.FBMsg + &#39; The Score is: &#39; + DScoreObj.DScore;
+				scorer.dynamicPost({
+					score1: DScoreObj.DScore,
+					feedback1: DScoreObj.FBMsg
+				});
+
 
 				//////second call to score//////
 				scorer.addSettings(&#39;compute&#39;,{
 					parcelValue : [&#39;second&#39;],
 					cond1VarValues: [&quot;Old white People / Unpleasant&quot;], //condition 1
 					cond2VarValues: [&quot;Old white People / Pleasant&quot;] //condition 2
-
 				});
 				scorer.addSettings(&#39;message&#39;,{
 					MessageDef: [
@@ -754,10 +758,13 @@ define([&#39;pipAPI&#39;,&#39;pipScorer&#39;], function(APIConstructor,Scorer) {
 						{ cut:&#39;5&#39;, message:&#39;Your data suggest an Automatic positive attitude toward old white people&#39; }// D &gt; 0.2 (and D&lt;=2)
 					]
 				});
-				console.log(&#39;calling scorer for the second time&#39;);
+
 				DScoreObj = scorer.computeD();
 				var media2 = DScoreObj.FBMsg+&#39; The Score is: &#39;+DScoreObj.DScore;
-				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,&quot;score2&quot;,&quot;feedback2&quot;);
+				scorer.dynamicPost({
+					score1: DScoreObj.DScore,
+					feedback1: DScoreObj.FBMsg
+				});
 
 				//////third call to score//////
 				scorer.addSettings(&#39;compute&#39;,{
@@ -773,10 +780,13 @@ define([&#39;pipAPI&#39;,&#39;pipScorer&#39;], function(APIConstructor,Scorer) {
 						{ cut:&#39;5&#39;, message:&#39;Your data suggest an Automatic positive attitude toward young black people&#39; }// D &gt; 0.2 (and D&lt;=2)
 					]
 				});
-				console.log(&#39;calling scorer for the third time&#39;);
+
 				DScoreObj = scorer.computeD();
 				var media3 = DScoreObj.FBMsg+&#39; The Score is: &#39;+DScoreObj.DScore;
-				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,&quot;score3&quot;,&quot;feedback3&quot;);
+				scorer.dynamicPost({
+					score1: DScoreObj.DScore,
+					feedback1: DScoreObj.FBMsg
+				});
 
 				//////fourth call to score//////
 				scorer.addSettings(&#39;compute&#39;,{
@@ -792,12 +802,16 @@ define([&#39;pipAPI&#39;,&#39;pipScorer&#39;], function(APIConstructor,Scorer) {
 						{ cut:&#39;5&#39;, message:&#39;Your data suggest an Automatic positive attitude toward young white people&#39; }// D &gt; 0.2 (and D&lt;=2)
 					]
 				});
-				console.log(&#39;calling scorer for the fourth time&#39;);
-				DScoreObj = scorer.computeD();
-				var media = {css:{color:&#39;black&#39;},media:{html:&#39;&lt;h1&gt;&lt;div&gt;&lt;p style=&quot;font-size:24px&quot;&gt;&lt;color=&quot;#FFFAFA&quot;&gt; &#39;+media1+ &#39;&lt;br/&gt;&#39;+media2+ &#39;&lt;br/&gt;&#39;+media3+ &#39;&lt;br/&gt;&#39;+DScoreObj.FBMsg+&#39; The Score is:&#39;+DScoreObj.DScore+&#39;&lt;/p&gt;&lt;/div&gt;&#39;}};
-				trial.stimuli.push(media);
-				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,&quot;score4&quot;,&quot;feedback4&quot;);
 
+				DScoreObj = scorer.computeD();
+				var media4 = DScoreObj.FBMsg+&#39; The Score is: &#39;+DScoreObj.DScore;
+				scorer.dynamicPost({
+					score1: DScoreObj.DScore,
+					feedback1: DScoreObj.FBMsg
+				});
+
+				var media = {css:{color:&#39;black&#39;},media:{html:&#39;&lt;h1&gt;&lt;div&gt;&lt;p style=&quot;font-size:24px&quot;&gt;&lt;color=&quot;#FFFAFA&quot;&gt; &#39;+media1+ &#39;&lt;br/&gt;&#39;+media2+ &#39;&lt;br/&gt;&#39;+media3+ &#39;&lt;br/&gt;&#39;+media4+&#39;&lt;/p&gt;&lt;/div&gt;&#39;}};
+				trial.stimuli.push(media);
 			}
 		},
 		{ //Instructions trial, the end of the task, instruction what to do next

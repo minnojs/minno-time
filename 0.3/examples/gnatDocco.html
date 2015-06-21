@@ -124,7 +124,7 @@
 
 	API.addSettings(<span class="hljs-string">'base_url'</span>,{
 		image : <span class="hljs-string">'../../images'</span>,
-		template : <span class="hljs-string">'../../../../resources/GNAT'</span>
+		template : <span class="hljs-string">'../../../resources/GNAT'</span>
 	});
 
 
@@ -1442,7 +1442,17 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
 				<span class="hljs-comment">/* global console */</span>
 				<span class="hljs-keyword">var</span> trial = <span class="hljs-keyword">this</span>;
 				<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'calling scorer'</span>);
-				<span class="hljs-keyword">var</span> DScoreObj, DScore, FBMsg;
+				<span class="hljs-keyword">var</span> DScoreObj, DScore, FBMsg;</pre></div>
+		
+	
+		<p>////first call to score//////</p>
+
+
+		
+		  <div class='highlight'><pre>				scorer.addSettings(<span class="hljs-string">'compute'</span>,{
+					parcelValue : [<span class="hljs-string">'first'</span>]
+				});
+
 				DScoreObj = scorer.computeD();
 				<span class="hljs-keyword">var</span> DScore1 = DScoreObj.DScore;
 				<span class="hljs-built_in">console</span>.log(DScore1);</pre></div>
@@ -1488,37 +1498,32 @@ Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me 
 				<span class="hljs-built_in">console</span>.log(DScore4);</pre></div>
 		
 	
-		<p>avrage the 4 scores</p>
+		<p>If all scores are numbers</p>
 
 
 		
-		  <div class='highlight'><pre>				<span class="hljs-keyword">if</span>( (!<span class="hljs-built_in">isNaN</span>(DScore1)) &amp;&amp; (!<span class="hljs-built_in">isNaN</span>(DScore2)) &amp;&amp; (!<span class="hljs-built_in">isNaN</span>(DScore3)) &amp;&amp; (!<span class="hljs-built_in">isNaN</span>(DScore4))){</pre></div>
+		  <div class='highlight'><pre>				<span class="hljs-keyword">if</span> ((DScore1 !== <span class="hljs-string">''</span>) &amp;&amp; (DScore2 !== <span class="hljs-string">''</span>) &amp;&amp; (DScore3 !== <span class="hljs-string">''</span>) &amp;&amp; (DScore4 !== <span class="hljs-string">''</span>)){</pre></div>
 		
 	
-		<p>avrage the 4 scores</p>
+		<p>Average the 4 scores</p>
 
 
 		
 		  <div class='highlight'><pre>					DScore = (<span class="hljs-built_in">parseFloat</span>(DScore1) + <span class="hljs-built_in">parseFloat</span>(DScore2) + <span class="hljs-built_in">parseFloat</span>(DScore3) + <span class="hljs-built_in">parseFloat</span>(DScore4))/<span class="hljs-number">4</span>;
-					<span class="hljs-keyword">if</span>(<span class="hljs-built_in">isNaN</span>(DScore)){
-						FBMsg = DScoreObj.errorMessage;
-					}
-					<span class="hljs-keyword">else</span>{
-						FBMsg = scorer.getFBMsg(DScore);
-						}
-					<span class="hljs-built_in">console</span>.log(FBMsg);
+					FBMsg = scorer.getFBMsg(DScore);
+				} <span class="hljs-keyword">else</span> {
+					DScore = <span class="hljs-string">''</span>;
+					FBMsg = <span class="hljs-string">'An error has occurred'</span>;
 				}
-				<span class="hljs-keyword">else</span>{
-					FBMsg = DScoreObj.errorMessage;
-					DScore = <span class="hljs-string">""</span>;
 
-				}
 				<span class="hljs-built_in">console</span>.log(DScore);
 				<span class="hljs-built_in">console</span>.log(FBMsg);
 				<span class="hljs-keyword">var</span> media = {css:{color:<span class="hljs-string">'black'</span>},media:{html:<span class="hljs-string">'&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt; '</span>+FBMsg+<span class="hljs-string">'&lt;br&gt;The Score is:'</span>+DScore+<span class="hljs-string">'&lt;/p&gt;&lt;/div&gt;'</span>}};
 				trial.stimuli.push(media);
-				scorer.postToServer(DScore,FBMsg,<span class="hljs-string">"score"</span>,<span class="hljs-string">"feedback"</span>);
-
+				scorer.dynamicPost({
+					score: DScoreObj.DScore,
+					feedback: DScoreObj.FBMsg
+				});
 
 			}
 		},

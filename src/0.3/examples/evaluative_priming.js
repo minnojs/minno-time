@@ -464,12 +464,11 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 			inherit: "inst",
 			stimuli: [],
 			customize: function(){
-				/* global console */
 				var trial = this;
-				console.log('calling scorer');
-				var DScore = scorer.computeD();//compute the Dscore
-				var FBMsg = scorer.getFBMsg(DScore);//the user feedback
-				console.log('DScore='+DScore+ " FBMsg="+FBMsg);
+				var DScoreObj = scorer.computeD();
+				var DScore = DScoreObj.Dscore;
+				var FBMsg = DScoreObj.FBMsg;
+
 				var media = {media:{html:'<div><p style="font-size:28px"><color="#FFFFFF"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};
 				trial.stimuli.push(media);//show the user feedback
 			}

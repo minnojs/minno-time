@@ -445,14 +445,15 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 				console.log('calling scorer');
 				var DScoreObj = scorer.computeD();
 				var DScore = DScoreObj.DScore;//compute the Dscore
-				var FBMsg = DScoreObj.errorMessage;
-				if(!isNaN(DScore)){
-					FBMsg = scorer.getFBMsg(DScore);//the user feedback
-				}
+				var FBMsg = DScoreObj.FBMsg;
 				console.log('DScore='+DScore+ " FBMsg="+FBMsg);
 				var media = {media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};
 				trial.stimuli.push(media);//show the user feedback
-				scorer.postToServer(DScore,FBMsg,"score","feedback");
+				scorer.dynamicPost({
+					score: DScoreObj.DScore,
+					feedback: DScoreObj.FBMsg
+				});
+
 			}
 		},
 		{

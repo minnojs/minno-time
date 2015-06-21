@@ -38,10 +38,23 @@ scorer.addSettings('message',messageObj);
 Get the score and the message from the scorer (make sure that you do this in a function that is called at the end of the PIP task, after the scores are collected);
 
 ```js
-DScoreObj = scorer.computeD();
+var DScoreObj = scorer.computeD();
 ```
 
+### computeD
+The computeD function activates the scorer and returns an object with the score and feedback message.
 
+```js
+var DScoreObj = scorer.computeD();
+```
+
+The DscoreObj has the following properties:
+
+Property 			| Description
+--------------- 	| -----------
+Dscore 				| The computed score for this task (if an error was encountered the score will be an empty string).
+FBMsg 				| The feedback message (either a score message or an error message).
+error 				| (true or false) whether an error has happened.
 
 ### Settings: compute
 The compute settings affects the way that the final score is computed. In order to use it you set an object into the compute setting. The available properties are described below.

@@ -454,6 +454,10 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 				var trial = this;
 
 
+				scorer.addSettings('compute',{
+					parcelValue : ['first']
+				});
+
 				DScoreObj = scorer.computeD();
 				var DScore1= DScoreObj.DScore;
 
@@ -465,30 +469,26 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 				DScoreObj = scorer.computeD();
 				var DScore2 = DScoreObj.DScore;
 
-					//avrage the scores
-					console.log(DScore1);
-					console.log(DScore2);
-					if((!isNaN(DScore1)) && (!isNaN(DScore2)) ){
-						DScore = (parseFloat(DScore1) + parseFloat(DScore2))/2;
-						console.log(DScore);
-						if(isNaN(DScore)){
-						FBMsg = DScoreObj.errorMessage;
-						}
-						else{
-						FBMsg = scorer.getFBMsg(DScore);
-						}
-						console.log(FBMsg);
-
-					}
-					else{
-						FBMsg = DScoreObj.errorMessage;
-						DScore = "";
-
-					}
+				//avrage the scores
+				console.log(DScore1);
+				console.log(DScore2);
+				// If all scores are numbers
+				if ((DScore1 !== '') && (DScore2 !== '')){
+					//Average the 4 scores
+					DScore = (parseFloat(DScore1) + parseFloat(DScore2))/2;
+					FBMsg = scorer.getFBMsg(DScore);
+				} else {
+					DScore = '';
+					FBMsg = 'An error has occurred';
+				}
 
 				var media = {css:{color:'black'},media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};
 				trial.stimuli.push(media);
-				scorer.postToServer(DScore,FBMsg,"score1","feedback1");
+				scorer.dynamicPost({
+					score1: DScoreObj.DScore,
+					feedback1: DScoreObj.FBMsg
+				});
+
 			}
 		},
 

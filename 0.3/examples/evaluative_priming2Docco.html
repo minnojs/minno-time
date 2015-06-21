@@ -168,24 +168,12 @@
 		  <div class='highlight'><pre>	scorer.addSettings(<span class="hljs-string">'compute'</span>,{
 		ErrorVar:<span class="hljs-string">'score'</span>,
 		condVar:<span class="hljs-string">"condition"</span>,
-		cond1VarValues: [<span class="hljs-string">"Old black People / Unpleasant"</span>], <span class="hljs-comment">//condition 1</span>
-		cond2VarValues: [<span class="hljs-string">"Old black People / Pleasant"</span>], <span class="hljs-comment">//condition 2</span>
 		parcelVar : <span class="hljs-string">"parcel"</span>,
-		parcelValue : [<span class="hljs-string">'first'</span>],
 		fastRT : <span class="hljs-number">150</span>, <span class="hljs-comment">//Below this reaction time, the latency is considered extremely fast.</span>
 		maxFastTrialsRate : <span class="hljs-number">0.1</span>, <span class="hljs-comment">//Above this % of extremely fast responses within a condition, the participant is considered too fast.</span>
 		minRT : <span class="hljs-number">150</span>, <span class="hljs-comment">//Below this latency</span>
 		maxRT : <span class="hljs-number">5000</span>, <span class="hljs-comment">//above this</span>
 		errorLatency : {use:<span class="hljs-string">"false"</span>, penalty:<span class="hljs-number">600</span>, useForSTD:<span class="hljs-literal">true</span>}<span class="hljs-comment">//ignore error respones</span>
-	});
-
-	scorer.addSettings(<span class="hljs-string">'message'</span>,{
-		MessageDef: [
-			{ cut:<span class="hljs-string">'-0.2'</span>, message:<span class="hljs-string">'Your data suggest an Automatic negative attitude toward old black people'</span> },<span class="hljs-comment">//D &lt; -0.2</span>
-			{ cut:<span class="hljs-string">'0.2'</span>, message:<span class="hljs-string">'Your data suggest Neutral automatic attitude toward old black people'</span> },<span class="hljs-comment">// -0.2 &lt;= D &lt;= 0.2</span>
-			{ cut:<span class="hljs-string">'5'</span>, message:<span class="hljs-string">'Your data suggest an Automatic positive attitude toward old black people'</span> }<span class="hljs-comment">// D &gt; 0.2 (and D&lt;=2)</span>
-		]
-
 	});</pre></div>
 		
 	
@@ -825,13 +813,33 @@ four categories of images, and two categories of words.</p>
 			inherit: <span class="hljs-string">"inst"</span>,
 			stimuli: [],
 			customize: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-				<span class="hljs-comment">/* global console */</span>
 				<span class="hljs-keyword">var</span> trial = <span class="hljs-keyword">this</span>;
-				<span class="hljs-keyword">var</span> DScoreObj;
-				<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'calling scorer'</span>);
+				<span class="hljs-keyword">var</span> DScoreObj;</pre></div>
+		
+	
+		<p>////first call to score//////</p>
+
+
+		
+		  <div class='highlight'><pre>				scorer.addSettings(<span class="hljs-string">'compute'</span>,{
+					parcelValue : [<span class="hljs-string">'first'</span>],
+					cond1VarValues: [<span class="hljs-string">"Old black People / Unpleasant"</span>], <span class="hljs-comment">//condition 1</span>
+					cond2VarValues: [<span class="hljs-string">"Old black People / Pleasant"</span>] <span class="hljs-comment">//condition 2</span>
+				});
+				scorer.addSettings(<span class="hljs-string">'message'</span>,{
+					MessageDef: [
+						{ cut:<span class="hljs-string">'-0.2'</span>, message:<span class="hljs-string">'Your data suggest an Automatic negative attitude toward old black people'</span> },<span class="hljs-comment">//D &lt; -0.2</span>
+						{ cut:<span class="hljs-string">'0.2'</span>, message:<span class="hljs-string">'Your data suggest Neutral automatic attitude toward old black people'</span> },<span class="hljs-comment">// -0.2 &lt;= D &lt;= 0.2</span>
+						{ cut:<span class="hljs-string">'5'</span>, message:<span class="hljs-string">'Your data suggest an Automatic positive attitude toward old black people'</span> }<span class="hljs-comment">// D &gt; 0.2 (and D&lt;=2)</span>
+					]
+				});
+
 				DScoreObj = scorer.computeD();
-				<span class="hljs-keyword">var</span> media1 = DScoreObj.FBMsg+<span class="hljs-string">' The Score is: '</span>+DScoreObj.DScore;
-				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,<span class="hljs-string">"score1"</span>,<span class="hljs-string">"feedback1"</span>);</pre></div>
+				<span class="hljs-keyword">var</span> media1 = DScoreObj.FBMsg + <span class="hljs-string">' The Score is: '</span> + DScoreObj.DScore;
+				scorer.dynamicPost({
+					score1: DScoreObj.DScore,
+					feedback1: DScoreObj.FBMsg
+				});</pre></div>
 		
 	
 		<p>////second call to score//////</p>
@@ -842,7 +850,6 @@ four categories of images, and two categories of words.</p>
 					parcelValue : [<span class="hljs-string">'second'</span>],
 					cond1VarValues: [<span class="hljs-string">"Old white People / Unpleasant"</span>], <span class="hljs-comment">//condition 1</span>
 					cond2VarValues: [<span class="hljs-string">"Old white People / Pleasant"</span>] <span class="hljs-comment">//condition 2</span>
-
 				});
 				scorer.addSettings(<span class="hljs-string">'message'</span>,{
 					MessageDef: [
@@ -851,10 +858,13 @@ four categories of images, and two categories of words.</p>
 						{ cut:<span class="hljs-string">'5'</span>, message:<span class="hljs-string">'Your data suggest an Automatic positive attitude toward old white people'</span> }<span class="hljs-comment">// D &gt; 0.2 (and D&lt;=2)</span>
 					]
 				});
-				<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'calling scorer for the second time'</span>);
+
 				DScoreObj = scorer.computeD();
 				<span class="hljs-keyword">var</span> media2 = DScoreObj.FBMsg+<span class="hljs-string">' The Score is: '</span>+DScoreObj.DScore;
-				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,<span class="hljs-string">"score2"</span>,<span class="hljs-string">"feedback2"</span>);</pre></div>
+				scorer.dynamicPost({
+					score1: DScoreObj.DScore,
+					feedback1: DScoreObj.FBMsg
+				});</pre></div>
 		
 	
 		<p>////third call to score//////</p>
@@ -874,10 +884,13 @@ four categories of images, and two categories of words.</p>
 						{ cut:<span class="hljs-string">'5'</span>, message:<span class="hljs-string">'Your data suggest an Automatic positive attitude toward young black people'</span> }<span class="hljs-comment">// D &gt; 0.2 (and D&lt;=2)</span>
 					]
 				});
-				<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'calling scorer for the third time'</span>);
+
 				DScoreObj = scorer.computeD();
 				<span class="hljs-keyword">var</span> media3 = DScoreObj.FBMsg+<span class="hljs-string">' The Score is: '</span>+DScoreObj.DScore;
-				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,<span class="hljs-string">"score3"</span>,<span class="hljs-string">"feedback3"</span>);</pre></div>
+				scorer.dynamicPost({
+					score1: DScoreObj.DScore,
+					feedback1: DScoreObj.FBMsg
+				});</pre></div>
 		
 	
 		<p>////fourth call to score//////</p>
@@ -897,12 +910,16 @@ four categories of images, and two categories of words.</p>
 						{ cut:<span class="hljs-string">'5'</span>, message:<span class="hljs-string">'Your data suggest an Automatic positive attitude toward young white people'</span> }<span class="hljs-comment">// D &gt; 0.2 (and D&lt;=2)</span>
 					]
 				});
-				<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'calling scorer for the fourth time'</span>);
-				DScoreObj = scorer.computeD();
-				<span class="hljs-keyword">var</span> media = {css:{color:<span class="hljs-string">'black'</span>},media:{html:<span class="hljs-string">'&lt;h1&gt;&lt;div&gt;&lt;p style="font-size:24px"&gt;&lt;color="#FFFAFA"&gt; '</span>+media1+ <span class="hljs-string">'&lt;br/&gt;'</span>+media2+ <span class="hljs-string">'&lt;br/&gt;'</span>+media3+ <span class="hljs-string">'&lt;br/&gt;'</span>+DScoreObj.FBMsg+<span class="hljs-string">' The Score is:'</span>+DScoreObj.DScore+<span class="hljs-string">'&lt;/p&gt;&lt;/div&gt;'</span>}};
-				trial.stimuli.push(media);
-				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,<span class="hljs-string">"score4"</span>,<span class="hljs-string">"feedback4"</span>);
 
+				DScoreObj = scorer.computeD();
+				<span class="hljs-keyword">var</span> media4 = DScoreObj.FBMsg+<span class="hljs-string">' The Score is: '</span>+DScoreObj.DScore;
+				scorer.dynamicPost({
+					score1: DScoreObj.DScore,
+					feedback1: DScoreObj.FBMsg
+				});
+
+				<span class="hljs-keyword">var</span> media = {css:{color:<span class="hljs-string">'black'</span>},media:{html:<span class="hljs-string">'&lt;h1&gt;&lt;div&gt;&lt;p style="font-size:24px"&gt;&lt;color="#FFFAFA"&gt; '</span>+media1+ <span class="hljs-string">'&lt;br/&gt;'</span>+media2+ <span class="hljs-string">'&lt;br/&gt;'</span>+media3+ <span class="hljs-string">'&lt;br/&gt;'</span>+media4+<span class="hljs-string">'&lt;/p&gt;&lt;/div&gt;'</span>}};
+				trial.stimuli.push(media);
 			}
 		},
 		{ <span class="hljs-comment">//Instructions trial, the end of the task, instruction what to do next</span>

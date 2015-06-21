@@ -22,7 +22,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 
 	API.addSettings('base_url',{
 		image : '../../images',
-		template : '../../../../resources/GNAT'
+		template : '../../../resources/GNAT'
 	});
 
 
@@ -1022,6 +1022,12 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 				var trial = this;
 				console.log('calling scorer');
 				var DScoreObj, DScore, FBMsg;
+
+				//////first call to score//////
+				scorer.addSettings('compute',{
+					parcelValue : ['first']
+				});
+
 				DScoreObj = scorer.computeD();
 				var DScore1 = DScoreObj.DScore;
 				console.log(DScore1);
@@ -1056,29 +1062,24 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 				var DScore4 = DScoreObj.DScore;
 				console.log(DScore4);
 
-				//avrage the 4 scores
-				if( (!isNaN(DScore1)) && (!isNaN(DScore2)) && (!isNaN(DScore3)) && (!isNaN(DScore4))){
-					//avrage the 4 scores
+				// If all scores are numbers
+				if ((DScore1 !== '') && (DScore2 !== '') && (DScore3 !== '') && (DScore4 !== '')){
+					//Average the 4 scores
 					DScore = (parseFloat(DScore1) + parseFloat(DScore2) + parseFloat(DScore3) + parseFloat(DScore4))/4;
-					if(isNaN(DScore)){
-						FBMsg = DScoreObj.errorMessage;
-					}
-					else{
-						FBMsg = scorer.getFBMsg(DScore);
-						}
-					console.log(FBMsg);
+					FBMsg = scorer.getFBMsg(DScore);
+				} else {
+					DScore = '';
+					FBMsg = 'An error has occurred';
 				}
-				else{
-					FBMsg = DScoreObj.errorMessage;
-					DScore = "";
 
-				}
 				console.log(DScore);
 				console.log(FBMsg);
 				var media = {css:{color:'black'},media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};
 				trial.stimuli.push(media);
-				scorer.postToServer(DScore,FBMsg,"score","feedback");
-
+				scorer.dynamicPost({
+					score: DScoreObj.DScore,
+					feedback: DScoreObj.FBMsg
+				});
 
 			}
 		},

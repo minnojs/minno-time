@@ -53,24 +53,12 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 	scorer.addSettings('compute',{
 		ErrorVar:'score',
 		condVar:"condition",
-		cond1VarValues: ["Old black People / Unpleasant"], //condition 1
-		cond2VarValues: ["Old black People / Pleasant"], //condition 2
 		parcelVar : "parcel",
-		parcelValue : ['first'],
 		fastRT : 150, //Below this reaction time, the latency is considered extremely fast.
 		maxFastTrialsRate : 0.1, //Above this % of extremely fast responses within a condition, the participant is considered too fast.
 		minRT : 150, //Below this latency
 		maxRT : 5000, //above this
 		errorLatency : {use:"false", penalty:600, useForSTD:true}//ignore error respones
-	});
-
-	scorer.addSettings('message',{
-		MessageDef: [
-			{ cut:'-0.2', message:'Your data suggest an Automatic negative attitude toward old black people' },//D < -0.2
-			{ cut:'0.2', message:'Your data suggest Neutral automatic attitude toward old black people' },// -0.2 <= D <= 0.2
-			{ cut:'5', message:'Your data suggest an Automatic positive attitude toward old black people' }// D > 0.2 (and D<=2)
-		]
-
 	});
 
 	//Define the basic trial (the prsentation of the images and words)
@@ -587,20 +575,36 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 			inherit: "inst",
 			stimuli: [],
 			customize: function(){
-				/* global console */
 				var trial = this;
 				var DScoreObj;
-				console.log('calling scorer');
+
+				//////first call to score//////
+				scorer.addSettings('compute',{
+					parcelValue : ['first'],
+					cond1VarValues: ["Old black People / Unpleasant"], //condition 1
+					cond2VarValues: ["Old black People / Pleasant"] //condition 2
+				});
+				scorer.addSettings('message',{
+					MessageDef: [
+						{ cut:'-0.2', message:'Your data suggest an Automatic negative attitude toward old black people' },//D < -0.2
+						{ cut:'0.2', message:'Your data suggest Neutral automatic attitude toward old black people' },// -0.2 <= D <= 0.2
+						{ cut:'5', message:'Your data suggest an Automatic positive attitude toward old black people' }// D > 0.2 (and D<=2)
+					]
+				});
+
 				DScoreObj = scorer.computeD();
-				var media1 = DScoreObj.FBMsg+' The Score is: '+DScoreObj.DScore;
-				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score1","feedback1");
+				var media1 = DScoreObj.FBMsg + ' The Score is: ' + DScoreObj.DScore;
+				scorer.dynamicPost({
+					score1: DScoreObj.DScore,
+					feedback1: DScoreObj.FBMsg
+				});
+
 
 				//////second call to score//////
 				scorer.addSettings('compute',{
 					parcelValue : ['second'],
 					cond1VarValues: ["Old white People / Unpleasant"], //condition 1
 					cond2VarValues: ["Old white People / Pleasant"] //condition 2
-
 				});
 				scorer.addSettings('message',{
 					MessageDef: [
@@ -609,10 +613,13 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 						{ cut:'5', message:'Your data suggest an Automatic positive attitude toward old white people' }// D > 0.2 (and D<=2)
 					]
 				});
-				console.log('calling scorer for the second time');
+
 				DScoreObj = scorer.computeD();
 				var media2 = DScoreObj.FBMsg+' The Score is: '+DScoreObj.DScore;
-				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score2","feedback2");
+				scorer.dynamicPost({
+					score1: DScoreObj.DScore,
+					feedback1: DScoreObj.FBMsg
+				});
 
 				//////third call to score//////
 				scorer.addSettings('compute',{
@@ -628,10 +635,13 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 						{ cut:'5', message:'Your data suggest an Automatic positive attitude toward young black people' }// D > 0.2 (and D<=2)
 					]
 				});
-				console.log('calling scorer for the third time');
+
 				DScoreObj = scorer.computeD();
 				var media3 = DScoreObj.FBMsg+' The Score is: '+DScoreObj.DScore;
-				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score3","feedback3");
+				scorer.dynamicPost({
+					score1: DScoreObj.DScore,
+					feedback1: DScoreObj.FBMsg
+				});
 
 				//////fourth call to score//////
 				scorer.addSettings('compute',{
@@ -647,12 +657,16 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 						{ cut:'5', message:'Your data suggest an Automatic positive attitude toward young white people' }// D > 0.2 (and D<=2)
 					]
 				});
-				console.log('calling scorer for the fourth time');
-				DScoreObj = scorer.computeD();
-				var media = {css:{color:'black'},media:{html:'<h1><div><p style="font-size:24px"><color="#FFFAFA"> '+media1+ '<br/>'+media2+ '<br/>'+media3+ '<br/>'+DScoreObj.FBMsg+' The Score is:'+DScoreObj.DScore+'</p></div>'}};
-				trial.stimuli.push(media);
-				scorer.postToServer(DScoreObj.DScore,DScoreObj.FBMsg,"score4","feedback4");
 
+				DScoreObj = scorer.computeD();
+				var media4 = DScoreObj.FBMsg+' The Score is: '+DScoreObj.DScore;
+				scorer.dynamicPost({
+					score1: DScoreObj.DScore,
+					feedback1: DScoreObj.FBMsg
+				});
+
+				var media = {css:{color:'black'},media:{html:'<h1><div><p style="font-size:24px"><color="#FFFAFA"> '+media1+ '<br/>'+media2+ '<br/>'+media3+ '<br/>'+media4+'</p></div>'}};
+				trial.stimuli.push(media);
 			}
 		},
 		{ //Instructions trial, the end of the task, instruction what to do next
