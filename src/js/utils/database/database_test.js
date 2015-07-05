@@ -6,7 +6,7 @@ define(['underscore', './databaseModule'],function(_){
 			store = jasmine.createSpyObj('store',['create', 'add','read']);
 
 		beforeEach(module('database', function($provide){
-			inflateSpy  = jasmine.createSpy('inflate').andCallFake(function(){return arguments[2];});
+			inflateSpy  = jasmine.createSpy('inflate').andCallFake(function(){return arguments[0];});
 			templateSpy = jasmine.createSpy('template').andCallFake(function(){return arguments[0];});
 			sequenceSpy = jasmine.createSpy('sequence');
 
@@ -70,8 +70,9 @@ define(['underscore', './databaseModule'],function(_){
 			});
 
 			it('should template if query has not been templated', function(){
-				var obj = {};
+				var obj = {data:123};
 				db.inflate('ns', obj, 'context');
+				expect(templateSpy).toHaveBeenCalledWith(obj.data,'context', undefined);
 				expect(templateSpy).toHaveBeenCalledWith(obj.$inflated,'context', undefined);
 			});
 
@@ -80,6 +81,19 @@ define(['underscore', './databaseModule'],function(_){
 				db.inflate('test', {$inflated:{data:123},$meta: 456}, context);
 				expect(context.testMeta).toBe(456);
 				expect(context.testData).toBe(123);
+			});
+
+			// ************** addGlobal, addCurrent **************
+			it('should add to global (addGlobal)', function(){
+				var context = {global:{}};
+				db.inflate('test', {$inflated:{addGlobal:{test:123}}}, context);
+				expect(context.global.test).toBe(123);
+			});
+
+			it('should add to current (addCurrent)', function(){
+				var context = {current:{}};
+				db.inflate('test', {$inflated:{addCurrent:{test:123}}}, context);
+				expect(context.current.test).toBe(123);
 			});
 		});
 
