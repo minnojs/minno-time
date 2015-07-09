@@ -112,8 +112,6 @@
 						<ul class="nav bs-docs-sidenav">
 
 							{{ navitem("Overview", "../tutorials/overview", data.basename) }}
-							{{ navitem("Install", "../tutorials/install", data.basename) }}
-							{{ navitem("Javascript", "../tutorials/javascript", data.basename) }}
 							{{ navitem("Hello World", "../tutorials/hello", data.basename) }}
 							{{ navitem("Slide show", "../tutorials/slideshow", data.basename) }}
 							<li>
