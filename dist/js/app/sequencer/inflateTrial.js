@@ -50,7 +50,6 @@ define(function(require){
 		if (val.template){
 			val.inlineTemplate = requirejs('text!' + buildUrl(val.template, 'template'));
 			val.inlineTemplate = _.template(val.inlineTemplate)(context);
-			val.template = null;
 		}
 
 		stim[prop] = val;

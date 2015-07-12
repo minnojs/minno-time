@@ -117,10 +117,11 @@ define(function(require) {
 			var fullpath = settings.logger && settings.logger.fullpath; // should we use the full path or just the file name
 			if (media.alias) {return media.alias;} // if we have an alias ues it
 			for (var prop in media) {
-				if (prop != 'inherit') {
-					if (_.contains(['image','template'],prop)) {
-                        return fullpath ? media[prop] : media[prop].replace(/^.*[\\\/]/, '');
-					}
+				if (_.contains(['image','template'],prop)) {
+                    return fullpath ? media[prop] : media[prop].replace(/^.*[\\\/]/, '');
+				}
+				if (_.contains(['word','html','inlineTemplate'],prop) && media[prop]) { // sometimes we have an empty value (this happens when we load a template and then translate it into an inline template)
+                    return media[prop];
 				}
 			}
 		}
