@@ -11,7 +11,7 @@ define(function(require) {
 
 	function html(media){
 		// all templateing is done within the inflate trial function and the sequencer
-		var template = media.html || media.template || media.inlineTemplate;
+		var template = media.html || media.inlineTemplate || media.template; // give inline template precedence over template, because tempaltes are loaded into inlinetemplate
 
 		if (media.word) {
 			media.displayType = 'element';
