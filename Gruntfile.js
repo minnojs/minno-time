@@ -18,8 +18,20 @@ module.exports = function(grunt) {
 		banner: {
 			compact: '/*! <%= pkg.name %> <%= pkg.version %> (Custom Build) | <%= pkg.license %> */',
 			full: '/*!\n' +
-				' * <%= pkg.name %> v<%= pkg.version %>\n' +
-				' * <%= pkg.license %> License\n' +
+				' * @license <%= pkg.name %> v<%= pkg.version %>\n' +
+				' * Copyright 2013-2015 Project Implicit\n' +
+				' *\n' +
+				' * Licensed under the Apache License, Version 2.0 (the "License");\n' +
+				' * you may not use this file except in compliance with the License.\n' +
+				' * You may obtain a copy of the License at\n' +
+				' *\n' +
+				' * \thttp://www.apache.org/licenses/LICENSE-2.0\n' +
+				' *\n' +
+				' * Unless required by applicable law or agreed to in writing, software\n' +
+				' * distributed under the License is distributed on an "AS IS" BASIS,\n' +
+				' * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n' +
+				' * See the License for the specific language governing permissions and\n' +
+				' * limitations under the License.\n' +
 				' */\n'
 		},
 
@@ -52,8 +64,8 @@ module.exports = function(grunt) {
 					appDir: 'src',
 					baseUrl: 'js',
 					skipDirOptimize: true, // so that we don't run into problems with node.js files form the bundles. also makes things faster...
-					generateSourceMaps: true,
-					preserveLicenseComments: false,
+					// generateSourceMaps: true,
+					// preserveLicenseComments: false,
 					optimize: 'uglify2',
 					fileExclusionRegExp: /(\.scss|\.md|_test\.js)$/,
 					paths: {
