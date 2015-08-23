@@ -51,4 +51,4 @@ require(['js/config'], function() {
 });
 ```
 
-Integrating the player into a back-end requires the server side to parse and store the player's logs. (See [API](./API.md#logging)).
+Integrating the player into a back-end requires the server side to parse and store the player's logs. (See [API](./API.html#logging)).

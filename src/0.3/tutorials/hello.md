@@ -5,7 +5,7 @@ description: This section of the tutorial will walk you through creating your fi
 
 We will create a simple task that says "Hello world". As we go, we will comment on several of the player's features and explain some of the ways you can customize your task.
 
-First, download the whole task from [here](../../resources/tutorials/js/hello.js) and try to understand what's going on by only reading that file. You can see also see the task in action right [here](#{player}../resources/tutorials/js/hello.js).
+First, download the whole task from [here](./hello.js) and try to understand what's going on by only reading that file. You can see also see the task in action right [here](./helloPlay.html).
 
 ### The wrapper
 PIP's scripts are usually a single JavaScript file. The script is wrapped within a define function (You don't have to understand what it does, but if you are interested look up [requirejs](http://requirejs.org/)).
@@ -27,7 +27,7 @@ define(['pipAPI'], function(APIconstructor) {
 The wrapper creates the `API` object for you. The `API` object is the instrument that we will use to create and run tasks. The whole task is written by creating a bunch of objects and arrays. The API object has functions that accept those objects and arrays and know how to create a task from them. 
 
 ### The task structure
-Each task is composed of one or more trials, that are activated sequentially. We set trials into the player using a function called [`API.addSequence`](./API.md#add-sequence) that accepts an array of trials as its argument. After adding any trials that you like all that is left is activating the player by calling [`API.play`](API.md#play):
+Each task is composed of one or more trials, that are activated sequentially. We set trials into the player using a function called [`API.addSequence`](./API.html#add-sequence) that accepts an array of trials as its argument. After adding any trials that you like all that is left is activating the player by calling [`API.play`](API.html#play):
 
 ```js
 define(['pipAPI'], function(APIconstructor) {
@@ -82,7 +82,7 @@ What we see above is a definition of a trial. A trial is a JavaScript object. In
 
 #### **input**
 
-The `input` object is an array of objects that define the input we expect the participant to use. Each object in the`input` array defines one input element (full documentation [here](./API.md#input)).
+The `input` object is an array of objects that define the input we expect the participant to use. Each object in the`input` array defines one input element (full documentation [here](./API.html#input)).
 
 ```js
 [//Open the array of input objects.
@@ -95,7 +95,7 @@ Each input object must include the properties `handle` and `on`. The `handle` pr
 
 In this case, we created an input object that listens to the "space keypressed" event (`on:'space'`), and triggers an event called "space" (`handle:'space'`). We will use the event name in the `interactions` section.
 
-The player supports [many](./API.md#input) types of input. For now, let's learn only about `keypressed`. `keypressed` creates an input listener for simple keyboard interactions. The following code creates a listener for the event of hitting the `'e'` key:
+The player supports [many](./API.html#input) types of input. For now, let's learn only about `keypressed`. `keypressed` creates an input listener for simple keyboard interactions. The following code creates a listener for the event of hitting the `'e'` key:
 
 ```js
 [
@@ -110,7 +110,7 @@ Note also that the name that we give the event is absolutely arbitrary, so we ca
 
 The `layout` object is responsible for stimuli that are presented during the whole trial. All the stimuli that are set into the `layout` array will be displayed automatically from the beginning of the trial until its end. (We use a different object, named `stimuli` to define stimuli that are displayed only for a part of the trial. We will learn about the `stimuli` object in more advanced examples).
 
-The layout is an array of objects. Each object represents a stimulus. The [stimulus object](./API.md#stimuli) is a complex objects, and we'll learn more about it in more advanced examples. For now, let's start with a simple example:
+The layout is an array of objects. Each object represents a stimulus. The [stimulus object](./API.html#stimuli) is a complex objects, and we'll learn more about it in more advanced examples. For now, let's start with a simple example:
 
 ```js
 [//This opens an array of stimulus objects to show in the layout.
@@ -123,7 +123,7 @@ The layout is an array of objects. Each object represents a stimulus. The [stimu
 
 This stimulus displays the words "Hello world" at the center of the player's canvas.
 
-Stimulus objects hold a [`media`](./API.md#media) object to display, and relevant data regarding how to display it. This particular stimulus sets the style for the media using the `css` property. [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) is the language used by browsers to describe styles. Using the stimulus `css` property we can control css in any way we want. In this case we use the css object to set the *font size* and *color* of the stimulus.
+Stimulus objects hold a [`media`](./API.html#media) object to display, and relevant data regarding how to display it. This particular stimulus sets the style for the media using the `css` property. [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) is the language used by browsers to describe styles. Using the stimulus `css` property we can control css in any way we want. In this case we use the css object to set the *font size* and *color* of the stimulus.
 
 The font size of this stimulus is set to `2em`. `em` is a css size unit, `1em` is the standard (default) font size, `2em` is twice that size and so on (you can use fractions too: e.g., `1.3em`). So that the text displayed by this stimulus is double the default text size.
 
@@ -133,7 +133,7 @@ The `css` object can do far more than this. If you want to know more you can che
 
 #### **interactions**
 
-[Interactions](./API.md#interactions) are a grouping of [`conditions`](./API.md#interactions-conditions) (statements of truth) and [`actions`](./API.md#interactions-actions) to perform if (and only if) all conditions are true. We won't really get into interactions here, but these are the basics:
+[Interactions](./API.html#interactions) are a grouping of [`conditions`](./API.html#interactions-conditions) (statements of truth) and [`actions`](./API.html#interactions-actions) to perform if (and only if) all conditions are true. We won't really get into interactions here, but these are the basics:
 
 ```js
 [
@@ -148,10 +148,10 @@ The `css` object can do far more than this. If you want to know more you can che
 ]
 ```
 
-Each interaction object has a `conditions` property and an `actions` property. The `conditions` property is an array of condition objects. Each condition objects defines a condition that can be true of false. For instance, the condition in the example above is that the name (i.e., handle) of currently active input is 'space'. This condition is true only when the participant hits space (that is what we defined in the input section). There are a few other possible conditions that can be defined, and we will learn about them in more advanced examples (to see the full list of conditions, see [here](./API.md#interactions-conditions)).
+Each interaction object has a `conditions` property and an `actions` property. The `conditions` property is an array of condition objects. Each condition objects defines a condition that can be true of false. For instance, the condition in the example above is that the name (i.e., handle) of currently active input is 'space'. This condition is true only when the participant hits space (that is what we defined in the input section). There are a few other possible conditions that can be defined, and we will learn about them in more advanced examples (to see the full list of conditions, see [here](./API.html#interactions-conditions)).
 If all the condition objects in the conditions array are true, then all the actions in the `actions` array are executed. 
 
-The `actions` array holds an array of actions to perform if all `conditions` are evaluated as true. In this case the only action is to end this trial. We will learn about other forms of actions in more advanced examples (to see the full list of conditions, see [here](./API.md#interactions-actions)).
+The `actions` array holds an array of actions to perform if all `conditions` are evaluated as true. In this case the only action is to end this trial. We will learn about other forms of actions in more advanced examples (to see the full list of conditions, see [here](./API.html#interactions-actions)).
 
 ###Detailed recap
 Here is the whole code again, with comments that explain each and every line. Before you read those comments, it might be good to look at the simple not-commented code [here](../../resources/tutorials/js/hello.js), and try again to understand what you see. Whenever you have a question about a line in the code, have a look at that line in the heavily commented code below:

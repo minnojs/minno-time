@@ -112,4 +112,4 @@ When developing PIP scripts things don't always go as expected. Sometimes you mi
 
 In case your script does not load, or freezes at a certain point, open your console and see if you have any errors.
 
-The [local server](install.md) gives you an additional, extremely powerful, tool. It uses [jshint](http://jshint.com/) to evaluate your code and can often point out syntax errors that are difficult to recognize.
+The [local server](install.html) gives you an additional, extremely powerful, tool. It uses [jshint](http://jshint.com/) to evaluate your code and can often point out syntax errors that are difficult to recognize.

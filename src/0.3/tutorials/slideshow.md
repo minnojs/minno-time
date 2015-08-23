@@ -72,7 +72,7 @@ Download [here](../../resources/tutorials/js/slideshow1.js). You can see it in a
 Our task is becoming longer and harder to maintain. Imagine a slide show with 50 slides, it will need more than 500 lines of code. If we would want to make any changes that apply to all the trials (e.g., increase the font size), we will have to go through each trial individually and make the same change. This is where the concept of inheritance comes in. Inheritance allows you to create a prototype of a trial (or stimulus or media object), and re-use it whenever you want. To understand how this works, we need to first learn a bit about sets.
 
 #### **Sets**
-[Set](./API.md#sets) is a list of one or more PIP objects (trials, stimuli or media objects). After defining a set of objects (e.g., trials), we can re-use those objects. Therefore, if we want to create a basic trial and re-use it a few times, we create a one-trial set, and then re-use it in a sequence. We will focus here on trial sets, but everything that applies to the trials sets also applies to stimuli sets or media sets as well.
+[Set](./API.html#sets) is a list of one or more PIP objects (trials, stimuli or media objects). After defining a set of objects (e.g., trials), we can re-use those objects. Therefore, if we want to create a basic trial and re-use it a few times, we create a one-trial set, and then re-use it in a sequence. We will focus here on trial sets, but everything that applies to the trials sets also applies to stimuli sets or media sets as well.
 
 We create trial sets using the `API.addTrialSets()` function. The simplest use of the function involves two arguments; the first is the set name, and the second is an array of objects to add to the set. The following code creates a trial set called *slide* and populates it with one trial: our "Hello world" trial.
 
@@ -92,7 +92,7 @@ Now, we can refer to this trial in the future with the name we gave it ('slide')
 #### **Inheritance**
 Inheritance allows us to re-use trials: new trials can be created by inheriting a trial from a set. If there is only one trial in the set, we simply inherit the whole set.
 
-Trials (and stimuli and media too) have a special property called [inherit](./API.md#inheriting) that allows them to specify a specific set to inherit from. This allows trials to be significantly shorter. The following code activates our slide three times:
+Trials (and stimuli and media too) have a special property called [inherit](./API.html#inheriting) that allows them to specify a specific set to inherit from. This allows trials to be significantly shorter. The following code activates our slide three times:
 
 ```js
 API.addSequence([ //Our sequence is an array of trials.
@@ -195,7 +195,7 @@ API.addTrialSets('slide',[{
 ```
 It means that each trial that will inherit 'slide' will need to add layout stimulus. 
 
-There is much more to learn about inheritance. You will learn about it in the [Stroop](./stroop=setup.md) example.  
-For instance, what happens when there are a few different objects in a set? We can use that in order to randomly choose a trial (or a stimulus or a media object). We can put three different trials in a set and then inherit the set in a way that will choose one of those trials [randomly](./stroop-inheritance.md). 
-You can also try to learn all that there is to know about inheritance straight from the [API documentation](./API.md#inheritance).
+There is much more to learn about inheritance. You will learn about it in the [Stroop](./stroop=setup.html) example.  
+For instance, what happens when there are a few different objects in a set? We can use that in order to randomly choose a trial (or a stimulus or a media object). We can put three different trials in a set and then inherit the set in a way that will choose one of those trials [randomly](./stroop-inheritance.html). 
+You can also try to learn all that there is to know about inheritance straight from the [API documentation](./API.html#inheritance).
 
