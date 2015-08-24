@@ -154,7 +154,7 @@ If all the condition objects in the conditions array are true, then all the acti
 The `actions` array holds an array of actions to perform if all `conditions` are evaluated as true. In this case the only action is to end this trial. We will learn about other forms of actions in more advanced examples (to see the full list of conditions, see [here](./API.html#interactions-actions)).
 
 ###Detailed recap
-Here is the whole code again, with comments that explain each and every line. Before you read those comments, it might be good to look at the simple not-commented code [here](../../resources/tutorials/js/hello.js), and try again to understand what you see. Whenever you have a question about a line in the code, have a look at that line in the heavily commented code below:
+Here is the whole code again, with comments that explain each and every line. Before you read those comments, it might be good to look at the simple not-commented code [here](hello.js), and try again to understand what you see. Whenever you have a question about a line in the code, have a look at that line in the heavily commented code below:
 
 ```js
 /* The script wrapper */

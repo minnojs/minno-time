@@ -66,7 +66,7 @@ API.addSequence([
 
 You should try it (don't forget the wrapper, and the activation function at the end (`API.play()`)). Try adding another trial. Try changing the media or style of the stimuli.
 
-Download [here](../../resources/tutorials/js/slideshow1.js). You can see it in action right [here](#{player}../resources/tutorials/js/slideshow1.js).
+Download [here](slideshow1.js). You can see it in action right [here](./slideshow1Play.html).
 
 ### Basic inheritance
 Our task is becoming longer and harder to maintain. Imagine a slide show with 50 slides, it will need more than 500 lines of code. If we would want to make any changes that apply to all the trials (e.g., increase the font size), we will have to go through each trial individually and make the same change. This is where the concept of inheritance comes in. Inheritance allows you to create a prototype of a trial (or stimulus or media object), and re-use it whenever you want. To understand how this works, we need to first learn a bit about sets.
@@ -157,7 +157,7 @@ API.addSequence([
 ]);
 ```
 
-Download [here](../../resources/tutorials/js/slideshow2.js). You can see it in action right [here](#{player}../resources/tutorials/js/slideshow2.js).
+Download [here](slideshow2.js). You can see it in action right [here](slideshow2Play.html).
 
 #### **Defaults**
 Let's take this one step further. What if we want to centralize the way stimuli look? Let's use inheritance to control that too. First, we create the basic stimulus (we'll call it 'default'):
@@ -181,7 +181,7 @@ API.addSequence([
 	}
 ]);
 ```
-Download the slideshow example [here](../../resources/tutorials/js/slideshow3.js). You can see it in action right [here](#{player}../resources/tutorials/js/slideshow3.js).
+Download the slideshow example [here](slideshow3.js). You can see it in action right [here](slideshow3Play.html).
 
 Note that the default stimulus had no media. It means that each stimulus that will inherit this stimulus will need to add a media object. We could have done the same thing with a basic slide trial: create a trial without any layout. 
 ```js
@@ -195,7 +195,7 @@ API.addTrialSets('slide',[{
 ```
 It means that each trial that will inherit 'slide' will need to add layout stimulus. 
 
-There is much more to learn about inheritance. You will learn about it in the [Stroop](./stroop=setup.html) example.  
-For instance, what happens when there are a few different objects in a set? We can use that in order to randomly choose a trial (or a stimulus or a media object). We can put three different trials in a set and then inherit the set in a way that will choose one of those trials [randomly](./stroop-inheritance.html). 
+There is much more to learn about inheritance. You will learn about it in the [Stroop](./stroop-setupDocco.html) example.  
+For instance, what happens when there are a few different objects in a set? We can use that in order to randomly choose a trial (or a stimulus or a media object). We can put three different trials in a set and then inherit the set in a way that will choose one of those trials [randomly](./stroop-inheritanceDocco.html). 
 You can also try to learn all that there is to know about inheritance straight from the [API documentation](./API.html#inheritance).
 
