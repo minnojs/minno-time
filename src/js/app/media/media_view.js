@@ -14,14 +14,16 @@ define(function(require){
 
         // build element according to simulus
         initialize: function(options){
-            this.options = options || {}; // needed since backbone v1.1.0
+            this.options = options; // needed since backbone v1.1.0
 
             this.$el
                 .addClass('stimulus')
                 .attr('data-handle', this.model.handle)     // add data-handle for handeling of mouse/touch interactions
                 .css("visibility", "hidden")
-                .css(this.model.get('css'))
+                .css(this.model.get('css')) // TODO: move to render
                 .appendTo(canvas);
+
+            this.listenTo(this.model, 'change:$show' ,this.renderShow);
 
             this.render();
         },
@@ -33,6 +35,7 @@ define(function(require){
         render: function(){
             // these are the things that need recalibrating on refresh
             this.size();
+            this.renderShow();
 
             // if the element does not have a width it is meaningless to place it at this stage
             if (this.$el.width()){
@@ -48,30 +51,8 @@ define(function(require){
             return this;
         },
 
-        show: function(){
-            // if this is a gif, reload it before displaying so that the gif is reset
-            if (this.options.type === 'image' && this.options.image.indexOf('gif') !== -1){
-                // weird IE bug that prevents refreshing gifs...
-				// also, on IE11 you can't refresh a gif when it is not visibility:visible
-                if(window.ActiveXObject || "ActiveXObject" in window){ // true only in IE
-                    this.$el.css("visibility", "visible");
-					this.$el[0].src =  this.options.image + '#' + Math.random();
-                } else {
-                    // Firefox requires to explicitly empty the "src" before resetting it.
-                    this.$el[0].src = "";
-                    this.$el[0].src = this.options.image;
-					this.$el.css("visibility", "visible");
-                }
-
-				return this;
-            }
-
-            this.$el.css("visibility", "visible");
-            return this;
-        },
-
-        hide: function(){
-            this.$el.css("visibility", "hidden");
+        renderShow: function(){
+            this.el.style.visibility = this.model.get('$show') ? 'visible' : 'hidden';
             return this;
         },
 
@@ -94,7 +75,10 @@ define(function(require){
 
         // places the element on the canvas (has to be called after size)
         // @TODO: this is way too complex to be left here, we should probably export this to a seperate file or something
+        // @TODO: see if we can apply this http://www.smashingmagazine.com/2013/08/absolute-horizontal-vertical-centering-css/
+        // @TODO see if explicit locations can use % instead of manually calculating
         place: function(){
+
             // helper function: returns sizes of element;
             function size($elem){
                 return {

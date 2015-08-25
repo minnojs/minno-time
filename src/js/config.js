@@ -16,9 +16,9 @@ define(function(){
       text: ['//cdnjs.cloudflare.com/ajax/libs/require-text/2.0.3/text.min', "../../bower_components/requirejs-text/text"],
 
       // Core Libraries
-      jquery: ["a//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min","../../bower_components/jquery/jquery"],
+      jquery: ["//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min","../../bower_components/jquery/jquery.min"],
       underscore: ["//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min","../../bower_components/lodash-compat/lodash.min"],
-      backbone: ['//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min', "../../bower_components/backbone/backbone"]
+      backbone: ['//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.2/backbone-min', "../../bower_components/backbone/backbone-min"]
     },
 
     packages:[

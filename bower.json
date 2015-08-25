@@ -20,7 +20,7 @@
     "requirejs": "~2.1.14",
     "lodash-compat": "3.5.0",
     "requirejs-text": "~2.0.12",
-    "backbone": "1.1.2",
+    "backbone": "1.2.2",
     "json2": "*",
     "jquery": "components/jquery#~1.10.2"
   }

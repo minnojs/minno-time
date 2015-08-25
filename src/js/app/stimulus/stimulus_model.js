@@ -52,7 +52,7 @@ define(function(require) {
 				}
 
 				// present the stimulus
-				self.media.show();
+				self.set('$show', true);
 			});
 
 			// subscribe to set attribute action
@@ -83,13 +83,13 @@ define(function(require) {
 				}
 
 				// hide the stimulus
-				self.media.hide();
+				self.set('$show', false);
 			});
 		},
 
 		disable: function(){
 			// hide the stimulus
-			this.media.hide();
+			this.set('$show', false);
 
 			// make sure the stacks exist
 			this.timeStack = this.timeStack || [];
