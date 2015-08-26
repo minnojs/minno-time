@@ -15,7 +15,7 @@ define(function(require){
 	var _ = require('underscore')
 		, action_list = require('./action_list');
 
-	function applyActions(actions,eventData){
+	function applyActions(trial, actions,eventData){
 		// marks whether this is the final action to take
 		var continueActions = true;
 
@@ -32,7 +32,7 @@ define(function(require){
 				if (action.type === 'endTrial'){
 					continueActions = false;
 				}
-				actionFn(action, eventData);
+				actionFn(trial, action, eventData);
 			} else {
 				throw new Error('unknown action: ' + action.type);
 			}

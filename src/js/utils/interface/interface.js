@@ -1,5 +1,6 @@
 define(function(require){
 	var _ = require('underscore')
+		, Events = require('backbone').Events
 		, Listener = require('./listener')
 		, is_touch_device = require('../is_touch')
 		, now = require('./now');
@@ -20,7 +21,11 @@ define(function(require){
 	var listenerStack = [] // holds all active listeners
 		, baseTime = 0;
 
-	return {
+	function Interface(){
+
+	}
+
+	_.extend(Interface.prototype, Events, {
 		// get latency (time since last reset)
 		getLatency: function(){
 			return now() - baseTime;
@@ -83,5 +88,7 @@ define(function(require){
 			// empty stack
 			listenerStack = [];
 		}
-	};
+	});
+
+	return new Interface();
 });

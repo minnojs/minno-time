@@ -47,13 +47,13 @@ define(function(require){
 
 		display_all: function(){
 			this.each(function(stimulus){
-				stimulus.set('$show', true);
+				stimulus.start('All');
 			});
 		},
 
 		hide_all: function(){
 			this.each(function(stimulus){
-				stimulus.set('$show', false);
+				stimulus.stop('All');
 			});
 		},
 

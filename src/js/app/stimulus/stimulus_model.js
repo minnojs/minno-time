@@ -1,30 +1,22 @@
 define(function(require) {
 	var MyModel = require("models/model")
 		,MediaView = require("app/media/media_constructor")
-		,pubsub = require("utils/pubsub")
 		,_ = require("underscore")
 		,is_touch = require("utils/is_touch")
 		,settings = require("app/task/settings");
 
 
 	var Model = MyModel.extend({
-		initialize: function(){
+		initialize: function(source, options){
 			// set trial in the model
-			if (this.collection.trial) {
-				this.trial = this.collection.trial;
-			}
+			this.trial = options.trial;
 
 			// set model handle
-			this.attributes.data = this.attributes.data || {}; // make sure we have a data object
+			this.attributes.data = source.data || {}; // make sure we have a data object
 			this.attributes.data.handle = this.attributes.data.handle || this.attributes.handle; // set the handle in the data object
-			this.handle =  this.attributes.data.handle; // set the handle in the stimulus object
+			this.handle = this.attributes.data.handle; // set the handle in the stimulus object
 
-			// pick the correct media according to if this is a touch device
-			var mediaSource = is_touch && this.get('touchMedia') ? this.get('touchMedia') : this.get('media');
-
-			// take the media source and build it into a full fledged view
-			this.media = new MediaView(mediaSource,this);
-
+			this._setMedia(options.container);
 		},
 
 		// Default values for all of the attributes
@@ -33,75 +25,63 @@ define(function(require) {
 			css:{}
 		},
 
-
-		// activate stimulus listeners (maybe these shoud sit in one of the trial modules? call with apply)
-		// ----------------------------------------------------------------------------------------------------------
+		// Public functions for activating and deactivating the stimulus
+		// -------------------------------------------------------------
 
 		activate: function(){
-			var self = this;
-			var stimHandle = this.handle;
-			this.timeStack = this.timeStack || [];
-			this.pubsubStack = this.pubsubStack || [];
-
-			// subscribe to start action
-			// -------------------------
-			pubsub.subscribe('stim:start', self.pubsubStack, function(handle){
-				if (!_.include([stimHandle,'All'], handle)) {
-					// make sure this publication is aimed at us
-					return false;
-				}
-
-				// present the stimulus
-				self.set('$show', true);
-			});
-
-			// subscribe to set attribute action
-			// ---------------------------------
-
-			pubsub.subscribe('stim:setAttr', self.pubsubStack, function(handle,setter){
-				if (!_.include([stimHandle,'All'], handle)) {
-					// make sure this publication is aimed at us
-					return false;
-				}
-
-				// if this is a function let it do whatever it wants with this model, otherwise simply call set.
-				if (_.isFunction(setter)) {
-					setter.apply(self);
-				} else {
-					var data = self.get('data') || {};
-					data = _.extend(data, setter);
-					self.set('data', data);
-				}
-			});
-
-			// subscribe to stop stimulus action
-			// ---------------------------------
-			pubsub.subscribe('stim:stop', self.pubsubStack, function(handle){
-				if (!_.include([stimHandle,'All'], handle)) {
-					// make sure this publication is aimed at us
-					return false;
-				}
-
-				// hide the stimulus
-				self.set('$show', false);
-			});
+			this.listenTo(this.trial,'stim:start', this.start);
+			this.listenTo(this.trial,'stim:stop', this.stop);
+			this.listenTo(this.trial,'stim:setAttr', this.setData);
 		},
 
 		disable: function(){
-			// hide the stimulus
-			this.set('$show', false);
+			this.stop();
+			this.stopListening();
+		},
 
-			// make sure the stacks exist
-			this.timeStack = this.timeStack || [];
-			this.pubsubStack = this.pubsubStack || [];
+		// Stimulus actions
+		// ----------------
 
-			_.each(this.pubsubStack, function(handle) {
-				pubsub.unsubscribe(handle);
+		start: function(handle){
+			this._selected(handle) && this.set('$show', true);
+		},
+
+		stop: function(handle){
+			this._selected(handle) && this.set('$show', false);
+		},
+
+		setData: function(handle,setter){
+			if (!this._selected(handle)) {return false;}
+			var data = this.get('data') || {};
+
+			// if this is a function let it do whatever it wants with this model, otherwise simply call set.
+			if (_.isFunction(setter)) {
+				setter.call(this,this,data);
+			} else {
+				this.set('data', _.extend({},data, setter));
+			}
+		},
+
+		// Helpers
+		// -------
+
+		// helper to check whether this stimulus is targeted by an action
+		_selected: function(handle){
+			return _.include([this.handle, 'All'], handle);
+		},
+
+		// setup the media
+		_setMedia: function(container){
+			// pick the correct media according to if this is a touch device
+			var mediaSource = is_touch && this.get('touchMedia') ? this.get('touchMedia') : this.get('media');
+
+			// take the media source and build it into a full fledged view
+			this.media = new MediaView({
+				model: this,
+				source: mediaSource,
+				trial: this.trial,
+				container: container
 			});
-
-			// empty stacks
-			this.timeStack = [];
-			this.pubsubStack = [];
 		},
 
 		name: function(){

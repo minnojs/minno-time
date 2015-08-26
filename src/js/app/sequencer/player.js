@@ -1,6 +1,7 @@
 define(function(require){
 
 	var $					= require('jquery')
+		, _ 				= require('underscore')
 		, Trial				= require('app/trial/trial_constructor')
 		, logger			= require('app/task/log/logger')
 		, settingsGetter	= require('app/task/settings')
@@ -22,10 +23,18 @@ define(function(require){
 		// if we have another trial play it (next() both returns the next trial and sets it as current)
 		if (source) {
 			// create new trial and activate it
-			trial = new Trial(source);
+			trial = new Trial(source, {container:main});
 			trial
-				.activate()								// activate the trial
-				.done(function(){
+				.activate()	// activate the trial
+				.then(function(){
+					// remove all stimuli from canvas (needs to be inside timeout to prevent blink in some browsers)
+					// @todo: improve very ugly solution to ie7 bug, we need the no timeout solution for ipad where this causes a blink
+					if (document.all && !document.addEventListener) {// IE7 or lower
+						_.defer(function(){main.empty();});
+					} else {
+						main.empty();
+					}
+
 					pubsub.publish('log:send');			// see if we need to send the log stack
 					nextTrial.apply(null,arguments);	// when we're done try to play the next one (move arguments on to nextTrial)
 				});

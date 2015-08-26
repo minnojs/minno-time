@@ -15,12 +15,13 @@ define(function(require){
 
 		// activate listener:
 		this.on(function(e,type){
-			trigger(e,type,definitions, interfaceObj.getLatency());
+			var eventData = trigger(e,type,definitions, interfaceObj.getLatency());
+			interfaceObj.trigger(type,eventData);
 		});
 
 		// for now the destroyer simply unbinds the event
 		this.destroy = this.off;
-	};
+	}
 
 	return Listener;
 

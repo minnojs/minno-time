@@ -2,115 +2,108 @@ define(function(require){
 
 	var _ = require('underscore')
 		, pubsub = require('utils/pubsub')
-		, input = require('utils/interface/interface')
 		, global = require('app/global');
 
  	var actions = {
 		/*
 		 * Stimulus actions
-		 *
 		 */
 
-		showStim: function(options){
-			var handle = options.handle || options;
-			pubsub.publish('stim:start',[handle]);
+		showStim: function(trial, actionObj){
+			var handle = actionObj.handle || actionObj;
+			trial.trigger('stim:start',handle);
 		},
 
-		hideStim: function(options){
-			var handle = options.handle || options;
-			pubsub.publish('stim:stop',[handle]);
+		hideStim: function(trial, actionObj){
+			var handle = actionObj.handle || actionObj;
+			trial.trigger('stim:stop',handle);
 		},
 
-		setStimAttr: function(options){
-			var handle = options.handle;
-			var setter = options.setter;
-			pubsub.publish('stim:setAttr',[handle,setter]);
+		setStimAttr: function(trial, actionObj){
+			var handle = actionObj.handle;
+			var setter = actionObj.setter;
+			trial.trigger('stim:setAttr',handle,setter);
 		},
 
 		/*
 		 * Trial actions
 		 */
 
-		setTrialAttr: function(options, eventData){
-			if (typeof options.setter == 'undefined') {
+		setTrialAttr: function(trial, actionObj, eventData){
+			if (typeof actionObj.setter == 'undefined') {
 				throw new Error('The setTrialAttr action requires a setter property');
 			}
-			pubsub.publish('trial:setAttr',[options.setter, eventData]);
+			trial.trigger('trial:setAttr',actionObj.setter, eventData);
 		},
 
-		setInput: function(options){
-			if (typeof options.input == 'undefined') {
+		setInput: function(trial, actionObj){
+			if (typeof actionObj.input == 'undefined') {
 				throw new Error('The setInput action requires an input property');
 			}
-			pubsub.publish('trial:setInput',[options.input]);
+			trial.trigger('trial:setInput',actionObj.input);
 		},
 
-		trigger: function(options){
-			if (typeof options.handle == 'undefined') {
+		trigger: function(trial, actionObj){
+			if (typeof actionObj.handle == 'undefined') {
 				throw new Error('The trigger action requires a handle property');
 			}
-			pubsub.publish('trial:setInput',[{handle:options.handle,on:'timeout',duration:+options.duration || 0}]);
+			trial.trigger('trial:setInput',{handle:actionObj.handle,on:'timeout',duration:+actionObj.duration || 0});
 		},
 
-		removeInput: function(options){
-			if (typeof options.handle == 'undefined') {
+		removeInput: function(trial, actionObj){
+			if (typeof actionObj.handle == 'undefined') {
 				throw new Error('The removeInput action requires a handle property');
 			}
-			pubsub.publish('trial:removeInput',[options.handle]);
+			trial.trigger('trial:removeInput',actionObj.handle);
 		},
 
 		// we use es3 true to protect from trailing commas in IE7. Here jshint thinks goto is a reserved word.
 		/* jshint es3:false */
-		goto: function(options){
-		/* jshint es3:true */
-
-			pubsub.publish('trial:goto',[options]);
+		goto: function(trial, actionObj){
+			trial.trigger('trial:goto',actionObj);
 		},
 
-		endTrial: function(){
-			pubsub.publish('trial:end');
+		endTrial: function(trial){
+			trial.trigger('trial:end');
 		},
 
-		resetTimer: function(options,eventData){
-			// set current evenData to 0
-			eventData.latency = 0;
-			// reset the global timer
-			input.resetTimer();
+		resetTimer: function(trial, actionObj, eventData){
+			trial.trigger('trial:resetTimer', actionObj, eventData);
 		},
 
 		/*
 		 * Logger
 		 */
 
-		log: function(options,eventData){
-			pubsub.publish('log',[options,eventData]);
+		log: function(trial, actionObj, eventData){
+			pubsub.publish('log',[actionObj, eventData]);
 		},
 
 		/*
 		 * Misc
 		 */
 
-		setGlobalAttr: function(options){
-			switch (typeof options.setter){
+		setGlobalAttr: function(trial, actionObj){
+			switch (typeof actionObj.setter){
 				case 'function':
-					options.setter.apply(null,[global(), options]);
+					actionObj.setter.apply(null,[global(), actionObj]);
 					break;
 				case 'object':
-					_.extend(global(), options.setter);
+					_.extend(global(), actionObj.setter);
 					break;
 				default:
 					throw new Error('setGlobalAttr requires a "setter" property');
 			}
 		},
 
-		custom: function(options,eventData){
-			if (typeof options.fn != 'function') {
+		custom: function(trial, actionObj, eventData){
+			if (typeof actionObj.fn != 'function') {
 				throw new Error('The custom action requires a fn propery');
 			}
-			options.fn.apply(null, [options,eventData,global()]);
+			actionObj.fn.apply(null, [actionObj, eventData,global()]);
 		},
 
-		canvas: function(options){
+		canvas: function(trial, actionObj){
 			var $canvas = require('app/task/main_view').$el;
 			var canvas = require('app/task/canvasConstructor');
 			var trial = require('app/trial/current_trial')();
@@ -122,7 +115,7 @@ define(function(require){
 			};
 
 			// settings activator
-			var off = canvas(map, _.pick(options,['background','canvasBackground','borderColor','borderWidth']));
+			var off = canvas(map, _.pick(actionObj,['background','canvasBackground','borderColor','borderWidth']));
 			trial.deferred.promise().always(off);
 		}
 
