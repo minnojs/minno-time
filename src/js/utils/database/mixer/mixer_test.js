@@ -81,11 +81,17 @@ define(['underscore','./mixerModule', '../randomize/randomizeModuleMock'],functi
 					})).toEqual([wrapper,2,1]);
 				});
 
-				it('should recursively mix (real use case)', function(){
+				iit('should recursively mix (real use case)', function(){
 					expect(mixer({
 						mixer:'random',
-						data: [0,{mixer:'repeat', times:2, data:[1,2]},3]
-					})).toEqual([3,2, 1,2,1,0]);
+						data: [
+							0,
+							{mixer:'repeat', times:1, data:[
+								{mixer:'repeat', times:2, data:[2]}
+							]},
+							3
+						]
+					})).toEqual([3,2,2,0]);
 
 				});
 
