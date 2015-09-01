@@ -101,8 +101,11 @@ define(function(require){
 		post: function(url, obj){
 			var $ = require('jquery');
 			$.post(url, obj);
-		}
+		},
 
+		shuffle: function(collection){
+			return _.shuffle(collection);
+		}
 	});
 
 	return API;

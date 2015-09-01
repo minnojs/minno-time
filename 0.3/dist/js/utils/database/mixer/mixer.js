@@ -61,8 +61,9 @@ define(['underscore'],function(_){
 
 				function randomDeepMixer(sequence){
 					return _.reduce(sequence, function(arr,value){
+
 						if (_.isPlainObject(value) && 'mixer' in value && value.mixer != 'wrapper'){
-							var seq = mix(value, context);
+							var seq = randomDeepMixer(mix(value, context));
 							return arr.concat(seq);
 						} else {
 							return arr.concat([value]);

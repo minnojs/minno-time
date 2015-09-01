@@ -25,17 +25,29 @@ define(function(require){
 
 			inflate: function(namespace, query, context, options){
 				var coll = this.getColl(namespace);
+				var result;
 
-				// inflate
+				// inherit
 				if (!query.$inflated || query.reinflate) {
 					query.$inflated = inflate(query, coll, this.randomizer);
 				}
 
-				// interpolate
+				// template
 				if (!query.$templated || query.regenerateTemplate){
-					context[namespace + 'Data'] = query.$inflated.data || {};
 					context[namespace + 'Meta'] = query.$meta;
+					context[namespace + 'Data'] = templateObj(query.$inflated.data || {}, context, options); // make sure we support
 					query.$templated = templateObj(query.$inflated, context, options);
+				}
+
+				result = query.$templated;
+
+				// set flags
+				if (context.global && result.addGlobal){
+					_.extend(context.global, result.addGlobal);
+				}
+
+				if (context.current && result.addCurrent){
+					_.extend(context.current, result.addCurrent);
 				}
 
 				return query.$templated;

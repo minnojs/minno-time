@@ -68,8 +68,7 @@ define(function(require){
 			// note that we do this in reverse so that the index does not change
 			for (var i = listenerStack.length - 1; i >= 0 ; i--){
 				var listener = listenerStack[i];
-
-				if (_.indexOf(listener.handle, handleList) != -1){
+				if (_.indexOf(handleList,listener.handle) != -1){
 					listener.off();
 					listenerStack.splice(i,1);
 				}

@@ -47,11 +47,14 @@ body {
 .bs-home-nav .bs-nav-b {
   display: none; }
 
-.bs-docs-nav .navbar-brand, .bs-docs-nav .navbar-nav > li > a {
+.bs-docs-nav .navbar-brand,
+.bs-docs-nav .navbar-nav > li > a {
   font-weight: 500;
   color: #563d7c; }
 
-.bs-docs-nav .navbar-nav > li > a:hover, .bs-docs-nav .navbar-nav > .active > a, .bs-docs-nav .navbar-nav > .active > a:hover {
+.bs-docs-nav .navbar-nav > li > a:hover,
+.bs-docs-nav .navbar-nav > .active > a,
+.bs-docs-nav .navbar-nav > .active > a:hover {
   color: #463265;
   background-color: #f9f9f9; }
 
@@ -61,7 +64,8 @@ body {
 .bs-docs-nav .navbar-header .navbar-toggle {
   border-color: #fff; }
 
-.bs-docs-nav .navbar-header .navbar-toggle:hover, .bs-docs-nav .navbar-header .navbar-toggle:focus {
+.bs-docs-nav .navbar-header .navbar-toggle:hover,
+.bs-docs-nav .navbar-header .navbar-toggle:focus {
   background-color: #f9f9f9;
   border-color: #f9f9f9; }
 
@@ -140,7 +144,8 @@ body {
     line-height: 1; } }
 
 @media (min-width: 992px) {
-  .bs-docs-header h1, .bs-docs-header p {
+  .bs-docs-header h1,
+  .bs-docs-header p {
     margin-right: 380px; } }
 
 /*
@@ -165,13 +170,17 @@ body {
       font-weight: 500;
       color: #767676;
       font-weight: bold; }
-      .bs-docs-sidebar .nav > li > a:hover, .bs-docs-sidebar .nav > li > a:focus, .bs-docs-sidebar .nav > li > div:hover, .bs-docs-sidebar .nav > li > div:focus {
+      .bs-docs-sidebar .nav > li > a:hover,
+      .bs-docs-sidebar .nav > li > a:focus, .bs-docs-sidebar .nav > li > div:hover,
+      .bs-docs-sidebar .nav > li > div:focus {
         padding-left: 19px;
         color: #563d7c;
         text-decoration: none;
         background-color: transparent;
         border-left: 1px solid #563d7c; }
-    .bs-docs-sidebar .nav > .active > a, .bs-docs-sidebar .nav > .active:hover > a, .bs-docs-sidebar .nav > .active:focus > a {
+    .bs-docs-sidebar .nav > .active > a,
+    .bs-docs-sidebar .nav > .active:hover > a,
+    .bs-docs-sidebar .nav > .active:focus > a {
       padding-left: 18px;
       color: #563d7c;
       background-color: transparent;
@@ -188,11 +197,17 @@ body {
         .bs-docs-sidebar .nav .nav > li > a a, .bs-docs-sidebar .nav .nav > li > div a {
           color: #767676;
           margin-right: 5px; }
-          .bs-docs-sidebar .nav .nav > li > a a:hover, .bs-docs-sidebar .nav .nav > li > a a:focus, .bs-docs-sidebar .nav .nav > li > div a:hover, .bs-docs-sidebar .nav .nav > li > div a:focus {
+          .bs-docs-sidebar .nav .nav > li > a a:hover,
+          .bs-docs-sidebar .nav .nav > li > a a:focus, .bs-docs-sidebar .nav .nav > li > div a:hover,
+          .bs-docs-sidebar .nav .nav > li > div a:focus {
             text-decoration: none; }
-        .bs-docs-sidebar .nav .nav > li > a:hover, .bs-docs-sidebar .nav .nav > li > a:focus, .bs-docs-sidebar .nav .nav > li > div:hover, .bs-docs-sidebar .nav .nav > li > div:focus {
+        .bs-docs-sidebar .nav .nav > li > a:hover,
+        .bs-docs-sidebar .nav .nav > li > a:focus, .bs-docs-sidebar .nav .nav > li > div:hover,
+        .bs-docs-sidebar .nav .nav > li > div:focus {
           padding-left: 29px; }
-      .bs-docs-sidebar .nav .nav > .active > div, .bs-docs-sidebar .nav .nav > .active:hover > div, .bs-docs-sidebar .nav .nav > .active:focus > div {
+      .bs-docs-sidebar .nav .nav > .active > div,
+      .bs-docs-sidebar .nav .nav > .active:hover > div,
+      .bs-docs-sidebar .nav .nav > .active:focus > div {
         padding-left: 28px;
         font-weight: 500;
         color: #563d7c;
@@ -204,7 +219,8 @@ body {
   @media (min-width: 992px) {
     .bs-docs-sidebar {
       /* Widen the fixed sidebar */ }
-      .bs-docs-sidebar .affix, .bs-docs-sidebar .affix-bottom {
+      .bs-docs-sidebar .affix,
+      .bs-docs-sidebar .affix-bottom {
         width: 213px; }
       .bs-docs-sidebar .affix {
         position: fixed;
@@ -213,7 +229,8 @@ body {
       .bs-docs-sidebar .affix-bottom {
         position: absolute;
         /* Undo the static from mobile first approach */ }
-      .bs-docs-sidebar .affix-bottom .bs-docs-sidenav, .bs-docs-sidebar .affix .bs-docs-sidenav {
+      .bs-docs-sidebar .affix-bottom .bs-docs-sidenav,
+      .bs-docs-sidebar .affix .bs-docs-sidenav {
         margin-top: 0;
         margin-bottom: 0; } }
   .bs-docs-sidebar.affix {
@@ -221,7 +238,8 @@ body {
   @media (min-width: 1200px) {
     .bs-docs-sidebar {
       /* Widen the fixed sidebar again */ }
-      .bs-docs-sidebar.affix-bottom, .bs-docs-sidebar.affix {
+      .bs-docs-sidebar.affix-bottom,
+      .bs-docs-sidebar.affix {
         width: 263px; } }
 
 /* First level of nav */
@@ -230,7 +248,8 @@ body {
   margin-bottom: 20px; }
 
 /* Back to top (hidden on mobile) */
-.back-to-top, .bs-docs-theme-toggle {
+.back-to-top,
+.bs-docs-theme-toggle {
   display: none;
   padding: 4px 10px;
   margin-top: 10px;
@@ -239,7 +258,8 @@ body {
   font-weight: 500;
   color: #999; }
 
-.back-to-top:hover, .bs-docs-theme-toggle:hover {
+.back-to-top:hover,
+.bs-docs-theme-toggle:hover {
   color: #563d7c;
   text-decoration: none; }
 
@@ -247,7 +267,8 @@ body {
   margin-top: 0; }
 
 @media (min-width: 768px) {
-  .back-to-top, .bs-docs-theme-toggle {
+  .back-to-top,
+  .bs-docs-theme-toggle {
     display: block; } }
 
 /*

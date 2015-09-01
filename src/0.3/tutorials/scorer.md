@@ -217,5 +217,3 @@ score 				| The task score (required).
 msg 				| The feedback message (required).
 scoreKey 			| The key for the score data (optional, uses the `postSettings` property `score` by default).
 msgKey 				|  The key for the message data (optional, uses the `postSettings` property `msg` by default).
-
-
