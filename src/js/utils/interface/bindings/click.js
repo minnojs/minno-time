@@ -32,7 +32,7 @@ define(function(require){
 			var activateCallback = function(e){ callback(e,eventName); };
 
 			// If we're binding to an existing element, bind to its appropriate handle
-			if ($element){
+			if (!$element){
 				$(document).on(eventName + '.interface','[data-handle="'+definitions.stimHandle + '"]', activateCallback);
 			} else {
 				// the element to attach
