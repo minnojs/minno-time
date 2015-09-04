@@ -20,7 +20,6 @@ define(function(require){
 
 
 	return function evaluate(conditions, inputData){
-
 		var global = globalGetter();
 		var current = global.current || {};
 		var trial = current_trial();
@@ -51,6 +50,7 @@ define(function(require){
 		_.each(conditions,function(condition){
 			var searchObj, result;
 			var evaluation = true;
+
 			switch (condition.type){
 				case 'begin':
 					if (inputData.type !== 'begin') {
@@ -190,7 +190,13 @@ define(function(require){
 					break;
 
 				case 'function' :
-					if (!condition.value.apply(trial,[trial,inputData])) {
+					if (!condition.value.apply(trial,[condition,inputData, trial])) {
+						evaluation = false;
+					}
+					break;
+
+				case 'custom':
+					if (!condition.fn.apply(null, [condition, inputData, trial])) {
 						evaluation = false;
 					}
 					break;

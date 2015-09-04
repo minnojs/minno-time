@@ -1,5 +1,3 @@
-# piPlayer API
-
 ### Table of contents
 
 * [Defintions](#definitions)
@@ -30,8 +28,6 @@ Media are the objects that we display. We currently support five types of media:
 
 If you insert a string instead of a media object the player treats it as if it was Plain text.
 The folowing two media definitions have the same outcome:`'Wiki'`, `{word:'Wiki'}`
-
-
 
 ### Stimuli
 
@@ -222,6 +218,15 @@ Each condition object has a `type` property that defines what type of evaluation
 
 In addition, it has a `negate` property (false by default) that determines whether to activate the condition when the evaluation is true or when it is false.
 
+It is possible to create complex conditions, the following condition, for instance, is activated in case there is an input that is not equal to trial.data.customAttribute, and the input handle is not "time".
+```js
+[
+    {type:'inputEqualsTrial',property:'customAttribute',negate:true},
+    {type:'inputEquals',value:'time',negate:true}
+]
+```
+
+
 **begin**:
 Automatically activated at the beginning of the trial, and is never fired again.
 * `{type:'begin'}`
@@ -282,20 +287,15 @@ The optional property `handle` narrows the search down to stimuli fitting the `h
 * `{type:'currentEqualsTrial',currentProp:'customAttribute', stimProp:'otherCustomAttribute', handle:'myStimHandle'}`
 
 **function**:
+This options is deprecated. use **custom** instead.
+
+**custom**:
 It is also possible to create a custom condition:
 
 ```js
-{type:'function',value:function(trial,inputData){
+{type:'custom', value:function(condtion, inputData, trial){
     // do your mojo here and return true or false
 }}
-```
-
-It is possible to create complex conditions, the following condition, for instance, is activated in case there is an input that is not equal to trial.data.customAttribute, and the input handle is not "time".
-```js
-[
-    {type:'inputEqualsTrial',property:'customAttribute',negate:true},
-    {type:'inputEquals',value:'time',negate:true}
-]
 ```
 
 #### Interactions: actions
