@@ -27,7 +27,7 @@ define(function(require){
 
 		_.forEach(actions,function(action){
 			var actionFn = action_list[action.type];
-			if (action) {
+			if (actionFn) {
 				// currently the only reason to halt action activation is the endTrial command
 				if (action.type === 'endTrial'){
 					continueActions = false;
