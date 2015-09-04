@@ -19,6 +19,8 @@ define(function(require){
 		, current_trial = require('./current_trial');
 
 
+	// @TODO This should be done using some sort of mapping function (reduce? for loop?)
+	// lets have a uniform API for the evaluation functions.
 	return function evaluate(conditions, inputData){
 		var global = globalGetter();
 		var current = global.current || {};

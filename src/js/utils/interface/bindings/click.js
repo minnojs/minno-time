@@ -25,29 +25,30 @@ define(function(require){
 	 */
 
 	return function(listener,definitions){
-		var eventName = is_touch_device ? 'touchstart' : 'mousedown';
+		var eventName = (is_touch_device ? 'touchstart' : 'mousedown') + '.interface';
 		var $element = definitions.element ? $(definitions.element) : false;
 
 		listener.on = function(callback){
-			var activateCallback = function(e){ callback(e,eventName); };
+			function activateCallback(e){ callback(e,eventName); }
+			this.activateCallback = activateCallback;
 
 			// If we're binding to an existing element, bind to its appropriate handle
 			if (!$element){
-				$(document).on(eventName + '.interface','[data-handle="'+definitions.stimHandle + '"]', activateCallback);
+				$(document).on(eventName,'[data-handle="'+definitions.stimHandle + '"]', activateCallback);
 			} else {
 				// the element to attach
 				$element
 					.css(definitions.css || {})
 					.appendTo('#canvas')							// @todo, not great form, we should probably have a variable pointing there...
-					.on(eventName+'.interface',activateCallback);
+					.on(eventName,activateCallback);
 			}
 		};
 
 		listener.off = function(){
 			if ($element){
-				$(document).off(eventName + '.interface','[data-handle="'+definitions.stimHandle + '"]');
-			} else {
 				$element.remove();									// this also removes any attached events
+			} else {
+				$(document).on(eventName,'[data-handle="'+definitions.stimHandle + '"]', this.activateCallback);
 			}
 		};
 	};
