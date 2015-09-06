@@ -3,11 +3,11 @@ define(function(require){
 	var $					= require('jquery')
 		, _ 				= require('underscore')
 		, Trial				= require('app/trial/trial_constructor')
-		, logger			= require('app/task/log/logger')
 		, settingsGetter	= require('app/task/settings')
-		, pubsub			= require('utils/pubsub')
+		, LoggerConstrucor	= require('app/task/log/logger')
 		, main 				= require('app/task/main_view')
-		, inflateTrial 		= require('./inflateTrial');
+		, inflateTrial 		= require('./inflateTrial')
+		, logger;
 
 
 	/*
@@ -16,6 +16,8 @@ define(function(require){
 
 	// check if we have another trial, if so plays it, if not ends the task
 	function nextTrial(destination, properties){
+		// @TODO we should find a better way to pass the logger around. this way we're just cheating a singleton
+		logger = logger || new LoggerConstrucor(settingsGetter().logger);
 
 		var source = inflateTrial(destination, properties);
 		var trial;
@@ -24,6 +26,8 @@ define(function(require){
 		if (source) {
 			// create new trial and activate it
 			trial = new Trial(source, {container:main});
+			trial.on('trial:log',logger.log, logger);
+
 			trial
 				.activate()	// activate the trial
 				.then(function(){
@@ -35,18 +39,17 @@ define(function(require){
 						main.empty();
 					}
 
-					pubsub.publish('log:send');			// see if we need to send the log stack
+					logger.sendChunk();
+
 					nextTrial.apply(null,arguments);	// when we're done try to play the next one (move arguments on to nextTrial)
 				});
-
-			// let everyone know that we are ready to go
-			pubsub.publish("trial:activated",[trial]);
 		} else {
 			// @TODO: this realy shouldn't be here. this whole function is responsible for too many things...
 			//
 			// post any data that hasn't been posted yet.
 			// and then proceed to the end task hook or to redirect
-			logger()
+			logger
+				.sendAll()
 				.always(function(){
 					var hooks = settingsGetter('hooks') || {};
 					return $.when(hooks.endTask && hooks.endTask());

@@ -74,10 +74,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 			// Display the stimulus imidiately.
 			{
 				conditions: [
-					{type:'begin'},
-					{type:'function', value:function(){
-						console.log(arguments)
-					}}
+					{type:'begin'}
 				],
 				actions: [
 					{type:'showStim',handle:'target'}

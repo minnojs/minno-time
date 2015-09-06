@@ -1,7 +1,7 @@
 define(function(require){
 
 	var _ = require('underscore')
-		, pubsub = require('utils/pubsub')
+		, $ = require('jquery')
 		, global = require('app/global');
 
  	var actions = {
@@ -76,7 +76,7 @@ define(function(require){
 		 */
 
 		log: function(trial, actionObj, eventData){
-			pubsub.publish('log',[actionObj, eventData]);
+			trial.trigger('trial:log', trial, actionObj, eventData);
 		},
 
 		/*
@@ -106,7 +106,6 @@ define(function(require){
 		canvas: function(trial, actionObj){
 			var $canvas = require('app/task/main_view').$el;
 			var canvas = require('app/task/canvasConstructor');
-			var trial = require('app/trial/current_trial')();
 			var map = {
 				background 			: {element: $('body'), property: 'backgroundColor'},
 				canvasBackground	: {element: $canvas, property:'backgroundColor'},
