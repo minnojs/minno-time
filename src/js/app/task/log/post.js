@@ -3,11 +3,10 @@
  * returns a function that takes data and sends it to the server after appending any meta data
  */
 define(function(require){
-	var $ = require('jquery')
-		, settingsGetter = require('app/task/settings');
+	var $ = require('jquery');
 
-	function send(data){
-		var settings = settingsGetter();
+
+	function send(data, settings){
 		var url = settings.logger && settings.logger.url
 			, deff = $.Deferred();
 
@@ -19,6 +18,7 @@ define(function(require){
 		var post = {
 			json: JSON.stringify(data) || ""
 		};
+
 		$.extend(post, settings.metaData || {});
 
 		// lets post our data

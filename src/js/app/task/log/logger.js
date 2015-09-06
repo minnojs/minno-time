@@ -13,6 +13,7 @@ define(function(require){
 	function Logger(settings){
 		this.settings = settings || {};
 		this.lastSend = 0;
+		this.allSent = $.when();
 	}
 
 	_.extend(Logger.prototype, {
@@ -29,9 +30,11 @@ define(function(require){
 		// reset lastSend counter
 		this.lastSend = logStack.length;
 
-		// if logChunk is empty just return a resolved promise
-		return logChunk.length ? post(logChunk) : $.when();
+		if (logChunk.length){
+			this.allSent = $.when(this.allSent, post(logChunk, this.settings));
+		}
 
+		return this.allSent;
 	}
 	/*
 	 * Send all logs since lastSend
@@ -41,12 +44,12 @@ define(function(require){
 		var logStack = logStackGetter();
 		var pulse = this.settings.pulse || 0;
 
-		// post if we have reached the pulse limit
+		// send if we have reached the pulse limit
 		if (pulse && logStack.length - this.lastSend >= pulse) {
-			return this.sendAll();
-		} else {
-			return $.when(true);
+			this.sendAll();
 		}
+
+		return this.allSent;
 	}
 
 	/*
