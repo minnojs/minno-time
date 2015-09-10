@@ -1,12 +1,11 @@
 define(function(require) {
-	var MyModel = require("models/model")
+	var Model = require("backbone").Model
 		,MediaView = require("app/media/media_constructor")
 		,_ = require("underscore")
 		,is_touch = require("utils/is_touch")
 		,settings = require("app/task/settings");
 
-
-	var Model = MyModel.extend({
+	var Stimulus = Model.extend({
 		initialize: function(source, options){
 			// set trial in the model
 			this.trial = options.trial;
@@ -109,6 +108,6 @@ define(function(require) {
 	});
 
 	// Returns the Model class
-	return Model;
+	return Stimulus;
 
 });

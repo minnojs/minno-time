@@ -7,7 +7,8 @@ define(function(require){
 
 
 	function send(data, settings){
-		var url = settings.logger && settings.logger.url
+
+		var url = settings && settings.url
 			, deff = $.Deferred();
 
 		if (!url) {

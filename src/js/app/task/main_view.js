@@ -9,7 +9,7 @@ define(function(require){
 		, adjust_canvas = require('./adjust_canvas')
 		, canvas = require('./canvasConstructor')
 		,script = require('app/task/script')
-		,loadingTpl = require('text!templates/loading.html');
+		,loadingTpl = require('text!./loading.html');
 
 
 	var View = Backbone.View.extend({

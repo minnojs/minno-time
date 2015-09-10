@@ -32,7 +32,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 
 	// setting the way the logger works (how often we send data to the server and the url for the data)
 	API.addSettings('logger',{
-		pulse: 20,
+		pulse: 10,
 		url : '/implicit/PiPlayerApplet'
 	});
 

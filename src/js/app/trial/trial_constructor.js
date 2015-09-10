@@ -4,8 +4,8 @@ define(function(require){
 	var $ = require('jquery');
 	var Events = require('backbone').Events;
 
-	var input = require('utils/interface/interface');
-	var Stimuli = require('app/stimulus/stimulus_collection');
+	var input = require('../interface/interface');
+	var Stimuli = require('../stimulus/stimulus_collection');
 	var interactions = require('./interactions');
 	var global_trial = require('./current_trial');
 	var counter = 0;

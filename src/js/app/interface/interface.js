@@ -2,7 +2,7 @@ define(function(require){
 	var _ = require('underscore')
 		, Events = require('backbone').Events
 		, Listener = require('./listener')
-		, is_touch_device = require('../is_touch')
+		, is_touch_device = require('utils/is_touch')
 		, now = require('./now');
 
 
