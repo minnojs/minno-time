@@ -61,7 +61,7 @@ define(function(require){
 			});
 
 			// fire the beginTrial event
-			this.input.trigger('begin',{type:'begin', latency:0});
+			this.input.trigger('begin',{type:'begin', handle:'begin', latency:0});
 
 			// return the trial deferred
 			return this.deferred.promise();

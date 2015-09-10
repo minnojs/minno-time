@@ -13,7 +13,7 @@ define(function(require){
 
 		for (i=0;i<interactions.length;i++){
 			row = interactions[i];
-			if (evaluate(row.conditions,inputData)) {
+			if (evaluate(trial, row.conditions,inputData)) {
 				// if this action includes endTrial we want to stop evalutation
 				// otherwise we might evaluate using data from the next trial by accident...
 				if (!activate(trial, row.actions,inputData)){
