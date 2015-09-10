@@ -64,7 +64,7 @@ define(function(require){
 		},
 
 		endTrial: function(trial){
-			trial.trigger('trial:end');
+			trial.trigger('trial:stop');
 		},
 
 		resetTimer: function(trial, actionObj, eventData){
@@ -115,7 +115,7 @@ define(function(require){
 
 			// settings activator
 			var off = canvas(map, _.pick(actionObj,['background','canvasBackground','borderColor','borderWidth']));
-			trial.deferred.promise().always(off);
+			trial.on('trial:end',off);
 		}
 
 	};

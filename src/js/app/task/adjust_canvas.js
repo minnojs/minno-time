@@ -75,6 +75,7 @@ define(function(require){
 			$canvas.css('font-size',height*(settings.textSize || 3)/100);
 
 			// refresh all stimuli (we don't want to do this before we have trials)
+			// @Todo should probably be broadcast somehow... let the stimuli deal with this directly
 			if (trial()) {
 				trial()._layout_collection.refresh();
 				trial()._stimulus_collection.refresh();

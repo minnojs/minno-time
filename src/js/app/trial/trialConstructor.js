@@ -1,9 +1,7 @@
 define(function(require){
 
 	var _ = require('underscore');
-	var $ = require('jquery');
 	var Events = require('backbone').Events;
-
 	var input = require('../interface/interface');
 	var Stimuli = require('../stimulus/stimulus_collection');
 	var interactions = require('./interactions');
@@ -28,9 +26,6 @@ define(function(require){
 		// by default this is simply the next trial, this can be changed using the goto action
 		// the syntax is [destination, properties]
 		this._next = ['next',{}];
-
-		// the trial deferred (used to follow when the trial ends)
-		this.deferred = $.Deferred();
 	}
 
 	_.extend(Trial.prototype,Events,{
@@ -42,7 +37,7 @@ define(function(require){
 			// set global trial
 			global_trial(this);
 
-			this.on('trial:end', this.deactivate, this);
+			this.on('trial:stop', this.deactivate, this);
 			this.on('trial:setAttr', this.setData, this);
 			this.on('trial:setInput', this.setInput, this);
 			this.on('trial:removeInput', this.removeInput, this);
@@ -63,9 +58,6 @@ define(function(require){
 
 			// fire the beginTrial event
 			this.input.trigger('begin',{type:'begin', handle:'begin', latency:0});
-
-			// return the trial deferred
-			return this.deferred.promise();
 		},
 
 		deactivate: function(){
@@ -75,13 +67,14 @@ define(function(require){
 			// disable active stimuli
 			this._stimulus_collection.disable();
 
+			// unset global trial
+			global_trial(undefined);
+
+			this.trigger('trial:end', this._next[0], this._next[1]);
+
 			// remove all listeners
 			this.off();
 			this.stopListening();
-
-			// unset global trial
-			global_trial(undefined);
-			this.deferred.resolve(this._next[0], this._next[1]);
 		},
 
 		/**

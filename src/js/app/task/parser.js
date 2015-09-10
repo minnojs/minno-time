@@ -5,16 +5,12 @@
 define(function(require){
 	// load dependancies
 	var _ = require('underscore');
-	var scriptGetter = require('app/task/script');
 	var db = require('../sequencer/database');
 	var go = require('../sequencer/sequenceGoto');
 	var sequenceSetter = require('../sequencer/taskSequence');
 	var preload = require('../sequencer/sequencePreload');
 
-	return function(){
-		var script = scriptGetter();
-
-
+	return function(script){
 		db.createColl('trial');
 		db.createColl('stimulus');
 		db.createColl('media');

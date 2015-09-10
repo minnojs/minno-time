@@ -13,7 +13,6 @@ define(function(require){
 
 
 	var View = Backbone.View.extend({
-
 		id: 'canvas',
 
 		initialize: function(){
@@ -28,9 +27,6 @@ define(function(require){
 			 */
 			var adjust = _.bind(this.adjustCanvas,this);
 			$(window).on('orientationchange.pip resize.pip', adjust);
-			this.deferred.promise().always(function(){
-				$(window).off('orientationchange.pip resize.pip', adjust);
-			});
 		},
 
 		render: function(){
@@ -75,6 +71,7 @@ define(function(require){
 		// display loading page
 		loading: function(parseDef){
 			var $bar;
+			var self = this;
 
 			// if loading has already finished lets skip the loading page
 			if (parseDef.state() != "pending"){
@@ -90,6 +87,9 @@ define(function(require){
 				.progress(function(done, remaining){
 					// update progress bar
 					$bar.width((remaining ? (done/remaining)*100 : 0) + '%');
+				})
+				.done(function(){
+					self.empty();
 				});
 		},
 
