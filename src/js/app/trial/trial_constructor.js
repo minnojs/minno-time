@@ -19,6 +19,7 @@ define(function(require){
 		this.source = source;
 		this._id = _.uniqueId('trial_');
 		this.counter = counter++;
+		this.container = options.container;
 
 		this._layout_collection = new Stimuli(arrayWrap(source.layout),{trial:this, container:options.container});
 		this._stimulus_collection = new Stimuli(arrayWrap(source.stimuli),{trial:this, container:options.container});

@@ -104,7 +104,7 @@ define(function(require){
 		},
 
 		canvas: function(trial, actionObj){
-			var $canvas = require('app/task/main_view').$el;
+			var $canvas = trial.container.$el;
 			var canvas = require('app/task/canvasConstructor');
 			var map = {
 				background 			: {element: $('body'), property: 'backgroundColor'},

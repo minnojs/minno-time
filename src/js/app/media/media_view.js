@@ -5,23 +5,21 @@
 
 define(function(require){
     var Backbone = require('backbone'),
-        _ = require('underscore'),
-        main_view = require('app/task/main_view');
-
-    var canvas = main_view.$el;
+        _ = require('underscore');
 
     var View = Backbone.View.extend({
 
         // build element according to simulus
         initialize: function(options){
             this.options = options; // needed since backbone v1.1.0
+            this.$container = options.container.$el;
 
             this.$el
                 .addClass('stimulus')
                 .attr('data-handle', this.model.handle)     // add data-handle for handeling of mouse/touch interactions
                 .css("visibility", "hidden")
                 .css(this.model.get('css')) // TODO: move to render
-                .appendTo(canvas);
+                .appendTo(this.$container);
 
             this.listenTo(this.model, 'change:$show' ,this.renderShow);
 
@@ -88,7 +86,7 @@ define(function(require){
             }
 
             var top, bottom, left, right; // will hold the offset for the locations
-            var canvasSize = size(canvas);
+            var canvasSize = size(this.$container);
             var elSize = size(this.$el);
             // get location setting and set center as default
             var location = this.model.get('location') || {};
