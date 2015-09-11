@@ -1,6 +1,5 @@
 {
   "name": "lodash-compat",
-  "version": "3.5.0",
   "main": "lodash.js",
   "ignore": [
     ".*",

@@ -1,6 +1,5 @@
 {
   "name": "lodash-compat",
-  "version": "3.5.0",
   "main": "lodash.js",
   "ignore": [
     ".*",
@@ -11,13 +10,14 @@
     "node_modules"
   ],
   "homepage": "https://github.com/lodash/lodash-compat",
-  "_release": "3.5.0",
+  "version": "3.10.1",
+  "_release": "3.10.1",
   "_resolution": {
     "type": "version",
-    "tag": "3.5.0",
-    "commit": "ee89e32120161ce5a556c237152bc527cb74b236"
+    "tag": "3.10.1",
+    "commit": "ef0ef9ab27259ccbaa3eaf0a5f233408a8188bb6"
   },
   "_source": "git://github.com/lodash/lodash-compat.git",
-  "_target": "3.5.0",
+  "_target": "3.10.1",
   "_originalSource": "lodash-compat"
 }

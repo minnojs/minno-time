@@ -8,14 +8,15 @@ define(function(require){
 		, _ = require('underscore')
 		, adjust_canvas = require('./adjust_canvas')
 		, canvas = require('./canvasConstructor')
-		,script = require('app/task/script')
 		,loadingTpl = require('text!./loading.html');
 
 
-	var View = Backbone.View.extend({
+	var ContainerView = Backbone.View.extend({
 		id: 'canvas',
 
-		initialize: function(){
+		initialize: function(options){
+			this.options = options;
+
 			_.bindAll(this, ['activate','render','destroy']);
 
 			this.deferred = $.Deferred();
@@ -36,7 +37,7 @@ define(function(require){
 
 		activate: function(){
 			var self = this;
-			var canvasSettings = script().settings.canvas || {};
+			var canvasSettings = _.get(this.options, 'settings.canvas' ,{});
 			var docReady = $.Deferred(); // document ready deferred, so we can continue only after activation has culminated
 
 			$(document).ready(function(){
@@ -108,5 +109,5 @@ define(function(require){
 	});
 
 	// Returns the View class
-	return new View();
+	return ContainerView;
 });

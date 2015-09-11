@@ -8,10 +8,8 @@ define(function(require){
 
 	var _ = require('underscore'),
 		mainScript = require('app/task/script'),
-		main = require('app/task/main_view'),
-		parse = require('app/task/parser'),
 		Player = require('app/sequencer/player'),
-		global = require('app/global');
+		preload = require('app/sequencer/sequencePreload');
 
 	// expose object
 	// GUI:
@@ -34,20 +32,14 @@ define(function(require){
 	//
 
 	function activate(script, done){
-		// init global
-		var glob = global();
-		var name = script.name || 'anonymous PIP';
-		var player = new Player(script.settings || {});
-
-		// create local namespace
-		glob[name] = glob.current = (_.isPlainObject(script.current) ? script.current : {});
-		glob.current.logs || (glob.current.logs = []); // init logs object
-
+		var player = new Player(script);
+		var main = player.container;
 		// set the main script as a global
 		// @TODO: get this out of our hair
 		mainScript(script);
 
-		var parseDef = parse(script);
+		var parseDef = preload(script);
+
 
 		// activate main view and then display the loading screen
 
@@ -69,6 +61,13 @@ define(function(require){
 				var redirect = script.settings && script.settings.redirect;
 				window.location.href = redirect || window.location.href;
 			});
+	}
+
+	function spreLoad(){
+		// add loading page
+		// get all media
+		// update loading page
+		// resolve
 	}
 
 	return activate;
