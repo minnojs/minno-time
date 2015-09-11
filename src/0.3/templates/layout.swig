@@ -152,6 +152,7 @@
 							</li>
 							{{ navitem("API", "../tutorials/API", data.basename) }}
 							{{ navitem("Scorer", "../tutorials/scorer", data.basename) }}
+							{{ navitem("Resources", "../tutorials/resources", data.basename) }}
 							{{ navitem("Playground", "../tutorials/playgroundPlay", data.basename) }}
 						</ul>
 						<!-- <a class="back-to-top" href="#top">

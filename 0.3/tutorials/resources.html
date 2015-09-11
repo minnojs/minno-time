@@ -81,8 +81,8 @@
 		<div id="content" class="bs-docs-header">
 			<div class="container">
 				
-	<h1>Javascript</h1>
-	<p>Getting to know the environment PIP works with.</p>
+	<h1>Resources</h1>
+	<p>Various resources to make your life easier.</p>
 
 			</div>
 		</div>
@@ -91,111 +91,9 @@
 			<div class="row">
 				<div class="col-md-9" role="main">
 					
-	<p>PIP scripts are written using JavaScript; <a href="http://en.wikipedia.org/wiki/JavaScript">JavaScript</a> is a programming language used by browsers (like Internet Explorer, Chrome or Safari). PIP’s scripts do not require you to program any JavaScript but you should have a basic grasp of the basic syntax before we go on. If you know some basic JavaScript you can skip this section and go directly to the Hello world tutorial.</p>
-<p>The fundamental building blocks of javascript expressions are variables and literals (more details <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Values,_variables,_and_literals">here</a>).</p>
-<p>Variables store information. Each variable stores one or a few different values.</p>
-<h3 id="value-types">Value types</h3>
-<p>There are several types of values recognized by JavaScript.</p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Examples</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Numbers</td>
-<td>42, 3.13</td>
-</tr>
-<tr>
-<td>String</td>
-<td>“Howdy”, ‘’ // a string is always wrapped in single or double parenthesis</td>
-</tr>
-<tr>
-<td>Logical (Boolean)</td>
-<td>true, false</td>
-</tr>
-<tr>
-<td>Array</td>
-<td><code>[]</code>, <code>[1,3,5]</code></td>
-</tr>
-<tr>
-<td>Object</td>
-<td><code>{}</code>, <code>{a:12, b:&quot;twelve&quot;}</code> // An object has named properties, the second instance here has two properties: <code>a</code> and <code>b</code>.</td>
-</tr>
-<tr>
-<td>Function</td>
-<td><code>function(){console.log(&#39;Howdy&#39;)}</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id="variables">Variables</h3>
-<p>Variables are symbolic names for values in your script. You can define variables using the keyword <code>var</code>; for example <code>var x=42</code> sets the value 42 into the variable <code>x</code>. Any time you want to refer to the value stored in a variable you can refer to the variable name instead. This is useful if you want to define a value at one point in your script and reuse it again and again.</p>
-<pre><code class="lang-js"><span class="hljs-comment">// Define variable</span>
-<span class="hljs-keyword">var</span> x = <span class="hljs-number">17</span>
-<span class="hljs-built_in">console</span>.log(x)        <span class="hljs-comment">// prints 17 into the browser's console.</span>
-
-<span class="hljs-comment">// change variable value</span>
-x = <span class="hljs-number">343</span>
-<span class="hljs-built_in">console</span>.log(x)        <span class="hljs-comment">// prints 343</span>
-</code></pre>
-<p>Notice that the first time we created the variable <code>x</code>, we had to use the word <code>var</code>. Then, when we referred to that variable again, we did not use <code>var</code> anymore. You can create each variable only once in your code. You can create the variable at any point in your file. However, you can’t use the variable until you created it. So, setting 343 into x before you created it won’t work. </p>
-<h3 id="comments">Comments</h3>
-<p>Comments are a way to keep your code documented. You will probably not remember what you were trying to do a week after you wrote a piece of code. So make sure to document everything. Further, if you document your code, others can use it, or help you find errors.</p>
-<p>JavaScript has two types of comments; block comments and single line comments:</p>
-<pre><code class="lang-js"><span class="hljs-comment">// a short, single-line comment</span>
-<span class="hljs-built_in">console</span>.log(<span class="hljs-number">123</span>) <span class="hljs-comment">// one line comments can come at the end of a line of script too</span>
-
-<span class="hljs-comment">/* this is a long, multi-line comment
-     about my script. So I am using 
-     the syntax for a block comment. */</span>
-</code></pre>
-<h3 id="array-literals">Array literals</h3>
-<p>Arrays are ordered lists of values, their elements may be any value types (including other arrays). When you create the array, you can assign the elements within the array with commas (learn <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">more</a>).</p>
-<pre><code class="lang-js"><span class="hljs-comment">// Define arr</span>
-<span class="hljs-keyword">var</span> arr = [<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">5</span>,<span class="hljs-number">7</span>,<span class="hljs-number">11</span>]
-
-<span class="hljs-comment">// Access arr elements</span>
-<span class="hljs-built_in">console</span>.log(arr[<span class="hljs-number">0</span>])            <span class="hljs-comment">// prints 1</span>
-<span class="hljs-built_in">console</span>.log(arr[<span class="hljs-number">3</span>])            <span class="hljs-comment">// prints 7</span>
-</code></pre>
-<p>Arrays have cells. To refer to one value in the array, we use the value’s cell index inside []. </p>
-<h3 id="object-literals">Object literals</h3>
-<p>Object literals are a structure of variables. The structure is a list of property names and associated values. Like arrays, objects group of few variables together. However, in objects, each value has a name (rather than a cell number). For instance, you can think of a person as an object with many different properties. The person has a name, a family name, age, weight, and more. </p>
-<pre><code class="lang-js"><span class="hljs-comment">// Define an object named person.</span>
-<span class="hljs-keyword">var</span> person = {name: <span class="hljs-string">'John Ridley'</span>, family:<span class="hljs-string">'Stroop'</span>, age:<span class="hljs-number">33</span>, weight:{lbs:<span class="hljs-number">150</span>, kg:<span class="hljs-number">68</span>}} 
-<span class="hljs-comment">//This object has four variables in it. The weight variable is an object inside an object.</span>
-
-<span class="hljs-comment">// Here are the two main methods to refer to the object's properties</span>
-<span class="hljs-built_in">console</span>.log(person.name)        <span class="hljs-comment">// prints 'John Ridley'</span>
-<span class="hljs-built_in">console</span>.log(person[<span class="hljs-string">'family'</span>])        <span class="hljs-comment">// prints 'Stroop'</span>
-<span class="hljs-built_in">console</span>.log(person.weight.kg)        <span class="hljs-comment">// prints '68'</span>
-</code></pre>
-<p>The property name and values are separated using a colon <code>:</code>, pairs are separated using a semicolon <code>;</code>. Object property names can be any string (=text), number, array, or object. The properties are accessed either using brackets <code>obj[&#39;propertyName&#39;]</code> or using dot(.) notation <code>obj.propertyName</code>.</p>
-<h3 id="functions">Functions</h3>
-<p>Functions are one of the fundamental building blocks in JavaScript. A function is a JavaScript procedure—a set of statements that perform a task or calculate a value.</p>
-<p>For example, the following code defines a simple function named square:</p>
-<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">square</span><span class="hljs-params">(number)</span> </span>{
-    <span class="hljs-keyword">return</span> number * number;
-}
-</code></pre>
-<p>This function accepts a number as an argument and then returns its square.</p>
-<p>A function definition consists of the <code>function</code> keyword followed by:</p>
-<ul>
-<li>The name of the function (optional).</li>
-<li>A list of arguments to the function, enclosed in parentheses and separated by commas.</li>
-<li>The JavaScript statements that define the function, enclosed in curly braces, <code>{}</code>.</li>
-</ul>
-<p>Functions in JavaScript are a special type of object. This means that they can be stored as variables and passed as arguments. In order to activate the procedure stored within a function you use parenthesis notation <code>functionName(arguments)</code>, using the function previously defined:</p>
-<pre><code class="lang-js"><span class="hljs-built_in">console</span>.log(square)                <span class="hljs-comment">// prints the square function</span>
-<span class="hljs-built_in">console</span>.log(square(<span class="hljs-number">9</span>))            <span class="hljs-comment">// prints 81</span>
-</code></pre>
-<p>(learn more <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions">here</a>).</p>
-<h3 id="errors-and-debugging">Errors and debugging</h3>
-<p>When developing PIP scripts things don’t always go as expected. Sometimes you might make a syntactical error, sometime you might misspell a PIP keyword. The browser always logs these errors and it is useful to see them. All modern browsers have a console that allows you to see the errors (if you are using firefox you should check out <a href="https://getfirebug.com/">firebug</a>). Most browsers use <code>F12</code> as a shortcut for displaying the console. If that doesn’t work for you search your browsers menus: look for a <strong>Web Developer</strong> or <strong>Developer Tools</strong> menu under tools or options.</p>
-<p>In case your script does not load, or freezes at a certain point, open your console and see if you have any errors.</p>
-<p>The <a href="install.html">local server</a> gives you an additional, extremely powerful, tool. It uses <a href="http://jshint.com/">jshint</a> to evaluate your code and can often point out syntax errors that are difficult to recognize.</p>
+	<h3 id="extensions">Extensions</h3>
+<p>The PI tasks are easily extensible.</p>
+<p><a href="http://www.bgu.ac.il/~baranany/">Yoav Bar-Anan</a> from <a href="https://implicit.harvard.edu/implicit/aboutus.html">Project Implicit</a> has created several extensions for the easy creation of a few common reaction-time tasks. You can find the instructions for using them right <a href="https://app-dev-01.implicit.harvard.edu/implicit/common/all/js/pip/piscripts/ydocs/dist/index.html">here</a>.</p>
 
 
 				</div>
@@ -439,7 +337,7 @@ x = <span class="hljs-number">343</span>
 							</li>
 						
 							
-							<li class="">
+							<li class=" active ">
 								<a href="../tutorials/resources.html">Resources</a>
 							</li>
 						
