@@ -5,7 +5,6 @@ define(function(require){
 	var input = require('../interface/interface');
 	var Stimuli = require('../stimulus/stimulus_collection');
 	var interactions = require('./interactions');
-	var global_trial = require('./current_trial');
 	var counter = 0;
 
 	function Trial(source, options){
@@ -34,8 +33,6 @@ define(function(require){
 		interactions: interactions,
 
 		activate: function(){
-			// set global trial
-			global_trial(this);
 
 			this.on('trial:stop', this.deactivate, this);
 			this.on('trial:setAttr', this.setData, this);
@@ -43,6 +40,10 @@ define(function(require){
 			this.on('trial:removeInput', this.removeInput, this);
 			this.on('trial:resetTimer', this.resetTimer, this);
 			this.on('trial:goto', this.updateGoto, this);
+			this.listenTo(this.container, 'adjustCanvas', function(){
+				this._layout_collection.refresh();
+				this._stimulus_collection.refresh();
+			});
 
 			// activate stimuli
 			this._layout_collection.display_all();
@@ -66,9 +67,6 @@ define(function(require){
 
 			// disable active stimuli
 			this._stimulus_collection.disable();
-
-			// unset global trial
-			global_trial(undefined);
 
 			this.trigger('trial:end', this._next[0], this._next[1]);
 

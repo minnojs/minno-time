@@ -6,7 +6,7 @@ define(function(require){
 	var Backbone = require('backbone')
 		, $ = require('jquery')
 		, _ = require('underscore')
-		, adjust_canvas = require('./adjust_canvas')
+		, adjustCanvas = require('./adjustCanvas')
 		, canvas = require('./canvasConstructor')
 		,loadingTpl = require('text!./loading.html');
 
@@ -16,6 +16,7 @@ define(function(require){
 
 		initialize: function(options){
 			this.options = options;
+			this.canvasSettings = _.get(this.options, 'settings.canvas' ,{});
 
 			_.bindAll(this, ['activate','render','destroy']);
 
@@ -31,13 +32,13 @@ define(function(require){
 		},
 
 		render: function(){
-			this.adjustCanvas(true);
+			this.adjustCanvas({init:true});
 			return this;
 		},
 
 		activate: function(){
 			var self = this;
-			var canvasSettings = _.get(this.options, 'settings.canvas' ,{});
+			var canvasSettings = this.canvasSettings;
 			var docReady = $.Deferred(); // document ready deferred, so we can continue only after activation has culminated
 
 			$(document).ready(function(){
@@ -105,7 +106,7 @@ define(function(require){
 		},
 
 		// sets canvas size (used also for refreshing upon orientation change)
-		adjustCanvas: adjust_canvas
+		adjustCanvas: adjustCanvas
 	});
 
 	// Returns the View class

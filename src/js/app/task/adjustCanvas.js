@@ -1,24 +1,32 @@
 /*
  * adjust canvas according to window size and settings
  * this module is built to be part of the main view
+ * @TODO: this is a whole mess.
+ * 	* pass element explicitly
+ * 	* this probably isn't the correct way to pass containerView
+ * 	* I'd like to separate resize enough so that we can throttle/debounce it.
+ *
  */
 define(function(require){
 
 	var $ = require('jquery')
-		, settingsGetter = require('app/task/settings')
-		, trial = require('app/trial/current_trial');
+		, _ = require('underscore');
 
 	// the function to be used by the main view
-	function adjust_canvas(init){
+	function adjustCanvas(options){
+		var containerView = this;
+		var settings = containerView.canvasSettings;
+		var init = _.get(options,'init', false);
+		// @TODO: this is a terrible mix. we should find a way to separate the
 		var self = this;
-		// get canvas settings
-		var settings = settingsGetter('canvas') || {};
+
 
 		// calculate proportions (as height/width)
 		var proportions;
 		if (settings.proportions) {
-			if ($.isPlainObject(settings.proportions)) {
-				if (typeof settings.proportions.height !== 'number' || typeof settings.proportions.width !== 'number'){
+			if (_.isPlainObject(settings.proportions)) {
+
+				if (!_.isNumber(settings.proportions.height) || !_.isNumber(settings.proportions.width)){
 					throw new Error('The canvas proportions object`s height and a width properties must be numeric');
 				}
 				proportions = settings.proportions.height/settings.proportions.width; // if proportions are an object they should include width and height
@@ -44,7 +52,10 @@ define(function(require){
 				width = settings.width;
 				height = width*proportions;
 
-			} else { // dynamic canvas size
+			}
+			// dynamic canvas size
+			else {
+
 				// get current screen size
 				var screenSize = {
 					width: $(window).innerWidth(),
@@ -76,15 +87,12 @@ define(function(require){
 
 			// refresh all stimuli (we don't want to do this before we have trials)
 			// @Todo should probably be broadcast somehow... let the stimuli deal with this directly
-			if (trial()) {
-				trial()._layout_collection.refresh();
-				trial()._stimulus_collection.refresh();
-			}
+			containerView.trigger('adjustCanvas');
 
 			// scroll to top of window (hides some of the mess on the top of mobile devices)
 			window.scrollTo(0, 1);
 		}
 	}
 
-	return adjust_canvas;
+	return adjustCanvas;
 });
