@@ -13,7 +13,7 @@ define(function(require){
 	 */
 
 	var _ = require('underscore')
-		, action_list = require('./action_list');
+		, actionList = require('./actionList');
 
 	function applyActions(trial, actions,eventData){
 		// marks whether this is the final action to take
@@ -26,7 +26,7 @@ define(function(require){
 		actions = _.isArray(actions) ? actions : [actions];
 
 		_.forEach(actions,function(action){
-			var actionFn = action_list[action.type];
+			var actionFn = actionList[action.type];
 
 			if (!actionFn) {
 				throw new Error('unknown action: ' + action.type);

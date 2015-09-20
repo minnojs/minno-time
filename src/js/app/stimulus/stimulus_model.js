@@ -1,14 +1,14 @@
 define(function(require) {
-	var Model = require("backbone").Model
-		,MediaView = require("app/media/media_constructor")
-		,_ = require("underscore")
-		,is_touch = require("utils/is_touch")
-		,settings = require("app/task/settings");
+	var Model = require('backbone').Model
+		,MediaView = require('app/media/media_constructor')
+		,_ = require('underscore')
+		,is_touch = require('utils/is_touch');
 
 	var Stimulus = Model.extend({
 		initialize: function(source, options){
 			// set trial in the model
 			this.trial = options.trial;
+			this.settings = options.settings;
 
 			// set model handle
 			this.attributes.data = source.data || {}; // make sure we have a data object
@@ -93,7 +93,8 @@ define(function(require) {
 
 		mediaName: function(){
 			var media = this.media.options;
-			var fullpath = settings.logger && settings.logger.fullpath; // should we use the full path or just the file name
+			var fullpath = _.get(this.settings,'logger.fullpath',false); // should we use the full path or just the file name
+
 			if (media.alias) {return media.alias;} // if we have an alias ues it
 			for (var prop in media) {
 				if (_.contains(['image','template'],prop)) {
@@ -104,7 +105,6 @@ define(function(require) {
 				}
 			}
 		}
-
 	});
 
 	// Returns the Model class

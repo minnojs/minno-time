@@ -37,37 +37,35 @@ define(function(require){
 		},
 
 		activate: function(){
+			if (document.readyState == 'loading'){
+				throw new Error('Player cannot be activated before document is loaded.');
+			}
+
 			var self = this;
 			var canvasSettings = this.canvasSettings;
-			var docReady = $.Deferred(); // document ready deferred, so we can continue only after activation has culminated
 
-			$(document).ready(function(){
 
-				var map = {
-					background 			: {element: $('body'), property: 'backgroundColor'},
-					canvasBackground	: {element: self.$el, property:'backgroundColor'},
-					borderColor			: {element: self.$el, property:'borderColor'},
-					borderWidth			: {element: self.$el, property:'borderWidth'}
-				};
+			var map = {
+				background 			: {element: $('body'), property: 'backgroundColor'},
+				canvasBackground	: {element: self.$el, property:'backgroundColor'},
+				borderColor			: {element: self.$el, property:'borderColor'},
+				borderWidth			: {element: self.$el, property:'borderWidth'}
+			};
 
-				// settings activator
-				var off = canvas(map, _.pick(canvasSettings,['background','canvasBackground','borderColor','borderWidth']));
-				self.deferred.promise().always(off);
+			// settings activator
+			var off = canvas(map, _.pick(canvasSettings,['background','canvasBackground','borderColor','borderWidth']));
+			self.deferred.promise().always(off);
 
-				canvasSettings.css && self.$el.css(canvasSettings.css);
+			canvasSettings.css && self.$el.css(canvasSettings.css);
 
-				// append to body and render
-				if ($('[pi-player]').length){
-					$('[pi-player]').empty().append(self.$el);
-				} else {
-					self.$el.appendTo('body');
-				}
+			// append to body and render
+			if ($('[pi-player]').length){
+				$('[pi-player]').empty().append(self.$el);
+			} else {
+				self.$el.appendTo('body');
+			}
 
-				self.render();
-				docReady.resolve();
-			});
-
-			return docReady;
+			self.render();
 		},
 
 		// display loading page

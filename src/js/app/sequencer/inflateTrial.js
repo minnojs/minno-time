@@ -3,16 +3,16 @@ define(function(require){
 	var _ 					= require('underscore');
 	var globalGetter 		= require('../global');
 	var sequenceGetter		= require('./taskSequence');
-	var buildUrl 			= require('../task/build_url');
+	var buildUrl 			= require('../task/buildUrl');
 
 	// @TODO: the destination/properties distinction is unclear
-	function inflateTrial(db, destination, properties){
+	function inflateTrial(db, nextArr, settings){
 		var sequence = sequenceGetter();
 		var global = globalGetter();
 		var context = {global: global, current: global.current};
 		var source;
 
-		sequence.go(destination, properties, context);
+		sequence.go(nextArr[0], nextArr[1], context);
 		source = sequence.current(context, {skip:['layout','stimuli']});
 
 		if (!source){
@@ -41,11 +41,11 @@ define(function(require){
 			// note that the base url is added to the media object during the sequence preload
 			// if needed, build url
 			if (val.image){
-				val.image = buildUrl(val.image,'image');
+				val.image = buildUrl(val.image,'image', settings.base_url);
 			}
 
 			if (val.template){
-				val.inlineTemplate = requirejs('text!' + buildUrl(val.template, 'template'));
+				val.inlineTemplate = requirejs('text!' + buildUrl(val.template, 'template', settings.base_url));
 				val.inlineTemplate = _.template(val.inlineTemplate)(context);
 			}
 

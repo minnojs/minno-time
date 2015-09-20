@@ -18,13 +18,27 @@ define(function(require){
 		this.counter = counter++;
 		this.container = options.container;
 
-		this._layout_collection = new Stimuli(arrayWrap(source.layout),{trial:this, container:options.container});
-		this._stimulus_collection = new Stimuli(arrayWrap(source.stimuli),{trial:this, container:options.container});
+		var stimOptions = {trial:this, container:options.container, settings:options.settings};
+
+		this._layout_collection = new Stimuli(arrayWrap(source.layout), stimOptions);
+		this._stimulus_collection = new Stimuli(arrayWrap(source.stimuli),stimOptions);
 
 		// the next trial we want to play
 		// by default this is simply the next trial, this can be changed using the goto action
 		// the syntax is [destination, properties]
 		this._next = ['next',{}];
+
+		// listen up
+		this.on('trial:stop', this.stop, this);
+		this.on('trial:setAttr', this.setData, this);
+		this.on('trial:setInput', this.setInput, this);
+		this.on('trial:removeInput', this.removeInput, this);
+		this.on('trial:resetTimer', this.resetTimer, this);
+		this.on('trial:goto', this.updateGoto, this);
+		this.listenTo(this.container, 'adjustCanvas', function(){
+			this._layout_collection.refresh();
+			this._stimulus_collection.refresh();
+		});
 	}
 
 	_.extend(Trial.prototype,Events,{
@@ -32,19 +46,7 @@ define(function(require){
 
 		interactions: interactions,
 
-		activate: function(){
-
-			this.on('trial:stop', this.deactivate, this);
-			this.on('trial:setAttr', this.setData, this);
-			this.on('trial:setInput', this.setInput, this);
-			this.on('trial:removeInput', this.removeInput, this);
-			this.on('trial:resetTimer', this.resetTimer, this);
-			this.on('trial:goto', this.updateGoto, this);
-			this.listenTo(this.container, 'adjustCanvas', function(){
-				this._layout_collection.refresh();
-				this._stimulus_collection.refresh();
-			});
-
+		start: function(){
 			// activate stimuli
 			this._layout_collection.display_all();
 			this._stimulus_collection.activate();
@@ -61,14 +63,14 @@ define(function(require){
 			this.input.trigger('begin',{type:'begin', handle:'begin', latency:0});
 		},
 
-		deactivate: function(){
+		stop: function(){
 			// cancel all listeners
 			this.input.destroy();
 
 			// disable active stimuli
 			this._stimulus_collection.disable();
 
-			this.trigger('trial:end', this._next[0], this._next[1]);
+			this.trigger('trial:end', this._next);
 
 			// remove all listeners
 			this.off();

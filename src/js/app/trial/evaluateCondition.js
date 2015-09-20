@@ -18,9 +18,6 @@ define(function(require){
 		, globalGetter = require('app/global')
 		, conditionList = require('./conditionList');
 
-
-	// @TODO This should be done using some sort of mapping function (reduce? for loop?)
-	// lets have a uniform API for the evaluation functions.
 	function evaluate(trial, conditions, inputData){
 		var global = globalGetter();
 

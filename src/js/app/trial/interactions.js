@@ -5,7 +5,7 @@ define(function(require){
 	 *
 	 */
 
-	var evaluate = require('./evaluate')
+	var evaluate = require('./evaluateCondition')
 		, activate = require('./action');
 
 	return function interact(trial, interactions,inputData){
