@@ -98,8 +98,11 @@ Repeats the element in `data` `times` times.
 * `{mixer:'repeat', times:10, data: [obj1,obj2]}`
 
 **random**:
-Randomizes the order of elements in `data`. Please note that the randomizer pre-mixes all the content in data, so that any branching mixers will be branched according to the environment as it is when the random mixer is reached. If you want to delay the branching until it is reached, simply wrap it within a `wrapper` mixer.
+Randomizes the order of elements in `data`. Random pre-computes all of the elements in data, if you want to keep some of the elements together, use the `wrapper` mixer. If you want to mark a specific mixer within random not to be pre-computed, simply add `wrapper:true`.
+Please note that the randomizer pre-computes all the content in data, so that any branching mixers will be branched according to the environment as it is when the random mixer is reached. If you want to delay the branching until it is reached, simply wrap it within a `wrapper` mixer or add `wrapper:true`.
+
 * `{mixer:'random', data: [obj1,obj2]}`
+* `{mixer:'random', data: [obj1,{mixer:'repeat', wrapper:true,data:[1,2,3]}]}`
 
 **weightedRandom**:
 Selects a single element using a weighted random algorithm. Each element in `data` is given the appropriate weight from `weights`. In the following example obj2 has four times the probability of being selected as obj1.

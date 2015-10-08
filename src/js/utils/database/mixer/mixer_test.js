@@ -73,7 +73,7 @@ define(['underscore','./mixerModule', '../randomize/randomizeModuleMock'],functi
 					})).toEqual([3, 3,2,1]);
 				});
 
-				it('should not mix wrappers', function(){
+				it('should not mix wrappers (mixer="wrapper")', function(){
 					var wrapper = {mixer:'wrapper', data:[3,4]};
 					expect(mixer({
 						mixer:'random',
@@ -81,7 +81,15 @@ define(['underscore','./mixerModule', '../randomize/randomizeModuleMock'],functi
 					})).toEqual([wrapper,2,1]);
 				});
 
-				iit('should recursively mix (real use case)', function(){
+				it('should not mix wrappers (mixer.wrapper = true)', function(){
+					var wrapper = {mixer:'repeat',wrapper:true, data:[3,4]};
+					expect(mixer({
+						mixer:'random',
+						data: [1,2,wrapper]
+					})).toEqual([wrapper,2,1]);
+				});
+
+				it('should recursively mix (real use case)', function(){
 					expect(mixer({
 						mixer:'random',
 						data: [
