@@ -72,7 +72,18 @@
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#">Github</a></li>
+						<li>
+							<form class="navbar-form navbar-left" role="search" method="get" action="http://www.google.com/search">
+							  <div class="form-group">
+							    <input type="text" class="form-control" placeholder="Search" name="q" size="25" maxlength="255">
+							  </div>
+							  <button type="submit" class="btn btn-default" value="Google Search">
+							    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+							  </button>
+							  <input type="hidden" name="sitesearch" value="projectimplicit.github.io" checked />
+							</form>
+						</li>
+						<li><a href="https://github.com/ProjectImplicit/PIPlayer">Github</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -111,10 +122,10 @@
 <li><p><code>{inlineTemplate: &#39;&lt;span&gt;&lt;%= trialData.name ?&gt;&lt;/span&gt;&#39;}</code> takes the literal text of a template</p>
 <p>Templates may include any valid html and <a href="http://documentcloud.github.com/underscore/#template">underscore template formating</a>. (Note: you should always wrap your template inside a single html element).</p>
 <p>Stimuli are passed the trial and stimulus data attributes as “trialData” and “stimulusData” so that you can call:</p>
-<pre><code class="lang-HTML">&lt;div&gt;
-  &lt;%= trialData.name %&gt;
-  &lt;span&gt; &lt;%= stimulusData.handle %&gt; &lt;/span&gt;
-&lt;/div&gt;
+<pre><code class="lang-HTML"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">%=</span> <span class="hljs-attribute">trialData.name</span> %&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">%=</span> <span class="hljs-attribute">stimulusData.handle</span> %&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
 </li>
 </ul>
@@ -239,12 +250,12 @@ Each input object must include both a <code>handle</code> and an <code>on</code>
 <p>Protip: In addition to the preset input types you can create custom input:</p>
 <pre><code class="lang-js">    {
         handle: <span class="hljs-string">'myInput'</span>,
-        on: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(callback)</span></span>{
+        on: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">callback</span>)</span>{
             <span class="hljs-comment">// do your mojo here and then</span>
             <span class="hljs-comment">// where e is the raw event, and 'eventType' is the name of this event</span>
             callback(e, <span class="hljs-string">'eventType'</span>);
         },
-        off: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+        off: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
             <span class="hljs-comment">// remove your listener (if you need to keep state you can encapsulate the whole input object in a module)</span>
         }
     }
@@ -326,7 +337,7 @@ The optional property <code>handle</code> narrows the search down to stimuli fit
 </ul>
 <p><strong>function</strong>:
 It is also possible to create a custom condition:</p>
-<pre><code class="lang-js">{type:<span class="hljs-string">'function'</span>,value:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(trial,inputData)</span></span>{
+<pre><code class="lang-js">{type:<span class="hljs-string">'function'</span>,value:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">trial,inputData</span>)</span>{
     <span class="hljs-comment">// do your mojo here and return true or false</span>
 }}
 </code></pre>
@@ -356,7 +367,7 @@ Any attributes in the setter object will be coppied to the stimulus.data object.
 <ul>
 <li><code>{type:&#39;setStimAttr&#39;,handle:&#39;myStim&#39;,setter:{myAttr:&#39;myValue&#39;,myOtherAttr:&#39;myOtherValue&#39;}</code></li>
 <li><p>The setter function:</p>
-<pre><code class="lang-js">  {type:<span class="hljs-string">'setStimAttr'</span>,handle:<span class="hljs-string">'myStim'</span>,setter:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+<pre><code class="lang-js">  {type:<span class="hljs-string">'setStimAttr'</span>,handle:<span class="hljs-string">'myStim'</span>,setter:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
       <span class="hljs-comment">// do your mojo here :)</span>
       <span class="hljs-comment">// the context ("this") of this function is the stimulus model</span>
   }
@@ -369,7 +380,7 @@ Any attributes in the setter object will be coppied to the trial.data object.</p
 <ul>
 <li><code>{type:&#39;setTrialAttr&#39;,setter:{myAttr:&#39;myValue&#39;,myOtherAttr:&#39;myOtherValue&#39;}</code></li>
 <li><p>The setter function:</p>
-<pre><code class="lang-js">  {type:<span class="hljs-string">'setTrialAttr'</span>,setter:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(trialData, eventData)</span></span>{
+<pre><code class="lang-js">  {type:<span class="hljs-string">'setTrialAttr'</span>,setter:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">trialData, eventData</span>)</span>{
       <span class="hljs-comment">// do your mojo here :)</span>
       <span class="hljs-comment">// trialData is the data object for this trial</span>
       <span class="hljs-comment">// eventData is the internal event that triggered this action</span>
@@ -384,7 +395,7 @@ Any attributes in the setter object will be coppied into the global object.</p>
 <ul>
 <li><code>{type:&#39;setGlobalAttr&#39;,setter:{myAttr:&#39;myValue&#39;,myOtherAttr:&#39;myOtherValue&#39;}</code></li>
 <li><p>The setter function:</p>
-<pre><code class="lang-js">  {type:<span class="hljs-string">'setGlobalAttr'</span>,setter:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(globalObject)</span></span>{
+<pre><code class="lang-js">  {type:<span class="hljs-string">'setGlobalAttr'</span>,setter:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">globalObject</span>)</span>{
       <span class="hljs-comment">// do your mojo here :)</span>
       <span class="hljs-comment">// globalObject is the global object...</span>
   }
@@ -538,7 +549,7 @@ If the data property is set as a string, we assume it refers to the element hand
 </ul>
 <p><strong>function</strong>:
 You may also use a custom function to pick your element.</p>
-<pre><code class="lang-js">{set: <span class="hljs-string">'setName'</span>, type: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(definitions)</span></span>{
+<pre><code class="lang-js">{set: <span class="hljs-string">'setName'</span>, type: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">definitions</span>)</span>{
     <span class="hljs-comment">// definitions is the inherit object (including  set, type, and whatever other properties you'd like to use)</span>
     <span class="hljs-comment">// the context ("this") is the element collection, it is a Backbone.js collection of the elements in the set</span>
 }}
@@ -550,7 +561,7 @@ The example shows how you can use customize to push a stimulus into the trial, t
 <pre><code class="lang-js">{
     inherit: <span class="hljs-string">'something'</span>,
     stimuli: [], <span class="hljs-comment">// note that their are no stimuli yet!</span>
-    customize : <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(trialSource, globalObject)</span></span>{
+    customize : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">trialSource, globalObject</span>)</span>{
         <span class="hljs-comment">// push a stimulus into the stimulus array</span>
         trialSource.stimuli.push(stim1);
     }
@@ -657,7 +668,7 @@ The wrapper mixer serves a sort of parenthesis for the mixer. It has two primary
 <pre><code class="lang-js">settings = {
     logger: {
         url: <span class="hljs-string">'your/target/url'</span>,
-        logger: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+        logger: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
             <span class="hljs-comment">// do your mojo here :)</span>
         }
     },
@@ -672,7 +683,7 @@ The wrapper mixer serves a sort of parenthesis for the mixer. It has two primary
     url: <span class="hljs-string">'your/target/url'</span>,
     pulse: <span class="hljs-number">3</span>,
     fullpath: <span class="hljs-literal">false</span>,
-    logger: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    logger: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
         <span class="hljs-comment">// do your mojo here :)</span>
     }
 }
@@ -694,7 +705,7 @@ An object that is used to extend each logged row. This is useful in case you wan
 Accepts a function to replace the existing logging function. (don’t touch this if you don’t <strong>realy</strong> know what you’re doing).
 The logger function is called each time a log action is triggered (see interactions: actions <a href="#interactions-actions">log</a>).
 It is responsible for adding a logging row to be sent to the server.</p>
-<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(trialData, inputData, actionData,logStack)</span></span>{
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">trialData, inputData, actionData,logStack</span>)</span>{
     <span class="hljs-comment">// trialData: the data object from this trial</span>
     <span class="hljs-comment">// inputData: the input object that triggered this action</span>
     <span class="hljs-comment">// actionData: the action object that was triggered (it should look like {type:'log', your:'custom property'})</span>
@@ -706,7 +717,7 @@ It is responsible for adding a logging row to be sent to the server.</p>
 }
 </code></pre>
 <p>This is what the default logger looks like:</p>
-<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(trialData, inputData, actionData,logStack)</span></span>{
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">trialData, inputData, actionData,logStack</span>)</span>{
     <span class="hljs-keyword">var</span> stimList = <span class="hljs-keyword">this</span>._stimulus_collection.get_stimlist();
     <span class="hljs-keyword">var</span> mediaList = <span class="hljs-keyword">this</span>._stimulus_collection.get_medialist();
 
@@ -773,7 +784,7 @@ This option is not used if the endTask hook is set.</p>
 <h4 id="hooks">Hooks</h4>
 <p>Hooks are functions that are to be run at predefined points throughout the player.</p>
 <pre><code class="lang-js">hooks: {
-    endTask: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{}
+    endTask: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{}
 }
 </code></pre>
 <p><code>endTask</code>:
@@ -791,7 +802,7 @@ In order to create a post with three keys: json, session_id and task_id - you wo
 <h3 id="api">API</h3>
 <p>The API is a javascript object that is used to activate the PIP.
 The basic format for accessing the API is as follows:</p>
-<pre><code class="lang-js">define([<span class="hljs-string">'app/API'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(APIconstructor)</span> </span>{
+<pre><code class="lang-js">define([<span class="hljs-string">'app/API'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">APIconstructor</span>) </span>{
     <span class="hljs-keyword">var</span> API = <span class="hljs-keyword">new</span> APIconstructor();
 
     API.addScript(script);

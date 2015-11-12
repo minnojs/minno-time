@@ -19,6 +19,7 @@
     "gulp-docco": "0.0.4",
     "gulp-front-matter": "^1.2.0",
     "gulp-git": "^0.5.6",
+    "gulp-marked": "^1.0.0",
     "gulp-rename": "^1.2.0",
     "gulp-sass": "^2.0.4",
     "gulp-util": "^3.0.2",

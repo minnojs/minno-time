@@ -72,7 +72,18 @@
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#">Github</a></li>
+						<li>
+							<form class="navbar-form navbar-left" role="search" method="get" action="http://www.google.com/search">
+							  <div class="form-group">
+							    <input type="text" class="form-control" placeholder="Search" name="q" size="25" maxlength="255">
+							  </div>
+							  <button type="submit" class="btn btn-default" value="Google Search">
+							    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+							  </button>
+							  <input type="hidden" name="sitesearch" value="projectimplicit.github.io" checked />
+							</form>
+						</li>
+						<li><a href="https://github.com/ProjectImplicit/PIPlayer">Github</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -333,7 +344,7 @@ scorer.addSettings(<span class="hljs-string">'message'</span>,messageObj);
 scorer.dynamicPost({
     score: DScoreObj.DScore,
     feedback: DScoreObj.FBMsg
-}).always(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{ <span class="hljs-comment">// always run the following code, even if the post failed.</span>
+}).always(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{ <span class="hljs-comment">// always run the following code, even if the post failed.</span>
     top.location.href = <span class="hljs-string">"/my/next/url/"</span>;
 });
 </code></pre>

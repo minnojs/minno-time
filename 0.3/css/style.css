@@ -170,9 +170,7 @@ body {
       font-weight: 500;
       color: #767676;
       font-weight: bold; }
-      .bs-docs-sidebar .nav > li > a:hover,
-      .bs-docs-sidebar .nav > li > a:focus, .bs-docs-sidebar .nav > li > div:hover,
-      .bs-docs-sidebar .nav > li > div:focus {
+      .bs-docs-sidebar .nav > li > a:hover, .bs-docs-sidebar .nav > li > a:focus, .bs-docs-sidebar .nav > li > div:hover, .bs-docs-sidebar .nav > li > div:focus {
         padding-left: 19px;
         color: #563d7c;
         text-decoration: none;
@@ -197,13 +195,9 @@ body {
         .bs-docs-sidebar .nav .nav > li > a a, .bs-docs-sidebar .nav .nav > li > div a {
           color: #767676;
           margin-right: 5px; }
-          .bs-docs-sidebar .nav .nav > li > a a:hover,
-          .bs-docs-sidebar .nav .nav > li > a a:focus, .bs-docs-sidebar .nav .nav > li > div a:hover,
-          .bs-docs-sidebar .nav .nav > li > div a:focus {
+          .bs-docs-sidebar .nav .nav > li > a a:hover, .bs-docs-sidebar .nav .nav > li > a a:focus, .bs-docs-sidebar .nav .nav > li > div a:hover, .bs-docs-sidebar .nav .nav > li > div a:focus {
             text-decoration: none; }
-        .bs-docs-sidebar .nav .nav > li > a:hover,
-        .bs-docs-sidebar .nav .nav > li > a:focus, .bs-docs-sidebar .nav .nav > li > div:hover,
-        .bs-docs-sidebar .nav .nav > li > div:focus {
+        .bs-docs-sidebar .nav .nav > li > a:hover, .bs-docs-sidebar .nav .nav > li > a:focus, .bs-docs-sidebar .nav .nav > li > div:hover, .bs-docs-sidebar .nav .nav > li > div:focus {
           padding-left: 29px; }
       .bs-docs-sidebar .nav .nav > .active > div,
       .bs-docs-sidebar .nav .nav > .active:hover > div,
@@ -238,8 +232,7 @@ body {
   @media (min-width: 1200px) {
     .bs-docs-sidebar {
       /* Widen the fixed sidebar again */ }
-      .bs-docs-sidebar.affix-bottom,
-      .bs-docs-sidebar.affix {
+      .bs-docs-sidebar.affix-bottom, .bs-docs-sidebar.affix {
         width: 263px; } }
 
 /* First level of nav */

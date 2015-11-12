@@ -72,7 +72,18 @@
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#">Github</a></li>
+						<li>
+							<form class="navbar-form navbar-left" role="search" method="get" action="http://www.google.com/search">
+							  <div class="form-group">
+							    <input type="text" class="form-control" placeholder="Search" name="q" size="25" maxlength="255">
+							  </div>
+							  <button type="submit" class="btn btn-default" value="Google Search">
+							    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+							  </button>
+							  <input type="hidden" name="sitesearch" value="projectimplicit.github.io" checked />
+							</form>
+						</li>
+						<li><a href="https://github.com/ProjectImplicit/PIPlayer">Github</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -95,7 +106,7 @@
 		
 
 		
-		  <div class='highlight'><pre>define([<span class="hljs-string">'pipAPI'</span>,<span class="hljs-string">'pipScorer'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(APIConstructor,Scorer)</span> </span>{
+		  <div class='highlight'><pre>define([<span class="hljs-string">'pipAPI'</span>,<span class="hljs-string">'pipScorer'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">APIConstructor,Scorer</span>) </span>{
 
 	<span class="hljs-keyword">var</span> API = <span class="hljs-keyword">new</span> APIConstructor();
 	<span class="hljs-keyword">var</span> scorer = <span class="hljs-keyword">new</span> Scorer();
@@ -141,7 +152,7 @@
 
 
 		
-		  <div class='highlight'><pre>        logger: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(trialData, inputData, actionData, logStack)</span></span>{
+		  <div class='highlight'><pre>        logger: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">trialData, inputData, actionData, logStack</span>)</span>{
 
 			<span class="hljs-keyword">var</span> stimList = <span class="hljs-keyword">this</span>._stimulus_collection.get_stimlist();
 			<span class="hljs-keyword">var</span> mediaList = <span class="hljs-keyword">this</span>._stimulus_collection.get_medialist();
@@ -246,7 +257,7 @@
 						{type:<span class="hljs-string">'setInput'</span>,input:{handle:category1,on: <span class="hljs-string">'keypressed'</span>, key:<span class="hljs-string">'i'</span>}},
 						{type:<span class="hljs-string">'setInput'</span>,input:{handle:category2,on:<span class="hljs-string">'leftTouch'</span>,touch:<span class="hljs-literal">true</span>}},
 						{type:<span class="hljs-string">'setInput'</span>,input:{handle:category1,on:<span class="hljs-string">'rightTouch'</span>,touch:<span class="hljs-literal">true</span>}},
-						{type:<span class="hljs-string">'setTrialAttr'</span>,setter:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data,event)</span></span>{
+						{type:<span class="hljs-string">'setTrialAttr'</span>,setter:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data,event</span>)</span>{
 							data.begin = event.latency;
 						}}
 					]
@@ -689,7 +700,7 @@ Twp categories of images, and two categories of words.</p>
 			data: {blockStart:<span class="hljs-literal">true</span>},
 			inherit: <span class="hljs-string">"inst"</span>,
 			stimuli: [],
-			customize: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+			customize: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
 				<span class="hljs-keyword">var</span> trial = <span class="hljs-keyword">this</span>;
 				<span class="hljs-keyword">var</span> DScoreObj = scorer.computeD();
 				<span class="hljs-keyword">var</span> DScore = DScoreObj.Dscore;

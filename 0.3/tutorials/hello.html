@@ -72,7 +72,18 @@
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#">Github</a></li>
+						<li>
+							<form class="navbar-form navbar-left" role="search" method="get" action="http://www.google.com/search">
+							  <div class="form-group">
+							    <input type="text" class="form-control" placeholder="Search" name="q" size="25" maxlength="255">
+							  </div>
+							  <button type="submit" class="btn btn-default" value="Google Search">
+							    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+							  </button>
+							  <input type="hidden" name="sitesearch" value="projectimplicit.github.io" checked />
+							</form>
+						</li>
+						<li><a href="https://github.com/ProjectImplicit/PIPlayer">Github</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -96,7 +107,7 @@
 <h3 id="the-wrapper">The wrapper</h3>
 <p>PIP’s scripts are usually a single JavaScript file. The script is wrapped within a define function (You don’t have to understand what it does, but if you are interested look up <a href="http://requirejs.org/">requirejs</a>).</p>
 <pre><code class="lang-js"><span class="hljs-comment">/* The script wrapper */</span>
-define([<span class="hljs-string">'pipAPI'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(APIconstructor)</span> </span>{
+define([<span class="hljs-string">'pipAPI'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">APIconstructor</span>) </span>{
     <span class="hljs-keyword">var</span> API = <span class="hljs-keyword">new</span> APIconstructor();
 
     <span class="hljs-comment">/*
@@ -110,7 +121,7 @@ define([<span class="hljs-string">'pipAPI'</span>], <span class="hljs-function">
 <p>The wrapper creates the <code>API</code> object for you. The <code>API</code> object is the instrument that we will use to create and run tasks. The whole task is written by creating a bunch of objects and arrays. The API object has functions that accept those objects and arrays and know how to create a task from them. </p>
 <h3 id="the-task-structure">The task structure</h3>
 <p>Each task is composed of one or more trials, that are activated sequentially. We set trials into the player using a function called <a href="./API.html#add-sequence"><code>API.addSequence</code></a> that accepts an array of trials as its argument. After adding any trials that you like all that is left is activating the player by calling <a href="API.html#play"><code>API.play</code></a>:</p>
-<pre><code class="lang-js">define([<span class="hljs-string">'pipAPI'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(APIconstructor)</span> </span>{
+<pre><code class="lang-js">define([<span class="hljs-string">'pipAPI'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">APIconstructor</span>) </span>{
 
     <span class="hljs-keyword">var</span> API = <span class="hljs-keyword">new</span> APIconstructor();
 
@@ -200,10 +211,10 @@ Note also that the name that we give the event is absolutely arbitrary, so we ca
 <p>Each interaction object has a <code>conditions</code> property and an <code>actions</code> property. The <code>conditions</code> property is an array of condition objects. Each condition objects defines a condition that can be true of false. For instance, the condition in the example above is that the name (i.e., handle) of currently active input is ‘space’. This condition is true only when the participant hits space (that is what we defined in the input section). There are a few other possible conditions that can be defined, and we will learn about them in more advanced examples (to see the full list of conditions, see <a href="./API.html#interactions-conditions">here</a>).
 If all the condition objects in the conditions array are true, then all the actions in the <code>actions</code> array are executed. </p>
 <p>The <code>actions</code> array holds an array of actions to perform if all <code>conditions</code> are evaluated as true. In this case the only action is to end this trial. We will learn about other forms of actions in more advanced examples (to see the full list of conditions, see <a href="./API.html#interactions-actions">here</a>).</p>
-<h3 id="detailed-recap">Detailed recap</h3>
-<p>Here is the whole code again, with comments that explain each and every line. Before you read those comments, it might be good to look at the simple not-commented code <a href="hello.js">here</a>, and try again to understand what you see. Whenever you have a question about a line in the code, have a look at that line in the heavily commented code below:</p>
+<p>###Detailed recap
+Here is the whole code again, with comments that explain each and every line. Before you read those comments, it might be good to look at the simple not-commented code <a href="hello.js">here</a>, and try again to understand what you see. Whenever you have a question about a line in the code, have a look at that line in the heavily commented code below:</p>
 <pre><code class="lang-js"><span class="hljs-comment">/* The script wrapper */</span>
-define([<span class="hljs-string">'pipAPI'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(APIconstructor)</span> </span>{
+define([<span class="hljs-string">'pipAPI'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">APIconstructor</span>) </span>{
 
     <span class="hljs-keyword">var</span> API = <span class="hljs-keyword">new</span> APIconstructor();
 

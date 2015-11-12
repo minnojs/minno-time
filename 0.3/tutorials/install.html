@@ -72,7 +72,18 @@
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#">Github</a></li>
+						<li>
+							<form class="navbar-form navbar-left" role="search" method="get" action="http://www.google.com/search">
+							  <div class="form-group">
+							    <input type="text" class="form-control" placeholder="Search" name="q" size="25" maxlength="255">
+							  </div>
+							  <button type="submit" class="btn btn-default" value="Google Search">
+							    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+							  </button>
+							  <input type="hidden" name="sitesearch" value="projectimplicit.github.io" checked />
+							</form>
+						</li>
+						<li><a href="https://github.com/ProjectImplicit/PIPlayer">Github</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -125,7 +136,7 @@
 <h3 id="public-installation">Public installation</h3>
 <p>The back-end for recording the player data is not open source yet (if you want to write a back-end, thats great! we’d love to cooperate).</p>
 <p>If you want to use the player within you own application you should use the files within <code>dist</code> and fit <code>index.html</code> to your needs. The idea is that the inner <code>require</code> takes the URL to your script (relative to the js folder - so it may be easier for you to give it absolute URLs).</p>
-<pre><code class="lang-js"><span class="hljs-built_in">require</span>([<span class="hljs-string">'js/config'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+<pre><code class="lang-js"><span class="hljs-built_in">require</span>([<span class="hljs-string">'js/config'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
     <span class="hljs-built_in">require</span>([<span class="hljs-string">'path/to/your/script'</span>]);
 });
 </code></pre>

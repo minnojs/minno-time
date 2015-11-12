@@ -72,7 +72,18 @@
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#">Github</a></li>
+						<li>
+							<form class="navbar-form navbar-left" role="search" method="get" action="http://www.google.com/search">
+							  <div class="form-group">
+							    <input type="text" class="form-control" placeholder="Search" name="q" size="25" maxlength="255">
+							  </div>
+							  <button type="submit" class="btn btn-default" value="Google Search">
+							    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+							  </button>
+							  <input type="hidden" name="sitesearch" value="projectimplicit.github.io" checked />
+							</form>
+						</li>
+						<li><a href="https://github.com/ProjectImplicit/PIPlayer">Github</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -102,7 +113,7 @@
 
 
 		
-		  <div class='highlight'><pre>define([<span class="hljs-string">'pipAPI'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(APIconstructor)</span> </span>{
+		  <div class='highlight'><pre>define([<span class="hljs-string">'pipAPI'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">APIconstructor</span>) </span>{
 
 	<span class="hljs-keyword">var</span> API = <span class="hljs-keyword">new</span> APIconstructor();
 
@@ -126,7 +137,7 @@ prime1/category1++</p>
 
 
 		
-		  <div class='highlight'><pre>	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inc_prime1_category1</span><span class="hljs-params">()</span></span>{
+		  <div class='highlight'><pre>	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inc_prime1_category1</span>(<span class="hljs-params"></span>)</span>{
 		AMPScorer.counter.prime1.category1 = AMPScorer.counter.prime1.category1+<span class="hljs-number">1</span>;
 		}</pre></div>
 		
@@ -135,7 +146,7 @@ prime1/category1++</p>
 
 
 		
-		  <div class='highlight'><pre>	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inc_prime1_category2</span><span class="hljs-params">()</span></span>{
+		  <div class='highlight'><pre>	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inc_prime1_category2</span>(<span class="hljs-params"></span>)</span>{
 		AMPScorer.counter.prime1.category2 = AMPScorer.counter.prime1.category2+<span class="hljs-number">1</span>;
 		}</pre></div>
 		
@@ -144,7 +155,7 @@ prime1/category1++</p>
 
 
 		
-		  <div class='highlight'><pre>	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inc_prime2_category1</span><span class="hljs-params">()</span></span>{
+		  <div class='highlight'><pre>	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inc_prime2_category1</span>(<span class="hljs-params"></span>)</span>{
 		AMPScorer.counter.prime2.category1 = AMPScorer.counter.prime2.category1+<span class="hljs-number">1</span>;
 		}</pre></div>
 		
@@ -153,7 +164,7 @@ prime1/category1++</p>
 
 
 		
-		  <div class='highlight'><pre>	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inc_prime2_category2</span><span class="hljs-params">()</span></span>{
+		  <div class='highlight'><pre>	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inc_prime2_category2</span>(<span class="hljs-params"></span>)</span>{
 		AMPScorer.counter.prime2.category2 = AMPScorer.counter.prime2.category2+<span class="hljs-number">1</span>;
 		}</pre></div>
 		
@@ -162,7 +173,7 @@ prime1/category1++</p>
 
 
 		
-		  <div class='highlight'><pre>	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">resetCounters</span><span class="hljs-params">()</span></span>{
+		  <div class='highlight'><pre>	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">resetCounters</span>(<span class="hljs-params"></span>)</span>{
 		AMPScorer.counter.prime2.category2=<span class="hljs-number">0</span>;
 		AMPScorer.counter.prime2.category1=<span class="hljs-number">0</span>;
 		AMPScorer.counter.prime1.category2=<span class="hljs-number">0</span>;
@@ -174,7 +185,7 @@ prime1/category1++</p>
 
 
 		
-		  <div class='highlight'><pre>	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">computeAMPScore</span><span class="hljs-params">(scoreArray)</span></span>{
+		  <div class='highlight'><pre>	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">computeAMPScore</span>(<span class="hljs-params">scoreArray</span>)</span>{
 		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i=<span class="hljs-number">3</span>; i&lt;scoreArray.length; i++){<span class="hljs-comment">// the first 3 are the example images, go over all the other logs.</span>
 			<span class="hljs-keyword">if</span>(scoreArray[i].responseHandle == category1){ <span class="hljs-comment">//pleasent response</span>
 				<span class="hljs-keyword">if</span>(scoreArray[i].data.condition == condition1){ <span class="hljs-comment">//the image is from the first category</span>
@@ -239,7 +250,7 @@ prime1/category1++</p>
 
 
 		
-		  <div class='highlight'><pre>        logger: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(trialData, inputData, actionData,logStack)</span></span>{
+		  <div class='highlight'><pre>        logger: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">trialData, inputData, actionData,logStack</span>)</span>{
 
 			<span class="hljs-keyword">var</span> stimList = <span class="hljs-keyword">this</span>._stimulus_collection.get_stimlist();
 			<span class="hljs-keyword">var</span> mediaList = <span class="hljs-keyword">this</span>._stimulus_collection.get_medialist();
@@ -323,7 +334,7 @@ prime1/category1++</p>
 
 
 		
-		  <div class='highlight'><pre>						{type:<span class="hljs-string">'setTrialAttr'</span>,setter:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data,event)</span></span>{
+		  <div class='highlight'><pre>						{type:<span class="hljs-string">'setTrialAttr'</span>,setter:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data,event</span>)</span>{
 							data.begin = event.latency;
 						}},
 
@@ -478,7 +489,7 @@ prime1/category1++</p>
 
 
 		
-		  <div class='highlight'><pre>						{type:<span class="hljs-string">'setTrialAttr'</span>,setter:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data,event)</span></span>{
+		  <div class='highlight'><pre>						{type:<span class="hljs-string">'setTrialAttr'</span>,setter:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data,event</span>)</span>{
 							data.begin = event.latency;
 						}},
 
@@ -1009,7 +1020,7 @@ example</p>
 			inherit: <span class="hljs-string">"inst"</span>,
 			layout: [],
 			stimuli: [],
-				customize: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+				customize: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
 				<span class="hljs-keyword">var</span> trial = <span class="hljs-keyword">this</span>;</pre></div>
 		
 	
