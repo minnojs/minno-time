@@ -98,8 +98,8 @@ define(function(require){
             // helper function: returns sizes of element;
             function size($elem){
                 return {
-                    height    : $elem.outerHeight(),
-                    width    : $elem.outerWidth()
+                    height    : $elem.innerHeight(),
+                    width    : $elem.innerWidth()
                 };
             }
 
