@@ -102,7 +102,24 @@
 			<div class="row">
 				<div class="col-md-9" role="main">
 					
-	<h1 id="player-manual">Player manual</h1>
+	<h3 id="table-of-contents">Table of contents</h3>
+<ul>
+<li><a href="#definitions">Defintions</a></li>
+<li><a href="#media">Media</a></li>
+<li><a href="#stimuli">Stimuli</a></li>
+<li><a href="#trial">Trial</a><ul>
+<li>[Layout / stimuli]</li>
+<li><a href="#input">Input</a></li>
+<li><a href="interactions">Interactions</a><ul>
+<li>[Conditions]</li>
+<li>[Actions]</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#inheritance">Inheritance</a></li>
+<li><a href="#logging">Logginh</a></li>
+</ul>
 <h3 id="definitions">Definitions</h3>
 <ul>
 <li><strong>Media</strong> are the objects that we display.</li>
@@ -116,20 +133,6 @@
 <li>Image: <code>{image: &#39;some/url/image.png}</code></li>
 <li>Jquery elements:<code>{jquery: $(&#39;&lt;div&gt;&#39;,{text: &#39;anything you want&#39; })}</code></li>
 <li>HTML: <code>{html: &quot;&lt;div&gt;any html&lt;/div&gt;&quot;}</code></li>
-<li><p>Template:</p>
-<ul>
-<li><code>{template: &#39;some/url/template.html&#39;}</code> takes the url of a template file</li>
-<li><p><code>{inlineTemplate: &#39;&lt;span&gt;&lt;%= trialData.name ?&gt;&lt;/span&gt;&#39;}</code> takes the literal text of a template</p>
-<p>Templates may include any valid html and <a href="http://documentcloud.github.com/underscore/#template">underscore template formating</a>. (Note: you should always wrap your template inside a single html element).</p>
-<p>Stimuli are passed the trial and stimulus data attributes as “trialData” and “stimulusData” so that you can call:</p>
-<pre><code class="lang-HTML"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">%=</span> <span class="hljs-attribute">trialData.name</span> %&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">%=</span> <span class="hljs-attribute">stimulusData.handle</span> %&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-</code></pre>
-</li>
-</ul>
-</li>
 </ul>
 <p>If you insert a string instead of a media object the player treats it as if it was Plain text.
 The folowing two media definitions have the same outcome:<code>&#39;Wiki&#39;</code>, <code>{word:&#39;Wiki&#39;}</code></p>
@@ -153,7 +156,7 @@ The size of the stimulus in percentage of the player canvas. By default, size is
 <p><code>location</code>:
 The location to display the stimulus, in percentage of the player canvas. Where <code>left:20</code> means that the left border of the stimulus should be 20% from the left of the canvas. You may define any of <code>left</code>/<code>right</code>/<code>top</code>/<code>bottom</code> attributes.</p>
 <p>Instead of specifying percentages you may use the keyword <code>center</code> in order to center the stimulus, or the keyword <code>auto</code> in order to override any previous settings.
-By default, location is set to <code>{left:&#39;center&#39;, right:&#39;center&#39;,top:&#39;center&#39;, left:&#39;center&#39;}</code>.</p>
+By default, location is set to <code>{left:&#39;center&#39;, right:&#39;center&#39;,top:&#39;center&#39;, bottom:&#39;center&#39;}</code>.</p>
 <p><code>css</code>:
 Accepts any jquery css object. (see the <a href="http://api.jquery.com/css/">api</a> for details)</p>
 <p><code>media</code>:
@@ -225,17 +228,33 @@ Each input object must include both a <code>handle</code> and an <code>on</code>
 <li><code>{handle: &#39;enter&#39;,on: &#39;keypressed&#39;,key:13}</code></li>
 <li><code>{handle: &#39;enter&#39;,on: &#39;keypressed&#39;,key:[13,&#39;a&#39;]}</code></li>
 </ul>
-<p><strong>click</strong>: Takes either a stimulus handle (<code>stimHandle</code>) or an html element (<code>element</code>) to present, in case an element is defined it is presented as soon as the input is activated.</p>
+<p><strong>click</strong>: Takes either a stimulus handle (<code>stimHandle</code>) or an html element (<code>element</code>). The input is activated when the user clicks the stimulus or the html element. In case an element is defined it is presented as soon as the input is activated.</p>
 <ul>
 <li><code>{handle:&#39;right&#39;,on:&#39;click&#39;,element:$(&#39;&lt;div&gt;&#39;,css:{})}</code></li>
 <li><code>{handle:&#39;right&#39;,on:&#39;click&#39;,stimHandle:&#39;myStimHandle&#39;}</code></li>
 </ul>
+<p><strong>mouseup</strong>: Takes a stimulus handle (<code>stimHandle</code>). Triggers each time the mouse key is released over the space of the target object.</p>
+<ul>
+<li><code>{handle:&#39;right&#39;,on:&#39;mouseup&#39;,stimHandle:&#39;myStimHandle&#39;}</code></li>
+</ul>
+<p><strong>mousedown</strong>: Takes a stimulus handle (<code>stimHandle</code>). Triggers each time the mouse key is pressed over the space of the target object.</p>
+<ul>
+<li><code>{handle:&#39;right&#39;,on:&#39;mousedown&#39;,stimHandle:&#39;myStimHandle&#39;}</code></li>
+</ul>
+<p><strong>mouseenter</strong>: Takes a stimulus handle (<code>stimHandle</code>). Triggers each time the mouse enters the space of the target object. (note that this behaviour is meaningless in touch devices)</p>
+<ul>
+<li><code>{handle:&#39;right&#39;,on:&#39;mouseenter&#39;,stimHandle:&#39;myStimHandle&#39;}</code></li>
+</ul>
+<p><strong>mouseleave</strong>: Takes a stimulus handle (<code>stimHandle</code>). Triggers each time the mouse leaves the space of the target object. (note that this behaviour is meaningless in touch devices)</p>
+<ul>
+<li><code>{handle:&#39;right&#39;,on:&#39;mouseleave&#39;,stimHandle:&#39;myStimHandle&#39;}</code></li>
+</ul>
 <p><strong>timeout</strong>: Takes a <code>duration</code> property and fires after the duration passes</p>
 <ul>
 <li><code>{handle:&#39;time&#39;,on:&#39;timeout&#39;,duration:300}</code></li>
-<li><code>{handle:&#39;time&#39;,on:&#39;timeout&#39;,duration:[300,600,900]]}</code>             pick a random value from an array</li>
-<li><code>{handle:&#39;time&#39;,on:&#39;timeout&#39;,duration:{min:300, max: 900}}}</code>         randomly pick from within a range</li>
-<li><code>{handle:&#39;time&#39;,on:&#39;timeout&#39;,duration:function(){return 630}}</code>     use a custom function to pick duration</li>
+<li><code>{handle:&#39;time&#39;,on:&#39;timeout&#39;,duration:[300,600,900]]}</code>            pick a random value from an array</li>
+<li><code>{handle:&#39;time&#39;,on:&#39;timeout&#39;,duration:{min:300, max: 900}}}</code>      randomly pick from within a range</li>
+<li><code>{handle:&#39;time&#39;,on:&#39;timeout&#39;,duration:function(){return 630}}</code>    use a custom function to pick duration</li>
 </ul>
 <p>In addition, we have several shortcuts for commonly used inputs:</p>
 <ul>
@@ -285,6 +304,12 @@ For each interaction object, if all the conditions are true, then all the action
 <h4 id="interactions-conditions">Interactions: conditions</h4>
 <p>Each condition object has a <code>type</code> property that defines what type of evaluation to perform.</p>
 <p>In addition, it has a <code>negate</code> property (false by default) that determines whether to activate the condition when the evaluation is true or when it is false.</p>
+<p>It is possible to create complex conditions, the following condition, for instance, is activated in case there is an input that is not equal to trial.data.customAttribute, and the input handle is not “time”.</p>
+<pre><code class="lang-js">[
+    {type:<span class="hljs-string">'inputEqualsTrial'</span>,property:<span class="hljs-string">'customAttribute'</span>,negate:<span class="hljs-literal">true</span>},
+    {type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'time'</span>,negate:<span class="hljs-literal">true</span>}
+]
+</code></pre>
 <p><strong>begin</strong>:
 Automatically activated at the beginning of the trial, and is never fired again.</p>
 <ul>
@@ -295,11 +320,6 @@ Check if the input <code>handle</code> equals to a static value, <code>value</co
 <ul>
 <li><code>{type:&#39;inputEquals&#39;,value:&#39;enter&#39;}</code></li>
 <li><code>{type:&#39;inputEquals&#39;,value:[&#39;left&#39;,&#39;right&#39;]}</code></li>
-</ul>
-<p><strong>inputEqualsGlobal</strong>
-Check if the input <code>handle</code> equals to the <code>property</code> property of the global object.</p>
-<ul>
-<li><code>{type:&#39;inputEqualsGlobal&#39;,property:&#39;customAttribute&#39;}</code></li>
 </ul>
 <p><strong>inputEqualsTrial</strong>:
 Check if the input <code>handle</code> equals to the <code>property</code> property of trial.data</p>
@@ -318,6 +338,11 @@ Check if the <code>property</code> property of the trial.data object equals to <
 <ul>
 <li><code>{type:&#39;trialEquals&#39;,property:&#39;customProperty&#39;, value:&#39;someValue&#39;}</code></li>
 </ul>
+<p><strong>inputEqualsGlobal</strong>
+Check if the input <code>handle</code> equals to the <code>property</code> property of the global object.</p>
+<ul>
+<li><code>{type:&#39;inputEqualsGlobal&#39;,property:&#39;customAttribute&#39;}</code></li>
+</ul>
 <p><strong>globalEquals</strong>:
 Check if the <code>property</code> property of the global object equals to <code>value</code>.</p>
 <ul>
@@ -335,17 +360,35 @@ The optional property <code>handle</code> narrows the search down to stimuli fit
 <li><code>{type:&#39;globalEqualsTrial&#39;,globalProp:&#39;customAttribute&#39;, stimProp:&#39;otherCustomAttribute&#39;}</code></li>
 <li><code>{type:&#39;globalEqualsTrial&#39;,globalProp:&#39;customAttribute&#39;, stimProp:&#39;otherCustomAttribute&#39;, handle:&#39;myStimHandle&#39;}</code></li>
 </ul>
+<p><strong>inputEqualsCurrent</strong>
+Check if the input <code>handle</code> equals to the <code>property</code> property of the current object.</p>
+<ul>
+<li><code>{type:&#39;inputEqualsCurrent&#39;,property:&#39;customAttribute&#39;}</code></li>
+</ul>
+<p><strong>currentEquals</strong>:
+Check if the <code>property</code> property of the current object equals to <code>value</code>.</p>
+<ul>
+<li><code>{type:&#39;currentEquals&#39;,property:&#39;customProperty&#39;, value:&#39;someValue&#39;}</code></li>
+</ul>
+<p><strong>currentEqualsTrial</strong>:
+Check if the current property <code>currentProp</code> equals to the trial.data property <code>trialProp</code>.</p>
+<ul>
+<li><code>{type:&#39;currentEqualsTrial&#39;,currentProp:&#39;customAttribute&#39;, trialProp:&#39;otherCustomAttribute&#39;}</code></li>
+</ul>
+<p><strong>currentEqualsStim</strong>:
+Check if the current property <code>currentProp</code> equals to the <code>stimProp</code> property of any one of the stimulus.data in this trial.
+The optional property <code>handle</code> narrows the search down to stimuli fitting the <code>handle</code></p>
+<ul>
+<li><code>{type:&#39;currentEqualsTrial&#39;,currentProp:&#39;customAttribute&#39;, stimProp:&#39;otherCustomAttribute&#39;}</code></li>
+<li><code>{type:&#39;currentEqualsTrial&#39;,currentProp:&#39;customAttribute&#39;, stimProp:&#39;otherCustomAttribute&#39;, handle:&#39;myStimHandle&#39;}</code></li>
+</ul>
 <p><strong>function</strong>:
+This options is deprecated. use <strong>custom</strong> instead.</p>
+<p><strong>custom</strong>:
 It is also possible to create a custom condition:</p>
-<pre><code class="lang-js">{type:<span class="hljs-string">'function'</span>,value:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">trial,inputData</span>)</span>{
+<pre><code class="lang-js">{type:<span class="hljs-string">'custom'</span>, value:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">condtion, inputData, trial</span>)</span>{
     <span class="hljs-comment">// do your mojo here and return true or false</span>
 }}
-</code></pre>
-<p>It is possible to create complex conditions, the following condition, for instance, is activated in case there is an input that is not equal to trial.data.customAttribute, and the input handle is not “time”.</p>
-<pre><code class="lang-js">[
-    {type:<span class="hljs-string">'inputEqualsTrial'</span>,property:<span class="hljs-string">'customAttribute'</span>,negate:<span class="hljs-literal">true</span>},
-    {type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'time'</span>,negate:<span class="hljs-literal">true</span>}
-]
 </code></pre>
 <h4 id="interactions-actions">Interactions: actions</h4>
 <p>If all the conditions in a row of interactions are true, its actions will be executed.</p>
@@ -430,6 +473,11 @@ Resets trial timer. The latency of any events from here on (including the curren
 <ul>
 <li><code>{type:&#39;endTrial&#39;}</code></li>
 </ul>
+<p><strong>canvas</strong>:
+Change canvas style using any of the following properties (see <a href="#canvas">settings</a>): <code>background</code>, <code>canvasBackground</code>, <code>borderColor</code>, <code>borderWidth</code>.</p>
+<ul>
+<li><code>{type:&#39;canvas&#39;, background:&#39;blue&#39;}</code></li>
+</ul>
 <p><strong>log</strong>:
 Log this action. Pushes this action into the logging stack so that it is later sent to the server (you can set how the player logs an action using the <a href="#logger-">logger settings</a>)</p>
 <ul>
@@ -506,8 +554,8 @@ The only exception to this rule is their <code>data</code> objects which we atte
 
 <span class="hljs-comment">// The result would be:</span>
 {
-    data: {name: <span class="hljs-string">'jack'</span>, family:<span class="hljs-string">'doe'</span>}     <span class="hljs-comment">// the child kept its own name but inherited the family name</span>
-    stimuli: [                            <span class="hljs-comment">// the stimuli array was completely overwritten</span>
+    data: {name: <span class="hljs-string">'jack'</span>, family:<span class="hljs-string">'doe'</span>}  <span class="hljs-comment">// the child kept its own name but inherited the family name</span>
+    stimuli: [                          <span class="hljs-comment">// the stimuli array was completely overwritten</span>
         stim1
     ]
 }
