@@ -56,7 +56,7 @@ The size of the stimulus in percentage of the player canvas. By default, size is
 The location to display the stimulus, in percentage of the player canvas. Where `left:20` means that the left border of the stimulus should be 20% from the left of the canvas. You may define any of `left`/`right`/`top`/`bottom` attributes.
 
 Instead of specifying percentages you may use the keyword `center` in order to center the stimulus, or the keyword `auto` in order to override any previous settings.
-By default, location is set to `{left:'center', right:'center',top:'center', left:'center'}`.
+By default, location is set to `{left:'center', right:'center',top:'center', bottom:'center'}`.
 
 `css`:
 Accepts any jquery css object. (see the [api](http://api.jquery.com/css/) for details)
