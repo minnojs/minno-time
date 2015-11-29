@@ -3,7 +3,19 @@ title: API
 description: All the little details...
 ---
 
-# Player manual
+### Table of contents
+
+* [Defintions](#definitions)
+* [Media](#media)
+* [Stimuli](#stimuli)
+* [Trial](#trial)
+    - [Layout / stimuli]
+    - [Input](#input)
+    - [Interactions](interactions)
+        + [Conditions]
+        + [Actions]
+* [Inheritance](#inheritance)
+* [Logginh](#logging)
 
 ### Definitions
 * **Media** are the objects that we display.
@@ -18,24 +30,9 @@ Media are the objects that we display. We currently support five types of media:
 * Image: `{image: 'some/url/image.png}`
 * Jquery elements:` {jquery: $('<div>',{text: 'anything you want' })}`
 * HTML: `{html: "<div>any html</div>"}`
-* Template:
-    * `{template: 'some/url/template.html'}` takes the url of a template file
-	* `{inlineTemplate: '<span><%= trialData.name ?></span>'}` takes the literal text of a template
-
-    Templates may include any valid html and [underscore template formating](http://documentcloud.github.com/underscore/#template). (Note: you should always wrap your template inside a single html element).
-
-	Stimuli are passed the trial and stimulus data attributes as "trialData" and "stimulusData" so that you can call:
-	```HTML
-	<div>
-		<%= trialData.name %>
-		<span> <%= stimulusData.handle %> </span>
-	</div>
-	```
 
 If you insert a string instead of a media object the player treats it as if it was Plain text.
 The folowing two media definitions have the same outcome:`'Wiki'`, `{word:'Wiki'}`
-
-
 
 ### Stimuli
 
@@ -43,13 +40,13 @@ Stimuli are responsible for how we present the media.
 
 ```js
 {
-	handle:'myStim',
-	size: {height:25,width:25},
-	location: {left:25,top:75},
-	css:{color:'red','font-size':'2em'},
-	media: {word: 'Your very cool stimulus'},
-	data: {myData: 'some info', myOtherData: 'some other info'}
-	nolog: false
+    handle:'myStim',
+    size: {height:25,width:25},
+    location: {left:25,top:75},
+    css:{color:'red','font-size':'2em'},
+    media: {word: 'Your very cool stimulus'},
+    data: {myData: 'some info', myOtherData: 'some other info'}
+    nolog: false
 }
 ```
 
@@ -64,7 +61,7 @@ The size of the stimulus in percentage of the player canvas. By default, size is
 The location to display the stimulus, in percentage of the player canvas. Where `left:20` means that the left border of the stimulus should be 20% from the left of the canvas. You may define any of `left`/`right`/`top`/`bottom` attributes.
 
 Instead of specifying percentages you may use the keyword `center` in order to center the stimulus, or the keyword `auto` in order to override any previous settings.
-By default, location is set to `{left:'center', right:'center',top:'center', left:'center'}`.
+By default, location is set to `{left:'center', right:'center',top:'center', bottom:'center'}`.
 
 `css`:
 Accepts any jquery css object. (see the [api](http://api.jquery.com/css/) for details)
@@ -89,42 +86,42 @@ Trials are responsible for organizing stimuli and interactions with the user.
 
 ```js
 {
-	data:{my: 'arbitrary',data:'object'},
-	layout: [
-		stimulus1,
-		stimulus2
-	],
-	input: [
-		{handle:'left',on:'leftTouch'},
-		{handle:'right',on:'rightTouch'}
-	],
-	stimuli: [
-		stimulus3
-	],
-	interactions: [
-		{
-			conditions: [{type:'begin'}],
-			actions: [{type:'hideStim',handle:'myStimHandle'}]
-		},
-		{
-			conditions: [{type:'inputEqualsStim',property:'orientation'}],
-			actions: [
-				{type:'showStim',handle:'myStim'},
-				{type:'setInput',input:{handle:'time',on:'timeout',duration:300}}
-			]
-		},
-		{
-			conditions: [
-				{type:'inputEqualsStim',property:'orientation',negate:true},
-				{type:'inputEquals',value:'time',negate:true}
-			],
-			actions: [{type:'endTrial'}]
-		},
-		{
-			conditions: [{type:'inputEquals',value:'time'}],
-			actions: [{type:'hideStim',handle:'myStim'}]
-		}
-	]
+    data:{my: 'arbitrary',data:'object'},
+    layout: [
+        stimulus1,
+        stimulus2
+    ],
+    input: [
+        {handle:'left',on:'leftTouch'},
+        {handle:'right',on:'rightTouch'}
+    ],
+    stimuli: [
+        stimulus3
+    ],
+    interactions: [
+        {
+            conditions: [{type:'begin'}],
+            actions: [{type:'hideStim',handle:'myStimHandle'}]
+        },
+        {
+            conditions: [{type:'inputEqualsStim',property:'orientation'}],
+            actions: [
+                {type:'showStim',handle:'myStim'},
+                {type:'setInput',input:{handle:'time',on:'timeout',duration:300}}
+            ]
+        },
+        {
+            conditions: [
+                {type:'inputEqualsStim',property:'orientation',negate:true},
+                {type:'inputEquals',value:'time',negate:true}
+            ],
+            actions: [{type:'endTrial'}]
+        },
+        {
+            conditions: [{type:'inputEquals',value:'time'}],
+            actions: [{type:'hideStim',handle:'myStim'}]
+        }
+    ]
 }
 ```
 
@@ -150,15 +147,27 @@ Each input object must include both a `handle` and an `on` property.
 * `{handle: 'enter',on: 'keypressed',key:13}`
 * `{handle: 'enter',on: 'keypressed',key:[13,'a']}`
 
-**click**: Takes either a stimulus handle (`stimHandle`) or an html element (`element`) to present, in case an element is defined it is presented as soon as the input is activated.
+**click**: Takes either a stimulus handle (`stimHandle`) or an html element (`element`). The input is activated when the user clicks the stimulus or the html element. In case an element is defined it is presented as soon as the input is activated.
 * `{handle:'right',on:'click',element:$('<div>',css:{})}`
 * `{handle:'right',on:'click',stimHandle:'myStimHandle'}`
 
+**mouseup**: Takes a stimulus handle (`stimHandle`). Triggers each time the mouse key is released over the space of the target object.
+* `{handle:'right',on:'mouseup',stimHandle:'myStimHandle'}`
+
+**mousedown**: Takes a stimulus handle (`stimHandle`). Triggers each time the mouse key is pressed over the space of the target object.
+* `{handle:'right',on:'mousedown',stimHandle:'myStimHandle'}`
+
+**mouseenter**: Takes a stimulus handle (`stimHandle`). Triggers each time the mouse enters the space of the target object. (note that this behaviour is meaningless in touch devices)
+* `{handle:'right',on:'mouseenter',stimHandle:'myStimHandle'}`
+
+**mouseleave**: Takes a stimulus handle (`stimHandle`). Triggers each time the mouse leaves the space of the target object. (note that this behaviour is meaningless in touch devices)
+* `{handle:'right',on:'mouseleave',stimHandle:'myStimHandle'}`
+
 **timeout**: Takes a `duration` property and fires after the duration passes
 * `{handle:'time',on:'timeout',duration:300}`
-* `{handle:'time',on:'timeout',duration:[300,600,900]]}` 			pick a random value from an array
-* `{handle:'time',on:'timeout',duration:{min:300, max: 900}}}` 		randomly pick from within a range
-* `{handle:'time',on:'timeout',duration:function(){return 630}}` 	use a custom function to pick duration
+* `{handle:'time',on:'timeout',duration:[300,600,900]]}`            pick a random value from an array
+* `{handle:'time',on:'timeout',duration:{min:300, max: 900}}}`      randomly pick from within a range
+* `{handle:'time',on:'timeout',duration:function(){return 630}}`    use a custom function to pick duration
 
 In addition, we have several shortcuts for commonly used inputs:
 * `{handle: 'enter',on: 'enter'}`
@@ -171,17 +180,17 @@ In addition, we have several shortcuts for commonly used inputs:
 
 Protip: In addition to the preset input types you can create custom input:
 ```js
-	{
-		handle: 'myInput',
-		on: function(callback){
-			// do your mojo here and then
-			// where e is the raw event, and 'eventType' is the name of this event
-			callback(e, 'eventType');
-		},
-		off: function(){
-			// remove your listener (if you need to keep state you can encapsulate the whole input object in a module)
-		}
-	}
+    {
+        handle: 'myInput',
+        on: function(callback){
+            // do your mojo here and then
+            // where e is the raw event, and 'eventType' is the name of this event
+            callback(e, 'eventType');
+        },
+        off: function(){
+            // remove your listener (if you need to keep state you can encapsulate the whole input object in a module)
+        }
+    }
 ```
 
 The input objects support an additional meta property: `touch`. If touch is undefined then this input will always be used.
@@ -198,14 +207,14 @@ For each interaction object, if all the conditions are true, then all the action
 
 ```js
 {
-	conditions: [
-		condition1,
-		condition2
-	],
-	actions: [
-		action1,
-		action2
-	]
+    conditions: [
+        condition1,
+        condition2
+    ],
+    actions: [
+        action1,
+        action2
+    ]
 }
 ```
 #### Interactions: conditions
@@ -213,6 +222,15 @@ For each interaction object, if all the conditions are true, then all the action
 Each condition object has a `type` property that defines what type of evaluation to perform.
 
 In addition, it has a `negate` property (false by default) that determines whether to activate the condition when the evaluation is true or when it is false.
+
+It is possible to create complex conditions, the following condition, for instance, is activated in case there is an input that is not equal to trial.data.customAttribute, and the input handle is not "time".
+```js
+[
+    {type:'inputEqualsTrial',property:'customAttribute',negate:true},
+    {type:'inputEquals',value:'time',negate:true}
+]
+```
+
 
 **begin**:
 Automatically activated at the beginning of the trial, and is never fired again.
@@ -222,10 +240,6 @@ Automatically activated at the beginning of the trial, and is never fired again.
 Check if the input `handle` equals to a static value, `value` may be either a string or an array strings.
 * `{type:'inputEquals',value:'enter'}`
 * `{type:'inputEquals',value:['left','right']}`
-
-**inputEqualsGlobal**
-Check if the input `handle` equals to the `property` property of the global object.
-* `{type:'inputEqualsGlobal',property:'customAttribute'}`
 
 **inputEqualsTrial**:
 Check if the input `handle` equals to the `property` property of trial.data
@@ -241,6 +255,10 @@ The optional property `handle` narrows the search down to stimuli fitting the `h
 Check if the `property` property of the trial.data object equals to `value`.
 * `{type:'trialEquals',property:'customProperty', value:'someValue'}`
 
+**inputEqualsGlobal**
+Check if the input `handle` equals to the `property` property of the global object.
+* `{type:'inputEqualsGlobal',property:'customAttribute'}`
+
 **globalEquals**:
 Check if the `property` property of the global object equals to `value`.
 * `{type:'globalEquals',property:'customProperty', value:'someValue'}`
@@ -255,22 +273,34 @@ The optional property `handle` narrows the search down to stimuli fitting the `h
 * `{type:'globalEqualsTrial',globalProp:'customAttribute', stimProp:'otherCustomAttribute'}`
 * `{type:'globalEqualsTrial',globalProp:'customAttribute', stimProp:'otherCustomAttribute', handle:'myStimHandle'}`
 
+**inputEqualsCurrent**
+Check if the input `handle` equals to the `property` property of the current object.
+* `{type:'inputEqualsCurrent',property:'customAttribute'}`
+
+**currentEquals**:
+Check if the `property` property of the current object equals to `value`.
+* `{type:'currentEquals',property:'customProperty', value:'someValue'}`
+
+**currentEqualsTrial**:
+Check if the current property `currentProp` equals to the trial.data property `trialProp`.
+* `{type:'currentEqualsTrial',currentProp:'customAttribute', trialProp:'otherCustomAttribute'}`
+
+**currentEqualsStim**:
+Check if the current property `currentProp` equals to the `stimProp` property of any one of the stimulus.data in this trial.
+The optional property `handle` narrows the search down to stimuli fitting the `handle`
+* `{type:'currentEqualsTrial',currentProp:'customAttribute', stimProp:'otherCustomAttribute'}`
+* `{type:'currentEqualsTrial',currentProp:'customAttribute', stimProp:'otherCustomAttribute', handle:'myStimHandle'}`
 
 **function**:
+This options is deprecated. use **custom** instead.
+
+**custom**:
 It is also possible to create a custom condition:
 
 ```js
-{type:'function',value:function(trial,inputData){
-	// do your mojo here and return true or false
+{type:'custom', value:function(condtion, inputData, trial){
+    // do your mojo here and return true or false
 }}
-```
-
-It is possible to create complex conditions, the following condition, for instance, is activated in case there is an input that is not equal to trial.data.customAttribute, and the input handle is not "time".
-```js
-[
-	{type:'inputEqualsTrial',property:'customAttribute',negate:true},
-	{type:'inputEquals',value:'time',negate:true}
-]
 ```
 
 #### Interactions: actions
@@ -293,12 +323,12 @@ Any attributes in the setter object will be coppied to the stimulus.data object.
 * `{type:'setStimAttr',handle:'myStim',setter:{myAttr:'myValue',myOtherAttr:'myOtherValue'}`
 * The setter function:
 
-	```js
-	{type:'setStimAttr',handle:'myStim',setter:function(){
-		// do your mojo here :)
-		// the context ("this") of this function is the stimulus model
-	}
-	```
+    ```js
+    {type:'setStimAttr',handle:'myStim',setter:function(){
+        // do your mojo here :)
+        // the context ("this") of this function is the stimulus model
+    }
+    ```
 
 **setTrialAttr**:
 Set a trial.data attribute, takes a `setter` object or function.
@@ -306,14 +336,14 @@ Any attributes in the setter object will be coppied to the trial.data object.
 * `{type:'setTrialAttr',setter:{myAttr:'myValue',myOtherAttr:'myOtherValue'}`
 * The setter function:
 
-	```js
-	{type:'setTrialAttr',setter:function(trialData, eventData){
-		// do your mojo here :)
-		// trialData is the data object for this trial
-		// eventData is the internal event that triggered this action
-		// the context ("this") of this function is the trial object
-	}
-	```
+    ```js
+    {type:'setTrialAttr',setter:function(trialData, eventData){
+        // do your mojo here :)
+        // trialData is the data object for this trial
+        // eventData is the internal event that triggered this action
+        // the context ("this") of this function is the trial object
+    }
+    ```
 
 **setGlobalAttr**:
 Set a global object property, takes a `setter` object or function.
@@ -321,12 +351,12 @@ Any attributes in the setter object will be coppied into the global object.
 * `{type:'setGlobalAttr',setter:{myAttr:'myValue',myOtherAttr:'myOtherValue'}`
 * The setter function:
 
-	```js
-	{type:'setGlobalAttr',setter:function(globalObject){
-		// do your mojo here :)
-		// globalObject is the global object...
-	}
-	```
+    ```js
+    {type:'setGlobalAttr',setter:function(globalObject){
+        // do your mojo here :)
+        // globalObject is the global object...
+    }
+    ```
 
 **trigger**:
 Activate the input `handle`. If duration is set, the activation happens after the duration. By default the input `handle` is triggered immediately.
@@ -350,6 +380,10 @@ Resets trial timer. The latency of any events from here on (including the curren
 **endTrial**:
 *Speaks for itself (note that any actions that come after this is called may not work properly).
 * `{type:'endTrial'}`
+
+**canvas**:
+Change canvas style using any of the following properties (see [settings](#canvas)): `background`, `canvasBackground`, `borderColor`, `borderWidth`.
+* `{type:'canvas', background:'blue'}`
 
 **log**:
 Log this action. Pushes this action into the logging stack so that it is later sent to the server (you can set how the player logs an action using the [logger settings](#logger-))
@@ -389,25 +423,25 @@ The examples here use trials as an example, the same principles apply to stimuli
 
 ```js
 var task = {
-	// these are the trial sets
-	trialSets: {
-		// This is the first set, it has only one trial
-		default : [
-			defaultTrial
-		],
+    // these are the trial sets
+    trialSets: {
+        // This is the first set, it has only one trial
+        default : [
+            defaultTrial
+        ],
 
-		// This is the second set it has three trials
-		// The first trial explicitly inherits the default trial and adds some data to it
-		IAT : [
-			{inherit:{set:default},data:{block:1}},
-			block02Trials,
-			block03Trials
-		]
-	},
+        // This is the second set it has three trials
+        // The first trial explicitly inherits the default trial and adds some data to it
+        IAT : [
+            {inherit:{set:default},data:{block:1}},
+            block02Trials,
+            block03Trials
+        ]
+    },
 
-	// these are the stimulus and media sets
-	stimulusSets : stimulusSets,
-	mediaSets : mediaSets
+    // these are the stimulus and media sets
+    stimulusSets : stimulusSets,
+    mediaSets : mediaSets
 }
 ```
 
@@ -421,28 +455,28 @@ Follow this pseudo code:
 ```js
 // The parent trial
 {
-	data: {name: 'jhon', family:'doe'}
-	stimuli: [
-		stim1,
-		stim2
-	]
+    data: {name: 'jhon', family:'doe'}
+    stimuli: [
+        stim1,
+        stim2
+    ]
 }
 
 // The child trial which attempts to inherit the parent
 {
-	inherit: 'parent',
-	data: {name: 'jack'}
-	stimuli: [
-		stim1
-	]
+    inherit: 'parent',
+    data: {name: 'jack'}
+    stimuli: [
+        stim1
+    ]
 }
 
 // The result would be:
 {
-	data: {name: 'jack', family:'doe'} 	// the child kept its own name but inherited the family name
-	stimuli: [							// the stimuli array was completely overwritten
-		stim1
-	]
+    data: {name: 'jack', family:'doe'}  // the child kept its own name but inherited the family name
+    stimuli: [                          // the stimuli array was completely overwritten
+        stim1
+    ]
 }
 ```
 
@@ -450,7 +484,7 @@ In order for an element to inherit another element it must use the `inherit` pro
 
 ```js
 {
-	inherit: inheritObject
+    inherit: inheritObject
 }
 ```
 
@@ -487,8 +521,8 @@ If the data property is set as a string, we assume it refers to the element hand
 You may also use a custom function to pick your element.
 ```js
 {set: 'setName', type: function(definitions){
-	// definitions is the inherit object (including  set, type, and whatever other properties you'd like to use)
-	// the context ("this") is the element collection, it is a Backbone.js collection of the elements in the set
+    // definitions is the inherit object (including  set, type, and whatever other properties you'd like to use)
+    // the context ("this") is the element collection, it is a Backbone.js collection of the elements in the set
 }}
 ```
 
@@ -500,12 +534,12 @@ The example shows how you can use customize to push a stimulus into the trial, t
 
 ```js
 {
-	inherit: 'something',
-	stimuli: [], // note that their are no stimuli yet!
-	customize : function(trialSource, globalObject){
-		// push a stimulus into the stimulus array
-		trialSource.stimuli.push(stim1);
-	}
+    inherit: 'something',
+    stimuli: [], // note that their are no stimuli yet!
+    customize : function(trialSource, globalObject){
+        // push a stimulus into the stimulus array
+        trialSource.stimuli.push(stim1);
+    }
 }
 ```
 
@@ -515,14 +549,14 @@ The example shows how you can use customize to push a stimulus into the trial, t
 The sequence is an ordered list of the trials that you want to present consequently to the users.
 ```js
 task = {
-	trialSets: trialSets,
-	stimulusSets : stimulusSets,
-	mediaSets : mediaSets,
-	sequence: [
-		trial1,
-		trial2,
-		trial3
-	]
+    trialSets: trialSets,
+    stimulusSets : stimulusSets,
+    mediaSets : mediaSets,
+    sequence: [
+        trial1,
+        trial2,
+        trial3
+    ]
 
 }
 ```
@@ -538,8 +572,8 @@ You may insert such an object at any place within the sequence and it will be re
 The basic structure of a mixer object is:
 ```js
 {
-	mixer: 'functionType',
-	data: [trial1, trial2]
+    mixer: 'functionType',
+    data: [trial1, trial2]
 }
 ```
 
@@ -551,41 +585,41 @@ A sequence can look something like this (don't get scared it's simpler than it l
 
 ```js
 [
-	// The first trial to present.
-	firstTrial,
+    // The first trial to present.
+    firstTrial,
 
-	// Repeat the structure inside 10 time (so we get 40 trials)
-	{
-		mixer: 'repeat',
-		times: 10,
-		data: [
-			// Delay the mixing of these elements until after the `repeat`.
-			{
-				mixer: 'wrapper',
-				data: [
-					trial1,
-					// Randomize the order of the trials within.
-					{
-						mixer: 'random',
-						data: [
-							trial2,
-							// Keep trial 3 and 4 together.
-							{
-								mixer: 'wrapper',
-								data: [
-									trial3,
-									trial4
-								]
-							}
-						]
-					} // end random
-				]
-			} // end wrapper
-		]
-	}, // end repeat
+    // Repeat the structure inside 10 time (so we get 40 trials)
+    {
+        mixer: 'repeat',
+        times: 10,
+        data: [
+            // Delay the mixing of these elements until after the `repeat`.
+            {
+                mixer: 'wrapper',
+                data: [
+                    trial1,
+                    // Randomize the order of the trials within.
+                    {
+                        mixer: 'random',
+                        data: [
+                            trial2,
+                            // Keep trial 3 and 4 together.
+                            {
+                                mixer: 'wrapper',
+                                data: [
+                                    trial3,
+                                    trial4
+                                ]
+                            }
+                        ]
+                    } // end random
+                ]
+            } // end wrapper
+        ]
+    }, // end repeat
 
-	// the last trial to present
-	lastTrial
+    // the last trial to present
+    lastTrial
 ]
 ```
 This sequence has an opening and ending trial (`firstTrial` and `lastTrial`).
@@ -621,16 +655,16 @@ The wrapper mixer serves a sort of parenthesis for the mixer. It has two primary
 Player wide settings are set within the "settings" property of the task JSON.
 ```js
 settings = {
-	logger: {
-		url: 'your/target/url',
-		logger: function(){
-			// do your mojo here :)
-		}
-	},
-	canvas: {
-		maxWidth: 800,
-		proportions : 1
-	}
+    logger: {
+        url: 'your/target/url',
+        logger: function(){
+            // do your mojo here :)
+        }
+    },
+    canvas: {
+        maxWidth: 800,
+        proportions : 1
+    }
 }
 ```
 
@@ -638,12 +672,12 @@ settings = {
 
 ```js
 logger: {
-	url: 'your/target/url',
-	pulse: 3,
-	fullpath: false,
-	logger: function(){
-		// do your mojo here :)
-	}
+    url: 'your/target/url',
+    pulse: 3,
+    fullpath: false,
+    logger: function(){
+        // do your mojo here :)
+    }
 }
 ```
 
@@ -672,33 +706,33 @@ It is responsible for adding a logging row to be sent to the server.
 
 ```js
 function(trialData, inputData, actionData,logStack){
-	// trialData: the data object from this trial
-	// inputData: the input object that triggered this action
-	// actionData: the action object that was triggered (it should look like {type:'log', your:'custom property'})
-	// logStack: an array with all previously logged rows
+    // trialData: the data object from this trial
+    // inputData: the input object that triggered this action
+    // actionData: the action object that was triggered (it should look like {type:'log', your:'custom property'})
+    // logStack: an array with all previously logged rows
 
-	// the context for this function ("this") is the original trial object
+    // the context for this function ("this") is the original trial object
 
-	// the function should return an object to be pushed into the trial stack, and later be sent to the server
+    // the function should return an object to be pushed into the trial stack, and later be sent to the server
 }
 ```
 
 This is what the default logger looks like:
 ```js
 function(trialData, inputData, actionData,logStack){
-	var stimList = this._stimulus_collection.get_stimlist();
-	var mediaList = this._stimulus_collection.get_medialist();
+    var stimList = this._stimulus_collection.get_stimlist();
+    var mediaList = this._stimulus_collection.get_medialist();
 
-	return {
-		log_serial : logStack.length,
-		trial_id: this._id,
-		name: this.name(),
-		responseHandle: inputData.handle,
-		latency: Math.floor(inputData.latency),
-		stimuli: stimList,
-		media: mediaList,
-		data: trialData
-	};
+    return {
+        log_serial : logStack.length,
+        trial_id: this._id,
+        name: this.name(),
+        responseHandle: inputData.handle,
+        latency: Math.floor(inputData.latency),
+        stimuli: stimList,
+        media: mediaList,
+        data: trialData
+    };
 };
 ```
 
@@ -709,8 +743,8 @@ It controls the shape and appearance of the canvas.
 
 ```js
 canvas: {
-	maxWidth: 800,
-	proportions : 0.8
+    maxWidth: 800,
+    proportions : 0.8
 }
 ```
 
@@ -750,8 +784,8 @@ It accepts either an object setting the base url for images and templates or a s
 ```js
 // object notation
 base_url: {
-	image: "images",
-	template: "templates/"
+    image: "images",
+    template: "templates/"
 }
 
 // string notation
@@ -773,7 +807,7 @@ Hooks are functions that are to be run at predefined points throughout the playe
 
 ```js
 hooks: {
-	endTask: function(){}
+    endTask: function(){}
 }
 ```
 
@@ -788,8 +822,8 @@ In order to create a post with three keys: json, session_id and task_id - you wo
 
 ```js
 metaData: {
-	session_id: 9872356,
-	task_id: '43BTW78'
+    session_id: 9872356,
+    task_id: '43BTW78'
 }
 ```
 
@@ -804,11 +838,11 @@ The basic format for accessing the API is as follows:
 
 ```js
 define(['app/API'], function(APIconstructor) {
-	var API = new APIconstructor();
+    var API = new APIconstructor();
 
-	API.addScript(script);
-	
-	return API.script;
+    API.addScript(script);
+    
+    return API.script;
 });
 ```
 
@@ -827,31 +861,31 @@ Allows extending the global or current objects respectively:
 * `API.addGlobal(object);`
 * `API.addCurrent(object);`
 
-	For instance if the current global object looks like this:
+    For instance if the current global object looks like this:
 
-	```js
-	var globalObject = {
-		name: 'Sándor Ferenczi',
-		score: '90'
-	}
-	```
+    ```js
+    var globalObject = {
+        name: 'Sándor Ferenczi',
+        score: '90'
+    }
+    ```
 
-	Then the following script:
-	```js
-	API.addGlobal({
-		score: '100',
-		done: true
-	})
-	```
+    Then the following script:
+    ```js
+    API.addGlobal({
+        score: '100',
+        done: true
+    })
+    ```
 
-	Will leave the global object as
-	```js
-	var globalObject = {
-		name: 'Sándor Ferenczi',
-		score: '100',
-		done: true
-	}
-	```
+    Will leave the global object as
+    ```js
+    var globalObject = {
+        name: 'Sándor Ferenczi',
+        score: '100',
+        done: true
+    }
+    ```
 
 **getGlobal, getCurrent**:
 Returns the global or current object respectively:
@@ -865,16 +899,16 @@ You may add a whole settings section:
 
 ```js
 API.addSettings({
-	canvas: {},
-	logger: {}
+    canvas: {},
+    logger: {}
 });
 ```
 
 Alternatively you may add a specific setting:
 ```js
 API.addSettings('canvas',{
-	maxWidth: 800,
-	proportions : 0.8
+    maxWidth: 800,
+    proportions : 0.8
 });
 ```
 
@@ -885,8 +919,8 @@ You may add a complete sets object:
 
 ```js
 API.addTrialSets({
-	Default: [defaultTrial],
-	introduction: [intro1, intro2, intro3]
+    Default: [defaultTrial],
+    introduction: [intro1, intro2, intro3]
 });
 ```
 
@@ -927,15 +961,15 @@ The player sends all the data it has gathered to the url defined in the settings
 The data is sent as an ajax POST where the only field is "json" (unless you added something using [metadata](#meta-data)).
 The field includes a json array including all logs created. each log is an object including the following fields:
 
-Field 			| Description
+Field           | Description
 --------------- |---
-log_serial		| the serial number for this log row (starts at 1)
-trial_id 		| a unique identifier for this trial
-name 			| the name of this trial - an alias if one is set, otherwise the set the trial inherited
-block 			| the block attribute of trial.data (it is up to the user to set this attribute, usually in the trial definitions)
-responseHandle	| the handle for the input that triggered this log
-score 			| the score attribute of trial.data (it is up to the user to set this attribute, usually using setTrialAttr)
-latency			| the latency of the response from the beginning of the trial
-stimuli 		| a json including the stimuli used in this trial (we use an alias if one is set, otherwise the stimulus set, otherwise the stimulus handle otherwise stim#)
-media 			| a json including the media used in this trial (we use an alias if one is set, otherwise the media set, otherwise media#)
-data 			| a json including the data property of this trial
+log_serial      | the serial number for this log row (starts at 1)
+trial_id        | a unique identifier for this trial
+name            | the name of this trial - an alias if one is set, otherwise the set the trial inherited
+block           | the block attribute of trial.data (it is up to the user to set this attribute, usually in the trial definitions)
+responseHandle  | the handle for the input that triggered this log
+score           | the score attribute of trial.data (it is up to the user to set this attribute, usually using setTrialAttr)
+latency         | the latency of the response from the beginning of the trial
+stimuli         | a json including the stimuli used in this trial (we use an alias if one is set, otherwise the stimulus set, otherwise the stimulus handle otherwise stim#)
+media           | a json including the media used in this trial (we use an alias if one is set, otherwise the media set, otherwise media#)
+data            | a json including the data property of this trial
