@@ -48,7 +48,7 @@ define(function(require){
 			if ($element){
 				$element.remove();									// this also removes any attached events
 			} else {
-				$(document).on(eventName,'[data-handle="'+definitions.stimHandle + '"]', this.activateCallback);
+				$(document).off(eventName,'[data-handle="'+definitions.stimHandle + '"]', this.activateCallback);
 			}
 		};
 	};
