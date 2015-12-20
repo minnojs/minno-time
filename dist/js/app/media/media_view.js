@@ -4,6 +4,44 @@
  */
 
 define(function(require){
+
+    // Adapted from https://gist.github.com/paulirish/1579671 which derived from
+    // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+    // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
+
+    // requestAnimationFrame polyfill by Erik Möller.
+    // Fixes from Paul Irish, Tino Zijdel, Andrew Mao, Klemen Slavič, Darius Bacon
+
+    // MIT license
+
+    if (!Date.now)
+        Date.now = function() { return new Date().getTime(); };
+
+    (function() {
+        'use strict';
+
+        var vendors = ['webkit', 'moz'];
+        for (var i = 0; i < vendors.length && !window.requestAnimationFrame; ++i) {
+            var vp = vendors[i];
+            window.requestAnimationFrame = window[vp+'RequestAnimationFrame'];
+            window.cancelAnimationFrame = (window[vp+'CancelAnimationFrame']
+                                       || window[vp+'CancelRequestAnimationFrame']);
+        }
+        if (/iP(ad|hone|od).*OS 6/.test(window.navigator.userAgent) // iOS6 is buggy
+            || !window.requestAnimationFrame || !window.cancelAnimationFrame) {
+            var lastTime = 0;
+            window.requestAnimationFrame = function(callback) {
+                var now = Date.now();
+                var nextTime = Math.max(lastTime + 16, now);
+                return setTimeout(function() { callback(lastTime = nextTime); },
+                                  nextTime - now);
+            };
+            window.cancelAnimationFrame = clearTimeout;
+        }
+    }());
+
+
+
     var Backbone = require('backbone'),
         _ = require('underscore'),
         main_view = require('app/task/main_view');
@@ -31,21 +69,28 @@ define(function(require){
         // we hide and show them using visibility
 
         render: function(){
+
             // these are the things that need recalibrating on refresh
             this.size();
 
-            // if the element does not have a width it is meaningless to place it at this stage
-            if (this.$el.width()){
-                this.place();
-            } else {
-                // this is probably an image that hasn't been loaded yet
-                // we need to defer "place" because safari needs time to load images
-                // the preloader makes sure that the image is already in cache
-                // but it appears that safari requires another round of the call stack before loading the image...
-                _.defer(_.bind(this.place, this));
-            }
+            this.deferToLoad(this.place);
 
             return this;
+        },
+
+        deferToLoad: function(cb){
+            cb = _.bind(cb, this);
+            // if the element does not have a width it has not been loaded yet
+            if (this.$el.width()){
+                cb();
+            } else {
+                // we need defer for safari
+                // we need raf for chrome on ipad
+                _.defer(function(){
+                    window.requestAnimationFrame(cb);
+                });
+
+            }
         },
 
         show: function(){
@@ -66,7 +111,10 @@ define(function(require){
 				return this;
             }
 
-            this.$el.css("visibility", "visible");
+            this.deferToLoad(function(){
+                this.$el.css("visibility", "visible");
+            });
+
             return this;
         },
 
@@ -95,6 +143,7 @@ define(function(require){
         // places the element on the canvas (has to be called after size)
         // @TODO: this is way too complex to be left here, we should probably export this to a seperate file or something
         place: function(){
+
             // helper function: returns sizes of element;
             function size($elem){
                 return {
@@ -106,6 +155,7 @@ define(function(require){
             var top, bottom, left, right; // will hold the offset for the locations
             var canvasSize = size(canvas);
             var elSize = size(this.$el);
+
             // get location setting and set center as default
             var location = this.model.get('location') || {};
             if (typeof location.top == 'undefined' && typeof location.bottom == 'undefined') {
