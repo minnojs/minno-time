@@ -58,8 +58,8 @@ define(function(require){
 
 				// get current screen size
 				var screenSize = {
-					width: $(window).innerWidth(),
-					height: $(window).innerHeight()
+					width: document.documentElement.clientWidth,
+					height: document.documentElement.clientHeight
 				};
 
 				var maxHeight = screenSize.height;

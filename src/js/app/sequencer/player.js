@@ -94,10 +94,10 @@ define(function(require){
 		container.activate();
 		container
 			.loading(parseDef) // activate loading screen
-			.done(function(){
+			.then(function(){
 				player.next(['next', {}]); // activate task
 			})
-			.fail(function(src){
+			.catch(function(src){
 				throw new Error('loading resource failed, do something about it! (you can start by checking the error log, you are probably reffering to the wrong url - ' + src +')');
 			});
 	}

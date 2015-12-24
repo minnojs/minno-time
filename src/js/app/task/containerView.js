@@ -73,22 +73,11 @@ define(function(require){
 			var $bar;
 			var self = this;
 
-			// if loading has already finished lets skip the loading page
-			if (parseDef.state() != "pending"){
-				return parseDef;
-			}
-
 			// display the loading template
 			this.$el.html(loadingTpl);
 
-			$bar = this.$('.meter span');
-
 			return parseDef
-				.progress(function(done, remaining){
-					// update progress bar
-					$bar.width((remaining ? (done/remaining)*100 : 0) + '%');
-				})
-				.done(function(){
+				.then(function(){
 					self.empty();
 				});
 		},

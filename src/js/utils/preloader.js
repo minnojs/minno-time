@@ -1,42 +1,47 @@
 /*
  * media preloader
  */
-define(function(require){
-	var $ = require('jquery');
+define(function(){
 
 	var srcStack = [];				// an array holding all our sources
 	var defStack = [];				// an array holding all the deferreds
 	var stackDone = 0;				// the number of sources we have completed downloading
-	var allDone = $.Deferred();		// General deferred, notifies upon source completion
 	var images = {};
+	var templates = {};
 
 	// load a single source
 	function load(src, type){
+		var deferred;
 		type = type || 'image';
 		// if we haven't loaded this yet
-		if ($.inArray(src, srcStack) == -1) {
-			var deferred = $.Deferred();
-
+		if (srcStack.indexOf(src) == -1) {
 			switch (type) {
 				case 'template':
-					requirejs(['text!' + src], function(){
-						deferred.resolve();
-					}, function(){
+					deferred = new Promise(function(resolve, reject){
+						requirejs(['text!' + src], resolve, reject);
+					})
+					.then(function(template){
+						templates[src] = template;
+					})
+					.catch(function(){
 						throw new Error('Template not found: ' + src);
-					});
+					})
 					break;
+
 				case 'image':
 					/* falls through */
 				default :
-					var img = new Image();	// create img object
-					$(img).on('load',function(){deferred.resolve();}); // resolve deferred on load
-					$(img).one('error',function(){
-						img.src = "";
+					deferred = new Promise(function(resolve, reject){
+						var img = new Image();	// create img object
+						img.onload = resolve;
+						img.onerror = function(){
+							img.src = '';
+							img.src = src;
+							img.onerror = reject;
+						}
 						img.src = src;
-						$(img).on('error', function(){throw new Error('Image not found: "' + src + '"');});
-					}); // reject deferred on error
-					img.src = src;
-					images[src] = img;
+						images[src] = img;
+					});
 					break;
 			}
 
@@ -45,13 +50,9 @@ define(function(require){
 			srcStack.push(src);
 
 			// count this defered as done
-			deferred
-				.done(function(){
-					// increment the completed counter
-					stackDone++;
-					// notify allDone that we advanced another step
-					allDone.notify(stackDone,defStack.length);
-				});
+			deferred.then(function(){
+				stackDone++;
+			});
 
 			return deferred;
 		}
@@ -63,17 +64,16 @@ define(function(require){
 		// loads a single source
 		add: load,
 
+		getTemplate: function(url){
+			return templates[url];
+		},
+
 		getImage: function(url){
 			return images[url].cloneNode();
 		},
 
 		activate: function(){
-			// fail or reject allDone according to our defStack
-			$.when.apply($,defStack)
-				.done(function(){allDone.resolve();})
-				.fail(function(){allDone.reject();});
-
-			return allDone.promise();
+			return Promise.all(defStack);
 		},
 
 		// reset globals so we can reuse this object
@@ -81,11 +81,7 @@ define(function(require){
 			srcStack = [];
 			defStack = [];
 			stackDone = 0;
-			allDone = this.state = $.Deferred();
-		},
-
-		// returns a deferred describing the state of this preload
-		state: allDone
+		}
 	};
 
 });
