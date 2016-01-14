@@ -111,8 +111,8 @@
 	<span class="hljs-keyword">var</span> API = <span class="hljs-keyword">new</span> APIConstructor();
 	<span class="hljs-keyword">var</span> scorer = <span class="hljs-keyword">new</span> Scorer();
 
-	<span class="hljs-keyword">var</span> category1 = <span class="hljs-string">'Pleasent'</span>;
-	<span class="hljs-keyword">var</span> category2 = <span class="hljs-string">'Unpleasent'</span>;</pre></div>
+	<span class="hljs-keyword">var</span> category1 = <span class="hljs-string">'Pleasant'</span>;
+	<span class="hljs-keyword">var</span> category2 = <span class="hljs-string">'Unpleasant'</span>;</pre></div>
 		
 	
 		<p>Set the size of the screen</p>
@@ -264,7 +264,7 @@
 				},</pre></div>
 		
 	
-		<p>there are 2 possible responses: “pleasent” and “unpleasent”, here we handle these responses when the user answers
+		<p>there are 2 possible responses: “pleasant” and “unpleasant”, here we handle these responses when the user answers
 matches the word value (correct response)</p>
 
 
@@ -280,7 +280,7 @@ matches the word value (correct response)</p>
 				},</pre></div>
 		
 	
-		<p>there are 2 possible responses: “pleasent” and “unpleasent”, here we handle with these responses when the user answer
+		<p>there are 2 possible responses: “pleasant” and “unpleasant”, here we handle with these responses when the user answer
 doesn’t match the word value (incorrect response)
 this conditions are true only after incorrect response
 handle incorrect response.
@@ -339,7 +339,7 @@ this conditions are true only after incorrect response</p>
 
 
 		
-		  <div class='highlight'><pre>		pleasentWhite:[{
+		  <div class='highlight'><pre>		pleasantWhite:[{
 			data: {parcel:<span class="hljs-string">'research'</span>, condition: <span class="hljs-string">"pleasant/white"</span>},
 			inherit:{set: <span class="hljs-string">'basicTrial'</span>},
 			stimuli: [
@@ -355,7 +355,7 @@ this conditions are true only after incorrect response</p>
 
 
 		
-		  <div class='highlight'><pre>		pleasentBlack:[{
+		  <div class='highlight'><pre>		pleasantBlack:[{
 			data: {parcel:<span class="hljs-string">'research'</span>,condition: <span class="hljs-string">"pleasant/black "</span>},
 			inherit:{set: <span class="hljs-string">'basicTrial'</span>},
 			stimuli: [
@@ -371,7 +371,7 @@ this conditions are true only after incorrect response</p>
 
 
 		
-		  <div class='highlight'><pre>		unpleasentWhite:[{
+		  <div class='highlight'><pre>		unpleasantWhite:[{
 			data: {parcel:<span class="hljs-string">'research'</span>,condition: <span class="hljs-string">"unpleasant/white"</span>},
 			inherit:{set: <span class="hljs-string">'basicTrial'</span>},
 			stimuli: [
@@ -387,7 +387,7 @@ this conditions are true only after incorrect response</p>
 
 
 		
-		  <div class='highlight'><pre>		unpleasentBlack:[{
+		  <div class='highlight'><pre>		unpleasantBlack:[{
 			data: {parcel:<span class="hljs-string">'research'</span>,condition: <span class="hljs-string">"unpleasant/black"</span>},
 			inherit:{set: <span class="hljs-string">'basicTrial'</span>},
 			stimuli: [
@@ -621,10 +621,10 @@ Twp categories of images, and two categories of words.</p>
 					mixer: <span class="hljs-string">'repeat'</span>,
 					times: <span class="hljs-number">15</span>,
 					data : [
-						{inherit: <span class="hljs-string">'pleasentWhite'</span>,data:{block:<span class="hljs-number">0</span>}},
-						{inherit: <span class="hljs-string">'pleasentBlack'</span>,data:{block:<span class="hljs-number">0</span>}},
-						{inherit: <span class="hljs-string">'unpleasentWhite'</span>,data:{block:<span class="hljs-number">0</span>}},
-						{inherit: <span class="hljs-string">'unpleasentBlack'</span>,data:{block:<span class="hljs-number">0</span>}}
+						{inherit: <span class="hljs-string">'pleasantWhite'</span>,data:{block:<span class="hljs-number">0</span>}},
+						{inherit: <span class="hljs-string">'pleasantBlack'</span>,data:{block:<span class="hljs-number">0</span>}},
+						{inherit: <span class="hljs-string">'unpleasantWhite'</span>,data:{block:<span class="hljs-number">0</span>}},
+						{inherit: <span class="hljs-string">'unpleasantBlack'</span>,data:{block:<span class="hljs-number">0</span>}}
 					]
 				} <span class="hljs-comment">// end wrapper</span>
 			]
@@ -651,10 +651,10 @@ Twp categories of images, and two categories of words.</p>
 					mixer: <span class="hljs-string">'repeat'</span>,
 					times: <span class="hljs-number">15</span>,
 					data : [
-						{inherit: <span class="hljs-string">'pleasentWhite'</span>,data:{block:<span class="hljs-number">1</span>}},
-						{inherit: <span class="hljs-string">'pleasentBlack'</span>,data:{block:<span class="hljs-number">1</span>}},
-						{inherit: <span class="hljs-string">'unpleasentWhite'</span>,data:{block:<span class="hljs-number">1</span>}},
-						{inherit: <span class="hljs-string">'unpleasentBlack'</span>,data:{block:<span class="hljs-number">1</span>}}
+						{inherit: <span class="hljs-string">'pleasantWhite'</span>,data:{block:<span class="hljs-number">1</span>}},
+						{inherit: <span class="hljs-string">'pleasantBlack'</span>,data:{block:<span class="hljs-number">1</span>}},
+						{inherit: <span class="hljs-string">'unpleasantWhite'</span>,data:{block:<span class="hljs-number">1</span>}},
+						{inherit: <span class="hljs-string">'unpleasantBlack'</span>,data:{block:<span class="hljs-number">1</span>}}
 					]
 				} <span class="hljs-comment">// end wrapper</span>
 			]
@@ -682,10 +682,10 @@ Twp categories of images, and two categories of words.</p>
 					mixer: <span class="hljs-string">'repeat'</span>,
 					times: <span class="hljs-number">15</span>,
 					data : [
-						{inherit: <span class="hljs-string">'pleasentWhite'</span>,data:{block:<span class="hljs-number">2</span>}},
-						{inherit: <span class="hljs-string">'pleasentBlack'</span>,data:{block:<span class="hljs-number">2</span>}},
-						{inherit: <span class="hljs-string">'unpleasentWhite'</span>,data:{block:<span class="hljs-number">2</span>}},
-						{inherit: <span class="hljs-string">'unpleasentBlack'</span>,data:{block:<span class="hljs-number">2</span>}}
+						{inherit: <span class="hljs-string">'pleasantWhite'</span>,data:{block:<span class="hljs-number">2</span>}},
+						{inherit: <span class="hljs-string">'pleasantBlack'</span>,data:{block:<span class="hljs-number">2</span>}},
+						{inherit: <span class="hljs-string">'unpleasantWhite'</span>,data:{block:<span class="hljs-number">2</span>}},
+						{inherit: <span class="hljs-string">'unpleasantBlack'</span>,data:{block:<span class="hljs-number">2</span>}}
 					]
 				}
 			]

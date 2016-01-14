@@ -3,8 +3,8 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 	var API = new APIConstructor();
 	var scorer = new Scorer();
 
-	var category1 = 'Pleasent';
-	var category2 = 'Unpleasent';
+	var category1 = 'Pleasant';
+	var category2 = 'Unpleasant';
 
 	//Set the size of the screen
 	API.addSettings('canvas',{
@@ -115,7 +115,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 						}}
 					]
 				},
-				// there are 2 possible responses: "pleasent" and "unpleasent", here we handle these responses when the user answers
+				// there are 2 possible responses: "pleasant" and "unpleasant", here we handle these responses when the user answers
 				// matches the word value (correct response)
 				{
 					conditions: [
@@ -126,7 +126,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 						{type:'trigger', handle:'showFix'}//End the trial immidiatlly after correct response
 					]
 				},
-				// there are 2 possible responses: "pleasent" and "unpleasent", here we handle with these responses when the user answer
+				// there are 2 possible responses: "pleasant" and "unpleasant", here we handle with these responses when the user answer
 				// doesn't match the word value (incorrect response)
 				//this conditions are true only after incorrect response
 				// handle incorrect response.
@@ -172,7 +172,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 
 	API.addTrialSets({
 		//pleasant+white people (condition 1)
-		pleasentWhite:[{
+		pleasantWhite:[{
 			data: {parcel:'research', condition: "pleasant/white"},
 			inherit:{set: 'basicTrial'},
 			stimuli: [
@@ -184,7 +184,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 		}],
 
 		//pleasant+black people (condition 2)
-		pleasentBlack:[{
+		pleasantBlack:[{
 			data: {parcel:'research',condition: "pleasant/black "},
 			inherit:{set: 'basicTrial'},
 			stimuli: [
@@ -196,7 +196,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 		}],
 
 		//unpleasant+white people (condition 2)
-		unpleasentWhite:[{
+		unpleasantWhite:[{
 			data: {parcel:'research',condition: "unpleasant/white"},
 			inherit:{set: 'basicTrial'},
 			stimuli: [
@@ -208,7 +208,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 		}],
 
 		//unpleasant+ black people (condition 1)
-		unpleasentBlack:[{
+		unpleasantBlack:[{
 			data: {parcel:'research',condition: "unpleasant/black"},
 			inherit:{set: 'basicTrial'},
 			stimuli: [
@@ -399,10 +399,10 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 					mixer: 'repeat',
 					times: 15,
 					data : [
-						{inherit: 'pleasentWhite',data:{block:0}},
-						{inherit: 'pleasentBlack',data:{block:0}},
-						{inherit: 'unpleasentWhite',data:{block:0}},
-						{inherit: 'unpleasentBlack',data:{block:0}}
+						{inherit: 'pleasantWhite',data:{block:0}},
+						{inherit: 'pleasantBlack',data:{block:0}},
+						{inherit: 'unpleasantWhite',data:{block:0}},
+						{inherit: 'unpleasantBlack',data:{block:0}}
 					]
 				} // end wrapper
 			]
@@ -424,10 +424,10 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 					mixer: 'repeat',
 					times: 15,
 					data : [
-						{inherit: 'pleasentWhite',data:{block:1}},
-						{inherit: 'pleasentBlack',data:{block:1}},
-						{inherit: 'unpleasentWhite',data:{block:1}},
-						{inherit: 'unpleasentBlack',data:{block:1}}
+						{inherit: 'pleasantWhite',data:{block:1}},
+						{inherit: 'pleasantBlack',data:{block:1}},
+						{inherit: 'unpleasantWhite',data:{block:1}},
+						{inherit: 'unpleasantBlack',data:{block:1}}
 					]
 				} // end wrapper
 			]
@@ -450,10 +450,10 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 					mixer: 'repeat',
 					times: 15,
 					data : [
-						{inherit: 'pleasentWhite',data:{block:2}},
-						{inherit: 'pleasentBlack',data:{block:2}},
-						{inherit: 'unpleasentWhite',data:{block:2}},
-						{inherit: 'unpleasentBlack',data:{block:2}}
+						{inherit: 'pleasantWhite',data:{block:2}},
+						{inherit: 'pleasantBlack',data:{block:2}},
+						{inherit: 'unpleasantWhite',data:{block:2}},
+						{inherit: 'unpleasantBlack',data:{block:2}}
 					]
 				}
 			]

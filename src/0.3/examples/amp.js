@@ -4,8 +4,8 @@ define(['pipAPI'], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
-	var category1 = 'Pleasent';
-	var category2 = 'Unpleasent';
+	var category1 = 'Pleasant';
+	var category2 = 'Unpleasant';
 	var condition1= "white";
 	var condition2= "black";
 	//a Scorer for the AMP
@@ -40,7 +40,7 @@ define(['pipAPI'], function(APIconstructor) {
 	//compute the AMP score, according to the logs.
 	function computeAMPScore(scoreArray){
 		for(var i=3; i<scoreArray.length; i++){// the first 3 are the example images, go over all the other logs.
-			if(scoreArray[i].responseHandle == category1){ //pleasent response
+			if(scoreArray[i].responseHandle == category1){ //pleasant response
 				if(scoreArray[i].data.condition == condition1){ //the image is from the first category
 					inc_prime1_category1();
 				}
@@ -50,7 +50,7 @@ define(['pipAPI'], function(APIconstructor) {
 					}
 				}
 			}
-			else{// unpleasent response
+			else{// unpleasant response
 				if(scoreArray[i].responseHandle == category2){//do nothing when there is no answer
 					if(scoreArray[i].data.condition == condition1){ //the image is from the first category
 						inc_prime1_category2();
@@ -171,7 +171,7 @@ define(['pipAPI'], function(APIconstructor) {
 
 				{//What to do upon response
 				//the  condition: dont remove the mask upon timeout, wait until reaction
-					conditions: [{type:'inputEquals',value:category1}], //pleasent response
+					conditions: [{type:'inputEquals',value:category1}], //pleasant response
 					actions: [
 						{type:'setTrialAttr',setter:{score:'1'}},
 						{type:'hideStim',handle:'All'},
@@ -182,7 +182,7 @@ define(['pipAPI'], function(APIconstructor) {
 					]
 				},
 				{
-					conditions: [{type:'inputEquals',value:category2}], //unpleasent response.
+					conditions: [{type:'inputEquals',value:category2}], //unpleasant response.
 					actions: [
 						{type:'setTrialAttr',setter:{score:'0'}},
 						{type:'hideStim',handle:'All'},
@@ -279,7 +279,7 @@ define(['pipAPI'], function(APIconstructor) {
 				},
 				{//What to do upon correct response
 				//the condition: dont remove the word upon timeout, wait until reaction
-					conditions: [{type:'inputEquals',value:category1}], //pleasent response
+					conditions: [{type:'inputEquals',value:category1}], //pleasant response
 					actions: [
 						{type:'hideStim',handle:'All'},
 						{type:'setTrialAttr',setter:{score:'1'}},
@@ -290,7 +290,7 @@ define(['pipAPI'], function(APIconstructor) {
 				},
 
 				{
-					conditions: [{type:'inputEquals',value:category2}], //unpleasent response.
+					conditions: [{type:'inputEquals',value:category2}], //unpleasant response.
 					actions: [
 						{type:'hideStim',handle:'All'},
 						{type:'setTrialAttr',setter:{score:'0'}},

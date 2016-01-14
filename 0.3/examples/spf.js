@@ -311,7 +311,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 			{word: 'Nice'},
 			{word: 'Heaven'},
 			{word: 'Happy'},
-			{word: 'Pleasaure'}
+			{word: 'Pleasure'}
 		],
 		attribute2: [ //Unpleasant
 			{word: 'Nasty'},

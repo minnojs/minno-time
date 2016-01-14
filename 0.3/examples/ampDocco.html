@@ -117,8 +117,8 @@
 
 	<span class="hljs-keyword">var</span> API = <span class="hljs-keyword">new</span> APIconstructor();
 
-	<span class="hljs-keyword">var</span> category1 = <span class="hljs-string">'Pleasent'</span>;
-	<span class="hljs-keyword">var</span> category2 = <span class="hljs-string">'Unpleasent'</span>;
+	<span class="hljs-keyword">var</span> category1 = <span class="hljs-string">'Pleasant'</span>;
+	<span class="hljs-keyword">var</span> category2 = <span class="hljs-string">'Unpleasant'</span>;
 	<span class="hljs-keyword">var</span> condition1= <span class="hljs-string">"white"</span>;
 	<span class="hljs-keyword">var</span> condition2= <span class="hljs-string">"black"</span>;</pre></div>
 		
@@ -187,7 +187,7 @@ prime1/category1++</p>
 		
 		  <div class='highlight'><pre>	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">computeAMPScore</span>(<span class="hljs-params">scoreArray</span>)</span>{
 		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i=<span class="hljs-number">3</span>; i&lt;scoreArray.length; i++){<span class="hljs-comment">// the first 3 are the example images, go over all the other logs.</span>
-			<span class="hljs-keyword">if</span>(scoreArray[i].responseHandle == category1){ <span class="hljs-comment">//pleasent response</span>
+			<span class="hljs-keyword">if</span>(scoreArray[i].responseHandle == category1){ <span class="hljs-comment">//pleasant response</span>
 				<span class="hljs-keyword">if</span>(scoreArray[i].data.condition == condition1){ <span class="hljs-comment">//the image is from the first category</span>
 					inc_prime1_category1();
 				}
@@ -197,7 +197,7 @@ prime1/category1++</p>
 					}
 				}
 			}
-			<span class="hljs-keyword">else</span>{<span class="hljs-comment">// unpleasent response</span>
+			<span class="hljs-keyword">else</span>{<span class="hljs-comment">// unpleasant response</span>
 				<span class="hljs-keyword">if</span>(scoreArray[i].responseHandle == category2){<span class="hljs-comment">//do nothing when there is no answer</span>
 					<span class="hljs-keyword">if</span>(scoreArray[i].data.condition == condition1){ <span class="hljs-comment">//the image is from the first category</span>
 						inc_prime1_category2();
@@ -369,7 +369,7 @@ prime1/category1++</p>
 
 
 		
-		  <div class='highlight'><pre>					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:category1}], <span class="hljs-comment">//pleasent response</span>
+		  <div class='highlight'><pre>					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:category1}], <span class="hljs-comment">//pleasant response</span>
 					actions: [
 						{type:<span class="hljs-string">'setTrialAttr'</span>,setter:{score:<span class="hljs-string">'1'</span>}},
 						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'All'</span>},
@@ -385,7 +385,7 @@ prime1/category1++</p>
 					]
 				},
 				{
-					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:category2}], <span class="hljs-comment">//unpleasent response.</span>
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:category2}], <span class="hljs-comment">//unpleasant response.</span>
 					actions: [
 						{type:<span class="hljs-string">'setTrialAttr'</span>,setter:{score:<span class="hljs-string">'0'</span>}},
 						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'All'</span>},
@@ -510,7 +510,7 @@ prime1/category1++</p>
 
 
 		
-		  <div class='highlight'><pre>					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:category1}], <span class="hljs-comment">//pleasent response</span>
+		  <div class='highlight'><pre>					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:category1}], <span class="hljs-comment">//pleasant response</span>
 					actions: [
 						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'All'</span>},
 						{type:<span class="hljs-string">'setTrialAttr'</span>,setter:{score:<span class="hljs-string">'1'</span>}},
@@ -521,7 +521,7 @@ prime1/category1++</p>
 				},
 
 				{
-					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:category2}], <span class="hljs-comment">//unpleasent response.</span>
+					conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:category2}], <span class="hljs-comment">//unpleasant response.</span>
 					actions: [
 						{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'All'</span>},
 						{type:<span class="hljs-string">'setTrialAttr'</span>,setter:{score:<span class="hljs-string">'0'</span>}},
