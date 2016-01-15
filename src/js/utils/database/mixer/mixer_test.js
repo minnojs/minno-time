@@ -105,19 +105,34 @@ define(['underscore','./mixerModule', '../randomize/randomizeModuleMock'],functi
 
 			});
 
+			describe(': choose', function(){
 
-			it('should choose n || 1 random elements', function(){
-				expect(mixer({
-					mixer:'choose',
-					data: [1,2,3,4]
-				})).toEqual([4]);
+				it('should choose 1 random elements', function(){
+					expect(mixer({
+						mixer:'choose',
+						data: [1,2,3,4]
+					})).toEqual([4]);
+				});
 
-				expect(mixer({
-					mixer:'choose',
-					n: 2,
-					data: [1,2,3,4]
-				})).toEqual([4,3]);
+				it('should choose n random elements', function(){
+					expect(mixer({
+						mixer:'choose',
+						n: 2,
+						data: [1,2,3,4]
+					})).toEqual([4,3]);
+				});
+
+				it('should pre mix data', function(){
+					expect(mixer({
+						mixer:'choose',
+						n:2,
+						data: [1, {mixer:'repeat', times:2, data:[2]}]
+					})).toEqual([2,2]);
+				});
+
 			});
+
+
 
 			it('should know how to weightedRandom', inject(function(randomizeSettings){
 				randomizeSettings.random = 0.5;
@@ -140,6 +155,14 @@ define(['underscore','./mixerModule', '../randomize/randomizeModuleMock'],functi
 					weights: [0.2, 0.6, 0.2],
 					data: [1,2, 3]
 				})).toEqual([3]);
+
+				randomizeSettings.random = 0.9;
+				expect(mixer({
+					mixer:'weightedRandom',
+					n: 2,
+					weights: [0.2, 0.6, 0.2],
+					data: [1,2, 3]
+				})).toEqual([3, 3]);
 			}));
 		});
 

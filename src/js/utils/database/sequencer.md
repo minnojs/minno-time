@@ -98,20 +98,132 @@ Repeats the element in `data` `times` times.
 * `{mixer:'repeat', times:10, data: [obj1,obj2]}`
 
 **random**:
-Randomizes the order of elements in `data`. Random pre-computes all of the elements in data, if you want to keep some of the elements together, use the `wrapper` mixer. If you want to mark a specific mixer within random not to be pre-computed, simply add `wrapper:true`.
-Please note that the randomizer pre-computes all the content in data, so that any branching mixers will be branched according to the environment as it is when the random mixer is reached. If you want to delay the branching until it is reached, simply wrap it within a `wrapper` mixer or add `wrapper:true`.
+Randomizes the order of elements in `data`. Random randomizes the order of all the elements under the random mixer's data array, even if they are inside a mixer. For example, consider the following code:
+```js
+var mixer = {
+    mixer:'random',
+    data: [
+        obj1,
+        {
+            mixer:'repeat',
+            times:2,
+            data:[
+                obj2
+            ]
+        }
+    ]
+}
+```
 
-* `{mixer:'random', data: [obj1,obj2]}`
-* `{mixer:'random', data: [obj1,{mixer:'repeat', wrapper:true,data:[1,2,3]}]}`
+It will form one of the following sequences: 
 
-**weightedRandom**:
-Selects a single element using a weighted random algorithm. Each element in `data` is given the appropriate weight from `weights`. In the following example obj2 has four times the probability of being selected as obj1.
-* `{mixer:'weightedRandom', weights: [0.2,0.8], data: [obj1,obj2]}`
+* [obj1,obj2,obj2]
+* [obj2,obj1,obj2]
+* [obj2,obj2,obj1]
+
+If you want to keep some of the elements in the data together (and not randomized), use the `wrapper` mixer. For instance:
+
+```js
+var mixer = {
+    mixer:'random',
+    data: [
+        obj1
+        {
+            mixer:'wrapper',
+            data:[
+                obj2,
+                obj3,
+                obj4
+            ]
+        }
+    ]
+}
+```
+This code will keep obj2, obj3, and obj4 together, in that same order (obj2, obj3, obj4), and will randomly present obj1 before or after these three objects.
+
+You can make any mixer into a wrapper by adding `wrapper:true`. For example: 
+
+```js
+var mixer = {
+    mixer:'random',
+    data: [
+        obj1,
+        {
+            mixer:'repeat',
+            times:2,
+            wrapper:true,
+            data:[
+                obj2,
+                obj3
+            ]
+        }
+    ]
+}
+```
+
+This code will results in one of the following sequences:
+
+* [obj1,obj2,obj3,obj2,obj3]
+* [obj2,obj3,obj2,obj3,obj1]
+
+If you want to randomize the order of two lists, and randomize the objects within each list but without mixing the two lists together, the following code will do the trick: 
+```js
+var mixer = {
+    mixer:'random',
+    data: [
+        {
+            mixer:'random',
+            wrapper:true,
+            data:[obj1,obj2]
+        },
+        {
+            mixer:'random',
+            wrapper:true,
+            data:[obj3,obj4]
+        }
+    ]
+}
+```
+
+This code will create one of the following sequences: 
+
+* [obj1,obj2,obj3,obj4]
+* [obj1,obj2,obj4,obj3]
+* [obj2,obj1,obj3,obj4]
+* [obj2,obj1,obj4,obj3]
+* [obj3,obj4,obj1,obj2]
+* [obj4,obj3,obj1,obj2]
+* [obj3,obj4,obj2,obj1]
+* [obj4,obj3,obj2,obj1]
+
+Please note that the `random` mixer pre-computes all the content in `data`, so that any branching mixers will be branched according to the state of the study at the time of the randomization. So, if you have a branch that depends on a previous object, make sure that the branch always comes after that object. Again, you can use wrapper:true in a branch (or multiBranch) mixer, if you need to keep the order of some objects fixed for the branching to make sense. 
 
 **choose**:
 Selects `n` random elements from `data` (by default the chooser picks one element).
 * `{mixer:'choose', data: [obj1,obj2]}` pick one of these two objs
 * `{mixer:'choose', n:2, data: [obj1,obj2,obj3]}` pick two of these three objs
+
+**weightedChoose**:
+Chooses `n` random elements from data using a weighted randomize algorithm. Each element in `data` is given the appropriate weight from `weights`. And may be picked once or more. In the following example obj2 has four times the probability of being selected as obj1.
+
+```js
+{
+    mixer:'weightedChoose',
+    n: 2,
+    weights: [0.2,0.8],
+    data: [obj1,obj2]}
+}
+```
+
+This code will create one of the following sequences: 
+
+* [obj1,obj1] - 4% of cases
+* [obj1,obj2] - 16% of cases
+* [obj2,obj1] - 16% of cases
+* [obj2,obj2] - 64% of cases
+
+**weightedRandom**:
+Alias for `weightedChoose`.
 
 **wrapper**:
 The wrapper mixer serves a sort of parenthesis for the mixer. In case you want to keep a set of elements as a block (when randomizing) simply wrap them and they'll stay together.
