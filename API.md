@@ -1,14 +1,14 @@
 ### Table of contents
 
-* [Defintions](#definitions)
+* [Definitions](#definitions)
 * [Media](#media)
 * [Stimuli](#stimuli)
 * [Trial](#trial)
-    - [Layout / stimuli]
+    - [Layout / stimuli](#layout-stimuli)
     - [Input](#input)
-    - [Interactions](interactions)
-        + [Conditions]
-        + [Actions]
+    - [Interactions](#interactions)
+        + [Conditions](#interactions-conditions)
+        + [Actions](#interactions-actions)
 * [Inheritance](#inheritance)
 * [Logginh](#logging)
 
