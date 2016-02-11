@@ -5,15 +5,15 @@ description: All the little details...
 
 ### Table of contents
 
-* [Defintions](#definitions)
+* [Definitions](#definitions)
 * [Media](#media)
 * [Stimuli](#stimuli)
 * [Trial](#trial)
-    - [Layout / stimuli]
+    - [Layout / stimuli](#layout-stimuli)
     - [Input](#input)
-    - [Interactions](interactions)
-        + [Conditions]
-        + [Actions]
+    - [Interactions](#interactions)
+        + [Conditions](#interactions-conditions)
+        + [Actions](#interactions-actions)
 * [Inheritance](#inheritance)
 * [Logginh](#logging)
 
@@ -320,20 +320,20 @@ Hide a stimulus, takes a stimulus `handle`. Use 'All' for all stimuli.
 **setStimAttr**:
 Set a stimulus.data attribute, takes a stimulus `handle` and a `setter` object or function.
 Any attributes in the setter object will be coppied to the stimulus.data object.
-* `{type:'setStimAttr',handle:'myStim',setter:{myAttr:'myValue',myOtherAttr:'myOtherValue'}`
+* `{type:'setStimAttr',handle:'myStim',setter:{property:'value',otherProperty:'otherValue'}}`
 * The setter function:
 
     ```js
     {type:'setStimAttr',handle:'myStim',setter:function(){
         // do your mojo here :)
         // the context ("this") of this function is the stimulus model
-    }
+    }}
     ```
 
 **setTrialAttr**:
 Set a trial.data attribute, takes a `setter` object or function.
 Any attributes in the setter object will be coppied to the trial.data object.
-* `{type:'setTrialAttr',setter:{myAttr:'myValue',myOtherAttr:'myOtherValue'}`
+* `{type:'setTrialAttr',setter:{property:'value',otherProperty:'otherValue'}}`
 * The setter function:
 
     ```js
@@ -342,20 +342,20 @@ Any attributes in the setter object will be coppied to the trial.data object.
         // trialData is the data object for this trial
         // eventData is the internal event that triggered this action
         // the context ("this") of this function is the trial object
-    }
+    }}
     ```
 
 **setGlobalAttr**:
 Set a global object property, takes a `setter` object or function.
 Any attributes in the setter object will be coppied into the global object.
-* `{type:'setGlobalAttr',setter:{myAttr:'myValue',myOtherAttr:'myOtherValue'}`
+* `{type:'setGlobalAttr',setter:{property:'value',otherProperty:'otherValue'}}`
 * The setter function:
 
     ```js
     {type:'setGlobalAttr',setter:function(globalObject){
         // do your mojo here :)
         // globalObject is the global object...
-    }
+    }}
     ```
 
 **trigger**:
