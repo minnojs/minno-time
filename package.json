@@ -7,7 +7,8 @@
     "build": "grunt build",
     "start": "grunt server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "npm install grunt-contrib-watch"
+    "postinstall": "npm install grunt-contrib-watch",
+    "version": "grunt version"
   },
   "repository": {
     "type": "git",
