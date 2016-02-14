@@ -8,11 +8,16 @@ define(function(require){
 	var $ = require('jquery')
 		, pubsub = require('utils/pubsub')
 		, evaluate = require('./evaluate')
-		, activate = require('./action');
+		, activate = require('./action')
+		, currentTrial = require('app/trial/current_trial');
 
 	var subscriptionStack = [];
 
-	var interact = function(interactions,input_data){
+	function interact(interactions,input_data){
+		var trial = currentTrial();
+
+		$.extend(input_data, {trialId: trial._id, trialCounter: trial.counter});
+
 		$.each(interactions,function(key,row){
 			if (evaluate(row.conditions,input_data)) {
 				// if this action includes endTrial we want to stop evalutation
