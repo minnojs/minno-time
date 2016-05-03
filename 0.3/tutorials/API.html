@@ -266,6 +266,9 @@ Each input object must include both a <code>handle</code> and an <code>on</code>
 <li><code>{handle:&#39;top&#39;,on:&#39;topTouch&#39;}</code></li>
 <li><code>{handle:&#39;bottom&#39;,on:&#39;bottomTouch&#39;}</code></li>
 </ul>
+<p><code>leftTouch</code>, <code>rightTouch</code>, <code>topTouch</code> and <code>bottomTouch</code> support the property <code>css</code> that will allow you to change the style of the touch area, for example:</p>
+<pre><code class="lang-js">{handle:<span class="hljs-string">'bottom'</span>, on: <span class="hljs-string">'bottomTouch'</span>, css: {background:<span class="hljs-string">'blue'</span>, width: <span class="hljs-string">'50%'</span>}}
+</code></pre>
 <p>Protip: In addition to the preset input types you can create custom input:</p>
 <pre><code class="lang-js">    {
         handle: <span class="hljs-string">'myInput'</span>,
