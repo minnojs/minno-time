@@ -86,7 +86,8 @@ define(function(require){
 						height: '100%',
 						background: '#00FF00',
 						opacity: 0.3
-					});
+					})
+					.css(definitions.css || {});
 
 				click(listener,definitions);
 				break;
@@ -100,7 +101,8 @@ define(function(require){
 						height: '100%',
 						background: '#00FF00',
 						opacity: 0.3
-					});
+					})
+					.css(definitions.css || {});
 
 				click(listener,definitions);
 				break;
@@ -114,7 +116,8 @@ define(function(require){
 						height: '30%',
 						background: '#00FF00',
 						opacity: 0.3
-					});
+					})
+					.css(definitions.css || {});
 
 				click(listener,definitions);
 				break;
@@ -128,7 +131,8 @@ define(function(require){
 						height: '30%',
 						background: '#00FF00',
 						opacity: 0.3
-					});
+					})
+					.css(definitions.css || {});
 
 				click(listener,definitions);
 				break;

@@ -151,8 +151,8 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 
 		// Create user interface (just click space to move on...)
 		input: [
-			{handle:'space',on:'space'},
-			{handle:'space',on:'bottomTouch',touch:true},
+			//{handle:'space',on:'space'},
+			{handle:'space',on:'bottomTouch',stouch:true, css:{background:'red'}},
 			{handle:'enter',on:'enter'}
 		],
 

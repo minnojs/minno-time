@@ -173,6 +173,12 @@ In addition, we have several shortcuts for commonly used inputs:
 * `{handle:'top',on:'topTouch'}`
 * `{handle:'bottom',on:'bottomTouch'}`
 
+`leftTouch`, `rightTouch`, `topTouch` and `bottomTouch` support the property `css` that will allow you to change the style of the touch area, for example:
+
+```js
+{handle:'bottom', on: 'bottomTouch', css: {background:'blue', width: '50%'}}
+```
+
 Protip: In addition to the preset input types you can create custom input:
 ```js
     {
