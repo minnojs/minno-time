@@ -815,6 +815,11 @@ hooks: {
 `endTask`:
 Called at the end of the task instead of the default redirect.
 
+#### onEnd
+Called at the end of the task instead of the default redirect.
+This function is a more standart complient version of `hooks.endTask`.
+
+
 #### Meta data
 
 Meta data is data that should be returned with every request to the server.
