@@ -40,7 +40,8 @@ define(function(require){
 			logger()
 				.always(function(){
 					var hooks = settingsGetter('hooks') || {};
-					return $.when(hooks.endTask && hooks.endTask());
+					var endTask = hooks.endTask || settingsGetter('onEnd') || $.noop;
+					return $.when(endTask());
 				})
 				.always(function(){
 					main.deferred.resolve();
