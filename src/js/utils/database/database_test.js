@@ -60,13 +60,17 @@ define(['underscore', './databaseModule'],function(_){
 
 			// ************** template **************
 			it('should not template if query has been interpolated', function(){
-				db.inflate('ns', {$templated:true}, 'context');
-				expect(templateSpy).not.toHaveBeenCalled();
+                var query = {}
+				db.inflate('ns', query, 'context');
+				db.inflate('ns', query, 'context');
+				expect(templateSpy.calls.length).toBe(1*2); // once for the query, once for nsData
 			});
 
 			it('should force template if regenerateTemplate is true', function(){
-				db.inflate('ns', {$templated:true, regenerateTemplate:true}, 'context');
-				expect(templateSpy).toHaveBeenCalled();
+                var query = {regenerateTemplate:true};
+				db.inflate('ns', query, 'context');
+				db.inflate('ns', query, 'context');
+				expect(templateSpy.calls.length).toBe(2*2); // once for the query, once for nsData
 			});
 
 			it('should template if query has not been templated', function(){

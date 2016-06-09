@@ -12,6 +12,7 @@ define(function(require){
 				operator = condition;
 			} else {
 				// @TODO angular.$parse may be a better candidate for doing this...
+                // or maybe lodash _.get?
 				left = dotNotation(condition.compare,context);
 				right = dotNotation(condition.to,context);
 				operator = condition.operator;
@@ -49,7 +50,8 @@ define(function(require){
 				case 'equals':
 					/* falls through */
 				default:
-					if (_.isUndefined(right)){
+                    // if right condition is not set, treat this as a truth test for left
+					if (_.isUndefined(condition.to)){
 						return !!left;
 					}
 					return _.isEqual(left, right);

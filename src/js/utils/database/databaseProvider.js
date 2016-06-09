@@ -30,10 +30,11 @@ define(function(require){
 				// inherit
 				if (!query.$inflated || query.reinflate) {
 					query.$inflated = inflate(query, coll, this.randomizer);
+                    query.$templated = null; // we have to retemplate after querying, who know what new templates we got here...
 				}
 
 				// template
-				if (!query.$templated || query.regenerateTemplate){
+				if (!query.$templated || query.$inflated.regenerateTemplate){
 					context[namespace + 'Meta'] = query.$meta;
 					context[namespace + 'Data'] = templateObj(query.$inflated.data || {}, context, options); // make sure we support
 					query.$templated = templateObj(query.$inflated, context, options);
