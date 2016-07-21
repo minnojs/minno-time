@@ -145,16 +145,15 @@ define(function(require){
 
 		name: function(){
 			// if we have an alias ues it
-			if (this.data.alias) {
-				return this.data.alias;
-			}
+			if (this.alias) { return this.alias; }
+			if (this.data.alias) { return this.data.alias; }
+
 			// otherwise try using the set we inherited from
-			if (_.isString(this._source.inherit)){
-				return this._source.inherit;
-			}
+			if (_.isString(this._source.inherit)){ return this._source.inherit; }
 			if (_.isPlainObject(this._source.inherit)){
 				return this._source.inherit.set;
 			}
+
 			return false; // we're out of options here
 		}
 	});

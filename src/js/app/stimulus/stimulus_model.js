@@ -106,7 +106,10 @@ define(function(require) {
 
 		name: function(){
 			var attr = this.attributes;
+            // if we have an alias ues it
+			if (attr.alias) {return attr.alias;} 
 			if (attr.data.alias) {return attr.data.alias;} // if we have an alias ues it
+
 			if (attr.inherit && attr.inherit.set) {return attr.inherit.set;} // otherwise try using the set we inherited from
 			if (attr.handle) {return attr.handle;} // otherwise use handle
 			return 'Anonymous Stimulus'; // we're out of options here
