@@ -1,5 +1,5 @@
 /*!
- * @license PIPlayer v0.3.26
+ * @license PIPlayer v0.3.27
  * Copyright 2013-2015 Project Implicit
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
