@@ -2,6 +2,7 @@
 title: API
 description: All the little details...
 ---
+
 ### Table of contents
 
 * [Definitions](#definitions)
@@ -823,6 +824,7 @@ Called at the end of the task instead of the default redirect.
 Called at the end of the task instead of the default redirect.
 This function is a more standart complient version of `hooks.endTask`.
 
+
 #### Meta data
 
 Meta data is data that should be returned with every request to the server.
@@ -970,6 +972,7 @@ The player sends all the data it has gathered to the url defined in the settings
 The data is sent as an ajax POST where the only field is "json" (unless you added something using [metadata](#meta-data)).
 The field includes a json array including all logs created. each log is an object including the following fields:
 
+
 Field           | Description
 --------------- |---
 log_serial      | the serial number for this log row (starts at 1)
@@ -982,3 +985,6 @@ latency         | the latency of the response from the beginning of the trial
 stimuli         | a json including the stimuli used in this trial (we use an alias if one is set, otherwise the stimulus set, otherwise the stimulus handle otherwise stim#)
 media           | a json including the media used in this trial (we use an alias if one is set, otherwise the media set, otherwise media#)
 data            | a json including the data property of this trial
+
+You can control the names that the different elements get by adding an `alias` property to the element itslef or to its `data`.
+If the `alias` isn't set, then the player attempts to choose a meaningful name on its own (using the inherited set, or whatever is appropriate).
