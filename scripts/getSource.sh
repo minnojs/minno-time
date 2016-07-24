@@ -79,6 +79,6 @@ do
 	cp -r $TMPDIR/{dist,bower_components,package.json} $DIR/$VERSION/ || error_exit "$LINENO: could not import dist/bower_components."
 
 	######## quest ########
-	copy_api $LATESTTAG "resources/tutorials/API.md" "$DIR/src/0.3/examples/API.md"
+	copy_api $LATESTTAG "API.md" "$DIR/src/0.3/examples/API.md"
 	copy_api $LATESTTAG "src/js/extensions/dscore/README.md" "$DIR/src/0.3/tutorials/scorer.md"
 done
