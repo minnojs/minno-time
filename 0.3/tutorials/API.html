@@ -138,14 +138,14 @@
 The folowing two media definitions have the same outcome:<code>&#39;Wiki&#39;</code>, <code>{word:&#39;Wiki&#39;}</code></p>
 <h3 id="stimuli">Stimuli</h3>
 <p>Stimuli are responsible for how we present the media.</p>
-<pre><code class="lang-js"><span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">handle</span>:<span class="hljs-value"><span class="hljs-string">'myStim'</span>,
-    size: {height:<span class="hljs-number">25</span>,width:<span class="hljs-number">25</span></span></span></span>},
-    <span class="hljs-tag">location</span>: <span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"><span class="hljs-number">25</span>,top:<span class="hljs-number">75</span></span></span></span>},
-    <span class="hljs-tag">css</span>:<span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"><span class="hljs-string">'red'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span></span></span></span>},
-    <span class="hljs-tag">media</span>: <span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">word</span>:<span class="hljs-value"> <span class="hljs-string">'Your very cool stimulus'</span></span></span></span>},
-    <span class="hljs-tag">data</span>: <span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">myData</span>:<span class="hljs-value"> <span class="hljs-string">'some info'</span>, myOtherData: <span class="hljs-string">'some other info'</span></span></span></span>}
-    <span class="hljs-tag">nolog</span>: <span class="hljs-tag">false</span>
+<pre><code class="lang-js">{
+    handle:<span class="hljs-string">'myStim'</span>,
+    size: {height:<span class="hljs-number">25</span>,width:<span class="hljs-number">25</span>},
+    location: {left:<span class="hljs-number">25</span>,top:<span class="hljs-number">75</span>},
+    css:{color:<span class="hljs-string">'red'</span>,<span class="hljs-string">'font-size'</span>:<span class="hljs-string">'2em'</span>},
+    media: {word: <span class="hljs-string">'Your very cool stimulus'</span>},
+    data: {myData: <span class="hljs-string">'some info'</span>, myOtherData: <span class="hljs-string">'some other info'</span>}
+    nolog: <span class="hljs-literal">false</span>
 }
 </code></pre>
 <p><code>handle</code>:
@@ -171,40 +171,40 @@ By default nolog is set to false.</p>
 <h3 id="trial">Trial</h3>
 <p>Trials are responsible for organizing stimuli and interactions with the user.</p>
 <pre><code class="lang-js">{
-<span class="hljs-label">    data:</span>{<span class="hljs-string">my:</span> <span class="hljs-string">'arbitrary'</span>,<span class="hljs-string">data:</span><span class="hljs-string">'object'</span>},
-<span class="hljs-label">    layout:</span> [
+    data:{my: <span class="hljs-string">'arbitrary'</span>,data:<span class="hljs-string">'object'</span>},
+    layout: [
         stimulus1,
         stimulus2
     ],
-<span class="hljs-label">    input:</span> [
-        {<span class="hljs-string">handle:</span><span class="hljs-string">'left'</span>,<span class="hljs-string">on:</span><span class="hljs-string">'leftTouch'</span>},
-        {<span class="hljs-string">handle:</span><span class="hljs-string">'right'</span>,<span class="hljs-string">on:</span><span class="hljs-string">'rightTouch'</span>}
+    input: [
+        {handle:<span class="hljs-string">'left'</span>,on:<span class="hljs-string">'leftTouch'</span>},
+        {handle:<span class="hljs-string">'right'</span>,on:<span class="hljs-string">'rightTouch'</span>}
     ],
-<span class="hljs-label">    stimuli:</span> [
+    stimuli: [
         stimulus3
     ],
-<span class="hljs-label">    interactions:</span> [
+    interactions: [
         {
-<span class="hljs-label">            conditions:</span> [{<span class="hljs-string">type:</span><span class="hljs-string">'begin'</span>}],
-<span class="hljs-label">            actions:</span> [{<span class="hljs-string">type:</span><span class="hljs-string">'hideStim'</span>,<span class="hljs-string">handle:</span><span class="hljs-string">'myStimHandle'</span>}]
+            conditions: [{type:<span class="hljs-string">'begin'</span>}],
+            actions: [{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'myStimHandle'</span>}]
         },
         {
-<span class="hljs-label">            conditions:</span> [{<span class="hljs-string">type:</span><span class="hljs-string">'inputEqualsStim'</span>,<span class="hljs-string">property:</span><span class="hljs-string">'orientation'</span>}],
-<span class="hljs-label">            actions:</span> [
-                {<span class="hljs-string">type:</span><span class="hljs-string">'showStim'</span>,<span class="hljs-string">handle:</span><span class="hljs-string">'myStim'</span>},
-                {<span class="hljs-string">type:</span><span class="hljs-string">'setInput'</span>,<span class="hljs-string">input:</span>{<span class="hljs-string">handle:</span><span class="hljs-string">'time'</span>,<span class="hljs-string">on:</span><span class="hljs-string">'timeout'</span>,<span class="hljs-string">duration:</span><span class="hljs-number">300</span>}}
+            conditions: [{type:<span class="hljs-string">'inputEqualsStim'</span>,property:<span class="hljs-string">'orientation'</span>}],
+            actions: [
+                {type:<span class="hljs-string">'showStim'</span>,handle:<span class="hljs-string">'myStim'</span>},
+                {type:<span class="hljs-string">'setInput'</span>,input:{handle:<span class="hljs-string">'time'</span>,on:<span class="hljs-string">'timeout'</span>,duration:<span class="hljs-number">300</span>}}
             ]
         },
         {
-<span class="hljs-label">            conditions:</span> [
-                {<span class="hljs-string">type:</span><span class="hljs-string">'inputEqualsStim'</span>,<span class="hljs-string">property:</span><span class="hljs-string">'orientation'</span>,<span class="hljs-string">negate:</span><span class="hljs-literal">true</span>},
-                {<span class="hljs-string">type:</span><span class="hljs-string">'inputEquals'</span>,<span class="hljs-string">value:</span><span class="hljs-string">'time'</span>,<span class="hljs-string">negate:</span><span class="hljs-literal">true</span>}
+            conditions: [
+                {type:<span class="hljs-string">'inputEqualsStim'</span>,property:<span class="hljs-string">'orientation'</span>,negate:<span class="hljs-literal">true</span>},
+                {type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'time'</span>,negate:<span class="hljs-literal">true</span>}
             ],
-<span class="hljs-label">            actions:</span> [{<span class="hljs-string">type:</span><span class="hljs-string">'endTrial'</span>}]
+            actions: [{type:<span class="hljs-string">'endTrial'</span>}]
         },
         {
-<span class="hljs-label">            conditions:</span> [{<span class="hljs-string">type:</span><span class="hljs-string">'inputEquals'</span>,<span class="hljs-string">value:</span><span class="hljs-string">'time'</span>}],
-<span class="hljs-label">            actions:</span> [{<span class="hljs-string">type:</span><span class="hljs-string">'hideStim'</span>,<span class="hljs-string">handle:</span><span class="hljs-string">'myStim'</span>}]
+            conditions: [{type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'time'</span>}],
+            actions: [{type:<span class="hljs-string">'hideStim'</span>,handle:<span class="hljs-string">'myStim'</span>}]
         }
     ]
 }
@@ -267,17 +267,17 @@ Each input object must include both a <code>handle</code> and an <code>on</code>
 <li><code>{handle:&#39;bottom&#39;,on:&#39;bottomTouch&#39;}</code></li>
 </ul>
 <p><code>leftTouch</code>, <code>rightTouch</code>, <code>topTouch</code> and <code>bottomTouch</code> support the property <code>css</code> that will allow you to change the style of the touch area, for example:</p>
-<pre><code class="lang-js">{<span class="hljs-string">handle:</span><span class="hljs-string">'bottom'</span>, <span class="hljs-string">on:</span> <span class="hljs-string">'bottomTouch'</span>, <span class="hljs-string">css:</span> {<span class="hljs-string">background:</span><span class="hljs-string">'blue'</span>, <span class="hljs-string">width:</span> <span class="hljs-string">'50%'</span>}}
+<pre><code class="lang-js">{handle:<span class="hljs-string">'bottom'</span>, on: <span class="hljs-string">'bottomTouch'</span>, css: {background:<span class="hljs-string">'blue'</span>, width: <span class="hljs-string">'50%'</span>}}
 </code></pre>
 <p>Protip: In addition to the preset input types you can create custom input:</p>
 <pre><code class="lang-js">    {
         handle: <span class="hljs-string">'myInput'</span>,
-        on: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(callback)</span></span>{
+        on: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">callback</span>)</span>{
             <span class="hljs-comment">// do your mojo here and then</span>
             <span class="hljs-comment">// where e is the raw event, and 'eventType' is the name of this event</span>
-            <span class="hljs-keyword">callback</span>(e, <span class="hljs-string">'eventType'</span>);
+            callback(e, <span class="hljs-string">'eventType'</span>);
         },
-        off: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+        off: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
             <span class="hljs-comment">// remove your listener (if you need to keep state you can encapsulate the whole input object in a module)</span>
         }
     }
@@ -293,8 +293,8 @@ If it is set to <code>false</code> then the input will be used only on non touch
 <p>Interactions are composed of conditions and actions. Every time an event is fired (any input including timeout or the begining of a trial) all the conditions are evaluated.</p>
 <p>The <code>interactions</code> array is composed of interaction objects, each holding an array of conditions and an array of actions.
 For each interaction object, if all the conditions are true, then all the actions are carried out.</p>
-<pre><code class="lang-js"><span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">conditions</span>:<span class="hljs-value"> [
+<pre><code class="lang-js">{
+    conditions: [
         condition1,
         condition2
     ],
@@ -302,15 +302,15 @@ For each interaction object, if all the conditions are true, then all the action
         action1,
         action2
     ]
-</span></span></span>}
+}
 </code></pre>
 <h4 id="interactions-conditions">Interactions: conditions</h4>
 <p>Each condition object has a <code>type</code> property that defines what type of evaluation to perform.</p>
 <p>In addition, it has a <code>negate</code> property (false by default) that determines whether to activate the condition when the evaluation is true or when it is false.</p>
 <p>It is possible to create complex conditions, the following condition, for instance, is activated in case there is an input that is not equal to trial.data.customAttribute, and the input handle is not “time”.</p>
 <pre><code class="lang-js">[
-    {<span class="hljs-string">type:</span><span class="hljs-string">'inputEqualsTrial'</span>,<span class="hljs-string">property:</span><span class="hljs-string">'customAttribute'</span>,<span class="hljs-string">negate:</span><span class="hljs-literal">true</span>},
-    {<span class="hljs-string">type:</span><span class="hljs-string">'inputEquals'</span>,<span class="hljs-string">value:</span><span class="hljs-string">'time'</span>,<span class="hljs-string">negate:</span><span class="hljs-literal">true</span>}
+    {type:<span class="hljs-string">'inputEqualsTrial'</span>,property:<span class="hljs-string">'customAttribute'</span>,negate:<span class="hljs-literal">true</span>},
+    {type:<span class="hljs-string">'inputEquals'</span>,value:<span class="hljs-string">'time'</span>,negate:<span class="hljs-literal">true</span>}
 ]
 </code></pre>
 <p><strong>begin</strong>:
@@ -389,8 +389,8 @@ The optional property <code>handle</code> narrows the search down to stimuli fit
 This options is deprecated. use <strong>custom</strong> instead.</p>
 <p><strong>custom</strong>:
 It is also possible to create a custom condition:</p>
-<pre><code class="lang-js">{<span class="hljs-built_in">type</span>:<span class="hljs-string">'custom'</span>, value:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(condtion, inputData, trial)</span></span>{
-    // <span class="hljs-keyword">do</span> your mojo here <span class="hljs-keyword">and</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span> <span class="hljs-keyword">or</span> <span class="hljs-keyword">false</span>
+<pre><code class="lang-js">{type:<span class="hljs-string">'custom'</span>, value:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">condtion, inputData, trial</span>)</span>{
+    <span class="hljs-comment">// do your mojo here and return true or false</span>
 }}
 </code></pre>
 <h4 id="interactions-actions">Interactions: actions</h4>
@@ -413,7 +413,7 @@ Any attributes in the setter object will be coppied to the stimulus.data object.
 <ul>
 <li><code>{type:&#39;setStimAttr&#39;,handle:&#39;myStim&#39;,setter:{property:&#39;value&#39;,otherProperty:&#39;otherValue&#39;}}</code></li>
 <li><p>The setter function:</p>
-<pre><code class="lang-js">  {type:<span class="hljs-string">'setStimAttr'</span>,handle:<span class="hljs-string">'myStim'</span>,setter:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+<pre><code class="lang-js">  {type:<span class="hljs-string">'setStimAttr'</span>,handle:<span class="hljs-string">'myStim'</span>,setter:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
       <span class="hljs-comment">// do your mojo here :)</span>
       <span class="hljs-comment">// the context ("this") of this function is the stimulus model</span>
   }}
@@ -426,7 +426,7 @@ Any attributes in the setter object will be coppied to the trial.data object.</p
 <ul>
 <li><code>{type:&#39;setTrialAttr&#39;,setter:{property:&#39;value&#39;,otherProperty:&#39;otherValue&#39;}}</code></li>
 <li><p>The setter function:</p>
-<pre><code class="lang-js">  {type:<span class="hljs-string">'setTrialAttr'</span>,setter:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(trialData, eventData)</span></span>{
+<pre><code class="lang-js">  {type:<span class="hljs-string">'setTrialAttr'</span>,setter:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">trialData, eventData</span>)</span>{
       <span class="hljs-comment">// do your mojo here :)</span>
       <span class="hljs-comment">// trialData is the data object for this trial</span>
       <span class="hljs-comment">// eventData is the internal event that triggered this action</span>
@@ -441,7 +441,7 @@ Any attributes in the setter object will be coppied into the global object.</p>
 <ul>
 <li><code>{type:&#39;setGlobalAttr&#39;,setter:{property:&#39;value&#39;,otherProperty:&#39;otherValue&#39;}}</code></li>
 <li><p>The setter function:</p>
-<pre><code class="lang-js">  {type:<span class="hljs-string">'setGlobalAttr'</span>,setter:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(globalObject)</span></span>{
+<pre><code class="lang-js">  {type:<span class="hljs-string">'setGlobalAttr'</span>,setter:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">globalObject</span>)</span>{
       <span class="hljs-comment">// do your mojo here :)</span>
       <span class="hljs-comment">// globalObject is the global object...</span>
   }}
@@ -510,26 +510,26 @@ Responsible for the next trial we go to. This action will be executed only after
 <p>The element sets are defined in the main task script under <code>trialSets</code>/<code>stimulusSets</code>/<code>mediaSets</code>. Or using using the API using <code>addMediaSets</code>/<code>addStimulusSets</code>/<code>addTrialSets</code>.</p>
 <p>Each set is simply an array of elements that can later be referred to as a base for new elements. Note that the name that you give the set (in the example, default or IAT) is the handle that you later use to refer to it.</p>
 <p>The examples here use trials as an example, the same principles apply to stimuli and media elements.</p>
-<pre><code class="lang-js">var task = {
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> task = {
     <span class="hljs-comment">// these are the trial sets</span>
-<span class="hljs-label">    trialSets:</span> {
+    trialSets: {
         <span class="hljs-comment">// This is the first set, it has only one trial</span>
-        <span class="hljs-string">default :</span> [
+        <span class="hljs-keyword">default</span> : [
             defaultTrial
         ],
 
         <span class="hljs-comment">// This is the second set it has three trials</span>
         <span class="hljs-comment">// The first trial explicitly inherits the default trial and adds some data to it</span>
-        <span class="hljs-string">IAT :</span> [
-            {<span class="hljs-string">inherit:</span>{<span class="hljs-string">set:</span><span class="hljs-keyword">default</span>},<span class="hljs-string">data:</span>{<span class="hljs-string">block:</span><span class="hljs-number">1</span>}},
+        IAT : [
+            {inherit:{set:<span class="hljs-keyword">default</span>},data:{block:<span class="hljs-number">1</span>}},
             block02Trials,
             block03Trials
         ]
     },
 
     <span class="hljs-comment">// these are the stimulus and media sets</span>
-    <span class="hljs-string">stimulusSets :</span> stimulusSets,
-    <span class="hljs-string">mediaSets :</span> mediaSets
+    stimulusSets : stimulusSets,
+    mediaSets : mediaSets
 }
 </code></pre>
 <h4 id="inheriting">Inheriting</h4>
@@ -539,8 +539,8 @@ The only exception to this rule is their <code>data</code> objects which we atte
 <p>Follow this pseudo code:</p>
 <pre><code class="lang-js"><span class="hljs-comment">// The parent trial</span>
 {
-<span class="hljs-label">    data:</span> {<span class="hljs-string">name:</span> <span class="hljs-string">'jhon'</span>, <span class="hljs-string">family:</span><span class="hljs-string">'doe'</span>}
-<span class="hljs-label">    stimuli:</span> [
+    data: {name: <span class="hljs-string">'jhon'</span>, family:<span class="hljs-string">'doe'</span>}
+    stimuli: [
         stim1,
         stim2
     ]
@@ -548,25 +548,25 @@ The only exception to this rule is their <code>data</code> objects which we atte
 
 <span class="hljs-comment">// The child trial which attempts to inherit the parent</span>
 {
-<span class="hljs-label">    inherit:</span> <span class="hljs-string">'parent'</span>,
-<span class="hljs-label">    data:</span> {<span class="hljs-string">name:</span> <span class="hljs-string">'jack'</span>}
-<span class="hljs-label">    stimuli:</span> [
+    inherit: <span class="hljs-string">'parent'</span>,
+    data: {name: <span class="hljs-string">'jack'</span>}
+    stimuli: [
         stim1
     ]
 }
 
 <span class="hljs-comment">// The result would be:</span>
 {
-<span class="hljs-label">    data:</span> {<span class="hljs-string">name:</span> <span class="hljs-string">'jack'</span>, <span class="hljs-string">family:</span><span class="hljs-string">'doe'</span>}  <span class="hljs-comment">// the child kept its own name but inherited the family name</span>
-<span class="hljs-label">    stimuli:</span> [                          <span class="hljs-comment">// the stimuli array was completely overwritten</span>
+    data: {name: <span class="hljs-string">'jack'</span>, family:<span class="hljs-string">'doe'</span>}  <span class="hljs-comment">// the child kept its own name but inherited the family name</span>
+    stimuli: [                          <span class="hljs-comment">// the stimuli array was completely overwritten</span>
         stim1
     ]
 }
 </code></pre>
 <p>In order for an element to inherit another element it must use the <code>inherit</code> property of the inheriting element.</p>
-<pre><code class="lang-js"><span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">inherit</span>:<span class="hljs-value"> inheritObject
-</span></span></span>}
+<pre><code class="lang-js">{
+    inherit: inheritObject
+}
 </code></pre>
 <p>The inherit object has a <code>set</code> property defining which element set it should inherit from.
 It also has a <code>type</code> property that defines what type of inheritance we should use.</p>
@@ -600,7 +600,7 @@ If the data property is set as a string, we assume it refers to the element hand
 </ul>
 <p><strong>function</strong>:
 You may also use a custom function to pick your element.</p>
-<pre><code class="lang-js">{<span class="hljs-keyword">set</span>: <span class="hljs-string">'setName'</span>, type: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(definitions)</span></span>{
+<pre><code class="lang-js">{set: <span class="hljs-string">'setName'</span>, type: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">definitions</span>)</span>{
     <span class="hljs-comment">// definitions is the inherit object (including  set, type, and whatever other properties you'd like to use)</span>
     <span class="hljs-comment">// the context ("this") is the element collection, it is a Backbone.js collection of the elements in the set</span>
 }}
@@ -610,21 +610,21 @@ You may also use a custom function to pick your element.</p>
 It accepts two arguments: the source object on which it is called (in this case the appropriate trial object), and the global object. The source object is also the context for the function.
 The example shows how you can use customize to push a stimulus into the trial, this allows us to generate stim1 dynamicaly.</p>
 <pre><code class="lang-js">{
-    inherit: 'something',
-    stimuli: <span class="hljs-keyword">[</span>], // note that their are no stimuli yet!
-    customize<span class="hljs-keyword"> :</span><span class="hljs-function"> function(</span>trialSource, globalObject<span class="hljs-function">)</span>{
-        // push a stimulus into the stimulus<span class="hljs-instruction"> array
-</span>       <span class="hljs-function"> trialSource.stimuli.push(</span>stim1<span class="hljs-function">)</span>;
+    inherit: <span class="hljs-string">'something'</span>,
+    stimuli: [], <span class="hljs-comment">// note that their are no stimuli yet!</span>
+    customize : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">trialSource, globalObject</span>)</span>{
+        <span class="hljs-comment">// push a stimulus into the stimulus array</span>
+        trialSource.stimuli.push(stim1);
     }
 }
 </code></pre>
 <h3 id="the-sequence">The sequence</h3>
 <p>The sequence is an ordered list of the trials that you want to present consequently to the users.</p>
 <pre><code class="lang-js">task = {
-<span class="hljs-label">    trialSets:</span> trialSets,
-    <span class="hljs-string">stimulusSets :</span> stimulusSets,
-    <span class="hljs-string">mediaSets :</span> mediaSets,
-<span class="hljs-label">    sequence:</span> [
+    trialSets: trialSets,
+    stimulusSets : stimulusSets,
+    mediaSets : mediaSets,
+    sequence: [
         trial1,
         trial2,
         trial3
@@ -638,10 +638,10 @@ that allow for powerful randomization of your task.</p>
 <p>The mixer allows wrapping sub sequences in objects that allow you to manipulate the way in which they appear.
 You may insert such an object at any place within the sequence and it will be replaced by the appropriate trials.</p>
 <p>The basic structure of a mixer object is:</p>
-<pre><code class="lang-js"><span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">mixer</span>:<span class="hljs-value"> <span class="hljs-string">'functionType'</span>,
+<pre><code class="lang-js">{
+    mixer: <span class="hljs-string">'functionType'</span>,
     data: [trial1, trial2]
-</span></span></span>}
+}
 </code></pre>
 <p>The <code>mixer</code> property holds the mixer type.</p>
 <p>The <code>data</code> property holds an array of elements (either trials or mixer objects).</p>
@@ -654,21 +654,21 @@ You may insert such an object at any place within the sequence and it will be re
     {
         mixer: <span class="hljs-string">'repeat'</span>,
         times: <span class="hljs-number">10</span>,
-        <span class="hljs-keyword">data</span>: [
+        data: [
             <span class="hljs-comment">// Delay the mixing of these elements until after the `repeat`.</span>
             {
                 mixer: <span class="hljs-string">'wrapper'</span>,
-                <span class="hljs-keyword">data</span>: [
+                data: [
                     trial1,
                     <span class="hljs-comment">// Randomize the order of the trials within.</span>
                     {
                         mixer: <span class="hljs-string">'random'</span>,
-                        <span class="hljs-keyword">data</span>: [
+                        data: [
                             trial2,
                             <span class="hljs-comment">// Keep trial 3 and 4 together.</span>
                             {
                                 mixer: <span class="hljs-string">'wrapper'</span>,
-                                <span class="hljs-keyword">data</span>: [
+                                data: [
                                     trial3,
                                     trial4
                                 ]
@@ -719,7 +719,7 @@ The wrapper mixer serves a sort of parenthesis for the mixer. It has two primary
 <pre><code class="lang-js">settings = {
     logger: {
         url: <span class="hljs-string">'your/target/url'</span>,
-        logger: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+        logger: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
             <span class="hljs-comment">// do your mojo here :)</span>
         }
     },
@@ -734,7 +734,7 @@ The wrapper mixer serves a sort of parenthesis for the mixer. It has two primary
     url: <span class="hljs-string">'your/target/url'</span>,
     pulse: <span class="hljs-number">3</span>,
     fullpath: <span class="hljs-literal">false</span>,
-    logger: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    logger: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
         <span class="hljs-comment">// do your mojo here :)</span>
     }
 }
@@ -756,7 +756,7 @@ An object that is used to extend each logged row. This is useful in case you wan
 Accepts a function to replace the existing logging function. (don’t touch this if you don’t <strong>realy</strong> know what you’re doing).
 The logger function is called each time a log action is triggered (see interactions: actions <a href="#interactions-actions">log</a>).
 It is responsible for adding a logging row to be sent to the server.</p>
-<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(trialData, inputData, actionData,logStack)</span></span>{
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">trialData, inputData, actionData,logStack</span>)</span>{
     <span class="hljs-comment">// trialData: the data object from this trial</span>
     <span class="hljs-comment">// inputData: the input object that triggered this action</span>
     <span class="hljs-comment">// actionData: the action object that was triggered (it should look like {type:'log', your:'custom property'})</span>
@@ -787,10 +787,10 @@ It is responsible for adding a logging row to be sent to the server.</p>
 <h4 id="canvas">Canvas</h4>
 <p>The canvas section is responsible for the overall look of the player.
 It controls the shape and appearance of the canvas.</p>
-<pre><code class="lang-js"><span class="hljs-tag">canvas</span>: <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">maxWidth</span>:<span class="hljs-value"> <span class="hljs-number">800</span>,
+<pre><code class="lang-js">canvas: {
+    maxWidth: <span class="hljs-number">800</span>,
     proportions : <span class="hljs-number">0.8</span>
-</span></span></span>}
+}
 </code></pre>
 <p><code>width</code>:
 If width is set, then the canvas size is set to a constant width (set the hight using the <code>proportions</code> property).</p>
@@ -818,24 +818,24 @@ Allows you to add any custom css to the canvas (using the jquery css <a href="ht
 <p>The <code>base_url</code> section is responsible for loading images and templates. It allows the user to pick a base url from which to load all images and templates.
 It accepts either an object setting the base url for images and templates or a string that will be used for both images and templates:</p>
 <pre><code class="lang-js"><span class="hljs-comment">// object notation</span>
-<span class="hljs-tag">base_url</span>: {
-    <span class="hljs-attribute">image</span>: <span class="hljs-string">"images"</span>,
-    <span class="hljs-attribute">template</span>: <span class="hljs-string">"templates/"</span>
+base_url: {
+    image: <span class="hljs-string">"images"</span>,
+    template: <span class="hljs-string">"templates/"</span>
 }
 
 <span class="hljs-comment">// string notation</span>
-<span class="hljs-attribute">base_url</span>: <span class="hljs-string">"media/"</span>
+base_url: <span class="hljs-string">"media/"</span>
 </code></pre>
 <h4 id="redirect">Redirect</h4>
 <p>The redirect setting decides where to redirect the player at the end of the task.
 By default, the player simply refreshes the current page.
 This option is not used if the endTask hook is set.</p>
-<pre><code class="lang-js"><span class="hljs-string">redirect:</span> <span class="hljs-string">'//my.domain.edu'</span>
+<pre><code class="lang-js">redirect: <span class="hljs-string">'//my.domain.edu'</span>
 </code></pre>
 <h4 id="hooks">Hooks</h4>
 <p>Hooks are functions that are to be run at predefined points throughout the player.</p>
-<pre><code class="lang-js"><span class="hljs-tag">hooks</span>: <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">endTask</span>:<span class="hljs-value"> <span class="hljs-function">function</span>(){</span></span></span>}
+<pre><code class="lang-js">hooks: {
+    endTask: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{}
 }
 </code></pre>
 <p><code>endTask</code>:
@@ -847,16 +847,16 @@ This function is a more standart complient version of <code>hooks.endTask</code>
 <p>Meta data is data that should be returned with every request to the server.
 Any key value pair in the meta data is added to every post the player makes to the server.
 In order to create a post with three keys: json, session_id and task_id - you would write something like this:</p>
-<pre><code class="lang-js"><span class="hljs-tag">metaData</span>: <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">session_id</span>:<span class="hljs-value"> <span class="hljs-number">9872356</span>,
+<pre><code class="lang-js">metaData: {
+    session_id: <span class="hljs-number">9872356</span>,
     task_id: <span class="hljs-string">'43BTW78'</span>
-</span></span></span>}
+}
 </code></pre>
 <p>(the json field is the field that holds the player data it is created automaticaly)</p>
 <h3 id="api">API</h3>
 <p>The API is a javascript object that is used to activate the PIP.
 The basic format for accessing the API is as follows:</p>
-<pre><code class="lang-js">define([<span class="hljs-string">'app/API'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(APIconstructor)</span> </span>{
+<pre><code class="lang-js">define([<span class="hljs-string">'app/API'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">APIconstructor</span>) </span>{
     <span class="hljs-keyword">var</span> API = <span class="hljs-keyword">new</span> APIconstructor();
 
     API.addScript(script);
@@ -887,10 +887,10 @@ Allows extending the global or current objects respectively:</p>
   }
 </code></pre>
 <p>  Then the following script:</p>
-<pre><code class="lang-js">  <span class="hljs-tag">API</span><span class="hljs-class">.addGlobal</span>(<span class="hljs-rules">{
-      <span class="hljs-rule"><span class="hljs-attribute">score</span>:<span class="hljs-value"> <span class="hljs-string">'100'</span>,
-      done: true
-  </span></span></span>})
+<pre><code class="lang-js">  API.addGlobal({
+      score: <span class="hljs-string">'100'</span>,
+      done: <span class="hljs-literal">true</span>
+  })
 </code></pre>
 <p>  Will leave the global object as</p>
 <pre><code class="lang-js">  <span class="hljs-keyword">var</span> globalObject = {
@@ -910,28 +910,28 @@ Returns the global or current object respectively:</p>
 <p><strong>addSettings</strong>:
 <code>API.addSettings</code> allows you to add settings to your script.</p>
 <p>You may add a whole settings section:</p>
-<pre><code class="lang-js"><span class="hljs-tag">API</span><span class="hljs-class">.addSettings</span>(<span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">canvas</span>:<span class="hljs-value"> {</span></span></span>},
-    <span class="hljs-tag">logger</span>: <span class="hljs-rules">{}</span>
+<pre><code class="lang-js">API.addSettings({
+    canvas: {},
+    logger: {}
 });
 </code></pre>
 <p>Alternatively you may add a specific setting:</p>
-<pre><code class="lang-js"><span class="hljs-tag">API</span><span class="hljs-class">.addSettings</span>(<span class="hljs-string">'canvas'</span>,{
-    <span class="hljs-attribute">maxWidth</span>: <span class="hljs-number">800</span>,
-    <span class="hljs-attribute">proportions </span>: <span class="hljs-number">0.8</span>
+<pre><code class="lang-js">API.addSettings(<span class="hljs-string">'canvas'</span>,{
+    maxWidth: <span class="hljs-number">800</span>,
+    proportions : <span class="hljs-number">0.8</span>
 });
 </code></pre>
 <p><strong>addTrialSets, addStimulusSets and addMediaSets</strong>:
 There are three add set functions, one for each of the set types: <code>addTrialSets</code>, <code>addStimulusSets</code> and <code>addMediaSets</code>.
 Each of them allows adding sets to your script.
 You may add a complete sets object:</p>
-<pre><code class="lang-js"><span class="hljs-tag">API</span><span class="hljs-class">.addTrialSets</span>(<span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">Default</span>:<span class="hljs-value"> [defaultTrial],
+<pre><code class="lang-js">API.addTrialSets({
+    Default: [defaultTrial],
     introduction: [intro1, intro2, intro3]
-</span></span></span>});
+});
 </code></pre>
 <p>Or you may add a single set:</p>
-<pre><code class="lang-js">API.addTrialSets(<span class="hljs-string">"introduction"</span>,[intro1, intro2]); // adds intro1 <span class="hljs-built_in">and</span> intro2 <span class="hljs-keyword">to</span> the introduction <span class="hljs-keyword">set</span>
+<pre><code class="lang-js">API.addTrialSets(<span class="hljs-string">"introduction"</span>,[intro1, intro2]); <span class="hljs-comment">// adds intro1 and intro2 to the introduction set</span>
 </code></pre>
 <p>Or part of a set</p>
 <pre><code class="lang-js">API.addTrialSets(<span class="hljs-string">"introduction"</span>,intro3); <span class="hljs-comment">// adds intro3 to the introduction set</span>
@@ -939,10 +939,10 @@ You may add a complete sets object:</p>
 <p><strong>addSequence</strong>
 Allows adding sequence objects to your script.</p>
 <p>Here is a single set:</p>
-<pre><code class="lang-js"><span class="hljs-tag">API</span><span class="hljs-class">.addSequence</span>(<span class="hljs-attr_selector">[trial1,trial2]</span>);
+<pre><code class="lang-js">API.addSequence([trial1,trial2]);
 </code></pre>
 <p>And part of a set:</p>
-<pre><code class="lang-js"><span class="hljs-tag">API</span><span class="hljs-class">.addSequence</span>(<span class="hljs-tag">trial2</span>);
+<pre><code class="lang-js">API.addSequence(trial2);
 </code></pre>
 <p><strong>getScript</strong>:
 Returns the script that you’ve built so far. Useful mainly for debugging:</p>
