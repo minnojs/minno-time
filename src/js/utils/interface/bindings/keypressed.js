@@ -29,6 +29,10 @@ define(function(require){
 		// attach listener
 		this.on = function(callback){
 			$(document).on(eventName,function(e){
+                // Firefox has an accesability option called "Search for text when I start typing"
+                // It causes a search box to jump up whenever a key is typed.
+                // stopping propagation presents this without actually canceling the event
+                e.stopPropagation();
 				if (!keyDownArr[e.which] && $.inArray(e.which,target) != -1) {
 					keyDownArr[e.which] = true; // set flag to prevent multi pressing of a key
 					callback(e,'keydown');
