@@ -1,11 +1,7 @@
 #!/usr/bin/env bash
 
 # get base dir so that we source from the correct location
-DIR="${BASH_SOURCE%/*}"
-if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
-
-# get absolute path to the base repository
-DIR=$(readlink -f $DIR/..)
+DIR=$(git rev-parse --show-toplevel)
 
 # get helpers
 source "$DIR/scripts/errorExit.sh" || error_exit "$LINENO: errorExit not found."
@@ -42,7 +38,6 @@ function copy_api (){
 # create temporary directory that we can use for our stuff...
 # http://unix.stackexchange.com/questions/30091/fix-or-alternative-for-mktemp-in-os-x
 TMPDIR=`mktemp -d 2>/dev/null || mktemp -d -t 'myTMPDIR'`
-TMPDIR=$(readlink -f $TMPDIR)
 trap "rm -Rf $TEMPDIR" EXIT
 
 git fetch --quiet
@@ -50,6 +45,7 @@ git fetch --quiet
 # create repository clone
 cd $TMPDIR
 git clone --quiet $DIR .
+TMPDIR=$(git rev-parse --show-toplevel) # get absolute path for tmpdir
 
 # Get new tags from remote
 git fetch --quiet --tags

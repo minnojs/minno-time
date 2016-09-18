@@ -127,7 +127,8 @@ gulp.task('build:css', function(){
 gulp.task('build',  ['build:js', 'build:md', 'build:css', 'build:swig','build:html']);
 
 gulp.task('deploy', function(cb){
-	exec('scripts/deploy.sh', function(){
+	exec('scripts/deploy.sh', function(err){
+        if (err) throw err;
 		gulp.run('build', cb);
 	});
 });

@@ -1,11 +1,7 @@
 #!/usr/bin/env bash
 
-# get base dir so that we source from the correct location
-DIR="${BASH_SOURCE%/*}"
-if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
-
-# get absolute path to the base repository
-DIR=$(readlink -f $DIR/..)
+# path to repo
+DIR=$(git rev-parse --show-toplevel)
 
 # get helpers
 source "$DIR/scripts/errorExit.sh" || error_exit "$LINENO: errorExit not found."

@@ -4,12 +4,14 @@
  */
 define(function(require){
 	var $ = require('jquery')
+        , _ = require('underscore')
 		, settingsGetter = require('app/task/settings');
 
+    window._ = _;
 	function send(data){
 		var settings = settingsGetter();
-		var url = settings.logger && settings.logger.url
-			, deff = $.Deferred();
+		var url = _.get(settings, 'logger.url');
+        var deff = $.Deferred();
 
 		if (!url) {
 			return deff.resolve();
@@ -19,6 +21,7 @@ define(function(require){
 		var post = {
 			json: JSON.stringify(data) || ""
 		};
+
 		$.extend(post, settings.metaData || {});
 
 		// lets post our data
@@ -26,7 +29,7 @@ define(function(require){
 
 		// now, if there was a failure, lets try to resend
 		deff = deff.then(null,function(){
-			return $.post(url,post);
+			return $.post(url,post).then(null, _.get(settings, 'logger.error'));
 		});
 
 		return deff;
