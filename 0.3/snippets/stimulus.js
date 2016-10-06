@@ -46,7 +46,7 @@ define(['pipAPI','jquery'], function(APIconstructor, $) {
 				/* the bottom left stimulus begins here */
 				{
 					location:{left:0,bottom:0},
-					media:{template:'../../../../resources/bottom_left.html'}
+					media:{template:'../../../resources/bottom_left.html'}
 				},
 				/* the bottom left stimulus begins here */
 
