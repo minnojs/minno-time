@@ -296,3 +296,7 @@ body {
   .bs-example + .zero-clipboard .btn-clipboard {
     top: -16px;
     border-top-right-radius: 0; } }
+
+.ace_search input, .ace_search button {
+  color: initial;
+  font-size: 12px; }
