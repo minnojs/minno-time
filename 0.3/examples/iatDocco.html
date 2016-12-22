@@ -59,13 +59,13 @@
 				<nav class="collapse navbar-collapse bs-navbar-collapse">
 					<ul class="nav navbar-nav">
 						<li>
-							<a href="/PIquest/">Basics</a>
+							<a href="/PIquest/0.0">Basics</a>
 						</li>
 						<li>
-							<a href="/PIquest/">piQuest</a>
+							<a href="/PIquest/0.0/quest">piQuest</a>
 						</li>
 						<li>
-							<a href="/PIquest/">piManager</a>
+							<a href="/PIquest/0.0/manager">piManager</a>
 						</li>
 						<li class="active">
 							<a href="javascript:void(0);">piPlayer</a>
