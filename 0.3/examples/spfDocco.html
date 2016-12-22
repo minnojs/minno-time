@@ -59,7 +59,7 @@
 				<nav class="collapse navbar-collapse bs-navbar-collapse">
 					<ul class="nav navbar-nav">
 						<li>
-							<a href="/PIquest/0.1">Basics</a>
+							<a href="/PIquest/0.1/basics">Basics</a>
 						</li>
 						<li>
 							<a href="/PIquest/0.1/quest">piQuest</a>

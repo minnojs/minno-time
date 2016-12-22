@@ -16,7 +16,7 @@ gulp.task('clean', function(cb){
 // just copy html over
 gulp.task('build:html', function(){
 	return gulp
-		.src(pagesPath + '*.html')
+		.src(['src/**/index.html', pagesPath + '*.html'])
 		.pipe(gulp.dest('.'));
 });
 
