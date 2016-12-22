@@ -3,7 +3,7 @@ title: Install
 description: PI Player builds and runs experiments with time-sensitive tasks over the Internet.
 ---
 
-The project implicit player is an open source project and its source code is available on [Github](https://github.com/ProjectImplicit/PIPlayer). You may use it freely under the terms of the license. This page will explain the basics of getting the player to work.
+The Minno player is an open source project and its source code is available on [Github](https://github.com/ProjectImplicit/PIPlayer). You may use it freely under the terms of the license. This page will explain the basics of getting the player to work.
 
 ### Local installation
 
@@ -25,7 +25,7 @@ In order to install the player localy you have to install [Node.js](http://nodej
 	* `npm build`
 * When these commands have gone through - thats it, you've installed the player.
 
-If you have a git client then you may want to clone the player directly instead of downloading it:
+If you have a git client then you may want to clone Minno directly instead of downloading it:
 
 ```bash
 git clone https://github.com/ProjectImplicit/PIPlayer .
