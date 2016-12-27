@@ -10,7 +10,7 @@
 		<meta name="keywords" content="HTML, CSS, JS, JavaScript, framework, bootstrap, front-end, frontend, web development">
 		<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 
-		<title>piPlayer &middot; V0.3</title>
+		<title>miPlayer &middot; V0.3</title>
 
 		{% block head %}
 		<!-- Bootstrap core CSS -->
@@ -54,7 +54,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a href="../../" class="navbar-brand">Minno</a>
+					<a href="/" class="navbar-brand">Minno</a>
 				</div>
 				<nav class="collapse navbar-collapse bs-navbar-collapse">
 					<ul class="nav navbar-nav">
@@ -62,13 +62,13 @@
 							<a href="/PIquest/0.1/basics">Basics</a>
 						</li>
 						<li>
-							<a href="/PIquest/0.1/quest">piQuest</a>
+							<a href="/PIquest/0.1/quest">miQuest</a>
 						</li>
 						<li>
-							<a href="/PIquest/0.1/manager">piManager</a>
+							<a href="/PIquest/0.1/manager">miManager</a>
 						</li>
 						<li class="active">
-							<a href="javascript:void(0);">piPlayer</a>
+							<a href="javascript:void(0);">miPlayer</a>
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
@@ -80,10 +80,10 @@
 							  <button type="submit" class="btn btn-default" value="Google Search">
 							    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 							  </button>
-							  <input type="hidden" name="sitesearch" value="projectimplicit.github.io" checked />
+							  <input type="hidden" name="sitesearch" value="minnojs.github.io" checked />
 							</form>
 						</li>
-						<li><a href="https://github.com/ProjectImplicit/PIPlayer">Github</a></li>
+						<li><a href="https://github.com/minnojs/minno-time">Github</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -183,9 +183,9 @@
 				<ul class="bs-docs-footer-links text-muted">
 					<li>Currently v0.0.27</li>
 					<li>&middot;</li>
-					<li><a href="https://github.com/ProjectImplicit/PIquest">GitHub</a></li>
+					<li><a href="https://github.com/minnojs/minno-time">GitHub</a></li>
 					<li>&middot;</li>
-					<li><a href="https://github.com/ProjectImplicit/PIquest/releases">Releases</a></li>
+					<li><a href="https://github.com/minnojs/minno-time/releases">Releases</a></li>
 				</ul>
 			</div>
 		</footer>
