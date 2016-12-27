@@ -59,13 +59,13 @@
 				<nav class="collapse navbar-collapse bs-navbar-collapse">
 					<ul class="nav navbar-nav">
 						<li>
-							<a href="/minno-quest/0.1/basics">Basics</a>
+							<a href="/minno-quest/0.1/basics/overview.html">Basics</a>
 						</li>
 						<li>
-							<a href="/minno-quest/0.1/quest">miQuest</a>
+							<a href="/minno-quest/0.1/quest/overview.html">miQuest</a>
 						</li>
 						<li>
-							<a href="/minno-quest/0.1/manager">miManager</a>
+							<a href="/minno-quest/0.1/manager/overview.html">miManager</a>
 						</li>
 						<li class="active">
 							<a href="javascript:void(0);">miPlayer</a>
