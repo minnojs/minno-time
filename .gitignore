@@ -33,7 +33,7 @@ nbproject
 .svn
 .CVS
 .idea
+
 node_modules
-docs
-user
+pages
 bower_components/underscore
