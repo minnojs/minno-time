@@ -1,39 +1,42 @@
 {
-    "name": "PIPlayer",
-    "version": "0.3.29",
-    "license": "Apache-2.0",
-    "description": "Project Implicit Player",
-    "minno" : {
-        "activeVersions": ["0.3"],
-        "questVersion": "0.1"
-    },
-    "scripts": {
-        "build": "grunt build",
-        "start": "grunt server",
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "postinstall": "npm install grunt-contrib-watch",
-        "gendocs" : "gendocs docs pages",
-        "version": "grunt version"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/ProjectImplicit/PIPlayer.git"
-    },
-    "bugs": "https://github.com/ProjectImplicit/PIPlayer/issues",
-    "author": "Elad Zlotnick",
-    "devDependencies": {
-        "express": "~3.4.8",
-        "grunt": "~0.4.3",
-        "grunt-bump": "0.0.14",
-        "grunt-cli": "~0.1.9",
-        "grunt-contrib-jshint": "~0.6.1",
-        "grunt-contrib-requirejs": "~0.4.1",
-        "grunt-docco": "~0.3.1",
-        "grunt-express": "~1.2.1",
-        "grunt-sass": "^1.1.0",
-        "jade": "~1.1.5",
-        "jshint": "^2.4.4",
-        "marked": "~0.3.0",
-        "selenium-webdriver": "~2.39.0"
-    }
+  "name": "PIPlayer",
+  "version": "0.3.29",
+  "license": "Apache-2.0",
+  "description": "Project Implicit Player",
+  "minno": {
+    "activeVersions": [
+      "0.3"
+    ],
+    "questVersion": "0.1"
+  },
+  "scripts": {
+    "build": "grunt build",
+    "start": "grunt server",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "npm install grunt-contrib-watch",
+    "gendocs": "minno-gendocs docs pages",
+    "version": "grunt version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ProjectImplicit/PIPlayer.git"
+  },
+  "bugs": "https://github.com/ProjectImplicit/PIPlayer/issues",
+  "author": "Elad Zlotnick",
+  "devDependencies": {
+    "express": "~3.4.8",
+    "grunt": "~0.4.3",
+    "grunt-bump": "0.0.14",
+    "grunt-cli": "~0.1.9",
+    "grunt-contrib-jshint": "~0.6.1",
+    "grunt-contrib-requirejs": "~0.4.1",
+    "grunt-docco": "~0.3.1",
+    "grunt-express": "~1.2.1",
+    "grunt-sass": "^1.1.0",
+    "jade": "~1.1.5",
+    "jshint": "^2.4.4",
+    "marked": "~0.3.0",
+    "minno-gendocs": "^1.0.0",
+    "selenium-webdriver": "~2.39.0"
+  }
 }
