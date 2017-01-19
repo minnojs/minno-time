@@ -1,0 +1,374 @@
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Minno.js</title>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+		<link href="../assets/prism.css" rel="stylesheet" />
+		<link href="../assets/style.css" rel="stylesheet" />
+	</head>
+	<body>
+		<header>
+			<section>
+				<nav class="brand">
+                    <a href="/"><h1>Minno</h1></a>
+				</nav>
+				<nav>
+					<a href="/minno-quest/0.1/basics/overview.html">Basics</a>
+					<a href="/minno-quest/0.1/manager/overview.html">miManager</a>
+					<a href="/minno-quest/0.1/quest/overview.html">miQuest</a>
+					<a href="/minno-time/0.3/time/overview.html">miTime</a>
+				</nav>
+				<nav>
+                    <select id="version-select"><option value="0.3" selected>v0.3</option></select>
+					<a href="https://github.com/minnojs">Github</a>
+				</nav>
+			</section>
+		</header>
+		<main>
+			<section class="docs">
+                <h1><a name="api" class="header-link" href="#api"><span></span></a>API</h1><ul>
+<li>Core<ul>
+<li><a href="overview.html">Overview</a></li>
+<li><a href="API.html">API</a></li>
+<li><strong><a href="scorer.html">Scorer</a></strong></li>
+<li><a href="resources.html">Resources</a></li>
+<li><a href="playground.html">Playground</a></li>
+</ul>
+</li>
+<li>Tutorials<ul>
+<li><a href="hello.html">Hello World</a><ul>
+<li><a href="helloPlay.html">Playground</a></li>
+</ul>
+</li>
+<li><a href="slideshow.html">Slide show</a><ul>
+<li><a href="slideshow1.html">step1</a></li>
+<li><a href="slideshow2.html">step2</a></li>
+<li><a href="slideshow3.html">step3</a></li>
+</ul>
+</li>
+<li>Stroop<ul>
+<li><a href="stroop-setup.html">Setup</a></li>
+<li><a href="stroop-interactions.html">Interactions</a></li>
+<li><a href="stroop-inheritance.html">inheritance</a></li>
+<li><a href="stroop-block.html">Blocks</a></li>
+<li><a href="stroop-task.html">Task</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Examples<ul>
+<li><a href="iat.html">IAT</a></li>
+<li><a href="amp.html">AMP</a></li>
+<li><a href="biat.html">BIAT</a></li>
+<li><a href="gnat.html">GNAT</a></li>
+<li><a href="spf.html">SPF</a></li>
+<li><a href="st-iat.html">ST-IAT</a></li>
+<li><a href="evaluative_priming.html">Evaluative priming</a></li>
+<li><a href="evaluative_priming2.html">Evaluative priming 2</a></li>
+</ul>
+</li>
+<li>Snippets<ul>
+<li><a href="inheritance.html">Inheritance</a></li>
+<li><a href="input.html">Input</a></li>
+<li><a href="interactions.html">Interactions</a></li>
+<li><a href="sequence.html">Sequence</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="stimulus.html">Stimulus</a></li>
+<li><a href="touch.html">Touch</a></li>
+<li><a href="trial.html">Trial</a></li>
+</ul>
+</li>
+</ul>
+<p>The Scorer component of the PIP is an implementation of the D-score algorithm for computing IAT scores. The scorer allows creating an appropriate feedback message for the users, as well as logging them to the server.
+In order to compute the score the trials are divided to parcels, the score for each parcel is computed and then the scores are averaged.</p>
+<h3><a name="table-of-contents" class="header-link" href="#table-of-contents"><span></span></a>Table of contents</h3><ul>
+<li><a href="#how-to-use">How to Use</a></li>
+<li><a href="#settings-compute">Settings: compute</a><ul>
+<li><a href="#parcels">Parcels</a></li>
+<li><a href="#errorlatency">errorLatency</a></li>
+</ul>
+</li>
+<li><a href="#settings-message">Settings: message</a></li>
+<li><a href="#posting-to-the-server">Posting to the server.</a><ul>
+<li><a href="#dynamicpost">dynamicPost</a></li>
+<li><a href="#posttoserver">postToServer</a></li>
+</ul>
+</li>
+</ul>
+<h3><a name="how-to-use" class="header-link" href="#how-to-use"><span></span></a>How to Use</h3><p>Create instance of the scorer:</p>
+<pre><code class="lang-javascript">var scorer = new Scorer();
+</code></pre>
+<p>Set the settings for the scorer as covered in <a href="#settings-compute">compute</a>, and <a href="#settings-message">messages</a>.</p>
+<p>The scorer has two sets of settings; <a href="#settings-compute">compute</a>, and <a href="#settings-message">messages</a>. The first has to do with the way the score is computed, the second allows you to customize the feedback messages that the scorer creates. Each takes an object with an assortment of properties as described below.
+You can set the different settings using the following commands:</p>
+<pre><code class="lang-javascript">scorer.addSettings(&#39;compute&#39;,computeObj);
+scorer.addSettings(&#39;message&#39;,messageObj);
+</code></pre>
+<p>Get the score and the message from the scorer (make sure that you do this in a function that is called at the end of the PIP task, after the scores are collected);</p>
+<pre><code class="lang-javascript">var DScoreObj = scorer.computeD();
+</code></pre>
+<h3><a name="computed" class="header-link" href="#computed"><span></span></a>computeD</h3><p>The computeD function activates the scorer and returns an object with the score and feedback message.</p>
+<pre><code class="lang-javascript">var DScoreObj = scorer.computeD();
+</code></pre>
+<p>The DscoreObj has the following properties:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dscore</td>
+<td>The computed score for this task (if an error was encountered the score will be an empty string).</td>
+</tr>
+<tr>
+<td>FBMsg</td>
+<td>The feedback message (either a score message or an error message).</td>
+</tr>
+<tr>
+<td>error</td>
+<td>(true or false) whether an error has happened.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="settings-compute" class="header-link" href="#settings-compute"><span></span></a>Settings: compute</h3><p>The compute settings affects the way that the final score is computed. In order to use it you set an object into the compute setting. The available properties are described below.</p>
+<pre><code class="lang-javascript">scorer.addSettings(&#39;compute&#39;,{
+    property : value
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AnalyzedVar</td>
+<td>Which variable to analyze. Defaulted to &#39;latency&#39;.</td>
+</tr>
+<tr>
+<td>ErrorVar</td>
+<td>Which data property marks the trial as an error trial (default: &#39;score&#39;). 1 is considered an error, 0 no error.</td>
+</tr>
+<tr>
+<td>condVar</td>
+<td>The variable that indicate the condition (default: &#39;condition&#39;).</td>
+</tr>
+<tr>
+<td>cond1VarValues</td>
+<td>An array with the values of the condVar that will comprise of condition 1 in the comparison.</td>
+</tr>
+<tr>
+<td>cond2VarValues</td>
+<td>An array with the values of the condVar that will comprise of condition 2 in the comparison.</td>
+</tr>
+<tr>
+<td>parcelVar</td>
+<td>A variable that indicate the name for the parcels (default: &#39;parcel&#39;).</td>
+</tr>
+<tr>
+<td>parcelValue</td>
+<td>An array with the values for the parcels. When building the experiment mark each trial with the parcel it belongs to, make sure that each parcel has trials that belong to both to condition 1 and condition 2.</td>
+</tr>
+<tr>
+<td>fastRT</td>
+<td>A variable that indicates the latency limit beyond which the latency is considered too fast. (also see the <code>maxFastTrialsRate</code> property)</td>
+</tr>
+<tr>
+<td>maxFastTrialsRate</td>
+<td>The percentage of fast trials we are willing to tolerate. Above this % of extremely fast responses within a condition, the participant is considered too fast. If the number of trials that are too fast is too hight then an error message will be generated and saved (calculation will continue though).</td>
+</tr>
+<tr>
+<td>minRT</td>
+<td>Only trials that have latency between minRT and maxRT will be calculated.</td>
+</tr>
+<tr>
+<td>maxRT</td>
+<td>Only trials that have latency between minRT and maxRT will be calculated.</td>
+</tr>
+<tr>
+<td>maxErrorParcelRate</td>
+<td>If the % of error trials are greater than this value then an error will be generated and saved.</td>
+</tr>
+<tr>
+<td>errorLatency</td>
+<td>An object that determines the behavior of the scorer n relation to error trials. The object has three properties: <code>use</code>, <code>latency</code> and <code>useForSTD</code>. See documentation <a href="#errorLatency">below</a>.</td>
+</tr>
+<tr>
+<td>postSettings</td>
+<td>An object used to determine the url and variable to send to the implicit server when any of the post methods are used. It has three properties; <code>score</code>: the default key to which the score is set. <code>msg</code>: the default key to which the message is set. <code>url</code>: the url to which the data is sent. More about posting <a href="#posting-to-the-server">here</a>.</td>
+</tr>
+</tbody>
+</table>
+<h4><a name="parcels" class="header-link" href="#parcels"><span></span></a>Parcels</h4><p>First we set up the parcels:</p>
+<pre><code class="lang-javascript">scorer.addSettings(&#39;compute&#39;,{
+        ...
+        parcelVar : &quot;parcel&quot;,
+        parcelValue : [&#39;first&#39;,&#39;second&#39;],
+        ...
+});
+</code></pre>
+<p>Then set up the assorted trial parcels.</p>
+<pre><code class="lang-javascript">    {
+        data: {parcel:&#39;first&#39; ...},
+        ...
+    },
+    {
+        data: {parcel:&#39;second&#39; ...},
+        ...
+    }
+</code></pre>
+<p>Each parcel will be computed separately, and the final score will be the average of all parcels.</p>
+<h4><a name="errorlatency" class="header-link" href="#errorlatency"><span></span></a>errorLatency</h4><p>The <code>errorLatency</code> property takes an object with the following properties.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>use</td>
+<td>May have three values: <code>latency</code> (the default): the scorer will include error trials. <code>false</code>: the scorer will ignore error trials. <code>penalty</code>: the scorer will add a penalty to the the latency of error trials (see penalty property).</td>
+</tr>
+<tr>
+<td>penalty</td>
+<td>The penalty that will be added to error trials if <code>use</code>is set to &#39;penalty&#39;.</td>
+</tr>
+<tr>
+<td>useForSTD</td>
+<td>If true error trials will be used in calculations of variance.</td>
+</tr>
+</tbody>
+</table>
+<p>The following examples shows a setting that penalizes mistakes by 600ms, and includes them in variance calculations.</p>
+<pre><code>scorer.addSettings(&#39;compute&#39;,{
+        ....
+        errorLatency : {use:&quot;penalty&quot;, penalty:600, useForSTD:true},
+        ....
+}
+</code></pre><h3><a name="settings-message" class="header-link" href="#settings-message"><span></span></a>Settings: message</h3><p>The message setting affects the feedback messages that the scorer produces. In order to use it you set an object into the message setting. The available properties are described below.</p>
+<pre><code class="lang-javascript">scorer.addSettings(&#39;message&#39;,{
+    property : value
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>manyErrors</td>
+<td>The feedback in case the user did not give enough correct responses.</td>
+</tr>
+<tr>
+<td>tooFast</td>
+<td>The feedback in case there were too many fast trials.</td>
+</tr>
+<tr>
+<td>notEnough</td>
+<td>The feedback in case we don&#39;t have enough correct responses to compute the score.</td>
+</tr>
+<tr>
+<td>MessageDef</td>
+<td>An array of cutoff scores and messages for interpreting the results. Scores that fall between two cutoffs will be associated with the cutoff above them. Scores below the lowest cutoff will be associated with the lowest cutoff. Scores above the highest cutoff cause trouble! set your cutoff high enough so that this never happens.</td>
+</tr>
+</tbody>
+</table>
+<p>For example:</p>
+<pre><code class="lang-javascript">    scorer.addSettings(&#39;message&#39;,{
+        manyErrors: &quot;There were too many errors made to determine a result.&quot;,
+        tooFast: &quot;There were too many fast trials to determine a result.&quot;,
+        notEnough: &quot;There were not enough trials to determine a result.&quot;
+        MessageDef: [
+            { cut:&#39;-0.65&#39;, message:&#39;strong preference left&#39; },
+            { cut:&#39;-0.35&#39;, message:&#39;moderate preference left&#39; },
+            { cut:&#39;-0.15&#39;, message:&#39;slight preference left&#39; },
+            { cut:&#39;0.15&#39;, message:&#39;little to no preference&#39; },
+            { cut:&#39;0.35&#39;, message:&#39;slight preference right&#39; },
+            { cut:&#39;0.65&#39;, message:&#39;moderate preference right&#39; },
+            { cut:&#39;5&#39;, message:&#39;strong preference right&#39; }
+        ]
+    });
+</code></pre>
+<h3><a name="posting-to-the-server" class="header-link" href="#posting-to-the-server"><span></span></a>Posting to the server.</h3><p>The scorer offers two methods for posting scorer data to the server. The preferable method is using the scorer function <code>dynamicPost</code>. We keep the deprecated function <code>postToServer</code> only for backward compatibility.</p>
+<p>You can and should set the post settings in the <code>postSettings</code> property of the <a href="#settings-compute">compute setting</a>. Most notably, that is where you set the target URL.</p>
+<pre><code class="lang-javascript">scorer.addSettings(&#39;compute&#39;,{
+    postSettings : {score:&quot;score&quot;,msg:&quot;feedback&quot;,url:&quot;/implicit/scorer&quot;}
+});
+</code></pre>
+<h4><a name="dynamicpost" class="header-link" href="#dynamicpost"><span></span></a>dynamicPost</h4><p>This function takes an object, jsonifies it, and sends it to the server. It returns a jQuery promise so you can do anything that you like after it finishes.</p>
+<pre><code class="lang-javascript">// Compute score
+var DScoreObj = scorer.computeD();
+// Post to the server
+scorer.dynamicPost({
+    score: DScoreObj.DScore,
+    feedback: DScoreObj.FBMsg
+}).always(function(){ // always run the following code, even if the post failed.
+    top.location.href = &quot;/my/next/url/&quot;;
+});
+</code></pre>
+<h4><a name="posttoserver" class="header-link" href="#posttoserver"><span></span></a>postToServer</h4><p>This method is deprecated. Use <a href="#dynamicpost">dynamicPost</a> instead.</p>
+<p>If you need to use it anyway, The syntax is like so:</p>
+<pre><code class="lang-javascript">// Compute score
+var DScoreObj = scorer.computeD();
+var score = DScoreObj.DScore,
+var feedback = DScoreObj.FBMsg
+var score = &#39;score&#39;;
+var msg = &#39;feedback&#39;;
+
+// post to server
+scorer.postToServer(score, msg, scoreKey, msgKey);
+</code></pre>
+<p>Where the arguments are as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>score</td>
+<td>The task score (required).</td>
+</tr>
+<tr>
+<td>msg</td>
+<td>The feedback message (required).</td>
+</tr>
+<tr>
+<td>scoreKey</td>
+<td>The key for the score data (optional, uses the <code>postSettings</code> property <code>score</code> by default).</td>
+</tr>
+<tr>
+<td>msgKey</td>
+<td>The key for the message data (optional, uses the <code>postSettings</code> property <code>msg</code> by default).</td>
+</tr>
+</tbody>
+</table>
+
+				<hr />
+				<small>License: Apache 2. &copy; Project Implicit. &middot; Current version [version]</small>
+			</section>
+		</main>
+		<script src="../assets/prism.js"></script>
+        <script>
+            (function(){
+                var select = document.getElementById('version-select');
+                select.addEventListener('change', function(event){
+                    var version = event.target.value;
+                    location.href = location.href.replace(/[0-9]\.[0-9]/, version)
+                });
+            })();
+        </script>
+	</body>
+</html>

@@ -3,11 +3,18 @@
   "version": "0.3.29",
   "license": "Apache-2.0",
   "description": "Project Implicit Player",
+  "minno": {
+    "activeVersions": [
+      "0.3"
+    ],
+    "questVersion": "0.1"
+  },
   "scripts": {
     "build": "grunt build",
     "start": "grunt server",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "npm install grunt-contrib-watch",
+    "gendocs": "minno-gendocs docs pages",
     "version": "grunt version"
   },
   "repository": {
@@ -29,6 +36,7 @@
     "jade": "~1.1.5",
     "jshint": "^2.4.4",
     "marked": "~0.3.0",
+    "minno-gendocs": "^1.0.0",
     "selenium-webdriver": "~2.39.0"
   }
 }

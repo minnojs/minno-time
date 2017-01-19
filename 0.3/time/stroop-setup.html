@@ -1,0 +1,221 @@
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Minno.js</title>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+		<link href="../assets/prism.css" rel="stylesheet" />
+		<link href="../assets/style.css" rel="stylesheet" />
+	</head>
+	<body>
+		<header>
+			<section>
+				<nav class="brand">
+                    <a href="/"><h1>Minno</h1></a>
+				</nav>
+				<nav>
+					<a href="/minno-quest/0.1/basics/overview.html">Basics</a>
+					<a href="/minno-quest/0.1/manager/overview.html">miManager</a>
+					<a href="/minno-quest/0.1/quest/overview.html">miQuest</a>
+					<a href="/minno-time/0.3/time/overview.html">miTime</a>
+				</nav>
+				<nav>
+                    <select id="version-select"><option value="0.3" selected>v0.3</option></select>
+					<a href="https://github.com/minnojs">Github</a>
+				</nav>
+			</section>
+		</header>
+		<main>
+			<section class="docs">
+                <h1><a name="a-hrefstroop-setuphtmlsetupa" class="header-link" href="#a-hrefstroop-setuphtmlsetupa"><span></span></a><a href="stroop-setup.html">Setup</a></h1><ul>
+<li>Core<ul>
+<li><a href="overview.html">Overview</a></li>
+<li><a href="API.html">API</a></li>
+<li><a href="scorer.html">Scorer</a></li>
+<li><a href="resources.html">Resources</a></li>
+<li><a href="playground.html">Playground</a></li>
+</ul>
+</li>
+<li>Tutorials<ul>
+<li><a href="hello.html">Hello World</a><ul>
+<li><a href="helloPlay.html">Playground</a></li>
+</ul>
+</li>
+<li><a href="slideshow.html">Slide show</a><ul>
+<li><a href="slideshow1.html">step1</a></li>
+<li><a href="slideshow2.html">step2</a></li>
+<li><a href="slideshow3.html">step3</a></li>
+</ul>
+</li>
+<li>Stroop<ul>
+<li><strong>Setup</strong></li>
+<li><a href="stroop-interactions.html">Interactions</a></li>
+<li><a href="stroop-inheritance.html">inheritance</a></li>
+<li><a href="stroop-block.html">Blocks</a></li>
+<li><a href="stroop-task.html">Task</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Examples<ul>
+<li><a href="iat.html">IAT</a></li>
+<li><a href="amp.html">AMP</a></li>
+<li><a href="biat.html">BIAT</a></li>
+<li><a href="gnat.html">GNAT</a></li>
+<li><a href="spf.html">SPF</a></li>
+<li><a href="st-iat.html">ST-IAT</a></li>
+<li><a href="evaluative_priming.html">Evaluative priming</a></li>
+<li><a href="evaluative_priming2.html">Evaluative priming 2</a></li>
+</ul>
+</li>
+<li>Snippets<ul>
+<li><a href="inheritance.html">Inheritance</a></li>
+<li><a href="input.html">Input</a></li>
+<li><a href="interactions.html">Interactions</a></li>
+<li><a href="sequence.html">Sequence</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="stimulus.html">Stimulus</a></li>
+<li><a href="touch.html">Touch</a></li>
+<li><a href="trial.html">Trial</a></li>
+</ul>
+</li>
+</ul>
+<p> Now that we have a few of the basic building blocks of the player available to us,
+ lets start putting together a real task.</p>
+<p> We will create a task that demonstrates the stroop effect:
+ When the name of a color (e.g. &quot;blue&quot;, &quot;green,&quot; or &quot;red&quot;) is printed in a color not denoted by the name (e.g., the word &quot;red&quot; printed in blue instead of red),
+ naming the color of the word takes longer and is more prone to errors than when the color of the ink matches the name of the color.
+ The effect is named after John Ridley Stroop who first published the effect in English in 1935.</p>
+<p> There is no scripted way that you are supposed to create a task, but we will break down the task in one way that we&#39;ve found useful.</p>
+<section playground>
+    <div class="buttons">
+        <a class="activate-button">Activate</a>
+        <a class="download-button" href="stroop-setup.js" download>Download</a>
+    </div>
+    <div class="editor">//Now that we have a few of the basic building blocks of the player available to us,
+// lets start putting together a real task.
+
+// We will create a task that demonstrates the stroop effect:
+// When the name of a color (e.g. "blue", "green," or "red") is printed in a color not denoted by the name (e.g., the word "red" printed in blue instead of red),
+// naming the color of the word takes longer and is more prone to errors than when the color of the ink matches the name of the color.
+// The effect is named after John Ridley Stroop who first published the effect in English in 1935.
+
+// There is no scripted way that you are supposed to create a task, but we will break down the task in one way that we've found useful.
+
+
+define(['pipAPI'], function(APIconstructor) {
+
+	var API = new APIconstructor();
+
+	// ### Setup
+	// The player has many many [settings](./API.html#settings) that you can tinker with, we will use only one here.
+
+	// In order to set the default text size you can use the `canvas` [setting](./API.html#canvas) like so:
+
+	API.addSettings('canvas',{
+		textSize: 5
+	});
+
+	// `textSize` controls the default font size in the canvas.
+	// It takes a single number that represents font size in percentage of the canvas height (similar to the CSS3 `vh` unit).
+	// From now on any time we use a relative fontSize (read: every time we use `em` for fontSize), it will be relative to this size.
+
+	// ### Stimuli
+	// Lets start with the thing that we already know how to do.
+
+	// We'll create lists of the stimuli we are going to use.
+	// We have three groups of stimuli; **red**, **blue** and **green**.
+	// We will create a separate set of stimuli for each of these groups.
+	// These sets will allow us to randomize and extend them later on.
+
+	API.addStimulusSets('red',[
+		{media:'Red', css:{color:'red'}},
+		{media:'Blue', css:{color:'red'}},
+		{media:'Green', css:{color:'red'}}
+	]);
+
+	API.addStimulusSets('blue',[
+		{media:'Red', css:{color:'blue'}},
+		{media:'Blue', css:{color:'blue'}},
+		{media:'Green', css:{color:'blue'}}
+	]);
+
+	API.addStimulusSets('green',[
+		{media:'Red', css:{color:'green'}},
+		{media:'Blue', css:{color:'green'}},
+		{media:'Green', css:{color:'green'}}
+	]);
+
+	// All the stimuli in each set have the same color, each stimulus in the set has a distinct name.
+
+	// Note also that we use the shortcut to plain text media (simply settings a string),
+	// and not the full fledged media object (that would look like this: `{word:'Red'}`).
+	// You can of course use any type of [media](./API.md#media) here.
+
+// ### Layout
+// We will start by composing the stroop trial.
+
+// In the stroop task we sort words by their colors.
+// First things first, lets add labels to the task canvas so that it is clear what the user is sorting the stimuli to.
+// We'll add three labels, one for each of the colors we are using.
+
+// By default stimuli are displayed at the center of the screen, if we want to display them at other locations,
+// we use the `location` property of the [stimulus object](./API.md#stimuli).
+// The location property takes an object with distances from the border in percentages of the player canvas.
+// Where `left:20` means that the left border of the stimulus should be 20% from the left of the canvas.
+// You may define any of the `left`/`right`/`top`/`bottom` properties.
+// In this case we'll define the labels to be two percent of the canvas away from the borders just so they don't collide.
+
+// We use the `css` property to control the style of the labels.
+// We set the `background` color to the appropriate color and the `fontSize` of the labels to be 1.5 times of the default fontSize.
+// The `padding` property is used to set the size of the labels background (more about padding [here](https://developer.mozilla.org/en-US/docs/Web/CSS/box_model)).
+
+	API.addSequence([
+		{
+			layout: [
+				{
+					media:'1',
+					location:{left:2,top:2},
+					css:{background:'red',padding:'2%',fontSize:'1.5em'}
+				},
+				{
+					media:'2',
+					location:{top:2},
+					css:{background:'blue',padding:'2%',fontSize:'1.5em'}
+				},
+				{
+					media:'3',
+					location:{right:2,top:2},
+					css:{background:'green',padding:'2%',fontSize:'1.5em'}
+				},
+				{inherit:'red'}
+			],
+			input: [],
+			interactions: []
+		}
+	]);
+
+	// #### Return the script
+	return API.script;
+});
+/* don't forget to close the define wrapper */
+</div>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" integrity="sha256-xrr4HH5eSY+cFz4SH7ja/LaAi9qcEdjMpeMP49/iOLs=" crossorigin="anonymous"></script>
+<script src="../assets/playground.js"></script>
+
+				<hr />
+				<small>License: Apache 2. &copy; Project Implicit. &middot; Current version [version]</small>
+			</section>
+		</main>
+		<script src="../assets/prism.js"></script>
+        <script>
+            (function(){
+                var select = document.getElementById('version-select');
+                select.addEventListener('change', function(event){
+                    var version = event.target.value;
+                    location.href = location.href.replace(/[0-9]\.[0-9]/, version)
+                });
+            })();
+        </script>
+	</body>
+</html>

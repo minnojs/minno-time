@@ -1,0 +1,95 @@
+<!doctype html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width">
+
+		<base href="../dist/"></base>
+		<link rel="stylesheet" href="styles/main.css" />
+
+		<!-- Favicons -->
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="icon" href="/favicon.ico">
+
+		<style type="text/css">
+
+			.container {padding-top: 15px;}
+
+			/* http://www.sitepoint.com/css3-responsive-centered-image/ */
+			.pi-spinner {
+				position: absolute;max-width: 80%;top: 50%;left: 50%;margin-left: -32px;margin-top: -32px;border-radius: 3px;
+				display: block; -moz-box-sizing: border-box; box-sizing: border-box; background: url(img/loader.gif) no-repeat; width: 64px;height: 64px;padding-left: 64px; /* Equal to width of new image */}
+			.pi-spinner:empty {margin: auto;-webkit-transform: translate(-50%, -50%);-moz-transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);-o-transform: translate(-50%, -50%);transform: translate(-50%, -50%);}
+			@media screen and (orientation: portrait) {.pi-spinner { max-width: 90%; }}
+			@media screen and (orientation: landscape) {.pi-spinner { max-height: 90%; }}
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+            <div id="task">
+            
+			<img class="pi-spinner" ng-hide="1"/>
+            </div>
+			<div pi-console></div>
+		</div>
+
+	</body>
+
+	<script src="../bower_components/requirejs/require.js"></script>
+	<script type="text/javascript">
+        var pipUrl = '../../../minno-time/0.3/dist/js';
+
+		require.config({ baseUrl: 'js' });
+
+		window.activate = function(taskMap){
+            var contents, i, element = document.getElementById('task'), type = taskType(taskMap);
+
+            if (typeof taskMap === 'string') taskMap = {task: taskMap};
+
+            if (type === 'manager') {
+                element.setAttribute('pi-manager', 'task');
+            } else {
+                element.setAttribute('pi-manager-task', JSON.stringify({type:type, scriptUrl:'task', baseUrl:type === 'pip' ? pipUrl : undefined}));
+            }
+
+            for (i in taskMap) {
+                contents = taskMap[i].replace('define(', 'define("' + i + '",');
+                eval(contents);
+            }
+
+			require(['bootstrap'], function(){
+				require(['task'], function(script){
+					script.settings || (script.settings = {});
+					script.settings.onEnd = window.close;
+					script.settings.hooks = {endTask:window.close.bind(window)};
+
+                    var oldPreTask = script.settings.onPreTask;
+                    script.settings.onPreTask = preTask;
+                    
+					require(['angular','app'], function(angular, app) {
+						angular.element(document).ready(function() {
+							angular.bootstrap(element, [app.name]);
+						});
+					});
+
+                    preTask.$inject = ['currentTask'];
+                    function preTask(task){
+                        if (task.type === 'pip') task.baseUrl = pipUrl;
+                        if (oldPreTask) oldPreTask.apply(this, arguments);
+                    }
+				});
+			});
+
+            function taskType(taskMap){
+                if (typeof taskMap !== 'string') return 'manager';
+
+                var minnoTypeRgx = /define.+(manager|pip|quest)API/;
+                var matches = minnoTypeRgx.exec(taskMap);
+
+                if (matches) return matches[1];
+                throw new Error('Unknown player type');
+            }
+		};
+	</script>
+</html>

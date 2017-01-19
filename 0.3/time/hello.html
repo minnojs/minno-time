@@ -1,0 +1,268 @@
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Minno.js</title>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+		<link href="../assets/prism.css" rel="stylesheet" />
+		<link href="../assets/style.css" rel="stylesheet" />
+	</head>
+	<body>
+		<header>
+			<section>
+				<nav class="brand">
+                    <a href="/"><h1>Minno</h1></a>
+				</nav>
+				<nav>
+					<a href="/minno-quest/0.1/basics/overview.html">Basics</a>
+					<a href="/minno-quest/0.1/manager/overview.html">miManager</a>
+					<a href="/minno-quest/0.1/quest/overview.html">miQuest</a>
+					<a href="/minno-time/0.3/time/overview.html">miTime</a>
+				</nav>
+				<nav>
+                    <select id="version-select"><option value="0.3" selected>v0.3</option></select>
+					<a href="https://github.com/minnojs">Github</a>
+				</nav>
+			</section>
+		</header>
+		<main>
+			<section class="docs">
+                <h1><a name="hello-world" class="header-link" href="#hello-world"><span></span></a>Hello world</h1><ul>
+<li>Core<ul>
+<li><a href="overview.html">Overview</a></li>
+<li><a href="API.html">API</a></li>
+<li><a href="scorer.html">Scorer</a></li>
+<li><a href="resources.html">Resources</a></li>
+<li><a href="playground.html">Playground</a></li>
+</ul>
+</li>
+<li>Tutorials<ul>
+<li><strong><a href="hello.html">Hello World</a></strong><ul>
+<li><a href="helloPlay.html">Playground</a></li>
+</ul>
+</li>
+<li><a href="slideshow.html">Slide show</a><ul>
+<li><a href="slideshow1.html">step1</a></li>
+<li><a href="slideshow2.html">step2</a></li>
+<li><a href="slideshow3.html">step3</a></li>
+</ul>
+</li>
+<li>Stroop<ul>
+<li><a href="stroop-setup.html">Setup</a></li>
+<li><a href="stroop-interactions.html">Interactions</a></li>
+<li><a href="stroop-inheritance.html">inheritance</a></li>
+<li><a href="stroop-block.html">Blocks</a></li>
+<li><a href="stroop-task.html">Task</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Examples<ul>
+<li><a href="iat.html">IAT</a></li>
+<li><a href="amp.html">AMP</a></li>
+<li><a href="biat.html">BIAT</a></li>
+<li><a href="gnat.html">GNAT</a></li>
+<li><a href="spf.html">SPF</a></li>
+<li><a href="st-iat.html">ST-IAT</a></li>
+<li><a href="evaluative_priming.html">Evaluative priming</a></li>
+<li><a href="evaluative_priming2.html">Evaluative priming 2</a></li>
+</ul>
+</li>
+<li>Snippets<ul>
+<li><a href="inheritance.html">Inheritance</a></li>
+<li><a href="input.html">Input</a></li>
+<li><a href="interactions.html">Interactions</a></li>
+<li><a href="sequence.html">Sequence</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="stimulus.html">Stimulus</a></li>
+<li><a href="touch.html">Touch</a></li>
+<li><a href="trial.html">Trial</a></li>
+</ul>
+</li>
+</ul>
+<p>We will create a simple task that says &quot;Hello world&quot;. As we go, we will comment on several of the player&#39;s features and explain some of the ways you can customize your task.</p>
+<p>You can follow along and play around with the code right <a href="./helloPlay.html">here</a>.</p>
+<h3><a name="the-wrapper" class="header-link" href="#the-wrapper"><span></span></a>The wrapper</h3><p>PIP&#39;s scripts are usually a single JavaScript file. The script is wrapped within a define function (You don&#39;t have to understand what it does, but if you are interested look up <a href="http://requirejs.org/">requirejs</a>).</p>
+<pre><code class="lang-javascript">/* The script wrapper */
+define([&#39;pipAPI&#39;], function(APIconstructor) {
+    var API = new APIconstructor();
+
+    /*
+        Your script comes here...
+    */
+
+    return API.script;
+});
+/* don&#39;t forget to close the wrapper */
+</code></pre>
+<p>The wrapper creates the <code>API</code> object for you. The <code>API</code> object is the instrument that we will use to create and run tasks. The whole task is written by creating a bunch of objects and arrays. The API object has functions that accept those objects and arrays and know how to create a task from them. </p>
+<h3><a name="the-task-structure" class="header-link" href="#the-task-structure"><span></span></a>The task structure</h3><p>Each task is composed of one or more trials, that are activated sequentially. We set trials into the player using a function called <a href="./API.html#add-sequence"><code>API.addSequence</code></a> that accepts an array of trials as its argument. After adding any trials that you like all that is left is activating the player by calling <a href="API.html#play"><code>API.play</code></a>:</p>
+<pre><code class="lang-javascript">define([&#39;pipAPI&#39;], function(APIconstructor) {
+
+    var API = new APIconstructor();
+
+    API.addSequence([
+        /*
+            This is where you input all your trials.
+            We will see below how to write trials.
+        */
+    ]);
+
+    return API.script;
+});
+</code></pre>
+<p>In the following section we will see how to populate the trial sequence. Later, we will see that <code>API</code> provides many additional functions that allow us to further customize the player.</p>
+<h3><a name="hello-world" class="header-link" href="#hello-world"><span></span></a>Hello world</h3><p>Let&#39;s populate the sequence with a simple trial. The following trial displays the words &quot;Hello world&quot; at the center of the screen, and ends when you press <code>space</code>.</p>
+<pre><code class="lang-javascript">{
+    input: [
+        // What input to accept from the participant (user)
+        {handle:&#39;space&#39;,on:&#39;space&#39;}
+    ],
+    layout: [
+        // What to show throughout the trial.
+        {
+            media :{word:&#39;Hello world&#39;},
+            css:{fontSize:&#39;2em&#39;,color:&#39;#D7685A&#39;}
+        }
+    ],
+    interactions: [
+        // What to do when different events occur.
+        {
+            conditions: [
+                {type:&#39;inputEquals&#39;,value:&#39;space&#39;}
+            ],
+            actions: [
+                {type:&#39;endTrial&#39;}
+            ]
+        }
+    ]
+}
+</code></pre>
+<p>What we see above is a definition of a trial. A trial is a JavaScript object. Inside that object, there are three other objects: <code>input</code>, <code>layout</code> and <code>interaction</code>. Each of these objects defines a different aspect in the trial. Let&#39;s learn about these three objects, one by one.</p>
+<h4><a name="stronginputstrong" class="header-link" href="#stronginputstrong"><span></span></a><strong>input</strong></h4><p>The <code>input</code> object is an array of objects that define the input we expect the participant to use. Each object in the<code>input</code> array defines one input element (full documentation <a href="./API.html#input">here</a>).</p>
+<pre><code class="lang-javascript">[//Open the array of input objects.
+    //An input object that defines what to do when the user hits space.
+    {handle:&#39;space&#39;, on:&#39;space&#39;} 
+]//Close the array
+</code></pre>
+<p>Each input object must include the properties <code>handle</code> and <code>on</code>. The <code>handle</code> property defines the name of this input. Other parts of the script can then refer to this input using this name (e.g., check whether the input was activated). The <code>on</code> property defines what type of input this object listens to.</p>
+<p>In this case, we created an input object that listens to the &quot;space keypressed&quot; event (<code>on:&#39;space&#39;</code>), and triggers an event called &quot;space&quot; (<code>handle:&#39;space&#39;</code>). We will use the event name in the <code>interactions</code> section.</p>
+<p>The player supports <a href="./API.html#input">many</a> types of input. For now, let&#39;s learn only about <code>keypressed</code>. <code>keypressed</code> creates an input listener for simple keyboard interactions. The following code creates a listener for the event of hitting the <code>&#39;e&#39;</code> key:</p>
+<pre><code class="lang-javascript">[
+    {handle:&#39;space&#39;, on:&#39;keypressed&#39;, key:&#39;e&#39;}
+]
+</code></pre>
+<p>Note that the event type is now <code>keypressed</code> and we added an additional property to the object, <code>key</code> which defines what type of keypressed triggers this event. 
+Note also that the name that we give the event is absolutely arbitrary, so we can leave the handle as <code>&#39;space&#39;</code> and it still works. However, it is generally a good practice to use meaningful names (e.g., <code>&#39;key_e&#39;</code>). You can try replacing the old input object with this one, and see what happens. Then try creating an object that responds to the <code>&#39;i&#39;</code> key being pressed.</p>
+<h4><a name="stronglayoutstrong" class="header-link" href="#stronglayoutstrong"><span></span></a><strong>layout</strong></h4><p>The <code>layout</code> object is responsible for stimuli that are presented during the whole trial. All the stimuli that are set into the <code>layout</code> array will be displayed automatically from the beginning of the trial until its end. (We use a different object, named <code>stimuli</code> to define stimuli that are displayed only for a part of the trial. We will learn about the <code>stimuli</code> object in more advanced examples).</p>
+<p>The layout is an array of objects. Each object represents a stimulus. The <a href="./API.html#stimuli">stimulus object</a> is a complex objects, and we&#39;ll learn more about it in more advanced examples. For now, let&#39;s start with a simple example:</p>
+<pre><code class="lang-javascript">[//This opens an array of stimulus objects to show in the layout.
+    {//Each object is a stimulus object.
+        media :{word:&#39;Hello world&#39;}, //Media defines what to show
+        css:{fontSize:&#39;2em&#39;,color:&#39;#FF0000&#39;} //css defines its style.
+    }
+]
+</code></pre>
+<p>This stimulus displays the words &quot;Hello world&quot; at the center of the player&#39;s canvas.</p>
+<p>Stimulus objects hold a <a href="./API.html#media"><code>media</code></a> object to display, and relevant data regarding how to display it. This particular stimulus sets the style for the media using the <code>css</code> property. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS">CSS</a> is the language used by browsers to describe styles. Using the stimulus <code>css</code> property we can control css in any way we want. In this case we use the css object to set the <em>font size</em> and <em>color</em> of the stimulus.</p>
+<p>The font size of this stimulus is set to <code>2em</code>. <code>em</code> is a css size unit, <code>1em</code> is the standard (default) font size, <code>2em</code> is twice that size and so on (you can use fractions too: e.g., <code>1.3em</code>). So that the text displayed by this stimulus is double the default text size.</p>
+<p>The color attribute accepts any valid css color. You can try the following: <code>&#39;#0000FF&#39;</code>, <code>&#39;#FFFFFF&#39;</code>, <code>&#39;#00FF00&#39;</code> or use <a href="http://html-color-codes.info/">this</a> site to find additional colors.</p>
+<p>The <code>css</code> object can do far more than this. If you want to know more you can check out the full API  <a href="http://api.jquery.com/css/#css2"><code>here</code></a></p>
+<h4><a name="stronginteractionsstrong" class="header-link" href="#stronginteractionsstrong"><span></span></a><strong>interactions</strong></h4><p><a href="./API.html#interactions">Interactions</a> are a grouping of <a href="./API.html#interactions-conditions"><code>conditions</code></a> (statements of truth) and <a href="./API.html#interactions-actions"><code>actions</code></a> to perform if (and only if) all conditions are true. We won&#39;t really get into interactions here, but these are the basics:</p>
+<pre><code class="lang-javascript">[
+    {
+        conditions: [
+            {type:&#39;inputEquals&#39;,value:&#39;space&#39;}
+        ],
+        actions: [
+            {type:&#39;endTrial&#39;}
+        ]
+    }
+]
+</code></pre>
+<p>Each interaction object has a <code>conditions</code> property and an <code>actions</code> property. The <code>conditions</code> property is an array of condition objects. Each condition objects defines a condition that can be true of false. For instance, the condition in the example above is that the name (i.e., handle) of currently active input is &#39;space&#39;. This condition is true only when the participant hits space (that is what we defined in the input section). There are a few other possible conditions that can be defined, and we will learn about them in more advanced examples (to see the full list of conditions, see <a href="./API.html#interactions-conditions">here</a>).
+If all the condition objects in the conditions array are true, then all the actions in the <code>actions</code> array are executed. </p>
+<p>The <code>actions</code> array holds an array of actions to perform if all <code>conditions</code> are evaluated as true. In this case the only action is to end this trial. We will learn about other forms of actions in more advanced examples (to see the full list of conditions, see <a href="./API.html#interactions-actions">here</a>).</p>
+<p>###Detailed recap
+Here is the whole code again, with comments that explain each and every line. Before you read those comments, it might be good to look at the simple not-commented code <a href="hello.html">here</a>, and try again to understand what you see. Whenever you have a question about a line in the code, have a look at that line in the heavily commented code below:</p>
+<pre><code class="lang-javascript">/* The script wrapper */
+define([&#39;pipAPI&#39;], function(APIconstructor) {
+
+    var API = new APIconstructor();
+
+    //The whole script is inside a function. 
+    //The function accepts an API object. 
+    //We use the API object to set the task.
+    //The function addSequence creates a sequence of trials.
+    //That function accepts an array of trials.
+    API.addSequence([ //Open the array of trials
+    //This array has only one object in it. So, the task will run one trial only.
+        { //This object defines a trial
+
+            //A trial is defined by setting a few properties.
+
+            //The first property in this trial is called input.
+            input: [ //The trial&#39;s &quot;input&quot; property is an array of input objects.
+                //This array has only one object, so it will handle only one input from the users.
+                //The input object has a few different properties to define what kind of user input this trial handles.
+                {handle:&#39;space&#39;,on:&#39;space&#39;}
+            ], //Close the array of inputs, and continue to the trial&#39;s next property.
+
+            //Another property in this is trial is called &quot;layout&quot;.
+            //layout defines what to show throughout the trial.
+            layout: [//The trial&#39;s &quot;layout&quot; property is an array of stimulus objects.
+                //In our example, the layout array has only one item (object).
+                {// This is a stimulus object. It has a few properties.
+                    //The media property is an object that defines what to show.
+                    media :{word:&#39;Hello world&#39;},
+                    //The css property is an object that defines how to show it.
+                    css:{fontSize:&#39;2em&#39;,color:&#39;#D7685A&#39;}
+                }
+            ],//Close the layout array, and continue to the trial&#39;s next property.
+
+            //Interactions is an array of if-then scenarios. It defines the flow of the trial (what to do when certain conditions are met).
+            interactions: [ //Start the array of interactions.
+                // Our array in this example has only one object in it.
+                {//This is an interaction object. It has two properties: conditions, and actions.
+                    //conditions is an array of conditions.
+                    conditions: [ //Open the array of conditions.
+                        //Our example has only one condition.
+                        //The condition: if the input named &#39;space&#39; was activated (tip: go back to the input property: that&#39;s were we defined this event).
+                        {type:&#39;inputEquals&#39;,value:&#39;space&#39;}
+                    ],
+                    //actions is an array of actions: each action defines something that should be done when the interaction&#39;s conditions are true.
+                    actions: [ //Open the array of actions.
+                        //There is only one action here: end the trial.
+                        {type:&#39;endTrial&#39;}
+                    ] //Close the array of actions
+                } //Close the interaction object.
+            ] //Close the array of interactions
+        } //Close the trial object.
+    ]); //Close the array of trials and the addSequence function. use ; to execute the function.
+
+    //In summary, in this trial we showed the text &#39;Hello World!&#39; with the layout property.
+    //We then waited for the user to hit space (we used the input object to define that). 
+    //When the user hit space, we ended the trial (this was done with an interaction object).
+
+    // Activate the player. This will play the trial sequence. In our case, it will play a single trial.
+    return API.script;
+}); //Close the define wrapper.
+</code></pre>
+<h3><a name="epilogue-of-sorts" class="header-link" href="#epilogue-of-sorts"><span></span></a>Epilogue (of sorts)</h3><p>You&#39;ve learned how to create a single trial, and the different elements that compose it. The next stage is seeing how different trials come together to form a task.</p>
+<p>We will now go on to creating a simple slide-show.</p>
+
+				<hr />
+				<small>License: Apache 2. &copy; Project Implicit. &middot; Current version [version]</small>
+			</section>
+		</main>
+		<script src="../assets/prism.js"></script>
+        <script>
+            (function(){
+                var select = document.getElementById('version-select');
+                select.addEventListener('change', function(event){
+                    var version = event.target.value;
+                    location.href = location.href.replace(/[0-9]\.[0-9]/, version)
+                });
+            })();
+        </script>
+	</body>
+</html>

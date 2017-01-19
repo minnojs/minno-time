@@ -1,0 +1,122 @@
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Minno.js</title>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+		<link href="../assets/prism.css" rel="stylesheet" />
+		<link href="../assets/style.css" rel="stylesheet" />
+	</head>
+	<body>
+		<header>
+			<section>
+				<nav class="brand">
+                    <a href="/"><h1>Minno</h1></a>
+				</nav>
+				<nav>
+					<a href="/minno-quest/0.1/basics/overview.html">Basics</a>
+					<a href="/minno-quest/0.1/manager/overview.html">miManager</a>
+					<a href="/minno-quest/0.1/quest/overview.html">miQuest</a>
+					<a href="/minno-time/0.3/time/overview.html">miTime</a>
+				</nav>
+				<nav>
+                    <select id="version-select"><option value="0.3" selected>v0.3</option></select>
+					<a href="https://github.com/minnojs">Github</a>
+				</nav>
+			</section>
+		</header>
+		<main>
+			<section class="docs">
+                <h1><a name="overview" class="header-link" href="#overview"><span></span></a>Overview</h1><ul>
+<li>Core<ul>
+<li><strong><a href="overview.html">Overview</a></strong></li>
+<li><a href="API.html">API</a></li>
+<li><a href="scorer.html">Scorer</a></li>
+<li><a href="resources.html">Resources</a></li>
+<li><a href="playground.html">Playground</a></li>
+</ul>
+</li>
+<li>Tutorials<ul>
+<li><a href="hello.html">Hello World</a><ul>
+<li><a href="helloPlay.html">Playground</a></li>
+</ul>
+</li>
+<li><a href="slideshow.html">Slide show</a><ul>
+<li><a href="slideshow1.html">step1</a></li>
+<li><a href="slideshow2.html">step2</a></li>
+<li><a href="slideshow3.html">step3</a></li>
+</ul>
+</li>
+<li>Stroop<ul>
+<li><a href="stroop-setup.html">Setup</a></li>
+<li><a href="stroop-interactions.html">Interactions</a></li>
+<li><a href="stroop-inheritance.html">inheritance</a></li>
+<li><a href="stroop-block.html">Blocks</a></li>
+<li><a href="stroop-task.html">Task</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Examples<ul>
+<li><a href="iat.html">IAT</a></li>
+<li><a href="amp.html">AMP</a></li>
+<li><a href="biat.html">BIAT</a></li>
+<li><a href="gnat.html">GNAT</a></li>
+<li><a href="spf.html">SPF</a></li>
+<li><a href="st-iat.html">ST-IAT</a></li>
+<li><a href="evaluative_priming.html">Evaluative priming</a></li>
+<li><a href="evaluative_priming2.html">Evaluative priming 2</a></li>
+</ul>
+</li>
+<li>Snippets<ul>
+<li><a href="inheritance.html">Inheritance</a></li>
+<li><a href="input.html">Input</a></li>
+<li><a href="interactions.html">Interactions</a></li>
+<li><a href="sequence.html">Sequence</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="stimulus.html">Stimulus</a></li>
+<li><a href="touch.html">Touch</a></li>
+<li><a href="trial.html">Trial</a></li>
+</ul>
+</li>
+</ul>
+<p>Minno-time builds and runs experiments with time-sensitive tasks over the Internet. It is written in JavaScript and is built to be extremely versatile and customizable.
+Researchers can program their own studies by writing scripts in a language that PIP can understand. Those scripts are written as JavaScript objects. This format allows writing simple and straightforward scripts using a constrained scripting language. The format also allows advanced users to easily create complex and dynamic scripts using in-line JavaScript.</p>
+<h3><a name="central-concepts" class="header-link" href="#central-concepts"><span></span></a>Central Concepts</h3><p>The player treats each task as a <strong>sequence</strong> of <strong>trials</strong>.</p>
+<p><strong>Trials</strong> do three things:</p>
+<ul>
+<li>Control stimuli presentation</li>
+<li>Evaluate user responses</li>
+<li>Respond to user responses (give feedback, hide a stimulus, finish trial, etc.)</li>
+</ul>
+<p>Trials are implemented with a <strong>Trial</strong> object. The Trial object is responsible for anything that &#39;happens&#39; in the trial (e.g., presentation of stimuli). The trial object uses several other objects, the most important of them are the <strong>Stimulus</strong> and the <strong>Media</strong> objects. <strong>Media</strong> objects are responsible for what we show the user (text, images or any other form of media). <strong>Stimuli</strong> objects are responsible for how we show the media objects. For instance, the <strong>Stimulus</strong> objects controls the size and location of the presentation of a media object. Each stimulus includes one Media object. A Trial object may have multiple stimulus objects (to allow you showing a few different stimuli in the same trial).</p>
+<p>Trials, Stimuli and Media are the main building blocks of your task. Often, you will want to group them into <strong>Sets</strong>. The Sets are used to organize and randomize their members.</p>
+<p>There cannot be more than one trial at a time, and each trial can change just about anything in the player&#39;s behavior. To program a task you need to define the trial <strong>sequences</strong>.</p>
+<ul>
+<li>Trials within a sequence may be duplicated, reordered and randomly selected.</li>
+<li>Trials can be created by inheriting some features from another trial.</li>
+<li>Trials may be randomly selected from custom lists (sets).</li>
+</ul>
+<h3><a name="creating-a-task" class="header-link" href="#creating-a-task"><span></span></a>Creating a Task</h3><p>When creating a task you first create your building blocks. You create prototypes for each trial type you intend to use and create sets of stimuli for later use. Next, you drop the building blocks into the sequence; at this stage you decide on the global structure of your task and create the exact randomization that you want.</p>
+<p>Once your script is ready all you have to do is to call it from within the player index page.</p>
+<h3><a name="collecting-the-data" class="header-link" href="#collecting-the-data"><span></span></a>Collecting the data</h3><p>All the data that is recorded by the player is sent to a URL of your choosing. Tasks may vary greatly so we give you the flexibility to send whatever data you need and process it however you see fit.</p>
+<h3><a name="learn-how-to-use-pip" class="header-link" href="#learn-how-to-use-pip"><span></span></a>Learn how to use PIP</h3><p>This was only a short overview of the player. There are many ways to learn how to use it.
+We recommend you first see some code examples. Start with the <a href="./hello.html">hello world example</a>. Then, to understand better the syntax used in that example, read a little about <a href="./javascript.html">Javascript objects</a>. Next, go back to the <a href="./hello.html">hello world example</a> or continue to the <a href="./slideshow.html">slideshow example</a> to see that you understand PIP code more clearly.</p>
+<p>Next, we recommend that you read and experience our Stroop tutorial, which will take you from <a href="./stroop-setupDocco.html">setup</a> to the <a href="./stroop-taskDocco.html">complete task</a> in a few steps.</p>
+<p>While reading the tutorials, we recommend that you tinker with the files yourself, and see if you can create your own version of each of the scripts you&#39;ll see throughout that tutorial. The scripts are all available within the playgrounds (click the <span class="glyphicon glyphicon-play-circle"></span> button beside the tutorial link). Try to make minor changes in each step. This will help you make sure that you understand what each part of the code does.</p>
+
+				<hr />
+				<small>License: Apache 2. &copy; Project Implicit. &middot; Current version [version]</small>
+			</section>
+		</main>
+		<script src="../assets/prism.js"></script>
+        <script>
+            (function(){
+                var select = document.getElementById('version-select');
+                select.addEventListener('change', function(event){
+                    var version = event.target.value;
+                    location.href = location.href.replace(/[0-9]\.[0-9]/, version)
+                });
+            })();
+        </script>
+	</body>
+</html>
