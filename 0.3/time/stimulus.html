@@ -85,8 +85,8 @@
         <a class="activate-button">Activate</a>
         <a class="download-button" href="stimulus.js" download>Download</a>
     </div>
-    <div class="editor">/*We use jQuery in this file as a global, so we need to mark it for the parser (jshint) */
-define(['pipAPI','jquery'], function(APIconstructor, $) {
+    <div class="editor">/* We use jQuery in this file as a global, so we need to mark it for the parser (jshint) */
+define([&quot;pipAPI&quot;,&quot;jquery&quot;], function(APIconstructor, $) {
 
 	var API = new APIconstructor();
 
@@ -98,24 +98,24 @@ define(['pipAPI','jquery'], function(APIconstructor, $) {
 		/* The trial begins here */
 		{
 			input: [
-				{handle:'space',on:'space'}
+				{handle:&quot;space&quot;,on:&quot;space&quot;}
 			],
 
 			// The layout property is an array of the static stimuli in the trial
 			layout:[
 				/* the top right stimulus begins here */
 				{
-					// The **location** property of the stimulus controls where the stimulus will appear. </br>
-					// Permitted values are numbers (percentages of canvas size), 'center' or 'auto'. By default, location is set to center.
+					// The **location** property of the stimulus controls where the stimulus will appear. &lt;/br&gt;
+					// Permitted values are numbers (percentages of canvas size), &quot;center&quot; or &quot;auto&quot;. By default, location is set to center.
 					location:{right:0,top:0},
 
 					// The **css** property of the stimulus controls the styling of displayed elements
 					// it uses the jquery property name standard (http://api.jquery.com/css/)
-					css: {color:'red',fontSize:'2em'},
+					css: {color:&quot;red&quot;,fontSize:&quot;2em&quot;},
 
 					// The **media** property of the stimulus controls what it is that we are about to display.
 					// the simplest form of media is a **word**, or string of text
-					media:{word:'top right (word)'}
+					media:{word:&quot;top right (word)&quot;}
 				},
 				/* the top right stimulus ends here */
 
@@ -124,7 +124,7 @@ define(['pipAPI','jquery'], function(APIconstructor, $) {
 				/* the top left stimulus begins here */
 				{
 					location:{left:0,top:0},
-					media:{html:'<b>bottom left (html)</b>'}
+					media:{html:&quot;&lt;b&gt;bottom left (html)&lt;/b&gt;&quot;}
 				},
 				/* the top left stimulus begins here */
 
@@ -133,7 +133,7 @@ define(['pipAPI','jquery'], function(APIconstructor, $) {
 				/* the bottom left stimulus begins here */
 				{
 					location:{left:0,bottom:0},
-					media:{template:'../../../resources/bottom_left.html'}
+					media:{template:&quot;../../../resources/bottom_left.html&quot;}
 				},
 				/* the bottom left stimulus begins here */
 
@@ -141,7 +141,7 @@ define(['pipAPI','jquery'], function(APIconstructor, $) {
 				/* the bottom right stimulus begins here */
 				{
 					location:{right:0,bottom:0},
-					media: {jquery : $('<div>',{text:'bottom left (jQuery)'})}
+					media: {jquery : $(&quot;&lt;div&gt;&quot;,{text:&quot;bottom left (jQuery)&quot;})}
 				}
 				/* the bottom right stimulus begins here */
 
@@ -150,11 +150,11 @@ define(['pipAPI','jquery'], function(APIconstructor, $) {
 
 			// The stimuli property holds stimuli that are to be dynamically presented
 			stimuli: [
-				// Lets show an **image** this time. </br>
-				// The size property allows you to control the image size (in percentage of canvas). By default it is set to 'auto'.
+				// Lets show an **image** this time. &lt;/br&gt;
+				// The size property allows you to control the image size (in percentage of canvas). By default it is set to &quot;auto&quot;.
 				{
-					size: {height:75, width:'auto'},
-					media :{image:'../../images/learning.jpg'},
+					size: {height:75, width:&quot;auto&quot;},
+					media :{image:&quot;../../images/learning.jpg&quot;},
 					// `nolog` allows you to control whether this stimulus will be logged (see the interactions section)
 					nolog:true
 				}
@@ -162,13 +162,13 @@ define(['pipAPI','jquery'], function(APIconstructor, $) {
 
 			interactions: [
 				{
-					conditions: [{type:'begin'}],
-					actions: [{type:'showStim',handle:'All'}]
+					conditions: [{type:&quot;begin&quot;}],
+					actions: [{type:&quot;showStim&quot;,handle:&quot;All&quot;}]
 				},
 
 				{
-					conditions: [{type:'inputEquals',value:'space'}],
-					actions: [{type:'endTrial'}]
+					conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],
+					actions: [{type:&quot;endTrial&quot;}]
 				}
 			]
 		}
@@ -179,7 +179,7 @@ define(['pipAPI','jquery'], function(APIconstructor, $) {
 
 	return API.script;
 });
-/* don't forget to close the require wrapper */
+/* don&quot;t forget to close the require wrapper */
 </div>
 </section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" integrity="sha256-xrr4HH5eSY+cFz4SH7ja/LaAi9qcEdjMpeMP49/iOLs=" crossorigin="anonymous"></script>

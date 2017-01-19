@@ -84,48 +84,48 @@
         <a class="activate-button">Activate</a>
         <a class="download-button" href="slideshow3.js" download>Download</a>
     </div>
-    <div class="editor">define(['pipAPI'],function(APIconstructor) {
+    <div class="editor">define([&quot;pipAPI&quot;], function(APIconstructor) {
 
-	var API = new APIconstructor('slideshow');
+	var API = new APIconstructor(&quot;slideshow&quot;);
 
 
 	// Create a trial set with the "Hello world" trial.
-	API.addTrialSets('slide',[{
-		input: [{handle:'space',on:'space'}],
-		layout: [{media :{word:'Hello world'}}],
+	API.addTrialSets(&quot;slide&quot;,[{
+		input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+		layout: [{media :{word:&quot;Hello world&quot;}}],
 		interactions: [{
-			conditions: [{type:'inputEquals',value:'space'}],
-			actions: [{type:'endTrial'}]
+			conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],
+			actions: [{type:&quot;endTrial&quot;}]
 		}]
 	}]);
 
 	// Create a stimulus set with the default style for all trials.
-	API.addStimulusSets('default',[
-		{css:{fontSize:'2em',color:'#D7685A'}}
+	API.addStimulusSets(&quot;default&quot;,[
+		{css:{fontSize:&quot;2em&quot;,color:&quot;#D7685A&quot;}}
 	]);
 
 	// Create the sequence.
 	API.addSequence([
 		// Trials know to inherit from trial sets.
 		{
-			inherit:'slide',
+			inherit:&quot;slide&quot;,
 			// Stimuli know to inherit from stimulus sets.
 			layout: [{
-				inherit:'default',
-				media :{word:'This'}
+				inherit:&quot;default&quot;,
+				media :{word:&quot;This&quot;}
 			}]
 		},
 		{
-			inherit:'slide',
-			layout: [{inherit:'default',media :{word:'is'}}]
+			inherit:&quot;slide&quot;,
+			layout: [{inherit:&quot;default&quot;,media :{word:&quot;is&quot;}}]
 		},
 		{
-			inherit:'slide',
-			layout: [{inherit:'default',media :{word:'even'}}]
+			inherit:&quot;slide&quot;,
+			layout: [{inherit:&quot;default&quot;,media :{word:&quot;even&quot;}}]
 		},
 		{
-			inherit:'slide',
-			layout: [{inherit:'default',media :{word:'Cooler!'}}]
+			inherit:&quot;slide&quot;,
+			layout: [{inherit:&quot;default&quot;,media :{word:&quot;Cooler!&quot;}}]
 		}
 	]);
 

@@ -84,34 +84,34 @@
         <a class="activate-button">Activate</a>
         <a class="download-button" href="slideshow1.js" download>Download</a>
     </div>
-    <div class="editor">define(['pipAPI'],function(APIconstructor) {
+    <div class="editor">define([&quot;pipAPI&quot;], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
 
 	API.addSequence([
 		{
-			input: [{handle:'space',on:'space'}],
-			layout: [{media :{word:'Is\'nt'}}],
+			input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+			layout: [{media :{word:&quot;Is\&quot;nt&quot;}}],
 			interactions: [{
-				conditions: [{type:'inputEquals',value:'space'}],
-				actions: [{type:'endTrial'}]
+				conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],
+				actions: [{type:&quot;endTrial&quot;}]
 			}]
 		},
 		{
-			input: [{handle:'space',on:'space'}],
-			layout: [{media :{word:'this'}}],
+			input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+			layout: [{media :{word:&quot;this&quot;}}],
 			interactions: [{
-				conditions: [{type:'inputEquals',value:'space'}],
-				actions: [{type:'endTrial'}]
+				conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],
+				actions: [{type:&quot;endTrial&quot;}]
 			}]
 		},
 		{
-			input: [{handle:'space',on:'space'}],
-			layout: [{media :{word:'cool?'}}],
+			input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+			layout: [{media :{word:&quot;cool?&quot;}}],
 			interactions: [{
-				conditions: [{type:'inputEquals',value:'space'}],
-				actions: [{type:'endTrial'}]
+				conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],
+				actions: [{type:&quot;endTrial&quot;}]
 			}]
 		}
 	]);

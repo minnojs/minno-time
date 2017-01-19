@@ -84,8 +84,8 @@
         <a class="activate-button">Activate</a>
         <a class="download-button" href="helloPlay.js" download>Download</a>
     </div>
-    <div class="editor">//### Hello world
-define(['pipAPI'], function(APIconstructor) {
+    <div class="editor">// ### Hello world
+define([&quot;pipAPI&quot;], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
@@ -93,23 +93,23 @@ define(['pipAPI'], function(APIconstructor) {
 	API.addSequence([
 		{
 			input: [
-				{handle:'space',on:'space'}
+				{handle:&quot;space&quot;,on:&quot;space&quot;}
 			],
 			layout: [
 				// This is a stimulus object
 				{
-					media :{word:'Hello world'},
-					css:{fontSize:'2em',color:'#D7685A'}
+					media :{word:&quot;Hello world&quot;},
+					css:{fontSize:&quot;2em&quot;,color:&quot;#D7685A&quot;}
 				}
 			],
 			interactions: [
 				// This is an interaction (it has a condition and an action)
 				{
 					conditions: [
-						{type:'inputEquals',value:'space'}
+						{type:&quot;inputEquals&quot;,value:&quot;space&quot;}
 					],
 					actions: [
-						{type:'endTrial'}
+						{type:&quot;endTrial&quot;}
 					]
 				}
 			]

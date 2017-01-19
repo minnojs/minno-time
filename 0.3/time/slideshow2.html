@@ -84,38 +84,38 @@
         <a class="activate-button">Activate</a>
         <a class="download-button" href="slideshow2.js" download>Download</a>
     </div>
-    <div class="editor">define(['pipAPI'],function(APIconstructor) {
+    <div class="editor">define([&quot;pipAPI&quot;], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
 
 	// Create a trial set with the hello world trial
-	API.addTrialSets('slide',[{
-		input: [{handle:'space',on:'space'}],
-		layout: [{media :{word:'Hello world'}}],
+	API.addTrialSets(&quot;slide&quot;,[{
+		input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+		layout: [{media :{word:&quot;Hello world&quot;}}],
 		interactions: [{
-			conditions: [{type:'inputEquals',value:'space'}],
-			actions: [{type:'endTrial'}]
+			conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],
+			actions: [{type:&quot;endTrial&quot;}]
 		}]
 	}]);
 
 	// Create the sequence (Each trial extends the slide and overwrites the layout property)
 	API.addSequence([
 		{
-			inherit:'slide',
-			layout: [{media :{word:'This'}}]
+			inherit:&quot;slide&quot;,
+			layout: [{media :{word:&quot;This&quot;}}]
 		},
 		{
-			inherit:'slide',
-			layout: [{media :{word:'is'}}]
+			inherit:&quot;slide&quot;,
+			layout: [{media :{word:&quot;is&quot;}}]
 		},
 		{
-			inherit:'slide',
-			layout: [{media :{word:'even'}}]
+			inherit:&quot;slide&quot;,
+			layout: [{media :{word:&quot;even&quot;}}]
 		},
 		{
-			inherit:'slide',
-			layout: [{media :{word:'Cooler!!'}}]
+			inherit:&quot;slide&quot;,
+			layout: [{media :{word:&quot;Cooler!!&quot;}}]
 		}
 	]);
 

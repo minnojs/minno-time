@@ -84,62 +84,62 @@
         <a class="activate-button">Activate</a>
         <a class="download-button" href="st-iat.js" download>Download</a>
     </div>
-    <div class="editor">define(['pipAPI','pipScorer'],function(APIConstructor,Scorer) {
+    <div class="editor">define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Scorer) {
 
-	var API = new APIConstructor('plainIAT');
+	var API = new APIConstructor(&quot;plainIAT&quot;);
 	var scorer = new Scorer();
 
-	var attribute1 = 'Unpleasant';
-	var attribute2 = 'Pleasant';
-	var category = 'Black People';
-	// the layout for the trials were the 'Black People' are on the left side (with the 'Unpleasant')
+	var attribute1 = &quot;Unpleasant&quot;;
+	var attribute2 = &quot;Pleasant&quot;;
+	var category = &quot;Black People&quot;;
+	// the layout for the trials were the &quot;Black People&quot; are on the left side (with the &quot;Unpleasant&quot;)
 	var leftLayout = [
-				{location:{left:16,top:12},media:{word:'or'}, css:{color:'black','font-size':'2em'}},
-				{location:{left:10,top:6},media:{word:attribute1}, css:{color:'white','font-size':'2em'}},
-				{location:{left:10,top:18},media:{word:category}, css:{color:'red','font-size':'2em'}},
-				{location:{right:10,top:6},media:{word:attribute2}, css:{color:'white','font-size':'2em'}}
+				{location:{left:16,top:12},media:{word:&quot;or&quot;}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
+				{location:{left:10,top:6},media:{word:attribute1}, css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
+				{location:{left:10,top:18},media:{word:category}, css:{color:&quot;red&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
+				{location:{right:10,top:6},media:{word:attribute2}, css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
 			];
-	// the layout for the trials were the 'Black People' are on the right side (with the 'Pleasant')
+	// the layout for the trials were the &quot;Black People&quot; are on the right side (with the &quot;Pleasant&quot;)
 	var rightLayout = [
-				{location:{right:16,top:12},media:{word:'or'}, css:{color:'black','font-size':'2em'}},
-				{location:{left:10,top:6},media:{word:attribute1}, css:{color:'white','font-size':'2em'}},
-				{location:{right:6,top:18},media:{word:category}, css:{color:'red','font-size':'2em'}},
-				{location:{right:10,top:6},media:{word:attribute2}, css:{color:'white','font-size':'2em'}}
+				{location:{right:16,top:12},media:{word:&quot;or&quot;}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
+				{location:{left:10,top:6},media:{word:attribute1}, css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
+				{location:{right:6,top:18},media:{word:category}, css:{color:&quot;red&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
+				{location:{right:10,top:6},media:{word:attribute2}, css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
 			];
 
-	API.addSettings('canvas',{
+	API.addSettings(&quot;canvas&quot;,{
 		maxWidth: 1000,
 		proportions : 0.8,
 		//Change the colors to allow better presentation of the colored stimuli.
-		background: 'white',
-		canvasBackground: 'green',
+		background: &quot;white&quot;,
+		canvasBackground: &quot;green&quot;,
 		borderWidth: 5,
-		borderColor: 'black'
+		borderColor: &quot;black&quot;
 	});
 
-	API.addSettings('base_url',{
-		image : '../../images'
+	API.addSettings(&quot;base_url&quot;,{
+		image : &quot;../../images&quot;
 	});
 
-	API.addSettings('logger',{
+	API.addSettings(&quot;logger&quot;,{
 		pulse: 20,
-		url : '/implicit/PiPlayerApplet'
+		url : &quot;/implicit/PiPlayerApplet&quot;
 	});
 
 	//the scorer that computes the user feedback
-	scorer.addSettings('compute',{
-		ErrorVar:'score',
+	scorer.addSettings(&quot;compute&quot;,{
+		ErrorVar:&quot;score&quot;,
 		condVar:"condition",
 		//condition 1
 		cond1VarValues: [// Unpleasant, Black people/ pleasant
-			attribute1 + ',' + category + '/' + attribute2
+			attribute1 + &quot;,&quot; + category + &quot;/&quot; + attribute2
 		],
 		//condition 2
 		cond2VarValues: [// Unpleasant / Black people, Pleasant
-			attribute2 + ',' + category + '/' + attribute1
+			attribute2 + &quot;,&quot; + category + &quot;/&quot; + attribute1
 		],
 		parcelVar : "parcel",
-		parcelValue : ['first'],
+		parcelValue : [&quot;first&quot;],
 		fastRT : 150, //Below this reaction time, the latency is considered extremely fast.
 		maxFastTrialsRate : 0.1, //Above this % of extremely fast responses within a condition, the participant is considered too fast.
 		minRT : 400, //Below this latency
@@ -148,15 +148,15 @@
 		postSettings : {score:"score",msg:"feedback",url:"/implicit/scorer"}
 	});
 
-	scorer.addSettings('message',{ /**chack*/
+	scorer.addSettings(&quot;message&quot;,{ /**chack*/
 		MessageDef: [
-			{ cut:'-0.65', message:'Your data suggest strong positive automatic attitude toward Black People.' },
-			{ cut:'-0.35', message:'Your data suggest moderate positive automatic attitude toward Black People.' },
-			{ cut:'-0.15', message:'Your data suggest weak positive automatic attitude toward Black People.' },
-			{ cut:'0.15', message:'Your data suggest neutral automatic attitude toward Black People.' },
-			{ cut:'0.35', message:'Your data suggest weak negative automatic attitude toward Black People.' },
-			{ cut:'0.65', message:'Your data suggest moderate negative automatic attitude toward Black People.' },
-			{ cut:'5', message:'Your data suggest strong negative automatic attitude toward Black People.' }
+			{ cut:&quot;-0.65&quot;, message:&quot;Your data suggest strong positive automatic attitude toward Black People.&quot; },
+			{ cut:&quot;-0.35&quot;, message:&quot;Your data suggest moderate positive automatic attitude toward Black People.&quot; },
+			{ cut:&quot;-0.15&quot;, message:&quot;Your data suggest weak positive automatic attitude toward Black People.&quot; },
+			{ cut:&quot;0.15&quot;, message:&quot;Your data suggest neutral automatic attitude toward Black People.&quot; },
+			{ cut:&quot;0.35&quot;, message:&quot;Your data suggest weak negative automatic attitude toward Black People.&quot; },
+			{ cut:&quot;0.65&quot;, message:&quot;Your data suggest moderate negative automatic attitude toward Black People.&quot; },
+			{ cut:&quot;5&quot;, message:&quot;Your data suggest strong negative automatic attitude toward Black People.&quot; }
 		]
 	});
 
@@ -164,63 +164,63 @@
 	 * Create default Trial
 	 * note that this function takes a single object
 	 */
-	API.addTrialSets('Default',{
+	API.addTrialSets(&quot;Default&quot;,{
 		// by default each trial is correct, this is modified in case of an error
 		data: {score:0},
 		// set the interface for trials
 		input: [
-			{handle:'enter',on:'enter'},
-			{handle:'left',on:'keypressed',key:'e'},
-			{handle:'right',on:'keypressed',key:'i'},
-			{handle:'left',on:'leftTouch',touch:true},
-			{handle:'right',on:'rightTouch',touch:true}
+			{handle:&quot;enter&quot;,on:&quot;enter&quot;},
+			{handle:&quot;left&quot;,on:&quot;keypressed&quot;,key:&quot;e&quot;},
+			{handle:&quot;right&quot;,on:&quot;keypressed&quot;,key:&quot;i&quot;},
+			{handle:&quot;left&quot;,on:&quot;leftTouch&quot;,touch:true},
+			{handle:&quot;right&quot;,on:&quot;rightTouch&quot;,touch:true}
 		],
 
 		// user interactions
 		interactions: [
 			// begin trial : display stimulus imidiately
 			{
-				conditions: [{type:'begin'}],
-				actions: [{type:'showStim',handle:'myStim'}]
+				conditions: [{type:&quot;begin&quot;}],
+				actions: [{type:&quot;showStim&quot;,handle:&quot;myStim&quot;}]
 			},
 
 			// error
 			{
 				conditions: [
-					{type:'inputEqualsStim',property:'side',negate:true},								// check if the input handle is unequal to the "side" attribute of stimulus.data
-					{type:'inputEquals',value:['right','left']}									// make sure this is a click interaction
+					{type:&quot;inputEqualsStim&quot;,property:&quot;side&quot;,negate:true},								// check if the input handle is unequal to the "side" attribute of stimulus.data
+					{type:&quot;inputEquals&quot;,value:[&quot;right&quot;,&quot;left&quot;]}									// make sure this is a click interaction
 				],
 				actions: [
-					{type:'showStim',handle:'error'},											// show error stimulus
-					{type:'setTrialAttr', setter:{score:1}}										// set the score to 1
+					{type:&quot;showStim&quot;,handle:&quot;error&quot;},											// show error stimulus
+					{type:&quot;setTrialAttr&quot;, setter:{score:1}}										// set the score to 1
 				]
 			},
 
 			// correct
 			{
-				conditions: [{type:'inputEqualsStim',property:'side'}],								// check if the input handle is equal to the "side" attribute of stimulus.data
+				conditions: [{type:&quot;inputEqualsStim&quot;,property:&quot;side&quot;}],								// check if the input handle is equal to the "side" attribute of stimulus.data
 				actions: [
-					{type:'removeInput',handle:['left','right']},
-					{type:'hideStim', handle: 'All'},											// hide everything
-					{type:'log'},																// log this trial
-					{type:'setInput',input:{handle:'end', on:'timeout',duration:250}}			// trigger the "end action after ITI"
+					{type:&quot;removeInput&quot;,handle:[&quot;left&quot;,&quot;right&quot;]},
+					{type:&quot;hideStim&quot;, handle: &quot;All&quot;},											// hide everything
+					{type:&quot;log&quot;},																// log this trial
+					{type:&quot;setInput&quot;,input:{handle:&quot;end&quot;, on:&quot;timeout&quot;,duration:250}}			// trigger the "end action after ITI"
 				]
 			},
 
 			// end after ITI
 			{
-				conditions: [{type:'inputEquals',value:'end'}],
+				conditions: [{type:&quot;inputEquals&quot;,value:&quot;end&quot;}],
 				actions: [
-					{type:'endTrial'}
+					{type:&quot;endTrial&quot;}
 				]
 			},
 
 			// skip block
 			{
-				conditions: [{type:'inputEquals',value:'enter'}],
+				conditions: [{type:&quot;inputEquals&quot;,value:&quot;enter&quot;}],
 				actions: [
-					{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
-					{type:'endTrial'}
+					{type:&quot;goto&quot;, destination: &quot;nextWhere&quot;, properties: {blockStart:true}},
+					{type:&quot;endTrial&quot;}
 				]
 			}
 		]
@@ -234,36 +234,36 @@
 		// generic introduction trial, to be inherited by all other inroduction trials
 		{
 			// set block as generic so we can inherit it later
-			data: {block: 'generic'},
+			data: {block: &quot;generic&quot;},
 
 			// create user interface (just click to move on...)
 			input: [
-				{handle:'space',on:'space'},
-				{handle:'enter',on:'enter'},
-				{handle:'space',on:'bottomTouch',touch:true}
+				{handle:&quot;space&quot;,on:&quot;space&quot;},
+				{handle:&quot;enter&quot;,on:&quot;enter&quot;},
+				{handle:&quot;space&quot;,on:&quot;bottomTouch&quot;,touch:true}
 			],
 
 			interactions: [
 				// display instructions
 				{
-					conditions: [{type:'begin'}],
+					conditions: [{type:&quot;begin&quot;}],
 					actions: [
-						{type:'showStim',handle:'All'}
+						{type:&quot;showStim&quot;,handle:&quot;All&quot;}
 					]
 				},
 
 				// end trial
 				{
-					conditions: [{type:'inputEquals',value:'space'}],
-					actions: [{type:'endTrial'}]
+					conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],
+					actions: [{type:&quot;endTrial&quot;}]
 				},
 
 				// skip block
 				{
-					conditions: [{type:'inputEquals',value:'enter'}],
+					conditions: [{type:&quot;inputEquals&quot;,value:&quot;enter&quot;}],
 					actions: [
-						{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
-						{type:'endTrial'}
+						{type:&quot;goto&quot;, destination: &quot;nextWhere&quot;, properties: {blockStart:true}},
+						{type:&quot;endTrial&quot;}
 					]
 				}
 			]
@@ -277,63 +277,63 @@
 
 		leftBlack:[{//black people + unpleasant/ pleasant
 
-			data: {condition: attribute1 + ',' + category + '/' + attribute2},
+			data: {condition: attribute1 + &quot;,&quot; + category + &quot;/&quot; + attribute2},
 			layout: leftLayout,
-			inherit: 'Default',
+			inherit: &quot;Default&quot;,
 			stimuli: [
-				{inherit:{type:'exRandom',set:'category_left'}},
-				{inherit:{type:'random',set:'feedback'}}
+				{inherit:{type:&quot;exRandom&quot;,set:&quot;category_left&quot;}},
+				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
 			]
 		}],
 		rightUnpleasant:[{ //black people + pleasant/ unpleasant
 
-			data: {condition: attribute2 + ',' + category + '/' + attribute1},
+			data: {condition: attribute2 + &quot;,&quot; + category + &quot;/&quot; + attribute1},
 			layout: rightLayout,
-			inherit: 'Default',
+			inherit: &quot;Default&quot;,
 			stimuli: [
-				{inherit:{type:'exRandom',set:'left'}},
-				{inherit:{type:'random',set:'feedback'}}
+				{inherit:{type:&quot;exRandom&quot;,set:&quot;left&quot;}},
+				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
 			]
 		}],
 		leftUnpleasant:[{ //black people + unpleasant/ pleasant
 
-			data: {condition: attribute1 + ',' + category + '/' + attribute2},
+			data: {condition: attribute1 + &quot;,&quot; + category + &quot;/&quot; + attribute2},
 			layout: leftLayout,
-			inherit: 'Default',
+			inherit: &quot;Default&quot;,
 			stimuli: [
-				{inherit:{type:'exRandom',set:'left'}},
-				{inherit:{type:'random',set:'feedback'}}
+				{inherit:{type:&quot;exRandom&quot;,set:&quot;left&quot;}},
+				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
 			]
 		}],
 
 		leftPleasant:[{ //black people + unpleasant/ pleasant
 
-			data: {condition: attribute1 + ',' + category + '/' + attribute2},
+			data: {condition: attribute1 + &quot;,&quot; + category + &quot;/&quot; + attribute2},
 			layout: leftLayout,
-			inherit: 'Default',
+			inherit: &quot;Default&quot;,
 			stimuli: [
-				{inherit:{type:'exRandom',set:'right'}},
-				{inherit:{type:'random',set:'feedback'}}
+				{inherit:{type:&quot;exRandom&quot;,set:&quot;right&quot;}},
+				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
 			]
 		}],
 		rightPleasant:[{ //black people + pleasant/ unpleasant
 
-			data: {condition: attribute2 + ',' + category + '/' + attribute1},
+			data: {condition: attribute2 + &quot;,&quot; + category + &quot;/&quot; + attribute1},
 			layout: rightLayout,
-			inherit: 'Default',
+			inherit: &quot;Default&quot;,
 			stimuli: [
-				{inherit:{type:'exRandom',set:'right'}},
-				{inherit:{type:'random',set:'feedback'}}
+				{inherit:{type:&quot;exRandom&quot;,set:&quot;right&quot;}},
+				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
 			]
 		}],
 
 		rightBlack:[{ //black people + pleasant/ unpleasant
-			data: {condition: attribute2 + ',' + category + '/' + attribute1},
+			data: {condition: attribute2 + &quot;,&quot; + category + &quot;/&quot; + attribute1},
 			layout: rightLayout,
-			inherit: 'Default',													// inherit the default trial
+			inherit: &quot;Default&quot;,													// inherit the default trial
 			stimuli: [
-				{inherit:{type:'exRandom',set:'category_right'}},
-				{inherit:{type:'random',set:'feedback'}}
+				{inherit:{type:&quot;exRandom&quot;,set:&quot;category_right&quot;}},
+				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
 			]
 		}]
 	});
@@ -345,59 +345,59 @@
 	API.addStimulusSets({
 		// This Default stimulus is inherited by the other stimuli so that we can have a consistent look and change it from one place
 		Default: [
-			{css:{color:'white','font-size':'2em'}}
+			{css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
 		],
 
 		Instructions: [
-			{css:{'font-size':'1.3em',color:'black', lineHeight:1.2}}
+			{css:{&quot;font-size&quot;:&quot;1.3em&quot;,color:&quot;black&quot;, lineHeight:1.2}}
 		],
 
 		// The trial stimuli
 		// Each stimulus set holds the left and right stimuli for a specific page settings (is the first attribute/category in the left or right?)
 		// Notably the attribute/category sets repeat themselves 5 times each, this is so that when calling them they will be balanced accross each ten trials
 		category_left: [
-			{data:{side:'left', handle:'myStim', alias:category}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category'}}}
+			{data:{side:&quot;left&quot;, handle:&quot;myStim&quot;, alias:category}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;category&quot;}}}
 		],
 		category_right : [
-			{data:{side:'right', handle:'myStim', alias:category}, inherit:'Default', media: {inherit:{type:'exRandom',set:'category'}}}
+			{data:{side:&quot;right&quot;, handle:&quot;myStim&quot;, alias:category}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;category&quot;}}}
 		],
 		right : [
-			{data:{side:'right', handle:'myStim', alias:attribute2}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute2'}}}
+			{data:{side:&quot;right&quot;, handle:&quot;myStim&quot;, alias:attribute2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute2&quot;}}}
 		],
 		left : [
-			{data:{side:'left', handle:'myStim', alias:attribute1}, inherit:'Default', media: {inherit:{type:'exRandom',set:'attribute1'}}}
+			{data:{side:&quot;left&quot;, handle:&quot;myStim&quot;, alias:attribute1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute1&quot;}}}
 		],
 
 		// this stimulus used for giving feedback, in this case only the error notification
 		feedback : [
-			{handle:'error', location: {top: 80}, css:{color:'red','font-size':'4em'}, media: {word:'X'}, nolog:true}
+			{handle:&quot;error&quot;, location: {top: 80}, css:{color:&quot;red&quot;,&quot;font-size&quot;:&quot;4em&quot;}, media: {word:&quot;X&quot;}, nolog:true}
 		]
 	});
 
 	API.addMediaSets({
 		attribute1 : [
-			{word: 'Bomb'},
-			{word: 'Abuse'},
-			{word: 'Sadness'},
-			{word: 'Pain'},
-			{word: 'Poison'},
-			{word: 'Grief'}
+			{word: &quot;Bomb&quot;},
+			{word: &quot;Abuse&quot;},
+			{word: &quot;Sadness&quot;},
+			{word: &quot;Pain&quot;},
+			{word: &quot;Poison&quot;},
+			{word: &quot;Grief&quot;}
 		],
 		attribute2: [
-			{word: 'Paradise'},
-			{word: 'Pleasure'},
-			{word: 'Cheer'},
-			{word: 'Wonderful'},
-			{word: 'Splendid'},
-			{word: 'Love'}
+			{word: &quot;Paradise&quot;},
+			{word: &quot;Pleasure&quot;},
+			{word: &quot;Cheer&quot;},
+			{word: &quot;Wonderful&quot;},
+			{word: &quot;Splendid&quot;},
+			{word: &quot;Love&quot;}
 		],
 		category: [
-			{image: 'epbm1.jpg'},
-			{image: 'epbm2.jpg'},
-			{image: 'epbm3.jpg'},
-			{image: 'epbf1.jpg'},
-			{image: 'epbf2.jpg'},
-			{image: 'epbf3.jpg'}
+			{image: &quot;epbm1.jpg&quot;},
+			{image: &quot;epbm2.jpg&quot;},
+			{image: &quot;epbm3.jpg&quot;},
+			{image: &quot;epbf1.jpg&quot;},
+			{image: &quot;epbf2.jpg&quot;},
+			{image: &quot;epbf3.jpg&quot;}
 		]
 	});
 
@@ -408,30 +408,30 @@
 	//first block
 		{
 			data: {block:1, blockStart:true},			// we set the data with the category names so the template can display them
-			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
+			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
 			layout: rightLayout,
 			stimuli: [{
-				inherit:'Instructions',
-				media:{html:'<div><p style="font-size:24px"><color="#FFFAFA"><br/><br/>Put your middle or index fingers on the <b>E</b> key and <b>I</b> keys of your keyboard. Items representing the categories at the top will appear one-by-one in the middle of the screen. When the item belongs to a category on the left, press the <b>E</b> key;when the item belongs to a category on the right, press the <b>I</b> key. Items belong to only one category.If you make an error, an <font color="#FF0000"><b>X</b></font> will appear - fix the error by hitting the other key.<br/><b>GO AS FAST AS YOU CAN</b> while making as few mistakes as possible.Going too slow or making too many errors will result in an uninterpretable score.<br /><p align="center"><br/>Press the <b>space bar</b> to begin.<br><br>(round 1 of 4)</p></p></div>'}
+				inherit:&quot;Instructions&quot;,
+				media:{html:&quot;&lt;div&gt;&lt;p style="font-size:24px"&gt;&lt;color="#FFFAFA"&gt;&lt;br/&gt;&lt;br/&gt;Put your middle or index fingers on the &lt;b&gt;E&lt;/b&gt; key and &lt;b&gt;I&lt;/b&gt; keys of your keyboard. Items representing the categories at the top will appear one-by-one in the middle of the screen. When the item belongs to a category on the left, press the &lt;b&gt;E&lt;/b&gt; key;when the item belongs to a category on the right, press the &lt;b&gt;I&lt;/b&gt; key. Items belong to only one category.If you make an error, an &lt;font color="#FF0000"&gt;&lt;b&gt;X&lt;/b&gt;&lt;/font&gt; will appear - fix the error by hitting the other key.&lt;br/&gt;&lt;b&gt;GO AS FAST AS YOU CAN&lt;/b&gt; while making as few mistakes as possible.Going too slow or making too many errors will result in an uninterpretable score.&lt;br /&gt;&lt;p align="center"&gt;&lt;br/&gt;Press the &lt;b&gt;space bar&lt;/b&gt; to begin.&lt;br&gt;&lt;br&gt;(round 1 of 4)&lt;/p&gt;&lt;/p&gt;&lt;/div&gt;&quot;}
 			}]
 		},
 		{ //The presentation trials
-			mixer: 'random',		//in random order: 14 times: pleasant, 14 times: black people 14+6=20 times: unpleasant
+			mixer: &quot;random&quot;,		//in random order: 14 times: pleasant, 14 times: black people 14+6=20 times: unpleasant
 			data : [
 				{ //The presentation trials
-					mixer: 'repeat',
+					mixer: &quot;repeat&quot;,
 					times:14,
 					data : [
-						{inherit: 'rightBlack',data:{block:1, parcel:'first'}},
-						{inherit: 'rightPleasant',data:{block:1, parcel:'first'}},
-						{inherit: 'rightUnpleasant',data:{block:1, parcel:'first'}}
+						{inherit: &quot;rightBlack&quot;,data:{block:1, parcel:&quot;first&quot;}},
+						{inherit: &quot;rightPleasant&quot;,data:{block:1, parcel:&quot;first&quot;}},
+						{inherit: &quot;rightUnpleasant&quot;,data:{block:1, parcel:&quot;first&quot;}}
 					]
 				},
 				{ //The presentation trials
-					mixer: 'repeat',
+					mixer: &quot;repeat&quot;,
 					times:6,
 					data : [
-						{inherit: 'rightUnpleasant',data:{block:1, parcel:'first'}}
+						{inherit: &quot;rightUnpleasant&quot;,data:{block:1, parcel:&quot;first&quot;}}
 					]
 				}
 			]
@@ -439,30 +439,30 @@
 		//second block
 		{
 			data: {block:2, blockStart:true},
-			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
+			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
 			layout: leftLayout,
 			stimuli: [{
-				inherit:'Instructions',
-				media:{html:'<div><p style="font-size:24px"><color="#FFFAFA"><br/><br/><b>See above, the categories have changed locations.</b><br/> The rules, however, are the same.</p><br /><p>When the item belongs to a category on the left, press the <b>E</b> key; when the item belongs to a category on the right, press the <b>I</b> key. Items belong to only one category. <br/> <b>GO AS FAST AS YOU CAN.</b></p><br /> <p align="center">Press the <b>space bar</b> to begin.<br><br>(round 2 of 4)</p></p></p></div>'}
+				inherit:&quot;Instructions&quot;,
+				media:{html:&quot;&lt;div&gt;&lt;p style="font-size:24px"&gt;&lt;color="#FFFAFA"&gt;&lt;br/&gt;&lt;br/&gt;&lt;b&gt;See above, the categories have changed locations.&lt;/b&gt;&lt;br/&gt; The rules, however, are the same.&lt;/p&gt;&lt;br /&gt;&lt;p&gt;When the item belongs to a category on the left, press the &lt;b&gt;E&lt;/b&gt; key; when the item belongs to a category on the right, press the &lt;b&gt;I&lt;/b&gt; key. Items belong to only one category. &lt;br/&gt; &lt;b&gt;GO AS FAST AS YOU CAN.&lt;/b&gt;&lt;/p&gt;&lt;br /&gt; &lt;p align="center"&gt;Press the &lt;b&gt;space bar&lt;/b&gt; to begin.&lt;br&gt;&lt;br&gt;(round 2 of 4)&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/div&gt;&quot;}
 			}]
 		},
 		{ //The presentation trials
-			mixer: 'random',		//in random order: 14 times: unpleasant, 14 times: black people 14+6=20 times: pleasant
+			mixer: &quot;random&quot;,		//in random order: 14 times: unpleasant, 14 times: black people 14+6=20 times: pleasant
 			data : [
 				{ //The presentation trials
-					mixer: 'repeat',
+					mixer: &quot;repeat&quot;,
 					times:14,
 					data : [
-						{inherit: 'leftBlack',data:{block:2, parcel:'first'}},
-						{inherit: 'leftUnpleasant',data:{block:2, parcel:'first'}},
-						{inherit: 'leftPleasant',data:{block:2, parcel:'first'}}
+						{inherit: &quot;leftBlack&quot;,data:{block:2, parcel:&quot;first&quot;}},
+						{inherit: &quot;leftUnpleasant&quot;,data:{block:2, parcel:&quot;first&quot;}},
+						{inherit: &quot;leftPleasant&quot;,data:{block:2, parcel:&quot;first&quot;}}
 					]
 				},
 				{ //The presentation trials
-					mixer: 'repeat',
+					mixer: &quot;repeat&quot;,
 					times:6,
 					data : [
-						{inherit: 'leftPleasant',data:{block:2, parcel:'first'}}
+						{inherit: &quot;leftPleasant&quot;,data:{block:2, parcel:&quot;first&quot;}}
 					]
 				}
 			]
@@ -470,30 +470,30 @@
 		//third block
 		{
 			data: {block:3, blockStart:true},
-			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
+			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
 			layout: rightLayout,
 			stimuli: [{
-				inherit:'Instructions',
-				media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"><br/><br/><b>The categories have changed locations again.</b><br/><br/><br/><p align="center">Press the <b>space bar</b> to continue with the same task.<br><br>(round 3 of 4)</p></p></div>'}
+				inherit:&quot;Instructions&quot;,
+				media:{html:&quot;&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt;&lt;br/&gt;&lt;br/&gt;&lt;b&gt;The categories have changed locations again.&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;p align="center"&gt;Press the &lt;b&gt;space bar&lt;/b&gt; to continue with the same task.&lt;br&gt;&lt;br&gt;(round 3 of 4)&lt;/p&gt;&lt;/p&gt;&lt;/div&gt;&quot;}
 			}]
 		},
 	{ //The presentation trials
-			mixer: 'random',
+			mixer: &quot;random&quot;,
 			data : [
 				{
-					mixer: 'repeat',
+					mixer: &quot;repeat&quot;,
 					times:14,
 					data : [
-						{inherit: 'rightBlack',data:{block:3, parcel:'second'}},
-						{inherit: 'rightPleasant',data:{block:3, parcel:'second'}},
-						{inherit: 'rightUnpleasant',data:{block:3, parcel:'second'}}
+						{inherit: &quot;rightBlack&quot;,data:{block:3, parcel:&quot;second&quot;}},
+						{inherit: &quot;rightPleasant&quot;,data:{block:3, parcel:&quot;second&quot;}},
+						{inherit: &quot;rightUnpleasant&quot;,data:{block:3, parcel:&quot;second&quot;}}
 					]
 				},
 				{ //The presentation trials
-					mixer: 'repeat',
+					mixer: &quot;repeat&quot;,
 					times:6,
 					data : [
-						{inherit: 'rightUnpleasant',data:{block:3, parcel:'second'}}
+						{inherit: &quot;rightUnpleasant&quot;,data:{block:3, parcel:&quot;second&quot;}}
 					]
 				}
 			]
@@ -501,37 +501,37 @@
 		//fourth block
 		{
 			data: {block:4, blockStart:true},
-			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},			// inhertit the generic instruction block
+			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
 			layout: leftLayout,
 			stimuli: [{
-				inherit:'Instructions',
-				media:{html:'<div><p style="font-size:26px"><color="#FFFAFA"><br/><br/>The task is almost finished.<br/> Press the <b>space bar</b> when you are ready for the final round.</p><br/><br/><br/>(round 4 of 4)</p></div>'}
+				inherit:&quot;Instructions&quot;,
+				media:{html:&quot;&lt;div&gt;&lt;p style="font-size:26px"&gt;&lt;color="#FFFAFA"&gt;&lt;br/&gt;&lt;br/&gt;The task is almost finished.&lt;br/&gt; Press the &lt;b&gt;space bar&lt;/b&gt; when you are ready for the final round.&lt;/p&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;(round 4 of 4)&lt;/p&gt;&lt;/div&gt;&quot;}
 			}]
 		},
 		{ //The presentation trials
-			mixer: 'random',
+			mixer: &quot;random&quot;,
 			data : [
 				{
-					mixer: 'repeat',
+					mixer: &quot;repeat&quot;,
 					times:14,
 					data : [
-						{inherit: 'leftBlack',data:{block:4, parcel:'second'}},
-						{inherit: 'leftUnpleasant',data:{block:4, parcel:'second'}},
-						{inherit: 'leftPleasant',data:{block:4, parcel:'second'}}
+						{inherit: &quot;leftBlack&quot;,data:{block:4, parcel:&quot;second&quot;}},
+						{inherit: &quot;leftUnpleasant&quot;,data:{block:4, parcel:&quot;second&quot;}},
+						{inherit: &quot;leftPleasant&quot;,data:{block:4, parcel:&quot;second&quot;}}
 					]
 				},
 				{ //The presentation trials
-					mixer: 'repeat',
+					mixer: &quot;repeat&quot;,
 					times:6,
 					data : [
-						{inherit: 'leftPleasant',data:{block:4, parcel:'second'}}
+						{inherit: &quot;leftPleasant&quot;,data:{block:4, parcel:&quot;second&quot;}}
 					]
 				}
 			]
 		},
 		// user feedback- here we will use the computeD function.
 		{
-			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},
+			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
 			data: {blockStart:true},
 			stimuli: [],
 			customize: function(){
@@ -540,16 +540,16 @@
 				var trial = this;
 
 
-				scorer.addSettings('compute',{
-					parcelValue : ['first']
+				scorer.addSettings(&quot;compute&quot;,{
+					parcelValue : [&quot;first&quot;]
 				});
 
 				DScoreObj = scorer.computeD();
 				var DScore1= DScoreObj.DScore;
 
 					//////second call to score//////
-				scorer.addSettings('compute',{
-					parcelValue : ['second']
+				scorer.addSettings(&quot;compute&quot;,{
+					parcelValue : [&quot;second&quot;]
 				});
 
 				DScoreObj = scorer.computeD();
@@ -559,16 +559,16 @@
 				console.log(DScore1);
 				console.log(DScore2);
 				// If all scores are numbers
-				if ((DScore1 !== '') && (DScore2 !== '')){
+				if ((DScore1 !== &quot;&quot;) &amp;&amp; (DScore2 !== &quot;&quot;)){
 					//Average the 4 scores
 					DScore = (parseFloat(DScore1) + parseFloat(DScore2))/2;
 					FBMsg = scorer.getFBMsg(DScore);
 				} else {
-					DScore = '';
-					FBMsg = 'An error has occurred';
+					DScore = &quot;&quot;;
+					FBMsg = &quot;An error has occurred&quot;;
 				}
 
-				var media = {css:{color:'black'},media:{html:'<div><p style="font-size:28px"><color="#FFFAFA"> '+FBMsg+'<br>The Score is:'+DScore+'</p></div>'}};
+				var media = {css:{color:&quot;black&quot;},media:{html:&quot;&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt; &quot;+FBMsg+&quot;&lt;br&gt;The Score is:&quot;+DScore+&quot;&lt;/p&gt;&lt;/div&gt;&quot;}};
 				trial.stimuli.push(media);
 				scorer.dynamicPost({
 					score1: DScoreObj.DScore,
@@ -580,12 +580,12 @@
 
 		{ //Instructions trial, the end of the task, instruction what to do next
 			data: {blockStart:true},
-			inherit: {set:'introduction', type:'byData', data: {block:'generic'}},
+			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
 			stimuli: [
 				{//The instructions stimulus
-					data : {'handle':'instStim'},
-					css: {color:'black'},
-					media:{html:'<div><p style="font-size:28px"><color="#FFFAFA">You have completed the study<br/><br/>Thank you very much for your participation.<br/><br/> Press "space" for continue to next task.</p></div>'}
+					data : {&quot;handle&quot;:&quot;instStim&quot;},
+					css: {color:&quot;black&quot;},
+					media:{html:&quot;&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt;You have completed the study&lt;br/&gt;&lt;br/&gt;Thank you very much for your participation.&lt;br/&gt;&lt;br/&gt; Press "space" for continue to next task.&lt;/p&gt;&lt;/div&gt;&quot;}
 				}
 			]
 		}

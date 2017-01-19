@@ -84,31 +84,31 @@
         <a class="activate-button">Activate</a>
         <a class="download-button" href="evaluative_priming2.js" download>Download</a>
     </div>
-    <div class="editor">define(['pipAPI','pipScorer'],function(APIConstructor,Scorer) {
+    <div class="editor">define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Scorer) {
 
 	var API = new APIConstructor();
 	var scorer = new Scorer();
-	var category1 = 'Pleasant';
-	var category2 = 'Unpleasant';
+	var category1 = &quot;Pleasant&quot;;
+	var category2 = &quot;Unpleasant&quot;;
 
 	//Set the size of the screen
-	API.addSettings('canvas',{
+	API.addSettings(&quot;canvas&quot;,{
 		maxWidth: 1000,
 		proportions : 0.8,
 		//Change the colors to allow better presentation of the colored stimuli.
-		background: 'white',
-		canvasBackground: 'green',
+		background: &quot;white&quot;,
+		canvasBackground: &quot;green&quot;,
 		borderWidth: 5,
-		borderColor: 'black'
+		borderColor: &quot;black&quot;
 	});
 
-	API.addSettings('base_url',{
-		image : '../../images'
+	API.addSettings(&quot;base_url&quot;,{
+		image : &quot;../../images&quot;
 	});
 
 
-	API.addSettings('logger',{
-		url : '/implicit/PiPlayerApplet',
+	API.addSettings(&quot;logger&quot;,{
+		url : &quot;/implicit/PiPlayerApplet&quot;,
 		pulse : 20,
 
 		// use default logger (as copied from documents.txt but replace the regular latency with the computed latency)
@@ -118,7 +118,7 @@
 			var mediaList = this._stimulus_collection.get_medialist();
 
 			var myLatency = inputData.latency;
-			if (trialData.begin > 0) {
+			if (trialData.begin &gt; 0) {
 				myLatency = inputData.latency - trialData.begin;
 			}
 
@@ -136,8 +136,8 @@
 		}
 	});
 	//the scorer that compute the user feedback
-	scorer.addSettings('compute',{
-		ErrorVar:'score',
+	scorer.addSettings(&quot;compute&quot;,{
+		ErrorVar:&quot;score&quot;,
 		condVar:"condition",
 		parcelVar : "parcel",
 		fastRT : 150, //Below this reaction time, the latency is considered extremely fast.
@@ -153,94 +153,94 @@
 		data : {error:0},// by default each trial is crrect, this is modified in case of an error
 		//Layout defines what will be presented in the trial. It is like a background display.
 		layout: [
-			{location:{left:15,top:3},media:{word:'key: e'}, css:{color:'black','font-size':'1em'}},
-			{location:{right:15,top:3},media:{word:'key: i'},  css:{color:'black','font-size':'1em'}},
-			{location:{left:10,top:6},media:{word:category2}, css:{color:'white','font-size':'2em'}},
-			{location:{right:10,top:6},media:{word:category1},  css:{color:'white','font-size':'2em'}}
+			{location:{left:15,top:3},media:{word:&quot;key: e&quot;}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;1em&quot;}},
+			{location:{right:15,top:3},media:{word:&quot;key: i&quot;},  css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;1em&quot;}},
+			{location:{left:10,top:6},media:{word:category2}, css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
+			{location:{right:10,top:6},media:{word:category1},  css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
 		],
 		input: [
-			{handle:'enter',on:'enter'} //'enter' to skip the current block
+			{handle:&quot;enter&quot;,on:&quot;enter&quot;} //&quot;enter&quot; to skip the current block
 		],
 		//Set what to do.
 		interactions: [
 		{
-			conditions: [{type:'begin'}],
+			conditions: [{type:&quot;begin&quot;}],
 			actions: [
-				{type:'showStim',handle:'primingImage'},// display the first stimulus
-				{type:'setInput',input:{handle:'primeOut',on:'timeout',duration:300}}
+				{type:&quot;showStim&quot;,handle:&quot;primingImage&quot;},// display the first stimulus
+				{type:&quot;setInput&quot;,input:{handle:&quot;primeOut&quot;,on:&quot;timeout&quot;,duration:300}}
 			]
 		},
 		// show target stim
 		{
-			conditions: [{type:'inputEquals',value:'primeOut'}], // on time out
+			conditions: [{type:&quot;inputEquals&quot;,value:&quot;primeOut&quot;}], // on time out
 			actions: [
-				{type:'hideStim',handle:'primingImage'}, // hide the first stimulus
-				{type:'showStim',handle:'targetStim'}, // and show the second one
+				{type:&quot;hideStim&quot;,handle:&quot;primingImage&quot;}, // hide the first stimulus
+				{type:&quot;showStim&quot;,handle:&quot;targetStim&quot;}, // and show the second one
 				//Set the possible key inputs.
-				{type:'setInput',input:{handle:category2,on: 'keypressed', key:'e'}},
-				{type:'setInput',input:{handle:category1,on: 'keypressed', key:'i'}},
-				{type:'setInput',input:{handle:category2,on:'leftTouch',touch:true}},
-				{type:'setInput',input:{handle:category1,on:'rightTouch',touch:true}},
-				{type:'setInput',input:{handle:'targetOut',on:'timeout',duration:1500}}
+				{type:&quot;setInput&quot;,input:{handle:category2,on: &quot;keypressed&quot;, key:&quot;e&quot;}},
+				{type:&quot;setInput&quot;,input:{handle:category1,on: &quot;keypressed&quot;, key:&quot;i&quot;}},
+				{type:&quot;setInput&quot;,input:{handle:category2,on:&quot;leftTouch&quot;,touch:true}},
+				{type:&quot;setInput&quot;,input:{handle:category1,on:&quot;rightTouch&quot;,touch:true}},
+				{type:&quot;setInput&quot;,input:{handle:&quot;targetOut&quot;,on:&quot;timeout&quot;,duration:1500}}
 			]
 		},
 		// on time out
 		{
-			conditions: [{type:'inputEquals',value:'targetOut'}],
+			conditions: [{type:&quot;inputEquals&quot;,value:&quot;targetOut&quot;}],
 			actions: [
-				{type:'removeInput',handle	:[category2,category1]},//only one respnse is possible
-				{type:'hideStim',handle:'targetStim'}, // hide the stimulus
-				{type:'showStim',handle:'warning'}, // and show the warning
-				{type:'setInput',input:{handle:'showFix', on:'timeout',duration:250}} //End the trial in 250ms (show the warning until then)
+				{type:&quot;removeInput&quot;,handle	:[category2,category1]},//only one respnse is possible
+				{type:&quot;hideStim&quot;,handle:&quot;targetStim&quot;}, // hide the stimulus
+				{type:&quot;showStim&quot;,handle:&quot;warning&quot;}, // and show the warning
+				{type:&quot;setInput&quot;,input:{handle:&quot;showFix&quot;, on:&quot;timeout&quot;,duration:250}} //End the trial in 250ms (show the warning until then)
 			]
 		},
 		// there are 2 possible responses: "pleasant" and "unpleasant", here we handle these responses when the user answers
 		// matches the word value (correct response)
 		{
-			conditions: [{type:'inputEqualsStim',property:'wordCategory'}],
+			conditions: [{type:&quot;inputEqualsStim&quot;,property:&quot;wordCategory&quot;}],
 			actions: [
-				{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
-				{type:'removeInput',handle	:[category2,category1,'targetOut']}, //only one response is possible
-				{type:'trigger', handle:'showFix'}//End the trial immidiatlly after correct response
+				{type:&quot;log&quot;}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
+				{type:&quot;removeInput&quot;,handle	:[category2,category1,&quot;targetOut&quot;]}, //only one response is possible
+				{type:&quot;trigger&quot;, handle:&quot;showFix&quot;}//End the trial immidiatlly after correct response
 			]
 		},
 				// there are 2 possible responses: "pleasant" and "unpleasant", here we handle with these responses when the user answer
-				// doesn't match the word value (incorrect response)
+				// doesn&quot;t match the word value (incorrect response)
 				//this conditions are true only after incorrect response
 				// handle incorrect response.
 				//this conditions are true only after incorrect response
 		{
 			conditions: [
-				{type:'inputEqualsStim',property:'wordCategory', negate:true},
-				{type:'inputEquals',value: [category1, category2]}
+				{type:&quot;inputEqualsStim&quot;,property:&quot;wordCategory&quot;, negate:true},
+				{type:&quot;inputEquals&quot;,value: [category1, category2]}
 			], // This is a category action - as opposed to some timeout.
 			actions: [
-				{type:'setTrialAttr', setter:{score:1}},
-				{type:'log'}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
-				{type:'showStim',handle:'errorFB'}, //show error feedback
-				{type:'removeInput',handle:[category2,category1,'targetOut']},// block the option to change the answer or to answer twice
-				{type:'setInput',input:{handle:'showFix', on:'timeout',duration:250}} //End the trial in 250ms (show the x until then)
+				{type:&quot;setTrialAttr&quot;, setter:{score:1}},
+				{type:&quot;log&quot;}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
+				{type:&quot;showStim&quot;,handle:&quot;errorFB&quot;}, //show error feedback
+				{type:&quot;removeInput&quot;,handle:[category2,category1,&quot;targetOut&quot;]},// block the option to change the answer or to answer twice
+				{type:&quot;setInput&quot;,input:{handle:&quot;showFix&quot;, on:&quot;timeout&quot;,duration:250}} //End the trial in 250ms (show the x until then)
 			]
 		},
 		{
-			conditions: [{type:'inputEquals',value:'showFix'}], //What to do when endTrial is called.
+			conditions: [{type:&quot;inputEquals&quot;,value:&quot;showFix&quot;}], //What to do when endTrial is called.
 			actions: [
-				{type:'hideStim',handle:'All'},
-				{type:'showStim',handle:'blankScreen'}, //show blankScreen
-				{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:{min:300, max: 900}}} // randomly pick from within a range
+				{type:&quot;hideStim&quot;,handle:&quot;All&quot;},
+				{type:&quot;showStim&quot;,handle:&quot;blankScreen&quot;}, //show blankScreen
+				{type:&quot;setInput&quot;,input:{handle:&quot;endTrial&quot;, on:&quot;timeout&quot;,duration:{min:300, max: 900}}} // randomly pick from within a range
 			]
 		},
-		// skip block -> if you press 'enter' you will skip the current block.
+		// skip block -&gt; if you press &quot;enter&quot; you will skip the current block.
 		{
-			conditions: [{type:'inputEquals',value:'enter'}],
+			conditions: [{type:&quot;inputEquals&quot;,value:&quot;enter&quot;}],
 			actions: [
-				{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
-				{type:'endTrial'}
+				{type:&quot;goto&quot;, destination: &quot;nextWhere&quot;, properties: {blockStart:true}},
+				{type:&quot;endTrial&quot;}
 				]
 		},
 		{
-			conditions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
-			actions: [{type:'endTrial'}]
+			conditions: [{type:&quot;inputEquals&quot;,value:&quot;endTrial&quot;}], //What to do when endTrial is called.
+			actions: [{type:&quot;endTrial&quot;}]
 		}
 			] // end interactions
 		}] // end basic trial
@@ -248,93 +248,93 @@
 
 	API.addTrialSets({
 		pleasantOldWhite:[{		//pleasant+white old people (condition 1)
-			data: {parcel:'second', condition: "Old white People / Pleasant"},
-			inherit:{set: 'basicTrial'},
+			data: {parcel:&quot;second&quot;, condition: "Old white People / Pleasant"},
+			inherit:{set: &quot;basicTrial&quot;},
 			stimuli: [
-				{ inherit: {set: 'targetStimulusA', type:'exRandom'}, data : {handle:'targetStim'} },
-				{ inherit: {set: 'primingImage3', type:'exRandom'}, data : {handle:'primingImage'} },
-				{ inherit: 'errorFB'},
-				{ inherit: 'warning'},
-				{ inherit: 'blanckScreen'}
+				{ inherit: {set: &quot;targetStimulusA&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;targetStim&quot;} },
+				{ inherit: {set: &quot;primingImage3&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;primingImage&quot;} },
+				{ inherit: &quot;errorFB&quot;},
+				{ inherit: &quot;warning&quot;},
+				{ inherit: &quot;blanckScreen&quot;}
 			]
 		}],
 		pleasantOldBlack:[{		//pleasant+black old people (condition 2)
-			data: {parcel:'first',condition: "Old black People / Pleasant"},
-			inherit:{set: 'basicTrial'},
+			data: {parcel:&quot;first&quot;,condition: "Old black People / Pleasant"},
+			inherit:{set: &quot;basicTrial&quot;},
 			stimuli: [
-				{ inherit: {set: 'targetStimulusA', type:'exRandom'}, data : {handle:'targetStim'} },
-				{ inherit: {set: 'primingImage1', type:'exRandom'}, data : {handle:'primingImage'} },
-				{ inherit: 'errorFB'},
-				{ inherit: 'warning'},
-				{ inherit: 'blanckScreen'}
+				{ inherit: {set: &quot;targetStimulusA&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;targetStim&quot;} },
+				{ inherit: {set: &quot;primingImage1&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;primingImage&quot;} },
+				{ inherit: &quot;errorFB&quot;},
+				{ inherit: &quot;warning&quot;},
+				{ inherit: &quot;blanckScreen&quot;}
 			]
 		}],
 		pleasantYoungWhite:[{		//pleasant+white young people (condition 3)
-			data: {parcel:'fourth',condition: "Young white People / Pleasant"},
-			inherit:{set: 'basicTrial'},
+			data: {parcel:&quot;fourth&quot;,condition: "Young white People / Pleasant"},
+			inherit:{set: &quot;basicTrial&quot;},
 			stimuli: [
-				{ inherit: {set: 'targetStimulusA', type:'exRandom'}, data : {handle:'targetStim'} },
-				{ inherit: {set: 'primingImage4', type:'exRandom'}, data : {handle:'primingImage'} },
-				{ inherit: 'errorFB'},
-				{ inherit: 'warning'},
-				{ inherit: 'blanckScreen'}
+				{ inherit: {set: &quot;targetStimulusA&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;targetStim&quot;} },
+				{ inherit: {set: &quot;primingImage4&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;primingImage&quot;} },
+				{ inherit: &quot;errorFB&quot;},
+				{ inherit: &quot;warning&quot;},
+				{ inherit: &quot;blanckScreen&quot;}
 			]
 		}],
 		pleasantYoungBlack:[{		//pleasant+black young people (condition 4)
-			data: {parcel:'third',condition: "Young black People / Pleasant"},
-			inherit:{set: 'basicTrial'},
+			data: {parcel:&quot;third&quot;,condition: "Young black People / Pleasant"},
+			inherit:{set: &quot;basicTrial&quot;},
 			stimuli: [
-				{ inherit: {set: 'targetStimulusA', type:'exRandom'}, data : {handle:'targetStim'} },
-				{ inherit: {set: 'primingImage2', type:'exRandom'}, data : {handle:'primingImage'} },
-				{ inherit: 'errorFB'},
-				{ inherit: 'warning'},
-				{ inherit: 'blanckScreen'}
+				{ inherit: {set: &quot;targetStimulusA&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;targetStim&quot;} },
+				{ inherit: {set: &quot;primingImage2&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;primingImage&quot;} },
+				{ inherit: &quot;errorFB&quot;},
+				{ inherit: &quot;warning&quot;},
+				{ inherit: &quot;blanckScreen&quot;}
 			]
 		}],
 
 
 		unpleasantOldWhite:[{		//unpleasant+white old people (condition 1)
-			data: {parcel:'second',condition: "Old white People / Unpleasant"},
-			inherit:{set: 'basicTrial'},
+			data: {parcel:&quot;second&quot;,condition: "Old white People / Unpleasant"},
+			inherit:{set: &quot;basicTrial&quot;},
 			stimuli: [
-			{ inherit: {set: 'targetStimulusB', type:'exRandom'}, data : {handle:'targetStim'} },
-			{ inherit: {set: 'primingImage3', type:'exRandom'}, data : {handle:'primingImage'} },
-			{ inherit: 'errorFB'},
-			{ inherit: 'warning'},
-			{ inherit: 'blanckScreen'}
+			{ inherit: {set: &quot;targetStimulusB&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;targetStim&quot;} },
+			{ inherit: {set: &quot;primingImage3&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;primingImage&quot;} },
+			{ inherit: &quot;errorFB&quot;},
+			{ inherit: &quot;warning&quot;},
+			{ inherit: &quot;blanckScreen&quot;}
 			]
 		}],
 		unpleasantOldBlack:[{		//unpleasant+ black old people (condition 2)
-			data: {parcel:'first',condition: "Old black People / Unpleasant"},
-			inherit:{set: 'basicTrial'},
+			data: {parcel:&quot;first&quot;,condition: "Old black People / Unpleasant"},
+			inherit:{set: &quot;basicTrial&quot;},
 			stimuli: [
-			{ inherit: {set: 'targetStimulusB', type:'exRandom'}, data : {handle:'targetStim'} },
-			{ inherit: {set: 'primingImage1', type:'exRandom'}, data : {handle:'primingImage'} },
-			{ inherit: 'errorFB'},
-			{ inherit: 'warning'},
-			{ inherit: 'blanckScreen'}
+			{ inherit: {set: &quot;targetStimulusB&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;targetStim&quot;} },
+			{ inherit: {set: &quot;primingImage1&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;primingImage&quot;} },
+			{ inherit: &quot;errorFB&quot;},
+			{ inherit: &quot;warning&quot;},
+			{ inherit: &quot;blanckScreen&quot;}
 			]
 		}],
 		unpleasantYoungWhite:[{		//unpleasant+white young people (condition 3)
-			data: {parcel:'fourth',condition: "Young white People / Unpleasant"},
-			inherit:{set: 'basicTrial'},
+			data: {parcel:&quot;fourth&quot;,condition: "Young white People / Unpleasant"},
+			inherit:{set: &quot;basicTrial&quot;},
 			stimuli: [
-			{ inherit: {set: 'targetStimulusB', type:'exRandom'}, data : {handle:'targetStim'} },
-			{ inherit: {set: 'primingImage4', type:'exRandom'}, data : {handle:'primingImage'} },
-			{ inherit: 'errorFB'},
-			{ inherit: 'warning'},
-			{ inherit: 'blanckScreen'}
+			{ inherit: {set: &quot;targetStimulusB&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;targetStim&quot;} },
+			{ inherit: {set: &quot;primingImage4&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;primingImage&quot;} },
+			{ inherit: &quot;errorFB&quot;},
+			{ inherit: &quot;warning&quot;},
+			{ inherit: &quot;blanckScreen&quot;}
 			]
 		}],
 		unpleasantYoungBlack:[{		//unpleasant+ black young people (condition 4)
-			data: {parcel:'third',condition: "Young black People / Unpleasant"},
-			inherit:{set: 'basicTrial'},
+			data: {parcel:&quot;third&quot;,condition: "Young black People / Unpleasant"},
+			inherit:{set: &quot;basicTrial&quot;},
 			stimuli: [
-			{ inherit: {set: 'targetStimulusB', type:'exRandom'}, data : {handle:'targetStim'} },
-			{ inherit: {set: 'primingImage2', type:'exRandom'}, data : {handle:'primingImage'} },
-			{ inherit: 'errorFB'},
-			{ inherit: 'warning'},
-			{ inherit: 'blanckScreen'}
+			{ inherit: {set: &quot;targetStimulusB&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;targetStim&quot;} },
+			{ inherit: {set: &quot;primingImage2&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;primingImage&quot;} },
+			{ inherit: &quot;errorFB&quot;},
+			{ inherit: &quot;warning&quot;},
+			{ inherit: &quot;blanckScreen&quot;}
 			]
 		}]
 	});
@@ -344,33 +344,33 @@
 
 	// This Default stimulus is inherited by the other stimuli so that we can have a consistent look and change it from one place
 		Default: [
-			{css:{color:'white','font-size':'2em'}}
+			{css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
 		],
 
 	//first catagory of words
 		targetStimulusA: [
 			{
 				data : {wordCategory:category1, alias:category1},
-				inherit:'Default',
-				media: {inherit:{type:'exRandom',set:'targetWordsA'}} //Select a word from the media, randomly
+				inherit:&quot;Default&quot;,
+				media: {inherit:{type:&quot;exRandom&quot;,set:&quot;targetWordsA&quot;}} //Select a word from the media, randomly
 			}
 			],
 		//the second catagory of words
 		targetStimulusB: [
 			{
 				data : {wordCategory:category2, alias:category2},
-				inherit:'Default',
-				media: {inherit:{type:'exRandom',set:'targetWordsB'}}
+				inherit:&quot;Default&quot;,
+				media: {inherit:{type:&quot;exRandom&quot;,set:&quot;targetWordsB&quot;}}
 			}
 
 		],
 		//Error feedback stimulus
 		errorFB : [
 			{
-				data : {handle:'errorFB'},
+				data : {handle:&quot;errorFB&quot;},
 				size: {height:15,width:15},
 				location: {top:70},
-				media: {image:'cross.png'} //An image.
+				media: {image:&quot;cross.png&quot;} //An image.
 			}
 		],
 
@@ -378,49 +378,49 @@
 		//blanckScreen  stimulus (in between the trials) can be used as a fixation point
 		blanckScreen : [
 			{
-				data : {handle:'blanckScreen'},
-				css:{color:'green','font-size':'2em'},
-				media: {word:' '}//can be replace with '+'
+				data : {handle:&quot;blanckScreen&quot;},
+				css:{color:&quot;green&quot;,&quot;font-size&quot;:&quot;2em&quot;},
+				media: {word:&quot; &quot;}//can be replace with &quot;+&quot;
 			}
 		],
 		//warning "Response Faster!"
 		warning : [
 			{
-				data : {handle:'warning'},
-				css:{color:'red','font-size':'3em'},
-				media: {word:'Response Faster!'}
+				data : {handle:&quot;warning&quot;},
+				css:{color:&quot;red&quot;,&quot;font-size&quot;:&quot;3em&quot;},
+				media: {word:&quot;Response Faster!&quot;}
 			}
 		],
 		//priming stimulus: the 4 catagories of images
 			primingImage1 : [
 			{
 
-				data : {handle:'primingImage',alias:'oldBlack'},
-				inherit:'Default',
-				media: {inherit:{type:'exRandom',set:'Images1'}}
+				data : {handle:&quot;primingImage&quot;,alias:&quot;oldBlack&quot;},
+				inherit:&quot;Default&quot;,
+				media: {inherit:{type:&quot;exRandom&quot;,set:&quot;Images1&quot;}}
 			}
 			],
 			primingImage2 : [
 			{
-				data : {handle:'primingImage',alias:'youngBlack'},
-				inherit:'Default',
-				media: {inherit:{type:'exRandom',set:'Images2'}}
+				data : {handle:&quot;primingImage&quot;,alias:&quot;youngBlack&quot;},
+				inherit:&quot;Default&quot;,
+				media: {inherit:{type:&quot;exRandom&quot;,set:&quot;Images2&quot;}}
 			}
 			],
 			primingImage3 : [
 			{
 
-				data : {handle:'primingImage',alias:'oldWhite'},
-				inherit:'Default',
-				media: {inherit:{type:'exRandom',set:'Images3'}}
+				data : {handle:&quot;primingImage&quot;,alias:&quot;oldWhite&quot;},
+				inherit:&quot;Default&quot;,
+				media: {inherit:{type:&quot;exRandom&quot;,set:&quot;Images3&quot;}}
 			}
 			],
 			primingImage4 : [
 			{
 
-				data : {handle:'primingImage',alias:'youngWhite'},
-				inherit:'Default',
-				media: {inherit:{type:'exRandom',set:'Images4'}}
+				data : {handle:&quot;primingImage&quot;,alias:&quot;youngWhite&quot;},
+				inherit:&quot;Default&quot;,
+				media: {inherit:{type:&quot;exRandom&quot;,set:&quot;Images4&quot;}}
 			}
 			]
 
@@ -429,136 +429,136 @@
 	//four categories of images, and two categories of words.
 	API.addMediaSets({
 		Images1: [
-			{image: 'ybblackold1.jpg'},
-			{image: 'ybblackold2.jpg'},
-			{image: 'ybblackold3.jpg'},
-			{image: 'ybblackold4.jpg'},
-			{image: 'ybblackold5.jpg'},
-			{image: 'ybblackold6.jpg'},
-			{image: 'ybblackold7.jpg'},
-			{image: 'ybblackold8.jpg'},
-			{image: 'ybblackold9.jpg'},
-			{image: 'ybblackold10.jpg'},
-			{image: 'ybblackold11.jpg'},
-			{image: 'ybblackold12.jpg'}
+			{image: &quot;ybblackold1.jpg&quot;},
+			{image: &quot;ybblackold2.jpg&quot;},
+			{image: &quot;ybblackold3.jpg&quot;},
+			{image: &quot;ybblackold4.jpg&quot;},
+			{image: &quot;ybblackold5.jpg&quot;},
+			{image: &quot;ybblackold6.jpg&quot;},
+			{image: &quot;ybblackold7.jpg&quot;},
+			{image: &quot;ybblackold8.jpg&quot;},
+			{image: &quot;ybblackold9.jpg&quot;},
+			{image: &quot;ybblackold10.jpg&quot;},
+			{image: &quot;ybblackold11.jpg&quot;},
+			{image: &quot;ybblackold12.jpg&quot;}
 		]
 	});
 	API.addMediaSets({
 		Images2: [
-			{image: 'ybblackyng1.jpg'},
-			{image: 'ybblackyng2.jpg'},
-			{image: 'ybblackyng3.jpg'},
-			{image: 'ybblackyng4.jpg'},
-			{image: 'ybblackyng5.jpg'},
-			{image: 'ybblackyng6.jpg'},
-			{image: 'ybblackyng7.jpg'},
-			{image: 'ybblackyng8.jpg'},
-			{image: 'ybblackyng9.jpg'},
-			{image: 'ybblackyng10.jpg'},
-			{image: 'ybblackyng11.jpg'},
-			{image: 'ybblackyng12.jpg'}
+			{image: &quot;ybblackyng1.jpg&quot;},
+			{image: &quot;ybblackyng2.jpg&quot;},
+			{image: &quot;ybblackyng3.jpg&quot;},
+			{image: &quot;ybblackyng4.jpg&quot;},
+			{image: &quot;ybblackyng5.jpg&quot;},
+			{image: &quot;ybblackyng6.jpg&quot;},
+			{image: &quot;ybblackyng7.jpg&quot;},
+			{image: &quot;ybblackyng8.jpg&quot;},
+			{image: &quot;ybblackyng9.jpg&quot;},
+			{image: &quot;ybblackyng10.jpg&quot;},
+			{image: &quot;ybblackyng11.jpg&quot;},
+			{image: &quot;ybblackyng12.jpg&quot;}
 		]
 	});
 	API.addMediaSets({
 		Images3: [
-			{image: 'ybwhiteold1.jpg'},
-			{image: 'ybwhiteold2.jpg'},
-			{image: 'ybwhiteold3.jpg'},
-			{image: 'ybwhiteold4.jpg'},
-			{image: 'ybwhiteold5.jpg'},
-			{image: 'ybwhiteold6.jpg'},
-			{image: 'ybwhiteold7.jpg'},
-			{image: 'ybwhiteold8.jpg'},
-			{image: 'ybwhiteold9.jpg'},
-			{image: 'ybwhiteold10.jpg'},
-			{image: 'ybwhiteold11.jpg'},
-			{image: 'ybwhiteold12.jpg'}
+			{image: &quot;ybwhiteold1.jpg&quot;},
+			{image: &quot;ybwhiteold2.jpg&quot;},
+			{image: &quot;ybwhiteold3.jpg&quot;},
+			{image: &quot;ybwhiteold4.jpg&quot;},
+			{image: &quot;ybwhiteold5.jpg&quot;},
+			{image: &quot;ybwhiteold6.jpg&quot;},
+			{image: &quot;ybwhiteold7.jpg&quot;},
+			{image: &quot;ybwhiteold8.jpg&quot;},
+			{image: &quot;ybwhiteold9.jpg&quot;},
+			{image: &quot;ybwhiteold10.jpg&quot;},
+			{image: &quot;ybwhiteold11.jpg&quot;},
+			{image: &quot;ybwhiteold12.jpg&quot;}
 		]
 	});
 	API.addMediaSets({
 		Images4: [
-			{image: 'ybwhiteyng1.jpg'},
-			{image: 'ybwhiteyng2.jpg'},
-			{image: 'ybwhiteyng3.jpg'},
-			{image: 'ybwhiteyng4.jpg'},
-			{image: 'ybwhiteyng5.jpg'},
-			{image: 'ybwhiteyng6.jpg'},
-			{image: 'ybwhiteyng7.jpg'},
-			{image: 'ybwhiteyng8.jpg'},
-			{image: 'ybwhiteyng9.jpg'},
-			{image: 'ybwhiteyng10.jpg'},
-			{image: 'ybwhiteyng11.jpg'},
-			{image: 'ybwhiteyng12.jpg'}
+			{image: &quot;ybwhiteyng1.jpg&quot;},
+			{image: &quot;ybwhiteyng2.jpg&quot;},
+			{image: &quot;ybwhiteyng3.jpg&quot;},
+			{image: &quot;ybwhiteyng4.jpg&quot;},
+			{image: &quot;ybwhiteyng5.jpg&quot;},
+			{image: &quot;ybwhiteyng6.jpg&quot;},
+			{image: &quot;ybwhiteyng7.jpg&quot;},
+			{image: &quot;ybwhiteyng8.jpg&quot;},
+			{image: &quot;ybwhiteyng9.jpg&quot;},
+			{image: &quot;ybwhiteyng10.jpg&quot;},
+			{image: &quot;ybwhiteyng11.jpg&quot;},
+			{image: &quot;ybwhiteyng12.jpg&quot;}
 		]
 	});
 	API.addMediaSets({
 		targetWordsA: [
-			{word: ' Nice'},
-			{word: 'Friendly'},
-			{word: 'Considerate'},
-			{word: 'Gentle'},
-			{word: 'Gracious'},
-			{word: 'Sympathetic'},
-			{word: 'Generous'},
-			{word: 'Warm'},
-			{word: 'Kind'},
-			{word: 'Cheerful'},
-			{word: 'Beautiful'},
-			{word: 'Attractive'},
-			{word: 'Likeable'},
-			{word: 'Wonderful'}
+			{word: &quot; Nice&quot;},
+			{word: &quot;Friendly&quot;},
+			{word: &quot;Considerate&quot;},
+			{word: &quot;Gentle&quot;},
+			{word: &quot;Gracious&quot;},
+			{word: &quot;Sympathetic&quot;},
+			{word: &quot;Generous&quot;},
+			{word: &quot;Warm&quot;},
+			{word: &quot;Kind&quot;},
+			{word: &quot;Cheerful&quot;},
+			{word: &quot;Beautiful&quot;},
+			{word: &quot;Attractive&quot;},
+			{word: &quot;Likeable&quot;},
+			{word: &quot;Wonderful&quot;}
 		]
 	});
 
 	API.addMediaSets({
 		targetWordsB: [
-			{word: 'Nasty'},
-			{word: 'Ugly'},
-			{word: 'Stupid'},
-			{word: 'Evil'},
-			{word: 'Dirty'},
-			{word: 'Awful'},
-			{word: 'Offensive'},
-			{word: 'Dirty'},
-			{word: 'Annoying'},
-			{word: 'Vicious'},
-			{word: 'Rude'},
-			{word: 'Irritating'},
-			{word: 'Disgusting'},
-			{word: 'Cruel'}
+			{word: &quot;Nasty&quot;},
+			{word: &quot;Ugly&quot;},
+			{word: &quot;Stupid&quot;},
+			{word: &quot;Evil&quot;},
+			{word: &quot;Dirty&quot;},
+			{word: &quot;Awful&quot;},
+			{word: &quot;Offensive&quot;},
+			{word: &quot;Dirty&quot;},
+			{word: &quot;Annoying&quot;},
+			{word: &quot;Vicious&quot;},
+			{word: &quot;Rude&quot;},
+			{word: &quot;Irritating&quot;},
+			{word: &quot;Disgusting&quot;},
+			{word: &quot;Cruel&quot;}
 		]
 	});
 	//Define the instructions trial
-	API.addTrialSets('inst',{
+	API.addTrialSets(&quot;inst&quot;,{
 			input: [
-				{handle:'space',on:'space'}, //Will handle a SPACEBAR reponse
-				{handle: 'enter', on:'enter'},
-				{handle:'space',on:'centerTouch',touch:true}//support touch
+				{handle:&quot;space&quot;,on:&quot;space&quot;}, //Will handle a SPACEBAR reponse
+				{handle: &quot;enter&quot;, on:&quot;enter&quot;},
+				{handle:&quot;space&quot;,on:&quot;centerTouch&quot;,touch:true}//support touch
 			],
 			interactions: [
 				{ // begin trial
-					conditions: [{type:'begin'}],
-					actions: [{type:'showStim',handle:'All'}] //Show the instructions
+					conditions: [{type:&quot;begin&quot;}],
+					actions: [{type:&quot;showStim&quot;,handle:&quot;All&quot;}] //Show the instructions
 				},
 				{
-					conditions: [{type:'inputEquals',value:'space'}], //What to do when space is pressed
+					conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}], //What to do when space is pressed
 					actions: [
-						{type:'hideStim',handle:'All'}, //Hide the instructions
-						{type:'setInput',input:{handle:'endTrial', on:'timeout',duration:500}} //In 500ms: end the trial. In the mean time, we get a blank screen.
+						{type:&quot;hideStim&quot;,handle:&quot;All&quot;}, //Hide the instructions
+						{type:&quot;setInput&quot;,input:{handle:&quot;endTrial&quot;, on:&quot;timeout&quot;,duration:500}} //In 500ms: end the trial. In the mean time, we get a blank screen.
 					]
 				},
-					// skip block -> if you press 'enter' you will skip the current block.
+					// skip block -&gt; if you press &quot;enter&quot; you will skip the current block.
 				{
-					conditions: [{type:'inputEquals',value:'enter'}],
+					conditions: [{type:&quot;inputEquals&quot;,value:&quot;enter&quot;}],
 					actions: [
-						{type:'goto', destination: 'nextWhere', properties: {blockStart:true}},
-						{type:'endTrial'}
+						{type:&quot;goto&quot;, destination: &quot;nextWhere&quot;, properties: {blockStart:true}},
+						{type:&quot;endTrial&quot;}
 					]
 				},
 				{
-					conditions: [{type:'inputEquals',value:'endTrial'}], //What to do when endTrial is called.
+					conditions: [{type:&quot;inputEquals&quot;,value:&quot;endTrial&quot;}], //What to do when endTrial is called.
 					actions: [
-						{type:'endTrial'} //End the trial
+						{type:&quot;endTrial&quot;} //End the trial
 					]
 				}
 			]
@@ -571,27 +571,27 @@
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
-					data : {'handle':'instStim'},
+					data : {&quot;handle&quot;:&quot;instStim&quot;},
 					//the instructions that will be shown on the screen
-					media:{html:'<div><p style="font-size:24px"><color="FFFAFA">Put your middle or index fingers on the <b>E</b> key of the keyboard, and the <b>I</b> key as well. <br/> Words and photos will appear one after another. Ignore the photos and categorize the words as pleasant or unpleasant.<br/><br/>When the word belongs to the catagory "Unpleasant", press the <b>E</b> key. ; when the word belongs to the category "Pleasant", press the <b>I</b> key.</br></br>If you make an error, an X will appear.</br>This is a timed sorting task. <b>GO AS FAST AS YOU CAN</b> while making as few mistakes as possible.<br>This task will take about 5 minutes to complete.<br> press on "space" to begin <br><br>[Round 1 of 3]</p></div>'}
+					media:{html:&quot;&lt;div&gt;&lt;p style="font-size:24px"&gt;&lt;color="FFFAFA"&gt;Put your middle or index fingers on the &lt;b&gt;E&lt;/b&gt; key of the keyboard, and the &lt;b&gt;I&lt;/b&gt; key as well. &lt;br/&gt; Words and photos will appear one after another. Ignore the photos and categorize the words as pleasant or unpleasant.&lt;br/&gt;&lt;br/&gt;When the word belongs to the catagory "Unpleasant", press the &lt;b&gt;E&lt;/b&gt; key. ; when the word belongs to the category "Pleasant", press the &lt;b&gt;I&lt;/b&gt; key.&lt;/br&gt;&lt;/br&gt;If you make an error, an X will appear.&lt;/br&gt;This is a timed sorting task. &lt;b&gt;GO AS FAST AS YOU CAN&lt;/b&gt; while making as few mistakes as possible.&lt;br&gt;This task will take about 5 minutes to complete.&lt;br&gt; press on "space" to begin &lt;br&gt;&lt;br&gt;[Round 1 of 3]&lt;/p&gt;&lt;/div&gt;&quot;}
 				}
 			]
 		},
 		{ //The presentation trials
 			// Repeat 64 times the trial. (8 times each comination)
-			mixer: 'random',		//
+			mixer: &quot;random&quot;,		//
 			data : [{
-				mixer: 'repeat',
+				mixer: &quot;repeat&quot;,
 				times: 8,
 				data : [
-					{inherit: 'pleasantOldWhite',data:{block:0}},
-					{inherit: 'pleasantYoungWhite',data:{block:0}},
-					{inherit: 'pleasantOldBlack',data:{block:0}},
-					{inherit: 'pleasantYoungBlack',data:{block:0}},
-					{inherit: 'unpleasantOldWhite',data:{block:0}},
-					{inherit: 'unpleasantYoungWhite',data:{block:0}},
-					{inherit: 'unpleasantOldBlack',data:{block:0}},
-					{inherit: 'unpleasantYoungBlack',data:{block:0}}
+					{inherit: &quot;pleasantOldWhite&quot;,data:{block:0}},
+					{inherit: &quot;pleasantYoungWhite&quot;,data:{block:0}},
+					{inherit: &quot;pleasantOldBlack&quot;,data:{block:0}},
+					{inherit: &quot;pleasantYoungBlack&quot;,data:{block:0}},
+					{inherit: &quot;unpleasantOldWhite&quot;,data:{block:0}},
+					{inherit: &quot;unpleasantYoungWhite&quot;,data:{block:0}},
+					{inherit: &quot;unpleasantOldBlack&quot;,data:{block:0}},
+					{inherit: &quot;unpleasantYoungBlack&quot;,data:{block:0}}
 				]
 				} // end wrapper
 			]
@@ -601,26 +601,26 @@
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
-					data : {'handle':'instStim'},
-					media:{html:'<div><p style="font-size:28px"><color="#FFFAFA">Press "space" to continue with the same task.<br/><br/>Please try to challenge yourself to be as fast as you can without making mistakes<br/><br/>[Round 2 of 3].</p></div>'}
+					data : {&quot;handle&quot;:&quot;instStim&quot;},
+					media:{html:&quot;&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt;Press "space" to continue with the same task.&lt;br/&gt;&lt;br/&gt;Please try to challenge yourself to be as fast as you can without making mistakes&lt;br/&gt;&lt;br/&gt;[Round 2 of 3].&lt;/p&gt;&lt;/div&gt;&quot;}
 				}
 			]
 		},
 		{ //The presentation trials
 			// Repeat 64 times the trial. (8 times each comination)
-			mixer: 'random',		//
+			mixer: &quot;random&quot;,		//
 			data : [{
-				mixer: 'repeat',
+				mixer: &quot;repeat&quot;,
 				times: 8,
 				data : [
-						{inherit: 'pleasantOldWhite',data:{block:1}},
-					{inherit: 'pleasantYoungWhite',data:{block:1}},
-					{inherit: 'pleasantOldBlack',data:{block:1}},
-					{inherit: 'pleasantYoungBlack',data:{block:1}},
-					{inherit: 'unpleasantOldWhite',data:{block:1}},
-					{inherit: 'unpleasantYoungWhite',data:{block:1}},
-					{inherit: 'unpleasantOldBlack',data:{block:1}},
-					{inherit: 'unpleasantYoungBlack',data:{block:1}}
+						{inherit: &quot;pleasantOldWhite&quot;,data:{block:1}},
+					{inherit: &quot;pleasantYoungWhite&quot;,data:{block:1}},
+					{inherit: &quot;pleasantOldBlack&quot;,data:{block:1}},
+					{inherit: &quot;pleasantYoungBlack&quot;,data:{block:1}},
+					{inherit: &quot;unpleasantOldWhite&quot;,data:{block:1}},
+					{inherit: &quot;unpleasantYoungWhite&quot;,data:{block:1}},
+					{inherit: &quot;unpleasantOldBlack&quot;,data:{block:1}},
+					{inherit: &quot;unpleasantYoungBlack&quot;,data:{block:1}}
 				]
 				} // end wrapper
 			]
@@ -631,26 +631,26 @@
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
-					data : {'handle':'instStim'},
-					media:{html:'<div><p style="font-size:28px"><color="#FFFAFA">Press "space" for the last round.<br/><br/>[Round 3 of 3].</p></div>'}
+					data : {&quot;handle&quot;:&quot;instStim&quot;},
+					media:{html:&quot;&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt;Press "space" for the last round.&lt;br/&gt;&lt;br/&gt;[Round 3 of 3].&lt;/p&gt;&lt;/div&gt;&quot;}
 				}
 			]
 		},
 		{ //The presentation trials
 			// Repeat 64 times the trial. (8 times each comination)
-			mixer: 'random',		//
+			mixer: &quot;random&quot;,		//
 			data : [{
-				mixer: 'repeat',
+				mixer: &quot;repeat&quot;,
 				times: 8,
 				data : [
-					{inherit: 'pleasantOldWhite',data:{block:2}},
-					{inherit: 'pleasantYoungWhite',data:{block:2}},
-					{inherit: 'pleasantOldBlack',data:{block:2}},
-					{inherit: 'pleasantYoungBlack',data:{block:2}},
-					{inherit: 'unpleasantOldWhite',data:{block:2}},
-					{inherit: 'unpleasantYoungWhite',data:{block:2}},
-					{inherit: 'unpleasantOldBlack',data:{block:2}},
-					{inherit: 'unpleasantYoungBlack',data:{block:2}}
+					{inherit: &quot;pleasantOldWhite&quot;,data:{block:2}},
+					{inherit: &quot;pleasantYoungWhite&quot;,data:{block:2}},
+					{inherit: &quot;pleasantOldBlack&quot;,data:{block:2}},
+					{inherit: &quot;pleasantYoungBlack&quot;,data:{block:2}},
+					{inherit: &quot;unpleasantOldWhite&quot;,data:{block:2}},
+					{inherit: &quot;unpleasantYoungWhite&quot;,data:{block:2}},
+					{inherit: &quot;unpleasantOldBlack&quot;,data:{block:2}},
+					{inherit: &quot;unpleasantYoungBlack&quot;,data:{block:2}}
 				]
 				} // end wrapper
 			]
@@ -665,21 +665,21 @@
 				var DScoreObj;
 
 				//////first call to score//////
-				scorer.addSettings('compute',{
-					parcelValue : ['first'],
+				scorer.addSettings(&quot;compute&quot;,{
+					parcelValue : [&quot;first&quot;],
 					cond1VarValues: ["Old black People / Unpleasant"], //condition 1
 					cond2VarValues: ["Old black People / Pleasant"] //condition 2
 				});
-				scorer.addSettings('message',{
+				scorer.addSettings(&quot;message&quot;,{
 					MessageDef: [
-						{ cut:'-0.2', message:'Your data suggest an Automatic negative attitude toward old black people' },//D < -0.2
-						{ cut:'0.2', message:'Your data suggest Neutral automatic attitude toward old black people' },// -0.2 <= D <= 0.2
-						{ cut:'5', message:'Your data suggest an Automatic positive attitude toward old black people' }// D > 0.2 (and D<=2)
+						{ cut:&quot;-0.2&quot;, message:&quot;Your data suggest an Automatic negative attitude toward old black people&quot; },//D &lt; -0.2
+						{ cut:&quot;0.2&quot;, message:&quot;Your data suggest Neutral automatic attitude toward old black people&quot; },// -0.2 &lt;= D &lt;= 0.2
+						{ cut:&quot;5&quot;, message:&quot;Your data suggest an Automatic positive attitude toward old black people&quot; }// D &gt; 0.2 (and D&lt;=2)
 					]
 				});
 
 				DScoreObj = scorer.computeD();
-				var media1 = DScoreObj.FBMsg + ' The Score is: ' + DScoreObj.DScore;
+				var media1 = DScoreObj.FBMsg + &quot; The Score is: &quot; + DScoreObj.DScore;
 				scorer.dynamicPost({
 					score1: DScoreObj.DScore,
 					feedback1: DScoreObj.FBMsg
@@ -687,71 +687,71 @@
 
 
 				//////second call to score//////
-				scorer.addSettings('compute',{
-					parcelValue : ['second'],
+				scorer.addSettings(&quot;compute&quot;,{
+					parcelValue : [&quot;second&quot;],
 					cond1VarValues: ["Old white People / Unpleasant"], //condition 1
 					cond2VarValues: ["Old white People / Pleasant"] //condition 2
 				});
-				scorer.addSettings('message',{
+				scorer.addSettings(&quot;message&quot;,{
 					MessageDef: [
-						{ cut:'-0.2', message:'Your data suggest an Automatic negative attitude toward old white people' },//D < -0.2
-						{ cut:'0.2', message:'Your data suggest Neutral automatic attitude toward old white people' },// -0.2 <= D <= 0.2
-						{ cut:'5', message:'Your data suggest an Automatic positive attitude toward old white people' }// D > 0.2 (and D<=2)
+						{ cut:&quot;-0.2&quot;, message:&quot;Your data suggest an Automatic negative attitude toward old white people&quot; },//D &lt; -0.2
+						{ cut:&quot;0.2&quot;, message:&quot;Your data suggest Neutral automatic attitude toward old white people&quot; },// -0.2 &lt;= D &lt;= 0.2
+						{ cut:&quot;5&quot;, message:&quot;Your data suggest an Automatic positive attitude toward old white people&quot; }// D &gt; 0.2 (and D&lt;=2)
 					]
 				});
 
 				DScoreObj = scorer.computeD();
-				var media2 = DScoreObj.FBMsg+' The Score is: '+DScoreObj.DScore;
+				var media2 = DScoreObj.FBMsg+&quot; The Score is: &quot;+DScoreObj.DScore;
 				scorer.dynamicPost({
 					score1: DScoreObj.DScore,
 					feedback1: DScoreObj.FBMsg
 				});
 
 				//////third call to score//////
-				scorer.addSettings('compute',{
-					parcelValue : ['third'],
+				scorer.addSettings(&quot;compute&quot;,{
+					parcelValue : [&quot;third&quot;],
 					cond1VarValues: ["Young black People / Unpleasant"], //condition 1
 					cond2VarValues: ["Young black People / Pleasant"] //condition 2
 
 				});
-				scorer.addSettings('message',{
+				scorer.addSettings(&quot;message&quot;,{
 					MessageDef: [
-						{ cut:'-0.2', message:'Your data suggest an Automatic negative attitude young black people' },//D < -0.2
-						{ cut:'0.2', message:'Your data suggest Neutral automatic attitude toward young black people' },// -0.2 <= D <= 0.2
-						{ cut:'5', message:'Your data suggest an Automatic positive attitude toward young black people' }// D > 0.2 (and D<=2)
+						{ cut:&quot;-0.2&quot;, message:&quot;Your data suggest an Automatic negative attitude young black people&quot; },//D &lt; -0.2
+						{ cut:&quot;0.2&quot;, message:&quot;Your data suggest Neutral automatic attitude toward young black people&quot; },// -0.2 &lt;= D &lt;= 0.2
+						{ cut:&quot;5&quot;, message:&quot;Your data suggest an Automatic positive attitude toward young black people&quot; }// D &gt; 0.2 (and D&lt;=2)
 					]
 				});
 
 				DScoreObj = scorer.computeD();
-				var media3 = DScoreObj.FBMsg+' The Score is: '+DScoreObj.DScore;
+				var media3 = DScoreObj.FBMsg+&quot; The Score is: &quot;+DScoreObj.DScore;
 				scorer.dynamicPost({
 					score1: DScoreObj.DScore,
 					feedback1: DScoreObj.FBMsg
 				});
 
 				//////fourth call to score//////
-				scorer.addSettings('compute',{
-					parcelValue : ['fourth'],
+				scorer.addSettings(&quot;compute&quot;,{
+					parcelValue : [&quot;fourth&quot;],
 					cond1VarValues: ["Young white People / Unpleasant"], //condition 1
 					cond2VarValues: ["Young white People / Pleasant"] //condition 2
 
 				});
-				scorer.addSettings('message',{
+				scorer.addSettings(&quot;message&quot;,{
 					MessageDef: [
-						{ cut:'-0.2', message:'Your data suggest an Automatic negative attitude young white people' },//D < -0.2
-						{ cut:'0.2', message:'Your data suggest Neutral automatic attitude toward young white people' },// -0.2 <= D <= 0.2
-						{ cut:'5', message:'Your data suggest an Automatic positive attitude toward young white people' }// D > 0.2 (and D<=2)
+						{ cut:&quot;-0.2&quot;, message:&quot;Your data suggest an Automatic negative attitude young white people&quot; },//D &lt; -0.2
+						{ cut:&quot;0.2&quot;, message:&quot;Your data suggest Neutral automatic attitude toward young white people&quot; },// -0.2 &lt;= D &lt;= 0.2
+						{ cut:&quot;5&quot;, message:&quot;Your data suggest an Automatic positive attitude toward young white people&quot; }// D &gt; 0.2 (and D&lt;=2)
 					]
 				});
 
 				DScoreObj = scorer.computeD();
-				var media4 = DScoreObj.FBMsg+' The Score is: '+DScoreObj.DScore;
+				var media4 = DScoreObj.FBMsg+&quot; The Score is: &quot;+DScoreObj.DScore;
 				scorer.dynamicPost({
 					score1: DScoreObj.DScore,
 					feedback1: DScoreObj.FBMsg
 				});
 
-				var media = {css:{color:'black'},media:{html:'<h1><div><p style="font-size:24px"><color="#FFFAFA"> '+media1+ '<br/>'+media2+ '<br/>'+media3+ '<br/>'+media4+'</p></div>'}};
+				var media = {css:{color:&quot;black&quot;},media:{html:&quot;&lt;h1&gt;&lt;div&gt;&lt;p style="font-size:24px"&gt;&lt;color="#FFFAFA"&gt; &quot;+media1+ &quot;&lt;br/&gt;&quot;+media2+ &quot;&lt;br/&gt;&quot;+media3+ &quot;&lt;br/&gt;&quot;+media4+&quot;&lt;/p&gt;&lt;/div&gt;&quot;}};
 				trial.stimuli.push(media);
 			}
 		},
@@ -760,8 +760,8 @@
 			inherit : "inst",
 			stimuli: [
 				{//The instructions stimulus
-					data : {'handle':'instStim'},
-					media:{html:'<div><p style="font-size:28px"><color="#FFFAFA">You have completed the study<br/><br/>Thank you very much for your participation.<br/><br/> Press "space" for continue to next task.</p></div>'}
+					data : {&quot;handle&quot;:&quot;instStim&quot;},
+					media:{html:&quot;&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt;You have completed the study&lt;br/&gt;&lt;br/&gt;Thank you very much for your participation.&lt;br/&gt;&lt;br/&gt; Press "space" for continue to next task.&lt;/p&gt;&lt;/div&gt;&quot;}
 				}
 			]
 		}

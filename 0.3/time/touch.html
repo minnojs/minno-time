@@ -86,10 +86,10 @@
         <a class="activate-button">Activate</a>
         <a class="download-button" href="touch.js" download>Download</a>
     </div>
-    <div class="editor">//# Touch devices
+    <div class="editor">// # Touch devices
 // There are several changes required for support of touch devices.
 // This tutorial will show you how to fully support them in you tasks.
-define(['pipAPI'], function(APIconstructor) {
+define([&quot;pipAPI&quot;], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
@@ -101,15 +101,15 @@ define(['pipAPI'], function(APIconstructor) {
 			// If it is set to true then the input will be used only in touch devices.
 			// If it is set to false then the input will be used only in non touch devices.
 			input: [
-				// This input will be available on touch devices too (mostly, it won't be available for lack of keyboard though)
-				{handle:'end', on:'space'},
+				// This input will be available on touch devices too (mostly, it won&quot;t be available for lack of keyboard though)
+				{handle:&quot;end&quot;, on:&quot;space&quot;},
 
 				// But these will be available only on touch devices.
 
 				// There are several touch targeted input shortcuts that you can use (they work for non touch devices too though).
-				// These are `rightTouch`, `leftTouch`, `topTouch` and `bottomTouch`. </br>
-				{handle:'end',on:'rightTouch', touch:true},
-				{handle:'end',on:'leftTouch', touch: true}
+				// These are `rightTouch`, `leftTouch`, `topTouch` and `bottomTouch`. &lt;/br&gt;
+				{handle:&quot;end&quot;,on:&quot;rightTouch&quot;, touch:true},
+				{handle:&quot;end&quot;,on:&quot;leftTouch&quot;, touch: true}
 			],
 
 			// ##### touchMedia
@@ -120,20 +120,20 @@ define(['pipAPI'], function(APIconstructor) {
 			layout:[
 				{
 					location:{top:20},
-					media:{word:'this will always be here'}
+					media:{word:&quot;this will always be here&quot;}
 				},
 				{
 					location:{bottom:20},
-					media:{word:'Only on regular'},
-					touchMedia:{word:'Only on touch'}
+					media:{word:&quot;Only on regular&quot;},
+					touchMedia:{word:&quot;Only on touch&quot;}
 				}
 			],
 
 
 			interactions: [
 				{
-					conditions: [{type:'inputEquals',value:'end'}],
-					actions: [{type:'endTrial'}]
+					conditions: [{type:&quot;inputEquals&quot;,value:&quot;end&quot;}],
+					actions: [{type:&quot;endTrial&quot;}]
 				}
 			]
 		}

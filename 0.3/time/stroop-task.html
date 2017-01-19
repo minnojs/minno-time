@@ -85,54 +85,54 @@
         <a class="activate-button">Activate</a>
         <a class="download-button" href="stroop-task.js" download>Download</a>
     </div>
-    <div class="editor">//We've been slowly pulling the stroop task together, now is the time for a few last touches, just to get the feel for how things work.
+    <div class="editor">// We&quot;ve been slowly pulling the stroop task together, now is the time for a few last touches, just to get the feel for how things work.
 
-define(['pipAPI'], function(APIconstructor) {
+define([&quot;pipAPI&quot;], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
-	API.addSettings('canvas',{
+	API.addSettings(&quot;canvas&quot;,{
 		textSize: 5
 	});
 
-	API.addStimulusSets('red',[
-		{media:'Red', css:{color:'red'}},
-		{media:'Blue', css:{color:'red'}},
-		{media:'Green', css:{color:'red'}}
+	API.addStimulusSets(&quot;red&quot;,[
+		{media:&quot;Red&quot;, css:{color:&quot;red&quot;}},
+		{media:&quot;Blue&quot;, css:{color:&quot;red&quot;}},
+		{media:&quot;Green&quot;, css:{color:&quot;red&quot;}}
 	]);
 
-	API.addStimulusSets('blue',[
-		{media:'Red', css:{color:'blue'}},
-		{media:'Blue', css:{color:'blue'}},
-		{media:'Green', css:{color:'blue'}}
+	API.addStimulusSets(&quot;blue&quot;,[
+		{media:&quot;Red&quot;, css:{color:&quot;blue&quot;}},
+		{media:&quot;Blue&quot;, css:{color:&quot;blue&quot;}},
+		{media:&quot;Green&quot;, css:{color:&quot;blue&quot;}}
 	]);
 
-	API.addStimulusSets('green',[
-		{media:'Red', css:{color:'green'}},
-		{media:'Blue', css:{color:'green'}},
-		{media:'Green', css:{color:'green'}}
+	API.addStimulusSets(&quot;green&quot;,[
+		{media:&quot;Red&quot;, css:{color:&quot;green&quot;}},
+		{media:&quot;Blue&quot;, css:{color:&quot;green&quot;}},
+		{media:&quot;Green&quot;, css:{color:&quot;green&quot;}}
 	]);
 
-	API.addStimulusSets('error',[
-		{handle:'error',media:'X', css:{fontSize:'2em',color:'#FF0000'}, location:{top:70}}
+	API.addStimulusSets(&quot;error&quot;,[
+		{handle:&quot;error&quot;,media:&quot;X&quot;, css:{fontSize:&quot;2em&quot;,color:&quot;#FF0000&quot;}, location:{top:70}}
 	]);
 
-	API.addTrialSets('base',[{
+	API.addTrialSets(&quot;base&quot;,[{
 		input: [
-			{handle:'red',on:'keypressed',key:'1'},
-			{handle:'blue',on:'keypressed',key:'2'},
-			{handle:'green',on:'keypressed',key:'3'}
+			{handle:&quot;red&quot;,on:&quot;keypressed&quot;,key:&quot;1&quot;},
+			{handle:&quot;blue&quot;,on:&quot;keypressed&quot;,key:&quot;2&quot;},
+			{handle:&quot;green&quot;,on:&quot;keypressed&quot;,key:&quot;3&quot;}
 		],
 		layout: [
-			{media:'1',location:{left:2,top:2},css:{background:'red',padding:'2%',fontSize:'1.5em'}},
-			{media:'2',location:{top:2},css:{background:'blue',padding:'2%',fontSize:'1.5em'}},
-			{media:'3',location:{right:2,top:2},css:{background:'green',padding:'2%',fontSize:'1.5em'}}
+			{media:&quot;1&quot;,location:{left:2,top:2},css:{background:&quot;red&quot;,padding:&quot;2%&quot;,fontSize:&quot;1.5em&quot;}},
+			{media:&quot;2&quot;,location:{top:2},css:{background:&quot;blue&quot;,padding:&quot;2%&quot;,fontSize:&quot;1.5em&quot;}},
+			{media:&quot;3&quot;,location:{right:2,top:2},css:{background:&quot;green&quot;,padding:&quot;2%&quot;,fontSize:&quot;1.5em&quot;}}
 		],
 		interactions: [
 			/* Display the target stimulus. */
 			{
-				conditions:[{type:'begin'}],
-				actions: [{type:'showStim', handle: 'target'}]
+				conditions:[{type:&quot;begin&quot;}],
+				actions: [{type:&quot;showStim&quot;, handle: &quot;target&quot;}]
 			},
 
 			// ### Error feedback
@@ -146,27 +146,27 @@ define(['pipAPI'], function(APIconstructor) {
 			/* Correct response actions */
 			{
 				conditions: [
-					{type:'inputEqualsTrial',property:'group'}
+					{type:&quot;inputEqualsTrial&quot;,property:&quot;group&quot;}
 				],
 				actions: [
-					{type:'setTrialAttr', setter:{score:1}},
-					{type:'log'},
-					{type:'trigger', handle:'ITI'}
+					{type:&quot;setTrialAttr&quot;, setter:{score:1}},
+					{type:&quot;log&quot;},
+					{type:&quot;trigger&quot;, handle:&quot;ITI&quot;}
 				]
 			},
 
 			/* Incorrect response actions */
 			{
 				conditions: [
-					{type:'inputEqualsTrial',property:'group',negate:true},
-					{type:'inputEquals',value:['red','blue','green']}
+					{type:&quot;inputEqualsTrial&quot;,property:&quot;group&quot;,negate:true},
+					{type:&quot;inputEquals&quot;,value:[&quot;red&quot;,&quot;blue&quot;,&quot;green&quot;]}
 				],
 				actions: [
-					{type:'setTrialAttr', setter:{score:0}},
-					{type:'log'},
-					{type:'showStim', handle:'error'},
-					{type:'removeInput',handle:['red','blue','green']},
-					{type:'trigger', handle:'ITI', duration:500}
+					{type:&quot;setTrialAttr&quot;, setter:{score:0}},
+					{type:&quot;log&quot;},
+					{type:&quot;showStim&quot;, handle:&quot;error&quot;},
+					{type:&quot;removeInput&quot;,handle:[&quot;red&quot;,&quot;blue&quot;,&quot;green&quot;]},
+					{type:&quot;trigger&quot;, handle:&quot;ITI&quot;, duration:500}
 				]
 			},
 
@@ -176,7 +176,7 @@ define(['pipAPI'], function(APIconstructor) {
 			// Second, the correct response now triggers the ITI immediately.
 			// Third, The incorrect response first displays the error feedback (`showStim`) and only after 500 milliseconds triggers the ITI.
 
-			// You should also note that the `hideStim` action within the ITI interaction uses the handle `'All'`. When you want to refer to all the stimuli in a trial you can use the handle `'All'` and all stimuli will be affected.
+			// You should also note that the `hideStim` action within the ITI interaction uses the handle `&quot;All&quot;`. When you want to refer to all the stimuli in a trial you can use the handle `&quot;All&quot;` and all stimuli will be affected.
 
 			// ### Inter trial interval
 			// We add an inter trial interval (ITI).
@@ -187,28 +187,28 @@ define(['pipAPI'], function(APIconstructor) {
 
 			/* Inter trial interval */
 			{
-				conditions: [{type:'inputEquals', value:'ITI'}],
+				conditions: [{type:&quot;inputEquals&quot;, value:&quot;ITI&quot;}],
 				actions:[
-					{type:'hideStim',handle:'All'},
-					{type:'removeInput',handle:['red','blue','green']},
-					{type:'trigger', handle:'end',duration:500}
+					{type:&quot;hideStim&quot;,handle:&quot;All&quot;},
+					{type:&quot;removeInput&quot;,handle:[&quot;red&quot;,&quot;blue&quot;,&quot;green&quot;]},
+					{type:&quot;trigger&quot;, handle:&quot;end&quot;,duration:500}
 				]
 			},
 
-			// We've added three actions to each of the responses.
+			// We&quot;ve added three actions to each of the responses.
 			// `hideStim` hides the target stimulus so that we see a blank screen as soon as a response is made.
 			// `removeInput` removes the input listeners that have the handles *red*, *blue* and *green*, this prevents users from giving any further responses.
 			// `trigger` triggers an internal player event as if the user has committed an action.
 			// In this case, it triggers an event with the input handle `end` after a `duration` of 500 milliseconds.
 
-			// Furthermore, we've added an interaction that responds to the `end` event, that ends the trial.
+			// Furthermore, we&quot;ve added an interaction that responds to the `end` event, that ends the trial.
 			// Note that the users can not trigger the `end` event directly, only through the events that were exposed to them using the `keypressed` input.
 
 			/* End trial */
 			{
-				conditions: [{type:'inputEquals', value:'end'}],
+				conditions: [{type:&quot;inputEquals&quot;, value:&quot;end&quot;}],
 				actions:[
-					{type:'endTrial'}
+					{type:&quot;endTrial&quot;}
 				]
 			}
 
@@ -217,32 +217,32 @@ define(['pipAPI'], function(APIconstructor) {
 	}]);
 
 	// Finaly, we need to add it to each of the specific color trials.
-	// We can't add it to the *base* trial because the specific color trials make changes to `stimuli` and would overwrite it.
+	// We can&quot;t add it to the *base* trial because the specific color trials make changes to `stimuli` and would overwrite it.
 
-	API.addTrialSets('red',[{
-		inherit:'base',
-		data: {group:'red'},
+	API.addTrialSets(&quot;red&quot;,[{
+		inherit:&quot;base&quot;,
+		data: {group:&quot;red&quot;},
 		stimuli: [
-			{inherit:{set:'red',type:'exRandom'}, handle:'target'},
-			{inherit:'error'}
+			{inherit:{set:&quot;red&quot;,type:&quot;exRandom&quot;}, handle:&quot;target&quot;},
+			{inherit:&quot;error&quot;}
 		]
 	}]);
 
-	API.addTrialSets('blue',[{
-		inherit:'base',
-		data: {group:'blue'},
+	API.addTrialSets(&quot;blue&quot;,[{
+		inherit:&quot;base&quot;,
+		data: {group:&quot;blue&quot;},
 		stimuli: [
-			{inherit:{set:'blue',type:'exRandom'}, handle:'target'},
-			{inherit:'error'}
+			{inherit:{set:&quot;blue&quot;,type:&quot;exRandom&quot;}, handle:&quot;target&quot;},
+			{inherit:&quot;error&quot;}
 		]
 	}]);
 
-	API.addTrialSets('green',[{
-		inherit:'base',
-		data: {group:'green'},
+	API.addTrialSets(&quot;green&quot;,[{
+		inherit:&quot;base&quot;,
+		data: {group:&quot;green&quot;},
 		stimuli: [
-			{inherit:{set:'green',type:'exRandom'}, handle:'target'},
-			{inherit:'error'}
+			{inherit:{set:&quot;green&quot;,type:&quot;exRandom&quot;}, handle:&quot;target&quot;},
+			{inherit:&quot;error&quot;}
 		]
 	}]);
 
@@ -250,15 +250,15 @@ define(['pipAPI'], function(APIconstructor) {
 
 	API.addSequence([
 		{
-			mixer: 'random',
+			mixer: &quot;random&quot;,
 			data: [
 				{
-					mixer: 'repeat',
+					mixer: &quot;repeat&quot;,
 					times: 20,
 					data: [
-						{inherit:'red'},
-						{inherit:'blue'},
-						{inherit:'green'}
+						{inherit:&quot;red&quot;},
+						{inherit:&quot;blue&quot;},
+						{inherit:&quot;green&quot;}
 					]
 				}
 			]

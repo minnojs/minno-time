@@ -91,7 +91,7 @@
         <a class="activate-button">Activate</a>
         <a class="download-button" href="stroop-setup.js" download>Download</a>
     </div>
-    <div class="editor">//Now that we have a few of the basic building blocks of the player available to us,
+    <div class="editor">// Now that we have a few of the basic building blocks of the player available to us,
 // lets start putting together a real task.
 
 // We will create a task that demonstrates the stroop effect:
@@ -99,10 +99,10 @@
 // naming the color of the word takes longer and is more prone to errors than when the color of the ink matches the name of the color.
 // The effect is named after John Ridley Stroop who first published the effect in English in 1935.
 
-// There is no scripted way that you are supposed to create a task, but we will break down the task in one way that we've found useful.
+// There is no scripted way that you are supposed to create a task, but we will break down the task in one way that we&quot;ve found useful.
 
 
-define(['pipAPI'], function(APIconstructor) {
+define([&quot;pipAPI&quot;], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
@@ -111,7 +111,7 @@ define(['pipAPI'], function(APIconstructor) {
 
 	// In order to set the default text size you can use the `canvas` [setting](./API.html#canvas) like so:
 
-	API.addSettings('canvas',{
+	API.addSettings(&quot;canvas&quot;,{
 		textSize: 5
 	});
 
@@ -122,33 +122,33 @@ define(['pipAPI'], function(APIconstructor) {
 	// ### Stimuli
 	// Lets start with the thing that we already know how to do.
 
-	// We'll create lists of the stimuli we are going to use.
+	// We&quot;ll create lists of the stimuli we are going to use.
 	// We have three groups of stimuli; **red**, **blue** and **green**.
 	// We will create a separate set of stimuli for each of these groups.
 	// These sets will allow us to randomize and extend them later on.
 
-	API.addStimulusSets('red',[
-		{media:'Red', css:{color:'red'}},
-		{media:'Blue', css:{color:'red'}},
-		{media:'Green', css:{color:'red'}}
+	API.addStimulusSets(&quot;red&quot;,[
+		{media:&quot;Red&quot;, css:{color:&quot;red&quot;}},
+		{media:&quot;Blue&quot;, css:{color:&quot;red&quot;}},
+		{media:&quot;Green&quot;, css:{color:&quot;red&quot;}}
 	]);
 
-	API.addStimulusSets('blue',[
-		{media:'Red', css:{color:'blue'}},
-		{media:'Blue', css:{color:'blue'}},
-		{media:'Green', css:{color:'blue'}}
+	API.addStimulusSets(&quot;blue&quot;,[
+		{media:&quot;Red&quot;, css:{color:&quot;blue&quot;}},
+		{media:&quot;Blue&quot;, css:{color:&quot;blue&quot;}},
+		{media:&quot;Green&quot;, css:{color:&quot;blue&quot;}}
 	]);
 
-	API.addStimulusSets('green',[
-		{media:'Red', css:{color:'green'}},
-		{media:'Blue', css:{color:'green'}},
-		{media:'Green', css:{color:'green'}}
+	API.addStimulusSets(&quot;green&quot;,[
+		{media:&quot;Red&quot;, css:{color:&quot;green&quot;}},
+		{media:&quot;Blue&quot;, css:{color:&quot;green&quot;}},
+		{media:&quot;Green&quot;, css:{color:&quot;green&quot;}}
 	]);
 
 	// All the stimuli in each set have the same color, each stimulus in the set has a distinct name.
 
 	// Note also that we use the shortcut to plain text media (simply settings a string),
-	// and not the full fledged media object (that would look like this: `{word:'Red'}`).
+	// and not the full fledged media object (that would look like this: `{word:&quot;Red&quot;}`).
 	// You can of course use any type of [media](./API.md#media) here.
 
 // ### Layout
@@ -156,14 +156,14 @@ define(['pipAPI'], function(APIconstructor) {
 
 // In the stroop task we sort words by their colors.
 // First things first, lets add labels to the task canvas so that it is clear what the user is sorting the stimuli to.
-// We'll add three labels, one for each of the colors we are using.
+// We&quot;ll add three labels, one for each of the colors we are using.
 
 // By default stimuli are displayed at the center of the screen, if we want to display them at other locations,
 // we use the `location` property of the [stimulus object](./API.md#stimuli).
 // The location property takes an object with distances from the border in percentages of the player canvas.
 // Where `left:20` means that the left border of the stimulus should be 20% from the left of the canvas.
 // You may define any of the `left`/`right`/`top`/`bottom` properties.
-// In this case we'll define the labels to be two percent of the canvas away from the borders just so they don't collide.
+// In this case we&quot;ll define the labels to be two percent of the canvas away from the borders just so they don&quot;t collide.
 
 // We use the `css` property to control the style of the labels.
 // We set the `background` color to the appropriate color and the `fontSize` of the labels to be 1.5 times of the default fontSize.
@@ -173,21 +173,21 @@ define(['pipAPI'], function(APIconstructor) {
 		{
 			layout: [
 				{
-					media:'1',
+					media:&quot;1&quot;,
 					location:{left:2,top:2},
-					css:{background:'red',padding:'2%',fontSize:'1.5em'}
+					css:{background:&quot;red&quot;,padding:&quot;2%&quot;,fontSize:&quot;1.5em&quot;}
 				},
 				{
-					media:'2',
+					media:&quot;2&quot;,
 					location:{top:2},
-					css:{background:'blue',padding:'2%',fontSize:'1.5em'}
+					css:{background:&quot;blue&quot;,padding:&quot;2%&quot;,fontSize:&quot;1.5em&quot;}
 				},
 				{
-					media:'3',
+					media:&quot;3&quot;,
 					location:{right:2,top:2},
-					css:{background:'green',padding:'2%',fontSize:'1.5em'}
+					css:{background:&quot;green&quot;,padding:&quot;2%&quot;,fontSize:&quot;1.5em&quot;}
 				},
-				{inherit:'red'}
+				{inherit:&quot;red&quot;}
 			],
 			input: [],
 			interactions: []
@@ -197,7 +197,7 @@ define(['pipAPI'], function(APIconstructor) {
 	// #### Return the script
 	return API.script;
 });
-/* don't forget to close the define wrapper */
+/* don&quot;t forget to close the define wrapper */
 </div>
 </section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" integrity="sha256-xrr4HH5eSY+cFz4SH7ja/LaAi9qcEdjMpeMP49/iOLs=" crossorigin="anonymous"></script>

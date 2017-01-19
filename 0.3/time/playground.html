@@ -84,28 +84,28 @@
         <a class="activate-button">Activate</a>
         <a class="download-button" href="playground.js" download>Download</a>
     </div>
-    <div class="editor">define(['pipAPI'],function(APIconstructor) {
+    <div class="editor">define([&quot;pipAPI&quot;], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
 	API.addSequence([
 		{
 			input: [
-				{handle:'space',on:'space'}
+				{handle:&quot;space&quot;,on:&quot;space&quot;}
 			],
 			layout: [
 				{
-					media :{word:'Hello world'},
-					css:{fontSize:'2em',color:'#D7685A'}
+					media :{word:&quot;Hello world&quot;},
+					css:{fontSize:&quot;2em&quot;,color:&quot;#D7685A&quot;}
 				}
 			],
 			interactions: [
 				{
 					conditions: [
-						{type:'inputEquals',value:'space'}
+						{type:&quot;inputEquals&quot;,value:&quot;space&quot;}
 					],
 					actions: [
-						{type:'endTrial'}
+						{type:&quot;endTrial&quot;}
 					]
 				}
 			]

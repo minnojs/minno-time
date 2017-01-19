@@ -102,35 +102,35 @@
         <a class="activate-button">Activate</a>
         <a class="download-button" href="inheritance.js" download>Download</a>
     </div>
-    <div class="editor">//# Inheritance
+    <div class="editor">// # Inheritance
 // In this tutorial we will learn how to create sets of Trials/Stimuli/Media and use them for randomization.
 
 // Sets are essentialy lists of objects that allow us to select objects out of them.
 // The typical set definition looks something like this:
 
-//		API.addMediaSet('setName',[
+//		API.addMediaSet(&quot;setName&quot;,[
 //			media1,
 //			media2
 //		]);
 
 // Using objects from a set is simple. all you have to do is add the `inherit` property to the inheriting object.
 // There are two syntax types for inheriting.
-// The simplified version randomly inherits a media object form the set 'mediaSet':
+// The simplified version randomly inherits a media object form the set &quot;mediaSet&quot;:
 
-//		media: {inherit: 'mediaSet'}
+//		media: {inherit: &quot;mediaSet&quot;}
 
 // The full syntax allows you to pick the inheritance type:
 
 //		media: {
 //			inherit: {
-//				set: 'mediaSet',
-//				type: 'exRandom'
+//				set: &quot;mediaSet&quot;,
+//				type: &quot;exRandom&quot;
 //			}
 //		}
 
 
 
-define(['pipAPI'], function(APIconstructor) {
+define([&quot;pipAPI&quot;], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
@@ -138,54 +138,54 @@ define(['pipAPI'], function(APIconstructor) {
 
 	// #### media sets
 	// We define a set of media objects and call it *good*.
-	API.addMediaSets('good', [
-		{word: 'Paradise'},
-		{word: 'Pleasure'},
-		{word: 'Cheer'},
-		{word: 'Wonderful'},
-		{word: 'Splendid'},
-		{word: 'Love'}
+	API.addMediaSets(&quot;good&quot;, [
+		{word: &quot;Paradise&quot;},
+		{word: &quot;Pleasure&quot;},
+		{word: &quot;Cheer&quot;},
+		{word: &quot;Wonderful&quot;},
+		{word: &quot;Splendid&quot;},
+		{word: &quot;Love&quot;}
 	]);
 
 	// We define a set of media objects and call it *bad*.
-	API.addMediaSets('bad', [
-		{word: 'Bomb'},
-		{word: 'Abuse'},
-		{word: 'Sadness'},
-		{word: 'Pain'},
-		{word: 'Poison'},
-		{word: 'Grief'}
+	API.addMediaSets(&quot;bad&quot;, [
+		{word: &quot;Bomb&quot;},
+		{word: &quot;Abuse&quot;},
+		{word: &quot;Sadness&quot;},
+		{word: &quot;Pain&quot;},
+		{word: &quot;Poison&quot;},
+		{word: &quot;Grief&quot;}
 	]);
 
 	// #### Stimulus sets
 	// We define two types of stimuli: bad media on the left, good media on the right.
 	// This way, we use inheritance to style each media set in a uniform way.
 	API.addStimulusSets("Default", [
-		// randomly inherit a media object from the 'bad' media set
+		// randomly inherit a media object from the &quot;bad&quot; media set
 		{
-			data: {type:'bad'},
+			data: {type:&quot;bad&quot;},
 			location: {left:30},
-			media: {inherit:'bad'}
+			media: {inherit:&quot;bad&quot;}
 		},
-		// randomly inherit a media object from the 'good' media set
+		// randomly inherit a media object from the &quot;good&quot; media set
 		{
-			data: {type:'good'},
+			data: {type:&quot;good&quot;},
 			location: {right:30},
-			media: {inherit:'good'}
+			media: {inherit:&quot;good&quot;}
 		}
 	]);
 
 	// #### Trial sets
-	// We define only one trial, this is inherantly gives us a shortcut to this trial, and will eventuall allow us to use it as a prototype. </br>
+	// We define only one trial, this is inherantly gives us a shortcut to this trial, and will eventuall allow us to use it as a prototype. &lt;/br&gt;
 	// This trial simply displays a random stimulus.
 	API.addTrialSets("Default", [
 		{
-			input: [{handle: 'end', on:'space'}],
-			layout: [{inherit:'Default'}],
+			input: [{handle: &quot;end&quot;, on:&quot;space&quot;}],
+			layout: [{inherit:&quot;Default&quot;}],
 			interactions: [
 				{
-					conditions: [{type:'inputEquals',value:'end'}],
-					actions: [{type:'endTrial'}]
+					conditions: [{type:&quot;inputEquals&quot;,value:&quot;end&quot;}],
+					actions: [{type:&quot;endTrial&quot;}]
 				}
 			]
 		}
@@ -196,24 +196,24 @@ define(['pipAPI'], function(APIconstructor) {
 	API.addSequence([
 		// ##### Simple inheritance
 		// We can simply inherit the Default trial and have it display random stimuli.
-		{inherit:'Default'},
-		{inherit:'Default'},
-		{inherit:'Default'},
+		{inherit:&quot;Default&quot;},
+		{inherit:&quot;Default&quot;},
+		{inherit:&quot;Default&quot;},
 
 		// ##### Exclusive Randomization
 		// `exRandom`: pick a random object with exclusion.
-		// Repeated calls to `exRandom` will not return the same object until all objects in the set have been used. </br>
-		// Specificaly this Trial presents a random 'bad' media object (note that in this case we inherit a media object, not a stimulus).
+		// Repeated calls to `exRandom` will not return the same object until all objects in the set have been used. &lt;/br&gt;
+		// Specificaly this Trial presents a random &quot;bad&quot; media object (note that in this case we inherit a media object, not a stimulus).
 		{
-			input: [{handle: 'end', on:'space'}],
+			input: [{handle: &quot;end&quot;, on:&quot;space&quot;}],
 			layout: [
 				/* begin stimulus */
 				{
 					/* begin media */
 					media: {
 						inherit:{
-							set:'bad',
-							type:'exRandom'
+							set:&quot;bad&quot;,
+							type:&quot;exRandom&quot;
 						}
 					}
 					/* end media */
@@ -222,34 +222,34 @@ define(['pipAPI'], function(APIconstructor) {
 			],
 			interactions: [
 				{
-					conditions: [{type:'inputEquals',value:'end'}],
-					actions: [{type:'endTrial'}]
+					conditions: [{type:&quot;inputEquals&quot;,value:&quot;end&quot;}],
+					actions: [{type:&quot;endTrial&quot;}]
 				}
 			]
 		},
 
 		// ##### Inherit by Data
-		// `byData` checks if the inherit objtects' `data` property is a subset of the elements' `data` property and if it is it picks the element.
-		// (this means that if all properties of `data` equal to the properties of the same name in `element.data` it is a fit). </br>
+		// `byData` checks if the inherit objtects&quot; `data` property is a subset of the elements&quot; `data` property and if it is it picks the element.
+		// (this means that if all properties of `data` equal to the properties of the same name in `element.data` it is a fit). &lt;/br&gt;
 
-		// Specificaly, this trial picks the stimulus that has `data:{type:'good'}` (note that in this case we inherit a whole stimulus object).
+		// Specificaly, this trial picks the stimulus that has `data:{type:&quot;good&quot;}` (note that in this case we inherit a whole stimulus object).
 		{
-			input: [{handle: 'end', on:'space'}],
+			input: [{handle: &quot;end&quot;, on:&quot;space&quot;}],
 			layout: [
 				/* begin stimulus */
 				{
 					inherit:{
-						set:'Default',
-						type:'byData',
-						data: {type:'good'}
+						set:&quot;Default&quot;,
+						type:&quot;byData&quot;,
+						data: {type:&quot;good&quot;}
 					}
 				}
 				/* end stimulus */
 			],
 			interactions: [
 				{
-					conditions: [{type:'inputEquals',value:'end'}],
-					actions: [{type:'endTrial'}]
+					conditions: [{type:&quot;inputEquals&quot;,value:&quot;end&quot;}],
+					actions: [{type:&quot;endTrial&quot;}]
 				}
 			]
 		},
@@ -257,18 +257,18 @@ define(['pipAPI'], function(APIconstructor) {
 		// ##### Prototyping
 		// One of the greatest powers of inheritance is prototyping; using a the inheritance as a template for more advanced elements.
 		// When an element (the child) has an inherit property, then the child is used to extend the inherited element (the parent).
-		// What this means is that inherited properties are overwritten by explicit properties. Let's see how this works.
+		// What this means is that inherited properties are overwritten by explicit properties. Let&quot;s see how this works.
 		{
-			// Inherit the 'Default' trial.
-			inherit: 'Default',
+			// Inherit the &quot;Default&quot; trial.
+			inherit: &quot;Default&quot;,
 			// The layout property gets overridden
-			layout: [{media:{word:'One Child'}}]
+			layout: [{media:{word:&quot;One Child&quot;}}]
 		},
 		{
-			// Inherit the 'Default' trial.
-			inherit: 'Default',
+			// Inherit the &quot;Default&quot; trial.
+			inherit: &quot;Default&quot;,
 			// The layout property gets overriden in a different way.
-			layout: [{media:{word:'A differen child'}}]
+			layout: [{media:{word:&quot;A differen child&quot;}}]
 		}
 	]);
 
