@@ -1,5 +1,5 @@
 // ### Interactions
-// The `interactions` module of the PIP is composed of pairs of conditions and actions.
+// The `interactions` module of the miTime is composed of pairs of conditions and actions.
 // Each interaction object has both a conditions and an actions property. </br>
 
 //        {

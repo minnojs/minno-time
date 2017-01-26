@@ -1,7 +1,7 @@
 # Overview
 
 Minno-time builds and runs experiments with time-sensitive tasks over the Internet. It is written in JavaScript and is built to be extremely versatile and customizable.
-Researchers can program their own studies by writing scripts in a language that PIP can understand. Those scripts are written as JavaScript objects. This format allows writing simple and straightforward scripts using a constrained scripting language. The format also allows advanced users to easily create complex and dynamic scripts using in-line JavaScript.
+Researchers can program their own studies by writing scripts in a language that miTime can understand. Those scripts are written as JavaScript objects. This format allows writing simple and straightforward scripts using a constrained scripting language. The format also allows advanced users to easily create complex and dynamic scripts using in-line JavaScript.
 
 ### Central Concepts
 The player treats each task as a **sequence** of **trials**.
@@ -31,9 +31,9 @@ Once your script is ready all you have to do is to call it from within the playe
 ### Collecting the data
 All the data that is recorded by the player is sent to a URL of your choosing. Tasks may vary greatly so we give you the flexibility to send whatever data you need and process it however you see fit.
 
-### Learn how to use PIP
+### Learn how to use miTime
 This was only a short overview of the player. There are many ways to learn how to use it.
-We recommend you first see some code examples. Start with the [hello world example](./hello.html). Then, to understand better the syntax used in that example, read a little about [Javascript objects](./javascript.html). Next, go back to the [hello world example](./hello.html) or continue to the [slideshow example](./slideshow.html) to see that you understand PIP code more clearly.
+We recommend you first see some code examples. Start with the [hello world example](./hello.html). Then, to understand better the syntax used in that example, read a little about [Javascript objects](./javascript.html). Next, go back to the [hello world example](./hello.html) or continue to the [slideshow example](./slideshow.html) to see that you understand miTime code more clearly.
 
 Next, we recommend that you read and experience our Stroop tutorial, which will take you from [setup](./stroop-setupDocco.html) to the [complete task](./stroop-taskDocco.html) in a few steps.
 

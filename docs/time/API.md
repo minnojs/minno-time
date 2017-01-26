@@ -412,7 +412,7 @@ The `properties` property is an object to compare to the trial data. Note that t
 
 ### Inheritance
 
-Each element in the PIP (trial/stimulus/media) can inherit its attributes from an element set.
+Each element in the miTime (trial/stimulus/media) can inherit its attributes from an element set.
 
 #### Sets
 
@@ -839,7 +839,7 @@ metaData: {
 
 ### API
 
-The API is a javascript object that is used to activate the PIP.
+The API is a javascript object that is used to activate the miTime.
 The basic format for accessing the API is as follows:
 
 ```javascript

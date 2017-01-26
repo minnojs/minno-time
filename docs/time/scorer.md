@@ -1,6 +1,6 @@
 # API
 
-The Scorer component of the PIP is an implementation of the D-score algorithm for computing IAT scores. The scorer allows creating an appropriate feedback message for the users, as well as logging them to the server.
+The Scorer component of the miTime is an implementation of the D-score algorithm for computing IAT scores. The scorer allows creating an appropriate feedback message for the users, as well as logging them to the server.
 In order to compute the score the trials are divided to parcels, the score for each parcel is computed and then the scores are averaged.
 
 ### Table of contents
@@ -32,7 +32,7 @@ scorer.addSettings('compute',computeObj);
 scorer.addSettings('message',messageObj);
 ```
 
-Get the score and the message from the scorer (make sure that you do this in a function that is called at the end of the PIP task, after the scores are collected);
+Get the score and the message from the scorer (make sure that you do this in a function that is called at the end of the miTime task, after the scores are collected);
 
 ```javascript
 var DScoreObj = scorer.computeD();

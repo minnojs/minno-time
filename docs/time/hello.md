@@ -5,7 +5,7 @@ We will create a simple task that says "Hello world". As we go, we will comment 
 You can follow along and play around with the code right [here](./helloPlay.js).
 
 ### The wrapper
-PIP's scripts are usually a single JavaScript file. The script is wrapped within a define function (You don't have to understand what it does, but if you are interested look up [requirejs](http://requirejs.org/)).
+miTime's scripts are usually a single JavaScript file. The script is wrapped within a define function (You don't have to understand what it does, but if you are interested look up [requirejs](http://requirejs.org/)).
 
 ```javascript
 /* The script wrapper */

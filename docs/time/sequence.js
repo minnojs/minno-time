@@ -4,7 +4,7 @@ define(['pipAPI'], function(APIconstructor) {
 
 
 	// ### The trial sequence
-	// The heart of any PIP script is the sequence.
+	// The heart of any miTime script is the sequence.
 	// In this part of the tutorial we will see some advanced uses of the sequencer. </br>
 
 	API.addSequence([
@@ -197,7 +197,7 @@ define(['pipAPI'], function(APIconstructor) {
 	/* this is where we close the sequence */
 
 	// ### Pro tip
-	// *This section goes beyond the normal scope of the PIP, and is intended for use by advanced users only.* </br>
+	// *This section goes beyond the normal scope of the miTime, and is intended for use by advanced users only.* </br>
 	// The sequencer allows for many complex configurations. There are times that you want a quick easy way to test that the sequence you created really does what it is supposed to.
 	// The proper way to do that is to create a mock sequence and check that it is mixed correctly. </br>
 	// Following is such an example. </br>

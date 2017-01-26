@@ -1,5 +1,5 @@
 // # Settings
-// This tutorial will show you how to use the API in order to set the global settings for the PIP. </br>
+// This tutorial will show you how to use the API in order to set the global settings for the miTime. </br>
 // The `API.addSettings()` function takes two arguments; the first is the property we want to affect (i.e. canvas), and the second is the settings object we want to set in it.
 // Adding setting is accumulative. this means that adding a specific setting twice merges it in, and does not reset it to its defaults. </br>
 // The basic structure of the add settings object is as follows:

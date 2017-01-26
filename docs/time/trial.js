@@ -1,4 +1,4 @@
-// All PIP source files are wrapped inside define function
+// All miTime source files are wrapped inside define function
 // This function gives you access to the API object that we use to build the various tasks
 // If you want to know more about this, you can read up about AMD and check out http://requirejs.org/
 define(['pipAPI'], function(APIconstructor) {
@@ -6,7 +6,7 @@ define(['pipAPI'], function(APIconstructor) {
 	var API = new APIconstructor();
 
 	// ### The trial sequence
-	// The heart of any PIP script is the sequence.
+	// The heart of any miTime script is the sequence.
 	// Sequences are arrays of Trial objects. In this part of the tutorial we will see a simple sequence encompasing a single trial.
 
 	API.addSequence([
@@ -15,7 +15,7 @@ define(['pipAPI'], function(APIconstructor) {
 		{
 			// The data property of the trial is used to keep user defined data regarding this trial.
 			// It can be used to keep track of trial types, blocks, score etc.
-			// It becomes incrementaly usefull with more advance features of the PIP.
+			// It becomes incrementaly usefull with more advance features of the miTime.
 			data: {
 				myProperty: 'information',
 				myOtherProperty: 'more information'

@@ -1,6 +1,6 @@
 # Install
 
-The Minno player is an open source project and its source code is available on [Github](https://github.com/ProjectImplicit/PIPlayer). You may use it freely under the terms of the license. This page will explain the basics of getting the player to work.
+The Minno player is an open source project and its source code is available on [Github](https://github.com/ProjectImplicit/miTimelayer). You may use it freely under the terms of the license. This page will explain the basics of getting the player to work.
 
 ### Local installation
 
@@ -10,7 +10,7 @@ In order to install the player localy you have to install [Node.js](http://nodej
 
 #### Installing:
 * Download and install [Node.js](http://nodejs.org/).
-* Download the player from [Github](https://github.com/ProjectImplicit/PIPlayer/archive/master.zip).
+* Download the player from [Github](https://github.com/ProjectImplicit/miTimelayer/archive/master.zip).
 * Unzip the player into the directory of your choice.
 * Open a terminal (a text interface):
 	* On Windows, click the Start button, select All Programs, click Accessories, and then click Command Prompt.
@@ -25,7 +25,7 @@ In order to install the player localy you have to install [Node.js](http://nodej
 If you have a git client then you may want to clone Minno directly instead of downloading it:
 
 ```bash
-git clone https://github.com/ProjectImplicit/PIPlayer .
+git clone https://github.com/ProjectImplicit/miTimelayer .
 ```
 #### Activating
 Once you have installed the player, each time you want to activate the player all you have to do is run the following command: `npm start` from the player directory.

@@ -5,7 +5,7 @@ define(['pipAPI','jquery'], function(APIconstructor, $) {
 
 	API.addSequence([
 		// ### Stimuli and media
-		// The stimulus object is the object that tells the PIP exactly what and how to display a stimulus.
+		// The stimulus object is the object that tells the miTime exactly what and how to display a stimulus.
 		// Part of each stimulus is the media that it displays.
 
 		/* The trial begins here */

@@ -1,6 +1,6 @@
 # Javascript
 
-PIP scripts are written using JavaScript; [JavaScript](http://en.wikipedia.org/wiki/JavaScript) is a programming language used by browsers (like Internet Explorer, Chrome or Safari). PIP's scripts do not require you to program any JavaScript but you should have a basic grasp of the basic syntax before we go on. If you know some basic JavaScript you can skip this section and go directly to the Hello world tutorial.
+miTime scripts are written using JavaScript; [JavaScript](http://en.wikipedia.org/wiki/JavaScript) is a programming language used by browsers (like Internet Explorer, Chrome or Safari). miTime's scripts do not require you to program any JavaScript but you should have a basic grasp of the basic syntax before we go on. If you know some basic JavaScript you can skip this section and go directly to the Hello world tutorial.
 
 The fundamental building blocks of javascript expressions are variables and literals (more details [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Values,_variables,_and_literals)).
 
@@ -105,7 +105,7 @@ console.log(square(9))			// prints 81
 (learn more [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions)).
 
 ### Errors and debugging
-When developing PIP scripts things don't always go as expected. Sometimes you might make a syntactical error, sometime you might misspell a PIP keyword. The browser always logs these errors and it is useful to see them. All modern browsers have a console that allows you to see the errors (if you are using firefox you should check out [firebug](https://getfirebug.com/)). Most browsers use `F12` as a shortcut for displaying the console. If that doesn't work for you search your browsers menus: look for a **Web Developer** or **Developer Tools** menu under tools or options.
+When developing miTime scripts things don't always go as expected. Sometimes you might make a syntactical error, sometime you might misspell a miTime keyword. The browser always logs these errors and it is useful to see them. All modern browsers have a console that allows you to see the errors (if you are using firefox you should check out [firebug](https://getfirebug.com/)). Most browsers use `F12` as a shortcut for displaying the console. If that doesn't work for you search your browsers menus: look for a **Web Developer** or **Developer Tools** menu under tools or options.
 
 In case your script does not load, or freezes at a certain point, open your console and see if you have any errors.
 
