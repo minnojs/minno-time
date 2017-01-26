@@ -19,6 +19,20 @@
 					<a href="/minno-time/0.3/time/overview.html">miTime</a>
 				</nav>
 				<nav>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
                     <select id="version-select"><option value="0.3" selected>v0.3</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
@@ -79,7 +93,7 @@
 </ul>
 </li>
 </ul>
-<p> All PIP source files are wrapped inside define function
+<p> All miTime source files are wrapped inside define function
  This function gives you access to the API object that we use to build the various tasks
  If you want to know more about this, you can read up about AMD and check out <a href="http://requirejs.org/">http://requirejs.org/</a></p>
 <section playground>
@@ -87,7 +101,7 @@
         <a class="activate-button">Activate</a>
         <a class="download-button" href="trial.js" download>Download</a>
     </div>
-    <div class="editor">// All PIP source files are wrapped inside define function
+    <div class="editor">// All miTime source files are wrapped inside define function
 // This function gives you access to the API object that we use to build the various tasks
 // If you want to know more about this, you can read up about AMD and check out http://requirejs.org/
 define([&quot;pipAPI&quot;], function(APIconstructor) {
@@ -95,7 +109,7 @@ define([&quot;pipAPI&quot;], function(APIconstructor) {
 	var API = new APIconstructor();
 
 	// ### The trial sequence
-	// The heart of any PIP script is the sequence.
+	// The heart of any miTime script is the sequence.
 	// Sequences are arrays of Trial objects. In this part of the tutorial we will see a simple sequence encompasing a single trial.
 
 	API.addSequence([
@@ -104,7 +118,7 @@ define([&quot;pipAPI&quot;], function(APIconstructor) {
 		{
 			// The data property of the trial is used to keep user defined data regarding this trial.
 			// It can be used to keep track of trial types, blocks, score etc.
-			// It becomes incrementaly usefull with more advance features of the PIP.
+			// It becomes incrementaly usefull with more advance features of the miTime.
 			data: {
 				myProperty: &quot;information&quot;,
 				myOtherProperty: &quot;more information&quot;

@@ -19,6 +19,20 @@
 					<a href="/minno-time/0.3/time/overview.html">miTime</a>
 				</nav>
 				<nav>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
                     <select id="version-select"><option value="0.3" selected>v0.3</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
@@ -79,7 +93,7 @@
 </ul>
 </li>
 </ul>
-<p>PIP scripts are written using JavaScript; <a href="http://en.wikipedia.org/wiki/JavaScript">JavaScript</a> is a programming language used by browsers (like Internet Explorer, Chrome or Safari). PIP&#39;s scripts do not require you to program any JavaScript but you should have a basic grasp of the basic syntax before we go on. If you know some basic JavaScript you can skip this section and go directly to the Hello world tutorial.</p>
+<p>miTime scripts are written using JavaScript; <a href="http://en.wikipedia.org/wiki/JavaScript">JavaScript</a> is a programming language used by browsers (like Internet Explorer, Chrome or Safari). miTime&#39;s scripts do not require you to program any JavaScript but you should have a basic grasp of the basic syntax before we go on. If you know some basic JavaScript you can skip this section and go directly to the Hello world tutorial.</p>
 <p>The fundamental building blocks of javascript expressions are variables and literals (more details <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Values,_variables,_and_literals">here</a>).</p>
 <p>Variables store information. Each variable stores one or a few different values.</p>
 <h3><a name="value-types" class="header-link" href="#value-types"><span></span></a>Value types</h3><p>There are several types of values recognized by JavaScript.</p>
@@ -174,7 +188,7 @@ console.log(person.weight.kg)        // prints &#39;68&#39;
 console.log(square(9))            // prints 81
 </code></pre>
 <p>(learn more <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions">here</a>).</p>
-<h3><a name="errors-and-debugging" class="header-link" href="#errors-and-debugging"><span></span></a>Errors and debugging</h3><p>When developing PIP scripts things don&#39;t always go as expected. Sometimes you might make a syntactical error, sometime you might misspell a PIP keyword. The browser always logs these errors and it is useful to see them. All modern browsers have a console that allows you to see the errors (if you are using firefox you should check out <a href="https://getfirebug.com/">firebug</a>). Most browsers use <code>F12</code> as a shortcut for displaying the console. If that doesn&#39;t work for you search your browsers menus: look for a <strong>Web Developer</strong> or <strong>Developer Tools</strong> menu under tools or options.</p>
+<h3><a name="errors-and-debugging" class="header-link" href="#errors-and-debugging"><span></span></a>Errors and debugging</h3><p>When developing miTime scripts things don&#39;t always go as expected. Sometimes you might make a syntactical error, sometime you might misspell a miTime keyword. The browser always logs these errors and it is useful to see them. All modern browsers have a console that allows you to see the errors (if you are using firefox you should check out <a href="https://getfirebug.com/">firebug</a>). Most browsers use <code>F12</code> as a shortcut for displaying the console. If that doesn&#39;t work for you search your browsers menus: look for a <strong>Web Developer</strong> or <strong>Developer Tools</strong> menu under tools or options.</p>
 <p>In case your script does not load, or freezes at a certain point, open your console and see if you have any errors.</p>
 <p>The <a href="install.html">local server</a> gives you an additional, extremely powerful, tool. It uses <a href="http://jshint.com/">jshint</a> to evaluate your code and can often point out syntax errors that are difficult to recognize.</p>
 

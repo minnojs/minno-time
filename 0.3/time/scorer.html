@@ -19,6 +19,20 @@
 					<a href="/minno-time/0.3/time/overview.html">miTime</a>
 				</nav>
 				<nav>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
                     <select id="version-select"><option value="0.3" selected>v0.3</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
@@ -79,7 +93,7 @@
 </ul>
 </li>
 </ul>
-<p>The Scorer component of the PIP is an implementation of the D-score algorithm for computing IAT scores. The scorer allows creating an appropriate feedback message for the users, as well as logging them to the server.
+<p>The Scorer component of the miTime is an implementation of the D-score algorithm for computing IAT scores. The scorer allows creating an appropriate feedback message for the users, as well as logging them to the server.
 In order to compute the score the trials are divided to parcels, the score for each parcel is computed and then the scores are averaged.</p>
 <h3><a name="table-of-contents" class="header-link" href="#table-of-contents"><span></span></a>Table of contents</h3><ul>
 <li><a href="#how-to-use">How to Use</a></li>
@@ -104,7 +118,7 @@ You can set the different settings using the following commands:</p>
 <pre><code class="lang-javascript">scorer.addSettings(&#39;compute&#39;,computeObj);
 scorer.addSettings(&#39;message&#39;,messageObj);
 </code></pre>
-<p>Get the score and the message from the scorer (make sure that you do this in a function that is called at the end of the PIP task, after the scores are collected);</p>
+<p>Get the score and the message from the scorer (make sure that you do this in a function that is called at the end of the miTime task, after the scores are collected);</p>
 <pre><code class="lang-javascript">var DScoreObj = scorer.computeD();
 </code></pre>
 <h3><a name="computed" class="header-link" href="#computed"><span></span></a>computeD</h3><p>The computeD function activates the scorer and returns an object with the score and feedback message.</p>

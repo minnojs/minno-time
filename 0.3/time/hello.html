@@ -19,6 +19,20 @@
 					<a href="/minno-time/0.3/time/overview.html">miTime</a>
 				</nav>
 				<nav>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
                     <select id="version-select"><option value="0.3" selected>v0.3</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
@@ -81,7 +95,7 @@
 </ul>
 <p>We will create a simple task that says &quot;Hello world&quot;. As we go, we will comment on several of the player&#39;s features and explain some of the ways you can customize your task.</p>
 <p>You can follow along and play around with the code right <a href="./helloPlay.html">here</a>.</p>
-<h3><a name="the-wrapper" class="header-link" href="#the-wrapper"><span></span></a>The wrapper</h3><p>PIP&#39;s scripts are usually a single JavaScript file. The script is wrapped within a define function (You don&#39;t have to understand what it does, but if you are interested look up <a href="http://requirejs.org/">requirejs</a>).</p>
+<h3><a name="the-wrapper" class="header-link" href="#the-wrapper"><span></span></a>The wrapper</h3><p>miTime&#39;s scripts are usually a single JavaScript file. The script is wrapped within a define function (You don&#39;t have to understand what it does, but if you are interested look up <a href="http://requirejs.org/">requirejs</a>).</p>
 <pre><code class="lang-javascript">/* The script wrapper */
 define([&#39;pipAPI&#39;], function(APIconstructor) {
     var API = new APIconstructor();

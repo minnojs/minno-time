@@ -19,6 +19,20 @@
 					<a href="/minno-time/0.3/time/overview.html">miTime</a>
 				</nav>
 				<nav>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
                     <select id="version-select"><option value="0.3" selected>v0.3</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
@@ -80,7 +94,7 @@
 </li>
 </ul>
 <p>Minno-time builds and runs experiments with time-sensitive tasks over the Internet. It is written in JavaScript and is built to be extremely versatile and customizable.
-Researchers can program their own studies by writing scripts in a language that PIP can understand. Those scripts are written as JavaScript objects. This format allows writing simple and straightforward scripts using a constrained scripting language. The format also allows advanced users to easily create complex and dynamic scripts using in-line JavaScript.</p>
+Researchers can program their own studies by writing scripts in a language that miTime can understand. Those scripts are written as JavaScript objects. This format allows writing simple and straightforward scripts using a constrained scripting language. The format also allows advanced users to easily create complex and dynamic scripts using in-line JavaScript.</p>
 <h3><a name="central-concepts" class="header-link" href="#central-concepts"><span></span></a>Central Concepts</h3><p>The player treats each task as a <strong>sequence</strong> of <strong>trials</strong>.</p>
 <p><strong>Trials</strong> do three things:</p>
 <ul>
@@ -99,8 +113,8 @@ Researchers can program their own studies by writing scripts in a language that 
 <h3><a name="creating-a-task" class="header-link" href="#creating-a-task"><span></span></a>Creating a Task</h3><p>When creating a task you first create your building blocks. You create prototypes for each trial type you intend to use and create sets of stimuli for later use. Next, you drop the building blocks into the sequence; at this stage you decide on the global structure of your task and create the exact randomization that you want.</p>
 <p>Once your script is ready all you have to do is to call it from within the player index page.</p>
 <h3><a name="collecting-the-data" class="header-link" href="#collecting-the-data"><span></span></a>Collecting the data</h3><p>All the data that is recorded by the player is sent to a URL of your choosing. Tasks may vary greatly so we give you the flexibility to send whatever data you need and process it however you see fit.</p>
-<h3><a name="learn-how-to-use-pip" class="header-link" href="#learn-how-to-use-pip"><span></span></a>Learn how to use PIP</h3><p>This was only a short overview of the player. There are many ways to learn how to use it.
-We recommend you first see some code examples. Start with the <a href="./hello.html">hello world example</a>. Then, to understand better the syntax used in that example, read a little about <a href="./javascript.html">Javascript objects</a>. Next, go back to the <a href="./hello.html">hello world example</a> or continue to the <a href="./slideshow.html">slideshow example</a> to see that you understand PIP code more clearly.</p>
+<h3><a name="learn-how-to-use-mitime" class="header-link" href="#learn-how-to-use-mitime"><span></span></a>Learn how to use miTime</h3><p>This was only a short overview of the player. There are many ways to learn how to use it.
+We recommend you first see some code examples. Start with the <a href="./hello.html">hello world example</a>. Then, to understand better the syntax used in that example, read a little about <a href="./javascript.html">Javascript objects</a>. Next, go back to the <a href="./hello.html">hello world example</a> or continue to the <a href="./slideshow.html">slideshow example</a> to see that you understand miTime code more clearly.</p>
 <p>Next, we recommend that you read and experience our Stroop tutorial, which will take you from <a href="./stroop-setupDocco.html">setup</a> to the <a href="./stroop-taskDocco.html">complete task</a> in a few steps.</p>
 <p>While reading the tutorials, we recommend that you tinker with the files yourself, and see if you can create your own version of each of the scripts you&#39;ll see throughout that tutorial. The scripts are all available within the playgrounds (click the <span class="glyphicon glyphicon-play-circle"></span> button beside the tutorial link). Try to make minor changes in each step. This will help you make sure that you understand what each part of the code does.</p>
 

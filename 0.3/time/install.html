@@ -19,6 +19,20 @@
 					<a href="/minno-time/0.3/time/overview.html">miTime</a>
 				</nav>
 				<nav>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
                     <select id="version-select"><option value="0.3" selected>v0.3</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
@@ -79,12 +93,12 @@
 </ul>
 </li>
 </ul>
-<p>The Minno player is an open source project and its source code is available on <a href="https://github.com/ProjectImplicit/PIPlayer">Github</a>. You may use it freely under the terms of the license. This page will explain the basics of getting the player to work.</p>
+<p>The Minno player is an open source project and its source code is available on <a href="https://github.com/ProjectImplicit/miTimelayer">Github</a>. You may use it freely under the terms of the license. This page will explain the basics of getting the player to work.</p>
 <h3><a name="local-installation" class="header-link" href="#local-installation"><span></span></a>Local installation</h3><p>The player comes with a simple server that allows you to run it from your local machine. This server includes this tutorial, and lets you easily create and test tasks of your own. It does <em>not</em> save the data gathered from the player (but see the <a href="#public-installation">next section</a> about that).</p>
 <p>In order to install the player localy you have to install <a href="http://nodejs.org/">Node.html</a>. <strong>Node.html</strong> is a software platform for server-side and network applications. It is currently used by a number of large companies including LinkedIn, Microsoft, Yahoo!, Walmart and PayPal. And can be run off any of the popular operating systems.</p>
 <h4><a name="installing" class="header-link" href="#installing"><span></span></a>Installing:</h4><ul>
 <li>Download and install <a href="http://nodejs.org/">Node.html</a>.</li>
-<li>Download the player from <a href="https://github.com/ProjectImplicit/PIPlayer/archive/master.zip">Github</a>.</li>
+<li>Download the player from <a href="https://github.com/ProjectImplicit/miTimelayer/archive/master.zip">Github</a>.</li>
 <li>Unzip the player into the directory of your choice.</li>
 <li>Open a terminal (a text interface):<ul>
 <li>On Windows, click the Start button, select All Programs, click Accessories, and then click Command Prompt.</li>
@@ -101,7 +115,7 @@
 <li>When these commands have gone through - thats it, you&#39;ve installed the player.</li>
 </ul>
 <p>If you have a git client then you may want to clone Minno directly instead of downloading it:</p>
-<pre><code class="lang-bash">git clone https://github.com/ProjectImplicit/PIPlayer .
+<pre><code class="lang-bash">git clone https://github.com/ProjectImplicit/miTimelayer .
 </code></pre>
 <h4><a name="activating" class="header-link" href="#activating"><span></span></a>Activating</h4><p>Once you have installed the player, each time you want to activate the player all you have to do is run the following command: <code>npm start</code> from the player directory.</p>
 <p>You will find that a browser window opens with the tutorials site, only this time from your local machine.</p>

@@ -19,6 +19,20 @@
 					<a href="/minno-time/0.3/time/overview.html">miTime</a>
 				</nav>
 				<nav>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
                     <select id="version-select"><option value="0.3" selected>v0.3</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
@@ -134,7 +148,7 @@
 <p>You should try it (don&#39;t forget the wrapper, and the activation function at the end (<code>API.play()</code>)). Try adding another trial. Try changing the media or style of the stimuli.</p>
 <p>Download <a href="slideshow1.html">here</a>. You can see it in action right <a href="./slideshow1Play.html">here</a>.</p>
 <h3><a name="basic-inheritance" class="header-link" href="#basic-inheritance"><span></span></a>Basic inheritance</h3><p>Our task is becoming longer and harder to maintain. Imagine a slide show with 50 slides, it will need more than 500 lines of code. If we would want to make any changes that apply to all the trials (e.g., increase the font size), we will have to go through each trial individually and make the same change. This is where the concept of inheritance comes in. Inheritance allows you to create a prototype of a trial (or stimulus or media object), and re-use it whenever you want. To understand how this works, we need to first learn a bit about sets.</p>
-<h4><a name="strongsetsstrong" class="header-link" href="#strongsetsstrong"><span></span></a><strong>Sets</strong></h4><p><a href="./API.html#sets">Set</a> is a list of one or more PIP objects (trials, stimuli or media objects). After defining a set of objects (e.g., trials), we can re-use those objects. Therefore, if we want to create a basic trial and re-use it a few times, we create a one-trial set, and then re-use it in a sequence. We will focus here on trial sets, but everything that applies to the trials sets also applies to stimuli sets or media sets as well.</p>
+<h4><a name="strongsetsstrong" class="header-link" href="#strongsetsstrong"><span></span></a><strong>Sets</strong></h4><p><a href="./API.html#sets">Set</a> is a list of one or more miTime objects (trials, stimuli or media objects). After defining a set of objects (e.g., trials), we can re-use those objects. Therefore, if we want to create a basic trial and re-use it a few times, we create a one-trial set, and then re-use it in a sequence. We will focus here on trial sets, but everything that applies to the trials sets also applies to stimuli sets or media sets as well.</p>
 <p>We create trial sets using the <code>API.addTrialSets()</code> function. The simplest use of the function involves two arguments; the first is the set name, and the second is an array of objects to add to the set. The following code creates a trial set called <em>slide</em> and populates it with one trial: our &quot;Hello world&quot; trial.</p>
 <pre><code class="lang-javascript">API.addTrialSets(&#39;slide&#39;,[{
     input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],

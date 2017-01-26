@@ -4,7 +4,7 @@ header,main {margin:auto;max-width:1000px;}
 header section {position:relative;width:100%;content:"";display:table;clear:both;font-size:1.2em;}
 nav {float:left}
 nav:last-child {float:right}
-nav a {padding:10px;font-weight:500;color:#563d7c;}
+nav a {padding:10px;font-weight:500;color:#563d7c;vertical-align:top;}
 nav a:hover{text-decoration:none;}
 nav:not(.brand) a:hover {color: #463265;background-color: #f9f9f9;}
 nav.brand a{padding-left:0;}
@@ -25,7 +25,7 @@ th,td {padding:3px 10px;vertical-align:top;}
 a {color:#1e5799;display:inline-block;text-decoration:none;}
 a:hover {text-decoration:underline;}
 hr {border:0;border-bottom:1px solid #ddd;margin:30px 0;}
-select {font-size:1em;color:#563d7c;border:0;background-color:#fff;display:inline-block;-webkit-appearance: none;-moz-appearance: none;appearance: none;cursor:pointer;}
+select {font-size:1em;color:#563d7c;border:0;background-color:#fff;display:inline-block;padding: 12px 0;vertical-align: top;-webkit-appearance: none;-moz-appearance: none;appearance: none;cursor:pointer;}
 blockquote{ padding-left: 15px; border-left: 3px solid #aaa;background:#eee; } 
 blockquote p{padding:5px;}
 
@@ -59,3 +59,6 @@ a.activate-button:before{ content: "\25B6\ "; }
 a.download-button:before{ content: "\21D3\ "; }
 .editor { margin-top: 1em; border-radius: 4px 4px 0; border: 1px solid #ddd; height: 30em; font-size: 14px; }
 
+/* search box */
+nav #search-box {display:inline-block;padding:6px;}
+.gsc-search-box tbody tr:nth-child(odd) {background:#fff;}

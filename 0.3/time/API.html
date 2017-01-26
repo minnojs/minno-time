@@ -19,6 +19,20 @@
 					<a href="/minno-time/0.3/time/overview.html">miTime</a>
 				</nav>
 				<nav>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
                     <select id="version-select"><option value="0.3" selected>v0.3</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
@@ -471,7 +485,7 @@ Responsible for the next trial we go to. This action will be executed only after
 <li><code>{type:&#39;goto&#39;,destination: &#39;nextWhere&#39;, properties: {blockStart:true}}</code> goto the next trial that has these properties</li>
 <li><code>{type:&#39;goto&#39;,destination: &#39;previousWhere&#39;, properties: {blockStart:true}}</code> goto the previous trial that has these properties</li>
 </ul>
-<h3><a name="inheritance" class="header-link" href="#inheritance"><span></span></a>Inheritance</h3><p>Each element in the PIP (trial/stimulus/media) can inherit its attributes from an element set.</p>
+<h3><a name="inheritance" class="header-link" href="#inheritance"><span></span></a>Inheritance</h3><p>Each element in the miTime (trial/stimulus/media) can inherit its attributes from an element set.</p>
 <h4><a name="sets" class="header-link" href="#sets"><span></span></a>Sets</h4><p>The element sets are defined in the main task script under <code>trialSets</code>/<code>stimulusSets</code>/<code>mediaSets</code>. Or using using the API using <code>addMediaSets</code>/<code>addStimulusSets</code>/<code>addTrialSets</code>.</p>
 <p>Each set is simply an array of elements that can later be referred to as a base for new elements. Note that the name that you give the set (in the example, default or IAT) is the handle that you later use to refer to it.</p>
 <p>The examples here use trials as an example, the same principles apply to stimuli and media elements.</p>
@@ -806,7 +820,7 @@ In order to create a post with three keys: json, session_id and task_id - you wo
 }
 </code></pre>
 <p>(the json field is the field that holds the player data it is created automaticaly)</p>
-<h3><a name="api" class="header-link" href="#api"><span></span></a>API</h3><p>The API is a javascript object that is used to activate the PIP.
+<h3><a name="api" class="header-link" href="#api"><span></span></a>API</h3><p>The API is a javascript object that is used to activate the miTime.
 The basic format for accessing the API is as follows:</p>
 <pre><code class="lang-javascript">define([&#39;app/API&#39;], function(APIconstructor) {
     var API = new APIconstructor();
