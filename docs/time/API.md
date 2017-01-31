@@ -10,7 +10,7 @@
         + [Conditions](#interactions-conditions)
         + [Actions](#interactions-actions)
 - [Inheritance](#inheritance)
-- [Logginh](#logging)
+- [Loggin](#logging)
 
 ### Definitions
 * **Media** are the objects that we display.
@@ -387,7 +387,7 @@ Change canvas style using any of the following properties (see [settings](#canva
 * `{type:'canvas', background:'blue'}`
 
 **log**:
-Log this action. Pushes this action into the logging stack so that it is later sent to the server (you can set how the player logs an action using the [logger settings](#logger-))
+Log this action. Pushes this action into the logging stack so that it is later sent to the server (you can set how the player logs an action using the [logger settings](#logger))
 * `{type:'log'}`
 
 **custom**
@@ -669,7 +669,7 @@ settings = {
 }
 ```
 
-#### Logger <a href="#logger-"></a>
+#### Logger
 
 ```javascript
 logger: {
@@ -963,7 +963,7 @@ Returns the logs for this task. Useful for giving user feedback or creating stai
 
 ### Logging
 
-The player sends all the data it has gathered to the url defined in the settings [logger](#logger-).
+The player sends all the data it has gathered to the url defined in the settings [logger](#logger).
 The data is sent as an ajax POST where the only field is "json" (unless you added something using [metadata](#meta-data)).
 The field includes a json array including all logs created. each log is an object including the following fields:
 
