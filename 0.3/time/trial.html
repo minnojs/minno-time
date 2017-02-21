@@ -104,7 +104,7 @@
     <div class="editor">// All miTime source files are wrapped inside define function
 // This function gives you access to the API object that we use to build the various tasks
 // If you want to know more about this, you can read up about AMD and check out http://requirejs.org/
-define([&quot;pipAPI&quot;], function(APIconstructor) {
+define([&apos;pipAPI&apos;], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
@@ -120,15 +120,15 @@ define([&quot;pipAPI&quot;], function(APIconstructor) {
 			// It can be used to keep track of trial types, blocks, score etc.
 			// It becomes incrementaly usefull with more advance features of the miTime.
 			data: {
-				myProperty: &quot;information&quot;,
-				myOtherProperty: &quot;more information&quot;
+				myProperty: &apos;information&apos;,
+				myOtherProperty: &apos;more information&apos;
 			},
 
 			// The input property of the trial is used to create the user interface.
 			// In this case we tell the player to listen for hits on the space key.
 			// Later on we will tell the player what to do when the space button is clicked.
 			input: [
-				{handle:&quot;space&quot;,on:&quot;space&quot;}
+				{handle:&apos;space&apos;,on:&apos;space&apos;}
 			],
 
 			// The layout property of the trial is used to display statick stimuli.
@@ -136,15 +136,15 @@ define([&quot;pipAPI&quot;], function(APIconstructor) {
 			// This property holds an array of stimuli objects, in this case the stimuli are set to display words in the top left and bottom right of the screen.
 			// We will learn more about Stimuli in a later tutorial.
 			layout:[
-				{location:{left:0,top:0},media:{word:&quot;top left&quot;}},
-				{location:{left:&quot;auto&quot;,right:0,top:&quot;auto&quot;,bottom:0},media:{word:&quot;bottom right&quot;}}
+				{location:{left:0,top:0},media:{word:&apos;top left&apos;}},
+				{location:{left:&apos;auto&apos;,right:0,top:&apos;auto&apos;,bottom:0},media:{word:&apos;bottom right&apos;}}
 			],
 
 			// The stimuli property of the trial holds stimuli that are dynamicaly displayed durring the trial.
 			// These trials are not displayed by default, and can be affected by user interactions.
 			// Like the layout property the stimuli property holds an array of stimuli objects.
 			stimuli: [
-				{media :{word:&quot;Hello world&quot;}}
+				{media :{word:&apos;Hello world&apos;}}
 			],
 
 			// The interaction property of the trial is responsible for any interactions the user has through the trial.
@@ -155,17 +155,17 @@ define([&quot;pipAPI&quot;], function(APIconstructor) {
 				// 1. Display Stimulus
 				{
 					/* when we begin the trial (condition) */
-					conditions: [{type:&quot;begin&quot;}],
+					conditions: [{type:&apos;begin&apos;}],
 					/* show all stimuli (action) */
-					actions: [{type:&quot;showStim&quot;,handle:&quot;All&quot;}]
+					actions: [{type:&apos;showStim&apos;,handle:&apos;All&apos;}]
 				},
 
 				// 2. End trial on space click
 				{
 					/* when space is clicked */
-					conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],
+					conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],
 					/* end the trial */
-					actions: [{type:&quot;endTrial&quot;}]
+					actions: [{type:&apos;endTrial&apos;}]
 				}
 			]
 		}
@@ -175,7 +175,7 @@ define([&quot;pipAPI&quot;], function(APIconstructor) {
 
 	return API.script;
 });
-/* don&quot;t forget to close the require wrapper */</div>
+/* don&apos;t forget to close the require wrapper */</div>
 </section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" integrity="sha256-xrr4HH5eSY+cFz4SH7ja/LaAi9qcEdjMpeMP49/iOLs=" crossorigin="anonymous"></script>
 <script src="../assets/playground.js"></script>

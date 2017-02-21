@@ -99,7 +99,7 @@
         <a class="download-button" href="helloPlay.js" download>Download</a>
     </div>
     <div class="editor">// ### Hello world
-define([&quot;pipAPI&quot;], function(APIconstructor) {
+define([&apos;pipAPI&apos;], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
@@ -107,23 +107,23 @@ define([&quot;pipAPI&quot;], function(APIconstructor) {
 	API.addSequence([
 		{
 			input: [
-				{handle:&quot;space&quot;,on:&quot;space&quot;}
+				{handle:&apos;space&apos;,on:&apos;space&apos;}
 			],
 			layout: [
 				// This is a stimulus object
 				{
-					media :{word:&quot;Hello world&quot;},
-					css:{fontSize:&quot;2em&quot;,color:&quot;#D7685A&quot;}
+					media :{word:&apos;Hello world&apos;},
+					css:{fontSize:&apos;2em&apos;,color:&apos;#D7685A&apos;}
 				}
 			],
 			interactions: [
 				// This is an interaction (it has a condition and an action)
 				{
 					conditions: [
-						{type:&quot;inputEquals&quot;,value:&quot;space&quot;}
+						{type:&apos;inputEquals&apos;,value:&apos;space&apos;}
 					],
 					actions: [
-						{type:&quot;endTrial&quot;}
+						{type:&apos;endTrial&apos;}
 					]
 				}
 			]
