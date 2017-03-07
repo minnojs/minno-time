@@ -16,8 +16,6 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 		***********************************************************
 	*/
 
-	API.addGlobal({flag:12341234});
-
 	// set the canvas size
 	API.addSettings('canvas',{
 		maxWidth: 800,
@@ -26,8 +24,8 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 
 	// setting the base urls for images and templates
 	API.addSettings('base_url',{
-		image : '../resources/examples/images',
-		template : window.location.href + '../resources/examples/IAT'
+		image : '/resources/examples/images',
+		template : '/resources/examples/IAT'
 	});
 
 	// setting the way the logger works (how often we send data to the server and the url for the data)
@@ -55,9 +53,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 		input: [
 			{handle:'enter',on:'enter'},
 			{handle:'left',on:'keypressed',key:'e'},
-			{handle:'right',on:'keypressed',key:'i'},
-			{handle:'left',on:'leftTouch',touch:true},
-			{handle:'right',on:'rightTouch',touch:true}
+			{handle:'right',on:'keypressed',key:'i'}
 		],
 
 		// Constant elements in the display, in this case: the user instructions: left / right.
@@ -74,10 +70,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 			// Display the stimulus imidiately.
 			{
 				conditions: [
-					{type:'begin'},
-					{type:'function', value:function(){
-						console.log(arguments)
-					}}
+					{type:'begin'}
 				],
 				actions: [
 					{type:'showStim',handle:'target'}
@@ -151,8 +144,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 
 		// Create user interface (just click space to move on...)
 		input: [
-			//{handle:'space',on:'space'},
-			{handle:'space',on:'bottomTouch',stouch:true, css:{background:'red'}},
+			{handle:'space',on:'space'},
 			{handle:'enter',on:'enter'}
 		],
 
@@ -413,7 +405,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 		// Here we control only the general way that the layout appears.
 		// The mechanics inside the templates and the fact that we set the proper data in all trials allow us to use the same stimuli for the layout of all the trials.
 		layout: [
-			{data:{handle:'left'},location:{left:0,top:0},css:{color:'white',fontSize:'2em'},medias:{template:'left.jst'}, media:'1234 <%= stimulusData.handle %>'},
+			{data:{handle:'left'},location:{left:0,top:0},css:{color:'white',fontSize:'2em'},media:{template:'left.jst'}},
 			{data:{handle:'right'}, location:{left:'auto',right:0,top:0},css:{color:'white',fontSize:'2em'},media:{template:'right.jst'}}
 		]
 	});

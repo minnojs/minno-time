@@ -39,7 +39,7 @@ module.exports = function(grunt) {
 			files: ['src/js/', 'resources'],
 			options: {
 				jshintrc: '.jshintrc',
-				ignores: ['src/js/libs/*.js', 'src/js/r.js']
+				ignores: ['src/js/libs/*.js', 'src/js/r.js', 'src/js/utils']
 			}
 		},
 
@@ -111,20 +111,6 @@ module.exports = function(grunt) {
 			}
 		},
 
-		express: {
-			options: {
-				port: 3000,
-				hostname: '*'
-			},
-			server: {
-				options: {
-					server: path.resolve('resources/server'),
-					livereload:true,
-					open: true
-				}
-			}
-		},
-
 		// custum grunt task (resources/gruntTasks/test.js)
 		test: {
 			// local selenium server
@@ -162,13 +148,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-docco');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
-	grunt.loadNpmTasks('grunt-express');
-	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-sass');
 
 	// Default task(s).
 	grunt.registerTask('default', ['jshint']);
-	grunt.registerTask('server', ['express', 'watch:user','express-keepalive']);
 
 	grunt.registerTask('version', 'Advancing version', function(type){
 		grunt.task.run([

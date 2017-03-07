@@ -60,9 +60,9 @@ In order to build this project you should install [Node.js](http://nodejs.org/) 
 Next run `npm run build` in order to build the site and optimize the player.
 
 If you want to activate a simple local server run `npm start`.
+It will run the IAT in [resources/examples](resources/examples).
 
 We use [Grunt](http://gruntjs.com/) in order to automate tasks. `grunt build` should create a dist folder with the optimzed javascript, and a docs folder with documentation. You can specifiy an alternative url for the player using `grunt build --player=path/to/my/player`. You can ask for the site version (as opposed to local version) of the documentation using `grunt build --site`.
 
 ### Using PIPlayer in your own project
 You can use PIPlayer in your own project by adding it as a Bower dependency. `bower install PIPlayer`.  Please see Bower documentation for additional details on how to setup and use bower.
-
