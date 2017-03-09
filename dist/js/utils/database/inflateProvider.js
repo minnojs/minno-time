@@ -108,9 +108,8 @@ define(function(require){
 						if (!_.isPlainObject(parentProp)){
 							throw new Error('Inheritance error: You tried merging an object with an non object (for "' + key + '")');
 						}
-						_.extend(childProp, parentProp);
+						child[key] = _.extend({},parentProp,childProp);
 					}
-
 				}
 			});
 
