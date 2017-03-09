@@ -42,5 +42,4 @@ define(function(require) {
 	}
 
 	return html;
-
 });
