@@ -37,6 +37,7 @@ define(function(require){
 			}
 
 			if (!_.isPlainObject(source)){
+                console.error('You are trying to inflate a non object', source);
 				throw new Error('You are trying to inflate a non object');
 			}
 
@@ -110,6 +111,7 @@ define(function(require){
 						}
 						child[key] = _.extend({},parentProp,childProp);
 					}
+
 				}
 			});
 

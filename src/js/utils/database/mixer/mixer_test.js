@@ -27,6 +27,13 @@ define(['underscore','./mixerModule', '../randomize/randomizeModuleMock'],functi
 				}).toThrow();
 			});
 
+            it('should throw if a mixer returns anything but an array', function(){
+                mixer.mixers.notArr = function(){return null;} 
+                expect(function(){
+                    mixer({mixer:'notArr'}); 
+                }).toThrow();
+            });
+
 			it('should keep the results in the mixer object `$parsed`', function(){
 				var testArr = [];
 				mixer.mixers.testFn = function(){return testArr;};
@@ -37,10 +44,11 @@ define(['underscore','./mixerModule', '../randomize/randomizeModuleMock'],functi
 			});
 
 			it('should return `$parsed` unless remix = true', function(){
-				mixer.mixers.testFn = function(){return 456;};
+                var response = [];
+				mixer.mixers.testFn = function(){return response;};
 
 				expect(mixer({mixer:'testFn', $parsed:123})).toBe(123);
-				expect(mixer({mixer:'testFn', $parsed:123, remix:true})).toBe(456);
+				expect(mixer({mixer:'testFn', $parsed:123, remix:true})).toBe(response);
 			});
 
 			it('should repeat any data in a repeat n times', function(){
@@ -129,8 +137,24 @@ define(['underscore','./mixerModule', '../randomize/randomizeModuleMock'],functi
 						data: [1, {mixer:'repeat', times:2, data:[2]}]
 					})).toEqual([2,2]);
 				});
-
 			});
+
+            describe(': custom', function(){
+                it('should return the result of mixer.fn', function(){
+                    var response = [];
+                    expect(mixer({
+                        mixer:'custom',
+                        fn: function(){return response;}
+                    })).toBe(response);
+                });
+
+                it('should return an empty array if fn is not a function', function(){
+                    expect(mixer({
+                        mixer:'custom',
+                        fn: 1
+                    })).toEqual([]);
+                });
+            });
 
 
 
@@ -595,36 +619,39 @@ define(['underscore','./mixerModule', '../randomize/randomizeModuleMock'],functi
 				}));
 
 				it('should work', function(){
+                    var response = [];
 					expect(mixer({
 						mixer:'multiBranch',
 						branches:[
 							{conditions:[{}]}, //always false
-							{conditions: [{compare:'global.1',to:2}],data: "true"},
+							{conditions: [{compare:'global.1',to:2}],data: response},
 							{conditions: [{compare:'global.1',to:2}],data: "false"},
 							{}
 						],
 						elseData: "else"
-					}, {global:[1,2,3]})).toEqual("true");
+					}, {global:[1,2,3]})).toBe(response);
 				});
 
 				it('should support the defaultContext', inject(function(mixerDefaultContext){
+                    var response = [];
 					mixerDefaultContext.global = [1,2,3];
 					expect(mixer({
 						mixer:'multiBranch',
 						branches:[
 							{conditions:[{}]}, //always false
-							{conditions: [{compare:'global.1',to:2}],data: "true"},
+							{conditions: [{compare:'global.1',to:2}],data: response},
 							{conditions: [{compare:'global.1',to:2}],data: "false"},
 							{}
 						],
 						elseData: "else"
-					})).toEqual("true");
+					})).toBe(response);
 
 					delete(mixerDefaultContext.global);
 				}));
 
 
 				it('should support elseData', function(){
+                    var response = [];
 					expect(mixer({
 						mixer:'multiBranch',
 						branches:[
@@ -633,8 +660,8 @@ define(['underscore','./mixerModule', '../randomize/randomizeModuleMock'],functi
 							{conditions: [{compare:'global.1',to:2}],data: "false"},
 							{conditions:[{}]} //always false
 						],
-						elseData: "else"
-					}, {global:[]})).toEqual("else");
+						elseData: response
+					}, {global:[]})).toBe(response);
 				});
 
 			});

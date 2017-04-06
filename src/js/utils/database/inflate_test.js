@@ -139,8 +139,8 @@ define(['./databaseModule'],function(){
 			});
 
 			it('should merge objects', function(){
-				inflate({inherit:{merge:['a']}, a:{a:1}},[{a:{b:2}}]);
-				expect(result.a).toEqual({a:1,b:2});
+				inflate({inherit:{merge:['a']}, a:{a:1, b:2}},[{a:{b:3, c:3}}]);
+				expect(result.a).toEqual({a:1,b:2, c:3});
 			});
 
 			it('should throw if merge is not an array', function(){

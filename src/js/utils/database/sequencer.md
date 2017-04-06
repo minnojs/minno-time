@@ -247,6 +247,18 @@ Select the elements in `data` if all the conditions in the `conditions` array ar
 ```
 Find the first object within `branches` for which `conditions` is true, and select the elements in that objects `data`. If no object is selected then select `elseData` (optional). (See [conditions](#conditions) to learn about how conditions work).
 
+**custom**
+Custom mixers must return an array of appropriate elements.
+You can create them using the mixer context and the mixer element itself, or use them to create arbitrary elements as you like.
+
+``js
+{
+    mixer: 'custom',
+    fn: function(obj, context){
+        return [elem1, elem2]
+    }
+}
+```
 #### Conditions
 The conditional mixers (`branch` & `multiBranch`) allow you to change the content of a list according to [environmental variables](#variables). Each list has specific variables available to it, you can find the relevant details in the documentation for each list, but all lists have access to the `global` and `current` objects, so we'll use them for all examples here.
 
