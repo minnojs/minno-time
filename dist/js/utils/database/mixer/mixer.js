@@ -39,6 +39,10 @@ define(['underscore'],function(_){
 
 			obj.$parsed = mix.mixers[mixerName].apply(null, arguments);
 
+            if (!_.isArray(obj.$parsed)) {
+                throw new Error('Mixer: mixers must return an array (mixer: ' + mixerName + ')');
+            }
+
 			return obj.$parsed;
 		}
 
@@ -80,8 +84,13 @@ define(['underscore'],function(_){
 				return _.take(shuffle(sequence), obj.n ? obj.n : 1);
 			},
 
+            custom: function(obj, context){
+                return _.isFunction(obj.fn) ? obj.fn(obj, context) : [];
+            },
+
 			weightedRandom: weightedChoose,
 			weightedChoose: weightedChoose
+
 		};
 
 

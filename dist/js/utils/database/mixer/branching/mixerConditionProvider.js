@@ -20,6 +20,10 @@ define(function(require){
 
 			piConsole(['conditions']).info('Condition: ', left, operator || 'equals', right, condition);
 
+            if (condition.DEBUG && console) {
+                console.info('Condition: ', left, operator || 'equals', right, condition);
+            }
+
 			if (_.isFunction(operator)){
 				return !! operator.apply(context,[left, right, context]);
 			}

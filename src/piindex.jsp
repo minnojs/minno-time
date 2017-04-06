@@ -25,7 +25,7 @@ String getBase = getProtocol+"://"+getDomain;
 	<head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<base href="<%= getBase + "/implicit/common/all/js/pip/0.3.30/dist/" %>">
+		<base href="<%= getBase + "/implicit/common/all/js/pip/0.3.31/dist/" %>">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
         <meta HTTP-EQUIV="Expires" CONTENT="0"></meta>
         <meta HTTP-EQUIV="Pragma" CONTENT="no-cache"></meta>
