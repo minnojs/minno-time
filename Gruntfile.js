@@ -145,7 +145,6 @@ module.exports = function(grunt) {
 
 	grunt.task.loadTasks('resources/gruntTasks');
 	grunt.loadNpmTasks('grunt-bump');
-	grunt.loadNpmTasks('grunt-docco');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-sass');
