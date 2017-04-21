@@ -11,7 +11,8 @@ define(function(require){
 		main = require('app/task/main_view'),
 		parse = require('app/task/parser'),
 		play = require('app/sequencer/player'),
-		global = require('app/global');
+		global = require('app/global'),
+        global_trial = require('app/trial/current_trial');
 
 
 	function activate(script, done){
@@ -44,6 +45,13 @@ define(function(require){
 			});
 
 		return main.deferred.promise()
+            .then(function haltTrial(){
+                var trial = global_trial();
+                if (trial) {
+                    trial._next = ['end', {}]; // this ensures that the trial cycle ends. It is a horrible use of the API. I know :(
+                    trial.deactivate();
+                }
+            })
 			.then(done || function dfltDone(){
 				var redirect = script.settings && script.settings.redirect;
 				window.location.href = redirect || window.location.href;
