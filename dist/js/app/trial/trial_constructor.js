@@ -49,7 +49,6 @@ define(function(require){
 	_.extend(Trial.prototype,{
 
 		activate: function(){
-
 			var self = this;
 
 			// set global trial

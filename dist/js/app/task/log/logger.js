@@ -5,6 +5,7 @@
 define(function(require){
 
 	var $ = require('jquery')
+        , _ = require('underscore')
 		, pubsub = require('utils/pubsub')
 		, trial = require('app/trial/current_trial')
 		, settings = require('app/task/settings')
@@ -85,7 +86,7 @@ define(function(require){
 	pubsub.subscribe('log:send',function(){
 		var logStack = logStackGetter();
 		// get pulse size
-		var pulse = settings().logger && settings().logger.pulse;
+        var pulse = _.get(settings(), 'logger.pulse', 0);
 
 		// if logStack is full, lets send it
 		if (pulse && logStack.length - lastSend >= pulse) {
