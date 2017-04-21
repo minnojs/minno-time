@@ -1,0 +1,17 @@
+{
+    "rules": {
+        "indent": [1, "tab", {"SwitchCase": 1}],
+        "quotes": [1,"single"],
+        "linebreak-style": [2,"unix"],
+        "semi": [1,"always"],
+        "no-console": [1]
+    },
+    "env": {
+        "browser": true
+    },
+    "globals": {
+        "require" : true,
+        "define" : true
+    },
+    "extends": "eslint:recommended"
+}

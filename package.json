@@ -10,28 +10,26 @@
     "questVersion": "0.1"
   },
   "scripts": {
-    "build": "grunt build",
-    "start": "http-server . -p 3000 -o",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "eslint src/js",
+    "build": "npm run css && npm run requirejs",
+    "css": "node-sass src/css/main.scss --output src/css --source-map=true",
+    "requirejs": "r.js -o requirejs.build.js",
     "gendocs": "minno-gendocs docs pages",
-    "version": "grunt version"
+    "start": "http-server . -p 3000 -o",
+    "version": "npm run build && git add -A dist && git add -A src/main.css*"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ProjectImplicit/PIPlayer.git"
+    "url": "https://github.com/minnojs/minno-time.git"
   },
-  "bugs": "https://github.com/ProjectImplicit/PIPlayer/issues",
+  "bugs": "https://github.com/minnojs/minno-time/issues",
   "author": "Elad Zlotnick",
   "devDependencies": {
-    "grunt": "~0.4.3",
-    "grunt-bump": "0.0.14",
-    "grunt-cli": "~0.1.9",
-    "grunt-contrib-jshint": "~0.6.1",
-    "grunt-contrib-requirejs": "~0.4.1",
-    "grunt-sass": "^1.1.0",
+    "eslint": "^3.19.0",
     "http-server": "^0.9.0",
-    "jshint": "^2.4.4",
     "marked": "~0.3.0",
-    "minno-gendocs": "^1.0.0"
+    "minno-gendocs": "^1.0.0",
+    "node-sass": "^3.4.2",
+    "requirejs": "^2.1.17"
   }
 }
