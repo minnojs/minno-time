@@ -14,22 +14,22 @@ define(function(require){
 	 * http://www.websanova.com/blog/javascript/how-to-write-an-accurate-game-timer-in-javascript#.UmZ1PHh4uak
 	 */
 
-	var _ = require('underscore');
+    var _ = require('underscore');
 
-	return function timeout(){
-		var time = arguments[0];
-		var stack = _.isArray(arguments[1]) ? arguments[1] : [];
-		var callback = _.isFunction(arguments[1]) ? arguments[1] : arguments[2];
-		var timer_id = 0;
+    return function timeout(){
+        var time = arguments[0];
+        var stack = _.isArray(arguments[1]) ? arguments[1] : [];
+        var callback = _.isFunction(arguments[1]) ? arguments[1] : arguments[2];
+        var timer_id = 0;
 
-		if (!time) {
-			callback.call();
-		} else {
-			timer_id = setTimeout(callback,time);
-			stack.push(timer_id);
-		}
+        if (!time) {
+            callback.call();
+        } else {
+            timer_id = setTimeout(callback,time);
+            stack.push(timer_id);
+        }
 
-		return timer_id;
-	};
+        return timer_id;
+    };
 
 });

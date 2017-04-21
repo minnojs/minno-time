@@ -1,5 +1,5 @@
 define(function(require){
-	var $ = require('jquery')
+    var $ = require('jquery')
 		, is_touch_device = require('utils/is_touch');
 
 	/*
@@ -24,32 +24,32 @@ define(function(require){
 	 * }
 	 */
 
-	return function(listener,definitions){
-		var eventName = (is_touch_device ? 'touchstart' : 'mousedown') + '.interface';
-		var $element = definitions.element ? $(definitions.element) : false;
+    return function(listener,definitions){
+        var eventName = (is_touch_device ? 'touchstart' : 'mousedown') + '.interface';
+        var $element = definitions.element ? $(definitions.element) : false;
 
-		listener.on = function(callback){
-			function activateCallback(e){ callback(e,eventName); }
-			this.activateCallback = activateCallback;
+        listener.on = function(callback){
+            function activateCallback(e){ callback(e,eventName); }
+            this.activateCallback = activateCallback;
 
 			// If we're binding to an existing element, bind to its appropriate handle
-			if (!$element){
-				$(document).on(eventName,'[data-handle="'+definitions.stimHandle + '"]', activateCallback);
-			} else {
+            if (!$element){
+                $(document).on(eventName,'[data-handle="'+definitions.stimHandle + '"]', activateCallback);
+            } else {
 				// the element to attach
-				$element
+                $element
 					.css(definitions.css || {})
 					.appendTo('#canvas')							// @todo, not great form, we should probably have a variable pointing there...
 					.on(eventName,activateCallback);
-			}
-		};
+            }
+        };
 
-		listener.off = function(){
-			if ($element){
-				$element.remove();									// this also removes any attached events
-			} else {
-				$(document).off(eventName,'[data-handle="'+definitions.stimHandle + '"]', this.activateCallback);
-			}
-		};
-	};
+        listener.off = function(){
+            if ($element){
+                $element.remove();									// this also removes any attached events
+            } else {
+                $(document).off(eventName,'[data-handle="'+definitions.stimHandle + '"]', this.activateCallback);
+            }
+        };
+    };
 });

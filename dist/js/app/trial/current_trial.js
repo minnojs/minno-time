@@ -6,13 +6,13 @@ define(function(){
 	 * if it gets input, it replaces the current trial with the input;
 	 */
 
-	var trial;
+    var trial;
 
-	return function(newTrial){
-		if (newTrial) {
-			trial = newTrial;
-		}
+    return function(newTrial){
+        if (newTrial) {
+            trial = newTrial;
+        }
 
-		return trial;
-	};
+        return trial;
+    };
 });
