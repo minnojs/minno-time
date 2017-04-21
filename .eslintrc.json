@@ -1,6 +1,6 @@
 {
     "rules": {
-        "indent": [1, "tab", {"SwitchCase": 1}],
+        "indent": [1, 4, {"SwitchCase": 1}],
         "quotes": [1,"single"],
         "linebreak-style": [2,"unix"],
         "semi": [1,"always"],
@@ -11,6 +11,7 @@
     },
     "globals": {
         "require" : true,
+        "requirejs" : true,
         "define" : true
     },
     "extends": "eslint:recommended"

@@ -2,7 +2,7 @@
  * this file holds the trial sequence
  */
 define(function(){
-	var sequence;
+    var sequence;
 
 	/**
 	 * Getter/Setter for sequence
@@ -10,10 +10,10 @@ define(function(){
 	 * @param  {Object || null} obj 	The new script, if it is not set this is simply a getter.
 	 * @return {Object}     			The full script
 	 */
-	function getter(obj){
-		obj && (sequence = obj);
-		return sequence;
-	}
+    function getter(obj){
+        obj && (sequence = obj);
+        return sequence;
+    }
 
-	return getter;
+    return getter;
 });

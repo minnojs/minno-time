@@ -6,45 +6,45 @@
  */
 define(function(require){
 
-	var _ = require('underscore'),
-		mainScript = require('app/task/script'),
-		main = require('app/task/main_view'),
-		parse = require('app/task/parser'),
-		play = require('app/sequencer/player'),
-		global = require('app/global'),
+    var _ = require('underscore'),
+        mainScript = require('app/task/script'),
+        main = require('app/task/main_view'),
+        parse = require('app/task/parser'),
+        play = require('app/sequencer/player'),
+        global = require('app/global'),
         global_trial = require('app/trial/current_trial');
 
 
-	function activate(script, done){
+    function activate(script, done){
 		// init global
-		var glob = global(global());
-		var name = script.name || 'anonymous PIP';
+        var glob = global(global());
+        var name = script.name || 'anonymous PIP';
 
 		// create local namespace
-		glob[name] = glob.current = (_.isPlainObject(script.current) ? script.current : {});
-		glob.current.logs || (glob.current.logs = []); // init logs object
+        glob[name] = glob.current = (_.isPlainObject(script.current) ? script.current : {});
+        glob.current.logs || (glob.current.logs = []); // init logs object
 
 		// set the main script as a global
-		mainScript(script);
+        mainScript(script);
 
-		var parseDef = parse();
+        var parseDef = parse();
 
 		// activate main view and then display the loading screen
-		main
+        main
 			.activate()
 			.done(function(){
-				main
+    main
 					.loading(parseDef) // activate loading screen
 					.done(function(){
-						main.empty(); // remove the loading screen
-						play('next',{}); // activate task
-					})
+    main.empty(); // remove the loading screen
+    play('next',{}); // activate task
+})
 					.fail(function(src){
-						throw new Error('loading resource failed, do something about it! (you can start by checking the error log, you are probably reffering to the wrong url - ' + src +')');
-					});
-			});
+    throw new Error('loading resource failed, do something about it! (you can start by checking the error log, you are probably reffering to the wrong url - ' + src +')');
+});
+});
 
-		return main.deferred.promise()
+        return main.deferred.promise()
             .then(function haltTrial(){
                 var trial = global_trial();
                 if (trial) {
@@ -53,10 +53,10 @@ define(function(require){
                 }
             })
 			.then(done || function dfltDone(){
-				var redirect = script.settings && script.settings.redirect;
-				window.location.href = redirect || window.location.href;
-			});
-	}
+    var redirect = script.settings && script.settings.redirect;
+    window.location.href = redirect || window.location.href;
+});
+    }
 
-	return activate;
+    return activate;
 });

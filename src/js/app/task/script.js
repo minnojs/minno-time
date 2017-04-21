@@ -3,7 +3,7 @@
  */
 
 define(function(){
-	var scriptObj = {};
+    var scriptObj = {};
 
 	/**
 	 * Getter/Setter fo script
@@ -11,10 +11,10 @@ define(function(){
 	 * @param  {Object || null} obj 	The new script, if it is not set this is simply a getter.
 	 * @return {Object}     			The full script
 	 */
-	function script(obj){
-		obj && (scriptObj = obj);
-		return scriptObj;
-	}
+    function script(obj){
+        obj && (scriptObj = obj);
+        return scriptObj;
+    }
 
-	return script;
+    return script;
 });

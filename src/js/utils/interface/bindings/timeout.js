@@ -1,5 +1,5 @@
 define(function(require){
-	var timeout = require('utils/timeout')
+    var timeout = require('utils/timeout')
 		, randomize = require('utils/simpleRandomize');
 
 	/*
@@ -8,28 +8,28 @@ define(function(require){
 	 * requires definitions.duration, otherwise fires immediately
 	 */
 
-	return function(listener, definitions){
+    return function(listener, definitions){
 
 		// all this has to happen in a seperate module (closure) so that the different timers don't overide one anather
-		var Timeout = (function(){
+        var Timeout = (function(){
 
-			var duration = randomize(definitions.duration) || 0;
-			var timerID;
+            var duration = randomize(definitions.duration) || 0;
+            var timerID;
 
-			return {
-				on : function(callback){
-					timerID = timeout(duration,function(){
-						callback({},'timeout');
-					});
-				},
+            return {
+                on : function(callback){
+                    timerID = timeout(duration,function(){
+                        callback({},'timeout');
+                    });
+                },
 
-				off : function(){
-					clearTimeout(timerID);
-				}
-			};
-		})();
+                off : function(){
+                    clearTimeout(timerID);
+                }
+            };
+        })();
 
-		listener.on = Timeout.on;
-		listener.off = Timeout.off;
-	};
+        listener.on = Timeout.on;
+        listener.off = Timeout.off;
+    };
 });

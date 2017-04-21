@@ -16,7 +16,7 @@
     "requirejs": "r.js -o requirejs.build.js",
     "gendocs": "minno-gendocs docs pages",
     "start": "http-server . -p 3000 -o",
-    "version": "npm run build && git add -A dist && git add -A src/main.css*"
+    "version": "npm run build && git add -A dist && git add -A src/css/main.css*"
   },
   "repository": {
     "type": "git",
