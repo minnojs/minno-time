@@ -25,4 +25,7 @@
 	position:absolute;
 	text-align:center;
 	overflow: hidden;
+    opacity: 0;
 }
+
+[pi-player] .minno-stimulus-visible {opacity:1}

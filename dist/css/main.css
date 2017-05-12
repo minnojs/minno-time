@@ -63,4 +63,7 @@ a img {
 [pi-player] .stimulus {
   position: absolute;
   text-align: center;
-  overflow: hidden; }
+  overflow: hidden;
+  opacity: 0; }
+[pi-player] .minno-stimulus-visible {
+  opacity: 1; }

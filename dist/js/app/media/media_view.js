@@ -40,8 +40,6 @@ define(function(require){
         }
     }());
 
-
-
     var Backbone = require('backbone'),
         _ = require('underscore'),
         main_view = require('app/task/main_view');
@@ -57,7 +55,6 @@ define(function(require){
             this.$el
                 .addClass('stimulus')
                 .attr('data-handle', this.model.handle)     // add data-handle for handeling of mouse/touch interactions
-                .css('visibility', 'hidden')
                 .css(this.model.get('css'))
                 .appendTo(canvas);
 
@@ -66,28 +63,26 @@ define(function(require){
 
         // we keep all stimuli appended to the canvas so that the render function can apply to them
         // they shouldn't affect each other because they have absolute positioning
-        // we hide and show them using visibility
+        // we hide and show them using opacity
 
         render: function(){
 
             // these are the things that need recalibrating on refresh
             this.size();
-
             this.deferToLoad(this.place);
 
             return this;
         },
 
         deferToLoad: function(cb){
-            cb = _.bind(cb, this);
             // if the element does not have a width it has not been loaded yet
             if (this.$el.width()){
-                cb();
+                cb.apply(this);
             } else {
                 // we need defer for safari
                 // we need raf for chrome on ipad
                 _.defer(function(){
-                    window.requestAnimationFrame(cb);
+                    window.requestAnimationFrame(cb.bind(this));
                 });
 
             }
@@ -105,21 +100,21 @@ define(function(require){
                     // Firefox requires to explicitly empty the "src" before resetting it.
                     this.$el[0].src = '';
                     this.$el[0].src = this.options.image;
-                    this.$el.css('visibility', 'visible');
+                    this.$el.addClass('minno-stimulus-visible');
                 }
 
                 return this;
             }
 
             this.deferToLoad(function(){
-                this.$el.css('visibility', 'visible');
+                this.$el.addClass('minno-stimulus-visible');
             });
 
             return this;
         },
 
         hide: function(){
-            this.$el.css('visibility', 'hidden');
+            this.$el.removeClass('minno-stimulus-visible');
             return this;
         },
 
