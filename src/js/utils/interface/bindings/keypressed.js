@@ -1,55 +1,40 @@
-define(function(require){
-    var $ = require('jquery');
+define(function(){
+    /*
+     * key pressed listener
+     * reqires key
+     *
+     * key can be either charCode or string.
+     * or an array of charCode/strings.
+     */
 
-	/*
-	 * key pressed listener
-	 * reqires key
-	 *
-	 * key can be either charCode or string.
-	 * or an array of charCode/strings.
-	 */
-
-	// we monitor all key up events so that we trigger only once per key down
+    // we monitor all key up events so that we trigger only once per key down
     var keyDownArr = [];
-    $(document).on('keyup.keypressed',function(e){
-        keyDownArr[e.which] = false; // unset flag to prevent multi pressing of a key
-    });
-
-	// creates an object that is capable of activating a keypressed event and removing it
-    var Keypressed = function(definitions){
-		// make sure key is array
-        var key = $.isArray(definitions.key) ? definitions.key : [definitions.key];
-        var eventName = 'keydown.interface.' + definitions.handle;
-
-		// accept both keyCode and the key itself
-        var target = $.map(key,function(value){
-            return typeof value == 'string' ? value.toUpperCase().charCodeAt(0) : value;
-        });
-
-		// attach listener
-        this.on = function(callback){
-            $(document).on(eventName,function(e){
-                // Firefox has an accesability option called "Search for text when I start typing"
-                // It causes a search box to jump up whenever a key is typed.
-                // stopping propagation presents this without actually canceling the event
-                e.stopPropagation();
-                if (!keyDownArr[e.which] && $.inArray(e.which,target) != -1) {
-                    keyDownArr[e.which] = true; // set flag to prevent multi pressing of a key
-                    callback(e,'keydown');
-                }
-            });
-        };
-
-		// remove listener
-        this.off = function(){
-            $(document).off(eventName);
-        };
-
-    };
+    document.addEventListener('keyup',function(e){ keyDownArr[e.which] = false; });// unset flag to prevent multi pressing of a key 
 
     return function(listener,definitions){
-		// decorate listener with new keypressed
-        $.extend(listener,new Keypressed(definitions));
-    };
+        // make sure key is array
+        var key = Array.isArray(definitions.key) ? definitions.key : [definitions.key];
 
+        // map keys to keyCodes
+        var target = key.map(function(value){ return typeof value == 'string' ? value.toUpperCase().charCodeAt(0) : value; });
+
+        // attach listener
+        listener.on = function(callback){
+            this.listener = keypressListener;
+            document.addEventListener('keypress', this.listener);
+
+            function keypressListener(e){
+                e.stopPropagation();
+                if (keyDownArr[e.which] || (target.indexOf(e.which) === -1)) return;
+                keyDownArr[e.which] = true; // set flag to prevent multi pressing of a key
+                callback(e,'keydown');
+            }
+        };
+
+        // remove listener
+        listener.off = function(){
+            document.removeEventListener('keypress', this.listener);
+        };
+
+    };
 });
