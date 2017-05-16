@@ -76,7 +76,7 @@ define(function(require){
 
         deferToLoad: function(cb){
             // if the element does not have a width it has not been loaded yet
-            if (this.$el.width()){
+            if (this.$el[0].style.width){
                 cb.apply(this);
             } else {
                 // we need defer for safari
@@ -120,16 +120,18 @@ define(function(require){
 
         size: function(){
             var size = this.model.get('size');
+            var style = this.$el[0].style;
 
             if (size.font_size){
-                this.$el.css('font-size', size.font_size);
+                style.fontSize = size.font_size;
             }
+
             // if this is a word, we don't want to set height (it breaks centering)
             if (size.height != 'auto' && this.options.type != 'word') {
-                this.$el.height(size.height + '%');
+                style.height = size.height + '%';
             }
             if (size.width != 'auto'){
-                this.$el.width(size.width + '%');
+                style.width = size.width + '%';
             }
 
             return this;
@@ -193,12 +195,11 @@ define(function(require){
                 default            : right = (canvasSize.width * (location.right))/100;
             }
 
-            this.$el.css({
-                top     : top,
-                bottom    : bottom,
-                left     : left,
-                right     : right
-            });
+            var style = this.$el[0].style;
+            style.top = top;
+            style.bottom = bottom;
+            style.left = left;
+            style.right = right;
         }
 
     });

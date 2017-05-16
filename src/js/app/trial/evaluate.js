@@ -14,13 +14,13 @@
 
 define(function(require){
 
-    var _ = require('underscore')
-		, globalGetter = require('app/global')
-		, current_trial = require('./current_trial');
+    var _ = require('underscore');
+    var globalGetter = require('app/global');
+    var current_trial = require('./current_trial');
 
 
-	// @TODO This should be done using some sort of mapping function (reduce? for loop?)
-	// lets have a uniform API for the evaluation functions.
+    // @TODO This should be done using some sort of mapping function (reduce? for loop?)
+    // lets have a uniform API for the evaluation functions.
     return function evaluate(conditions, inputData){
         var global = globalGetter();
         var current = global.current || {};
@@ -30,26 +30,26 @@ define(function(require){
             throw new Error('There is an interaction without conditions!!');
         }
 
-		// make sure conditions is an array
-        conditions = _.isArray(conditions) ? conditions : [conditions];
+        // make sure conditions is an array
+        conditions = Array.isArray(conditions) ? conditions : [conditions];
 
-		// the internal event
+        // the internal event
         inputData = inputData || {};
 
-		// assume condition is true
+        // assume condition is true
         var isTrue = true;
 
-		// if this is a begin event, make sure we only run conditions that have begin in them
+        // if this is a begin event, make sure we only run conditions that have begin in them
         if (inputData.type == 'begin') {
-			// check if this set of conditions has 'begin' in it
+            // check if this set of conditions has 'begin' in it
             var has_begin = _.reduce(conditions, function(memo, row){return memo || row.type == 'begin';},false);
             if (!has_begin){
                 return false;
             }
         }
 
-		// try to refute the condition
-        _.each(conditions,function(condition){
+        // try to refute the condition
+        conditions.forEach(function checkCondition(condition){
             var searchObj, result;
             var evaluation = true;
 
@@ -61,7 +61,7 @@ define(function(require){
                     break;
 
                 case 'inputEquals' :
-					// make sure condition.value is an array
+                    // make sure condition.value is an array
                     _.isArray(condition.value) || (condition.value = [condition.value]);
 
                     if (_.indexOf(condition.value,inputData.handle) === -1) {
@@ -76,14 +76,14 @@ define(function(require){
                     break;
 
                 case 'inputEqualsStim':
-					// create search object
+                    // create search object
                     searchObj = {};
                     if (condition.handle){
                         searchObj['handle'] = condition.handle;
                     }
                     searchObj[condition.property] = inputData.handle;
 
-					// are there stimuli answering this descriptions?
+                    // are there stimuli answering this descriptions?
                     result = trial._stimulus_collection.whereData(searchObj);
                     if (result.length === 0) {
                         evaluation = false;
@@ -131,14 +131,14 @@ define(function(require){
                         throw new Error('globalEqualsStim requires both "globalProp" and "stimProp" to be defined');
                     }
 
-					// create search object
+                    // create search object
                     searchObj = {};
                     if (condition.handle){
                         searchObj['handle'] = condition.handle;
                     }
                     searchObj[condition.stimProp] = global[condition.globalProp];
 
-					// are there stimuli answering this descriptions?
+                    // are there stimuli answering this descriptions?
                     result = trial._stimulus_collection.whereData(searchObj);
                     if (result.length === 0) {
                         evaluation = false;
@@ -177,14 +177,14 @@ define(function(require){
                         throw new Error('currentEqualsStim requires both "currentProp" and "stimProp" to be defined');
                     }
 
-					// create search object
+                    // create search object
                     searchObj = {};
                     if (condition.handle){
                         searchObj['handle'] = condition.handle;
                     }
                     searchObj[condition.stimProp] = current[condition.currentProp];
 
-					// are there stimuli answering this descriptions?
+                    // are there stimuli answering this descriptions?
                     result = trial._stimulus_collection.whereData(searchObj);
                     if (result.length === 0) {
                         evaluation = false;
