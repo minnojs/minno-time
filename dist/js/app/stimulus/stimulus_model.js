@@ -52,7 +52,9 @@ define(function(require) {
                 }
 
 				// present the stimulus
-                self.media.show();
+                requestAnimationFrame(function(){
+                    self.media.show();
+                });
             });
 
 			// subscribe to set attribute action
@@ -83,7 +85,9 @@ define(function(require) {
                 }
 
 				// hide the stimulus
-                self.media.hide();
+                requestAnimationFrame(function(){
+                    self.media.hide();
+                });
             });
         },
 

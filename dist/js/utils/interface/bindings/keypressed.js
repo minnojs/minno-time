@@ -19,12 +19,12 @@ define(function(){
         var target = key.map(function(value){ return typeof value == 'string' ? value.toUpperCase().charCodeAt(0) : value; });
 
         // attach listener
-        listener.on = function(callback){
+        listener.on = function on(callback){
             this.listener = keypressListener;
-            document.addEventListener('keypress', this.listener);
+            document.addEventListener('keydown', this.listener);
 
             function keypressListener(e){
-                e.stopPropagation();
+                e.preventDefault(); // prevent FF from wasting about 10ms in browser-content.js
                 if (keyDownArr[e.which] || (target.indexOf(e.which) === -1)) return;
                 keyDownArr[e.which] = true; // set flag to prevent multi pressing of a key
                 callback(e,'keydown');
@@ -32,9 +32,8 @@ define(function(){
         };
 
         // remove listener
-        listener.off = function(){
-            document.removeEventListener('keypress', this.listener);
+        listener.off = function off(){
+            document.removeEventListener('keydown', this.listener);
         };
-
     };
 });

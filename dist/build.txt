@@ -54,6 +54,7 @@ js/utils/interface/listener.js
 js/utils/interface/now.js
 js/utils/interface/interface.js
 js/models/model.js
+js/utils/fastdom.js
 js/app/media/media_view.js
 js/utils/html.js
 js/app/global.js

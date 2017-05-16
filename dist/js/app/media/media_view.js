@@ -14,8 +14,7 @@ define(function(require){
 
     // MIT license
 
-    if (!Date.now)
-        Date.now = function() { return new Date().getTime(); };
+    if (!Date.now) Date.now = function() { return new Date().getTime(); };
 
     (function() {
         'use strict';
@@ -41,22 +40,21 @@ define(function(require){
     }());
 
     var Backbone = require('backbone'),
-        _ = require('underscore'),
+        fastdom = require('utils/fastdom'),
         main_view = require('app/task/main_view');
 
     var canvas = main_view.$el;
 
     var View = Backbone.View.extend({
-
+        
         // build element according to simulus
         initialize: function(options){
             this.options = options || {}; // needed since backbone v1.1.0
 
-            this.$el
-                .addClass('stimulus')
-                .attr('data-handle', this.model.handle)     // add data-handle for handeling of mouse/touch interactions
-                .css(this.model.get('css'))
-                .appendTo(canvas);
+            this.$el.addClass('stimulus');
+            this.$el.attr('data-handle', this.model.handle);     // add data-handle for handeling of mouse/touch interactions
+            this.$el.css(this.model.get('css'));
+            this.$el.appendTo(canvas);
 
             this.render();
         },
@@ -66,70 +64,38 @@ define(function(require){
         // we hide and show them using opacity
 
         render: function(){
-
             // these are the things that need recalibrating on refresh
             this.size();
-            this.deferToLoad(this.place);
-
-            return this;
-        },
-
-        deferToLoad: function(cb){
-            // if the element does not have a width it has not been loaded yet
-            if (this.$el.width()){
-                cb.apply(this);
-            } else {
-                // we need defer for safari
-                // we need raf for chrome on ipad
-                _.defer(function(){
-                    window.requestAnimationFrame(cb.bind(this));
-                });
-
-            }
+            this.place();
         },
 
         show: function(){
-            // if this is a gif, reload it before displaying so that the gif is reset
-            if (this.options.type === 'image' && this.options.image.indexOf('gif') !== -1){
-                // weird IE bug that prevents refreshing gifs...
-				// also, on IE11 you can't refresh a gif when it is not visibility:visible
-                if(window.ActiveXObject || 'ActiveXObject' in window){ // true only in IE
-                    this.$el.css('visibility', 'visible');
-                    this.$el[0].src =  this.options.image + '#' + Math.random();
-                } else {
-                    // Firefox requires to explicitly empty the "src" before resetting it.
-                    this.$el[0].src = '';
-                    this.$el[0].src = this.options.image;
-                    this.$el.addClass('minno-stimulus-visible');
-                }
-
-                return this;
-            }
-
-            this.deferToLoad(function(){
-                this.$el.addClass('minno-stimulus-visible');
-            });
-
-            return this;
+            var $el = this.$el;
+            $el.addClass('minno-stimulus-visible');
+            //fastdom.mutate(function(){ });
         },
 
         hide: function(){
-            this.$el.removeClass('minno-stimulus-visible');
-            return this;
+            var $el = this.$el;
+            fastdom.mutate(function(){
+                $el.removeClass('minno-stimulus-visible');
+            });
         },
 
         size: function(){
             var size = this.model.get('size');
+            var style = this.$el[0].style;
 
             if (size.font_size){
-                this.$el.css('font-size', size.font_size);
+                style.fontSize = size.font_size;
             }
+
             // if this is a word, we don't want to set height (it breaks centering)
             if (size.height != 'auto' && this.options.type != 'word') {
-                this.$el.height(size.height + '%');
+                style.height = size.height + '%';
             }
             if (size.width != 'auto'){
-                this.$el.width(size.width + '%');
+                style.width = size.width + '%';
             }
 
             return this;
@@ -193,12 +159,11 @@ define(function(require){
                 default            : right = (canvasSize.width * (location.right))/100;
             }
 
-            this.$el.css({
-                top     : top,
-                bottom    : bottom,
-                left     : left,
-                right     : right
-            });
+            var style = this.$el[0].style;
+            style.top = top;
+            style.bottom = bottom;
+            style.left = left;
+            style.right = right;
         }
 
     });
