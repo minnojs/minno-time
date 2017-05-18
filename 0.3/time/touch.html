@@ -19,6 +19,20 @@
 					<a href="/minno-time/0.3/time/overview.html">miTime</a>
 				</nav>
 				<nav>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
                     <select id="version-select"><option value="0.3" selected>v0.3</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
@@ -89,7 +103,7 @@
     <div class="editor">// # Touch devices
 // There are several changes required for support of touch devices.
 // This tutorial will show you how to fully support them in you tasks.
-define([&quot;pipAPI&quot;], function(APIconstructor) {
+define([&apos;pipAPI&apos;], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
@@ -101,15 +115,15 @@ define([&quot;pipAPI&quot;], function(APIconstructor) {
 			// If it is set to true then the input will be used only in touch devices.
 			// If it is set to false then the input will be used only in non touch devices.
 			input: [
-				// This input will be available on touch devices too (mostly, it won&quot;t be available for lack of keyboard though)
-				{handle:&quot;end&quot;, on:&quot;space&quot;},
+				// This input will be available on touch devices too (mostly, it won&apos;t be available for lack of keyboard though)
+				{handle:&apos;end&apos;, on:&apos;space&apos;},
 
 				// But these will be available only on touch devices.
 
 				// There are several touch targeted input shortcuts that you can use (they work for non touch devices too though).
 				// These are `rightTouch`, `leftTouch`, `topTouch` and `bottomTouch`. &lt;/br&gt;
-				{handle:&quot;end&quot;,on:&quot;rightTouch&quot;, touch:true},
-				{handle:&quot;end&quot;,on:&quot;leftTouch&quot;, touch: true}
+				{handle:&apos;end&apos;,on:&apos;rightTouch&apos;, touch:true},
+				{handle:&apos;end&apos;,on:&apos;leftTouch&apos;, touch: true}
 			],
 
 			// ##### touchMedia
@@ -120,20 +134,20 @@ define([&quot;pipAPI&quot;], function(APIconstructor) {
 			layout:[
 				{
 					location:{top:20},
-					media:{word:&quot;this will always be here&quot;}
+					media:{word:&apos;this will always be here&apos;}
 				},
 				{
 					location:{bottom:20},
-					media:{word:&quot;Only on regular&quot;},
-					touchMedia:{word:&quot;Only on touch&quot;}
+					media:{word:&apos;Only on regular&apos;},
+					touchMedia:{word:&apos;Only on touch&apos;}
 				}
 			],
 
 
 			interactions: [
 				{
-					conditions: [{type:&quot;inputEquals&quot;,value:&quot;end&quot;}],
-					actions: [{type:&quot;endTrial&quot;}]
+					conditions: [{type:&apos;inputEquals&apos;,value:&apos;end&apos;}],
+					actions: [{type:&apos;endTrial&apos;}]
 				}
 			]
 		}

@@ -3,5 +3,5 @@
  */
 
 define(function(){
-	return !!('ontouchstart' in window) ? true : false;
+    return 'ontouchstart' in window ? true : false;
 });

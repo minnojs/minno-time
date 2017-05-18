@@ -19,6 +19,20 @@
 					<a href="/minno-time/0.3/time/overview.html">miTime</a>
 				</nav>
 				<nav>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
                     <select id="version-select"><option value="0.3" selected>v0.3</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
@@ -165,7 +179,7 @@
         <a class="activate-button">Activate</a>
         <a class="download-button" href="stroop-block.js" download>Download</a>
     </div>
-    <div class="editor">// We&quot;ve created the building blocks of our task, the *congruent* and *incongruent* trials, now it is time to put them together into a task.
+    <div class="editor">// We&apos;ve created the building blocks of our task, the *congruent* and *incongruent* trials, now it is time to put them together into a task.
 // The tool that controls the structure and flow of the task is called the [mixer](./API.md#mixer).
 // It allows you to duplicate and randomize trials within the sequence.
 
@@ -180,14 +194,14 @@
 // ```javascript
 // API.addSequence([
 // 	{
-// 		mixer: &quot;random&quot;,
+// 		mixer: &apos;random&apos;,
 // 		data: [
-// 			{inherit:&quot;red&quot;},
-// 			{inherit:&quot;red&quot;},
-// 			{inherit:&quot;blue&quot;},
-// 			{inherit:&quot;blue&quot;},
-// 			{inherit:&quot;green&quot;},
-// 			{inherit:&quot;green&quot;}
+// 			{inherit:&apos;red&apos;},
+// 			{inherit:&apos;red&apos;},
+// 			{inherit:&apos;blue&apos;},
+// 			{inherit:&apos;blue&apos;},
+// 			{inherit:&apos;green&apos;},
+// 			{inherit:&apos;green&apos;}
 // 		]
 // 	}
 // ]);
@@ -197,12 +211,12 @@
 
 // ```javascript
 // API.addSequence([
-// 	{inherit:&quot;red&quot;},
-// 	{inherit:&quot;green&quot;},
-// 	{inherit:&quot;blue&quot;},
-// 	{inherit:&quot;green&quot;},
-// 	{inherit:&quot;red&quot;},
-// 	{inherit:&quot;blue&quot;}
+// 	{inherit:&apos;red&apos;},
+// 	{inherit:&apos;green&apos;},
+// 	{inherit:&apos;blue&apos;},
+// 	{inherit:&apos;green&apos;},
+// 	{inherit:&apos;red&apos;},
+// 	{inherit:&apos;blue&apos;}
 // ]);
 // ```
 
@@ -212,12 +226,12 @@
 // ```javascript
 // API.addSequence([
 // 	{
-// 		mixer: &quot;repeat&quot;,
+// 		mixer: &apos;repeat&apos;,
 // 		times: 2,
 // 		data: [
-// 			{inherit:&quot;red&quot;},
-// 			{inherit:&quot;blue&quot;},
-// 			{inherit:&quot;green&quot;}
+// 			{inherit:&apos;red&apos;},
+// 			{inherit:&apos;blue&apos;},
+// 			{inherit:&apos;green&apos;}
 // 		]
 // 	}
 // ]);
@@ -227,12 +241,12 @@
 
 // ```javascript
 // API.addSequence([
-// 	{inherit:&quot;red&quot;},
-// 	{inherit:&quot;blue&quot;},
-// 	{inherit:&quot;green&quot;},
-// 	{inherit:&quot;red&quot;},
-// 	{inherit:&quot;blue&quot;},
-// 	{inherit:&quot;green&quot;}
+// 	{inherit:&apos;red&apos;},
+// 	{inherit:&apos;blue&apos;},
+// 	{inherit:&apos;green&apos;},
+// 	{inherit:&apos;red&apos;},
+// 	{inherit:&apos;blue&apos;},
+// 	{inherit:&apos;green&apos;}
 // ]);
 // ```
 
@@ -248,11 +262,11 @@
 // So far we have inherited the stimuli like this:
 
 // ```javascript
-// API.addTrialSets(&quot;red&quot;,[{
-// 	inherit:&quot;base&quot;,
-// 	data: {group:&quot;red&quot;},
+// API.addTrialSets(&apos;red&apos;,[{
+// 	inherit:&apos;base&apos;,
+// 	data: {group:&apos;red&apos;},
 // 	stimuli: [
-// 		{inherit:&quot;red&quot;, handle:&quot;target&quot;}
+// 		{inherit:&apos;red&apos;, handle:&apos;target&apos;}
 // 	]
 // }]);
 // ```
@@ -260,11 +274,11 @@
 // In order to use `exRandom`, all we have to do is this:
 
 // ```javascript
-// API.addTrialSets(&quot;red&quot;,[{
-// 	inherit:&quot;base&quot;,
-// 	data: {group:&quot;red&quot;},
+// API.addTrialSets(&apos;red&apos;,[{
+// 	inherit:&apos;base&apos;,
+// 	data: {group:&apos;red&apos;},
 // 	stimuli: [
-// 		{inherit:{set:&quot;red&quot;,type:&quot;exRandom&quot;}, handle:&quot;target&quot;}
+// 		{inherit:{set:&apos;red&apos;,type:&apos;exRandom&apos;}, handle:&apos;target&apos;}
 // 	]
 // }]);
 // ```
@@ -272,71 +286,71 @@
 // Instead of setting `inherit` with the set name, and inheriting randomly we set inherit an object that has two properties; `type` sets the type of inheritance to use (in this case `exRandom`), `set` defines which set should we inherit from.
 
 // ### The script itself
-define([&quot;pipAPI&quot;], function(APIconstructor) {
+define([&apos;pipAPI&apos;], function(APIconstructor) {
 
-	var API = new APIconstructor(&quot;stroop&quot;);
+	var API = new APIconstructor(&apos;stroop&apos;);
 
 
-	API.addSettings(&quot;canvas&quot;,{
+	API.addSettings(&apos;canvas&apos;,{
 		textSize: 5
 	});
 
-	API.addStimulusSets(&quot;red&quot;,[
-		{media:&quot;Red&quot;, css:{color:&quot;red&quot;}},
-		{media:&quot;Blue&quot;, css:{color:&quot;red&quot;}},
-		{media:&quot;Green&quot;, css:{color:&quot;red&quot;}}
+	API.addStimulusSets(&apos;red&apos;,[
+		{media:&apos;Red&apos;, css:{color:&apos;red&apos;}},
+		{media:&apos;Blue&apos;, css:{color:&apos;red&apos;}},
+		{media:&apos;Green&apos;, css:{color:&apos;red&apos;}}
 	]);
 
-	API.addStimulusSets(&quot;blue&quot;,[
-		{media:&quot;Red&quot;, css:{color:&quot;blue&quot;}},
-		{media:&quot;Blue&quot;, css:{color:&quot;blue&quot;}},
-		{media:&quot;Green&quot;, css:{color:&quot;blue&quot;}}
+	API.addStimulusSets(&apos;blue&apos;,[
+		{media:&apos;Red&apos;, css:{color:&apos;blue&apos;}},
+		{media:&apos;Blue&apos;, css:{color:&apos;blue&apos;}},
+		{media:&apos;Green&apos;, css:{color:&apos;blue&apos;}}
 	]);
 
-	API.addStimulusSets(&quot;green&quot;,[
-		{media:&quot;Red&quot;, css:{color:&quot;green&quot;}},
-		{media:&quot;Blue&quot;, css:{color:&quot;green&quot;}},
-		{media:&quot;Green&quot;, css:{color:&quot;green&quot;}}
+	API.addStimulusSets(&apos;green&apos;,[
+		{media:&apos;Red&apos;, css:{color:&apos;green&apos;}},
+		{media:&apos;Blue&apos;, css:{color:&apos;green&apos;}},
+		{media:&apos;Green&apos;, css:{color:&apos;green&apos;}}
 	]);
 
-	API.addTrialSets(&quot;base&quot;,[{
+	API.addTrialSets(&apos;base&apos;,[{
 		input: [
-			{handle:&quot;red&quot;,on:&quot;keypressed&quot;,key:&quot;1&quot;},
-			{handle:&quot;blue&quot;,on:&quot;keypressed&quot;,key:&quot;2&quot;},
-			{handle:&quot;green&quot;,on:&quot;keypressed&quot;,key:&quot;3&quot;}
+			{handle:&apos;red&apos;,on:&apos;keypressed&apos;,key:&apos;1&apos;},
+			{handle:&apos;blue&apos;,on:&apos;keypressed&apos;,key:&apos;2&apos;},
+			{handle:&apos;green&apos;,on:&apos;keypressed&apos;,key:&apos;3&apos;}
 		],
 		layout: [
-			{media:&quot;1&quot;,location:{left:2,top:2},css:{background:&quot;red&quot;,padding:&quot;2%&quot;,fontSize:&quot;1.5em&quot;}},
-			{media:&quot;2&quot;,location:{top:2},css:{background:&quot;blue&quot;,padding:&quot;2%&quot;,fontSize:&quot;1.5em&quot;}},
-			{media:&quot;3&quot;,location:{right:2,top:2},css:{background:&quot;green&quot;,padding:&quot;2%&quot;,fontSize:&quot;1.5em&quot;}}
+			{media:&apos;1&apos;,location:{left:2,top:2},css:{background:&apos;red&apos;,padding:&apos;2%&apos;,fontSize:&apos;1.5em&apos;}},
+			{media:&apos;2&apos;,location:{top:2},css:{background:&apos;blue&apos;,padding:&apos;2%&apos;,fontSize:&apos;1.5em&apos;}},
+			{media:&apos;3&apos;,location:{right:2,top:2},css:{background:&apos;green&apos;,padding:&apos;2%&apos;,fontSize:&apos;1.5em&apos;}}
 		],
 		interactions: [
 			/* Display the target stimulus. */
 			{
-				conditions:[{type:&quot;begin&quot;}],
-				actions: [{type:&quot;showStim&quot;, handle: &quot;target&quot;}]
+				conditions:[{type:&apos;begin&apos;}],
+				actions: [{type:&apos;showStim&apos;, handle: &apos;target&apos;}]
 			},
 			/* Correct response actions */
 			{
 				conditions: [
-					{type:&quot;inputEqualsTrial&quot;,property:&quot;group&quot;}
+					{type:&apos;inputEqualsTrial&apos;,property:&apos;group&apos;}
 				],
 				actions: [
-					{type:&quot;setTrialAttr&quot;, setter:{score:1}},
-					{type:&quot;log&quot;},
-					{type:&quot;endTrial&quot;}
+					{type:&apos;setTrialAttr&apos;, setter:{score:1}},
+					{type:&apos;log&apos;},
+					{type:&apos;endTrial&apos;}
 				]
 			},
 			/* Incorrect response actions */
 			{
 				conditions: [
-					{type:&quot;inputEqualsTrial&quot;,property:&quot;group&quot;,negate:true},
-					{type:&quot;inputEquals&quot;,value:[&quot;red&quot;,&quot;blue&quot;,&quot;green&quot;]}
+					{type:&apos;inputEqualsTrial&apos;,property:&apos;group&apos;,negate:true},
+					{type:&apos;inputEquals&apos;,value:[&apos;red&apos;,&apos;blue&apos;,&apos;green&apos;]}
 				],
 				actions: [
-					{type:&quot;setTrialAttr&quot;, setter:{score:0}},
-					{type:&quot;log&quot;},
-					{type:&quot;endTrial&quot;}
+					{type:&apos;setTrialAttr&apos;, setter:{score:0}},
+					{type:&apos;log&apos;},
+					{type:&apos;endTrial&apos;}
 				]
 			}
 		]
@@ -345,27 +359,27 @@ define([&quot;pipAPI&quot;], function(APIconstructor) {
 	// ### Advanced inheritance
 	// Here, we put `exRandom` into use.
 
-	API.addTrialSets(&quot;red&quot;,[{
-		inherit:&quot;base&quot;,
-		data: {group:&quot;red&quot;},
+	API.addTrialSets(&apos;red&apos;,[{
+		inherit:&apos;base&apos;,
+		data: {group:&apos;red&apos;},
 		stimuli: [
-			{inherit:{set:&quot;red&quot;,type:&quot;exRandom&quot;}, handle:&quot;target&quot;}
+			{inherit:{set:&apos;red&apos;,type:&apos;exRandom&apos;}, handle:&apos;target&apos;}
 		]
 	}]);
 
-	API.addTrialSets(&quot;blue&quot;,[{
-		inherit:&quot;base&quot;,
-		data: {group:&quot;blue&quot;},
+	API.addTrialSets(&apos;blue&apos;,[{
+		inherit:&apos;base&apos;,
+		data: {group:&apos;blue&apos;},
 		stimuli: [
-			{inherit:{set:&quot;blue&quot;,type:&quot;exRandom&quot;}, handle:&quot;target&quot;}
+			{inherit:{set:&apos;blue&apos;,type:&apos;exRandom&apos;}, handle:&apos;target&apos;}
 		]
 	}]);
 
-	API.addTrialSets(&quot;green&quot;,[{
-		inherit:&quot;base&quot;,
-		data: {group:&quot;green&quot;},
+	API.addTrialSets(&apos;green&apos;,[{
+		inherit:&apos;base&apos;,
+		data: {group:&apos;green&apos;},
 		stimuli: [
-			{inherit:{set:&quot;green&quot;,type:&quot;exRandom&quot;}, handle:&quot;target&quot;}
+			{inherit:{set:&apos;green&apos;,type:&apos;exRandom&apos;}, handle:&apos;target&apos;}
 		]
 	}]);
 
@@ -378,16 +392,16 @@ define([&quot;pipAPI&quot;], function(APIconstructor) {
 	API.addSequence([
 		/* random mixer */
 		{
-			mixer: &quot;random&quot;,
+			mixer: &apos;random&apos;,
 			data: [
 				/* repeat mixer */
 				{
-					mixer: &quot;repeat&quot;,
+					mixer: &apos;repeat&apos;,
 					times: 20,
 					data: [
-						{inherit:&quot;red&quot;},
-						{inherit:&quot;blue&quot;},
-						{inherit:&quot;green&quot;}
+						{inherit:&apos;red&apos;},
+						{inherit:&apos;blue&apos;},
+						{inherit:&apos;green&apos;}
 					]
 				}
 			]

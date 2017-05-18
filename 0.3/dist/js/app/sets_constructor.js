@@ -12,27 +12,27 @@
  *
  */
 define(function(require){
-	var _ = require('underscore');
-	var Set = require('models/set');
+    var _ = require('underscore');
+    var Set = require('models/set');
 	// the constructor
-	function Set_constructor(){
+    function Set_constructor(){
 		// the (private) set stack
-		var setStack = {};
+        var setStack = {};
 
 		// setter function (optionaly adds sets, returns the set stack)
 		// this is the interface to this object
-		function sets(setArr){
-			_.each(setArr,function(value,key){
-				setStack[key] = new Set(value);
-				setStack[key].name = key;
-			});
+        function sets(setArr){
+            _.each(setArr,function(value,key){
+                setStack[key] = new Set(value);
+                setStack[key].name = key;
+            });
 
-			return setStack;
-		}
+            return setStack;
+        }
 
 		// return the setter function
-		return sets;
-	}
+        return sets;
+    }
 
-	return Set_constructor;
+    return Set_constructor;
 });

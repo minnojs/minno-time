@@ -19,6 +19,20 @@
 					<a href="/minno-time/0.3/time/overview.html">miTime</a>
 				</nav>
 				<nav>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
                     <select id="version-select"><option value="0.3" selected>v0.3</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
@@ -84,17 +98,17 @@
         <a class="activate-button">Activate</a>
         <a class="download-button" href="iat.js" download>Download</a>
     </div>
-    <div class="editor">define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Scorer) {
+    <div class="editor">define([&apos;pipAPI&apos;,&apos;pipScorer&apos;], function(APIConstructor,Scorer) {
 // This wrapper is neccesary in order to activate the API
 
 	var API = new APIConstructor();
 	var scorer = new Scorer();
 
 	// lets set the attibutes/concepts in one place so we can change them when we want
-	var attribute1 = &quot;Good Words&quot;;
-	var attribute2 = &quot;Bad Words&quot;;
-	var concept1 = &quot;Black People&quot;;
-	var concept2 = &quot;White People&quot;;
+	var attribute1 = &apos;Good Words&apos;;
+	var attribute2 = &apos;Bad Words&apos;;
+	var concept1 = &apos;Black People&apos;;
+	var concept2 = &apos;White People&apos;;
 
 	// ### Settings
 	/*
@@ -103,21 +117,21 @@
 	*/
 
 	// set the canvas size
-	API.addSettings(&quot;canvas&quot;,{
+	API.addSettings(&apos;canvas&apos;,{
 		maxWidth: 800,
 		proportions : 0.8
 	});
 
 	// setting the base urls for images and templates
-	API.addSettings(&quot;base_url&quot;,{
-		image : &quot;../../images&quot;,
-		template : &quot;../../../resources/IAT&quot;
+	API.addSettings(&apos;base_url&apos;,{
+		image : &apos;../../images&apos;,
+		template : &apos;../../../resources/IAT&apos;
 	});
 
 	// setting the way the logger works (how often we send data to the server and the url for the data)
-	API.addSettings(&quot;logger&quot;,{
+	API.addSettings(&apos;logger&apos;,{
 		pulse: 20,
-		url : &quot;/implicit/PiPlayerApplet&quot;
+		url : &apos;/implicit/PiPlayerApplet&apos;
 	});
 
 
@@ -129,7 +143,7 @@
 
 	// #### Default trial
 	// This trial serves as the default for all IAT trials (excluding instructions)
-	API.addTrialSets(&quot;Default&quot;,{
+	API.addTrialSets(&apos;Default&apos;,{
 		// By default each trial is correct, this is modified in case of an error
 		data: {score:0},
 
@@ -137,18 +151,18 @@
 		// In this case **e** and **i** are used for left and right.
 		// And in case this is a touch scenario we present appropriate touch elements.
 		input: [
-			{handle:&quot;enter&quot;,on:&quot;enter&quot;},
-			{handle:&quot;left&quot;,on:&quot;keypressed&quot;,key:&quot;e&quot;},
-			{handle:&quot;right&quot;,on:&quot;keypressed&quot;,key:&quot;i&quot;},
-			{handle:&quot;left&quot;,on:&quot;leftTouch&quot;,touch:true},
-			{handle:&quot;right&quot;,on:&quot;rightTouch&quot;,touch:true}
+			{handle:&apos;enter&apos;,on:&apos;enter&apos;},
+			{handle:&apos;left&apos;,on:&apos;keypressed&apos;,key:&apos;e&apos;},
+			{handle:&apos;right&apos;,on:&apos;keypressed&apos;,key:&apos;i&apos;},
+			{handle:&apos;left&apos;,on:&apos;leftTouch&apos;,touch:true},
+			{handle:&apos;right&apos;,on:&apos;rightTouch&apos;,touch:true}
 		],
 
 		// Constant elements in the display, in this case: the user instructions: left / right.
 		// Here we inherit the layout stimuli from the layout set.
 		layout: [
-			{inherit:{type:&quot;byData&quot;,set:&quot;layout&quot;,data:&quot;left&quot;}},
-			{inherit:{type:&quot;byData&quot;,set:&quot;layout&quot;,data:&quot;right&quot;}}
+			{inherit:{type:&apos;byData&apos;,set:&apos;layout&apos;,data:&apos;left&apos;}},
+			{inherit:{type:&apos;byData&apos;,set:&apos;layout&apos;,data:&apos;right&apos;}}
 		],
 
 		// User interactions.
@@ -157,42 +171,42 @@
 			// ##### At the begining of a trial
 			// Display the stimulus imidiately.
 			{
-				conditions: [{type:&quot;begin&quot;}],
+				conditions: [{type:&apos;begin&apos;}],
 				actions: [
-					{type:&quot;showStim&quot;,handle:&quot;target&quot;}
+					{type:&apos;showStim&apos;,handle:&apos;target&apos;}
 				]
 			},
 
 			// ##### Correct
 			// The input handle (either left or right) should be equal to the stimulus.data.side attribute.
 			{
-				// If the input handle is equal to the "side" attribute of stimulus.data
-				conditions: [{type:&quot;inputEqualsStim&quot;,property:&quot;side&quot;}],
-				// * Don&quot;t allow any further interactions.
+				// If the input handle is equal to the &quot;side&quot; attribute of stimulus.data
+				conditions: [{type:&apos;inputEqualsStim&apos;,property:&apos;side&apos;}],
+				// * Don&apos;t allow any further interactions.
 				// * Hide all stimuli.
 				// * Log this trial.
 				// * Trigger the `trialEnd` action after the ITI.
 				actions: [
-					{type:&quot;removeInput&quot;,handle:[&quot;left&quot;,&quot;right&quot;]},
-					{type:&quot;hideStim&quot;, handle: &quot;All&quot;},
-					{type:&quot;log&quot;},
-					{type:&quot;setInput&quot;,input:{handle:&quot;end&quot;, on:&quot;timeout&quot;,duration:250}}
+					{type:&apos;removeInput&apos;,handle:[&apos;left&apos;,&apos;right&apos;]},
+					{type:&apos;hideStim&apos;, handle: &apos;All&apos;},
+					{type:&apos;log&apos;},
+					{type:&apos;setInput&apos;,input:{handle:&apos;end&apos;, on:&apos;timeout&apos;,duration:250}}
 				]
 			},
 
 			// ##### error
 			{
 				// If this is a click interaction.
-				// But input handle is unequal to the "side" attribute of stimulus.data.
+				// But input handle is unequal to the &quot;side&quot; attribute of stimulus.data.
 				conditions: [
-					{type:&quot;inputEquals&quot;,value:[&quot;right&quot;,&quot;left&quot;]},
-					{type:&quot;inputEqualsStim&quot;,property:&quot;side&quot;,negate:true}
+					{type:&apos;inputEquals&apos;,value:[&apos;right&apos;,&apos;left&apos;]},
+					{type:&apos;inputEqualsStim&apos;,property:&apos;side&apos;,negate:true}
 				],
 				// * Display error stimulus
 				// * Set the score to 1 (error).
 				actions: [
-					{type:&quot;showStim&quot;,handle:&quot;error&quot;},
-					{type:&quot;setTrialAttr&quot;, setter:{score:1}}
+					{type:&apos;showStim&apos;,handle:&apos;error&apos;},
+					{type:&apos;setTrialAttr&apos;, setter:{score:1}}
 				]
 			},
 
@@ -200,10 +214,10 @@
 			// This interaction is triggered by a timout after a correct response.
 			// It allows us to pad each trial with an interval.
 			{
-				// Trigger when input handle is "end".
-				conditions: [{type:&quot;inputEquals&quot;,value:&quot;end&quot;}],
+				// Trigger when input handle is &quot;end&quot;.
+				conditions: [{type:&apos;inputEquals&apos;,value:&apos;end&apos;}],
 				actions: [
-					{type:&quot;endTrial&quot;}
+					{type:&apos;endTrial&apos;}
 				]
 			},
 
@@ -212,10 +226,10 @@
 			// It allows the user to skip a whole block all the way to the begining of the next block.
 			// Note that every instruction block is marked with `blockStart:true` so that `nextWhere` knows were to go.
 			{
-				conditions: [{type:&quot;inputEquals&quot;,value:&quot;enter&quot;}],
+				conditions: [{type:&apos;inputEquals&apos;,value:&apos;enter&apos;}],
 				actions: [
-					{type:&quot;goto&quot;, destination: &quot;nextWhere&quot;, properties: {blockStart:true}},
-					{type:&quot;endTrial&quot;}
+					{type:&apos;goto&apos;, destination: &apos;nextWhere&apos;, properties: {blockStart:true}},
+					{type:&apos;endTrial&apos;}
 				]
 			}
 		]
@@ -223,39 +237,39 @@
 
 	// #### Introduction Trial
 	// Here, we create a generic introduction trial, to be inherited by all other introduction trials.
-	API.addTrialSets("introduction", {
+	API.addTrialSets(&quot;introduction&quot;, {
 
-		// Set `block` as "generic" so we can inherit it later.
-		data: {block: &quot;generic&quot;},
+		// Set `block` as &quot;generic&quot; so we can inherit it later.
+		data: {block: &apos;generic&apos;},
 
 		// Create user interface (just click space to move on...)
 		input: [
-			{handle:&quot;space&quot;,on:&quot;space&quot;},
-			{handle:&quot;space&quot;,on:&quot;bottomTouch&quot;,touch:true},
-			{handle:&quot;enter&quot;,on:&quot;enter&quot;}
+			{handle:&apos;space&apos;,on:&apos;space&apos;},
+			{handle:&apos;space&apos;,on:&apos;bottomTouch&apos;,touch:true},
+			{handle:&apos;enter&apos;,on:&apos;enter&apos;}
 		],
 
 		// Display fixed layout (this is the same layout we use for the trials themselves)
 		layout:[
-			{inherit:{type:&quot;byData&quot;,set:&quot;layout&quot;,data:&quot;left&quot;}},
-			{inherit:{type:&quot;byData&quot;,set:&quot;layout&quot;,data:&quot;right&quot;}}
+			{inherit:{type:&apos;byData&apos;,set:&apos;layout&apos;,data:&apos;left&apos;}},
+			{inherit:{type:&apos;byData&apos;,set:&apos;layout&apos;,data:&apos;right&apos;}}
 		],
 
 		interactions: [
 			// ##### At the begining of a trial
 			// Display the instructions imidiately.
 			{
-				conditions: [{type:&quot;begin&quot;}],
+				conditions: [{type:&apos;begin&apos;}],
 				actions: [
-					{type:&quot;showStim&quot;,handle:&quot;All&quot;}
+					{type:&apos;showStim&apos;,handle:&apos;All&apos;}
 				]
 			},
 
 			// ##### End trial
 			// End the instructions as soon as space is clicked
 			{
-				conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],
-				actions: [{type:&quot;endTrial&quot;}]
+				conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],
+				actions: [{type:&apos;endTrial&apos;}]
 			},
 
 			// ##### Skip block
@@ -263,10 +277,10 @@
 			// It allows the user to skip a whole block all the way to the begining of the next block.
 			// Note that every instruction block is marked with `blockStart:true` so that `nextWhere` knows were to go.
 			{
-				conditions: [{type:&quot;inputEquals&quot;,value:&quot;enter&quot;}],
+				conditions: [{type:&apos;inputEquals&apos;,value:&apos;enter&apos;}],
 				actions: [
-					{type:&quot;goto&quot;, destination: &quot;nextWhere&quot;, properties: {blockStart:true}},
-					{type:&quot;endTrial&quot;}
+					{type:&apos;goto&apos;, destination: &apos;nextWhere&apos;, properties: {blockStart:true}},
+					{type:&apos;endTrial&apos;}
 				]
 			}
 		]
@@ -277,7 +291,7 @@
 	// They will be fully incorporated into the player in the sequence section &lt;/br&gt;
 	// The IAT has seven blocks. The first and the fifth are concept blocks and the second is an attribute block.
 	// The rest of the blocks are composed of concepts and attributes where the third and forth have the same combination, and the sixth and seventh have the opposing combination.
-	API.addTrialSets("IAT", [
+	API.addTrialSets(&quot;IAT&quot;, [
 
 		// ##### block1
 		// This is a concept block with concept 1 on the left.
@@ -288,26 +302,26 @@
 				// We also insert the concept name (so that the layout templates know what to show).
 				left2:concept1, right2:concept2,
 				// Finaly, we set the condition for the scorer.
-				condition: concept1 + &quot;/&quot; + concept2
+				condition: concept1 + &apos;/&apos; + concept2
 			},
 			// We inherit the default trial.
-			inherit: &quot;Default&quot;,
+			inherit: &apos;Default&apos;,
 			// Here we set the stimuli:
 			// The first with the target stimulus, and the second for error feedback if we need it.
 			stimuli: [
-				{inherit:{type:&quot;exRandom&quot;,set:&quot;concept1_left&quot;}},
-				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+				{inherit:{type:&apos;exRandom&apos;,set:&apos;concept1_left&apos;}},
+				{inherit:{type:&apos;random&apos;,set:&apos;feedback&apos;}}
 			]
 		},
 
 		// ##### block2
 		// This is an attribute block with attribute 1 on the left.
 		{
-			data: {block:2, left1 : attribute1, right1:attribute2, condition: attribute1 + &quot;/&quot; + attribute2},
-			inherit: &quot;Default&quot;,
+			data: {block:2, left1 : attribute1, right1:attribute2, condition: attribute1 + &apos;/&apos; + attribute2},
+			inherit: &apos;Default&apos;,
 			stimuli: [
-				{inherit:{type:&quot;exRandom&quot;,set:&quot;attribute1_left&quot;}},
-				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+				{inherit:{type:&apos;exRandom&apos;,set:&apos;attribute1_left&apos;}},
+				{inherit:{type:&apos;random&apos;,set:&apos;feedback&apos;}}
 			]
 		},
 
@@ -319,94 +333,94 @@
 				// For combined trials we add the row property so we can distinguish between the trials when inheriting
 				block:3,row:1,
 				left1:attribute1, right1:attribute2, left2:concept1, right2:concept2,
-				condition: attribute1 + &quot;,&quot; + concept1 + &quot;/&quot; + attribute2 + &quot;,&quot; + concept2,
+				condition: attribute1 + &apos;,&apos; + concept1 + &apos;/&apos; + attribute2 + &apos;,&apos; + concept2,
 				// This block is also marked as part of a parcel for the scorer
-				parcel:&quot;first&quot;
+				parcel:&apos;first&apos;
 			},
-			inherit: &quot;Default&quot;,
+			inherit: &apos;Default&apos;,
 			stimuli: [
-				{inherit:{type:&quot;exRandom&quot;,set:&quot;concept1_left&quot;}},
-				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+				{inherit:{type:&apos;exRandom&apos;,set:&apos;concept1_left&apos;}},
+				{inherit:{type:&apos;random&apos;,set:&apos;feedback&apos;}}
 			]
 		},
 
 		{
-			data: {block:3, row:2, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2, condition: attribute1 + &quot;,&quot; + concept1 + &quot;/&quot; + attribute2 + &quot;,&quot; + concept2,parcel:&quot;first&quot;},
-			inherit: &quot;Default&quot;,
+			data: {block:3, row:2, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2, condition: attribute1 + &apos;,&apos; + concept1 + &apos;/&apos; + attribute2 + &apos;,&apos; + concept2,parcel:&apos;first&apos;},
+			inherit: &apos;Default&apos;,
 			stimuli: [
-				{inherit:{type:&quot;exRandom&quot;,set:&quot;attribute1_left&quot;}},
-				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+				{inherit:{type:&apos;exRandom&apos;,set:&apos;attribute1_left&apos;}},
+				{inherit:{type:&apos;random&apos;,set:&apos;feedback&apos;}}
 			]
 		},
 
 		// ##### block4
 		// This is a combined block - the same as block 3.
 		{
-			data: {block:4, row:1, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2, condition: attribute1 + &quot;,&quot; + concept1 + &quot;/&quot; + attribute2 + &quot;,&quot; + concept2,parcel:&quot;second&quot;},
-			inherit: &quot;Default&quot;,
+			data: {block:4, row:1, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2, condition: attribute1 + &apos;,&apos; + concept1 + &apos;/&apos; + attribute2 + &apos;,&apos; + concept2,parcel:&apos;second&apos;},
+			inherit: &apos;Default&apos;,
 			stimuli: [
-				{inherit:{type:&quot;exRandom&quot;,set:&quot;concept1_left&quot;}},
-				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+				{inherit:{type:&apos;exRandom&apos;,set:&apos;concept1_left&apos;}},
+				{inherit:{type:&apos;random&apos;,set:&apos;feedback&apos;}}
 			]
 		},
 
 		{
-			data: {block:4, row:2, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2, condition: attribute1 + &quot;,&quot; + concept1 + &quot;/&quot; + attribute2 + &quot;,&quot; + concept2,parcel:&quot;second&quot;},
-			inherit: &quot;Default&quot;,
+			data: {block:4, row:2, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2, condition: attribute1 + &apos;,&apos; + concept1 + &apos;/&apos; + attribute2 + &apos;,&apos; + concept2,parcel:&apos;second&apos;},
+			inherit: &apos;Default&apos;,
 			stimuli: [
-				{inherit:{type:&quot;exRandom&quot;,set:&quot;attribute1_left&quot;}},
-				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+				{inherit:{type:&apos;exRandom&apos;,set:&apos;attribute1_left&apos;}},
+				{inherit:{type:&apos;random&apos;,set:&apos;feedback&apos;}}
 			]
 		},
 
 		// ##### block5
 		// This is a concept block, this time with concept 1 on the right instead of the left.
 		{
-			data: {block:5, left2:concept2, right2:concept1, condition: concept2 + &quot;/&quot; + concept1},
-			inherit: &quot;Default&quot;,
+			data: {block:5, left2:concept2, right2:concept1, condition: concept2 + &apos;/&apos; + concept1},
+			inherit: &apos;Default&apos;,
 			stimuli: [
-				{inherit:{type:&quot;exRandom&quot;,set:&quot;concept1_right&quot;}},
-				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+				{inherit:{type:&apos;exRandom&apos;,set:&apos;concept1_right&apos;}},
+				{inherit:{type:&apos;random&apos;,set:&apos;feedback&apos;}}
 			]
 		},
 
 		// ##### block6
 		// This is a combined block; attribute1 stayed on the left but now concept1 is on the right.
 		{
-			data: {block:6, row:1, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1, condition: attribute1 + &quot;,&quot; + concept2 + &quot;/&quot; + attribute2 + &quot;,&quot; + concept1,parcel:&quot;first&quot;},
-			inherit: &quot;Default&quot;,
+			data: {block:6, row:1, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1, condition: attribute1 + &apos;,&apos; + concept2 + &apos;/&apos; + attribute2 + &apos;,&apos; + concept1,parcel:&apos;first&apos;},
+			inherit: &apos;Default&apos;,
 			stimuli: [
-				{inherit:{type:&quot;exRandom&quot;,set:&quot;concept1_right&quot;}},
-				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+				{inherit:{type:&apos;exRandom&apos;,set:&apos;concept1_right&apos;}},
+				{inherit:{type:&apos;random&apos;,set:&apos;feedback&apos;}}
 			]
 		},
 
 		{
-			data: {block:6, row:2, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1, condition: attribute1 + &quot;,&quot; + concept2 + &quot;/&quot; + attribute2 + &quot;,&quot; + concept1,parcel:&quot;first&quot;},
-			inherit: &quot;Default&quot;,
+			data: {block:6, row:2, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1, condition: attribute1 + &apos;,&apos; + concept2 + &apos;/&apos; + attribute2 + &apos;,&apos; + concept1,parcel:&apos;first&apos;},
+			inherit: &apos;Default&apos;,
 			stimuli: [
-				{inherit:{type:&quot;exRandom&quot;,set:&quot;attribute1_left&quot;}},
-				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+				{inherit:{type:&apos;exRandom&apos;,set:&apos;attribute1_left&apos;}},
+				{inherit:{type:&apos;random&apos;,set:&apos;feedback&apos;}}
 			]
 		},
 
 		// ##### block7
 		// This is a combined block - the same as block 6.
 		{
-			data: {block:7, row:1, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1, condition: attribute1 + &quot;,&quot; + concept2 + &quot;/&quot; + attribute2 + &quot;,&quot; + concept1,parcel:&quot;second&quot;},
-			inherit: &quot;Default&quot;,
+			data: {block:7, row:1, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1, condition: attribute1 + &apos;,&apos; + concept2 + &apos;/&apos; + attribute2 + &apos;,&apos; + concept1,parcel:&apos;second&apos;},
+			inherit: &apos;Default&apos;,
 			stimuli: [
-				{inherit:{type:&quot;exRandom&quot;,set:&quot;concept1_right&quot;}},
-				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+				{inherit:{type:&apos;exRandom&apos;,set:&apos;concept1_right&apos;}},
+				{inherit:{type:&apos;random&apos;,set:&apos;feedback&apos;}}
 			]
 		},
 
 		{
-			data: {block:7, row:2, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1, condition: attribute1 + &quot;,&quot; + concept2 + &quot;/&quot; + attribute2 + &quot;,&quot; + concept1,parcel:&quot;second&quot;},
-			inherit: &quot;Default&quot;,
+			data: {block:7, row:2, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1, condition: attribute1 + &apos;,&apos; + concept2 + &apos;/&apos; + attribute2 + &apos;,&apos; + concept1,parcel:&apos;second&apos;},
+			inherit: &apos;Default&apos;,
 			stimuli: [
-				{inherit:{type:&quot;exRandom&quot;,set:&quot;attribute1_left&quot;}},
-				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+				{inherit:{type:&apos;exRandom&apos;,set:&apos;attribute1_left&apos;}},
+				{inherit:{type:&apos;random&apos;,set:&apos;feedback&apos;}}
 			]
 		}
 	]);
@@ -420,12 +434,12 @@
 	API.addStimulusSets({
 		// This Default stimulus is inherited by the other stimuli so that we can have a consistent appearance and change it from one place.
 		Default: [
-			{css:{color:&quot;#0000FF&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
+			{css:{color:&apos;#0000FF&apos;,&apos;font-size&apos;:&apos;2em&apos;}}
 		],
 
 		// This sets the appearance for the instructions.
 		Instructions: [
-			{css:{&quot;font-size&quot;:&quot;1.3em&quot;,color:&quot;white&quot;, lineHeight:1.2},handle:&quot;instructions&quot;}
+			{css:{&apos;font-size&apos;:&apos;1.3em&apos;,color:&apos;white&apos;, lineHeight:1.2},handle:&apos;instructions&apos;}
 		],
 
 		// #### The trial stimuli
@@ -433,58 +447,58 @@
 		// Each set hold stimuli both stimuli that display attribute1/category1 and stimuli that display attribute2/category2.
 		// The reason that the attribute/category sets repeat themselves 5 times each, is so that when we call them using exRandom, they will be balanced accross each ten trials.
 		attribute1_left : [
-			{data:{side:&quot;left&quot;, handle:&quot;target&quot;, alias:attribute1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute1&quot;}}},
-			{data:{side:&quot;right&quot;, handle:&quot;target&quot;, alias:attribute2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute2&quot;}}},
-			{data:{side:&quot;left&quot;, handle:&quot;target&quot;, alias:attribute1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute1&quot;}}},
-			{data:{side:&quot;right&quot;, handle:&quot;target&quot;, alias:attribute2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute2&quot;}}},
-			{data:{side:&quot;left&quot;, handle:&quot;target&quot;, alias:attribute1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute1&quot;}}},
-			{data:{side:&quot;right&quot;, handle:&quot;target&quot;, alias:attribute2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute2&quot;}}},
-			{data:{side:&quot;left&quot;, handle:&quot;target&quot;, alias:attribute1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute1&quot;}}},
-			{data:{side:&quot;right&quot;, handle:&quot;target&quot;, alias:attribute2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute2&quot;}}},
-			{data:{side:&quot;left&quot;, handle:&quot;target&quot;, alias:attribute1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute1&quot;}}},
-			{data:{side:&quot;right&quot;, handle:&quot;target&quot;, alias:attribute2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute2&quot;}}}
+			{data:{side:&apos;left&apos;, handle:&apos;target&apos;, alias:attribute1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute1&apos;}}},
+			{data:{side:&apos;right&apos;, handle:&apos;target&apos;, alias:attribute2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute2&apos;}}},
+			{data:{side:&apos;left&apos;, handle:&apos;target&apos;, alias:attribute1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute1&apos;}}},
+			{data:{side:&apos;right&apos;, handle:&apos;target&apos;, alias:attribute2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute2&apos;}}},
+			{data:{side:&apos;left&apos;, handle:&apos;target&apos;, alias:attribute1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute1&apos;}}},
+			{data:{side:&apos;right&apos;, handle:&apos;target&apos;, alias:attribute2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute2&apos;}}},
+			{data:{side:&apos;left&apos;, handle:&apos;target&apos;, alias:attribute1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute1&apos;}}},
+			{data:{side:&apos;right&apos;, handle:&apos;target&apos;, alias:attribute2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute2&apos;}}},
+			{data:{side:&apos;left&apos;, handle:&apos;target&apos;, alias:attribute1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute1&apos;}}},
+			{data:{side:&apos;right&apos;, handle:&apos;target&apos;, alias:attribute2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute2&apos;}}}
 		],
 		attribute1_right : [
-			{data:{side:&quot;left&quot;, handle:&quot;target&quot;, alias:attribute2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute2&quot;}}},
-			{data:{side:&quot;right&quot;, handle:&quot;target&quot;, alias:attribute1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute1&quot;}}},
-			{data:{side:&quot;left&quot;, handle:&quot;target&quot;, alias:attribute2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute2&quot;}}},
-			{data:{side:&quot;right&quot;, handle:&quot;target&quot;, alias:attribute1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute1&quot;}}},
-			{data:{side:&quot;left&quot;, handle:&quot;target&quot;, alias:attribute2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute2&quot;}}},
-			{data:{side:&quot;right&quot;, handle:&quot;target&quot;, alias:attribute1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute1&quot;}}},
-			{data:{side:&quot;left&quot;, handle:&quot;target&quot;, alias:attribute2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute2&quot;}}},
-			{data:{side:&quot;right&quot;, handle:&quot;target&quot;, alias:attribute1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute1&quot;}}},
-			{data:{side:&quot;left&quot;, handle:&quot;target&quot;, alias:attribute2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute2&quot;}}},
-			{data:{side:&quot;right&quot;, handle:&quot;target&quot;, alias:attribute1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute1&quot;}}}
+			{data:{side:&apos;left&apos;, handle:&apos;target&apos;, alias:attribute2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute2&apos;}}},
+			{data:{side:&apos;right&apos;, handle:&apos;target&apos;, alias:attribute1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute1&apos;}}},
+			{data:{side:&apos;left&apos;, handle:&apos;target&apos;, alias:attribute2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute2&apos;}}},
+			{data:{side:&apos;right&apos;, handle:&apos;target&apos;, alias:attribute1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute1&apos;}}},
+			{data:{side:&apos;left&apos;, handle:&apos;target&apos;, alias:attribute2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute2&apos;}}},
+			{data:{side:&apos;right&apos;, handle:&apos;target&apos;, alias:attribute1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute1&apos;}}},
+			{data:{side:&apos;left&apos;, handle:&apos;target&apos;, alias:attribute2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute2&apos;}}},
+			{data:{side:&apos;right&apos;, handle:&apos;target&apos;, alias:attribute1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute1&apos;}}},
+			{data:{side:&apos;left&apos;, handle:&apos;target&apos;, alias:attribute2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute2&apos;}}},
+			{data:{side:&apos;right&apos;, handle:&apos;target&apos;, alias:attribute1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute1&apos;}}}
 		],
 		concept1_left: [
-			{data:{side:&quot;left&quot;, handle:&quot;target&quot;, alias:concept1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;concept1&quot;}}},
-			{data:{side:&quot;right&quot;, handle:&quot;target&quot;, alias:concept2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;concept2&quot;}}},
-			{data:{side:&quot;left&quot;, handle:&quot;target&quot;, alias:concept1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;concept1&quot;}}},
-			{data:{side:&quot;right&quot;, handle:&quot;target&quot;, alias:concept2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;concept2&quot;}}},
-			{data:{side:&quot;left&quot;, handle:&quot;target&quot;, alias:concept1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;concept1&quot;}}},
-			{data:{side:&quot;right&quot;, handle:&quot;target&quot;, alias:concept2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;concept2&quot;}}},
-			{data:{side:&quot;left&quot;, handle:&quot;target&quot;, alias:concept1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;concept1&quot;}}},
-			{data:{side:&quot;right&quot;, handle:&quot;target&quot;, alias:concept2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;concept2&quot;}}},
-			{data:{side:&quot;left&quot;, handle:&quot;target&quot;, alias:concept1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;concept1&quot;}}},
-			{data:{side:&quot;right&quot;, handle:&quot;target&quot;, alias:concept2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;concept2&quot;}}}
+			{data:{side:&apos;left&apos;, handle:&apos;target&apos;, alias:concept1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;concept1&apos;}}},
+			{data:{side:&apos;right&apos;, handle:&apos;target&apos;, alias:concept2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;concept2&apos;}}},
+			{data:{side:&apos;left&apos;, handle:&apos;target&apos;, alias:concept1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;concept1&apos;}}},
+			{data:{side:&apos;right&apos;, handle:&apos;target&apos;, alias:concept2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;concept2&apos;}}},
+			{data:{side:&apos;left&apos;, handle:&apos;target&apos;, alias:concept1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;concept1&apos;}}},
+			{data:{side:&apos;right&apos;, handle:&apos;target&apos;, alias:concept2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;concept2&apos;}}},
+			{data:{side:&apos;left&apos;, handle:&apos;target&apos;, alias:concept1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;concept1&apos;}}},
+			{data:{side:&apos;right&apos;, handle:&apos;target&apos;, alias:concept2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;concept2&apos;}}},
+			{data:{side:&apos;left&apos;, handle:&apos;target&apos;, alias:concept1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;concept1&apos;}}},
+			{data:{side:&apos;right&apos;, handle:&apos;target&apos;, alias:concept2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;concept2&apos;}}}
 		],
 		concept1_right : [
-			{data:{side:&quot;left&quot;, handle:&quot;target&quot;, alias:concept2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;concept2&quot;}}},
-			{data:{side:&quot;right&quot;, handle:&quot;target&quot;, alias:concept1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;concept1&quot;}}},
-			{data:{side:&quot;left&quot;, handle:&quot;target&quot;, alias:concept2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;concept2&quot;}}},
-			{data:{side:&quot;right&quot;, handle:&quot;target&quot;, alias:concept1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;concept1&quot;}}},
-			{data:{side:&quot;left&quot;, handle:&quot;target&quot;, alias:concept2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;concept2&quot;}}},
-			{data:{side:&quot;right&quot;, handle:&quot;target&quot;, alias:concept1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;concept1&quot;}}},
-			{data:{side:&quot;left&quot;, handle:&quot;target&quot;, alias:concept2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;concept2&quot;}}},
-			{data:{side:&quot;right&quot;, handle:&quot;target&quot;, alias:concept1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;concept1&quot;}}},
-			{data:{side:&quot;left&quot;, handle:&quot;target&quot;, alias:concept2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;concept2&quot;}}},
-			{data:{side:&quot;right&quot;, handle:&quot;target&quot;, alias:concept1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;concept1&quot;}}}
+			{data:{side:&apos;left&apos;, handle:&apos;target&apos;, alias:concept2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;concept2&apos;}}},
+			{data:{side:&apos;right&apos;, handle:&apos;target&apos;, alias:concept1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;concept1&apos;}}},
+			{data:{side:&apos;left&apos;, handle:&apos;target&apos;, alias:concept2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;concept2&apos;}}},
+			{data:{side:&apos;right&apos;, handle:&apos;target&apos;, alias:concept1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;concept1&apos;}}},
+			{data:{side:&apos;left&apos;, handle:&apos;target&apos;, alias:concept2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;concept2&apos;}}},
+			{data:{side:&apos;right&apos;, handle:&apos;target&apos;, alias:concept1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;concept1&apos;}}},
+			{data:{side:&apos;left&apos;, handle:&apos;target&apos;, alias:concept2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;concept2&apos;}}},
+			{data:{side:&apos;right&apos;, handle:&apos;target&apos;, alias:concept1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;concept1&apos;}}},
+			{data:{side:&apos;left&apos;, handle:&apos;target&apos;, alias:concept2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;concept2&apos;}}},
+			{data:{side:&apos;right&apos;, handle:&apos;target&apos;, alias:concept1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;concept1&apos;}}}
 		],
 
 		// #### Feedback
 		// This stimulus is used for giving feedback, in this case only an error notification
 		feedback : [
-			{handle:&quot;error&quot;, location: {top: 80}, css:{color:&quot;red&quot;,&quot;font-size&quot;:&quot;4em&quot;}, media: {word:&quot;X&quot;}, nolog:true}
+			{handle:&apos;error&apos;, location: {top: 80}, css:{color:&apos;red&apos;,&apos;font-size&apos;:&apos;4em&apos;}, media: {word:&apos;X&apos;}, nolog:true}
 		],
 
 		// #### Layout
@@ -492,8 +506,8 @@
 		// Here we control only the general way that the layout appears.
 		// The mechanics inside the templates and the fact that we set the proper data in all trials allow us to use the same stimuli for the layout of all the trials.
 		layout: [
-			{data:{handle:&quot;left&quot;},location:{left:0,top:0},css:{color:&quot;white&quot;,fontSize:&quot;2em&quot;},media:{template:&quot;left.jst&quot;}},
-			{data:{handle:&quot;right&quot;}, location:{left:&quot;auto&quot;,right:0,top:0},css:{color:&quot;white&quot;,fontSize:&quot;2em&quot;},media:{template:&quot;right.jst&quot;}}
+			{data:{handle:&apos;left&apos;},location:{left:0,top:0},css:{color:&apos;white&apos;,fontSize:&apos;2em&apos;},media:{template:&apos;left.jst&apos;}},
+			{data:{handle:&apos;right&apos;}, location:{left:&apos;auto&apos;,right:0,top:0},css:{color:&apos;white&apos;,fontSize:&apos;2em&apos;},media:{template:&apos;right.jst&apos;}}
 		]
 	});
 
@@ -508,31 +522,31 @@
 	API.addMediaSets({
 		// #### Pleasant
 		attribute1 : [
-			{word: &quot;Nice&quot;},
-			{word: &quot;Heaven&quot;},
-			{word: &quot;Happy&quot;},
-			{word: &quot;Pleasure&quot;}
+			{word: &apos;Nice&apos;},
+			{word: &apos;Heaven&apos;},
+			{word: &apos;Happy&apos;},
+			{word: &apos;Pleasure&apos;}
 		],
 		// #### Unpleasant
 		attribute2: [
-			{word: &quot;Nasty&quot;},
-			{word: &quot;Hell&quot;},
-			{word: &quot;Horrible&quot;},
-			{word: &quot;Rotten&quot;}
+			{word: &apos;Nasty&apos;},
+			{word: &apos;Hell&apos;},
+			{word: &apos;Horrible&apos;},
+			{word: &apos;Rotten&apos;}
 		],
 		// #### Black people
 		concept1: [
-			{image: &quot;bf14_nc.jpg&quot;},
-			{image: &quot;bf23_nc.jpg&quot;},
-			{image: &quot;bf56_nc.jpg&quot;},
-			{image: &quot;bm14_nc.jpg&quot;}
+			{image: &apos;bf14_nc.jpg&apos;},
+			{image: &apos;bf23_nc.jpg&apos;},
+			{image: &apos;bf56_nc.jpg&apos;},
+			{image: &apos;bm14_nc.jpg&apos;}
 		],
 		// #### White people
 		concept2: [
-			{image: &quot;wf2_nc.jpg&quot;},
-			{image: &quot;wf3_nc.jpg&quot;},
-			{image: &quot;wf6_nc.jpg&quot;},
-			{image: &quot;wm1_nc.jpg&quot;}
+			{image: &apos;wf2_nc.jpg&apos;},
+			{image: &apos;wf3_nc.jpg&apos;},
+			{image: &apos;wf6_nc.jpg&apos;},
+			{image: &apos;wm1_nc.jpg&apos;}
 		]
 	});
 
@@ -548,18 +562,18 @@
 			// we set the data with the category names so the template can display them
 			data: {block:1, left2:concept1, right2:concept2,blockStart:true},
 			// inhertit the generic instruction block
-			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
+			inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},
 			stimuli: [{
-				inherit:&quot;Instructions&quot;,
-				media:{template:&quot;inst1.jst&quot;}
+				inherit:&apos;Instructions&apos;,
+				media:{template:&apos;inst1.jst&apos;}
 			}]
 		},
 		// repeat the block 1 trial 20 times
 		{
-			mixer : &quot;repeat&quot;,
+			mixer : &apos;repeat&apos;,
 			times : 20,
 			data : [
-				{inherit : {type:&quot;byData&quot;, data:{block:1}, set:&quot;IAT&quot;}}
+				{inherit : {type:&apos;byData&apos;, data:{block:1}, set:&apos;IAT&apos;}}
 			]
 		},
 
@@ -567,17 +581,17 @@
 		// block 2 instructions
 		{
 			data: {block:2, left1:attribute1, right1:attribute2, blockStart:true},
-			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
+			inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},
 			stimuli: [{
-				inherit:&quot;Instructions&quot;,
-				media:{template:&quot;inst2.jst&quot;}
+				inherit:&apos;Instructions&apos;,
+				media:{template:&apos;inst2.jst&apos;}
 			}]
 		},
 		{
-			mixer : &quot;repeat&quot;,
+			mixer : &apos;repeat&apos;,
 			times : 20,
 			data : [
-				{inherit : {type:&quot;byData&quot;, data:{block:2}, set:&quot;IAT&quot;}}
+				{inherit : {type:&apos;byData&apos;, data:{block:2}, set:&apos;IAT&apos;}}
 			]
 		},
 
@@ -585,18 +599,18 @@
 		// block 3 instructions
 		{
 			data: {block:3, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2,blockStart:true},
-			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
+			inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},
 			stimuli: [{
-				inherit:&quot;Instructions&quot;,
-				media:{template:&quot;inst3.jst&quot;}
+				inherit:&apos;Instructions&apos;,
+				media:{template:&apos;inst3.jst&apos;}
 			}]
 		},
 		{
-			mixer: &quot;repeat&quot;,
+			mixer: &apos;repeat&apos;,
 			times: 20,
 			data: [
-				{inherit : {type:&quot;byData&quot;, data:{block:3,row:1}, set:&quot;IAT&quot;}},
-				{inherit : {type:&quot;byData&quot;, data:{block:3,row:2}, set:&quot;IAT&quot;}}
+				{inherit : {type:&apos;byData&apos;, data:{block:3,row:1}, set:&apos;IAT&apos;}},
+				{inherit : {type:&apos;byData&apos;, data:{block:3,row:2}, set:&apos;IAT&apos;}}
 			]
 		},
 
@@ -604,18 +618,18 @@
 		// block 4 instructions
 		{
 			data: {block:4, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2,blockStart:true},
-			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
+			inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},
 			stimuli: [{
-				inherit:&quot;Instructions&quot;,
-				media:{template:&quot;inst4.jst&quot;}
+				inherit:&apos;Instructions&apos;,
+				media:{template:&apos;inst4.jst&apos;}
 			}]
 		},
 		{
-			mixer: &quot;repeat&quot;,
+			mixer: &apos;repeat&apos;,
 			times: 40,
 			data: [
-				{inherit : {type:&quot;byData&quot;, data:{block:4,row:1}, set:&quot;IAT&quot;}},
-				{inherit : {type:&quot;byData&quot;, data:{block:4,row:2}, set:&quot;IAT&quot;}}
+				{inherit : {type:&apos;byData&apos;, data:{block:4,row:1}, set:&apos;IAT&apos;}},
+				{inherit : {type:&apos;byData&apos;, data:{block:4,row:2}, set:&apos;IAT&apos;}}
 			]
 		},
 
@@ -623,17 +637,17 @@
 		// block 5 instructions
 		{
 			data: {block:5, left2:concept2, right2:concept1,blockStart:true},
-			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
+			inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},
 			stimuli: [{
-				inherit:&quot;Instructions&quot;,
-				media:{template:&quot;inst5.jst&quot;}
+				inherit:&apos;Instructions&apos;,
+				media:{template:&apos;inst5.jst&apos;}
 			}]
 		},
 		{
-			mixer : &quot;repeat&quot;,
+			mixer : &apos;repeat&apos;,
 			times : 40,
 			data : [
-				{inherit : {type:&quot;byData&quot;, data:{block:5}, set:&quot;IAT&quot;}}
+				{inherit : {type:&apos;byData&apos;, data:{block:5}, set:&apos;IAT&apos;}}
 			]
 		},
 
@@ -641,18 +655,18 @@
 		// block 6 instructions
 		{
 			data: {block:6, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1,blockStart:true},
-			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
+			inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},
 			stimuli: [{
-				inherit:&quot;Instructions&quot;,
-				media:{template:&quot;inst6.jst&quot;}
+				inherit:&apos;Instructions&apos;,
+				media:{template:&apos;inst6.jst&apos;}
 			}]
 		},
 		{
-			mixer: &quot;repeat&quot;,
+			mixer: &apos;repeat&apos;,
 			times: 20,
 			data: [
-				{inherit : {type:&quot;byData&quot;, data:{block:6,row:1}, set:&quot;IAT&quot;}},
-				{inherit : {type:&quot;byData&quot;, data:{block:6,row:2}, set:&quot;IAT&quot;}}
+				{inherit : {type:&apos;byData&apos;, data:{block:6,row:1}, set:&apos;IAT&apos;}},
+				{inherit : {type:&apos;byData&apos;, data:{block:6,row:2}, set:&apos;IAT&apos;}}
 			]
 		},
 
@@ -660,18 +674,18 @@
 		// block 7 instructions
 		{
 			data: {block:7, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1,blockStart:true},
-			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
+			inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},
 			stimuli: [{
-				inherit:&quot;Instructions&quot;,
-				media:{template:&quot;inst7.jst&quot;}
+				inherit:&apos;Instructions&apos;,
+				media:{template:&apos;inst7.jst&apos;}
 			}]
 		},
 		{
-			mixer: &quot;repeat&quot;,
+			mixer: &apos;repeat&apos;,
 			times: 20,
 			data: [
-				{inherit : {type:&quot;byData&quot;, data:{block:7,row:1}, set:&quot;IAT&quot;}},
-				{inherit : {type:&quot;byData&quot;, data:{block:7,row:2}, set:&quot;IAT&quot;}}
+				{inherit : {type:&apos;byData&apos;, data:{block:7,row:1}, set:&apos;IAT&apos;}},
+				{inherit : {type:&apos;byData&apos;, data:{block:7,row:2}, set:&apos;IAT&apos;}}
 			]
 		}
 	]; // end regular IAT sequence
@@ -686,17 +700,17 @@
 		// block 5 instructions
 		{
 			data: {block:5, left2:concept2, right2:concept1,blockStart:true},
-			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
+			inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},
 			stimuli: [{
-				inherit:&quot;Instructions&quot;,
-				media:{template:&quot;inst1.jst&quot;}
+				inherit:&apos;Instructions&apos;,
+				media:{template:&apos;inst1.jst&apos;}
 			}]
 		},
 		{
-			mixer : &quot;repeat&quot;,
+			mixer : &apos;repeat&apos;,
 			times : 20,
 			data : [
-				{inherit : {type:&quot;byData&quot;, data:{block:5}, set:&quot;IAT&quot;}}
+				{inherit : {type:&apos;byData&apos;, data:{block:5}, set:&apos;IAT&apos;}}
 			]
 		},
 
@@ -704,17 +718,17 @@
 		// block 2 instructions
 		{
 			data: {block:2, left1:attribute1, right1:attribute2,blockStart:true},
-			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
+			inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},
 			stimuli: [{
-				inherit:&quot;Instructions&quot;,
-				media:{template:&quot;inst2.jst&quot;}
+				inherit:&apos;Instructions&apos;,
+				media:{template:&apos;inst2.jst&apos;}
 			}]
 		},
 		{
-			mixer : &quot;repeat&quot;,
+			mixer : &apos;repeat&apos;,
 			times : 20,
 			data : [
-				{inherit : {type:&quot;byData&quot;, data:{block:2}, set:&quot;IAT&quot;}}
+				{inherit : {type:&apos;byData&apos;, data:{block:2}, set:&apos;IAT&apos;}}
 			]
 		},
 
@@ -722,18 +736,18 @@
 		// block 6 instructions
 		{
 			data: {block:6, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1,blockStart:true},
-			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
+			inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},
 			stimuli: [{
-				inherit:&quot;Instructions&quot;,
-				media:{template:&quot;inst3.jst&quot;}
+				inherit:&apos;Instructions&apos;,
+				media:{template:&apos;inst3.jst&apos;}
 			}]
 		},
 		{
-			mixer: &quot;repeat&quot;,
+			mixer: &apos;repeat&apos;,
 			times: 20,
 			data: [
-				{inherit : {type:&quot;byData&quot;, data:{block:6,row:1}, set:&quot;IAT&quot;}},
-				{inherit : {type:&quot;byData&quot;, data:{block:6,row:2}, set:&quot;IAT&quot;}}
+				{inherit : {type:&apos;byData&apos;, data:{block:6,row:1}, set:&apos;IAT&apos;}},
+				{inherit : {type:&apos;byData&apos;, data:{block:6,row:2}, set:&apos;IAT&apos;}}
 			]
 		},
 
@@ -741,18 +755,18 @@
 		// block 7 instructions
 		{
 			data: {block:7, left1:attribute1, right1:attribute2, left2:concept2, right2:concept1,blockStart:true},
-			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
+			inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},
 			stimuli: [{
-				inherit:&quot;Instructions&quot;,
-				media:{template:&quot;inst4.jst&quot;}
+				inherit:&apos;Instructions&apos;,
+				media:{template:&apos;inst4.jst&apos;}
 			}]
 		},
 		{
-			mixer: &quot;repeat&quot;,
+			mixer: &apos;repeat&apos;,
 			times: 20,
 			data: [
-				{inherit : {type:&quot;byData&quot;, data:{block:7,row:1}, set:&quot;IAT&quot;}},
-				{inherit : {type:&quot;byData&quot;, data:{block:7,row:2}, set:&quot;IAT&quot;}}
+				{inherit : {type:&apos;byData&apos;, data:{block:7,row:1}, set:&apos;IAT&apos;}},
+				{inherit : {type:&apos;byData&apos;, data:{block:7,row:2}, set:&apos;IAT&apos;}}
 			]
 		},
 
@@ -760,17 +774,17 @@
 		// block 1 instructions
 		{
 			data: {block:1, left2:concept1, right2:concept2,blockStart:true},			// we set the data with the category names so the template can display them
-			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+			inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
 			stimuli: [{
-				inherit:&quot;Instructions&quot;,
-				media:{template:&quot;inst5.jst&quot;}
+				inherit:&apos;Instructions&apos;,
+				media:{template:&apos;inst5.jst&apos;}
 			}]
 		},
 		{
-			mixer : &quot;repeat&quot;,
+			mixer : &apos;repeat&apos;,
 			times : 20,
 			data : [
-				{inherit : {type:&quot;byData&quot;, data:{block:1}, set:&quot;IAT&quot;}}
+				{inherit : {type:&apos;byData&apos;, data:{block:1}, set:&apos;IAT&apos;}}
 			]
 		},
 
@@ -778,18 +792,18 @@
 		// block 3 instructions
 		{
 			data: {block:3, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2,blockStart:true},
-			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
+			inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},
 			stimuli: [{
-				inherit:&quot;Instructions&quot;,
-				media:{template:&quot;inst6.jst&quot;}
+				inherit:&apos;Instructions&apos;,
+				media:{template:&apos;inst6.jst&apos;}
 			}]
 		},
 		{
-			mixer: &quot;repeat&quot;,
+			mixer: &apos;repeat&apos;,
 			times: 20,
 			data: [
-				{inherit : {type:&quot;byData&quot;, data:{block:3,row:1}, set:&quot;IAT&quot;}},
-				{inherit : {type:&quot;byData&quot;, data:{block:3,row:2}, set:&quot;IAT&quot;}}
+				{inherit : {type:&apos;byData&apos;, data:{block:3,row:1}, set:&apos;IAT&apos;}},
+				{inherit : {type:&apos;byData&apos;, data:{block:3,row:2}, set:&apos;IAT&apos;}}
 			]
 		},
 
@@ -797,18 +811,18 @@
 		// block 4 instructions
 		{
 			data: {block:4, left1:attribute1, right1:attribute2, left2:concept1, right2:concept2,blockStart:true},
-			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
+			inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},
 			stimuli: [{
-				inherit:&quot;Instructions&quot;,
-				media:{template:&quot;inst7.jst&quot;}
+				inherit:&apos;Instructions&apos;,
+				media:{template:&apos;inst7.jst&apos;}
 			}]
 		},
 		{
-			mixer: &quot;repeat&quot;,
+			mixer: &apos;repeat&apos;,
 			times: 20,
 			data: [
-				{inherit : {type:&quot;byData&quot;, data:{block:4,row:1}, set:&quot;IAT&quot;}},
-				{inherit : {type:&quot;byData&quot;, data:{block:4,row:2}, set:&quot;IAT&quot;}}
+				{inherit : {type:&apos;byData&apos;, data:{block:4,row:1}, set:&apos;IAT&apos;}},
+				{inherit : {type:&apos;byData&apos;, data:{block:4,row:2}, set:&apos;IAT&apos;}}
 			]
 		}
 	]; // end swaped IAT
@@ -818,16 +832,16 @@
 	 */
 	API.addSequence([
 		{
-			mixer: &quot;choose&quot;,
+			mixer: &apos;choose&apos;,
 			data: [
-				{mixer:&quot;wrapper&quot;,data:regularIAT},
-				{mixer:&quot;wrapper&quot;,data:swapedIAT}
+				{mixer:&apos;wrapper&apos;,data:regularIAT},
+				{mixer:&apos;wrapper&apos;,data:swapedIAT}
 			]
 		},
 
 		// user feedback- here we will use the computeD function.
 		{
-			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
+			inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},
 			data: {blockStart:true},
 			stimuli: [],
 			customize: function(){
@@ -835,13 +849,13 @@
 				var DScoreObj, media;
 
 				// First parcel
-				scorer.addSettings(&quot;compute&quot;,{
-					parcelValue : [&quot;first&quot;]
+				scorer.addSettings(&apos;compute&apos;,{
+					parcelValue : [&apos;first&apos;]
 				});
 
 				DScoreObj = scorer.computeD();
 
-				media = {css:{color:&quot;black&quot;},media:{html:&quot;&lt;div&gt;&lt;p style="font-size:12px;color:#FFFAFA"&gt; &quot;+DScoreObj.FBMsg+&quot;&lt;br&gt;The Score is:&quot;+DScoreObj.DScore+&quot;&lt;/p&gt;&lt;/div&gt;&quot;}};
+				media = {css:{color:&apos;black&apos;},media:{html:&apos;&lt;div&gt;&lt;p style=&quot;font-size:12px;color:#FFFAFA&quot;&gt; &apos;+DScoreObj.FBMsg+&apos;&lt;br&gt;The Score is:&apos;+DScoreObj.DScore+&apos;&lt;/p&gt;&lt;/div&gt;&apos;}};
 				trial.stimuli.push(media);
 				scorer.dynamicPost({
 					score1: DScoreObj.DScore,
@@ -849,12 +863,12 @@
 				});
 
 				// Second parcel
-				scorer.addSettings(&quot;compute&quot;,{
-					parcelValue : [&quot;second&quot;]
+				scorer.addSettings(&apos;compute&apos;,{
+					parcelValue : [&apos;second&apos;]
 				});
 
 				DScoreObj = scorer.computeD();
-				media = {css:{color:&quot;black&quot;},media:{html:&quot;&lt;h1&gt;&lt;div&gt;&lt;p style="font-size:12px;color=#FFFAFA&gt;&quot;+DScoreObj.FBMsg+&quot;&lt;br&gt;The Score is:&quot;+DScoreObj.DScore+&quot;&lt;/p&gt;&lt;/div&gt;&quot;}};
+				media = {css:{color:&apos;black&apos;},media:{html:&apos;&lt;h1&gt;&lt;div&gt;&lt;p style=&quot;font-size:12px;color=#FFFAFA&gt;&apos;+DScoreObj.FBMsg+&apos;&lt;br&gt;The Score is:&apos;+DScoreObj.DScore+&apos;&lt;/p&gt;&lt;/div&gt;&apos;}};
 				trial.stimuli.push(media);
 				scorer.dynamicPost({
 					score1: DScoreObj.DScore,
@@ -865,12 +879,12 @@
 		},
 
 		{ //Instructions trial, the end of the task, instruction what to do next
-			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
+			inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},
 			stimuli: [
 				{//The instructions stimulus
-					data : {&quot;handle&quot;:&quot;instStim&quot;},
-					css: {color:&quot;black&quot;},
-					media:{html:&quot;&lt;div&gt;&lt;p style="font-size:28px;color:#FFFAFA"&gt;You have completed the study&lt;br/&gt;&lt;br/&gt;Thank you very much for your participation.&lt;br/&gt;&lt;br/&gt; Press "space" to continue to next task.&lt;/p&gt;&lt;/div&gt;&quot;}
+					data : {&apos;handle&apos;:&apos;instStim&apos;},
+					css: {color:&apos;black&apos;},
+					media:{html:&apos;&lt;div&gt;&lt;p style=&quot;font-size:28px;color:#FFFAFA&quot;&gt;You have completed the study&lt;br/&gt;&lt;br/&gt;Thank you very much for your participation.&lt;br/&gt;&lt;br/&gt; Press &quot;space&quot; to continue to next task.&lt;/p&gt;&lt;/div&gt;&apos;}
 				}
 			]
 		}
@@ -883,37 +897,37 @@
 	*/
 
 	// setting scorer settings
-	scorer.addSettings(&quot;compute&quot;,{
-		ErrorVar:&quot;score&quot;,
-		condVar:"condition",
+	scorer.addSettings(&apos;compute&apos;,{
+		ErrorVar:&apos;score&apos;,
+		condVar:&quot;condition&quot;,
 		//condition 1
 		cond1VarValues: [
-			attribute1 + &quot;,&quot; + concept1 + &quot;/&quot; + attribute2 + &quot;,&quot; + concept2
+			attribute1 + &apos;,&apos; + concept1 + &apos;/&apos; + attribute2 + &apos;,&apos; + concept2
 		],
 		//condition 2
 		cond2VarValues: [
-			attribute1 + &quot;,&quot; + concept2 + &quot;/&quot; + attribute2 + &quot;,&quot; + concept1
+			attribute1 + &apos;,&apos; + concept2 + &apos;/&apos; + attribute2 + &apos;,&apos; + concept1
 		],
-		parcelVar : "parcel",
-		// parcelValue : [&quot;first&quot;], ==&gt; we set the parcels individually because we want two separate computations
+		parcelVar : &quot;parcel&quot;,
+		// parcelValue : [&apos;first&apos;], ==&gt; we set the parcels individually because we want two separate computations
 		fastRT : 150, //Below this reaction time, the latency is considered extremely fast.
 		maxFastTrialsRate : 0.1, //Above this % of extremely fast responses within a condition, the participant is considered too fast.
 		minRT : 400,
 		maxRT : 10000,
-		errorLatency : {use:"latency", penalty:600, useForSTD:true},//ignore error respones
-		postSettings : {score:"score",msg:"feedback",url:"/implicit/scorer"}
+		errorLatency : {use:&quot;latency&quot;, penalty:600, useForSTD:true},//ignore error respones
+		postSettings : {score:&quot;score&quot;,msg:&quot;feedback&quot;,url:&quot;/implicit/scorer&quot;}
 	});
 
 	// scorer messages
-	scorer.addSettings(&quot;message&quot;,{
+	scorer.addSettings(&apos;message&apos;,{
 		MessageDef: [
-			{ cut:&quot;-0.65&quot;, message:&quot;Your data suggest a strong implicit preference for Black People compared to White People&quot; },
-			{ cut:&quot;-0.35&quot;, message:&quot;Your data suggest a moderate implicit preference for Black People compared to White People.&quot; },
-			{ cut:&quot;-0.15&quot;, message:&quot;Your data suggest a slight implicit preference for Black People compared to White People.&quot; },
-			{ cut:&quot;0.15&quot;, message:&quot;Your data suggest little to no difference in implicit preference between Black People and White People.&quot; },
-			{ cut:&quot;0.35&quot;, message:&quot;Your data suggest a slight implicit preference for White People compared to Black People&quot; },
-			{ cut:&quot;0.65&quot;, message:&quot;Your data suggest a moderate implicit preference for White People compared to Black People&quot; },
-			{ cut:&quot;5&quot;, message:&quot;Your data suggest a strong implicit preference for White People compared to Black People&quot; }
+			{ cut:&apos;-0.65&apos;, message:&apos;Your data suggest a strong implicit preference for Black People compared to White People&apos; },
+			{ cut:&apos;-0.35&apos;, message:&apos;Your data suggest a moderate implicit preference for Black People compared to White People.&apos; },
+			{ cut:&apos;-0.15&apos;, message:&apos;Your data suggest a slight implicit preference for Black People compared to White People.&apos; },
+			{ cut:&apos;0.15&apos;, message:&apos;Your data suggest little to no difference in implicit preference between Black People and White People.&apos; },
+			{ cut:&apos;0.35&apos;, message:&apos;Your data suggest a slight implicit preference for White People compared to Black People&apos; },
+			{ cut:&apos;0.65&apos;, message:&apos;Your data suggest a moderate implicit preference for White People compared to Black People&apos; },
+			{ cut:&apos;5&apos;, message:&apos;Your data suggest a strong implicit preference for White People compared to Black People&apos; }
 		]
 	});
 

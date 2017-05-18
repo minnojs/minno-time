@@ -1,14 +1,14 @@
 define(function(require){
-	var _ = require('underscore');
+    var _ = require('underscore');
 
 	// the pubsub object itself
-	var pubsub = {};
+    var pubsub = {};
 
 	// the topic/subscription hash
-	var cache = {};
-	var counters ={};
+    var cache = {};
+    var counters ={};
 
-	pubsub.publish = function(/* String */topic, /* Array? */args){
+    pubsub.publish = function(/* String */topic, /* Array? */args){
 		// summary:
 		//		Publish some data on a named topic.
 		// topic: String
@@ -24,13 +24,13 @@ define(function(require){
 		//	|		$.publish("/some/topic", ["a","b","c"]);
 		// log(topic,args);
 
-		cache[topic] && _.each(cache[topic], function(func){
-			func.apply(pubsub, args || []);
-		});
+        cache[topic] && _.each(cache[topic], function(func){
+            func.apply(pubsub, args || []);
+        });
 
-	};
+    };
 
-	pubsub.subscribe = function(/* String */topic, /* Function */callback){
+    pubsub.subscribe = function(/* String */topic, /* Function */callback){
 		// summary:
 		//		Register a callback on a named topic.
 		// topic: String
@@ -51,28 +51,28 @@ define(function(require){
 		// example:
 		//	|	$.subscribe("/some/topic", "/handle/stack", function(a, b, c){ /* handle data */ });
 
-		var subStack;
+        var subStack;
 
 		// if second argument is not a call back use it as the subscription stack
-		if (_.isFunction(callback)) {
-			subStack = [];
-		} else {
-			subStack = arguments[1];
-			callback = arguments[2];
-		}
+        if (_.isFunction(callback)) {
+            subStack = [];
+        } else {
+            subStack = arguments[1];
+            callback = arguments[2];
+        }
 
-		if(!cache[topic]){
-			cache[topic] = {};
-			counters[topic] = 0;
-		}
+        if(!cache[topic]){
+            cache[topic] = {};
+            counters[topic] = 0;
+        }
 
-		cache[topic][counters[topic]++] = callback;
+        cache[topic][counters[topic]++] = callback;
 
-		subStack.push([topic, callback]);
-		return [topic, callback]; // Array
-	};
+        subStack.push([topic, callback]);
+        return [topic, callback]; // Array
+    };
 
-	pubsub.unsubscribe = function(/* Array */handle){
+    pubsub.unsubscribe = function(/* Array */handle){
 		// summary:
 		//		Disconnect a subscribed function for a topic.
 		// handle: Array
@@ -81,13 +81,13 @@ define(function(require){
 		//	|	var handle = $.subscribe("/something", function(){});
 		//	|	$.unsubscribe(handle);
 
-		var t = handle[0];
-		cache[t] && _.each(cache[t], function(func, idx){
-			func == handle[1] && delete(cache[t][idx]);
-		});
-	};
+        var t = handle[0];
+        cache[t] && _.each(cache[t], function(func, idx){
+            func == handle[1] && delete(cache[t][idx]);
+        });
+    };
 
-	return pubsub;
+    return pubsub;
 });
 
 
