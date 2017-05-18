@@ -19,7 +19,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 
 	//the source of the images
 	API.addSettings('base_url',{
-		image : '../../images'
+		image : '/images'
 	});
 
 	API.addSettings('logger',{

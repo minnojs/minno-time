@@ -32,7 +32,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 	});
 
 	API.addSettings('base_url',{
-		image : '../../images'
+		image : '/images'
 	});
 
 	API.addSettings('logger',{

@@ -21,8 +21,8 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 	});
 
 	API.addSettings('base_url',{
-		image : '../../images',
-		template : '../../../resources/GNAT'
+		image : '/images',
+		template : '/resources/GNAT'
 	});
 
 
