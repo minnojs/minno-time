@@ -76,7 +76,7 @@ define(['pipAPI'], function(APIconstructor) {
 	});
 	// from where to take the images
 	API.addSettings('base_url',{
-		image : '/images'
+		image : '/minno-time/images'
 	});
 
 	API.addSettings('logger',{

@@ -17,7 +17,7 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 	});
 
 	API.addSettings('base_url',{
-		image : '/images'
+		image : '/minno-time/images'
 	});
 
 

@@ -25,8 +25,8 @@ define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 
     // setting the base urls for images and templates
     API.addSettings('base_url',{
-        image : '/images',
-        template : '/resources/IAT'
+        image : '/minno-time/images',
+        template : '/minno-time/resources/IAT'
     });
 
     // setting the way the logger works (how often we send data to the server and the url for the data)
