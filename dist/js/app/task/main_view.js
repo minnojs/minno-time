@@ -4,12 +4,13 @@
 define(function(require){
 
     var Backbone = require('backbone')
-		, $ = require('jquery')
-		, _ = require('underscore')
-		, adjust_canvas = require('./adjust_canvas')
-		, canvas = require('./canvasConstructor')
-		,script = require('app/task/script')
-		,loadingTpl = require('text!templates/loading.html');
+        , $ = require('jquery')
+        , _ = require('underscore')
+        , fastdom = require('utils/fastdom')
+        , adjust_canvas = require('./adjust_canvas')
+        , canvas = require('./canvasConstructor')
+        ,script = require('app/task/script')
+        ,loadingTpl = require('text!templates/loading.html');
 
 
     var View = Backbone.View.extend({
@@ -22,15 +23,12 @@ define(function(require){
             this.deferred = $.Deferred();
             this.deferred.promise().always(this.destroy);
 
-			/**
-			 * Adjust canvas listener
-			 * @type {[type]}
-			 */
+            /**
+             * Adjust canvas listener
+             * @type {[type]}
+             */
             var adjust = _.bind(this.adjustCanvas,this);
-            $(window).on('orientationchange.pip resize.pip', adjust);
-            this.deferred.promise().always(function(){
-                $(window).off('orientationchange.pip resize.pip', adjust);
-            });
+            $(window).on('orientationchange.pip resize.pip', adjust); // removed on destroy
         },
 
         render: function(){
@@ -52,13 +50,13 @@ define(function(require){
                     borderWidth			: {element: self.$el, property:'borderWidth'}
                 };
 
-				// settings activator
+                // settings activator
                 var off = canvas(map, _.pick(canvasSettings,['background','canvasBackground','borderColor','borderWidth']));
                 self.deferred.promise().always(off);
 
                 canvasSettings.css && self.$el.css(canvasSettings.css);
 
-				// append to body and render
+                // append to body and render
                 if ($('[pi-player]').length){
                     $('[pi-player]').empty().append(self.$el);
                 } else {
@@ -72,29 +70,32 @@ define(function(require){
             return docReady;
         },
 
-		// display loading page
+        // display loading page
         loading: function(parseDef){
             var $bar;
 
-			// if loading has already finished lets skip the loading page
+            // if loading has already finished lets skip the loading page
             if (parseDef.state() != 'pending'){
                 return parseDef;
             }
 
-			// display the loading template
+            // display the loading template
             this.$el.html(loadingTpl);
 
             $bar = this.$('.meter span');
 
             return parseDef
-				.progress(function(done, remaining){
-					// update progress bar
-    $bar.width((remaining ? (done/remaining)*100 : 0) + '%');
-});
+            .progress(function(done, remaining){
+                // update progress bar
+                $bar.width((remaining ? (done/remaining)*100 : 0) + '%');
+            });
         },
 
         empty: function(){
-            this.$el.empty();
+            var $el = this.$el;
+            fastdom.mutate(function(){
+                $el.empty();
+            });
         },
 
         destroy: function(){
@@ -103,10 +104,10 @@ define(function(require){
             this.unbind();
         },
 
-		// sets canvas size (used also for refreshing upon orientation change)
+        // sets canvas size (used also for refreshing upon orientation change)
         adjustCanvas: adjust_canvas
     });
 
-	// Returns the View class
+    // Returns the View class
     return new View();
 });

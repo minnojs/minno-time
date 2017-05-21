@@ -6,6 +6,7 @@ css/main.css
 js/activatePIP.js
 ----------------
 js/app/task/script.js
+js/utils/fastdom.js
 js/app/task/settings.js
 js/app/trial/current_trial.js
 js/app/task/adjust_canvas.js
@@ -54,7 +55,6 @@ js/utils/interface/listener.js
 js/utils/interface/now.js
 js/utils/interface/interface.js
 js/models/model.js
-js/utils/fastdom.js
 js/app/media/media_view.js
 js/utils/html.js
 js/app/global.js

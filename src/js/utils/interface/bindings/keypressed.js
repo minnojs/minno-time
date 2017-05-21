@@ -24,8 +24,8 @@ define(function(){
             document.addEventListener('keydown', this.listener);
 
             function keypressListener(e){
-                e.preventDefault(); // prevent FF from wasting about 10ms in browser-content.js
                 if (keyDownArr[e.which] || (target.indexOf(e.which) === -1)) return;
+                e.preventDefault(); // prevent FF from wasting about 10ms in browser-content.js (and fast search)
                 keyDownArr[e.which] = true; // set flag to prevent multi pressing of a key
                 callback(e,'keydown');
             }

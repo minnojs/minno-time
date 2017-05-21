@@ -49,12 +49,16 @@ define(function(require){
         
         // build element according to simulus
         initialize: function(options){
+            var self = this;
+            var $el = this.$el;
             this.options = options || {}; // needed since backbone v1.1.0
 
-            this.$el.addClass('stimulus');
-            this.$el.attr('data-handle', this.model.handle);     // add data-handle for handeling of mouse/touch interactions
-            this.$el.css(this.model.get('css'));
-            this.$el.appendTo(canvas);
+            fastdom.mutate(function(){
+                $el.addClass('stimulus');
+                $el.attr('data-handle', self.model.handle);     // add data-handle for handeling of mouse/touch interactions
+                $el.css(self.model.get('css'));
+                $el.appendTo(canvas);
+            });
 
             this.render();
         },
@@ -71,8 +75,9 @@ define(function(require){
 
         show: function(){
             var $el = this.$el;
-            $el.addClass('minno-stimulus-visible');
-            //fastdom.mutate(function(){ });
+            fastdom.mutate(function(){ 
+                $el.addClass('minno-stimulus-visible');
+            });
         },
 
         hide: function(){
@@ -83,20 +88,19 @@ define(function(require){
         },
 
         size: function(){
-            var size = this.model.get('size');
+            var self = this;
             var style = this.$el[0].style;
 
-            if (size.font_size){
-                style.fontSize = size.font_size;
-            }
+            fastdom.mutate(function(){
+                var size = self.model.get('size');
 
-            // if this is a word, we don't want to set height (it breaks centering)
-            if (size.height != 'auto' && this.options.type != 'word') {
-                style.height = size.height + '%';
-            }
-            if (size.width != 'auto'){
-                style.width = size.width + '%';
-            }
+                if (size.font_size) style.fontSize = size.font_size;
+
+                // if this is a word, we don't want to set height (it breaks centering)
+                if (size.height != 'auto' && self.options.type != 'word') style.height = size.height + '%';
+
+                if (size.width != 'auto') style.width = size.width + '%';
+            });
 
             return this;
         },
@@ -104,7 +108,6 @@ define(function(require){
         // places the element on the canvas (has to be called after size)
         // @TODO: this is way too complex to be left here, we should probably export this to a seperate file or something
         place: function(){
-
             // helper function: returns sizes of element;
             function size($elem){
                 return {
@@ -113,57 +116,65 @@ define(function(require){
                 };
             }
 
-            var top, bottom, left, right; // will hold the offset for the locations
-            var canvasSize = size(canvas);
-            var elSize = size(this.$el);
+            var canvasSize, elSize;
+            var self = this;
+            var $el = this.$el;
 
-            // get location setting and set center as default
-            var location = this.model.get('location') || {};
-            if (typeof location.top == 'undefined' && typeof location.bottom == 'undefined') {
-                location.top = 'center';
-            }
-            if (typeof location.left == 'undefined' && typeof location.right == 'undefined') {
-                location.right = 'center';
-            }
+            fastdom.measure(function(){
+                canvasSize = size(canvas);
+                elSize = size($el);
+            });
 
-            // set offsets:
-            switch (location.top){
-                case undefined :
-                    /* falls through */
-                case 'auto'     : top = 'auto'; break;
-                case 'center'    : top = (canvasSize.height - elSize.height)/2; break;
-                default            : top = (canvasSize.height * location.top)/100;
-            }
+            fastdom.mutate(function(){
+                var top, bottom, left, right; // will hold the offset for the locations
+                // get location setting and set center as default
+                var location = self.model.get('location') || {};
+                if (typeof location.top == 'undefined' && typeof location.bottom == 'undefined') {
+                    location.top = 'center';
+                }
+                if (typeof location.left == 'undefined' && typeof location.right == 'undefined') {
+                    location.right = 'center';
+                }
 
-            switch (location.bottom){
-                case undefined :
-                    /* falls through */
-                case 'auto'     : bottom = 'auto'; break;
-                case 'center'    : bottom = (canvasSize.height - elSize.height)/2; break;
-                default            : bottom = (canvasSize.height * (location.bottom))/100;
-            }
+                // set offsets:
+                switch (location.top){
+                    case undefined :
+                        /* falls through */
+                    case 'auto'     : top = 'auto'; break;
+                    case 'center'    : top = (canvasSize.height - elSize.height)/2; break;
+                    default            : top = (canvasSize.height * location.top)/100;
+                }
 
-            switch (location.left){
-                case undefined :
-                    /* falls through */
-                case 'auto'     : left = 'auto'; break;
-                case 'center'    : left = (canvasSize.width - elSize.width)/2; break;
-                default            : left = (canvasSize.width * location.left)/100;
-            }
+                switch (location.bottom){
+                    case undefined :
+                        /* falls through */
+                    case 'auto'     : bottom = 'auto'; break;
+                    case 'center'    : bottom = (canvasSize.height - elSize.height)/2; break;
+                    default            : bottom = (canvasSize.height * (location.bottom))/100;
+                }
 
-            switch (location.right){
-                case undefined :
-                    /* falls through */
-                case 'auto'     : right = 'auto'; break;
-                case 'center'    : right = (canvasSize.width - elSize.width)/2; break;
-                default            : right = (canvasSize.width * (location.right))/100;
-            }
+                switch (location.left){
+                    case undefined :
+                        /* falls through */
+                    case 'auto'     : left = 'auto'; break;
+                    case 'center'    : left = (canvasSize.width - elSize.width)/2; break;
+                    default            : left = (canvasSize.width * location.left)/100;
+                }
 
-            var style = this.$el[0].style;
-            style.top = top;
-            style.bottom = bottom;
-            style.left = left;
-            style.right = right;
+                switch (location.right){
+                    case undefined :
+                        /* falls through */
+                    case 'auto'     : right = 'auto'; break;
+                    case 'center'    : right = (canvasSize.width - elSize.width)/2; break;
+                    default            : right = (canvasSize.width * (location.right))/100;
+                }
+
+                var style = $el[0].style;
+                style.top = top;
+                style.bottom = bottom;
+                style.left = left;
+                style.right = right;
+            });
         }
 
     });
