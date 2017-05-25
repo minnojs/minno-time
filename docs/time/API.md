@@ -202,6 +202,7 @@ If it is set to `false` then the input will be used only on non touch devices.
 
 #### Interactions
 Interactions are composed of conditions and actions. Every time an event is fired (any input including timeout or the begining of a trial) all the conditions are evaluated.
+Notably the `begin` event at the begining of each trial only evaluates interactions that have a `{type:'begin'}` condition.
 
 The `interactions` array is composed of interaction objects, each holding an array of conditions and an array of actions.
 For each interaction object, if all the conditions are true, then all the actions are carried out.
