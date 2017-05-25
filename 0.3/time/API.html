@@ -273,7 +273,8 @@ If it is set to <code>false</code> then the input will be used only on non touch
 <li><code>{handle:&#39;end&#39;,on:&#39;bottomTouch&#39;,touch:true}</code></li>
 <li><code>{handle: &#39;end&#39;,on: &#39;enter&#39;, touch:false}</code></li>
 </ul>
-<h4><a name="interactions" class="header-link" href="#interactions"><span></span></a>Interactions</h4><p>Interactions are composed of conditions and actions. Every time an event is fired (any input including timeout or the begining of a trial) all the conditions are evaluated.</p>
+<h4><a name="interactions" class="header-link" href="#interactions"><span></span></a>Interactions</h4><p>Interactions are composed of conditions and actions. Every time an event is fired (any input including timeout or the begining of a trial) all the conditions are evaluated.
+Notably the <code>begin</code> event at the begining of each trial only evaluates interactions that have a <code>{type:&#39;begin&#39;}</code> condition.</p>
 <p>The <code>interactions</code> array is composed of interaction objects, each holding an array of conditions and an array of actions.
 For each interaction object, if all the conditions are true, then all the actions are carried out.</p>
 <pre><code class="lang-javascript">{
