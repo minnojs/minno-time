@@ -1,8 +1,8 @@
 define(function(require){
-    var _ = require('underscore')
-		, Listener = require('./listener')
-		, is_touch_device = require('../is_touch')
-		, now = require('./now');
+    var _ = require('underscore');
+    var Listener = require('./listener');
+    var is_touch_device = require('../is_touch');
+    var now = require('./now');
 
 
 	/*
@@ -17,41 +17,30 @@ define(function(require){
 	 *
 	 */
 
-    var listenerStack = [] // holds all active listeners
-		, baseTime = 0;
+    var listenerStack = []; // holds all active listeners
+    var baseTime = 0;
 
     return {
 		// get latency (time since last reset)
-        getLatency: function(){
-            return now() - baseTime;
-        },
+        getLatency: function(){ return now() - baseTime; },
 
 		// reset timer
-        resetTimer: function(){
-            baseTime = now();
-        },
+        resetTimer: function(){ baseTime = now(); },
 
 		// add listeners
         add: function(definitions){
-            if (!definitions){
-                throw new Error('Missing input element. Could not add input listener');
-            }
+            if (!definitions) throw new Error('Missing input element. Could not add input listener');
 
             var interfaceObj = this;
-			// make sure definitions is set as an array
             var definitionsArr = _.isArray(definitions) ? definitions : [definitions];
 
-			// for each definitions object create a listener
+            // for each definitions object create a listener
             _.forEach(definitionsArr,function(definition){
-				// if this listener is targeted specificaly at a touch\!touch device
+                // if this listener is targeted specificaly at a touch\!touch device
                 if (!_.isUndefined(definition.touch)) {
-					// if needed, skip this listener
-                    if (is_touch_device && !definition.touch) {
-                        return true;
-                    }
-                    if (!is_touch_device && definition.touch) {
-                        return true;
-                    }
+                    // if needed, skip this listener
+                    if (is_touch_device && !definition.touch) return true;
+                    if (!is_touch_device && definition.touch) return true;
                 }
 
                 var listener = new Listener(definition, interfaceObj);
@@ -60,12 +49,12 @@ define(function(require){
 
         },
 
-		// remove listeners
+        // remove listeners
         remove: function(handleList){
-            handleList = _.isArray(handleList ) ? handleList  : [handleList ];
+            handleList = _.isArray(handleList ) ? handleList  : [handleList];
 
-			// go through the listener stack and remove any listeners that fit the handle list
-			// note that we do this in reverse so that the index does not change
+            // go through the listener stack and remove any listeners that fit the handle list
+            // note that we do this in reverse so that the index does not change
             for (var i = listenerStack.length - 1; i >= 0 ; i--){
                 var listener = listenerStack[i];
                 if (_.indexOf(handleList,listener.handle) != -1){
@@ -75,12 +64,12 @@ define(function(require){
             }
         },
 
-		// remove all listeners
+        // remove all listeners
         destroy: function(){
-			// destroy each listener
+            // destroy each listener
             _.invoke(listenerStack,'destroy');
 
-			// empty stack
+            // empty stack
             listenerStack = [];
         }
     };

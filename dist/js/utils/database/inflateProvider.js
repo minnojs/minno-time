@@ -10,127 +10,132 @@
  * @param depth: private use only, a counter for the depth of the recursion
  */
 define(function(require){
-	var _ = require('underscore');
+    var _ = require('underscore');
 
-	inflateProvider.$inject = ['databaseQuery','$rootScope','piConsole'];
-	function inflateProvider(query, $rootScope, $console){
+    inflateProvider.$inject = ['databaseQuery','$rootScope','piConsole'];
+    function inflateProvider(query, $rootScope, $console){
 
-		function customize(source){
-			// check for a custom function and run it if it exists
-			if (_.isFunction(source.customize)){
-				source.customize.apply(source, [source, $rootScope.global]);
-			}
-			return source;
-		}
+        function customize(source){
+            // check for a custom function and run it if it exists
+            if (_.isFunction(source.customize)){
+                source.customize.apply(source, [source, $rootScope.global]);
+            }
+            return source;
+        }
 
-		// @param source - object to inflate
-		// @param type - trial stimulus or media
-		// @param recursive - whether this is a recursive call or not
-		function inflate(source, coll, randomizer, recursive, depth){
+        // @param source - object to inflate
+        // @param type - trial stimulus or media
+        // @param recursive - whether this is a recursive call or not
+        function inflate(source, coll, randomizer, recursive, depth){
 
-			// protection against infinte loops
-			// ***********************************
-			depth = recursive ? --depth : 10;
+            // protection against infinte loops
+            // ***********************************
+            depth = recursive ? --depth : 10;
 
-			if (!depth) {
-				throw new Error('Inheritance loop too deep, you can only inherit up to 10 levels down');
-			}
+            if (!depth) {
+                throw new Error('Inheritance loop too deep, you can only inherit up to 10 levels down');
+            }
 
-			if (!_.isPlainObject(source)){
+            if (!_.isPlainObject(source)){
+                /* eslint-disable no-console */
                 console.error('You are trying to inflate a non object', source);
-				throw new Error('You are trying to inflate a non object');
-			}
+                /* eslint-enable no-console */
+                throw new Error('You are trying to inflate a non object');
+            }
 
-			var parent
-				// create child
-				, child = _.cloneDeep(source)
-				, err
-				, inheritObj = child.inherit;
+            var parent
+            // create child
+                , child = _.cloneDeep(source)
+                , err
+                , inheritObj = child.inherit;
 
 
-			// no inheritance
-			// ***********************************
+            /*
+             * no inheritance
+             */
 
-			// if we do not need to inherit anything, simply return source
-			if (!child.inherit) {
-				// customize only on the last call (non recursive)
-				!recursive && customize(child);
-				return child;
-			}
+            // if we do not need to inherit anything, simply return source
+            if (!child.inherit) {
+                // customize only on the last call (non recursive)
+                !recursive && customize(child);
+                return child;
+            }
 
-			// get parent
-			// ***********************************
-			parent = query(inheritObj, coll, randomizer);
+            /*
+             * get parent
+             */
 
-			// if inherit target was not found
-			if (!parent){
-				err = new Error('Query failed, object (' + JSON.stringify(inheritObj) +	') not found.');
-				$console('query').error(err);
-				throw err;
-			}
+            parent = query(inheritObj, coll, randomizer);
 
-			// inflate parent (recursively)
-			parent = inflate(
-				parent,
-				coll,
-				randomizer,
-				true,
-				depth
-			);
+            // if inherit target was not found
+            if (!parent){
+                err = new Error('Query failed, object (' + JSON.stringify(inheritObj) +	') not found.');
+                $console('query').error(err);
+                throw err;
+            }
 
-			// extending the child
-			// ***********************************
-			if (inheritObj.merge && !_.isArray(inheritObj.merge)){
-				throw new Error('Inheritance error: inherit.merge must be an array.');
-			}
+            // inflate parent (recursively)
+            parent = inflate(
+                parent,
+                coll,
+                randomizer,
+                true,
+                depth
+            );
 
-			// start inflating child (we have to extend selectively...)
-			_.each(parent, function(value, key){
-				var childProp, parentProp;
-				// if this key is not set yet, copy it out of the parent
-				if (!(key in child)){
-					child[key] = _.isFunction(value) ? value : _.cloneDeep(value);
-					return;
-				}
+            // extending the child
+            // ***********************************
+            if (inheritObj.merge && !_.isArray(inheritObj.merge)){
+                throw new Error('Inheritance error: inherit.merge must be an array.');
+            }
 
-				// if we have a merge array,
-				if (_.indexOf(inheritObj.merge, key) != -1){
-					childProp = child[key];
-					parentProp = value;
+            // start inflating child (we have to extend selectively...)
+            _.each(parent, function(value, key){
+                var childProp, parentProp;
+                // if this key is not set yet, copy it out of the parent
+                if (!(key in child)){
+                    child[key] = _.isFunction(value) ? value : _.cloneDeep(value);
+                    return;
+                }
 
-					if (_.isArray(childProp)){
-						if (!_.isArray(parentProp)){
-							throw new Error('Inheritance error: You tried merging an array with an non array (for "' + key + '")');
-						}
-						child[key] = childProp.concat(parentProp);
-					}
+                // if we have a merge array,
+                if (_.indexOf(inheritObj.merge, key) != -1){
+                    childProp = child[key];
+                    parentProp = value;
 
-					if (_.isPlainObject(childProp)){
-						if (!_.isPlainObject(parentProp)){
-							throw new Error('Inheritance error: You tried merging an object with an non object (for "' + key + '")');
-						}
-						child[key] = _.extend({},parentProp,childProp);
-					}
+                    if (_.isArray(childProp)){
+                        if (!_.isArray(parentProp)){
+                            throw new Error('Inheritance error: You tried merging an array with an non array (for "' + key + '")');
+                        }
+                        child[key] = childProp.concat(parentProp);
+                    }
 
-				}
-			});
+                    if (_.isPlainObject(childProp)){
+                        if (!_.isPlainObject(parentProp)){
+                            throw new Error('Inheritance error: You tried merging an object with an non object (for "' + key + '")');
+                        }
+                        child[key] = _.extend({},parentProp,childProp);
+                    }
 
-			// we want to extend the childs data even if it already exists
-			// its ok to shallow extend here (because by definition parent was created for this inflation)
-			if (parent.data){
-				child.data = _.extend(parent.data, child.data || {});
-			}
+                }
+            });
 
-			// Personal customization functions - only if this is the last iteration of inflate
-			// This way the customize function gets called only once.
-			!recursive && customize(child);
+            // we want to extend the childs data even if it already exists
+            // its ok to shallow extend here (because by definition parent was created for this inflation)
+            if (parent.data){
+                child.data = _.extend(parent.data, child.data || {});
+            }
 
-			// return inflated trial
-			return child;
-		}
+            // Personal customization functions - only if this is the last iteration of inflate
+            // This way the customize function gets called only once.
+            !recursive && customize(child);
 
-		return inflate;
-	}
+            // return inflated trial
+            return child;
+        }
 
-	return inflateProvider;
+        return inflate;
+    }
+
+    return inflateProvider;
 });

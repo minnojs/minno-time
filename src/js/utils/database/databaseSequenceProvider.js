@@ -1,8 +1,8 @@
 define(function(require){
-	var _ = require('underscore');
+    var _ = require('underscore');
 
-	SequenceProvider.$inject = ['MixerSequence'];
-	function SequenceProvider(MixerSequence){
+    SequenceProvider.$inject = ['MixerSequence'];
+    function SequenceProvider(MixerSequence){
 
 		/**
 		 * Sequence Constructor:
@@ -12,24 +12,24 @@ define(function(require){
 		 * @param  {Database} db        [the db itself]
 		 */
 
-		function Sequence(namespace, arr,db){
-			this.namespace = namespace;
-			this.mixerSequence = new MixerSequence(arr);
-			this.db = db;
-		}
+        function Sequence(namespace, arr,db){
+            this.namespace = namespace;
+            this.mixerSequence = new MixerSequence(arr);
+            this.db = db;
+        }
 
-		_.extend(Sequence.prototype, {
+        _.extend(Sequence.prototype, {
 			// only mix
-			next: function(context){
-				this.mixerSequence.next(context);
-				return this;
-			},
+            next: function(context){
+                this.mixerSequence.next(context);
+                return this;
+            },
 
 			// anti mix
-			prev: function(context){
-				this.mixerSequence.prev(context);
-				return this;
-			},
+            prev: function(context){
+                this.mixerSequence.prev(context);
+                return this;
+            },
 
 			/**
 			 * Return the element currently in focus.
@@ -37,38 +37,38 @@ define(function(require){
 			 * @param  {[type]} context [description]
 			 * @return {[type]}         [description]
 			 */
-			current: function(context, options){
-				context || (context = {});
+            current: function(context, options){
+                context || (context = {});
 				// must returned an element or undefined
-				var obj = this.mixerSequence.current(context);
+                var obj = this.mixerSequence.current(context);
 
 				// in case this is the end of the sequence
-				if (!obj){
-					return obj;
-				}
+                if (!obj){
+                    return obj;
+                }
 
-				return this.db.inflate(this.namespace, obj, context, options);
-			},
+                return this.db.inflate(this.namespace, obj, context, options);
+            },
 
 			/**
 			 * Returns an array of elements, created by proceeding through the whole sequence.
 			 * @return {[type]} [description]
 			 */
-			all: function(context, options){
-				var sequence = [];
+            all: function(context, options){
+                var sequence = [];
 
-				var el = this.next().current(context, options);
-				while (el){
-					sequence.push(el);
-					el = this.next().current(context, options);
-				}
+                var el = this.next().current(context, options);
+                while (el){
+                    sequence.push(el);
+                    el = this.next().current(context, options);
+                }
 
-				return sequence;
-			}
-		});
+                return sequence;
+            }
+        });
 
-		return Sequence;
-	}
+        return Sequence;
+    }
 
-	return SequenceProvider;
+    return SequenceProvider;
 });

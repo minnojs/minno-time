@@ -26,9 +26,7 @@ define(function(require){
         var current = global.current || {};
         var trial = current_trial();
 
-        if (!conditions){
-            throw new Error('There is an interaction without conditions!!');
-        }
+        if (!conditions) throw new Error('There is an interaction without conditions!!');
 
         // make sure conditions is an array
         conditions = Array.isArray(conditions) ? conditions : [conditions];
@@ -40,13 +38,7 @@ define(function(require){
         var isTrue = true;
 
         // if this is a begin event, make sure we only run conditions that have begin in them
-        if (inputData.type == 'begin') {
-            // check if this set of conditions has 'begin' in it
-            var has_begin = _.reduce(conditions, function(memo, row){return memo || row.type == 'begin';},false);
-            if (!has_begin){
-                return false;
-            }
-        }
+        if (inputData.type == 'begin' && conditions.every(function(condition){return condition.type != 'begin';})) return false;
 
         // try to refute the condition
         conditions.forEach(function checkCondition(condition){

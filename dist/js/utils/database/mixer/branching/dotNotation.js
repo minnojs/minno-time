@@ -1,22 +1,22 @@
 define(function(require){
-	var _ = require('underscore');
+    var _ = require('underscore');
 
-	function dotNotation(chain, obj){
+    function dotNotation(chain, obj){
 
-		if (_.isString(chain)){
-			chain = chain.split('.');
-		}
+        if (_.isString(chain)){
+            chain = chain.split('.');
+        }
 
-		return _.reduce(chain, function(result, link){
+        return _.reduce(chain, function(result, link){
 
-			if (_.isPlainObject(result) || _.isArray(result)){
-				return result[link];
-			}
+            if (_.isPlainObject(result) || _.isArray(result)){
+                return result[link];
+            }
 
-			return undefined;
+            return undefined;
 
-		}, obj);
-	}
+        }, obj);
+    }
 
-	return dotNotation;
+    return dotNotation;
 });

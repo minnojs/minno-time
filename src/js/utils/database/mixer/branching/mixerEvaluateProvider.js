@@ -1,8 +1,8 @@
 define(function(require){
-	var _ = require('underscore');
+    var _ = require('underscore');
 
-	evaluateProvider.$inject = ['mixerCondition'];
-	function evaluateProvider(condition){
+    evaluateProvider.$inject = ['mixerCondition'];
+    function evaluateProvider(condition){
 		/**
 		 * Checks if a conditions set is true
 		 * @param  {Array} conditions [an array of conditions]
@@ -10,33 +10,33 @@ define(function(require){
 		 * @return {Boolean}          [Are these conditions true]
 		 */
 
-		function evaluate(conditions,context){
+        function evaluate(conditions,context){
 			// make && the default
-			_.isArray(conditions) && (conditions = {and:conditions});
+            _.isArray(conditions) && (conditions = {and:conditions});
 
-			function test(cond){return evaluate(cond,context);}
+            function test(cond){return evaluate(cond,context);}
 
 			// && objects
-			if (conditions.and){
-				return _.every(conditions.and, test);
-			}
-			if (conditions.nand){
-				return !_.every(conditions.nand, test);
-			}
+            if (conditions.and){
+                return _.every(conditions.and, test);
+            }
+            if (conditions.nand){
+                return !_.every(conditions.nand, test);
+            }
 
 			// || objects
-			if (conditions.or){
-				return _.some(conditions.or, test);
-			}
-			if (conditions.nor){
-				return !_.some(conditions.nor, test);
-			}
+            if (conditions.or){
+                return _.some(conditions.or, test);
+            }
+            if (conditions.nor){
+                return !_.some(conditions.nor, test);
+            }
 
-			return condition(conditions, context);
-		}
+            return condition(conditions, context);
+        }
 
-		return evaluate;
-	}
+        return evaluate;
+    }
 
-	return evaluateProvider;
+    return evaluateProvider;
 });

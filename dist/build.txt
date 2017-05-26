@@ -23,7 +23,6 @@ js/utils/database/mixer/branching/mixerBranchingDecorator.js
 js/utils/database/mixer/mixerSequenceProvider.js
 js/utils/database/mixer/main.js
 js/utils/database/template/templateObjProvider.js
-js/utils/database/template/templateFilter.js
 js/utils/database/template/main.js
 js/utils/database/collection/collectionProvider.js
 js/utils/database/randomizer/randomizerProvider.js
