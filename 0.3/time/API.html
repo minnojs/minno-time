@@ -124,7 +124,7 @@
 </ul>
 <p>If you insert a string instead of a media object the player treats it as if it was Plain text.
 The folowing two media definitions have the same outcome:<code>&#39;Wiki&#39;</code>, <code>{word:&#39;Wiki&#39;}</code></p>
-<h3><a name="stimuli" class="header-link" href="#stimuli"><span></span></a>Stimuli</h3><p>Stimuli are responsible for how we present the media.</p>
+<h3><a name="stimuli" class="header-link" href="#stimuli"><span></span></a>Stimuli</h3><p>Stimuli are responsible for <em>how</em> we present the media.</p>
 <pre><code class="lang-javascript">{
     handle:&#39;myStim&#39;,
     size: {height:25,width:25},
@@ -136,8 +136,11 @@ The folowing two media definitions have the same outcome:<code>&#39;Wiki&#39;</c
 }
 </code></pre>
 <p><code>handle</code>:
-This is how refer to this specific stimulus inside the player (i.e. if we want to hide or show it). If more than one stimulus (per trial) has the same handle, all actions targeted at that handle will affect all stimuli.
-The handle may be set either in the body of the stimulus or inside the data attribute.</p>
+Each trial may have multiple stimuli, and they are refered to by <code>handle</code>.
+This is how refer to this specific stimulus inside the player (i.e. if we want to hide or show it). 
+If more than one stimulus (per trial) has the same handle, all actions targeted at that handle will affect all stimuli.
+You can set a stimulus handle either by setting the <code>handle</code> property, or by setting <code>handle</code> into the <a href="/minno-quest/0.1/basics/variables.html#local-variables-local-&amp;-meta">data object</a>.
+Alternatively, if a stimulus is inherited from a set, the handle is defined by default as the set that the stimulus was inherited from.</p>
 <p><code>size</code>:
 The size of the stimulus in percentage of the player canvas. By default, size is set to {height:&#39;auto&#39;,width:&#39;auto&#39;}.</p>
 <p><code>location</code>:
