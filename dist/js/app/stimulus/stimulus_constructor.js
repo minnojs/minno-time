@@ -4,8 +4,8 @@ define(function(require){
     return function Stimulus_constructor(source, options){
 
         var data = source;
-		// keep source for later use
-		// @TODO probably depracated
+        // keep source for later use
+        // @TODO probably depracated
         data.source = source;
 
         return new Stim_model(data, options);

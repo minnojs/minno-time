@@ -1,7 +1,7 @@
 define(function(require){
     var _ = require('underscore')
-		, Backbone = require('backbone')
-		, stimModel = require('app/stimulus/stimulus_constructor');
+        , Backbone = require('backbone')
+        , stimModel = require('app/stimulus/stimulus_constructor');
 
     var Collection = Backbone.Collection.extend({
         model:stimModel,
@@ -9,11 +9,11 @@ define(function(require){
         initialize: function(models,options){
             options || (options = {});
 
-			// set trial in the collection
+            // set trial in the collection
             this.trial = options.trial;
         },
 
-		// similar to the collection function where, only searches the data attribute
+        // similar to the collection function where, only searches the data attribute
         whereData: function(attrs) {
 
             if (_.isEmpty(attrs)) {
@@ -65,27 +65,27 @@ define(function(require){
 
         get_stimlist: function(){
             return this
-				.chain()
-				.filter(function(stimulus){return !stimulus.get('nolog');})
-				.map(function(stimulus,index){
-    return stimulus.name() || ('stim' + index);
-})
-				.value();
+            .chain()
+            .filter(function(stimulus){return !stimulus.get('nolog');})
+            .map(function(stimulus,index){
+                return stimulus.name() || ('stim' + index);
+            })
+            .value();
         },
 
         get_medialist: function(){
             return this
-				.chain()
-				.filter(function(stimulus){return !stimulus.get('nolog');})
-				.map(function(stimulus,index){
-    return stimulus.mediaName() || ('media' + index);
-})
-				.value();
+            .chain()
+            .filter(function(stimulus){return !stimulus.get('nolog');})
+            .map(function(stimulus,index){
+                return stimulus.mediaName() || ('media' + index);
+            })
+            .value();
         }
 
     });
 
-	// Returns the Collection class
+    // Returns the Collection class
     return Collection;
 
 });
