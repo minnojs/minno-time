@@ -9,15 +9,14 @@ define(function(require) {
 
     var Model = MyModel.extend({
         initialize: function(){
-			// set trial in the model
-            if (this.collection.trial) {
-                this.trial = this.collection.trial;
-            }
+            var stimulus = this.attributes;
+            // set trial in the model
+            if (this.collection.trial) this.trial = this.collection.trial;
 
-			// set model handle
-            this.attributes.data = this.attributes.data || {}; // make sure we have a data object
-            this.attributes.data.handle = this.attributes.data.handle || this.attributes.handle; // set the handle in the data object
-            this.handle =  this.attributes.data.handle; // set the handle in the stimulus object
+            // set model handle
+            stimulus.data = stimulus.data || {}; // make sure we have a data object
+            stimulus.data.handle = stimulus.data.handle || stimulus.handle || stimulus.set; // set the handle in the data object
+            this.handle =  stimulus.data.handle; // set the handle in the stimulus object
 
 			// pick the correct media according to if this is a touch device
             var mediaSource = is_touch && this.get('touchMedia') ? this.get('touchMedia') : this.get('media');
