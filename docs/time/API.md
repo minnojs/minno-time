@@ -31,7 +31,9 @@ The folowing two media definitions have the same outcome:`'Wiki'`, `{word:'Wiki'
 
 ### Stimuli
 
-Stimuli are responsible for how we present the media.
+Stimuli are responsible for *how* we present the media.
+
+
 
 ```javascript
 {
@@ -46,8 +48,11 @@ Stimuli are responsible for how we present the media.
 ```
 
 `handle`:
-This is how refer to this specific stimulus inside the player (i.e. if we want to hide or show it). If more than one stimulus (per trial) has the same handle, all actions targeted at that handle will affect all stimuli.
-The handle may be set either in the body of the stimulus or inside the data attribute.
+Each trial may have multiple stimuli, and they are refered to by `handle`.
+This is how refer to this specific stimulus inside the player (i.e. if we want to hide or show it). 
+If more than one stimulus (per trial) has the same handle, all actions targeted at that handle will affect all stimuli.
+You can set a stimulus handle either by setting the `handle` property, or by setting `handle` into the [data object](/minno-quest/0.1/basics/variables.html#local-variables-local-&-meta).
+Alternatively, if a stimulus is inherited from a set, the handle is defined by default as the set that the stimulus was inherited from.
 
 `size`:
 The size of the stimulus in percentage of the player canvas. By default, size is set to {height:'auto',width:'auto'}.
