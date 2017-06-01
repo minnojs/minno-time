@@ -1,9 +1,10 @@
 define(function(require){
     var fastdom = require('utils/fastdom');
+    var getSize = require('utils/getSize');
+
     return setPlace;
 
-    function setPlace(stimulus, el, canvas){
-
+    function setPlace(stimulus, canvas, el){
         return new Promise(function(resolve){
             fastdom.measure(function(){
                 var canvasSize = getSize(canvas);
@@ -60,15 +61,5 @@ define(function(require){
                 });
             });
         });
-
-        // helper function: returns sizes of element;
-        function getSize(el){
-            var computedStyle = window.getComputedStyle(el);
-            return {
-                height    : computedStyle.height,
-                width    : computedStyle.width
-            };
-        }
-
     }
 });

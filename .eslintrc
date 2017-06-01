@@ -12,7 +12,8 @@
     "globals": {
         "require" : true,
         "requirejs" : true,
-        "define" : true
+        "define" : true,
+        "Promise" : true
     },
     "extends": "eslint:recommended"
 }

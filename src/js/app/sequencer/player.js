@@ -1,12 +1,12 @@
 define(function(require){
 
-    var $					= require('jquery');
     var Trial				= require('app/trial/trial_constructor');
     var logger			= require('app/task/log/logger');
     var settingsGetter	= require('app/task/settings');
     var pubsub			= require('utils/pubsub');
     var main 				= require('app/task/main_view');
     var inflateTrial 		= require('./inflateTrial');
+    var noop = function(){};
 
 
     /*
@@ -28,9 +28,8 @@ define(function(require){
                 .then(function(){
                     return trial.activate();
                 })
-                .then(function(){
-                    pubsub.publish('log:send');			// see if we need to send the log stack
-                    nextTrial.apply(null,arguments);	// when we're done try to play the next one (move arguments on to nextTrial)
+                .then(function(args){
+                    nextTrial.apply(null,args);	// when we're done try to play the next one (move arguments on to nextTrial)
                 });
 
             // let everyone know that we are ready to go
@@ -43,8 +42,8 @@ define(function(require){
             logger()
             .always(function(){
                 var hooks = settingsGetter('hooks') || {};
-                var endTask = hooks.endTask || settingsGetter('onEnd') || $.noop;
-                return $.when(endTask());
+                var endTask = hooks.endTask || settingsGetter('onEnd') || noop;
+                return Promise.resolve(endTask());
             })
             .always(function(){
                 main.deferred.resolve();
@@ -53,5 +52,4 @@ define(function(require){
     }
 
     return nextTrial;
-
 });

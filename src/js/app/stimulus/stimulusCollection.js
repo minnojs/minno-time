@@ -41,10 +41,10 @@ define(function(require){
             .map(function(stim, index){return stim.name() || ('stim' + index);});
     }
 
-    function getMedialist(){
+    function getMedialist(options){
         return this.stimuli
             .filter(function(stim){return !stim.source.nolog;})
-            .map(function(stim, index){return stim.mediaName() || ('media' + index);});
+            .map(function(stim, index){return stim.mediaName(options) || ('media' + index);});
     }
 
     function destroy(){

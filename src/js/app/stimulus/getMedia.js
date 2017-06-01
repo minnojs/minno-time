@@ -12,14 +12,16 @@ define(function(){
         }
 
         if (media.image) {
+            // at this time, we count on the preloader to throw for errors
+            // the reject option isn't really being used here...
             return new Promise(function(resolve, reject){
                 el = document.createElement('img');
-                el.onload(resolve);
-                el.onerror(reject);
+                el.onload = function(){resolve(el);};
+                el.onerror = function(){reject(new Error('Image not found: ' + el.src ));};
                 el.src = media.image;
-                
             });
         }
+
         if (media.jquery) Promise.reject(new Error('Jquery is no longer supported in minno-time'));
 
         if (template) { // html | template | inlineTemplate

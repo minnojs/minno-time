@@ -29,33 +29,33 @@ define(function(require){
 
         var parseDef = parse();
 
-		// activate main view and then display the loading screen
+        // activate main view and then display the loading screen
         main
-			.activate()
-			.done(function(){
-    main
-					.loading(parseDef) // activate loading screen
-					.done(function(){
-    main.empty(); // remove the loading screen
-    play('next',{}); // activate task
-})
-					.fail(function(src){
-    throw new Error('loading resource failed, do something about it! (you can start by checking the error log, you are probably reffering to the wrong url - ' + src +')');
-});
-});
+        .activate()
+        .then(function(){
+            main
+            .loading(parseDef) // activate loading screen
+            .then(function(){
+                main.empty(); // remove the loading screen
+                play('next',{}); // activate task
+            })
+            .fail(function(src){
+                throw new Error('loading resource failed, do something about it! (you can start by checking the error log, you are probably reffering to the wrong url - ' + src +')');
+            });
+        });
 
         return main.deferred.promise()
-            .then(function haltTrial(){
-                var trial = global_trial();
-                if (trial) {
-                    trial._next = ['end', {}]; // this ensures that the trial cycle ends. It is a horrible use of the API. I know :(
-                    trial.deactivate();
-                }
-            })
-			.then(done || function dfltDone(){
-    var redirect = script.settings && script.settings.redirect;
-    window.location.href = redirect || window.location.href;
-});
+        .then(function haltTrial(){
+            var trial = global_trial();
+            if (trial) {
+                trial._next = ['end', {}]; // this ensures that the trial cycle ends. It is a horrible use of the API. I know :(
+                trial.deactivate();
+            }
+        })
+        .then(done || function dfltDone(){
+            var redirect = script.settings && script.settings.redirect;
+            window.location.href = redirect || window.location.href;
+        });
     }
 
     return activate;

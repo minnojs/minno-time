@@ -35,7 +35,7 @@ define(function(require){
         
         return getMedia(this.source.media)
             .then(setupElement.bind(this, this.canvas))
-            .then(render.bind(this)); 
+            .then(render.bind(this));
     }
 
     function setupElement(canvas, el){
@@ -47,8 +47,6 @@ define(function(require){
                 el.classList.add('stimulus');
                 el.setAttribute('data-handle', self.handle); // add data-handle for handeling of mouse/touch interactions
                 setSize(el, self.source);
-
-                // @@@@@@@@@@@@@@ TODO @@@@@@@@@@@@@@@@@@@@@@@@@
                 css(el, self.source.css || {});
 
                 // append to canvas
@@ -98,7 +96,7 @@ define(function(require){
         if (source.alias) {return source.alias;}
         if (this.data.alias) {return this.data.alias;} // if we have an alias ues it
 
-        if (source.inherit.set) {return source.inherit.set;} // otherwise try using the set we inherited from
+        if (source.inherit && source.inherit.set) {return source.inherit.set;} // otherwise try using the set we inherited from
         if (this.handle) {return this.handle;} // otherwise use handle
 
         // if no individual name is given, we set a default at the collection level
@@ -106,12 +104,10 @@ define(function(require){
 
     function mediaName(options){
         var media = this.source.media;
-        var fullpath = options && options.fullpath;
-        // @@@@@@@@@@@@@@@@@ TODO @@@@@@@@@@@@@@@
-        // make sure that full path is implemented somewhere higher
-        // settings.logger && settings.logger.fullpath; // should we use the full path or just the file name
+        var fullpath = options && options.fullpath; // as set within settings
 
         if (media.alias) {return media.alias;} // if we have an alias ues it
+
         for (var prop in media) {
             if (contains(['image','template'],prop)) return fullpath ? media[prop] : media[prop].replace(/^.*[\\\/]/, '');
 
@@ -120,7 +116,7 @@ define(function(require){
         }
 
         // if no individual name is given, we set a default at the collection level
-        
-        function contains(arr, val){ return arr.indexOf(val) != -1;}
     }
+
+    function contains(arr, val){ return arr.indexOf(val) != -1;}
 });

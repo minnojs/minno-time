@@ -140,7 +140,9 @@ define(function(require){
             global_trial(undefined);
 
             this.stimulusCollection.destroy();
-            self.deferred.resolve(self._next[0], self._next[1]);
+
+            pubsub.publish('log:send');			// see if we need to send the log stack
+            self.deferred.resolve(self._next);
         },
 
         name: function(){

@@ -39,35 +39,35 @@ define(function(require){
         activate: function(){
             var self = this;
             var canvasSettings = script().settings.canvas || {};
-            var docReady = $.Deferred(); // document ready deferred, so we can continue only after activation has culminated
 
-            $(document).ready(function(){
+            return new Promise(function(resolve){
+                $(document).ready(function(){
+                    var el = self.$el[0];
 
-                var map = {
-                    background 			: {element: $('body'), property: 'backgroundColor'},
-                    canvasBackground	: {element: self.$el, property:'backgroundColor'},
-                    borderColor			: {element: self.$el, property:'borderColor'},
-                    borderWidth			: {element: self.$el, property:'borderWidth'}
-                };
+                    var map = {
+                        background 			: {element: document.body, property: 'backgroundColor'},
+                        canvasBackground	: {element: el, property:'backgroundColor'},
+                        borderColor			: {element: el, property:'borderColor'},
+                        borderWidth			: {element: el, property:'borderWidth'}
+                    };
 
-                // settings activator
-                var off = canvas(map, _.pick(canvasSettings,['background','canvasBackground','borderColor','borderWidth']));
-                self.deferred.promise().always(off);
+                    // settings activator
+                    var off = canvas(map, _.pick(canvasSettings,['background','canvasBackground','borderColor','borderWidth']));
+                    self.deferred.promise().always(off);
 
-                canvasSettings.css && self.$el.css(canvasSettings.css);
+                    canvasSettings.css && self.$el.css(canvasSettings.css);
 
-                // append to body and render
-                if ($('[pi-player]').length){
-                    $('[pi-player]').empty().append(self.$el);
-                } else {
-                    self.$el.appendTo('body');
-                }
+                    // append to body and render
+                    if ($('[pi-player]').length){
+                        $('[pi-player]').empty().append(self.$el);
+                    } else {
+                        self.$el.appendTo('body');
+                    }
 
-                self.render();
-                docReady.resolve();
+                    self.render();
+                    resolve();
+                });
             });
-
-            return docReady;
         },
 
         // display loading page

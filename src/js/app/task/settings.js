@@ -13,9 +13,7 @@ define(function(require){
     function settingsGetter(name){
         var settings = script().settings || {};
 
-        if (name) {
-            return settings[name];
-        }
+        if (name) return settings[name];
         return settings;
     }
 
