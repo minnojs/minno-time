@@ -49,15 +49,25 @@ define(function(require){
                 setSize(el, self.source);
 
                 // @@@@@@@@@@@@@@ TODO @@@@@@@@@@@@@@@@@@@@@@@@@
-                //$(el).css(this.source.css || {});
-
-
+                css(el, self.source.css || {});
 
                 // append to canvas
                 canvas.appendChild(el);
                 resolve(el);
             });
         });
+    }
+
+    function css(el, obj){
+        var style = el.style;
+
+        for (var key in obj){
+            style[camelCase(key)] = obj[key];
+        }
+
+        function camelCase(str){ 
+            return  str.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); }); 
+        }
     }
 
     function render(el){
