@@ -38,7 +38,6 @@ define(function(require) {
         activate: function(){
             var self = this;
             var stimHandle = this.handle;
-            this.timeStack = this.timeStack || [];
             this.pubsubStack = this.pubsubStack || [];
 
             // subscribe to start action
@@ -90,7 +89,6 @@ define(function(require) {
             this.media.hide();
 
             // make sure the stacks exist
-            this.timeStack = this.timeStack || [];
             this.pubsubStack = this.pubsubStack || [];
 
             _.each(this.pubsubStack, function(handle) {
@@ -98,7 +96,6 @@ define(function(require) {
             });
 
             // empty stacks
-            this.timeStack = [];
             this.pubsubStack = [];
         },
 

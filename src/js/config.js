@@ -29,7 +29,7 @@ define(function(){
             }
         ],
 
-        deps: ['jquery', 'backbone', 'underscore']
+        deps: ['jquery', 'backbone', 'underscore', 'utils/polyfills']
     });
 
 });

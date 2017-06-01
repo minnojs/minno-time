@@ -76,6 +76,7 @@ define(function(require){
                     searchObj[condition.property] = inputData.handle;
 
                     // are there stimuli answering this descriptions?
+                    // @TODO: whereData is deprecated
                     result = trial._stimulus_collection.whereData(searchObj);
                     if (result.length === 0) {
                         evaluation = false;
@@ -131,6 +132,7 @@ define(function(require){
                     searchObj[condition.stimProp] = global[condition.globalProp];
 
                     // are there stimuli answering this descriptions?
+                    // @TODO: whereData is deprecated
                     result = trial._stimulus_collection.whereData(searchObj);
                     if (result.length === 0) {
                         evaluation = false;
@@ -177,6 +179,7 @@ define(function(require){
                     searchObj[condition.stimProp] = current[condition.currentProp];
 
                     // are there stimuli answering this descriptions?
+                    // @TODO: whereData is deprecated
                     result = trial._stimulus_collection.whereData(searchObj);
                     if (result.length === 0) {
                         evaluation = false;

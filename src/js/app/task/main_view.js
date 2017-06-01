@@ -27,7 +27,7 @@ define(function(require){
              * Adjust canvas listener
              * @type {[type]}
              */
-            var adjust = _.bind(this.adjustCanvas,this);
+            var adjust = this.adjustCanvas.bind(this);
             $(window).on('orientationchange.pip resize.pip', adjust); // removed on destroy
         },
 
@@ -85,10 +85,10 @@ define(function(require){
             $bar = this.$('.meter span');
 
             return parseDef
-            .progress(function(done, remaining){
-                // update progress bar
-                $bar.width((remaining ? (done/remaining)*100 : 0) + '%');
-            });
+                .progress(function(done, remaining){
+                    // update progress bar
+                    $bar.width((remaining ? (done/remaining)*100 : 0) + '%');
+                });
         },
 
         empty: function(){
