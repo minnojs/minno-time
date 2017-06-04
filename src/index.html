@@ -5,7 +5,6 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1" />
 
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
         <link type="text/css" rel="Stylesheet" href="css/main.css"/>
 
 
@@ -28,7 +27,7 @@
 	</head>
 
 	<body>
-		<div pi-player>
+		<div pi-player id="canvas">
 			<img class="pi-logo" src="img/loader.gif" />
 		</div>
 
@@ -40,7 +39,7 @@
 		<script type="text/javascript">
 			require(['js/config'], function() {
 				require(['activatePIP', getParameterByName('url') || '../resources/examples/iat.js'], function(activatePIP, script){
-					activatePIP(script);
+					activatePIP(document.getElementById('canvas'),script);
 				});
 			});
 		</script>

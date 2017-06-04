@@ -70,25 +70,18 @@ define(function(require){
                 case 'inputEqualsStim':
                     // create search object
                     searchObj = {};
-                    if (condition.handle){
-                        searchObj['handle'] = condition.handle;
-                    }
+                    if (condition.handle) searchObj['handle'] = condition.handle;
                     searchObj[condition.property] = inputData.handle;
 
                     // are there stimuli answering this descriptions?
-                    result = trial._stimulus_collection.whereData(searchObj);
-                    if (result.length === 0) {
-                        evaluation = false;
-                    }
+                    if (!hasData(searchObj)) evaluation = false;
                     break;
 
                 case 'trialEquals':
                     if (typeof condition.property == 'undefined' || typeof condition.value == 'undefined'){
                         throw new Error('trialEquals requires both "property" and "value" to be defined');
                     }
-                    if (condition.value !== trial.data[condition.property]){
-                        evaluation = false;
-                    }
+                    if (condition.value !== trial.data[condition.property]) evaluation = false;
                     break;
 
                 case 'inputEqualsGlobal':
@@ -131,10 +124,7 @@ define(function(require){
                     searchObj[condition.stimProp] = global[condition.globalProp];
 
                     // are there stimuli answering this descriptions?
-                    result = trial._stimulus_collection.whereData(searchObj);
-                    if (result.length === 0) {
-                        evaluation = false;
-                    }
+                    if (!hasData(searchObj)) evaluation = false;
                     break;
 
                 case 'inputEqualsCurrent':
@@ -159,9 +149,7 @@ define(function(require){
                     if (typeof condition.currentProp == 'undefined' || typeof condition.trialProp == 'undefined'){
                         throw new Error('currentEqualsTrial requires both "currentProp" and "trialProp" to be defined');
                     }
-                    if (current[condition.currentProp] !== trial.data[condition.trialProp]) {
-                        evaluation = false;
-                    }
+                    if (current[condition.currentProp] !== trial.data[condition.trialProp]) evaluation = false;
                     break;
 
                 case 'currentEqualsStim':
@@ -171,28 +159,19 @@ define(function(require){
 
                     // create search object
                     searchObj = {};
-                    if (condition.handle){
-                        searchObj['handle'] = condition.handle;
-                    }
+                    if (condition.handle) searchObj['handle'] = condition.handle;
                     searchObj[condition.stimProp] = current[condition.currentProp];
 
                     // are there stimuli answering this descriptions?
-                    result = trial._stimulus_collection.whereData(searchObj);
-                    if (result.length === 0) {
-                        evaluation = false;
-                    }
+                    if (!hasData(searchObj)) evaluation = false;
                     break;
 
                 case 'function' :
-                    if (!condition.value.apply(trial,[condition,inputData, trial])) {
-                        evaluation = false;
-                    }
+                    if (!condition.value.apply(trial,[condition,inputData, trial])) evaluation = false;
                     break;
 
                 case 'custom':
-                    if (!condition.fn.apply(null, [condition, inputData, trial])) {
-                        evaluation = false;
-                    }
+                    if (!condition.fn.apply(null, [condition, inputData, trial])) evaluation = false;
                     break;
 
                 default:
@@ -203,5 +182,15 @@ define(function(require){
         });
 
         return isTrue;
+
+        function hasData(searchObj){
+            return trial.stimulusCollection.stimuli.some(function(stim){
+                var data = stim.data;
+                for (var key in searchObj) {
+                    if (searchObj[key] !== data[key]) return false;
+                }
+                return true;
+            });
+        }
     };
 });

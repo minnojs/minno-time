@@ -28,7 +28,7 @@
 	</head>
 
 	<body>
-		<div pi-player>
+		<div pi-player id="canvas">
 			<img class="pi-logo" src="img/loader.gif" />
 		</div>
 
@@ -40,7 +40,7 @@
 		<script type="text/javascript">
 			require(['js/config'], function() {
 				require(['activatePIP', getParameterByName('url') || '../resources/examples/iat.js'], function(activatePIP, script){
-					activatePIP(script);
+					activatePIP(document.getElementById('canvas'),script);
 				});
 			});
 		</script>

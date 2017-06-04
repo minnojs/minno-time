@@ -6,56 +6,47 @@
  */
 define(function(require){
 
-    var _ = require('underscore'),
-        mainScript = require('app/task/script'),
-        main = require('app/task/main_view'),
-        parse = require('app/task/parser'),
-        play = require('app/sequencer/player'),
-        global = require('app/global'),
-        global_trial = require('app/trial/current_trial');
+    var _ = require('underscore');
 
+    var mainScript = require('app/task/script');
+    var global = require('app/global');
 
-    function activate(script, done){
-		// init global
+    var parse = require('app/task/parser');
+    var canvasSetup = require('app/task/canvasSetup');
+    var preloadPhase = require('app/preloadPhase');
+    var playPhase = require('app/playPhase');
+
+    function activate(canvas, script){
+        var $resize = canvasSetup(canvas, script);
+        var sink = playPhase(canvas, script);
+
+        setupVars(script);
+        parse(script); // Build db (can this be pure?) - maybe inject db into playphase
+
+        $resize.map(function(){
+            var trial = sink.$trial();
+            if (trial) trial.stimulusCollection.render();
+        });
+
+        sink.end.map($resize.end.bind(null, true)); // end resize stream
+
+        // preload Images, then play "playPhase"
+        preloadPhase(canvas, script).then(sink.play.bind(null, ['next', {}]));
+
+        return sink;
+    }
+
+    function setupVars(script){
+        // init global
         var glob = global(global());
-        var name = script.name || 'anonymous PIP';
+        var name = script.name || 'anonymous minno-time';
+        var current = _.isPlainObject(script.current) ? script.current : {};
 
-		// create local namespace
-        glob[name] = glob.current = (_.isPlainObject(script.current) ? script.current : {});
-        glob.current.logs || (glob.current.logs = []); // init logs object
+        current.logs || (current.logs = []); // init logs object
+        glob[name] = glob.current = current; // create local namespace
 
-		// set the main script as a global
+        // set the main script as a global
         mainScript(script);
-
-        var parseDef = parse();
-
-        // activate main view and then display the loading screen
-        main
-        .activate()
-        .then(function(){
-            main
-            .loading(parseDef) // activate loading screen
-            .then(function(){
-                main.empty(); // remove the loading screen
-                play('next',{}); // activate task
-            })
-            .fail(function(src){
-                throw new Error('loading resource failed, do something about it! (you can start by checking the error log, you are probably reffering to the wrong url - ' + src +')');
-            });
-        });
-
-        return main.deferred.promise()
-        .then(function haltTrial(){
-            var trial = global_trial();
-            if (trial) {
-                trial._next = ['end', {}]; // this ensures that the trial cycle ends. It is a horrible use of the API. I know :(
-                trial.deactivate();
-            }
-        })
-        .then(done || function dfltDone(){
-            var redirect = script.settings && script.settings.redirect;
-            window.location.href = redirect || window.location.href;
-        });
     }
 
     return activate;

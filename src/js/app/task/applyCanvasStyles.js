@@ -25,28 +25,18 @@ define(function(require){
     function canvasContructor(map, settings){
         var offArr;
 
-        if (!_.isPlainObject(map)){
-            throw new Error('canvas(map): You must set a rule map for canvas to work properly');
-        }
+        if (!_.isPlainObject(map)) throw new Error('canvas(map): You must set a rule map for canvas to work properly');
 
 		// if settings is undefined return a function that doesn't do anything
 		// just so we don't need to make sure that the user modifies the canvas
-        if (_.isUndefined(settings)){
-            return _.noop;
-        }
-
-        if (!_.isPlainObject(settings)){
-            throw new Error('canvas(settings): canvas settings must be an object');
-        }
+        if (_.isUndefined(settings)) return _.noop;
+        if (!_.isPlainObject(settings)) throw new Error('canvas(settings): canvas settings must be an object');
 
 		// create an array of off functions to undo any changes by this action
         offArr = _.map(settings, function(value,key){
             var rule = map[key];
-            if (rule){
-                return on(rule.element, rule.property, value);
-            } else {
-                throw new Error('canvas('+ key +'): unknow key in canvas object.');
-            }
+            if (rule) return on(rule.element, rule.property, value);
+            throw new Error('canvas('+ key +'): unknow key in canvas object.');
         });
 
         return function off(){
@@ -54,10 +44,10 @@ define(function(require){
         };
     }
 
-    function on($el, property, value){
-        var old = $el.css(property); // save old value
-        $el.css(property, value); // set new value
-        return _.bind($el.css, $el, property, old); // create off function: bind $el.css(property, old)
+    function on(el, property, value){
+        var old = el.style[property]; // save old value
+        el.style[property] = value; // set new value
+        return function(){el.style[property] = old;};  // create off function
     }
 
     return canvasContructor;

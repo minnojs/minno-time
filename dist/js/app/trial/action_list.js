@@ -1,7 +1,6 @@
 define(function(require){
 
     var _ = require('underscore')
-        , $ = require('jquery')
         , pubsub = require('utils/pubsub')
         , input = require('utils/interface/interface')
         , global = require('app/global');
@@ -112,18 +111,18 @@ define(function(require){
         },
 
         canvas: function(options){
-            var $canvas = require('app/task/main_view').$el;
-            var canvas = require('app/task/canvasConstructor');
+            var applyCanvasStyles = require('../task/applyCanvasStyles');
             var trial = require('app/trial/current_trial')();
+            var canvas = trial.cavnas;
             var map = {
-                background 			: {element: $('body'), property: 'backgroundColor'},
-                canvasBackground	: {element: $canvas, property:'backgroundColor'},
-                borderColor			: {element: $canvas, property:'borderColor'},
-                borderWidth			: {element: $canvas, property:'borderWidth'}
+                background 			: {element: document.body, property: 'backgroundColor'},
+                canvasBackground	: {element: canvas, property:'backgroundColor'},
+                borderColor			: {element: canvas, property:'borderColor'},
+                borderWidth			: {element: canvas, property:'borderWidth'}
             };
 
             // settings activator
-            var off = canvas(map, _.pick(options,['background','canvasBackground','borderColor','borderWidth']));
+            var off = applyCanvasStyles(map, _.pick(options,['background','canvasBackground','borderColor','borderWidth']));
             trial.deferred.promise().always(off);
         }
 

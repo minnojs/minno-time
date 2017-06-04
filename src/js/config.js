@@ -3,9 +3,6 @@ define(function(){
 
     // Sets the require.js configuration for your application.
     return require.config({
-        // how long to wait for incoming files (default is 7, we had problems loading Backbone - maybe this will do the trick - we need to set it so ridiculisly high because our servers are so slow...)
-        waitSeconds: 200,
-
         enforceDefine: true,
         baseUrl:'js',
 
@@ -13,12 +10,11 @@ define(function(){
         paths: {
             pipAPI: 'API',
             //plugins
-            text: ['//cdnjs.cloudflare.com/ajax/libs/require-text/2.0.3/text.min', '../../bower_components/requirejs-text/text'],
+            text: ['../../bower_components/requirejs-text/text'],
 
             // Core Libraries
             jquery: ['../../bower_components/jquery/jquery'],
-            underscore: ['//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min','../../bower_components/lodash-compat/lodash.min'],
-            backbone: ['//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min', '../../bower_components/backbone/backbone']
+            underscore: ['../../bower_components/lodash-compat/lodash.min']
         },
 
         packages:[
@@ -29,7 +25,7 @@ define(function(){
             }
         ],
 
-        deps: ['jquery', 'backbone', 'underscore', 'utils/polyfills']
+        deps: ['jquery',  'underscore', 'utils/polyfills']
     });
 
 });

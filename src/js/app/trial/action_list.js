@@ -111,9 +111,9 @@ define(function(require){
         },
 
         canvas: function(options){
-            var canvas = require('app/task/main_view').$el[0];
-            var canvasFn = require('app/task/canvasConstructor');
+            var applyCanvasStyles = require('../task/applyCanvasStyles');
             var trial = require('app/trial/current_trial')();
+            var canvas = trial.cavnas;
             var map = {
                 background 			: {element: document.body, property: 'backgroundColor'},
                 canvasBackground	: {element: canvas, property:'backgroundColor'},
@@ -122,7 +122,7 @@ define(function(require){
             };
 
             // settings activator
-            var off = canvasFn(map, _.pick(options,['background','canvasBackground','borderColor','borderWidth']));
+            var off = applyCanvasStyles(map, _.pick(options,['background','canvasBackground','borderColor','borderWidth']));
             trial.deferred.promise().always(off);
         }
 

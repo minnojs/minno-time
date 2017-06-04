@@ -529,7 +529,7 @@ You may also use a custom function to pick your element.
 ```javascript
 {set: 'setName', type: function(definitions){
     // definitions is the inherit object (including  set, type, and whatever other properties you'd like to use)
-    // the context ("this") is the element collection, it is a Backbone.js collection of the elements in the set
+    // the context ("this") is the element collection, it is a collection of the elements in the set
 }}
 ```
 

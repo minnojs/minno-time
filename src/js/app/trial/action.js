@@ -12,8 +12,8 @@ define(function(require){
 	 * @returns Boolean continueActions: whether this action stops further action activations
 	 */
 
-    var _ = require('underscore')
-		, action_list = require('./action_list');
+    var _ = require('underscore');
+    var action_list = require('./action_list');
 
     function applyActions(actions,eventData){
 		// marks whether this is the final action to take

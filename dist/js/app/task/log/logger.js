@@ -18,8 +18,10 @@ define(function(require){
 
     function defaultLogger(trialData, inputData, actionData,logStack){
 
-        var stimList = this._stimulus_collection.get_stimlist();
-        var mediaList = this._stimulus_collection.get_medialist();
+        var fullpath = _.get(settings(), 'logger.fullpath', false);
+
+        var stimList = this.stimulusCollection.getStimlist();
+        var mediaList = this.stimulusCollection.getMedialist({fullpath:fullpath});
 
         return {
             log_serial : logStack.length,

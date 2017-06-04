@@ -4,86 +4,75 @@
  */
 define(function(require){
 
-    var $ = require('jquery')
-		, settingsGetter = require('app/task/settings')
-		, trial = require('app/trial/current_trial');
+    var _ = require('underscore');
+    var getSize = require('utils/getSize');
 
-	// the function to be used by the main view
-    function adjust_canvas(init){
-        var self = this;
-		// get canvas settings
-        var settings = settingsGetter('canvas') || {};
+    // the function to be used by the main view
+    function adjust_canvas(canvas, settings){
 
-		// calculate proportions (as height/width)
-        var proportions;
-        if (settings.proportions) {
-            if ($.isPlainObject(settings.proportions)) {
-                if (typeof settings.proportions.height !== 'number' || typeof settings.proportions.width !== 'number'){
-                    throw new Error('The canvas proportions object`s height and a width properties must be numeric');
-                }
-                proportions = settings.proportions.height/settings.proportions.width; // if proportions are an object they should include width and height
-            } else {
-                proportions = settings.proportions || 0.8; // by default proportions are 0.8
-            }
+        return _.debounce(eventListener, 50);
+
+        function eventListener(event){
+            // we put this in a time out because of a latency of orientation change on android devices
+            if (event.type == 'orientationchange') setTimeout(resize, 500);
+            else resize();
         }
 
-		// we put this in a time out because of a latency of orientation change on android devices
-        setTimeout(resize,init ? 0 : 500); // end timeout
-
         function resize(){
-            var height, width;
-            var $canvas = self.$el;
+            var targetSize = getTargetSize(settings, canvas);
 
-			// static canvas size
-            if (settings.width){
-				// if this is not init, we've already set screen size, so don't mess around
-                if (!init){
-                    return true;
-                }
+            // remove border width and top margin from calculated width (can't depend on cool box styles yet...)
+            // we compute only margin-top because of a difference calculating margins between chrome + IE and firefox + mobile
+            var computedStyle = window.getComputedStyle(canvas);
+            targetSize.height -= parse(computedStyle.borderTopWidth) + parse(computedStyle.borderBottomWidth) + parse(computedStyle.marginTop);
+            targetSize.width -= parse(computedStyle.borderLeftWidth) + parse(computedStyle.borderRightWidth);
 
-                width = settings.width;
-                height = width*proportions;
+            // reset canvas size
+            canvas.style.width = targetSize.width + 'px';
+            canvas.style.height = targetSize.height + 'px';
+            canvas.style.fontSize = targetSize.height*(settings.textSize || 3)/100 + 'px';
 
-            } else { // dynamic canvas size
-				// get current screen size
-                var screenSize = {
-                    width: $(window).innerWidth(),
-                    height: $(window).innerHeight()
-                };
-
-                var maxHeight = screenSize.height;
-                var maxWidth = Math.min(settings.maxWidth, screenSize.width, $canvas.parent().innerWidth());
-
-				// calculate the correct size for this screen size
-                if (maxHeight > proportions * maxWidth) {
-                    height = maxWidth*proportions;
-                    width = maxWidth;
-                } else {
-                    height = maxHeight;
-                    width = maxHeight/proportions;
-                }
-            }
-
-			// remove border width and top margin from calculated width (can't depend on cool box styles yet...)
-			// we compute only margin-top because of a difference calculating margins between chrome + IE and firefox + mobile
-            height -= parseInt($canvas.css('border-top-width'),10) + parseInt($canvas.css('border-bottom-width'),10) + parseInt($canvas.css('margin-top'),10);
-            width -= parseInt($canvas.css('border-left-width'),10) + parseInt($canvas.css('border-right-width'),10);
-
-			// reset canvas size
-            $canvas.width(width);
-            $canvas.height(height);
-            $canvas.css('font-size',height*(settings.textSize || 3)/100);
-
-			// refresh all stimuli (we don't want to do this before we have trials)
-            if (trial()) {
-                trial()._layout_collection.refresh();
-                trial()._stimulus_collection.refresh();
-            }
-
-			// scroll to top of window (hides some of the mess on the top of mobile devices)
+            // scroll to top of window (hides some of the mess on the top of mobile devices)
             window.scrollTo(0, 1);
         }
     }
 
     return adjust_canvas;
+
+    function getProportions(settings){
+        // if proportions are an object they should include width and height
+        if (_.isPlainObject(settings.proportions)) {
+            if (typeof settings.proportions.height !== 'number' || typeof settings.proportions.width !== 'number'){
+                throw new Error('The canvas proportions object`s height and a width properties must be numeric');
+            }
+            return settings.proportions.height/settings.proportions.width; 
+        } 
+        return settings.proportions || 0.8; // by default proportions are 0.8
+    }
+
+    function getTargetSize(settings, canvas){
+        // calculate proportions (as height/width)
+        var proportions = getProportions(settings);
+
+        // static canvas size
+        // ------------------
+        if (settings.width) return {
+            width: settings.width,
+            height: settings.width*proportions
+        };
+
+        // dynamic canvas size
+        // -------------------
+
+        var docElement = window.document.documentElement; // used to get client view size
+
+        var maxHeight = docElement.clientHeight;
+        var maxWidth = Math.min(settings.maxWidth, docElement.clientWidth, getSize(canvas.parentNode).width);
+
+        // calculate the correct size for this screen size
+        if (maxHeight > proportions * maxWidth) return { height: maxWidth*proportions, width: maxWidth };
+        else return { height: maxHeight, width: maxHeight/proportions};
+    }
+
+    function parse(num){ return parseFloat(num, 10) || 0;}
 });

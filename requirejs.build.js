@@ -13,7 +13,6 @@
     paths: {
         text: '../../bower_components/requirejs-text/text',
         underscore: 'empty:',
-        backbone: 'empty:',
         jquery: 'empty:',
         JSON: 'empty:'
     },
@@ -33,7 +32,6 @@
 
     // Modules to be optimized:
     // we'll keep jquery and underscore seperate so they can be used by all modules
-    // backbone must always be excluded as it is not an AMD module and we enforceDefine in config.js
     modules: [
         {
             name: "activatePIP",
