@@ -10,7 +10,7 @@ define(function(require){
     // the function to be used by the main view
     function adjust_canvas(canvas, settings){
 
-        return _.debounce(eventListener, 50);
+        return _.throttle(eventListener, 16);
 
         function eventListener(event){
             // we put this in a time out because of a latency of orientation change on android devices

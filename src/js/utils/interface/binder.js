@@ -1,21 +1,22 @@
 define(function(require){
-    var $ = require('jquery')
-		, click = require('./bindings/click')
-		, mouseEvents = require('./bindings/mouseEvents')
-		, keypressed = require('./bindings/keypressed')
-		, keyup = require('./bindings/keyup')
-		, timeout = require('./bindings/timeout');
+
+    var _ = require('underscore');
+    var mouseEvents = require('./bindings/mouseEvents');
+    var keypressed = require('./bindings/keypressed');
+    var keyup = require('./bindings/keyup');
+    var timeout = require('./bindings/timeout');
+    var css = require('utils/css');
 
     /*
-	 * this function decorates a listener object with on and off functions
-	 * it takes listener (the object) and the binding definitions as parameters
-	 *
-	 * the function returns true in case the decoration was successfull and false in case it was not.
-	 */
+     * this function decorates a listener object with on and off functions
+     * it takes listener (the object) and the binding definitions as parameters
+     *
+     * the function returns true in case the decoration was successfull and false in case it was not.
+     */
     return function(listener,definitions){
         var on = definitions.on; // what type of binding is this?
 
-		// if the on and off function are set explicitly, set them in;
+        // if the on and off function are set explicitly, set them in;
         if (typeof on === 'function') {
             listener.on = definitions.on;
             listener.off = definitions.off;
@@ -26,9 +27,10 @@ define(function(require){
         }
 
         switch (on){
-			/*
-			 * the archtipical events
-			 */
+            /*
+             * the archtipical events
+             */
+
             case 'keypressed'	:
                 keypressed(listener, definitions);
                 break;
@@ -38,15 +40,12 @@ define(function(require){
                 break;
 
             case 'click'		:
-                click(listener,definitions);
+            case 'mousedown'    :
+                mouseEvents('mousedown', listener,definitions);
                 break;
 
             case 'mouseup'	:
                 mouseEvents('mouseup', listener,definitions);
-                break;
-
-            case 'mousedown'	:
-                mouseEvents('mousedown', listener,definitions);
                 break;
 
             case 'mouseenter'	:
@@ -61,78 +60,70 @@ define(function(require){
                 timeout(listener,definitions);
                 break;
 
-			/*
-			 * Shortcuts
-			 */
+            /*
+             * Shortcuts
+             */
 
             case 'enter'	:
-                keypressed(listener, $.extend({key:13},definitions));
+                keypressed(listener, _.assign({key:13},definitions));
                 break;
 
             case 'space'	:
-                keypressed(listener, $.extend({key:32},definitions));
+                keypressed(listener, _.assign({key:32},definitions));
                 break;
 
             case 'esc'	:
-                keypressed(listener, $.extend({key:27},definitions));
+                keypressed(listener, _.assign({key:27},definitions));
                 break;
 
             case 'leftTouch'	:
-                definitions.element = $('<div>')
-					.css({
-    position: 'absolute',
-    left: 0,
-    width: '30%',
-    height: '100%',
-    background: '#00FF00',
-    opacity: 0.3
-})
-					.css(definitions.css || {});
+                definitions.element = createElement(definitions.css, {
+                    position: 'absolute',
+                    left: 0,
+                    width: '30%',
+                    height: '100%',
+                    background: '#00FF00',
+                    opacity: 0.3
+                });
 
                 click(listener,definitions);
                 break;
 
             case 'rightTouch'	:
-                definitions.element = $('<div>')
-					.css({
-    position: 'absolute',
-    right: 0,
-    width: '30%',
-    height: '100%',
-    background: '#00FF00',
-    opacity: 0.3
-})
-					.css(definitions.css || {});
+                definitions.element = createElement(definitions.css, {
+                    position: 'absolute',
+                    right: 0,
+                    width: '30%',
+                    height: '100%',
+                    background: '#00FF00',
+                    opacity: 0.3
+                });
 
                 click(listener,definitions);
                 break;
 
             case 'topTouch'	:
-                definitions.element = $('<div>')
-					.css({
-    position: 'absolute',
-    top: 0,
-    width: '100%',
-    height: '30%',
-    background: '#00FF00',
-    opacity: 0.3
-})
-					.css(definitions.css || {});
+                definitions.element = createElement(definitions.css, {
+                    position: 'absolute',
+                    top: 0,
+                    width: '100%',
+                    height: '30%',
+                    background: '#00FF00',
+                    opacity: 0.3
+                });
 
                 click(listener,definitions);
                 break;
 
             case 'bottomTouch'	:
-                definitions.element = $('<div>')
-					.css({
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
-    height: '30%',
-    background: '#00FF00',
-    opacity: 0.3
-})
-					.css(definitions.css || {});
+                definitions.element = createElement(definitions.css, {
+                    position: 'absolute',
+                    bottom: 0,
+                    width: '100%',
+                    height: '30%',
+                    background: '#00FF00',
+                    opacity: 0.3
+                });
 
                 click(listener,definitions);
                 break;
@@ -142,5 +133,13 @@ define(function(require){
 
         }
         return true;
+
+        function createElement(css2, css1){
+            var el = document.createElement('div');
+            css(el, css1);
+            css(el, css2);
+            return el;
+        }
+
     };
 });

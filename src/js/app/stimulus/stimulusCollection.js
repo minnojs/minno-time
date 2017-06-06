@@ -32,7 +32,7 @@ define(function(require){
     }
 
     function render(){
-        this.stimuli.concat(this.layout).forEach(function(stim){stim.render;});
+        this.stimuli.concat(this.layout).forEach(function(stim){stim.render();});
     }
 
     function getStimlist(){

@@ -1,30 +1,33 @@
 define(function(require){
-    var $ = require('jquery');
+    var css = require('utils/css');
+    var fastdom = require('utils/fastdom');
 
-	/**
-	 * Decorates a Listener with the on and off functions for a mouse event
-	 *
-	 * It attaches a listener for event name to all elements that have definitions.stimHandle
-	 *
-	 * @param  {String} eventName   The event name to bind
-	 * @param  {Object} listener    The listener object to decorate
-	 * @param  {Object} definitions A definitions (options) object
-	 * @return {Object}             A decorator function
-	 */
-    function mouseEventsDecorator(eventName, listener,definitions){
+    return function(eventName, listener,definitions){
+        var canvas = document.getElementsByClassName('minno-canvas')[0]; // how bad is this? @TODO we should really pass canvas as prop
+        var element = definitions.element;
+
         listener.on = function(callback){
-            function activateCallback(e){
-                callback(e,eventName);
+            this.listener = clickListener;
+
+            if (element){
+                css(element, definitions.css);
+                fastdom.mutate(function(){
+                    canvas.appendChild(element);
+                });
             }
 
-			// If we're binding to an existing element, bind to its appropriate handle
-            $(document).on(eventName + '.interface','[data-handle="'+definitions.stimHandle + '"]', activateCallback);
+            canvas.addEventListener('eventName', clickListener);
+
+            function clickListener(e){
+                var target = e.target;
+                if (element && target === element) return callback(e,eventName);
+                if (!element && target.getAttribute('data-handle') === definitions.stimHandle) callback(e, eventName);
+            }
         };
 
         listener.off = function(){
-            $(document).off(eventName + '.interface','[data-handle="'+definitions.stimHandle + '"]');
+            if (element) canvas.removeChild(element);
+            canvas.removeEventHandler(eventName, this.listner);
         };
-    }
-
-    return mouseEventsDecorator;
+    };
 });

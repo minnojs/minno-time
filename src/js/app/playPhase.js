@@ -2,7 +2,7 @@ define(function(require){
 
     var _               = require('underscore');
     var Trial           = require('app/trial/trial_constructor');
-    var logger          = require('app/task/log/logger');
+    var logger          = require('app/task/logger/logger');
     var nextTrial       = require('./sequencer/nextTrial');
     var stream          = require('utils/stream');
 

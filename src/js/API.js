@@ -1,6 +1,7 @@
 define(function(require){
 
     var _ = require('underscore');
+    var post = require('utils/post');
 
 	/**
 	 * Constructor for PIPlayer script creator
@@ -98,10 +99,7 @@ define(function(require){
             throw new Error('you should return API.script instead of calling API.play()!!');
         },
 
-        post: function(url, obj){
-            var $ = require('jquery');
-            $.post(url, obj);
-        },
+        post: post,
 
         shuffle: function(collection){
             return _.shuffle(collection);
