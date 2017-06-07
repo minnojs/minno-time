@@ -59,7 +59,7 @@ define(['pipAPI'], function(APIconstructor) {
 			input: [
 				// **stimHandle** is used to indicate stimuli with the appropriate Handle (in this case "myStimulus").
 				{handle:'end',on:'click',stimHandle:'myStimulus'},
-				// **element** allows you to insert an html (or even jquery) element for this interaction
+				// **element** allows you to insert an html  element for this interaction
 				{handle:'end',on:'click',element:'<div>bump</div>'}
 			],
 			layout: [{data:{handle:'myStimulus'},media :{word:'Click me too!!'}}],

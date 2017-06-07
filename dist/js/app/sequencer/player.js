@@ -1,7 +1,7 @@
 define(function(require){
 
     var Trial				= require('app/trial/trial_constructor');
-    var logger			= require('app/task/log/logger');
+    var logger			= require('app/task/logger/logger');
     var settingsGetter	= require('app/task/settings');
     var inflateTrial 		= require('./inflateTrial');
     var noop = function(){};

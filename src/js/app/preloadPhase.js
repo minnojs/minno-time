@@ -1,6 +1,7 @@
 define(function(require){
 
     var preload = require('./sequencer/sequencePreload');
+    var fastdom = require('utils/fastdom');
 
     return preloadPhase;
 
@@ -19,7 +20,11 @@ define(function(require){
 
         var barStyle = canvas.getElementsByTagName('span')[0].style;
         barStyle.width = preloader.progress() + '%';
-        preloader.onload = function(){barStyle.width = preloader.progress()*100 + '%';};
+        preloader.onload = function(){
+            fastdom.mutate(function(){
+                barStyle.width = preloader.progress()*100 + '%';
+            });
+        };
 
         return preloader.all()
             .then(emptyCanvas)

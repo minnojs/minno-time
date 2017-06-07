@@ -4,6 +4,7 @@ define(function(require){
     var getMedia = require('./getMedia');
     var setSize = require('./setSize');
     var setPlace = require('./setPlace');
+    var css = require('utils/css');
 
     function Stimulus(stimulus, trial, canvas){
         var self = {
@@ -12,7 +13,7 @@ define(function(require){
             trial: trial,
             canvas: canvas,
             init: init,
-            render: render.bind(self),
+            render: render,
             show: show,
             hide: hide,
             name: name,
@@ -56,20 +57,8 @@ define(function(require){
         });
     }
 
-    function css(el, obj){
-        var style = el.style;
-
-        for (var key in obj){
-            style[camelCase(key)] = obj[key];
-        }
-
-        function camelCase(str){ 
-            return  str.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); }); 
-        }
-    }
-
-    function render(el){
-        return setPlace(this.source, this.canvas, el);
+    function render(){
+        return setPlace(this.source, this.canvas, this.el);
     }
 
     function show(){

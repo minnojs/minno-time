@@ -41,8 +41,8 @@ js/app/task/build_url.js
 js/app/sequencer/sequencePreload.js
 js/app/preloadPhase.js
 js/utils/pubsub.js
-js/utils/is_touch.js
-js/utils/interface/bindings/click.js
+js/utils/css.js
+js/utils/fastdom.js
 js/utils/interface/bindings/mouseEvents.js
 js/utils/interface/bindings/keypressed.js
 js/utils/interface/bindings/keyup.js
@@ -52,9 +52,9 @@ js/utils/interface/bindings/timeout.js
 js/utils/interface/binder.js
 js/utils/interface/triggerEvent.js
 js/utils/interface/listener.js
+js/utils/is_touch.js
 js/utils/interface/now.js
 js/utils/interface/interface.js
-js/utils/fastdom.js
 js/app/stimulus/getMedia.js
 js/app/stimulus/setSize.js
 js/app/stimulus/setPlace.js
@@ -66,9 +66,10 @@ js/app/trial/action_list.js
 js/app/trial/action.js
 js/app/trial/interactions.js
 js/app/trial/trial_constructor.js
-js/app/task/log/post.js
-js/app/task/log/log_stack.js
-js/app/task/log/logger.js
+js/utils/post.js
+js/app/task/logger/send.js
+js/app/task/logger/log_stack.js
+js/app/task/logger/logger.js
 js/app/sequencer/nextTrial.js
 js/app/playPhase.js
 js/activatePIP.js
@@ -84,4 +85,5 @@ js/utils/polyfills.js
 js/extensions/dscore/computeD.js
 js/extensions/dscore/msgMan.js
 js/extensions/dscore/parcelMng.js
+js/utils/post.js
 js/extensions/dscore/Scorer.js

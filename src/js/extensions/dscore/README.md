@@ -174,7 +174,7 @@ scorer.addSettings('compute',{
 
 
 #### dynamicPost
-This function takes an object, jsonifies it, and sends it to the server. It returns a jQuery promise so you can do anything that you like after it finishes.
+This function takes an object, jsonifies it, and sends it to the server. It returns a promise so you can do anything that you like after it finishes.
 
 ```js
 // Compute score

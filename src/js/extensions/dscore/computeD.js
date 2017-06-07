@@ -2,10 +2,10 @@
  * Essentialy a defaults object for the scorer
  */
 define(function(require){
-    var $ = require('jquery');
+    var _ = require('underscore');
 
     function ComputeD(){
-        $.extend(this, {
+        _.assign(this, {
             dataArray : {}, //The data array or structure the PIP will provide
             AnalyzedVar : 'latency', //The main variable used for the score computation. Usually will be the latency.
             ErrorVar : 'error', //The variable that indicates whether there was an error in the response
@@ -24,9 +24,9 @@ define(function(require){
         });
     }
 
-    $.extend(ComputeD.prototype, {
+    _.assign(ComputeD.prototype, {
         setComputeObject: function(obj){
-            $.extend(this,obj);
+            _.assign(this,obj);
         },
 
         setDataArray: function(){

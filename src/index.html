@@ -39,7 +39,7 @@
 		<script type="text/javascript">
 			require(['js/config'], function() {
 				require(['activatePIP', getParameterByName('url') || '../resources/examples/iat.js'], function(activatePIP, script){
-					activatePIP(document.getElementById('canvas'),script);
+					window.pip = activatePIP(document.getElementById('canvas'),script);
 				});
 			});
 		</script>

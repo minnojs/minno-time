@@ -19,11 +19,10 @@
 
 
 ### Media
-Media are the objects that we display. We currently support five types of media:
+Media are the objects that we display. We currently support three types of media:
 
 * Plain text: `{word: 'Your very cool stimulus'}`
 * Image: `{image: 'some/url/image.png}`
-* Jquery elements:` {jquery: $('<div>',{text: 'anything you want' })}`
 * HTML: `{html: "<div>any html</div>"}`
 
 If you insert a string instead of a media object the player treats it as if it was Plain text.

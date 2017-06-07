@@ -1,12 +1,14 @@
 define(function(require){
 
-    var $ = require('jquery')
-		, ComputeData = require('./computeD')
-		, MsgMan = require('./msgMan')
-		, ParcelMng = require('./parcelMng');
+    var ComputeData = require('./computeD');
+    var  MsgMan = require('./msgMan');
+    var  ParcelMng = require('./parcelMng');
+    var _ = require('underscore');
+    var post = require('utils/post');
+
 
 	// Description: make sure console.log is safe among all browsers.
-    window.console || (window.console = {log: $.noop, error: $.noop});
+    window.console || (window.console = {log: _.noop, error: _.noop});
 
     function Scorer(){
         this.computeData = new ComputeData();
@@ -14,7 +16,7 @@ define(function(require){
         this.parcelMng = new ParcelMng(this.msgMan);
     }
 
-    $.extend(Scorer.prototype, {
+    _.assign(Scorer.prototype, {
 
 		/**
 		 * Set settings for computeD or msgMan
@@ -92,7 +94,7 @@ define(function(require){
             data[scoreKey] = score;
             data[msgKey] = msg;
 
-            return $.post(url,JSON.stringify(data));
+            return post(url,JSON.stringify(data));
         },
 
 		/**
@@ -104,7 +106,7 @@ define(function(require){
             var postSettings = this.computeData.postSettings || {};
             var url = postSettings.url;
 
-            return $.post(url,JSON.stringify(data));
+            return post(url,JSON.stringify(data));
         },
 
 		// get message according to user input

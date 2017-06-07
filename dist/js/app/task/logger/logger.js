@@ -4,17 +4,16 @@
  */
 define(function(require){
 
-    var $ = require('jquery')
-        , _ = require('underscore')
-		, pubsub = require('utils/pubsub')
-		, trial = require('app/trial/current_trial')
-		, settings = require('app/task/settings')
-		, post = require('./post')
-		, logStackGetter = require('./log_stack');
+    var _ = require('underscore');
+    var pubsub = require('utils/pubsub');
+    var trial = require('app/trial/current_trial');
+    var settings = require('app/task/settings');
+    var send = require('./send');
+    var logStackGetter = require('./log_stack');
 
-	// counter for the last time we sent (it holds the last length for which we sent)
+    // counter for the last time we sent (it holds the last length for which we sent)
     var lastSend = 0;
-    var postDef = $.Deferred().resolve(); // a defered to follow all posting
+    var promises = [];
 
     function defaultLogger(trialData, inputData, actionData,logStack){
 
@@ -35,62 +34,60 @@ define(function(require){
         };
     }
 
-	/*
-	 * Send all logs since lastSend
-	 * @returns $.Deferred
-	 */
+    /*
+     * Send all logs since lastSend
+     * @returns promise
+     */
     function sendChunk(){
-        var logChunk; // the log chunk we want to send right now
+        var logChunk, promise; // the log chunk we want to send right now
         var logStack = logStackGetter();
 
-		// if  we've already sent everything,  we don't need to do anything
-        if (logStack.length - lastSend <= 0) {
-            return postDef;
-        } else {
-			// get the log chunk that we want to send
+        // if we haven't sent all logs
+        if (logStack.length - lastSend > 0) {
+            // get the log chunk that we want to send
             logChunk =  logStack.slice(lastSend, logStack.length);
 
-			// reset lastSend counter
+            // reset lastSend counter
             lastSend = logStack.length;
-            return $.when(postDef, post(logChunk));
+            promise = send(logChunk);
+            promises.push(promise);
         }
+
+        return Promise.all(promises);
     }
 
-	/*
-	 * create log row and push it into log stack
-	 */
+    /*
+     * create log row and push it into log stack
+     */
     pubsub.subscribe('log',function(options, input_data){
         var logStack = logStackGetter();
-		// get settings
+        // get settings
         var logger = settings().logger || {};
-		// get the logger function
+        // get the logger function
         var callback = logger.logger ? logger.logger : defaultLogger;
 
-		// add row to log stack
+        // add row to log stack
         var trialObj = trial();
         var row = callback.apply(trialObj,[trialObj.data, input_data, options,logStack]);
 
         if (logger.meta){
-            if ($.isPlainObject(logger.meta)){
-                $.extend(row, logger.meta);
-            } else {
-                throw new Error ('LOGGER: logger.meta must be an object but instead was a ' + typeof logger.meta);
-            }
+            if (_.isPlainObject(logger.meta)) _.assign(row, logger.meta);
+            else throw new Error ('LOGGER: logger.meta must be an object but instead was a ' + typeof logger.meta);
         }
 
         logStack.push(row);
     });
 
-	/*
-	 * send logStack to server, but only if it is full
-	 * The end task send is activated directly using the send function
-	 */
+    /*
+     * send logStack to server, but only if it is full
+     * The end task send is activated directly using the send function
+     */
     pubsub.subscribe('log:send',function(){
         var logStack = logStackGetter();
-		// get pulse size
+        // get pulse size
         var pulse = _.get(settings(), 'logger.pulse', 0);
 
-		// if logStack is full, lets send it
+        // if logStack is full, lets send it
         if (pulse && logStack.length - lastSend >= pulse) {
             sendChunk();
         }

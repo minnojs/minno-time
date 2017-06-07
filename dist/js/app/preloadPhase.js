@@ -7,7 +7,7 @@ define(function(require){
     function preloadPhase(canvas, script){
         var preloader = preload(script);
 
-        if (preloader.progress() == 1) return Promise.resolve();
+        if (preloader.progress() == 1) return Promise.resolve().then(emptyCanvas);
 
         canvas.innerHTML = [
             '<div class="meter-wrapper">',

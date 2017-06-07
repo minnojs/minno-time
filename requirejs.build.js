@@ -6,14 +6,13 @@
     appDir: 'src',
     baseUrl: 'js',
     skipDirOptimize: true, // so that we don't run into problems with node.js files form the bundles. also makes things faster...
-    // generateSourceMaps: true,
+    //generateSourceMaps: true,
     // preserveLicenseComments: false,
     optimize: 'uglify2',
     fileExclusionRegExp: /(\.scss|\.md|_test\.js)$/,
     paths: {
         text: '../../bower_components/requirejs-text/text',
         underscore: 'empty:',
-        jquery: 'empty:',
         JSON: 'empty:'
     },
 

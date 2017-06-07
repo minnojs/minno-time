@@ -5,6 +5,7 @@
  * @return {promise}
  */
 define(function(require){
+    require('utils/polyfills');
 
     var _ = require('underscore');
 
@@ -18,22 +19,22 @@ define(function(require){
 
     function activate(canvas, script){
         var $resize = canvasSetup(canvas, script);
-        var sink = playPhase(canvas, script);
+        var playSink = playPhase(canvas, script);
 
         setupVars(script);
         parse(script); // Build db (can this be pure?) - maybe inject db into playphase
 
         $resize.map(function(){
-            var trial = sink.$trial();
+            var trial = playSink.$trial();
             if (trial) trial.stimulusCollection.render();
         });
 
-        sink.end.map($resize.end.bind(null, true)); // end resize stream
+        playSink.end.map(function(){$resize.end(true);}); // end resize stream
 
         // preload Images, then play "playPhase"
-        preloadPhase(canvas, script).then(sink.play.bind(null, ['next', {}]));
+        preloadPhase(canvas, script).then(playSink.play.bind(null, ['next', {}]));
 
-        return sink;
+        return playSink;
     }
 
     function setupVars(script){
