@@ -1,2 +1,3 @@
 /src/js/utils/database/**
 /src/js/utils/collection/**
+/src/js/utils/polyfills.js
