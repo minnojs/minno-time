@@ -34,15 +34,15 @@ js/utils/getSize.js
 js/app/task/adjust_canvas.js
 js/app/task/applyCanvasStyles.js
 js/utils/stream.js
+js/utils/css.js
 js/app/task/canvasSetup.js
 js/utils/preloader.js
 js/app/task/settings.js
 js/app/task/build_url.js
 js/app/sequencer/sequencePreload.js
+js/utils/fastdom.js
 js/app/preloadPhase.js
 js/utils/pubsub.js
-js/utils/css.js
-js/utils/fastdom.js
 js/utils/interface/bindings/mouseEvents.js
 js/utils/interface/bindings/keypressed.js
 js/utils/interface/bindings/keyup.js
@@ -65,7 +65,7 @@ js/app/trial/evaluate.js
 js/app/trial/action_list.js
 js/app/trial/action.js
 js/app/trial/interactions.js
-js/app/trial/trial_constructor.js
+js/app/trial/Trial.js
 js/utils/post.js
 js/app/task/logger/send.js
 js/app/task/logger/log_stack.js

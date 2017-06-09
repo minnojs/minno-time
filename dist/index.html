@@ -7,7 +7,6 @@
 
         <link type="text/css" rel="Stylesheet" href="css/main.css"/>
 
-
 		<style type="text/css">
 			/* http://www.sitepoint.com/css3-responsive-centered-image/ */
 			img.pi-logo {position: absolute;max-width: 80%;top: 50%;left: 50%;margin-left: -32px;margin-top: -32px;border-radius: 3px;}
@@ -27,19 +26,19 @@
 	</head>
 
 	<body>
-		<div pi-player id="canvas">
+		<div id="canvas">
 			<img class="pi-logo" src="img/loader.gif" />
 		</div>
 
-		<!--[if lt IE 8]>
-			<script src="../bower_components/json2/json2.js"></script>
+		<!--[if lt IE 9]>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/aight/1.2.2/aight.min.js"></script>
 		<![endif]-->
 		<script src="../bower_components/requirejs/require.js"></script>
 
 		<script type="text/javascript">
 			require(['js/config'], function() {
 				require(['activatePIP', getParameterByName('url') || '../resources/examples/iat.js'], function(activatePIP, script){
-					activatePIP(document.getElementById('canvas'),script);
+					window.pip = activatePIP(document.getElementById('canvas'),script);
 				});
 			});
 		</script>

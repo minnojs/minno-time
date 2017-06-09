@@ -1,6 +1,5 @@
 define(function(require){
     var Stimulus = require('./Stimulus');
-    var fastdom = require('utils/fastdom');
 
     return stimCollection;
 
@@ -48,9 +47,6 @@ define(function(require){
     }
 
     function destroy(){
-        var canvas = this.canvas;
-        fastdom.mutate(function(){
-            while (canvas.firstChild) canvas.removeChild(canvas.firstChild);
-        });
+        this.stimuli.concat(this.layout).forEach(function(stim){stim.destroy();});
     }
 });

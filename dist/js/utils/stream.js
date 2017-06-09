@@ -1,5 +1,8 @@
 "use strict"
 
+// https://github.com/MithrilJS/mithril.js/blob/next/stream/stream.js
+// https://mithril.js.org/stream.html
+
 define(function() {
 
 var guid = 0, HALT = {}

@@ -75,8 +75,6 @@ define(function(require){
             // unset global trial
             global_trial(undefined);
 
-            this.stimulusCollection.destroy();
-
             // @TODO lets make the logger make some more sense. what is it doing here?
             pubsub.publish('log:send'); // see if we need to send the log stack
 

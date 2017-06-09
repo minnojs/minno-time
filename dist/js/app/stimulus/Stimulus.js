@@ -17,14 +17,15 @@ define(function(require){
             show: show,
             hide: hide,
             name: name,
-            mediaName: mediaName
+            mediaName: mediaName,
+            destroy: destroy
         };
 
         // make sure we have a data object
-        self.data = stimulus.data || {}; 
+        self.data = stimulus.data || {};
 
         // set the handle
-        self.handle = self.data.handle = self.data.handle || stimulus.handle || stimulus.set; 
+        self.handle = self.data.handle = self.data.handle || stimulus.handle || stimulus.set;
 
         return self;
     }
@@ -33,7 +34,7 @@ define(function(require){
 
     function init(){
         if (!this.source.media) throw new Error('Media object not defined for ' + this.name());
-        
+
         return getMedia(this.source.media)
             .then(setupElement.bind(this, this.canvas))
             .then(render.bind(this));
@@ -43,11 +44,11 @@ define(function(require){
         var self = this;
         this.el = el;
         return new Promise(function(resolve){
-            fastdom.mutate(function(){
+            fastdom.mutate(function initStim(){
                 // setup element
                 el.classList.add('minno-stimulus');
-                el.setAttribute('data-handle', self.handle); // add data-handle for handeling of mouse/touch interactions
-                setSize(el, self.source);
+                el.setAttribute('data-handle', self.handle); // data-handle for handeling of mouse/touch interactions
+                setSize(el, self.source); // does not depend on any measurements
                 css(el, self.source.css || {});
 
                 // append to canvas
@@ -65,7 +66,7 @@ define(function(require){
         var el = this.el;
         if (!el) throw new Error('A stimulus can not be shown before init is called');
 
-        fastdom.mutate(function(){ 
+        fastdom.mutate(function showStim(){
             el.classList.add('minno-stimulus-visible');
         });
     }
@@ -74,8 +75,16 @@ define(function(require){
         var el = this.el;
         if (!el) throw new Error('A stimulus can not be hidden before init is called');
 
-        fastdom.mutate(function(){ 
+        fastdom.mutate(function hideStim(){
             el.classList.remove('minno-stimulus-visible');
+        });
+    }
+
+    function destroy(){
+        var el = this.el;
+        var canvas = this.canvas;
+        fastdom.mutate(function removeStim(){
+            canvas.removeChild(el);
         });
     }
 

@@ -3,6 +3,7 @@ define(function(require){
     var adjustCanvas = require('./adjust_canvas');
     var applyCanvasStyles = require('./applyCanvasStyles');
     var stream = require('utils/stream');
+    var css = require('utils/css');
 
     return setupCanvas;
 
@@ -18,10 +19,6 @@ define(function(require){
         window.addEventListener('orientationchange', $resize);
         window.addEventListener('resize', $resize);
 
-        $resize.end
-            .map(function(){canvas.classList.remove('minno-canvas');})
-            .map(removeListeners)
-            .map(off);
 
 
         var map = {
@@ -34,8 +31,12 @@ define(function(require){
         // settings activator
         var off = applyCanvasStyles(map, _.pick(canvasSettings,['background','canvasBackground','borderColor','borderWidth']));
 
-        // @TODO connect this with our css from stimulus
-        canvasSettings.css && self.$el.css(canvasSettings.css);
+        canvasSettings.css && css(canvas, canvasSettings.css);
+
+        $resize.end
+            .map(function(){canvas.classList.remove('minno-canvas');})
+            .map(removeListeners)
+            .map(off);
 
         return $resize;
         

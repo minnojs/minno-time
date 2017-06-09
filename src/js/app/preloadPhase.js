@@ -10,15 +10,9 @@ define(function(require){
 
         if (preloader.progress() == 1) return Promise.resolve().then(emptyCanvas);
 
-        canvas.innerHTML = [
-            '<div class="meter-wrapper">',
-            '   <div class="meter">',
-            '       <span style="width: 0%"></span>',
-            '   </div>',
-            '</div>'
-        ].join('');
+        canvas.innerHTML = '<div class="minno-progress"><div class="minno-progress-bar"></div></div>';
 
-        var barStyle = canvas.getElementsByTagName('span')[0].style;
+        var barStyle = canvas.getElementsByClassName('minno-progress-bar')[0].style;
         barStyle.width = preloader.progress() + '%';
         preloader.onload = function(){
             fastdom.mutate(function(){
@@ -27,8 +21,7 @@ define(function(require){
         };
 
         return preloader.all()
-            .then(emptyCanvas)
-            .catch(function(src){
+            .then(emptyCanvas)['catch'](function(src){
                 throw new Error('loading resource failed, do something about it! (you can start by checking the error log, you are probably reffering to the wrong url - ' + src +')');
             });
 
