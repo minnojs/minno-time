@@ -16,7 +16,7 @@ define(function(require){
                 });
             }
 
-            canvas.addEventListener('eventName', clickListener);
+            canvas.addEventListener(eventName, clickListener);
 
             function clickListener(e){
                 var target = e.target;
@@ -27,7 +27,7 @@ define(function(require){
 
         listener.off = function(){
             if (element) canvas.removeChild(element);
-            canvas.removeEventHandler(eventName, this.listner);
+            canvas.removeEventListener(eventName, this.listner);
         };
     };
 });
