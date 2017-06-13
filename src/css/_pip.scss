@@ -23,10 +23,10 @@
 	position:absolute;
 	text-align:center;
 	overflow: hidden;
-    opacity: 0;
+    visibility: hidden;
 }
 
-.minno-stimulus-visible {opacity:1}
+.minno-stimulus-visible {visibility:visible;}
 
 .minno-progress {
     background-color: #20201F;
