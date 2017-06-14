@@ -43,6 +43,10 @@ define(function(require){
         start: function(){
             var trial = this;
 
+            /* eslint no-console:false */
+            if (this._source.DEBUG && window.DEBUG) console.group('Trial: ' + this.counter);
+            /* eslint no-console:true */
+
             // wait until all simuli are loaded
             return trial.stimulusCollection.ready
                 .then(function(){
@@ -62,6 +66,10 @@ define(function(require){
         },
 
         end: function(){
+            /* eslint no-console:false */
+            if (this._source.DEBUG && window.DEBUG) console.groupEnd('Trial: ' + this.counter);
+            /* eslint no-console:true */
+            
             // cancel all listeners
             input.destroy();
 

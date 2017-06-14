@@ -14,20 +14,33 @@ define(function(require){
 
     function interact(interactions,input_data){
         var trial = currentTrial();
-        var i, interaction;
+        var i, interaction, conditionTrue;;
+        var isDebug = trial._source.DEBUG && window.DEBUG;
 
         input_data.trialId = trial._id;
         input_data.trialCounter = trial.counter;
 
+        /* eslint no-console:false */
+        if (isDebug) console.groupColapsed('Event: ' + (input_data.handle || input_data.type), input_data);
+        /* eslint no-console:true */
+
         // use an explicit loop because we need to break
         for (i=0; i<interactions.length; i++){
             interaction = interactions[i];
-            if (evaluate(interaction.conditions,input_data)) {
-                // if this action includes endTrial we want to stop evalutation
-                // otherwise we might evaluate using data from the next trial by accident...
-                if ( !activate(interaction.actions,input_data) ) break;
-            }
+            conditionTrue = evaluate(interaction.conditions,input_data);
+
+            /* eslint no-console:false */
+            if (isDebug) console.log(conditionTrue, interaction.conditions);
+            /* eslint no-console:true */
+
+            // if this action includes endTrial we want to stop evalutation
+            // otherwise we might evaluate using data from the next trial by accident...
+            if (conditionTrue) if ( !activate(interaction.actions,input_data) ) break;
         }
+
+        /* eslint no-console:false */
+        if (isDebug) console.groupEnd('Event: ' + (input_data.handle || input_data.type));
+        /* eslint no-console:true */
     }
 
     return {

@@ -24,7 +24,7 @@ define(function(){
             }
         ],
 
-        deps: ['underscore', 'utils/polyfills']
+        deps: ['underscore']
     });
 
 });

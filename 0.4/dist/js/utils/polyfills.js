@@ -1,6 +1,13 @@
 define(function(){
     if (!Date.now) Date.now = function() { return new Date().getTime(); };
 
+    function log(){ console.log.apply(console, arguments); }
+    if (!console.group) console.group = log;
+    if (!console.group) console.groupCollapsed = log;
+    if (!console.groupEnd) console.group = log;
+    if (!console.table) console.group = log;
+
+
     (function() {
         'use strict';
 

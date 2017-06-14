@@ -19,21 +19,7 @@
 					<a href="/minno-time/0.3/time/overview.html">miTime</a>
 				</nav>
 				<nav>
-                    <div id="search-box">
-                        <script>
-                            (function() {
-                                var cx = '002953266509769041597:smg5beek-iu';
-                                var gcse = document.createElement('script');
-                                gcse.type = 'text/javascript';
-                                gcse.async = true;
-                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
-                                var s = document.getElementsByTagName('script')[0];
-                                s.parentNode.insertBefore(gcse, s);
-                            })();
-                        </script>
-                        <gcse:searchbox-only></gcse:searchbox-only>
-                    </div>
-                    <select id="version-select"><option value="0.3" selected>v0.3</option></select>
+                    <select id="version-select"><option value="0.3" selected>v0.3</option>,<option value="0.4" >v0.4</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
 			</section>
@@ -98,7 +84,7 @@
         <a class="activate-button">Activate</a>
         <a class="download-button" href="input.js" download>Download</a>
     </div>
-    <div class="editor">define([&apos;pipAPI&apos;], function(APIconstructor) {
+    <div class="editor">define([&quot;pipAPI&quot;], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
@@ -114,19 +100,19 @@
 		{
 			input: [
 				// Key can take single characters.
-				{handle:&apos;end&apos;,on:&apos;keypressed&apos;, key:&apos;i&apos;},
+				{handle:&quot;end&quot;,on:&quot;keypressed&quot;, key:&quot;i&quot;},
 				// Or key codes (69 is the key code for e).
-				{handle:&apos;end&apos;,on:&apos;keypressed&apos;, key:69},
+				{handle:&quot;end&quot;,on:&quot;keypressed&quot;, key:69},
 				// And even arrays
-				{handle:&apos;otherHandle&apos;,on:&apos;keypressed&apos;, key:[&apos;i&apos;,69]}
+				{handle:&quot;otherHandle&quot;,on:&quot;keypressed&quot;, key:[&quot;i&quot;,69]}
 			],
-			layout: [{media :{word:&apos;Click e or i to move on&apos;}}],
+			layout: [{media :{word:&quot;Click e or i to move on&quot;}}],
 			interactions: [
 				{
 					// This is where we tell the player to respond to the input.
 					// More about this in the conditions tutorial.
-					conditions: [{type:&apos;inputEquals&apos;,value:&apos;end&apos;}],
-					actions: [{type:&apos;endTrial&apos;}]
+					conditions: [{type:&quot;inputEquals&quot;,value:&quot;end&quot;}],
+					actions: [{type:&quot;endTrial&quot;}]
 				}
 			]
 		},
@@ -134,19 +120,19 @@
 		{
 			input: [
 				// Space
-				{handle:&apos;end&apos;,on:&apos;space&apos;},
+				{handle:&quot;end&quot;,on:&quot;space&quot;},
 				// Enter
-				{handle:&apos;end&apos;,on:&apos;enter&apos;},
+				{handle:&quot;end&quot;,on:&quot;enter&quot;},
 				// Escape
-				{handle:&apos;end&apos;,on:&apos;esc&apos;}
+				{handle:&quot;end&quot;,on:&quot;esc&quot;}
 			],
-			layout: [{media :{word:&apos;Click enter escape or space to move on&apos;}}],
+			layout: [{media :{word:&quot;Click enter escape or space to move on&quot;}}],
 			interactions: [
 				{
 					// This is where we tell the player to respond to the input.
 					// More about this in the conditions tutorial.
-					conditions: [{type:&apos;inputEquals&apos;,value:&apos;end&apos;}],
-					actions: [{type:&apos;endTrial&apos;}]
+					conditions: [{type:&quot;inputEquals&quot;,value:&quot;end&quot;}],
+					actions: [{type:&quot;endTrial&quot;}]
 				}
 			]
 		},
@@ -157,18 +143,18 @@
 		// In case an element is defined it is presented when the input is activated.
 		{
 			input: [
-				// **stimHandle** is used to indicate stimuli with the appropriate Handle (in this case &quot;myStimulus&quot;).
-				{handle:&apos;end&apos;,on:&apos;click&apos;,stimHandle:&apos;myStimulus&apos;},
+				// **stimHandle** is used to indicate stimuli with the appropriate Handle (in this case "myStimulus").
+				{handle:&quot;end&quot;,on:&quot;click&quot;,stimHandle:&quot;myStimulus&quot;},
 				// **element** allows you to insert an html (or even jquery) element for this interaction
-				{handle:&apos;end&apos;,on:&apos;click&apos;,element:&apos;&lt;div&gt;bump&lt;/div&gt;&apos;}
+				{handle:&quot;end&quot;,on:&quot;click&quot;,element:&quot;&lt;div&gt;bump&lt;/div&gt;&quot;}
 			],
-			layout: [{data:{handle:&apos;myStimulus&apos;},media :{word:&apos;Click me too!!&apos;}}],
+			layout: [{data:{handle:&quot;myStimulus&quot;},media :{word:&quot;Click me too!!&quot;}}],
 			interactions: [
 				{
 					// This is where we tell the player to respond to the input.
 					// More about this in the conditions tutorial.
-					conditions: [{type:&apos;inputEquals&apos;,value:&apos;end&apos;}],
-					actions: [{type:&apos;endTrial&apos;}]
+					conditions: [{type:&quot;inputEquals&quot;,value:&quot;end&quot;}],
+					actions: [{type:&quot;endTrial&quot;}]
 				}
 			]
 		},
@@ -180,15 +166,15 @@
 		{
 			input: [
 				// This trial will end after five seconds.
-				{handle:&apos;end&apos;, on: &apos;timeout&apos;, duration: 3000}
+				{handle:&quot;end&quot;, on: &quot;timeout&quot;, duration: 3000}
 			],
-			layout: [{media :{word:&apos;Wait just five seconds&apos;}}],
+			layout: [{media :{word:&quot;Wait just five seconds&quot;}}],
 			interactions: [
 				{
 					// This is where we tell the player to respond to the input.
 					// More about this in the conditions tutorial.
-					conditions: [{type:&apos;inputEquals&apos;,value:&apos;end&apos;}],
-					actions: [{type:&apos;endTrial&apos;}]
+					conditions: [{type:&quot;inputEquals&quot;,value:&quot;end&quot;}],
+					actions: [{type:&quot;endTrial&quot;}]
 				}
 			]
 		}

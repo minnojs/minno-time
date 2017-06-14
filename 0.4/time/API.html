@@ -41,6 +41,7 @@
 <li><a href="#interactions-actions">Actions</a></li>
 </ul>
 </li>
+<li><a href="#debug">Debug</a></li>
 </ul>
 </li>
 <li><a href="#inheritance">Inheritance</a></li>
@@ -475,7 +476,11 @@ Responsible for the next trial we go to. This action will be executed only after
 <li><code>{type:&#39;goto&#39;,destination: &#39;previousWhere&#39;, properties: {blockStart:true}}</code> goto the previous trial that has these properties</li>
 </ul>
 <h4><a name="debug" class="header-link" href="#debug"><span></span></a>DEBUG</h4><p>Setting DEBUG onto a trial causes a running log of events to be printed for that trial.
-It is only activated in development mode (width <code>window.DEBUG</code> set to true).</p>
+It is only activated in development mode, so you don&#39;t have to worry that it will be activated on production.</p>
+<pre><code class="lang-javascript">var trial = {
+    DEBUG: true
+}
+</code></pre>
 <p>Note that legacy browsers (read: Internet Explorer) do not support some of the styling used in the console.
 Please use a modern browser for best results.</p>
 <h3><a name="inheritance" class="header-link" href="#inheritance"><span></span></a>Inheritance</h3><p>Each element in the miTime (trial/stimulus/media) can inherit its attributes from an element set.</p>
