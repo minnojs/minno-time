@@ -9,6 +9,7 @@
     - [Interactions](#interactions)
         + [Conditions](#interactions-conditions)
         + [Actions](#interactions-actions)
+    - [Debug](#debug)
 - [Inheritance](#inheritance)
 - [Loggin](#logging)
 
@@ -31,8 +32,6 @@ The folowing two media definitions have the same outcome:`'Wiki'`, `{word:'Wiki'
 ### Stimuli
 
 Stimuli are responsible for *how* we present the media.
-
-
 
 ```javascript
 {
@@ -414,6 +413,18 @@ The `properties` property is an object to compare to the trial data. Note that t
 * `{type:'goto',destination: 'nextWhere', properties: {blockStart:true}}` goto the next trial that has these properties
 * `{type:'goto',destination: 'previousWhere', properties: {blockStart:true}}` goto the previous trial that has these properties
 
+#### DEBUG
+Setting DEBUG onto a trial causes a running log of events to be printed for that trial.
+It is only activated in development mode, so you don't have to worry that it will be activated on production.
+
+```javascript
+var trial = {
+    DEBUG: true
+}
+```
+
+Note that legacy browsers (read: Internet Explorer) do not support some of the styling used in the console.
+Please use a modern browser for best results.
 
 ### Inheritance
 
