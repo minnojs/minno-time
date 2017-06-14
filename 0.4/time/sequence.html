@@ -1,0 +1,357 @@
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Minno.js</title>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+		<link href="../assets/prism.css" rel="stylesheet" />
+		<link href="../assets/style.css" rel="stylesheet" />
+	</head>
+	<body>
+		<header>
+			<section>
+				<nav class="brand">
+                    <a href="/"><h1>Minno</h1></a>
+				</nav>
+				<nav>
+					<a href="/minno-quest/0.1/basics/overview.html">Basics</a>
+					<a href="/minno-quest/0.1/manager/overview.html">miManager</a>
+					<a href="/minno-quest/0.1/quest/overview.html">miQuest</a>
+					<a href="/minno-time/0.4/time/overview.html">miTime</a>
+				</nav>
+				<nav>
+                    <select id="version-select"><option value="0.3" >v0.3</option>,<option value="0.4" selected>v0.4</option></select>
+					<a href="https://github.com/minnojs">Github</a>
+				</nav>
+			</section>
+		</header>
+		<main>
+			<section class="docs">
+                <h1><a name="a-hrefsequencehtmlsequencea" class="header-link" href="#a-hrefsequencehtmlsequencea"><span></span></a><a href="sequence.html">Sequence</a></h1><ul>
+<li>Core<ul>
+<li><a href="overview.html">Overview</a></li>
+<li><a href="API.html">API</a></li>
+<li><a href="scorer.html">Scorer</a></li>
+<li><a href="resources.html">Resources</a></li>
+<li><a href="playground.html">Playground</a></li>
+</ul>
+</li>
+<li>Tutorials<ul>
+<li><a href="hello.html">Hello World</a><ul>
+<li><a href="helloPlay.html">Playground</a></li>
+</ul>
+</li>
+<li><a href="slideshow.html">Slide show</a><ul>
+<li><a href="slideshow1.html">step1</a></li>
+<li><a href="slideshow2.html">step2</a></li>
+<li><a href="slideshow3.html">step3</a></li>
+</ul>
+</li>
+<li>Stroop<ul>
+<li><a href="stroop-setup.html">Setup</a></li>
+<li><a href="stroop-interactions.html">Interactions</a></li>
+<li><a href="stroop-inheritance.html">inheritance</a></li>
+<li><a href="stroop-block.html">Blocks</a></li>
+<li><a href="stroop-task.html">Task</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Examples<ul>
+<li><a href="iat.html">IAT</a></li>
+<li><a href="amp.html">AMP</a></li>
+<li><a href="biat.html">BIAT</a></li>
+<li><a href="gnat.html">GNAT</a></li>
+<li><a href="spf.html">SPF</a></li>
+<li><a href="st-iat.html">ST-IAT</a></li>
+<li><a href="evaluative_priming.html">Evaluative priming</a></li>
+<li><a href="evaluative_priming2.html">Evaluative priming 2</a></li>
+</ul>
+</li>
+<li>Snippets<ul>
+<li><a href="inheritance.html">Inheritance</a></li>
+<li><a href="input.html">Input</a></li>
+<li><a href="interactions.html">Interactions</a></li>
+<li><strong>Sequence</strong></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="stimulus.html">Stimulus</a></li>
+<li><a href="touch.html">Touch</a></li>
+<li><a href="trial.html">Trial</a></li>
+</ul>
+</li>
+</ul>
+<section playground>
+    <div class="buttons">
+        <a class="activate-button">Activate</a>
+        <a class="download-button" href="sequence.js" download>Download</a>
+    </div>
+    <div class="editor">define([&quot;pipAPI&quot;], function(APIconstructor) {
+
+	var API = new APIconstructor();
+
+
+	// ### The trial sequence
+	// The heart of any miTime script is the sequence.
+	// In this part of the tutorial we will see some advanced uses of the sequencer. &lt;/br&gt;
+
+	API.addSequence([
+		// #### Multiple trials
+		// The sequence is an array of trials. you can sequentially add in as many trials as you want
+		{
+			// First trial
+			input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+			layout: [{media :{word:&quot;First trial&quot;}}],
+			interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+		},
+		{
+			// Second trial
+			input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+			layout: [{media :{word:&quot;Second trial&quot;}}],
+			interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+		}
+		// #### Mixer objects
+		// In order to create more complex sequences you can use mixer objects. Mixer objects allow you to repeat and randomize trials. &lt;/br&gt;
+		// Each mixer object has a mixer property that defines what type of mixer it is, and a data property that holds a sequence array to be mixed. This means that the sequence may include any number of trials and/or mixer objects.&lt;/br&gt;
+
+		//        {
+		//            mixer: &quot;mixer-type&quot;,
+		//            data: [task1, task2]
+		//        }
+		,
+
+		// ##### Random
+		{
+			// The mixer property tells the sequence what sort of mixer object this is.
+			// This mixer randomizes its sequence.
+			mixer : &quot;random&quot;,
+			// The data property holds a sequence array to be randomized. These trials will be inserted into the sequence in a random order.
+			data : [
+				{
+					input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+					layout: [{media :{word:&quot;Random 1&quot;}}],
+					interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+				},
+				{
+					input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+					layout: [{media :{word:&quot;Random 2&quot;}}],
+					interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+				},
+				{
+					input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+					layout: [{media :{word:&quot;Random 3&quot;}}],
+					interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+				}
+			]
+		},
+
+		// ##### Repeat
+		{
+			// This mixer repeats the trials in the data property.
+			mixer : &quot;repeat&quot;,
+			// The repeat mixer requires the times property that defines how many times to repeat the trials.
+			times : 3,
+			// The data property holds a sequence array to be repeated.
+			data : [
+				{
+					input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+					layout: [{media :{word:&quot;I am repeated !!&quot;}}],
+					interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+				}
+			]
+		},
+
+		// ##### Choose
+		{
+			// This mixer randomly chooses one or more trials
+			mixer : &quot;choose&quot;,
+			// The number of trials to choose (by default only one)
+			n : 1,
+			// The data property holds a sequence array from which the mixer picks trials.
+			data : [
+				{
+					input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+					layout: [{media :{word:&quot;Choose only one (1)&quot;}}],
+					interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+				},
+				{
+					input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+					layout: [{media :{word:&quot;Choose only one (2)&quot;}}],
+					interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+				},
+				{
+					input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+					layout: [{media :{word:&quot;Choose only one (3)&quot;}}],
+					interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+				}
+
+			]
+		},
+
+		// ##### Weighted Random
+		{
+			// The weighted random mixer chooses an element from `data` with specific weights for each entry.
+			mixer : &quot;weightedRandom&quot;,
+			// The weights of the elements. The numbers in this array are the relative weights of each respective element in data.
+			weights: [0.2,0.8],
+			// The data property holds a sequence array to be randomized.
+			data : [
+				{
+					input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+					layout: [{media :{word:&quot;Random 1 (20%)&quot;}}],
+					interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+				},
+				{
+					input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+					layout: [{media :{word:&quot;Random 2 (80%)&quot;}}],
+					interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+				}
+			]
+		},
+
+		// ##### Wrapper (blocks within randomize)
+		{
+			// This mixer randomizes its sequence
+			mixer : &quot;random&quot;,
+			// The data property holds a sequence array to be randomized.
+			data : [
+				// This trial is randomized normally
+				{
+					input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+					layout: [{media :{word:&quot;Complex - may be before or after the pair&quot;}}],
+					interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+				},
+				// The wrapper mixer tells the sequencer to keep the data inside it together despite the randomization. It is analogous to parenthesis in math. &lt;/br&gt;
+				// In contrast, if we has a repeat mixer here, its content would be randomized.
+				{
+					mixer: &quot;wrapper&quot;,
+					data: [
+						{
+							input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+							layout: [{media :{word:&quot;Pair 1&quot;}}],
+							interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+						},
+						{
+							input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+							layout: [{media :{word:&quot;Pair 2&quot;}}],
+							interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+						}
+					]
+				}
+			]
+		},
+
+		// ##### Wrapper (randomization within repeat)
+		{
+			// This mixer repeats its sequence.
+			mixer : &quot;repeat&quot;,
+			// Two times.
+			times: 2,
+			// The data property holds a sequence array to be repeated.
+			data : [
+				// The wrapper mixer tells the sequencer to deffer the randomization until after the repeat&lt;/br&gt;
+				// In contrast, if we didn&quot;t have the wrapper the randomizer would be run only once, and we would always randomize the same sequence.
+				{
+					mixer: &quot;wrapper&quot;,
+					data: [
+						{
+							mixer:&quot;random&quot;,
+							data: [
+								{
+									input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+									layout: [{media :{word:&quot;First Stim&quot;}}],
+									interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+								},
+								{
+									input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+									layout: [{media :{word:&quot;Second Stim&quot;}}],
+									interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+
+
+		// ##### The End
+		{
+			input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
+			layout: [{media :{word:&quot;The End&quot;}}],
+			interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+		}
+	]);
+	/* this is where we close the sequence */
+
+	// ### Pro tip
+	// *This section goes beyond the normal scope of the miTime, and is intended for use by advanced users only.* &lt;/br&gt;
+	// The sequencer allows for many complex configurations. There are times that you want a quick easy way to test that the sequence you created really does what it is supposed to.
+	// The proper way to do that is to create a mock sequence and check that it is mixed correctly. &lt;/br&gt;
+	// Following is such an example. &lt;/br&gt;
+
+	// Require the mixer function
+	require([&quot;utils/mixer&quot;], function(mixer) {
+		var sequence;
+
+		// Create a sequence using numbers (or strings) instead of trials.
+		// You may use all the regular mixer objects.
+		// This sequence creates an array of four sets of numbers.
+		// Each one of these begins with a `1`, ends with a `9`, and has all the digits between `2` and `8` randomized between them.
+		sequence = [
+			{
+				mixer : &quot;repeat&quot;,
+				times : 4,
+				data : [
+					// Parse the wrapper only **after** repeating.
+					{
+						mixer: &quot;wrapper&quot;,
+						data: [
+							{
+								mixer : &quot;wrapper&quot;,
+								data : [
+									1,
+									{
+										mixer: &quot;random&quot;,
+										// Note that we use numbers instead of trials here. This allows us to follow the order that this mixer follows.
+										data: [
+											2,3,4,5,6,7,8
+										] /* end random data */
+									},
+									9
+								] /* end repeat data */
+							}
+						] /* end random data */
+					}
+				] /* end repeat data */
+			}
+		];
+
+		// We log the results of the mixer into the console (click F12 to Open Developer Tools - in Firefox requires Firebug extension.) &lt;/br&gt;
+		// Now you can check to see if the order is what you intend.
+		/* global console */
+		console.log(mixer(sequence));
+	});
+
+	return API.script;
+
+});
+/* don&quot;t forget to close the define wrapper */</div>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" integrity="sha256-xrr4HH5eSY+cFz4SH7ja/LaAi9qcEdjMpeMP49/iOLs=" crossorigin="anonymous"></script>
+<script src="../assets/playground.js"></script>
+
+				<hr />
+				<small>License: Apache 2. &copy; Project Implicit. &middot; Current version [version]</small>
+			</section>
+		</main>
+		<script src="../assets/prism.js"></script>
+        <script>
+            (function(){
+                var select = document.getElementById('version-select');
+                select.addEventListener('change', function(event){
+                    var version = event.target.value;
+                    location.href = location.href.replace(/[0-9]\.[0-9]/, version)
+                });
+            })();
+        </script>
+	</body>
+</html>

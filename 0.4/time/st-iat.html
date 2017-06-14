@@ -1,0 +1,616 @@
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Minno.js</title>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+		<link href="../assets/prism.css" rel="stylesheet" />
+		<link href="../assets/style.css" rel="stylesheet" />
+	</head>
+	<body>
+		<header>
+			<section>
+				<nav class="brand">
+                    <a href="/"><h1>Minno</h1></a>
+				</nav>
+				<nav>
+					<a href="/minno-quest/0.1/basics/overview.html">Basics</a>
+					<a href="/minno-quest/0.1/manager/overview.html">miManager</a>
+					<a href="/minno-quest/0.1/quest/overview.html">miQuest</a>
+					<a href="/minno-time/0.4/time/overview.html">miTime</a>
+				</nav>
+				<nav>
+                    <select id="version-select"><option value="0.3" >v0.3</option>,<option value="0.4" selected>v0.4</option></select>
+					<a href="https://github.com/minnojs">Github</a>
+				</nav>
+			</section>
+		</header>
+		<main>
+			<section class="docs">
+                <h1><a name="a-hrefst-iathtmlst-iata" class="header-link" href="#a-hrefst-iathtmlst-iata"><span></span></a><a href="st-iat.html">ST-IAT</a></h1><ul>
+<li>Core<ul>
+<li><a href="overview.html">Overview</a></li>
+<li><a href="API.html">API</a></li>
+<li><a href="scorer.html">Scorer</a></li>
+<li><a href="resources.html">Resources</a></li>
+<li><a href="playground.html">Playground</a></li>
+</ul>
+</li>
+<li>Tutorials<ul>
+<li><a href="hello.html">Hello World</a><ul>
+<li><a href="helloPlay.html">Playground</a></li>
+</ul>
+</li>
+<li><a href="slideshow.html">Slide show</a><ul>
+<li><a href="slideshow1.html">step1</a></li>
+<li><a href="slideshow2.html">step2</a></li>
+<li><a href="slideshow3.html">step3</a></li>
+</ul>
+</li>
+<li>Stroop<ul>
+<li><a href="stroop-setup.html">Setup</a></li>
+<li><a href="stroop-interactions.html">Interactions</a></li>
+<li><a href="stroop-inheritance.html">inheritance</a></li>
+<li><a href="stroop-block.html">Blocks</a></li>
+<li><a href="stroop-task.html">Task</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Examples<ul>
+<li><a href="iat.html">IAT</a></li>
+<li><a href="amp.html">AMP</a></li>
+<li><a href="biat.html">BIAT</a></li>
+<li><a href="gnat.html">GNAT</a></li>
+<li><a href="spf.html">SPF</a></li>
+<li><strong>ST-IAT</strong></li>
+<li><a href="evaluative_priming.html">Evaluative priming</a></li>
+<li><a href="evaluative_priming2.html">Evaluative priming 2</a></li>
+</ul>
+</li>
+<li>Snippets<ul>
+<li><a href="inheritance.html">Inheritance</a></li>
+<li><a href="input.html">Input</a></li>
+<li><a href="interactions.html">Interactions</a></li>
+<li><a href="sequence.html">Sequence</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="stimulus.html">Stimulus</a></li>
+<li><a href="touch.html">Touch</a></li>
+<li><a href="trial.html">Trial</a></li>
+</ul>
+</li>
+</ul>
+<section playground>
+    <div class="buttons">
+        <a class="activate-button">Activate</a>
+        <a class="download-button" href="st-iat.js" download>Download</a>
+    </div>
+    <div class="editor">define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Scorer) {
+
+	var API = new APIConstructor(&quot;plainIAT&quot;);
+	var scorer = new Scorer();
+
+	var attribute1 = &quot;Unpleasant&quot;;
+	var attribute2 = &quot;Pleasant&quot;;
+	var category = &quot;Black People&quot;;
+	// the layout for the trials were the &quot;Black People&quot; are on the left side (with the &quot;Unpleasant&quot;)
+	var leftLayout = [
+				{location:{left:16,top:12},media:{word:&quot;or&quot;}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
+				{location:{left:10,top:6},media:{word:attribute1}, css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
+				{location:{left:10,top:18},media:{word:category}, css:{color:&quot;red&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
+				{location:{right:10,top:6},media:{word:attribute2}, css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
+			];
+	// the layout for the trials were the &quot;Black People&quot; are on the right side (with the &quot;Pleasant&quot;)
+	var rightLayout = [
+				{location:{right:16,top:12},media:{word:&quot;or&quot;}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
+				{location:{left:10,top:6},media:{word:attribute1}, css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
+				{location:{right:6,top:18},media:{word:category}, css:{color:&quot;red&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
+				{location:{right:10,top:6},media:{word:attribute2}, css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
+			];
+
+	API.addSettings(&quot;canvas&quot;,{
+		maxWidth: 1000,
+		proportions : 0.8,
+		//Change the colors to allow better presentation of the colored stimuli.
+		background: &quot;white&quot;,
+		canvasBackground: &quot;green&quot;,
+		borderWidth: 5,
+		borderColor: &quot;black&quot;
+	});
+
+	API.addSettings(&quot;base_url&quot;,{
+		image : &quot;/minno-time/images&quot;
+	});
+
+	API.addSettings(&quot;logger&quot;,{
+		pulse: 20,
+		url : &quot;/implicit/PiPlayerApplet&quot;
+	});
+
+	//the scorer that computes the user feedback
+	scorer.addSettings(&quot;compute&quot;,{
+		ErrorVar:&quot;score&quot;,
+		condVar:"condition",
+		//condition 1
+		cond1VarValues: [// Unpleasant, Black people/ pleasant
+			attribute1 + &quot;,&quot; + category + &quot;/&quot; + attribute2
+		],
+		//condition 2
+		cond2VarValues: [// Unpleasant / Black people, Pleasant
+			attribute2 + &quot;,&quot; + category + &quot;/&quot; + attribute1
+		],
+		parcelVar : "parcel",
+		parcelValue : [&quot;first&quot;],
+		fastRT : 150, //Below this reaction time, the latency is considered extremely fast.
+		maxFastTrialsRate : 0.1, //Above this % of extremely fast responses within a condition, the participant is considered too fast.
+		minRT : 400, //Below this latency
+		maxRT : 10000, //above this
+		errorLatency : {use:"latency", penalty:600, useForSTD:true},
+		postSettings : {score:"score",msg:"feedback",url:"/implicit/scorer"}
+	});
+
+	scorer.addSettings(&quot;message&quot;,{ /**chack*/
+		MessageDef: [
+			{ cut:&quot;-0.65&quot;, message:&quot;Your data suggest strong positive automatic attitude toward Black People.&quot; },
+			{ cut:&quot;-0.35&quot;, message:&quot;Your data suggest moderate positive automatic attitude toward Black People.&quot; },
+			{ cut:&quot;-0.15&quot;, message:&quot;Your data suggest weak positive automatic attitude toward Black People.&quot; },
+			{ cut:&quot;0.15&quot;, message:&quot;Your data suggest neutral automatic attitude toward Black People.&quot; },
+			{ cut:&quot;0.35&quot;, message:&quot;Your data suggest weak negative automatic attitude toward Black People.&quot; },
+			{ cut:&quot;0.65&quot;, message:&quot;Your data suggest moderate negative automatic attitude toward Black People.&quot; },
+			{ cut:&quot;5&quot;, message:&quot;Your data suggest strong negative automatic attitude toward Black People.&quot; }
+		]
+	});
+
+	/**
+	 * Create default Trial
+	 * note that this function takes a single object
+	 */
+	API.addTrialSets(&quot;Default&quot;,{
+		// by default each trial is correct, this is modified in case of an error
+		data: {score:0},
+		// set the interface for trials
+		input: [
+			{handle:&quot;enter&quot;,on:&quot;enter&quot;},
+			{handle:&quot;left&quot;,on:&quot;keypressed&quot;,key:&quot;e&quot;},
+			{handle:&quot;right&quot;,on:&quot;keypressed&quot;,key:&quot;i&quot;},
+			{handle:&quot;left&quot;,on:&quot;leftTouch&quot;,touch:true},
+			{handle:&quot;right&quot;,on:&quot;rightTouch&quot;,touch:true}
+		],
+
+		// user interactions
+		interactions: [
+			// begin trial : display stimulus imidiately
+			{
+				conditions: [{type:&quot;begin&quot;}],
+				actions: [{type:&quot;showStim&quot;,handle:&quot;myStim&quot;}]
+			},
+
+			// error
+			{
+				conditions: [
+					{type:&quot;inputEqualsStim&quot;,property:&quot;side&quot;,negate:true},								// check if the input handle is unequal to the "side" attribute of stimulus.data
+					{type:&quot;inputEquals&quot;,value:[&quot;right&quot;,&quot;left&quot;]}									// make sure this is a click interaction
+				],
+				actions: [
+					{type:&quot;showStim&quot;,handle:&quot;error&quot;},											// show error stimulus
+					{type:&quot;setTrialAttr&quot;, setter:{score:1}}										// set the score to 1
+				]
+			},
+
+			// correct
+			{
+				conditions: [{type:&quot;inputEqualsStim&quot;,property:&quot;side&quot;}],								// check if the input handle is equal to the "side" attribute of stimulus.data
+				actions: [
+					{type:&quot;removeInput&quot;,handle:[&quot;left&quot;,&quot;right&quot;]},
+					{type:&quot;hideStim&quot;, handle: &quot;All&quot;},											// hide everything
+					{type:&quot;log&quot;},																// log this trial
+					{type:&quot;setInput&quot;,input:{handle:&quot;end&quot;, on:&quot;timeout&quot;,duration:250}}			// trigger the "end action after ITI"
+				]
+			},
+
+			// end after ITI
+			{
+				conditions: [{type:&quot;inputEquals&quot;,value:&quot;end&quot;}],
+				actions: [
+					{type:&quot;endTrial&quot;}
+				]
+			},
+
+			// skip block
+			{
+				conditions: [{type:&quot;inputEquals&quot;,value:&quot;enter&quot;}],
+				actions: [
+					{type:&quot;goto&quot;, destination: &quot;nextWhere&quot;, properties: {blockStart:true}},
+					{type:&quot;endTrial&quot;}
+				]
+			}
+		]
+	});
+
+	/**
+	 * Create default Introduction trials
+	 * note that this function takes an array of objects
+	 */
+	API.addTrialSets("introduction", [
+		// generic introduction trial, to be inherited by all other inroduction trials
+		{
+			// set block as generic so we can inherit it later
+			data: {block: &quot;generic&quot;},
+
+			// create user interface (just click to move on...)
+			input: [
+				{handle:&quot;space&quot;,on:&quot;space&quot;},
+				{handle:&quot;enter&quot;,on:&quot;enter&quot;},
+				{handle:&quot;space&quot;,on:&quot;bottomTouch&quot;,touch:true}
+			],
+
+			interactions: [
+				// display instructions
+				{
+					conditions: [{type:&quot;begin&quot;}],
+					actions: [
+						{type:&quot;showStim&quot;,handle:&quot;All&quot;}
+					]
+				},
+
+				// end trial
+				{
+					conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],
+					actions: [{type:&quot;endTrial&quot;}]
+				},
+
+				// skip block
+				{
+					conditions: [{type:&quot;inputEquals&quot;,value:&quot;enter&quot;}],
+					actions: [
+						{type:&quot;goto&quot;, destination: &quot;nextWhere&quot;, properties: {blockStart:true}},
+						{type:&quot;endTrial&quot;}
+					]
+				}
+			]
+		}
+	]);
+
+	/**
+	 * Create specific trials for each block
+	 */
+	API.addTrialSets({
+
+		leftBlack:[{//black people + unpleasant/ pleasant
+
+			data: {condition: attribute1 + &quot;,&quot; + category + &quot;/&quot; + attribute2},
+			layout: leftLayout,
+			inherit: &quot;Default&quot;,
+			stimuli: [
+				{inherit:{type:&quot;exRandom&quot;,set:&quot;category_left&quot;}},
+				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+			]
+		}],
+		rightUnpleasant:[{ //black people + pleasant/ unpleasant
+
+			data: {condition: attribute2 + &quot;,&quot; + category + &quot;/&quot; + attribute1},
+			layout: rightLayout,
+			inherit: &quot;Default&quot;,
+			stimuli: [
+				{inherit:{type:&quot;exRandom&quot;,set:&quot;left&quot;}},
+				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+			]
+		}],
+		leftUnpleasant:[{ //black people + unpleasant/ pleasant
+
+			data: {condition: attribute1 + &quot;,&quot; + category + &quot;/&quot; + attribute2},
+			layout: leftLayout,
+			inherit: &quot;Default&quot;,
+			stimuli: [
+				{inherit:{type:&quot;exRandom&quot;,set:&quot;left&quot;}},
+				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+			]
+		}],
+
+		leftPleasant:[{ //black people + unpleasant/ pleasant
+
+			data: {condition: attribute1 + &quot;,&quot; + category + &quot;/&quot; + attribute2},
+			layout: leftLayout,
+			inherit: &quot;Default&quot;,
+			stimuli: [
+				{inherit:{type:&quot;exRandom&quot;,set:&quot;right&quot;}},
+				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+			]
+		}],
+		rightPleasant:[{ //black people + pleasant/ unpleasant
+
+			data: {condition: attribute2 + &quot;,&quot; + category + &quot;/&quot; + attribute1},
+			layout: rightLayout,
+			inherit: &quot;Default&quot;,
+			stimuli: [
+				{inherit:{type:&quot;exRandom&quot;,set:&quot;right&quot;}},
+				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+			]
+		}],
+
+		rightBlack:[{ //black people + pleasant/ unpleasant
+			data: {condition: attribute2 + &quot;,&quot; + category + &quot;/&quot; + attribute1},
+			layout: rightLayout,
+			inherit: &quot;Default&quot;,													// inherit the default trial
+			stimuli: [
+				{inherit:{type:&quot;exRandom&quot;,set:&quot;category_right&quot;}},
+				{inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+			]
+		}]
+	});
+
+	/*
+	 *	Stimulus Sets
+	 *
+	 */
+	API.addStimulusSets({
+		// This Default stimulus is inherited by the other stimuli so that we can have a consistent look and change it from one place
+		Default: [
+			{css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
+		],
+
+		Instructions: [
+			{css:{&quot;font-size&quot;:&quot;1.3em&quot;,color:&quot;black&quot;, lineHeight:1.2}}
+		],
+
+		// The trial stimuli
+		// Each stimulus set holds the left and right stimuli for a specific page settings (is the first attribute/category in the left or right?)
+		// Notably the attribute/category sets repeat themselves 5 times each, this is so that when calling them they will be balanced accross each ten trials
+		category_left: [
+			{data:{side:&quot;left&quot;, handle:&quot;myStim&quot;, alias:category}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;category&quot;}}}
+		],
+		category_right : [
+			{data:{side:&quot;right&quot;, handle:&quot;myStim&quot;, alias:category}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;category&quot;}}}
+		],
+		right : [
+			{data:{side:&quot;right&quot;, handle:&quot;myStim&quot;, alias:attribute2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute2&quot;}}}
+		],
+		left : [
+			{data:{side:&quot;left&quot;, handle:&quot;myStim&quot;, alias:attribute1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute1&quot;}}}
+		],
+
+		// this stimulus used for giving feedback, in this case only the error notification
+		feedback : [
+			{handle:&quot;error&quot;, location: {top: 80}, css:{color:&quot;red&quot;,&quot;font-size&quot;:&quot;4em&quot;}, media: {word:&quot;X&quot;}, nolog:true}
+		]
+	});
+
+	API.addMediaSets({
+		attribute1 : [
+			{word: &quot;Bomb&quot;},
+			{word: &quot;Abuse&quot;},
+			{word: &quot;Sadness&quot;},
+			{word: &quot;Pain&quot;},
+			{word: &quot;Poison&quot;},
+			{word: &quot;Grief&quot;}
+		],
+		attribute2: [
+			{word: &quot;Paradise&quot;},
+			{word: &quot;Pleasure&quot;},
+			{word: &quot;Cheer&quot;},
+			{word: &quot;Wonderful&quot;},
+			{word: &quot;Splendid&quot;},
+			{word: &quot;Love&quot;}
+		],
+		category: [
+			{image: &quot;epbm1.jpg&quot;},
+			{image: &quot;epbm2.jpg&quot;},
+			{image: &quot;epbm3.jpg&quot;},
+			{image: &quot;epbf1.jpg&quot;},
+			{image: &quot;epbf2.jpg&quot;},
+			{image: &quot;epbf3.jpg&quot;}
+		]
+	});
+
+	/*
+	 *	Create the Task sequence
+	 */
+	API.addSequence([
+	//first block
+		{
+			data: {block:1, blockStart:true},			// we set the data with the category names so the template can display them
+			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+			layout: rightLayout,
+			stimuli: [{
+				inherit:&quot;Instructions&quot;,
+				media:{html:&quot;&lt;div&gt;&lt;p style="font-size:24px"&gt;&lt;color="#FFFAFA"&gt;&lt;br/&gt;&lt;br/&gt;Put your middle or index fingers on the &lt;b&gt;E&lt;/b&gt; key and &lt;b&gt;I&lt;/b&gt; keys of your keyboard. Items representing the categories at the top will appear one-by-one in the middle of the screen. When the item belongs to a category on the left, press the &lt;b&gt;E&lt;/b&gt; key;when the item belongs to a category on the right, press the &lt;b&gt;I&lt;/b&gt; key. Items belong to only one category.If you make an error, an &lt;font color="#FF0000"&gt;&lt;b&gt;X&lt;/b&gt;&lt;/font&gt; will appear - fix the error by hitting the other key.&lt;br/&gt;&lt;b&gt;GO AS FAST AS YOU CAN&lt;/b&gt; while making as few mistakes as possible.Going too slow or making too many errors will result in an uninterpretable score.&lt;br /&gt;&lt;p align="center"&gt;&lt;br/&gt;Press the &lt;b&gt;space bar&lt;/b&gt; to begin.&lt;br&gt;&lt;br&gt;(round 1 of 4)&lt;/p&gt;&lt;/p&gt;&lt;/div&gt;&quot;}
+			}]
+		},
+		{ //The presentation trials
+			mixer: &quot;random&quot;,		//in random order: 14 times: pleasant, 14 times: black people 14+6=20 times: unpleasant
+			data : [
+				{ //The presentation trials
+					mixer: &quot;repeat&quot;,
+					times:14,
+					data : [
+						{inherit: &quot;rightBlack&quot;,data:{block:1, parcel:&quot;first&quot;}},
+						{inherit: &quot;rightPleasant&quot;,data:{block:1, parcel:&quot;first&quot;}},
+						{inherit: &quot;rightUnpleasant&quot;,data:{block:1, parcel:&quot;first&quot;}}
+					]
+				},
+				{ //The presentation trials
+					mixer: &quot;repeat&quot;,
+					times:6,
+					data : [
+						{inherit: &quot;rightUnpleasant&quot;,data:{block:1, parcel:&quot;first&quot;}}
+					]
+				}
+			]
+		},
+		//second block
+		{
+			data: {block:2, blockStart:true},
+			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+			layout: leftLayout,
+			stimuli: [{
+				inherit:&quot;Instructions&quot;,
+				media:{html:&quot;&lt;div&gt;&lt;p style="font-size:24px"&gt;&lt;color="#FFFAFA"&gt;&lt;br/&gt;&lt;br/&gt;&lt;b&gt;See above, the categories have changed locations.&lt;/b&gt;&lt;br/&gt; The rules, however, are the same.&lt;/p&gt;&lt;br /&gt;&lt;p&gt;When the item belongs to a category on the left, press the &lt;b&gt;E&lt;/b&gt; key; when the item belongs to a category on the right, press the &lt;b&gt;I&lt;/b&gt; key. Items belong to only one category. &lt;br/&gt; &lt;b&gt;GO AS FAST AS YOU CAN.&lt;/b&gt;&lt;/p&gt;&lt;br /&gt; &lt;p align="center"&gt;Press the &lt;b&gt;space bar&lt;/b&gt; to begin.&lt;br&gt;&lt;br&gt;(round 2 of 4)&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/div&gt;&quot;}
+			}]
+		},
+		{ //The presentation trials
+			mixer: &quot;random&quot;,		//in random order: 14 times: unpleasant, 14 times: black people 14+6=20 times: pleasant
+			data : [
+				{ //The presentation trials
+					mixer: &quot;repeat&quot;,
+					times:14,
+					data : [
+						{inherit: &quot;leftBlack&quot;,data:{block:2, parcel:&quot;first&quot;}},
+						{inherit: &quot;leftUnpleasant&quot;,data:{block:2, parcel:&quot;first&quot;}},
+						{inherit: &quot;leftPleasant&quot;,data:{block:2, parcel:&quot;first&quot;}}
+					]
+				},
+				{ //The presentation trials
+					mixer: &quot;repeat&quot;,
+					times:6,
+					data : [
+						{inherit: &quot;leftPleasant&quot;,data:{block:2, parcel:&quot;first&quot;}}
+					]
+				}
+			]
+		},
+		//third block
+		{
+			data: {block:3, blockStart:true},
+			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+			layout: rightLayout,
+			stimuli: [{
+				inherit:&quot;Instructions&quot;,
+				media:{html:&quot;&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt;&lt;br/&gt;&lt;br/&gt;&lt;b&gt;The categories have changed locations again.&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;p align="center"&gt;Press the &lt;b&gt;space bar&lt;/b&gt; to continue with the same task.&lt;br&gt;&lt;br&gt;(round 3 of 4)&lt;/p&gt;&lt;/p&gt;&lt;/div&gt;&quot;}
+			}]
+		},
+	{ //The presentation trials
+			mixer: &quot;random&quot;,
+			data : [
+				{
+					mixer: &quot;repeat&quot;,
+					times:14,
+					data : [
+						{inherit: &quot;rightBlack&quot;,data:{block:3, parcel:&quot;second&quot;}},
+						{inherit: &quot;rightPleasant&quot;,data:{block:3, parcel:&quot;second&quot;}},
+						{inherit: &quot;rightUnpleasant&quot;,data:{block:3, parcel:&quot;second&quot;}}
+					]
+				},
+				{ //The presentation trials
+					mixer: &quot;repeat&quot;,
+					times:6,
+					data : [
+						{inherit: &quot;rightUnpleasant&quot;,data:{block:3, parcel:&quot;second&quot;}}
+					]
+				}
+			]
+		},
+		//fourth block
+		{
+			data: {block:4, blockStart:true},
+			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+			layout: leftLayout,
+			stimuli: [{
+				inherit:&quot;Instructions&quot;,
+				media:{html:&quot;&lt;div&gt;&lt;p style="font-size:26px"&gt;&lt;color="#FFFAFA"&gt;&lt;br/&gt;&lt;br/&gt;The task is almost finished.&lt;br/&gt; Press the &lt;b&gt;space bar&lt;/b&gt; when you are ready for the final round.&lt;/p&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;(round 4 of 4)&lt;/p&gt;&lt;/div&gt;&quot;}
+			}]
+		},
+		{ //The presentation trials
+			mixer: &quot;random&quot;,
+			data : [
+				{
+					mixer: &quot;repeat&quot;,
+					times:14,
+					data : [
+						{inherit: &quot;leftBlack&quot;,data:{block:4, parcel:&quot;second&quot;}},
+						{inherit: &quot;leftUnpleasant&quot;,data:{block:4, parcel:&quot;second&quot;}},
+						{inherit: &quot;leftPleasant&quot;,data:{block:4, parcel:&quot;second&quot;}}
+					]
+				},
+				{ //The presentation trials
+					mixer: &quot;repeat&quot;,
+					times:6,
+					data : [
+						{inherit: &quot;leftPleasant&quot;,data:{block:4, parcel:&quot;second&quot;}}
+					]
+				}
+			]
+		},
+		// user feedback- here we will use the computeD function.
+		{
+			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
+			data: {blockStart:true},
+			stimuli: [],
+			customize: function(){
+				/* global console */
+				var DScoreObj, DScore, FBMsg;
+				var trial = this;
+
+
+				scorer.addSettings(&quot;compute&quot;,{
+					parcelValue : [&quot;first&quot;]
+				});
+
+				DScoreObj = scorer.computeD();
+				var DScore1= DScoreObj.DScore;
+
+					//////second call to score//////
+				scorer.addSettings(&quot;compute&quot;,{
+					parcelValue : [&quot;second&quot;]
+				});
+
+				DScoreObj = scorer.computeD();
+				var DScore2 = DScoreObj.DScore;
+
+				//avrage the scores
+				console.log(DScore1);
+				console.log(DScore2);
+				// If all scores are numbers
+				if ((DScore1 !== &quot;&quot;) &amp;&amp; (DScore2 !== &quot;&quot;)){
+					//Average the 4 scores
+					DScore = (parseFloat(DScore1) + parseFloat(DScore2))/2;
+					FBMsg = scorer.getFBMsg(DScore);
+				} else {
+					DScore = &quot;&quot;;
+					FBMsg = &quot;An error has occurred&quot;;
+				}
+
+				var media = {css:{color:&quot;black&quot;},media:{html:&quot;&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt; &quot;+FBMsg+&quot;&lt;br&gt;The Score is:&quot;+DScore+&quot;&lt;/p&gt;&lt;/div&gt;&quot;}};
+				trial.stimuli.push(media);
+				scorer.dynamicPost({
+					score1: DScoreObj.DScore,
+					feedback1: DScoreObj.FBMsg
+				});
+
+			}
+		},
+
+		{ //Instructions trial, the end of the task, instruction what to do next
+			data: {blockStart:true},
+			inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
+			stimuli: [
+				{//The instructions stimulus
+					data : {&quot;handle&quot;:&quot;instStim&quot;},
+					css: {color:&quot;black&quot;},
+					media:{html:&quot;&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt;You have completed the study&lt;br/&gt;&lt;br/&gt;Thank you very much for your participation.&lt;br/&gt;&lt;br/&gt; Press "space" for continue to next task.&lt;/p&gt;&lt;/div&gt;&quot;}
+				}
+			]
+		}
+	]);
+
+	return API.script;
+});
+</div>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" integrity="sha256-xrr4HH5eSY+cFz4SH7ja/LaAi9qcEdjMpeMP49/iOLs=" crossorigin="anonymous"></script>
+<script src="../assets/playground.js"></script>
+
+				<hr />
+				<small>License: Apache 2. &copy; Project Implicit. &middot; Current version [version]</small>
+			</section>
+		</main>
+		<script src="../assets/prism.js"></script>
+        <script>
+            (function(){
+                var select = document.getElementById('version-select');
+                select.addEventListener('change', function(event){
+                    var version = event.target.value;
+                    location.href = location.href.replace(/[0-9]\.[0-9]/, version)
+                });
+            })();
+        </script>
+	</body>
+</html>

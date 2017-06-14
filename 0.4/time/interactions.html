@@ -1,0 +1,452 @@
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Minno.js</title>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+		<link href="../assets/prism.css" rel="stylesheet" />
+		<link href="../assets/style.css" rel="stylesheet" />
+	</head>
+	<body>
+		<header>
+			<section>
+				<nav class="brand">
+                    <a href="/"><h1>Minno</h1></a>
+				</nav>
+				<nav>
+					<a href="/minno-quest/0.1/basics/overview.html">Basics</a>
+					<a href="/minno-quest/0.1/manager/overview.html">miManager</a>
+					<a href="/minno-quest/0.1/quest/overview.html">miQuest</a>
+					<a href="/minno-time/0.4/time/overview.html">miTime</a>
+				</nav>
+				<nav>
+                    <select id="version-select"><option value="0.3" >v0.3</option>,<option value="0.4" selected>v0.4</option></select>
+					<a href="https://github.com/minnojs">Github</a>
+				</nav>
+			</section>
+		</header>
+		<main>
+			<section class="docs">
+                <h1><a name="a-hrefinteractionshtmlinteractionsa" class="header-link" href="#a-hrefinteractionshtmlinteractionsa"><span></span></a><a href="interactions.html">Interactions</a></h1><ul>
+<li>Core<ul>
+<li><a href="overview.html">Overview</a></li>
+<li><a href="API.html">API</a></li>
+<li><a href="scorer.html">Scorer</a></li>
+<li><a href="resources.html">Resources</a></li>
+<li><a href="playground.html">Playground</a></li>
+</ul>
+</li>
+<li>Tutorials<ul>
+<li><a href="hello.html">Hello World</a><ul>
+<li><a href="helloPlay.html">Playground</a></li>
+</ul>
+</li>
+<li><a href="slideshow.html">Slide show</a><ul>
+<li><a href="slideshow1.html">step1</a></li>
+<li><a href="slideshow2.html">step2</a></li>
+<li><a href="slideshow3.html">step3</a></li>
+</ul>
+</li>
+<li>Stroop<ul>
+<li><a href="stroop-setup.html">Setup</a></li>
+<li><a href="stroop-interactions.html">Interactions</a></li>
+<li><a href="stroop-inheritance.html">inheritance</a></li>
+<li><a href="stroop-block.html">Blocks</a></li>
+<li><a href="stroop-task.html">Task</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Examples<ul>
+<li><a href="iat.html">IAT</a></li>
+<li><a href="amp.html">AMP</a></li>
+<li><a href="biat.html">BIAT</a></li>
+<li><a href="gnat.html">GNAT</a></li>
+<li><a href="spf.html">SPF</a></li>
+<li><a href="st-iat.html">ST-IAT</a></li>
+<li><a href="evaluative_priming.html">Evaluative priming</a></li>
+<li><a href="evaluative_priming2.html">Evaluative priming 2</a></li>
+</ul>
+</li>
+<li>Snippets<ul>
+<li><a href="inheritance.html">Inheritance</a></li>
+<li><a href="input.html">Input</a></li>
+<li><strong>Interactions</strong></li>
+<li><a href="sequence.html">Sequence</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="stimulus.html">Stimulus</a></li>
+<li><a href="touch.html">Touch</a></li>
+<li><a href="trial.html">Trial</a></li>
+</ul>
+</li>
+</ul>
+<h3><a name="interactions" class="header-link" href="#interactions"><span></span></a>Interactions</h3><p> The <code>interactions</code> module of the miTime is composed of pairs of conditions and actions.
+ Each interaction object has both a conditions and an actions property. </br></p>
+<pre><code>    {
+        conditions: [condition1, condition2],
+        actions: [action1, action2]
+    }
+</code></pre><section playground>
+    <div class="buttons">
+        <a class="activate-button">Activate</a>
+        <a class="download-button" href="interactions.js" download>Download</a>
+    </div>
+    <div class="editor">// ### Interactions
+// The `interactions` module of the miTime is composed of pairs of conditions and actions.
+// Each interaction object has both a conditions and an actions property. &lt;/br&gt;
+
+//        {
+//            conditions: [condition1, condition2],
+//            actions: [action1, action2]
+//        }
+
+define([&quot;pipAPI&quot;], function(APIconstructor) {
+
+	var API = new APIconstructor();
+
+	// ### conditions
+	// `conditions` are sets of conditions that can be either true or false.
+	// Each time there is an event (any input or the begining of a trial) all the conditions are evaluated.
+	// In case all the conditions of an interaction are true, we execute all the `actions` associated with it.
+
+	API.addSequence([
+		// ##### begin
+		// begin is a special condition that gets automaticaly fired at the begining of each trial.
+		// Use it to dispaly stimuli, and setup any time based action in your task.
+		{
+			// &amp;nbsp;
+			input: [
+				{handle:&quot;end&quot;,on:&quot;space&quot;}
+			],
+			stimuli: [{data:{handle:&quot;myStim&quot;},media :{word:&quot;[begin]: Click space to move on&quot;}}],
+			interactions: [
+				// This first interaction displays the stimulus
+				{
+					conditions: [
+						{
+							// Set the condition type
+							type:&quot;begin&quot;
+						}
+					],
+					actions: [{type:&quot;showStim&quot;,handle:&quot;myStim&quot;}]
+				},
+				// The second interaction is responsible for moving on (more about this in the inputEquals section)
+				{
+					conditions: [{type:&quot;inputEquals&quot;,value:&quot;end&quot;}],
+					actions: [{type:&quot;endTrial&quot;}]
+				}
+			]
+		},
+
+
+		// ##### inputEquals
+		// Check if the triggering input handle is a static value.
+		{
+			// We set i as the right key, and e as the left key
+			input: [
+				{handle:&quot;right&quot;,on:&quot;keypressed&quot;, key:&quot;i&quot;},
+				{handle:&quot;left&quot;,on:&quot;keypressed&quot;, key:&quot;e&quot;}
+			],
+			layout: [{media :{word:&quot;[inputEquals]: Click e to move on&quot;}}],
+			interactions: [
+				{
+					conditions: [
+						{
+							// Set the condition type
+							type:&quot;inputEquals&quot;,
+							// This action will only be activated if the input handle is &quot;left&quot; &lt;/br&gt;
+							// Pro tip: You can pass an array to the `value` property instead of just a handle name
+							value:&quot;left&quot;
+						}
+					],
+					actions: [{type:&quot;endTrial&quot;}]
+				}
+			]
+		},
+
+		// ##### inputEqualsTrial
+		// Each trial has an optional data property that holds an array of user defined values.
+		// The `inputEqualsTrial` condition compares the input handle with the contents of the `property` property of the current trials data property.
+		{
+			// We set the leftOrRight property of trial data to &quot;right&quot;
+			data: {leftOrRight: &quot;right&quot;},
+			input: [
+				{handle:&quot;right&quot;,on:&quot;keypressed&quot;, key:&quot;i&quot;},
+				{handle:&quot;left&quot;,on:&quot;keypressed&quot;, key:&quot;e&quot;}
+			],
+			layout: [{media :{word:&quot;[inputEqualsTrial]: Click i to move on&quot;}}],
+			interactions: [
+				{
+					conditions: [
+						{
+							// Set the condition type
+							type:&quot;inputEqualsTrial&quot;,
+							// This action will only be activated if the input handle is equal to the leftOrRight property of the trial data.
+							// in this case it will only be activated if the input handle is equal to &quot;right&quot;.
+							property:&quot;leftOrRight&quot;
+						}
+					],
+					actions: [{type:&quot;endTrial&quot;}]
+				}
+			]
+		},
+
+		// ##### inputEqualsStim
+		// Each stimulus has an optional data property that holds an array of user defined values.
+		// The `inputEqualsStim` condition compares the input handle with the contents of the `property` property of the current stimulus data property.
+		// Note that only stimuli in the stimuli property are checked, stimuli under layout are ignored!!
+		{
+			// &amp;nbsp;
+			input: [
+				{handle:&quot;right&quot;,on:&quot;keypressed&quot;, key:&quot;i&quot;},
+				{handle:&quot;left&quot;,on:&quot;keypressed&quot;, key:&quot;e&quot;}
+			],
+			stimuli: [{data:{handle:&quot;myStim&quot; ,leftOrRight:&quot;left&quot;}, media :{word:&quot;[inputEqualsStim]: Click e to move on&quot;}}],
+			interactions: [
+				// Just display the stimulus
+				{
+					conditions: [{type:&quot;begin&quot;}],
+					actions: [{type:&quot;showStim&quot;,handle:&quot;myStim&quot;}]
+				},
+				// End trial when the correct key is pressed
+				{
+					conditions: [
+						{
+							// Set the condition type
+							type:&quot;inputEqualsStim&quot;,
+							// This action will only be activated if the input handle is equal to the leftOrRight property of the stimulus data.
+							// In this case it will only be activated if the input handle is equal to &quot;right&quot;.
+							property:&quot;leftOrRight&quot;,
+							// The handle tells the player to search for the triggering property only in stimuli with the &quot;myStim&quot; handle.
+							// (You can ommit the handle property and the condition activates if any of the stimuli fit the inputEqualsStim criteria)
+							handle:&quot;myStim&quot;
+						}
+					],
+					actions: [{type:&quot;endTrial&quot;}]
+				}
+			]
+		},
+
+		// ##### Negate
+		// Sometimes we want a condition to be true only if a certain condition does NOT happen.
+		// In these cases we can use the negate property to reverse a condition.
+		// (when using negate you should be carefull that the condition doesn&quot;t turn out true in unexpected situations, for instance - on the begin input, or when triggering various timeouts)
+		{
+			data: {leftOrRight: &quot;right&quot;},
+			input: [
+				{handle:&quot;right&quot;,on:&quot;keypressed&quot;, key:&quot;i&quot;},
+				{handle:&quot;left&quot;,on:&quot;keypressed&quot;, key:&quot;e&quot;}
+			],
+			layout: [{media :{word:&quot;[inputEqualsTrial+negate]: Click e to move on&quot;}}],
+			interactions: [
+				{
+					conditions: [
+						// If input does not equal to the leftOrRight property
+						{
+							type:&quot;inputEqualsTrial&quot;,
+							property:&quot;leftOrRight&quot;,
+							negate: true
+						},
+						// And does not equal to the begin either.
+						// (Without this part of the condition the endTrial action would be fired upon the begin of the trial - which isn&quot;t a right keypress)
+						{
+							type:&quot;begin&quot;,
+							negate:true
+						}
+					],
+					actions: [{type:&quot;endTrial&quot;}]
+				}
+			]
+		}
+
+		// ### Actions
+		// Each time there is an event (any input or the begining of a trial) all the conditions are evaluated.
+		// In case all the conditions of an interaction are true, we execute all the `actions` associated with it.
+		,
+
+		// ##### Stimulus actions
+		// This trial allows showing and hiding stimuli using keyboard input.
+		// It also saves the status of the stimuli into the displayed property of the stimulus data object.
+		{
+			/* This trial marker is used in the goto trial later*/
+			data: {actionStart:true},
+			input: [
+				{handle:&quot;show&quot;,on:&quot;enter&quot;},
+				{handle:&quot;hide&quot;,on:&quot;space&quot;},
+				{handle:&quot;end&quot;,on:&quot;esc&quot;}
+			],
+			layout: [{location:{top:0}, media :{word:&quot;[showStim, hideStim, endTrial]: Click escape to move on, enter to show stimulus, space to hide it&quot;}}],
+			stimuli: [{data:{handle:&quot;myStim&quot;, displayed:false},media :{word:&quot;MyStim&quot;}}],
+			interactions: [
+				// *Display the stimulus*
+				{
+					conditions: [{type:&quot;inputEquals&quot;, value:&quot;show&quot;}],
+					actions: [
+						// `type:&quot;showStim&quot;` displays a stimulus. `handle` defines which stimuli should be affected
+						{
+							type:&quot;showStim&quot;,
+							handle:&quot;myStim&quot;
+						},
+						// `typ:&quot;setStimAttr&quot;` logs data into the stimulus data object. &lt;/br&gt;
+						// `handle` defines which stimuli should be affected. &lt;/br&gt;
+						// `setter` is an object to merge with the current stimulus data, overinging any clashing properties.&lt;/br&gt;
+						// In this case `type:&quot;setStimAttr&quot;` marks displayed as true.
+						{
+							type:&quot;setStimAttr&quot;,
+							handle:&quot;myStim&quot;,
+							setter:{displayed:true}
+						}
+					]
+				},
+				// *Hide the stimulus*
+				{
+					conditions: [{type:&quot;inputEquals&quot;, value:&quot;hide&quot;}],
+					actions: [
+						// `type:&quot;hideStim&quot;` displays a stimulus. `handle` defines which stimuli should be affected
+						{
+							type:&quot;hideStim&quot;,
+							handle:&quot;myStim&quot;
+						},
+						// In this case `type:&quot;setStimAttr&quot;` marks displayed as false.
+						{
+							type:&quot;setStimAttr&quot;,
+							handle:&quot;myStim&quot;,
+							setter:{displayed:false}
+						}
+
+					]
+				},
+				// *End the trial*
+				{
+					conditions: [{type:&quot;inputEquals&quot;, value:&quot;end&quot;}],
+					actions: [
+						// `type:&quot;endTrial&quot;` ends a trial and moves us on.
+						{
+							type:&quot;endTrial&quot;
+						}
+					]
+				}
+			]
+		},
+
+		// ##### Trial Actions
+		// This trial ends when space is clicked or 5 seconds have passed. &lt;/br&gt;
+		// You should note in particular the `type:&quot;log&quot;` action that is the way we tell the player to save the interaction and later send it to the server.
+		{
+
+			input: [
+				{handle:&quot;end&quot;,on:&quot;space&quot;}
+			],
+			layout: [{media :{word:&quot;[Trial actions]: Click space to move on or wait 5 seconds&quot;}}],
+			interactions: [
+				// *Activate timeout at the begining* &lt;/br&gt;
+				{
+					conditions: [{type:&quot;begin&quot;}],
+					actions: [
+						// `type:&quot;setInput&quot;` creates a new input for this trial. `input` is a regular input object.
+						{
+							type:&quot;setInput&quot;,
+							input:{handle:&quot;time&quot;,on:&quot;timeout&quot;,duration:5000}
+						}
+					]
+				},
+				// *End trial on timeout*
+				{
+					conditions: [{type:&quot;inputEquals&quot;, value:&quot;time&quot;}],
+					actions: [
+						{
+							type:&quot;endTrial&quot;
+						},
+						// The `type:&quot;log&quot;` action tells the player to log this interaction.
+						{
+							type:&quot;log&quot;
+						}
+					]
+				},
+				// *End trial on click*&lt;/br&gt;
+				// On space click, remove listerner for the timeout, mark this trial as manualy terminated, log it and end trial.
+				{
+					conditions: [{type:&quot;inputEquals&quot;,value:&quot;end&quot;}],
+					actions: [
+						// `type:&quot;removeInput&quot;` removes all inputs that have the `handle` handles.
+						{
+							type:&quot;removeInput&quot;,
+							handle	:&quot;time&quot;
+						},
+						// `type: &quot;setTrialAttr&quot;` merges the values from `setter` into the trial data.
+						// (setter may also take a function, see documentation)
+						{
+							type: &quot;setTrialAttr&quot;,
+							setter: {terminatedManual:true}
+						},
+						{
+							type:&quot;log&quot;
+						},
+						{
+							type:&quot;endTrial&quot;
+						}
+					]
+				}
+			]
+		},
+
+		// ##### goto
+		// The `type:&quot;goto&quot;` action is responsible for the next trial we move on to. It is special in that it executes only after the trial ends, so you will usualy want to follow it with an endTrial action.
+		// There are many types of goto destinations, refer to the documentation for a full list.
+		{
+
+			input: [
+				{handle:&quot;restart&quot;,on:&quot;space&quot;},
+				{handle:&quot;end&quot;,on:&quot;esc&quot;}
+			],
+			layout: [{media :{word:&quot;[goto]: Click space to restart actions, escape to end task&quot;}}],
+			interactions: [
+				{
+					conditions: [{type:&quot;inputEquals&quot;,value:&quot;restart&quot;}],
+					actions: [
+						// `destination` defines what type of goto this is, in this case go to the last trial that has all the properties in `properties`. &lt;/br&gt;
+						// `properties` is an object to compare to the trial data. note that the properties will only compare to properties present in the raw sequence (before inheritance)! &lt;/br&gt;
+						// In this case `previousWhere` finds the first action trial which is marked by the data object {actionStart : true}
+						{
+							type:&quot;goto&quot;,
+							destination:&quot;previousWhere&quot;,
+							properties: {actionStart:true}
+						},
+						{
+							type:&quot;endTrial&quot;
+						}
+					]
+				},
+				{
+					conditions: [{type:&quot;inputEquals&quot;,value:&quot;end&quot;}],
+					actions: [
+						{
+							type:&quot;endTrial&quot;
+						}
+					]
+				}
+			]
+		}
+	]);
+
+	return API.script;
+});</div>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" integrity="sha256-xrr4HH5eSY+cFz4SH7ja/LaAi9qcEdjMpeMP49/iOLs=" crossorigin="anonymous"></script>
+<script src="../assets/playground.js"></script>
+
+				<hr />
+				<small>License: Apache 2. &copy; Project Implicit. &middot; Current version [version]</small>
+			</section>
+		</main>
+		<script src="../assets/prism.js"></script>
+        <script>
+            (function(){
+                var select = document.getElementById('version-select');
+                select.addEventListener('change', function(event){
+                    var version = event.target.value;
+                    location.href = location.href.replace(/[0-9]\.[0-9]/, version)
+                });
+            })();
+        </script>
+	</body>
+</html>

@@ -1,0 +1,196 @@
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Minno.js</title>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+		<link href="../assets/prism.css" rel="stylesheet" />
+		<link href="../assets/style.css" rel="stylesheet" />
+	</head>
+	<body>
+		<header>
+			<section>
+				<nav class="brand">
+                    <a href="/"><h1>Minno</h1></a>
+				</nav>
+				<nav>
+					<a href="/minno-quest/0.1/basics/overview.html">Basics</a>
+					<a href="/minno-quest/0.1/manager/overview.html">miManager</a>
+					<a href="/minno-quest/0.1/quest/overview.html">miQuest</a>
+					<a href="/minno-time/0.4/time/overview.html">miTime</a>
+				</nav>
+				<nav>
+                    <select id="version-select"><option value="0.3" >v0.3</option>,<option value="0.4" selected>v0.4</option></select>
+					<a href="https://github.com/minnojs">Github</a>
+				</nav>
+			</section>
+		</header>
+		<main>
+			<section class="docs">
+                <h1><a name="javascript" class="header-link" href="#javascript"><span></span></a>Javascript</h1><ul>
+<li>Core<ul>
+<li><a href="overview.html">Overview</a></li>
+<li><a href="API.html">API</a></li>
+<li><a href="scorer.html">Scorer</a></li>
+<li><a href="resources.html">Resources</a></li>
+<li><a href="playground.html">Playground</a></li>
+</ul>
+</li>
+<li>Tutorials<ul>
+<li><a href="hello.html">Hello World</a><ul>
+<li><a href="helloPlay.html">Playground</a></li>
+</ul>
+</li>
+<li><a href="slideshow.html">Slide show</a><ul>
+<li><a href="slideshow1.html">step1</a></li>
+<li><a href="slideshow2.html">step2</a></li>
+<li><a href="slideshow3.html">step3</a></li>
+</ul>
+</li>
+<li>Stroop<ul>
+<li><a href="stroop-setup.html">Setup</a></li>
+<li><a href="stroop-interactions.html">Interactions</a></li>
+<li><a href="stroop-inheritance.html">inheritance</a></li>
+<li><a href="stroop-block.html">Blocks</a></li>
+<li><a href="stroop-task.html">Task</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Examples<ul>
+<li><a href="iat.html">IAT</a></li>
+<li><a href="amp.html">AMP</a></li>
+<li><a href="biat.html">BIAT</a></li>
+<li><a href="gnat.html">GNAT</a></li>
+<li><a href="spf.html">SPF</a></li>
+<li><a href="st-iat.html">ST-IAT</a></li>
+<li><a href="evaluative_priming.html">Evaluative priming</a></li>
+<li><a href="evaluative_priming2.html">Evaluative priming 2</a></li>
+</ul>
+</li>
+<li>Snippets<ul>
+<li><a href="inheritance.html">Inheritance</a></li>
+<li><a href="input.html">Input</a></li>
+<li><a href="interactions.html">Interactions</a></li>
+<li><a href="sequence.html">Sequence</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="stimulus.html">Stimulus</a></li>
+<li><a href="touch.html">Touch</a></li>
+<li><a href="trial.html">Trial</a></li>
+</ul>
+</li>
+</ul>
+<p>miTime scripts are written using JavaScript; <a href="http://en.wikipedia.org/wiki/JavaScript">JavaScript</a> is a programming language used by browsers (like Internet Explorer, Chrome or Safari). miTime&#39;s scripts do not require you to program any JavaScript but you should have a basic grasp of the basic syntax before we go on. If you know some basic JavaScript you can skip this section and go directly to the Hello world tutorial.</p>
+<p>The fundamental building blocks of javascript expressions are variables and literals (more details <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Values,_variables,_and_literals">here</a>).</p>
+<p>Variables store information. Each variable stores one or a few different values.</p>
+<h3><a name="value-types" class="header-link" href="#value-types"><span></span></a>Value types</h3><p>There are several types of values recognized by JavaScript.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Numbers</td>
+<td>42, 3.13</td>
+</tr>
+<tr>
+<td>String</td>
+<td>&quot;Howdy&quot;, &#39;&#39; // a string is always wrapped in single or double parenthesis</td>
+</tr>
+<tr>
+<td>Logical (Boolean)</td>
+<td>true, false</td>
+</tr>
+<tr>
+<td>Array</td>
+<td><code>[]</code>, <code>[1,3,5]</code></td>
+</tr>
+<tr>
+<td>Object</td>
+<td><code>{}</code>, <code>{a:12, b:&quot;twelve&quot;}</code> // An object has named properties, the second instance here has two properties: <code>a</code> and <code>b</code>.</td>
+</tr>
+<tr>
+<td>Function</td>
+<td><code>function(){console.log(&#39;Howdy&#39;)}</code></td>
+</tr>
+</tbody>
+</table>
+<h3><a name="variables" class="header-link" href="#variables"><span></span></a>Variables</h3><p>Variables are symbolic names for values in your script. You can define variables using the keyword <code>var</code>; for example <code>var x=42</code> sets the value 42 into the variable <code>x</code>. Any time you want to refer to the value stored in a variable you can refer to the variable name instead. This is useful if you want to define a value at one point in your script and reuse it again and again.</p>
+<pre><code class="lang-javascript">// Define variable
+var x = 17
+console.log(x)        // prints 17 into the browser&#39;s console.
+
+// change variable value
+x = 343
+console.log(x)        // prints 343
+</code></pre>
+<p>Notice that the first time we created the variable <code>x</code>, we had to use the word <code>var</code>. Then, when we referred to that variable again, we did not use <code>var</code> anymore. You can create each variable only once in your code. You can create the variable at any point in your file. However, you can&#39;t use the variable until you created it. So, setting 343 into x before you created it won&#39;t work. </p>
+<h3><a name="comments" class="header-link" href="#comments"><span></span></a>Comments</h3><p>Comments are a way to keep your code documented. You will probably not remember what you were trying to do a week after you wrote a piece of code. So make sure to document everything. Further, if you document your code, others can use it, or help you find errors.</p>
+<p>JavaScript has two types of comments; block comments and single line comments:</p>
+<pre><code class="lang-javascript">// a short, single-line comment
+console.log(123) // one line comments can come at the end of a line of script too
+
+/* this is a long, multi-line comment
+     about my script. So I am using 
+     the syntax for a block comment. */
+</code></pre>
+<h3><a name="array-literals" class="header-link" href="#array-literals"><span></span></a>Array literals</h3><p>Arrays are ordered lists of values, their elements may be any value types (including other arrays). When you create the array, you can assign the elements within the array with commas (learn <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">more</a>).</p>
+<pre><code class="lang-javascript">// Define arr
+var arr = [1,3,5,7,11]
+
+// Access arr elements
+console.log(arr[0])            // prints 1
+console.log(arr[3])            // prints 7
+</code></pre>
+<p>Arrays have cells. To refer to one value in the array, we use the value&#39;s cell index inside []. </p>
+<h3><a name="object-literals" class="header-link" href="#object-literals"><span></span></a>Object literals</h3><p>Object literals are a structure of variables. The structure is a list of property names and associated values. Like arrays, objects group of few variables together. However, in objects, each value has a name (rather than a cell number). For instance, you can think of a person as an object with many different properties. The person has a name, a family name, age, weight, and more. </p>
+<pre><code class="lang-javascript">// Define an object named person.
+var person = {name: &#39;John Ridley&#39;, family:&#39;Stroop&#39;, age:33, weight:{lbs:150, kg:68}} 
+//This object has four variables in it. The weight variable is an object inside an object.
+
+// Here are the two main methods to refer to the object&#39;s properties
+console.log(person.name)        // prints &#39;John Ridley&#39;
+console.log(person[&#39;family&#39;])        // prints &#39;Stroop&#39;
+console.log(person.weight.kg)        // prints &#39;68&#39;
+</code></pre>
+<p>The property name and values are separated using a colon <code>:</code>, pairs are separated using a semicolon <code>;</code>. Object property names can be any string (=text), number, array, or object. The properties are accessed either using brackets <code>obj[&#39;propertyName&#39;]</code> or using dot(.) notation <code>obj.propertyName</code>.</p>
+<h3><a name="functions" class="header-link" href="#functions"><span></span></a>Functions</h3><p>Functions are one of the fundamental building blocks in JavaScript. A function is a JavaScript procedure—a set of statements that perform a task or calculate a value.</p>
+<p>For example, the following code defines a simple function named square:</p>
+<pre><code class="lang-javascript">function square(number) {
+    return number * number;
+}
+</code></pre>
+<p>This function accepts a number as an argument and then returns its square.</p>
+<p>A function definition consists of the <code>function</code> keyword followed by:</p>
+<ul>
+<li>The name of the function (optional).</li>
+<li>A list of arguments to the function, enclosed in parentheses and separated by commas.</li>
+<li>The JavaScript statements that define the function, enclosed in curly braces, <code>{}</code>.</li>
+</ul>
+<p>Functions in JavaScript are a special type of object. This means that they can be stored as variables and passed as arguments. In order to activate the procedure stored within a function you use parenthesis notation <code>functionName(arguments)</code>, using the function previously defined:</p>
+<pre><code class="lang-javascript">console.log(square)                // prints the square function
+console.log(square(9))            // prints 81
+</code></pre>
+<p>(learn more <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions">here</a>).</p>
+<h3><a name="errors-and-debugging" class="header-link" href="#errors-and-debugging"><span></span></a>Errors and debugging</h3><p>When developing miTime scripts things don&#39;t always go as expected. Sometimes you might make a syntactical error, sometime you might misspell a miTime keyword. The browser always logs these errors and it is useful to see them. All modern browsers have a console that allows you to see the errors (if you are using firefox you should check out <a href="https://getfirebug.com/">firebug</a>). Most browsers use <code>F12</code> as a shortcut for displaying the console. If that doesn&#39;t work for you search your browsers menus: look for a <strong>Web Developer</strong> or <strong>Developer Tools</strong> menu under tools or options.</p>
+<p>In case your script does not load, or freezes at a certain point, open your console and see if you have any errors.</p>
+<p>The <a href="install.html">local server</a> gives you an additional, extremely powerful, tool. It uses <a href="http://jshint.com/">jshint</a> to evaluate your code and can often point out syntax errors that are difficult to recognize.</p>
+
+				<hr />
+				<small>License: Apache 2. &copy; Project Implicit. &middot; Current version [version]</small>
+			</section>
+		</main>
+		<script src="../assets/prism.js"></script>
+        <script>
+            (function(){
+                var select = document.getElementById('version-select');
+                select.addEventListener('change', function(event){
+                    var version = event.target.value;
+                    location.href = location.href.replace(/[0-9]\.[0-9]/, version)
+                });
+            })();
+        </script>
+	</body>
+</html>

@@ -1,0 +1,419 @@
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Minno.js</title>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+		<link href="../assets/prism.css" rel="stylesheet" />
+		<link href="../assets/style.css" rel="stylesheet" />
+	</head>
+	<body>
+		<header>
+			<section>
+				<nav class="brand">
+                    <a href="/"><h1>Minno</h1></a>
+				</nav>
+				<nav>
+					<a href="/minno-quest/0.1/basics/overview.html">Basics</a>
+					<a href="/minno-quest/0.1/manager/overview.html">miManager</a>
+					<a href="/minno-quest/0.1/quest/overview.html">miQuest</a>
+					<a href="/minno-time/0.4/time/overview.html">miTime</a>
+				</nav>
+				<nav>
+                    <select id="version-select"><option value="0.3" >v0.3</option>,<option value="0.4" selected>v0.4</option></select>
+					<a href="https://github.com/minnojs">Github</a>
+				</nav>
+			</section>
+		</header>
+		<main>
+			<section class="docs">
+                <h1><a name="a-hrefstroop-blockhtmlblocksa" class="header-link" href="#a-hrefstroop-blockhtmlblocksa"><span></span></a><a href="stroop-block.html">Blocks</a></h1><ul>
+<li>Core<ul>
+<li><a href="overview.html">Overview</a></li>
+<li><a href="API.html">API</a></li>
+<li><a href="scorer.html">Scorer</a></li>
+<li><a href="resources.html">Resources</a></li>
+<li><a href="playground.html">Playground</a></li>
+</ul>
+</li>
+<li>Tutorials<ul>
+<li><a href="hello.html">Hello World</a><ul>
+<li><a href="helloPlay.html">Playground</a></li>
+</ul>
+</li>
+<li><a href="slideshow.html">Slide show</a><ul>
+<li><a href="slideshow1.html">step1</a></li>
+<li><a href="slideshow2.html">step2</a></li>
+<li><a href="slideshow3.html">step3</a></li>
+</ul>
+</li>
+<li>Stroop<ul>
+<li><a href="stroop-setup.html">Setup</a></li>
+<li><a href="stroop-interactions.html">Interactions</a></li>
+<li><a href="stroop-inheritance.html">inheritance</a></li>
+<li><strong>Blocks</strong></li>
+<li><a href="stroop-task.html">Task</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Examples<ul>
+<li><a href="iat.html">IAT</a></li>
+<li><a href="amp.html">AMP</a></li>
+<li><a href="biat.html">BIAT</a></li>
+<li><a href="gnat.html">GNAT</a></li>
+<li><a href="spf.html">SPF</a></li>
+<li><a href="st-iat.html">ST-IAT</a></li>
+<li><a href="evaluative_priming.html">Evaluative priming</a></li>
+<li><a href="evaluative_priming2.html">Evaluative priming 2</a></li>
+</ul>
+</li>
+<li>Snippets<ul>
+<li><a href="inheritance.html">Inheritance</a></li>
+<li><a href="input.html">Input</a></li>
+<li><a href="interactions.html">Interactions</a></li>
+<li><a href="sequence.html">Sequence</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="stimulus.html">Stimulus</a></li>
+<li><a href="touch.html">Touch</a></li>
+<li><a href="trial.html">Trial</a></li>
+</ul>
+</li>
+</ul>
+<p> We&#39;ve created the building blocks of our task, the <em>congruent</em> and <em>incongruent</em> trials, now it is time to put them together into a task.
+ The tool that controls the structure and flow of the task is called the <a href="./API.html#mixer">mixer</a>.
+ It allows you to duplicate and randomize trials within the sequence.</p>
+<p> The way it works, is that you insert a mixer object inside the sequence and the player replaces it with the appropriate set of trials.
+ Each mixer object has a <code>mixer</code> property that holds the type of mixing that we want (more about that later),
+ and a <code>data</code> property that holds an array of trials and/or mixer objects to mix.
+ We will use two mixer types here: <code>repeat</code> and <code>random</code>.</p>
+<h3><a name="randomizing-the-sequence" class="header-link" href="#randomizing-the-sequence"><span></span></a>Randomizing the sequence</h3><p> We already know how to easily create a sequence of trials; simply drop the trials we want into the sequence. But what if we want each user to run into a different sequence? How do we tell the player to randomize the order? We will use the mixer to randomize the trial order:</p>
+<pre><code class="lang-javascript"> API.addSequence([
+     {
+         mixer: &#39;random&#39;,
+         data: [
+             {inherit:&#39;red&#39;},
+             {inherit:&#39;red&#39;},
+             {inherit:&#39;blue&#39;},
+             {inherit:&#39;blue&#39;},
+             {inherit:&#39;green&#39;},
+             {inherit:&#39;green&#39;}
+         ]
+     }
+ ]);
+</code></pre>
+<p> You will notice that this sequence has only one object, that has two properties; <code>mixer</code> and <code>data</code>. All the trials per se are set inside the <code>data</code> attribute. This mixer object takes all the elements inside the <code>data</code> property and randomizes their order. The player then sets the trials into the sequence instead of the mixer object. So that the result of the previous code may be equivalent to this:</p>
+<pre><code class="lang-javascript"> API.addSequence([
+     {inherit:&#39;red&#39;},
+     {inherit:&#39;green&#39;},
+     {inherit:&#39;blue&#39;},
+     {inherit:&#39;green&#39;},
+     {inherit:&#39;red&#39;},
+     {inherit:&#39;blue&#39;}
+ ]);
+</code></pre>
+<h3><a name="expanding-the-sequence" class="header-link" href="#expanding-the-sequence"><span></span></a>Expanding the sequence</h3><p> Sometimes we want to repeat a trial (or trials) more than once. In our case, for example, each time you run a trial it displays a different stimulus, so it is useful to display each trial several times. This is the purpose of the <code>repeat</code> mixer. The <code>times</code> property sets the number of times that the data should be replicated. The following mixer repeats <code>data</code> three times:</p>
+<pre><code class="lang-javascript"> API.addSequence([
+     {
+         mixer: &#39;repeat&#39;,
+         times: 2,
+         data: [
+             {inherit:&#39;red&#39;},
+             {inherit:&#39;blue&#39;},
+             {inherit:&#39;green&#39;}
+         ]
+     }
+ ]);
+</code></pre>
+<p> So that it is directly equivalent to</p>
+<pre><code class="lang-javascript"> API.addSequence([
+     {inherit:&#39;red&#39;},
+     {inherit:&#39;blue&#39;},
+     {inherit:&#39;green&#39;},
+     {inherit:&#39;red&#39;},
+     {inherit:&#39;blue&#39;},
+     {inherit:&#39;green&#39;}
+ ]);
+</code></pre>
+<h3><a name="exclusive-random" class="header-link" href="#exclusive-random"><span></span></a>Exclusive random</h3><p> An additional issue that comes up is the order of stimuli do be presented.
+ We used the mixer to randomize the order of trials, but the stimuli themselves are randomized when they are inherited from their respective stimulus sets.
+ By default inheritance picks a random element out of the target set.
+ But this way there is a chance that we pick the same element twice in a row, or not pick one of the elements at all.
+ The player offers <a href="./API.html#inheriting">additional types</a> of inheritance as well, in this case we will want to use <code>exRandom</code> which stands for exclusive random.
+ Exclusive random makes sure to exclude each element that it picks out of the set,
+ so that as long that their are element in the set that have not already been chosen it will pick from among them and not an element that has already been used.</p>
+<p> So far we have inherited the stimuli like this:</p>
+<pre><code class="lang-javascript"> API.addTrialSets(&#39;red&#39;,[{
+     inherit:&#39;base&#39;,
+     data: {group:&#39;red&#39;},
+     stimuli: [
+         {inherit:&#39;red&#39;, handle:&#39;target&#39;}
+     ]
+ }]);
+</code></pre>
+<p> In order to use <code>exRandom</code>, all we have to do is this:</p>
+<pre><code class="lang-javascript"> API.addTrialSets(&#39;red&#39;,[{
+     inherit:&#39;base&#39;,
+     data: {group:&#39;red&#39;},
+     stimuli: [
+         {inherit:{set:&#39;red&#39;,type:&#39;exRandom&#39;}, handle:&#39;target&#39;}
+     ]
+ }]);
+</code></pre>
+<p> Instead of setting <code>inherit</code> with the set name, and inheriting randomly we set inherit an object that has two properties; <code>type</code> sets the type of inheritance to use (in this case <code>exRandom</code>), <code>set</code> defines which set should we inherit from.</p>
+<h3><a name="the-script-itself" class="header-link" href="#the-script-itself"><span></span></a>The script itself</h3><section playground>
+    <div class="buttons">
+        <a class="activate-button">Activate</a>
+        <a class="download-button" href="stroop-block.js" download>Download</a>
+    </div>
+    <div class="editor">// We&quot;ve created the building blocks of our task, the *congruent* and *incongruent* trials, now it is time to put them together into a task.
+// The tool that controls the structure and flow of the task is called the [mixer](./API.md#mixer).
+// It allows you to duplicate and randomize trials within the sequence.
+
+// The way it works, is that you insert a mixer object inside the sequence and the player replaces it with the appropriate set of trials.
+// Each mixer object has a `mixer` property that holds the type of mixing that we want (more about that later),
+// and a `data` property that holds an array of trials and/or mixer objects to mix.
+// We will use two mixer types here: `repeat` and `random`.
+
+// ### Randomizing the sequence
+// We already know how to easily create a sequence of trials; simply drop the trials we want into the sequence. But what if we want each user to run into a different sequence? How do we tell the player to randomize the order? We will use the mixer to randomize the trial order:
+
+// ```javascript
+// API.addSequence([
+// 	{
+// 		mixer: &quot;random&quot;,
+// 		data: [
+// 			{inherit:&quot;red&quot;},
+// 			{inherit:&quot;red&quot;},
+// 			{inherit:&quot;blue&quot;},
+// 			{inherit:&quot;blue&quot;},
+// 			{inherit:&quot;green&quot;},
+// 			{inherit:&quot;green&quot;}
+// 		]
+// 	}
+// ]);
+// ```
+
+// You will notice that this sequence has only one object, that has two properties; `mixer` and `data`. All the trials per se are set inside the `data` attribute. This mixer object takes all the elements inside the `data` property and randomizes their order. The player then sets the trials into the sequence instead of the mixer object. So that the result of the previous code may be equivalent to this:
+
+// ```javascript
+// API.addSequence([
+// 	{inherit:&quot;red&quot;},
+// 	{inherit:&quot;green&quot;},
+// 	{inherit:&quot;blue&quot;},
+// 	{inherit:&quot;green&quot;},
+// 	{inherit:&quot;red&quot;},
+// 	{inherit:&quot;blue&quot;}
+// ]);
+// ```
+
+// ### Expanding the sequence
+// Sometimes we want to repeat a trial (or trials) more than once. In our case, for example, each time you run a trial it displays a different stimulus, so it is useful to display each trial several times. This is the purpose of the `repeat` mixer. The `times` property sets the number of times that the data should be replicated. The following mixer repeats `data` three times:
+
+// ```javascript
+// API.addSequence([
+// 	{
+// 		mixer: &quot;repeat&quot;,
+// 		times: 2,
+// 		data: [
+// 			{inherit:&quot;red&quot;},
+// 			{inherit:&quot;blue&quot;},
+// 			{inherit:&quot;green&quot;}
+// 		]
+// 	}
+// ]);
+// ```
+
+// So that it is directly equivalent to
+
+// ```javascript
+// API.addSequence([
+// 	{inherit:&quot;red&quot;},
+// 	{inherit:&quot;blue&quot;},
+// 	{inherit:&quot;green&quot;},
+// 	{inherit:&quot;red&quot;},
+// 	{inherit:&quot;blue&quot;},
+// 	{inherit:&quot;green&quot;}
+// ]);
+// ```
+
+// ### Exclusive random
+// An additional issue that comes up is the order of stimuli do be presented.
+// We used the mixer to randomize the order of trials, but the stimuli themselves are randomized when they are inherited from their respective stimulus sets.
+// By default inheritance picks a random element out of the target set.
+// But this way there is a chance that we pick the same element twice in a row, or not pick one of the elements at all.
+// The player offers [additional types](./API.md#inheriting) of inheritance as well, in this case we will want to use `exRandom` which stands for exclusive random.
+// Exclusive random makes sure to exclude each element that it picks out of the set,
+// so that as long that their are element in the set that have not already been chosen it will pick from among them and not an element that has already been used.
+
+// So far we have inherited the stimuli like this:
+
+// ```javascript
+// API.addTrialSets(&quot;red&quot;,[{
+// 	inherit:&quot;base&quot;,
+// 	data: {group:&quot;red&quot;},
+// 	stimuli: [
+// 		{inherit:&quot;red&quot;, handle:&quot;target&quot;}
+// 	]
+// }]);
+// ```
+
+// In order to use `exRandom`, all we have to do is this:
+
+// ```javascript
+// API.addTrialSets(&quot;red&quot;,[{
+// 	inherit:&quot;base&quot;,
+// 	data: {group:&quot;red&quot;},
+// 	stimuli: [
+// 		{inherit:{set:&quot;red&quot;,type:&quot;exRandom&quot;}, handle:&quot;target&quot;}
+// 	]
+// }]);
+// ```
+
+// Instead of setting `inherit` with the set name, and inheriting randomly we set inherit an object that has two properties; `type` sets the type of inheritance to use (in this case `exRandom`), `set` defines which set should we inherit from.
+
+// ### The script itself
+define([&quot;pipAPI&quot;], function(APIconstructor) {
+
+	var API = new APIconstructor(&quot;stroop&quot;);
+
+
+	API.addSettings(&quot;canvas&quot;,{
+		textSize: 5
+	});
+
+	API.addStimulusSets(&quot;red&quot;,[
+		{media:&quot;Red&quot;, css:{color:&quot;red&quot;}},
+		{media:&quot;Blue&quot;, css:{color:&quot;red&quot;}},
+		{media:&quot;Green&quot;, css:{color:&quot;red&quot;}}
+	]);
+
+	API.addStimulusSets(&quot;blue&quot;,[
+		{media:&quot;Red&quot;, css:{color:&quot;blue&quot;}},
+		{media:&quot;Blue&quot;, css:{color:&quot;blue&quot;}},
+		{media:&quot;Green&quot;, css:{color:&quot;blue&quot;}}
+	]);
+
+	API.addStimulusSets(&quot;green&quot;,[
+		{media:&quot;Red&quot;, css:{color:&quot;green&quot;}},
+		{media:&quot;Blue&quot;, css:{color:&quot;green&quot;}},
+		{media:&quot;Green&quot;, css:{color:&quot;green&quot;}}
+	]);
+
+	API.addTrialSets(&quot;base&quot;,[{
+		input: [
+			{handle:&quot;red&quot;,on:&quot;keypressed&quot;,key:&quot;1&quot;},
+			{handle:&quot;blue&quot;,on:&quot;keypressed&quot;,key:&quot;2&quot;},
+			{handle:&quot;green&quot;,on:&quot;keypressed&quot;,key:&quot;3&quot;}
+		],
+		layout: [
+			{media:&quot;1&quot;,location:{left:2,top:2},css:{background:&quot;red&quot;,padding:&quot;2%&quot;,fontSize:&quot;1.5em&quot;}},
+			{media:&quot;2&quot;,location:{top:2},css:{background:&quot;blue&quot;,padding:&quot;2%&quot;,fontSize:&quot;1.5em&quot;}},
+			{media:&quot;3&quot;,location:{right:2,top:2},css:{background:&quot;green&quot;,padding:&quot;2%&quot;,fontSize:&quot;1.5em&quot;}}
+		],
+		interactions: [
+			/* Display the target stimulus. */
+			{
+				conditions:[{type:&quot;begin&quot;}],
+				actions: [{type:&quot;showStim&quot;, handle: &quot;target&quot;}]
+			},
+			/* Correct response actions */
+			{
+				conditions: [
+					{type:&quot;inputEqualsTrial&quot;,property:&quot;group&quot;}
+				],
+				actions: [
+					{type:&quot;setTrialAttr&quot;, setter:{score:1}},
+					{type:&quot;log&quot;},
+					{type:&quot;endTrial&quot;}
+				]
+			},
+			/* Incorrect response actions */
+			{
+				conditions: [
+					{type:&quot;inputEqualsTrial&quot;,property:&quot;group&quot;,negate:true},
+					{type:&quot;inputEquals&quot;,value:[&quot;red&quot;,&quot;blue&quot;,&quot;green&quot;]}
+				],
+				actions: [
+					{type:&quot;setTrialAttr&quot;, setter:{score:0}},
+					{type:&quot;log&quot;},
+					{type:&quot;endTrial&quot;}
+				]
+			}
+		]
+	}]);
+
+	// ### Advanced inheritance
+	// Here, we put `exRandom` into use.
+
+	API.addTrialSets(&quot;red&quot;,[{
+		inherit:&quot;base&quot;,
+		data: {group:&quot;red&quot;},
+		stimuli: [
+			{inherit:{set:&quot;red&quot;,type:&quot;exRandom&quot;}, handle:&quot;target&quot;}
+		]
+	}]);
+
+	API.addTrialSets(&quot;blue&quot;,[{
+		inherit:&quot;base&quot;,
+		data: {group:&quot;blue&quot;},
+		stimuli: [
+			{inherit:{set:&quot;blue&quot;,type:&quot;exRandom&quot;}, handle:&quot;target&quot;}
+		]
+	}]);
+
+	API.addTrialSets(&quot;green&quot;,[{
+		inherit:&quot;base&quot;,
+		data: {group:&quot;green&quot;},
+		stimuli: [
+			{inherit:{set:&quot;green&quot;,type:&quot;exRandom&quot;}, handle:&quot;target&quot;}
+		]
+	}]);
+
+	// ### Using the mixer
+	// You can put mixers one inside the other in order to get richer combinations.
+	// For our Stroop task, we want to repeat each trial 10 times and then randomize their order.
+	// The mixer evaluates internal mixers before external ones, so we want the inner mixer to repeat our trials ten times,
+	// and only then the external mixer will do the randomization.
+
+	API.addSequence([
+		/* random mixer */
+		{
+			mixer: &quot;random&quot;,
+			data: [
+				/* repeat mixer */
+				{
+					mixer: &quot;repeat&quot;,
+					times: 20,
+					data: [
+						{inherit:&quot;red&quot;},
+						{inherit:&quot;blue&quot;},
+						{inherit:&quot;green&quot;}
+					]
+				}
+			]
+		}
+	]);
+
+	// Return the script
+	return API.script;
+});</div>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" integrity="sha256-xrr4HH5eSY+cFz4SH7ja/LaAi9qcEdjMpeMP49/iOLs=" crossorigin="anonymous"></script>
+<script src="../assets/playground.js"></script>
+
+				<hr />
+				<small>License: Apache 2. &copy; Project Implicit. &middot; Current version [version]</small>
+			</section>
+		</main>
+		<script src="../assets/prism.js"></script>
+        <script>
+            (function(){
+                var select = document.getElementById('version-select');
+                select.addEventListener('change', function(event){
+                    var version = event.target.value;
+                    location.href = location.href.replace(/[0-9]\.[0-9]/, version)
+                });
+            })();
+        </script>
+	</body>
+</html>
