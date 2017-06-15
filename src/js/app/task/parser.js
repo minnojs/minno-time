@@ -3,13 +3,13 @@
  */
 
 define(function(require){
-	// load dependancies
+    // load dependancies
     var _ = require('underscore');
-    var db = require('../sequencer/database');
+    var Database = require('utils/database/main');
     var go = require('../sequencer/sequenceGoto');
-    var sequenceSetter = require('../sequencer/taskSequence');
 
     return function(script){
+        var db = new Database();
         db.createColl('trial');
         db.createColl('stimulus');
         db.createColl('media');
@@ -22,6 +22,7 @@ define(function(require){
 
         var sequence = db.sequence('trial', script.sequence);
         sequence.go = go; // see sequence/goto.js to understand why we are doing this
-        sequenceSetter(sequence);
+        db.currentSequence = sequence;
+        return db;
     };
 });

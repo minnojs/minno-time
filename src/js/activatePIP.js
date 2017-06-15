@@ -19,10 +19,10 @@ define(function(require){
 
     function activate(canvas, script){
         var $resize = canvasSetup(canvas, script);
-        var playSink = playPhase(canvas, script);
+        var db = parse(script); // Build db (can this be pure?) - maybe inject db into playphase
+        var playSink = playPhase(canvas, db, script);
 
         setupVars(script);
-        parse(script); // Build db (can this be pure?) - maybe inject db into playphase
 
         $resize.map(function(){
             var trial = playSink.$trial();
