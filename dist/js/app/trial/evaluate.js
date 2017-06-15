@@ -42,7 +42,7 @@ define(function(require){
 
         // try to refute the condition
         conditions.forEach(function checkCondition(condition){
-            var searchObj, result;
+            var searchObj;
             var evaluation = true;
 
             switch (condition.type){
