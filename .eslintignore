@@ -1,3 +1,5 @@
 /src/js/utils/database/**
 /src/js/utils/collection/**
 /src/js/utils/polyfills.js
+/src/js/utils/stream.js
+/src/js/utils/fastdom.js
