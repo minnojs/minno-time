@@ -3,9 +3,9 @@ define(function(){
 
     function log(){ console.log.apply(console, arguments); }
     if (!console.group) console.group = log;
-    if (!console.group) console.groupCollapsed = log;
-    if (!console.groupEnd) console.group = log;
-    if (!console.table) console.group = log;
+    if (!console.groupCollapsed) console.groupCollapsed = log;
+    if (!console.groupEnd) console.groupEnd = log;
+    if (!console.table) console.table = log;
 
 
     (function() {

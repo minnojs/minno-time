@@ -19,6 +19,20 @@
 					<a href="/minno-time/0.4/time/overview.html">miTime</a>
 				</nav>
 				<nav>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
                     <select id="version-select"><option value="0.3" >v0.3</option>,<option value="0.4" selected>v0.4</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
@@ -95,14 +109,14 @@
 // lets start putting together a real task.
 
 // We will create a task that demonstrates the stroop effect:
-// When the name of a color (e.g. "blue", "green," or "red") is printed in a color not denoted by the name (e.g., the word "red" printed in blue instead of red),
+// When the name of a color (e.g. &quot;blue&quot;, &quot;green,&quot; or &quot;red&quot;) is printed in a color not denoted by the name (e.g., the word &quot;red&quot; printed in blue instead of red),
 // naming the color of the word takes longer and is more prone to errors than when the color of the ink matches the name of the color.
 // The effect is named after John Ridley Stroop who first published the effect in English in 1935.
 
-// There is no scripted way that you are supposed to create a task, but we will break down the task in one way that we&quot;ve found useful.
+// There is no scripted way that you are supposed to create a task, but we will break down the task in one way that we&apos;ve found useful.
 
 
-define([&quot;pipAPI&quot;], function(APIconstructor) {
+define([&apos;pipAPI&apos;], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
@@ -111,7 +125,7 @@ define([&quot;pipAPI&quot;], function(APIconstructor) {
 
 	// In order to set the default text size you can use the `canvas` [setting](./API.html#canvas) like so:
 
-	API.addSettings(&quot;canvas&quot;,{
+	API.addSettings(&apos;canvas&apos;,{
 		textSize: 5
 	});
 
@@ -122,33 +136,33 @@ define([&quot;pipAPI&quot;], function(APIconstructor) {
 	// ### Stimuli
 	// Lets start with the thing that we already know how to do.
 
-	// We&quot;ll create lists of the stimuli we are going to use.
+	// We&apos;ll create lists of the stimuli we are going to use.
 	// We have three groups of stimuli; **red**, **blue** and **green**.
 	// We will create a separate set of stimuli for each of these groups.
 	// These sets will allow us to randomize and extend them later on.
 
-	API.addStimulusSets(&quot;red&quot;,[
-		{media:&quot;Red&quot;, css:{color:&quot;red&quot;}},
-		{media:&quot;Blue&quot;, css:{color:&quot;red&quot;}},
-		{media:&quot;Green&quot;, css:{color:&quot;red&quot;}}
+	API.addStimulusSets(&apos;red&apos;,[
+		{media:&apos;Red&apos;, css:{color:&apos;red&apos;}},
+		{media:&apos;Blue&apos;, css:{color:&apos;red&apos;}},
+		{media:&apos;Green&apos;, css:{color:&apos;red&apos;}}
 	]);
 
-	API.addStimulusSets(&quot;blue&quot;,[
-		{media:&quot;Red&quot;, css:{color:&quot;blue&quot;}},
-		{media:&quot;Blue&quot;, css:{color:&quot;blue&quot;}},
-		{media:&quot;Green&quot;, css:{color:&quot;blue&quot;}}
+	API.addStimulusSets(&apos;blue&apos;,[
+		{media:&apos;Red&apos;, css:{color:&apos;blue&apos;}},
+		{media:&apos;Blue&apos;, css:{color:&apos;blue&apos;}},
+		{media:&apos;Green&apos;, css:{color:&apos;blue&apos;}}
 	]);
 
-	API.addStimulusSets(&quot;green&quot;,[
-		{media:&quot;Red&quot;, css:{color:&quot;green&quot;}},
-		{media:&quot;Blue&quot;, css:{color:&quot;green&quot;}},
-		{media:&quot;Green&quot;, css:{color:&quot;green&quot;}}
+	API.addStimulusSets(&apos;green&apos;,[
+		{media:&apos;Red&apos;, css:{color:&apos;green&apos;}},
+		{media:&apos;Blue&apos;, css:{color:&apos;green&apos;}},
+		{media:&apos;Green&apos;, css:{color:&apos;green&apos;}}
 	]);
 
 	// All the stimuli in each set have the same color, each stimulus in the set has a distinct name.
 
 	// Note also that we use the shortcut to plain text media (simply settings a string),
-	// and not the full fledged media object (that would look like this: `{word:&quot;Red&quot;}`).
+	// and not the full fledged media object (that would look like this: `{word:&apos;Red&apos;}`).
 	// You can of course use any type of [media](./API.md#media) here.
 
 // ### Layout
@@ -156,14 +170,14 @@ define([&quot;pipAPI&quot;], function(APIconstructor) {
 
 // In the stroop task we sort words by their colors.
 // First things first, lets add labels to the task canvas so that it is clear what the user is sorting the stimuli to.
-// We&quot;ll add three labels, one for each of the colors we are using.
+// We&apos;ll add three labels, one for each of the colors we are using.
 
 // By default stimuli are displayed at the center of the screen, if we want to display them at other locations,
 // we use the `location` property of the [stimulus object](./API.md#stimuli).
 // The location property takes an object with distances from the border in percentages of the player canvas.
 // Where `left:20` means that the left border of the stimulus should be 20% from the left of the canvas.
 // You may define any of the `left`/`right`/`top`/`bottom` properties.
-// In this case we&quot;ll define the labels to be two percent of the canvas away from the borders just so they don&quot;t collide.
+// In this case we&apos;ll define the labels to be two percent of the canvas away from the borders just so they don&apos;t collide.
 
 // We use the `css` property to control the style of the labels.
 // We set the `background` color to the appropriate color and the `fontSize` of the labels to be 1.5 times of the default fontSize.
@@ -173,21 +187,21 @@ define([&quot;pipAPI&quot;], function(APIconstructor) {
 		{
 			layout: [
 				{
-					media:&quot;1&quot;,
+					media:&apos;1&apos;,
 					location:{left:2,top:2},
-					css:{background:&quot;red&quot;,padding:&quot;2%&quot;,fontSize:&quot;1.5em&quot;}
+					css:{background:&apos;red&apos;,padding:&apos;2%&apos;,fontSize:&apos;1.5em&apos;}
 				},
 				{
-					media:&quot;2&quot;,
+					media:&apos;2&apos;,
 					location:{top:2},
-					css:{background:&quot;blue&quot;,padding:&quot;2%&quot;,fontSize:&quot;1.5em&quot;}
+					css:{background:&apos;blue&apos;,padding:&apos;2%&apos;,fontSize:&apos;1.5em&apos;}
 				},
 				{
-					media:&quot;3&quot;,
+					media:&apos;3&apos;,
 					location:{right:2,top:2},
-					css:{background:&quot;green&quot;,padding:&quot;2%&quot;,fontSize:&quot;1.5em&quot;}
+					css:{background:&apos;green&apos;,padding:&apos;2%&apos;,fontSize:&apos;1.5em&apos;}
 				},
-				{inherit:&quot;red&quot;}
+				{inherit:&apos;red&apos;}
 			],
 			input: [],
 			interactions: []
@@ -197,7 +211,7 @@ define([&quot;pipAPI&quot;], function(APIconstructor) {
 	// #### Return the script
 	return API.script;
 });
-/* don&quot;t forget to close the define wrapper */
+/* don&apos;t forget to close the define wrapper */
 </div>
 </section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" integrity="sha256-xrr4HH5eSY+cFz4SH7ja/LaAi9qcEdjMpeMP49/iOLs=" crossorigin="anonymous"></script>

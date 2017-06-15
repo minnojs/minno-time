@@ -7,7 +7,6 @@ define(function(){
     var defStack = [];				// an array holding all the deferreds
     var stackDone = 0;				// the number of sources we have completed downloading
     var images = {};
-    var noop = function(){};
 
     var loader = {
         // loads a single source

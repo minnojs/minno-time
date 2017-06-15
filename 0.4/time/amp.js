@@ -1,4 +1,6 @@
-//This example creates an amp task.
+// This example creates an amp task.
+// 
+// You can find the images used for this task [here](https://github.com/minnojs/minno-time/tree/gh-pages/images)
 define(['pipAPI'], function(APIconstructor) {
 
     var API = new APIconstructor();

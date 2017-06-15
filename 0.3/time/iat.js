@@ -1,3 +1,5 @@
+// You can find the images used for this task [here](https://github.com/minnojs/minno-time/tree/gh-pages/images)
+// and the templates [here](https://github.com/minnojs/minno-time/tree/gh-pages/resources/IAT).
 define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
     // This wrapper is neccesary in order to activate the API
 

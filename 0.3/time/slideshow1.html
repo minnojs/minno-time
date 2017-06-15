@@ -19,7 +19,21 @@
 					<a href="/minno-time/0.3/time/overview.html">miTime</a>
 				</nav>
 				<nav>
-                    <select id="version-select"><option value="0.3" selected>v0.3</option>,<option value="0.4" >v0.4</option></select>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
+                    <select id="version-select"><option value="0.3" selected>v0.3</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
 			</section>
@@ -84,34 +98,34 @@
         <a class="activate-button">Activate</a>
         <a class="download-button" href="slideshow1.js" download>Download</a>
     </div>
-    <div class="editor">define([&quot;pipAPI&quot;], function(APIconstructor) {
+    <div class="editor">define([&apos;pipAPI&apos;], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
 
 	API.addSequence([
 		{
-			input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
-			layout: [{media :{word:&quot;Is\&quot;nt&quot;}}],
+			input: [{handle:&apos;space&apos;,on:&apos;space&apos;}],
+			layout: [{media :{word:&apos;Is\&apos;nt&apos;}}],
 			interactions: [{
-				conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],
-				actions: [{type:&quot;endTrial&quot;}]
+				conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],
+				actions: [{type:&apos;endTrial&apos;}]
 			}]
 		},
 		{
-			input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
-			layout: [{media :{word:&quot;this&quot;}}],
+			input: [{handle:&apos;space&apos;,on:&apos;space&apos;}],
+			layout: [{media :{word:&apos;this&apos;}}],
 			interactions: [{
-				conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],
-				actions: [{type:&quot;endTrial&quot;}]
+				conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],
+				actions: [{type:&apos;endTrial&apos;}]
 			}]
 		},
 		{
-			input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
-			layout: [{media :{word:&quot;cool?&quot;}}],
+			input: [{handle:&apos;space&apos;,on:&apos;space&apos;}],
+			layout: [{media :{word:&apos;cool?&apos;}}],
 			interactions: [{
-				conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],
-				actions: [{type:&quot;endTrial&quot;}]
+				conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],
+				actions: [{type:&apos;endTrial&apos;}]
 			}]
 		}
 	]);

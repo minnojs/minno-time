@@ -1,4 +1,5 @@
-/* We use jQuery in this file as a global, so we need to mark it for the parser (jshint) */
+// You can find the images used for this task [here](https://github.com/minnojs/minno-time/tree/gh-pages/images)
+// and the templates [here](https://github.com/minnojs/minno-time/tree/gh-pages/resources).
 define(['pipAPI'], function(APIconstructor) {
 
     var API = new APIconstructor();

@@ -86,7 +86,7 @@ define(function(require){
                     opacity: 0.3
                 });
 
-                click(listener,definitions);
+                mouseEvents('mousedown', listener,definitions);
                 break;
 
             case 'rightTouch'	:
@@ -99,7 +99,7 @@ define(function(require){
                     opacity: 0.3
                 });
 
-                click(listener,definitions);
+                mouseEvents('mousedown', listener,definitions);
                 break;
 
             case 'topTouch'	:
@@ -112,7 +112,7 @@ define(function(require){
                     opacity: 0.3
                 });
 
-                click(listener,definitions);
+                mouseEvents('mousedown', listener,definitions);
                 break;
 
             case 'bottomTouch'	:
@@ -125,7 +125,7 @@ define(function(require){
                     opacity: 0.3
                 });
 
-                click(listener,definitions);
+                mouseEvents('mousedown', listener,definitions);
                 break;
 
             default:

@@ -43,9 +43,8 @@ define(function(require){
         start: function(){
             var trial = this;
 
-            /* eslint no-console:false */
-            if (this._source.DEBUG && window.DEBUG) console.group('Trial: ' + this.counter);
-            /* eslint no-console:true */
+            // eslint-disable-next-line no-console
+            if (this._source.DEBUG && window.DEBUG) console.group('Trial: ' + this.counter); 
 
             // wait until all simuli are loaded
             return trial.stimulusCollection.ready
@@ -66,9 +65,9 @@ define(function(require){
         },
 
         end: function(){
-            /* eslint no-console:false */
-            if (this._source.DEBUG && window.DEBUG) console.groupEnd('Trial: ' + this.counter);
-            /* eslint no-console:true */
+
+            // eslint-disable-next-line no-console
+            if (this._source.DEBUG && window.DEBUG) console.groupEnd('Trial: ' + this.counter); 
             
             // cancel all listeners
             input.destroy();

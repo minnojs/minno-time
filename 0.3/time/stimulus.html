@@ -19,7 +19,21 @@
 					<a href="/minno-time/0.3/time/overview.html">miTime</a>
 				</nav>
 				<nav>
-                    <select id="version-select"><option value="0.3" selected>v0.3</option>,<option value="0.4" >v0.4</option></select>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
+                    <select id="version-select"><option value="0.3" selected>v0.3</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
 			</section>
@@ -79,107 +93,100 @@
 </ul>
 </li>
 </ul>
-<p>/<em> We use jQuery in this file as a global, so we need to mark it for the parser (jshint) </em>/</p>
+<p> You can find the images used for this task <a href="https://github.com/minnojs/minno-time/tree/gh-pages/images">here</a>
+ and the templates <a href="https://github.com/minnojs/minno-time/tree/gh-pages/resources">here</a>.</p>
 <section playground>
     <div class="buttons">
         <a class="activate-button">Activate</a>
         <a class="download-button" href="stimulus.js" download>Download</a>
     </div>
-    <div class="editor">/* We use jQuery in this file as a global, so we need to mark it for the parser (jshint) */
-define([&quot;pipAPI&quot;,&quot;jquery&quot;], function(APIconstructor, $) {
+    <div class="editor">// You can find the images used for this task [here](https://github.com/minnojs/minno-time/tree/gh-pages/images)
+// and the templates [here](https://github.com/minnojs/minno-time/tree/gh-pages/resources).
+define([&apos;pipAPI&apos;], function(APIconstructor) {
 
-	var API = new APIconstructor();
+    var API = new APIconstructor();
 
-	API.addSequence([
-		// ### Stimuli and media
-		// The stimulus object is the object that tells the miTime exactly what and how to display a stimulus.
-		// Part of each stimulus is the media that it displays.
+    API.addSequence([
+        // ### Stimuli and media
+        // The stimulus object is the object that tells the miTime exactly what and how to display a stimulus.
+        // Part of each stimulus is the media that it displays.
 
-		/* The trial begins here */
-		{
-			input: [
-				{handle:&quot;space&quot;,on:&quot;space&quot;}
-			],
+        /* The trial begins here */
+        {
+            input: [
+                {handle:&apos;space&apos;,on:&apos;space&apos;}
+            ],
 
-			// The layout property is an array of the static stimuli in the trial
-			layout:[
-				/* the top right stimulus begins here */
-				{
-					// The **location** property of the stimulus controls where the stimulus will appear. &lt;/br&gt;
-					// Permitted values are numbers (percentages of canvas size), &quot;center&quot; or &quot;auto&quot;. By default, location is set to center.
-					location:{right:0,top:0},
+            // The layout property is an array of the static stimuli in the trial
+            layout:[
+                /* the top right stimulus begins here */
+                {
+                    // The **location** property of the stimulus controls where the stimulus will appear. &lt;/br&gt;
+                    // Permitted values are numbers (percentages of canvas size), &apos;center&apos; or &apos;auto&apos;. By default, location is set to center.
+                    location:{right:0,top:0},
 
-					// The **css** property of the stimulus controls the styling of displayed elements
-					// it uses the jquery property name standard (http://api.jquery.com/css/)
-					css: {color:&quot;red&quot;,fontSize:&quot;2em&quot;},
+                    // The **css** property of the stimulus controls the styling of displayed elements
+                    // it uses the jquery property name standard (http://api.jquery.com/css/)
+                    css: {color:&apos;red&apos;,fontSize:&apos;2em&apos;},
 
-					// The **media** property of the stimulus controls what it is that we are about to display.
-					// the simplest form of media is a **word**, or string of text
-					media:{word:&quot;top right (word)&quot;}
-				},
-				/* the top right stimulus ends here */
-
-
-				// The media object can be a piece of **html** too.
-				/* the top left stimulus begins here */
-				{
-					location:{left:0,top:0},
-					media:{html:&quot;&lt;b&gt;bottom left (html)&lt;/b&gt;&quot;}
-				},
-				/* the top left stimulus begins here */
-
-				// In this case the media objects uses an **external html** file.
-				// (see documentation regarding how to use this as a javascript template)
-				/* the bottom left stimulus begins here */
-				{
-					location:{left:0,bottom:0},
-					media:{template:&quot;../../../resources/bottom_left.html&quot;}
-				},
-				/* the bottom left stimulus begins here */
-
-				// The adventurous can even use **jQuery** objects
-				/* the bottom right stimulus begins here */
-				{
-					location:{right:0,bottom:0},
-					media: {jquery : $(&quot;&lt;div&gt;&quot;,{text:&quot;bottom left (jQuery)&quot;})}
-				}
-				/* the bottom right stimulus begins here */
+                    // The **media** property of the stimulus controls what it is that we are about to display.
+                    // the simplest form of media is a **word**, or string of text
+                    media:{word:&apos;top right (word)&apos;}
+                },
+                /* the top right stimulus ends here */
 
 
-			],
+                // The media object can be a piece of **html** too.
+                /* the top left stimulus begins here */
+                {
+                    location:{left:0,top:0},
+                    media:{html:&apos;&lt;b&gt;bottom left (html)&lt;/b&gt;&apos;}
+                },
+                /* the top left stimulus begins here */
 
-			// The stimuli property holds stimuli that are to be dynamically presented
-			stimuli: [
-				// Lets show an **image** this time. &lt;/br&gt;
-				// The size property allows you to control the image size (in percentage of canvas). By default it is set to &quot;auto&quot;.
-				{
-					size: {height:75, width:&quot;auto&quot;},
-					media :{image:&quot;../../images/learning.jpg&quot;},
-					// `nolog` allows you to control whether this stimulus will be logged (see the interactions section)
-					nolog:true
-				}
-			],
+                // In this case the media objects uses an **external html** file.
+                // (see documentation regarding how to use this as a javascript template)
+                /* the bottom left stimulus begins here */
+                {
+                    location:{left:0,bottom:0},
+                    media:{template:&apos;../../../resources/bottom_left.html&apos;}
+                }
+                /* the bottom left stimulus begins here */
 
-			interactions: [
-				{
-					conditions: [{type:&quot;begin&quot;}],
-					actions: [{type:&quot;showStim&quot;,handle:&quot;All&quot;}]
-				},
+            ],
 
-				{
-					conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],
-					actions: [{type:&quot;endTrial&quot;}]
-				}
-			]
-		}
-		/* The trial ends here */
+            // The stimuli property holds stimuli that are to be dynamically presented
+            stimuli: [
+                // Lets show an **image** this time. &lt;/br&gt;
+                // The size property allows you to control the image size (in percentage of canvas). By default it is set to &apos;auto&apos;.
+                {
+                    size: {height:75, width:&apos;auto&apos;},
+                    media :{image:&apos;../../images/learning.jpg&apos;},
+                    // `nolog` allows you to control whether this stimulus will be logged (see the interactions section)
+                    nolog:true
+                }
+            ],
 
-	]);
-	/* this is where we close the sequence */
+            interactions: [
+                {
+                    conditions: [{type:&apos;begin&apos;}],
+                    actions: [{type:&apos;showStim&apos;,handle:&apos;All&apos;}]
+                },
 
-	return API.script;
+                {
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],
+                    actions: [{type:&apos;endTrial&apos;}]
+                }
+            ]
+        }
+        /* The trial ends here */
+
+    ]);
+    /* this is where we close the sequence */
+
+    return API.script;
 });
-/* don&quot;t forget to close the require wrapper */
+/* don&apos;t forget to close the require wrapper */
 </div>
 </section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" integrity="sha256-xrr4HH5eSY+cFz4SH7ja/LaAi9qcEdjMpeMP49/iOLs=" crossorigin="anonymous"></script>
