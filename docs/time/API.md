@@ -11,7 +11,7 @@
         + [Actions](#interactions-actions)
     - [Debug](#debug)
 - [Inheritance](#inheritance)
-- [Loggin](#logging)
+- [Logging](#logging)
 
 ### Definitions
 * **Media** are the objects that we display.
