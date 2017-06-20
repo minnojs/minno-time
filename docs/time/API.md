@@ -10,7 +10,7 @@
         + [Conditions](#interactions-conditions)
         + [Actions](#interactions-actions)
 - [Inheritance](#inheritance)
-- [Loggin](#logging)
+- [Logging](#logging)
 
 ### Definitions
 * **Media** are the objects that we display.
