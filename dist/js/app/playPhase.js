@@ -15,7 +15,7 @@ define(function(require){
      * @returns sink : {end, promise}
      **/
 
-    function playerPhase(canvas, script){
+    function playerPhase(canvas, db, script){
         var $source = stream();
         var $trial = $source.map(activateTrial());
 
@@ -34,7 +34,7 @@ define(function(require){
         }
 
         function play(goto){
-            var next = nextTrial(goto);
+            var next = nextTrial(db, goto);
             if (next.done) $source.end(true);
             else $source(next.value);
         }
