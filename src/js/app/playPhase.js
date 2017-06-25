@@ -44,14 +44,17 @@ define(function(require){
             function activate(source){
                 var oldTrial = cache;
                 var trial = cache = new Trial(source, canvas);
-                trial.onend = play; // when we're done try to play the next one
+
+                trial.$end
+                    .map(function(){
+                        play(trial._next); // when we're done try to play the next one
+                    }); 
+                    
                 trial.start();
 
                 if (oldTrial) {
                     // we leave the old stimuli until the current ones are visiblie to maintain the continuity between trials
-                    // otherwise layout blinks between trials because it takes us at least a frame to measure the element sizes
-                    // The beginning of a trial is compposed of two mutations, adding the elemnt and resizing them.
-                    // This mutate waits until the first mutation in order to schedudual the removal of the old simuli
+                    // This mutate waits until the first mutation in order to schedudual the removal of the old stimuli
                     fastdom.mutate(function oldtrial(){
                         oldTrial.stimulusCollection.destroy();
                     });

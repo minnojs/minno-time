@@ -7,28 +7,29 @@ define(function(require){
     var interactions = require('./interactions');
     var global_trial = require('./current_trial');
     var gid = 0;
+    var stream = require('utils/stream');
 
     // data is already fully inflated
     function Trial(source, canvas){
+        // make sure we have all our stuff :)
+        if (!source.interactions) throw new Error('Interactions not defined');
+
         this.canvas = canvas;
+        this._source = source;
 
         // make sure we always have a data container
         this.data = source.data || {};
-
-        // keep source for later use
-        this._source = source;
 
         // create a uniqueId for this trial
         this._id = _.uniqueId('trial_');
         this.counter = gid++;
 
-        // make sure we have all our stuff :)
-        if (!source.interactions) {
-            throw new Error('Interactions not defined');
-        }
 
         // add stimuli
         this.stimulusCollection = stimulusCollection(this, canvas);
+
+        this.$events = stream();
+        this.$end = this.$events.end;
 
         // subscription stack
         this._pubsubStack = [];
@@ -85,7 +86,7 @@ define(function(require){
             // @TODO lets make the logger make some more sense. what is it doing here?
             pubsub.publish('log:send'); // see if we need to send the log stack
 
-            if (_.isFunction(this.onend)) this.onend(this._next);
+            this.$end(true);
         },
 
         name: function(){

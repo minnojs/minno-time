@@ -123,7 +123,7 @@ define(function(require){
 
             // settings activator
             var off = applyCanvasStyles(map, _.pick(options,['background','canvasBackground','borderColor','borderWidth']));
-            trial.deferred.promise().always(off);
+            trial.$end.map(off);
         }
 
     };
