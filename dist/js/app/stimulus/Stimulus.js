@@ -13,7 +13,6 @@ define(function(require){
             trial: trial,
             canvas: canvas,
             init: init,
-            render: render,
             show: show,
             hide: hide,
             name: name,
@@ -36,8 +35,7 @@ define(function(require){
         if (!this.source.media) throw new Error('Media object not defined for ' + this.name());
 
         return getMedia(this.source.media)
-            .then(setupElement.bind(this, this.canvas))
-            .then(render.bind(this));
+            .then(setupElement.bind(this, this.canvas));
     }
 
     function setupElement(canvas, el){
@@ -48,18 +46,17 @@ define(function(require){
                 // setup element
                 el.classList.add('minno-stimulus');
                 el.setAttribute('data-handle', self.handle); // data-handle for handeling of mouse/touch interactions
-                setSize(el, self.source); // does not depend on any measurements
+                setSize(el, self.source);
+                setPlace(el, self.source);
                 css(el, self.source.css || {});
+
+                if (self.source.isLayout) el.classList.add('minno-stimulus-visible');
 
                 // append to canvas
                 canvas.appendChild(el);
                 resolve(el);
             });
         });
-    }
-
-    function render(){
-        return setPlace(this.source, this.canvas, this.el);
     }
 
     function show(){
