@@ -24,11 +24,6 @@ define(function(require){
 
         setupVars(script);
 
-        $resize.map(function(){
-            var trial = playSink.$trial();
-            if (trial) trial.stimulusCollection.render();
-        });
-
         playSink.end.map(function(){$resize.end(true);}); // end resize stream
 
         // preload Images, then play "playPhase"
