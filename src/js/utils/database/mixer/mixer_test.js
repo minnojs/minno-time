@@ -477,6 +477,12 @@ define(['underscore','./mixerModule', '../randomize/randomizeModuleMock'],functi
                     expect(mc({compare:'local.a'})).not.toBeTruthy();
                 });
 
+                it('should support the whole condition as a function', function(){
+                    var opSpy = jasmine.createSpy('operator').andCallFake(function(){return true;});
+                    expect(mc(opSpy)).toBeTruthy();
+                    expect(opSpy).toHaveBeenCalledWith(undefined,undefined, context);
+                });
+
                 it('should support an operator function', function(){
                     var opSpy = jasmine.createSpy('operator').andCallFake(function(){return true;});
                     expect(mc({
@@ -488,11 +494,12 @@ define(['underscore','./mixerModule', '../randomize/randomizeModuleMock'],functi
                     expect(opSpy).toHaveBeenCalledWith(1,2, context);
                 });
 
-                it('should support the whole condition as a function', function(){
-                    var opSpy = jasmine.createSpy('operator').andCallFake(function(){return true;});
-                    expect(mc(opSpy)).toBeTruthy();
+                it('should support "equals"', function(){
+                    expect(mc({compare:2,to:2})).toBeTruthy();
+                });
 
-                    expect(opSpy).toHaveBeenCalledWith(undefined,undefined, context);
+                it('should support "negate"', function(){
+                    expect(mc({compare:2,to:2, negate:true})).not.toBeTruthy();
                 });
 
                 it('should support greaterThan', function(){

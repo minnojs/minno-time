@@ -3,11 +3,11 @@ define(function(require){
 
     function dotNotation(chain, obj){
 
-        if (_.isString(chain)){
-            chain = chain.split('.');
-        }
+        if (_.isUndefined(chain)) return;
+        if (_.isString(chain)) chain = chain.split('.');
 
-        return _.reduce(chain, function(result, link){
+        // @TODO maybe lodash _.get?
+        return chain.reduce(function(result, link){
 
             if (_.isPlainObject(result) || _.isArray(result)){
                 return result[link];
