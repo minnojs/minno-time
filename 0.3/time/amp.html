@@ -19,21 +19,7 @@
 					<a href="/minno-time/0.3/time/overview.html">miTime</a>
 				</nav>
 				<nav>
-                    <div id="search-box">
-                        <script>
-                            (function() {
-                                var cx = '002953266509769041597:smg5beek-iu';
-                                var gcse = document.createElement('script');
-                                gcse.type = 'text/javascript';
-                                gcse.async = true;
-                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
-                                var s = document.getElementsByTagName('script')[0];
-                                s.parentNode.insertBefore(gcse, s);
-                            })();
-                        </script>
-                        <gcse:searchbox-only></gcse:searchbox-only>
-                    </div>
-                    <select id="version-select"><option value="0.3" selected>v0.3</option></select>
+                    <select id="version-select"><option value="0.3" selected>v0.3</option>,<option value="0.4" >v0.4</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
 			</section>
@@ -103,14 +89,14 @@
     <div class="editor">// This example creates an amp task.
 // 
 // You can find the images used for this task [here](https://github.com/minnojs/minno-time/tree/gh-pages/images)
-define([&apos;pipAPI&apos;], function(APIconstructor) {
+define([&quot;pipAPI&quot;], function(APIconstructor) {
 
     var API = new APIconstructor();
 
-    var category1 = &apos;Pleasant&apos;;
-    var category2 = &apos;Unpleasant&apos;;
-    var condition1= &quot;white&quot;;
-    var condition2= &quot;black&quot;;
+    var category1 = &quot;Pleasant&quot;;
+    var category2 = &quot;Unpleasant&quot;;
+    var condition1= "white";
+    var condition2= "black";
     //a Scorer for the AMP
     var AMPScorer = {
         counter: { prime1: {category1: 0, category2: 0} , prime2: {category1: 0, category2: 0}}
@@ -168,23 +154,23 @@ define([&apos;pipAPI&apos;], function(APIconstructor) {
         }
     }
     //Set the size of the screen
-    API.addSettings(&apos;canvas&apos;,{
+    API.addSettings(&quot;canvas&quot;,{
         maxWidth: 900,
         proportions : 0.8,
         //Change the colors to allow better presentation of the colored stimuli.
-        background: &apos;white&apos;,
+        background: &quot;white&quot;,
         borderWidth: 5,
-        canvasBackground: &apos;green&apos;,
-        borderColor: &apos;black&apos;
+        canvasBackground: &quot;green&quot;,
+        borderColor: &quot;black&quot;
     });
     // from where to take the images
-    API.addSettings(&apos;base_url&apos;,{
-        image : &apos;/minno-time/images&apos;
+    API.addSettings(&quot;base_url&quot;,{
+        image : &quot;/minno-time/images&quot;
     });
 
-    API.addSettings(&apos;logger&apos;,{
+    API.addSettings(&quot;logger&quot;,{
         pulse: 20,
-        url : &apos;/implicit/PiPlayerApplet&apos;,
+        url : &quot;/implicit/PiPlayerApplet&quot;,
 
         // use default logger (as copied from documents.txt but replace the regular latency with the computed latency)
         logger: function(trialData, inputData, actionData,logStack){
@@ -211,92 +197,92 @@ define([&apos;pipAPI&apos;], function(APIconstructor) {
         basicTrial: [{
             //Layout defines what will be presented in the trial. It is like a background display.
             layout: [
-                {location:{left:2,top:2},media:{word:&apos;key: E&apos;}, css:{color:&apos;white&apos;,&apos;font-size&apos;:&apos;1em&apos;}},
-                {location:{left:75,top:2},media:{word:&apos;key: I&apos;},  css:{color:&apos;white&apos;,&apos;font-size&apos;:&apos;1em&apos;}},
-                {location:{left:2,top:5},media:{word:category2}, css:{color:&apos;#33ff33&apos;,&apos;font-size&apos;:&apos;2em&apos;}},
-                {location:{left:75,top:5},media:{word:category1},  css:{color:&apos;#33ff33&apos;,&apos;font-size&apos;:&apos;2em&apos;}}
+                {location:{left:2,top:2},media:{word:&quot;key: E&quot;}, css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;1em&quot;}},
+                {location:{left:75,top:2},media:{word:&quot;key: I&quot;},  css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;1em&quot;}},
+                {location:{left:2,top:5},media:{word:category2}, css:{color:&quot;#33ff33&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
+                {location:{left:75,top:5},media:{word:category1},  css:{color:&quot;#33ff33&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
             ],
             //Inputs for two possible responses.
             input: [
-                {handle:&apos;enter&apos;,on:&apos;enter&apos;}
+                {handle:&quot;enter&quot;,on:&quot;enter&quot;}
             ],
             //Set what to do.
             interactions: [
                 {
-                    conditions: [{type:&apos;begin&apos;}],
+                    conditions: [{type:&quot;begin&quot;}],
                     actions: [
-                        {type:&apos;showStim&apos;,handle:&apos;primingImage&apos;},// display the first stimulus=priming image
-                        {type:&apos;setInput&apos;,input:{handle:&apos;primeOut&apos;,on:&apos;timeout&apos;,duration:100}} //for 100 ms
+                        {type:&quot;showStim&quot;,handle:&quot;primingImage&quot;},// display the first stimulus=priming image
+                        {type:&quot;setInput&quot;,input:{handle:&quot;primeOut&quot;,on:&quot;timeout&quot;,duration:100}} //for 100 ms
                     ]
                 },
                 {
-                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;primeOut&apos;}], // on time out
+                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;primeOut&quot;}], // on time out
                     actions: [
-                        {type:&apos;hideStim&apos;,handle:&apos;primingImage&apos;}, // hide the first stimulus
-                        {type:&apos;showStim&apos;,handle:&apos;blankScreen&apos;}, // and show the second one=the blank screen
-                        {type:&apos;setInput&apos;,input:{handle:&apos;blankOut&apos;,on:&apos;timeout&apos;,duration:100}}
+                        {type:&quot;hideStim&quot;,handle:&quot;primingImage&quot;}, // hide the first stimulus
+                        {type:&quot;showStim&quot;,handle:&quot;blankScreen&quot;}, // and show the second one=the blank screen
+                        {type:&quot;setInput&quot;,input:{handle:&quot;blankOut&quot;,on:&quot;timeout&quot;,duration:100}}
                     ]
                 },
                 {
-                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;blankOut&apos;}], // on time out
+                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;blankOut&quot;}], // on time out
                     actions: [
-                        {type:&apos;hideStim&apos;,handle:&apos;blankScreen&apos;}, // hide the blank screen
-                        {type:&apos;showStim&apos;,handle:&apos;targetStim&apos;}, // and show the letter
-                        {type:&apos;setInput&apos;,input:{handle:category2,on: &apos;keypressed&apos;, key:&apos;e&apos;}},//the user can only answer here on
-                        {type:&apos;setInput&apos;,input:{handle:category1,on: &apos;keypressed&apos;, key:&apos;i&apos;}},
-                        {type:&apos;setInput&apos;,input:{handle:category2,on:&apos;leftTouch&apos;,touch:true}},
-                        {type:&apos;setInput&apos;,input:{handle:category1,on:&apos;rightTouch&apos;,touch:true}},
+                        {type:&quot;hideStim&quot;,handle:&quot;blankScreen&quot;}, // hide the blank screen
+                        {type:&quot;showStim&quot;,handle:&quot;targetStim&quot;}, // and show the letter
+                        {type:&quot;setInput&quot;,input:{handle:category2,on: &quot;keypressed&quot;, key:&quot;e&quot;}},//the user can only answer here on
+                        {type:&quot;setInput&quot;,input:{handle:category1,on: &quot;keypressed&quot;, key:&quot;i&quot;}},
+                        {type:&quot;setInput&quot;,input:{handle:category2,on:&quot;leftTouch&quot;,touch:true}},
+                        {type:&quot;setInput&quot;,input:{handle:category1,on:&quot;rightTouch&quot;,touch:true}},
 
                         // set the begin latency in trialData
-                        {type:&apos;setTrialAttr&apos;,setter:function(data,event){
+                        {type:&quot;setTrialAttr&quot;,setter:function(data,event){
                             data.begin = event.latency;
                         }},
 
-                        {type:&apos;setInput&apos;,input:{handle:&apos;targetOut&apos;,on:&apos;timeout&apos;,duration:100}}
+                        {type:&quot;setInput&quot;,input:{handle:&quot;targetOut&quot;,on:&quot;timeout&quot;,duration:100}}
                     ]
                 },
                 {
-                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;targetOut&apos;}], // on time out
+                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;targetOut&quot;}], // on time out
                     actions: [
-                        {type:&apos;hideStim&apos;,handle:&apos;targetStim&apos;}, // hide the letter
-                        {type:&apos;showStim&apos;,handle:&apos;MaskScreen&apos;} // and show the mask screen
+                        {type:&quot;hideStim&quot;,handle:&quot;targetStim&quot;}, // hide the letter
+                        {type:&quot;showStim&quot;,handle:&quot;MaskScreen&quot;} // and show the mask screen
                     ]
                 },
 
-                // skip block -&gt; if you press &apos;enter&apos; you will skip the current block.
+                // skip block -&gt; if you press &quot;enter&quot; you will skip the current block.
                 {
-                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;enter&apos;}],
+                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;enter&quot;}],
                     actions: [
-                        {type:&apos;goto&apos;, destination: &apos;nextWhere&apos;, properties: {blockStart:true}},
-                        {type:&apos;endTrial&apos;}
+                        {type:&quot;goto&quot;, destination: &quot;nextWhere&quot;, properties: {blockStart:true}},
+                        {type:&quot;endTrial&quot;}
                     ]
                 },
 
                 {//What to do upon response
                     //the  condition: dont remove the mask upon timeout, wait until reaction
-                    conditions: [{type:&apos;inputEquals&apos;,value:category1}], //pleasant response
+                    conditions: [{type:&quot;inputEquals&quot;,value:category1}], //pleasant response
                     actions: [
-                        {type:&apos;setTrialAttr&apos;,setter:{score:&apos;1&apos;}},
-                        {type:&apos;hideStim&apos;,handle:&apos;All&apos;},
-                        {type:&apos;removeInput&apos;,handle	:[category2,category1]},//only one respnse is possible
-                        //The player sends the value of score to the server, when you call the &apos;log&apos; action
-                        {type:&apos;log&apos;}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
-                        {type:&apos;setInput&apos;,input:{handle:&apos;endTrial&apos;,on:&apos;timeout&apos;,duration:250}}//end the trial 250ms after the response
+                        {type:&quot;setTrialAttr&quot;,setter:{score:&quot;1&quot;}},
+                        {type:&quot;hideStim&quot;,handle:&quot;All&quot;},
+                        {type:&quot;removeInput&quot;,handle	:[category2,category1]},//only one respnse is possible
+                        //The player sends the value of score to the server, when you call the &quot;log&quot; action
+                        {type:&quot;log&quot;}, // here we call the log action. This is because we want to record the latency of this input (the latency of the response)
+                        {type:&quot;setInput&quot;,input:{handle:&quot;endTrial&quot;,on:&quot;timeout&quot;,duration:250}}//end the trial 250ms after the response
                     ]
                 },
                 {
-                    conditions: [{type:&apos;inputEquals&apos;,value:category2}], //unpleasant response.
+                    conditions: [{type:&quot;inputEquals&quot;,value:category2}], //unpleasant response.
                     actions: [
-                        {type:&apos;setTrialAttr&apos;,setter:{score:&apos;0&apos;}},
-                        {type:&apos;hideStim&apos;,handle:&apos;All&apos;},
-                        {type:&apos;removeInput&apos;,handle	:[category2,category1]},
-                        {type:&apos;log&apos;},
-                        {type:&apos;setInput&apos;,input:{handle:&apos;endTrial&apos;,on:&apos;timeout&apos;,duration:250}}
+                        {type:&quot;setTrialAttr&quot;,setter:{score:&quot;0&quot;}},
+                        {type:&quot;hideStim&quot;,handle:&quot;All&quot;},
+                        {type:&quot;removeInput&quot;,handle	:[category2,category1]},
+                        {type:&quot;log&quot;},
+                        {type:&quot;setInput&quot;,input:{handle:&quot;endTrial&quot;,on:&quot;timeout&quot;,duration:250}}
                     ]
                 },
                 {
-                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;endTrial&apos;}], //What to do when endTrial is called.
-                    actions: [{type:&apos;endTrial&apos;}]
+                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;endTrial&quot;}], //What to do when endTrial is called.
+                    actions: [{type:&quot;endTrial&quot;}]
                 }
             ] // end interactions
 
@@ -306,22 +292,22 @@ define([&apos;pipAPI&apos;], function(APIconstructor) {
     API.addTrialSets({
         prime1:[{		//first condition
             data: {condition: condition1},
-            inherit:{set: &apos;basicTrial&apos;},
+            inherit:{set: &quot;basicTrial&quot;},
             stimuli: [
-                { inherit: {set: &apos;targetStimulus&apos;, type:&apos;exRandom&apos;}, data : {handle:&apos;targetStim&apos;} },
-                { inherit: {set: &apos;primingImage1&apos;, type:&apos;exRandom&apos;}, data : {handle:&apos;primingImage&apos;} },
-                { inherit: &apos;MaskScreen&apos;},
-                { inherit: &apos;blankScreen&apos;}
+                { inherit: {set: &quot;targetStimulus&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;targetStim&quot;} },
+                { inherit: {set: &quot;primingImage1&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;primingImage&quot;} },
+                { inherit: &quot;MaskScreen&quot;},
+                { inherit: &quot;blankScreen&quot;}
             ]
         }],
         prime2:[{		//second condition
             data: {condition: condition2},
-            inherit:{set: &apos;basicTrial&apos;},
+            inherit:{set: &quot;basicTrial&quot;},
             stimuli: [
-                { inherit: {set: &apos;targetStimulus&apos;, type:&apos;exRandom&apos;}, data : {handle:&apos;targetStim&apos;} },
-                { inherit: {set: &apos;primingImage2&apos;, type:&apos;exRandom&apos;}, data : {handle:&apos;primingImage&apos;} },
-                { inherit: &apos;MaskScreen&apos;},
-                { inherit: &apos;blankScreen&apos;}
+                { inherit: {set: &quot;targetStimulus&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;targetStim&quot;} },
+                { inherit: {set: &quot;primingImage2&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;primingImage&quot;} },
+                { inherit: &quot;MaskScreen&quot;},
+                { inherit: &quot;blankScreen&quot;}
             ]
         }]
     });
@@ -331,144 +317,144 @@ define([&apos;pipAPI&apos;], function(APIconstructor) {
         exampleTrial: [{
             //Layout defines what will be presented in the trial. It is like a background display.
             layout: [
-                {location:{left:2,top:2},media:{word:&apos;key: E&apos;}, css:{color:&apos;white&apos;,&apos;font-size&apos;:&apos;1em&apos;}},
-                {location:{left:75,top:2},media:{word:&apos;key: I&apos;},  css:{color:&apos;white&apos;,&apos;font-size&apos;:&apos;1em&apos;}},
-                {location:{left:2,top:5},media:{word:category2}, css:{color:&apos;#33ff33&apos;,&apos;font-size&apos;:&apos;2em&apos;}},
-                {location:{left:75,top:5},media:{word:category1},  css:{color:&apos;#33ff33&apos;,&apos;font-size&apos;:&apos;2em&apos;}}
+                {location:{left:2,top:2},media:{word:&quot;key: E&quot;}, css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;1em&quot;}},
+                {location:{left:75,top:2},media:{word:&quot;key: I&quot;},  css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;1em&quot;}},
+                {location:{left:2,top:5},media:{word:category2}, css:{color:&quot;#33ff33&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
+                {location:{left:75,top:5},media:{word:category1},  css:{color:&quot;#33ff33&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
             ],
             //Inputs for two possible responses.
             input: [
-                {handle:&apos;enter&apos;,on: &apos;enter&apos;}
+                {handle:&quot;enter&quot;,on: &quot;enter&quot;}
             ],
             //Set what to do.
             interactions: [
                 {
-                    conditions: [{type:&apos;begin&apos;}],
-                    actions: [{type:&apos;showStim&apos;,handle:&apos;primingImage&apos;},// display the first stimulus
-                        {type:&apos;setInput&apos;,input:{handle:&apos;primeOut&apos;,on:&apos;timeout&apos;,duration:125}}]  //display longer time in the example trial
+                    conditions: [{type:&quot;begin&quot;}],
+                    actions: [{type:&quot;showStim&quot;,handle:&quot;primingImage&quot;},// display the first stimulus
+                        {type:&quot;setInput&quot;,input:{handle:&quot;primeOut&quot;,on:&quot;timeout&quot;,duration:125}}]  //display longer time in the example trial
                 },
                 {
-                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;primeOut&apos;}], // on time out
+                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;primeOut&quot;}], // on time out
                     actions: [
-                        {type:&apos;hideStim&apos;,handle:&apos;primingImage&apos;}, // hide the first stimulus
-                        {type:&apos;showStim&apos;,handle:&apos;blankScreen&apos;}, // and show the second one
-                        {type:&apos;setInput&apos;,input:{handle:&apos;blankOut&apos;,on:&apos;timeout&apos;,duration:125}}
+                        {type:&quot;hideStim&quot;,handle:&quot;primingImage&quot;}, // hide the first stimulus
+                        {type:&quot;showStim&quot;,handle:&quot;blankScreen&quot;}, // and show the second one
+                        {type:&quot;setInput&quot;,input:{handle:&quot;blankOut&quot;,on:&quot;timeout&quot;,duration:125}}
                     ]
                 },
                 {
-                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;blankOut&apos;}], // on time out
+                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;blankOut&quot;}], // on time out
                     actions: [
-                        {type:&apos;hideStim&apos;,handle:&apos;blankScreen&apos;}, // hide the blank screen
-                        {type:&apos;showStim&apos;,handle:&apos;targetStim&apos;}, // and show the letter
-                        {type:&apos;setInput&apos;,input:{handle:category2,on: &apos;keypressed&apos;, key:&apos;e&apos;}},//the user can only answer here
-                        {type:&apos;setInput&apos;,input:{handle:category1,on: &apos;keypressed&apos;, key:&apos;i&apos;}},
-                        {type:&apos;setInput&apos;,input:{handle:category2,on:&apos;leftTouch&apos;,touch:true}},
-                        {type:&apos;setInput&apos;,input:{handle:category1,on:&apos;rightTouch&apos;,touch:true}},
+                        {type:&quot;hideStim&quot;,handle:&quot;blankScreen&quot;}, // hide the blank screen
+                        {type:&quot;showStim&quot;,handle:&quot;targetStim&quot;}, // and show the letter
+                        {type:&quot;setInput&quot;,input:{handle:category2,on: &quot;keypressed&quot;, key:&quot;e&quot;}},//the user can only answer here
+                        {type:&quot;setInput&quot;,input:{handle:category1,on: &quot;keypressed&quot;, key:&quot;i&quot;}},
+                        {type:&quot;setInput&quot;,input:{handle:category2,on:&quot;leftTouch&quot;,touch:true}},
+                        {type:&quot;setInput&quot;,input:{handle:category1,on:&quot;rightTouch&quot;,touch:true}},
 
                         // set the begin latency in trialData
-                        {type:&apos;setTrialAttr&apos;,setter:function(data,event){
+                        {type:&quot;setTrialAttr&quot;,setter:function(data,event){
                             data.begin = event.latency;
                         }},
 
-                        {type:&apos;setInput&apos;,input:{handle:&apos;targetOut&apos;,on:&apos;timeout&apos;,duration:125}}
+                        {type:&quot;setInput&quot;,input:{handle:&quot;targetOut&quot;,on:&quot;timeout&quot;,duration:125}}
                     ]
                 },
                 {
-                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;targetOut&apos;}], // on time out
+                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;targetOut&quot;}], // on time out
                     actions: [
-                        {type:&apos;hideStim&apos;,handle:&apos;targetStim&apos;}, // hide the first stimulus
-                        {type:&apos;showStim&apos;,handle:&apos;MaskScreen&apos;} // and show the mask screen
+                        {type:&quot;hideStim&quot;,handle:&quot;targetStim&quot;}, // hide the first stimulus
+                        {type:&quot;showStim&quot;,handle:&quot;MaskScreen&quot;} // and show the mask screen
                     ]
                 },
                 {//What to do upon correct response
                     //the condition: dont remove the word upon timeout, wait until reaction
-                    conditions: [{type:&apos;inputEquals&apos;,value:category1}], //pleasant response
+                    conditions: [{type:&quot;inputEquals&quot;,value:category1}], //pleasant response
                     actions: [
-                        {type:&apos;hideStim&apos;,handle:&apos;All&apos;},
-                        {type:&apos;setTrialAttr&apos;,setter:{score:&apos;1&apos;}},
-                        {type:&apos;removeInput&apos;,handle	:[category2,category1]},
-                        {type:&apos;log&apos;},
-                        {type:&apos;setInput&apos;,input:{handle:&apos;endTrial&apos;,on:&apos;timeout&apos;,duration:250}}
+                        {type:&quot;hideStim&quot;,handle:&quot;All&quot;},
+                        {type:&quot;setTrialAttr&quot;,setter:{score:&quot;1&quot;}},
+                        {type:&quot;removeInput&quot;,handle	:[category2,category1]},
+                        {type:&quot;log&quot;},
+                        {type:&quot;setInput&quot;,input:{handle:&quot;endTrial&quot;,on:&quot;timeout&quot;,duration:250}}
                     ]
                 },
 
                 {
-                    conditions: [{type:&apos;inputEquals&apos;,value:category2}], //unpleasant response.
+                    conditions: [{type:&quot;inputEquals&quot;,value:category2}], //unpleasant response.
                     actions: [
-                        {type:&apos;hideStim&apos;,handle:&apos;All&apos;},
-                        {type:&apos;setTrialAttr&apos;,setter:{score:&apos;0&apos;}},
-                        {type:&apos;removeInput&apos;,handle	:[category2,category1]},
-                        {type:&apos;log&apos;},
-                        {type:&apos;setInput&apos;,input:{handle:&apos;endTrial&apos;,on:&apos;timeout&apos;,duration:250}}
+                        {type:&quot;hideStim&quot;,handle:&quot;All&quot;},
+                        {type:&quot;setTrialAttr&quot;,setter:{score:&quot;0&quot;}},
+                        {type:&quot;removeInput&quot;,handle	:[category2,category1]},
+                        {type:&quot;log&quot;},
+                        {type:&quot;setInput&quot;,input:{handle:&quot;endTrial&quot;,on:&quot;timeout&quot;,duration:250}}
                     ]
                 },
 
-                // skip block -&gt; if you press &apos;enter&apos; you will skip the current block.
+                // skip block -&gt; if you press &quot;enter&quot; you will skip the current block.
                 {
-                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;enter&apos;}],
+                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;enter&quot;}],
                     actions: [
-                        {type:&apos;goto&apos;, destination: &apos;nextWhere&apos;, properties: {blockStart:true}},
-                        {type:&apos;endTrial&apos;}
+                        {type:&quot;goto&quot;, destination: &quot;nextWhere&quot;, properties: {blockStart:true}},
+                        {type:&quot;endTrial&quot;}
                     ]
                 },
 
                 {
-                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;endTrial&apos;}], //What to do when endTrial is called.
-                    actions: [{type:&apos;endTrial&apos;}]
+                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;endTrial&quot;}], //What to do when endTrial is called.
+                    actions: [{type:&quot;endTrial&quot;}]
                 }
             ]
         }], // end example trial
 
         example:[{
-            data:{condition:&quot;example&quot;},
-            inherit:{set: &apos;exampleTrial&apos;},
+            data:{condition:"example"},
+            inherit:{set: &quot;exampleTrial&quot;},
             stimuli: [
-                { inherit: {set: &apos;targetStimulus&apos;, type:&apos;exRandom&apos;}, data : {handle:&apos;targetStim&apos;} },
-                { inherit: {set: &apos;exprimingImage&apos;, type:&apos;exRandom&apos;}, data : {handle:&apos;primingImage&apos;} },
-                { inherit: &apos;exMaskScreen&apos;},
-                { inherit: &apos;blankScreen&apos;}
+                { inherit: {set: &quot;targetStimulus&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;targetStim&quot;} },
+                { inherit: {set: &quot;exprimingImage&quot;, type:&quot;exRandom&quot;}, data : {handle:&quot;primingImage&quot;} },
+                { inherit: &quot;exMaskScreen&quot;},
+                { inherit: &quot;blankScreen&quot;}
             ]
         }]
 
     });
 
     //Define the instructions trial- will be use gor showing the instruction at the begining of each block, and the user feedback at the end.
-    API.addTrialSets(&apos;inst&apos;,{
+    API.addTrialSets(&quot;inst&quot;,{
         layout: [
-            {location:{left:2,top:2},media:{word:&apos;key: E&apos;}, css:{color:&apos;white&apos;,&apos;font-size&apos;:&apos;1em&apos;}},
-            {location:{left:75,top:2},media:{word:&apos;key: I&apos;},  css:{color:&apos;white&apos;,&apos;font-size&apos;:&apos;1em&apos;}},
-            {location:{left:2,top:5},media:{word:category2}, css:{color:&apos;#33ff33&apos;,&apos;font-size&apos;:&apos;2em&apos;}},
-            {location:{left:75,top:5},media:{word:category1},  css:{color:&apos;#33ff33&apos;,&apos;font-size&apos;:&apos;2em&apos;}}
+            {location:{left:2,top:2},media:{word:&quot;key: E&quot;}, css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;1em&quot;}},
+            {location:{left:75,top:2},media:{word:&quot;key: I&quot;},  css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;1em&quot;}},
+            {location:{left:2,top:5},media:{word:category2}, css:{color:&quot;#33ff33&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
+            {location:{left:75,top:5},media:{word:category1},  css:{color:&quot;#33ff33&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
         ],
         input: [
-            {handle:&apos;space&apos;,on:&apos;space&apos;}, //Will handle a SPACEBAR reponse
-            {handle:&apos;enter&apos;,on:&apos;enter&apos;},
-            {handle:&apos;space&apos;,on:&apos;bottomTouch&apos;,touch:true}
+            {handle:&quot;space&quot;,on:&quot;space&quot;}, //Will handle a SPACEBAR reponse
+            {handle:&quot;enter&quot;,on:&quot;enter&quot;},
+            {handle:&quot;space&quot;,on:&quot;bottomTouch&quot;,touch:true}
         ],
         interactions: [
             { // begin trial
-                conditions: [{type:&apos;begin&apos;}],
-                actions: [{type:&apos;showStim&apos;,handle:&apos;All&apos;}] //Show the instructions, later use to show the user feedback
+                conditions: [{type:&quot;begin&quot;}],
+                actions: [{type:&quot;showStim&quot;,handle:&quot;All&quot;}] //Show the instructions, later use to show the user feedback
             },
             {
-                conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}], //What to do when space is pressed
+                conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}], //What to do when space is pressed
                 actions: [
-                    {type:&apos;hideStim&apos;,handle:&apos;All&apos;}, //Hide the instructions
-                    {type:&apos;setInput&apos;,input:{handle:&apos;endTrial&apos;, on:&apos;timeout&apos;,duration:500}} //In 500ms: end the trial. In the mean time, we get a blank screen.
+                    {type:&quot;hideStim&quot;,handle:&quot;All&quot;}, //Hide the instructions
+                    {type:&quot;setInput&quot;,input:{handle:&quot;endTrial&quot;, on:&quot;timeout&quot;,duration:500}} //In 500ms: end the trial. In the mean time, we get a blank screen.
                 ]
             },
             {
-                conditions: [{type:&apos;inputEquals&apos;,value:&apos;endTrial&apos;}], //What to do when endTrial is called.
+                conditions: [{type:&quot;inputEquals&quot;,value:&quot;endTrial&quot;}], //What to do when endTrial is called.
                 actions: [
-                    {type:&apos;endTrial&apos;} //End the trial
+                    {type:&quot;endTrial&quot;} //End the trial
                 ]
             },
-            // skip block -&gt; if you press &apos;enter&apos; while the instructions is shown, you will skip the current block.
+            // skip block -&gt; if you press &quot;enter&quot; while the instructions is shown, you will skip the current block.
             {
-                conditions: [{type:&apos;inputEquals&apos;,value:&apos;enter&apos;}],
+                conditions: [{type:&quot;inputEquals&quot;,value:&quot;enter&quot;}],
                 actions: [
-                    {type:&apos;goto&apos;, destination: &apos;nextWhere&apos;, properties: {blockStart:true}},
-                    {type:&apos;endTrial&apos;}
+                    {type:&quot;goto&quot;, destination: &quot;nextWhere&quot;, properties: {blockStart:true}},
+                    {type:&quot;endTrial&quot;}
                 ]
             }
         ]
@@ -480,39 +466,39 @@ define([&apos;pipAPI&apos;], function(APIconstructor) {
         //That way we can later create a stimulus object the inherits from this set randomly.
         // This Default stimulus is inherited by the other stimuli so that we can have a consistent look and change it from one place
     Default: [
-        {css:{color:&apos;white&apos;,&apos;font-size&apos;:&apos;2em&apos;}}
+        {css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
     ],
     //That way we can later create a stimulus object the inherits from this set randomly.
     targetStimulus: [
         {
-            data: {alias:&apos;chinese char.&apos;},
-            inherit:&apos;Default&apos;,
-            media: {inherit:{type:&apos;exRandom&apos;,set:&apos;targetWords&apos;}} //Select a word from the media, randomly
+            data: {alias:&quot;chinese char.&quot;},
+            inherit:&quot;Default&quot;,
+            media: {inherit:{type:&quot;exRandom&quot;,set:&quot;targetWords&quot;}} //Select a word from the media, randomly
         }
     ],
 
     //blankScreen  stimulus (in between the trials)
     MaskScreen : [
         {
-            data : {handle:&apos;MaskScreen&apos;},
-            inherit:&apos;Default&apos;,
-            media: {image:&apos;ampmask.jpg&apos;},//the mask we put on the letter
+            data : {handle:&quot;MaskScreen&quot;},
+            inherit:&quot;Default&quot;,
+            media: {image:&quot;ampmask.jpg&quot;},//the mask we put on the letter
             nolog:true
         }
     ],
-    exMaskScreen : [// the mask with the : &quot;Rate now&quot;
+    exMaskScreen : [// the mask with the : "Rate now"
         {
-            data : {handle:&apos;MaskScreen&apos;},
-            inherit:&apos;Default&apos;,
-            media: {image:&apos;ampmaskr.jpg&apos;},//the mask we put on the letter in the example trial
+            data : {handle:&quot;MaskScreen&quot;},
+            inherit:&quot;Default&quot;,
+            media: {image:&quot;ampmaskr.jpg&quot;},//the mask we put on the letter in the example trial
             nolog:true
         }
     ],
-    blankScreen : [// can be used as a fixation point by replacing the word with &apos;+&apos;
+    blankScreen : [// can be used as a fixation point by replacing the word with &quot;+&quot;
         {
-            data : {handle:&apos;blankScreen&apos;},
-            css:{color:&apos;green&apos;,&apos;font-size&apos;:&apos;2em&apos;},
-            media: {word:&apos; &apos;},//the blank screen in between
+            data : {handle:&quot;blankScreen&quot;},
+            css:{color:&quot;green&quot;,&quot;font-size&quot;:&quot;2em&quot;},
+            media: {word:&quot; &quot;},//the blank screen in between
             nolog:true
         }
     ],
@@ -520,25 +506,25 @@ define([&apos;pipAPI&apos;], function(APIconstructor) {
     primingImage1 : [
         //white
         {
-            data : {handle:&apos;primingImage&apos;,alias: &apos;white&apos;},
-            inherit:&apos;Default&apos;,
-            media: {inherit:{type:&apos;exRandom&apos;,set:&apos;Images1&apos;}}
+            data : {handle:&quot;primingImage&quot;,alias: &quot;white&quot;},
+            inherit:&quot;Default&quot;,
+            media: {inherit:{type:&quot;exRandom&quot;,set:&quot;Images1&quot;}}
         }
     ],
     //black
     primingImage2 : [
         {
-            data : {handle:&apos;primingImage&apos;,alias: &apos;black&apos;},
-            inherit:&apos;Default&apos;,
-            media: {inherit:{type:&apos;exRandom&apos;,set:&apos;Images2&apos;}}
+            data : {handle:&quot;primingImage&quot;,alias: &quot;black&quot;},
+            inherit:&quot;Default&quot;,
+            media: {inherit:{type:&quot;exRandom&quot;,set:&quot;Images2&quot;}}
         }
     ],
     //example images
     exprimingImage : [
         {
-            data : {handle:&apos;primingImage&apos;,alias:&apos;example&apos;},
-            inherit:&apos;Default&apos;,
-            media: {inherit:{type:&apos;exRandom&apos;,set:&apos;exImages&apos;}}
+            data : {handle:&quot;primingImage&quot;,alias:&quot;example&quot;},
+            inherit:&quot;Default&quot;,
+            media: {inherit:{type:&quot;exRandom&quot;,set:&quot;exImages&quot;}}
         }
     ]
     });
@@ -548,178 +534,178 @@ define([&apos;pipAPI&apos;], function(APIconstructor) {
     //example
     API.addMediaSets({
         exImages: [
-            {image: &apos;ampchair.jpg&apos;},
-            {image: &apos;amplamp.jpg&apos;},
-            {image: &apos;ampumbrella.jpg&apos;}
+            {image: &quot;ampchair.jpg&quot;},
+            {image: &quot;amplamp.jpg&quot;},
+            {image: &quot;ampumbrella.jpg&quot;}
         ]
     });
     //white
     API.addMediaSets({
         Images1: [
-            {image: &apos;sw01.jpg&apos;},
-            {image: &apos;sw02.jpg&apos;},
-            {image: &apos;sw03.jpg&apos;},
-            {image: &apos;sw04.jpg&apos;},
-            {image: &apos;sw05.jpg&apos;},
-            {image: &apos;sw06.jpg&apos;},
-            {image: &apos;sw07.jpg&apos;},
-            {image: &apos;sw08.jpg&apos;},
-            {image: &apos;sw09.jpg&apos;},
-            {image: &apos;sw10.jpg&apos;},
-            {image: &apos;sw11.jpg&apos;},
-            {image: &apos;sw12.jpg&apos;},
-            {image: &apos;wm5.jpg&apos;},
-            {image: &apos;wm15.jpg&apos;}
+            {image: &quot;sw01.jpg&quot;},
+            {image: &quot;sw02.jpg&quot;},
+            {image: &quot;sw03.jpg&quot;},
+            {image: &quot;sw04.jpg&quot;},
+            {image: &quot;sw05.jpg&quot;},
+            {image: &quot;sw06.jpg&quot;},
+            {image: &quot;sw07.jpg&quot;},
+            {image: &quot;sw08.jpg&quot;},
+            {image: &quot;sw09.jpg&quot;},
+            {image: &quot;sw10.jpg&quot;},
+            {image: &quot;sw11.jpg&quot;},
+            {image: &quot;sw12.jpg&quot;},
+            {image: &quot;wm5.jpg&quot;},
+            {image: &quot;wm15.jpg&quot;}
         ]
     });
     //black
     API.addMediaSets({
         Images2: [
-            {image: &apos;sb01.jpg&apos;},
-            {image: &apos;sb02.jpg&apos;},
-            {image: &apos;sb03.jpg&apos;},
-            {image: &apos;sb04.jpg&apos;},
-            {image: &apos;sb05.jpg&apos;},
-            {image: &apos;sb06.jpg&apos;},
-            {image: &apos;sb07.jpg&apos;},
-            {image: &apos;sb08.jpg&apos;},
-            {image: &apos;sb09.jpg&apos;},
-            {image: &apos;sb10.jpg&apos;},
-            {image: &apos;sb11.jpg&apos;},
-            {image: &apos;sb12.jpg&apos;}
+            {image: &quot;sb01.jpg&quot;},
+            {image: &quot;sb02.jpg&quot;},
+            {image: &quot;sb03.jpg&quot;},
+            {image: &quot;sb04.jpg&quot;},
+            {image: &quot;sb05.jpg&quot;},
+            {image: &quot;sb06.jpg&quot;},
+            {image: &quot;sb07.jpg&quot;},
+            {image: &quot;sb08.jpg&quot;},
+            {image: &quot;sb09.jpg&quot;},
+            {image: &quot;sb10.jpg&quot;},
+            {image: &quot;sb11.jpg&quot;},
+            {image: &quot;sb12.jpg&quot;}
         ]
     });
     //the letters
     API.addMediaSets({
         targetWords: [
-            {image: &apos;pic1.jpg&apos;},
-            {image: &apos;pic2.jpg&apos;},
-            {image: &apos;pic3.jpg&apos;},
-            {image: &apos;pic4.jpg&apos;},
-            {image: &apos;pic5.jpg&apos;},
-            {image: &apos;pic6.jpg&apos;},
-            {image: &apos;pic7.jpg&apos;},
-            {image: &apos;pic8.jpg&apos;},
-            {image: &apos;pic9.jpg&apos;},
-            {image: &apos;pic10.jpg&apos;},
-            {image: &apos;pic11.jpg&apos;},
-            {image: &apos;pic12.jpg&apos;},
-            {image: &apos;pic13.jpg&apos;},
-            {image: &apos;pic14.jpg&apos;},
-            {image: &apos;pic15.jpg&apos;},
-            {image: &apos;pic16.jpg&apos;},
-            {image: &apos;pic17.jpg&apos;},
-            {image: &apos;pic18.jpg&apos;},
-            {image: &apos;pic19.jpg&apos;},
-            {image: &apos;pic20.jpg&apos;},
-            {image: &apos;pic21.jpg&apos;},
-            {image: &apos;pic22.jpg&apos;},
-            {image: &apos;pic23.jpg&apos;},
-            {image: &apos;pic24.jpg&apos;},
-            {image: &apos;pic25.jpg&apos;},
-            {image: &apos;pic26.jpg&apos;},
-            {image: &apos;pic27.jpg&apos;},
-            {image: &apos;pic28.jpg&apos;},
-            {image: &apos;pic29.jpg&apos;},
-            {image: &apos;pic30.jpg&apos;},
-            {image: &apos;pic31.jpg&apos;},
-            {image: &apos;pic32.jpg&apos;},
-            {image: &apos;pic33.jpg&apos;},
-            {image: &apos;pic34.jpg&apos;},
-            {image: &apos;pic35.jpg&apos;},
-            {image: &apos;pic36.jpg&apos;},
-            {image: &apos;pic37.jpg&apos;},
-            {image: &apos;pic38.jpg&apos;},
-            {image: &apos;pic39.jpg&apos;},
-            {image: &apos;pic40.jpg&apos;},
-            {image: &apos;pic41.jpg&apos;},
-            {image: &apos;pic42.jpg&apos;},
-            {image: &apos;pic43.jpg&apos;},
-            {image: &apos;pic44.jpg&apos;},
-            {image: &apos;pic45.jpg&apos;},
-            {image: &apos;pic46.jpg&apos;},
-            {image: &apos;pic47.jpg&apos;},
-            {image: &apos;pic48.jpg&apos;},
-            {image: &apos;pic49.jpg&apos;},
-            {image: &apos;pic50.jpg&apos;},
-            {image: &apos;pic51.jpg&apos;},
-            {image: &apos;pic52.jpg&apos;},
-            {image: &apos;pic53.jpg&apos;},
-            {image: &apos;pic54.jpg&apos;},
-            {image: &apos;pic55.jpg&apos;},
-            {image: &apos;pic56.jpg&apos;},
-            {image: &apos;pic57.jpg&apos;},
-            {image: &apos;pic58.jpg&apos;},
-            {image: &apos;pic59.jpg&apos;},
-            {image: &apos;pic60.jpg&apos;},
-            {image: &apos;pic61.jpg&apos;},
-            {image: &apos;pic62.jpg&apos;},
-            {image: &apos;pic63.jpg&apos;},
-            {image: &apos;pic64.jpg&apos;},
-            {image: &apos;pic65.jpg&apos;},
-            {image: &apos;pic66.jpg&apos;},
-            {image: &apos;pic67.jpg&apos;},
-            {image: &apos;pic68.jpg&apos;},
-            {image: &apos;pic69.jpg&apos;},
-            {image: &apos;pic70.jpg&apos;},
-            {image: &apos;pic71.jpg&apos;},
-            {image: &apos;pic72.jpg&apos;},
-            {image: &apos;pic73.jpg&apos;},
-            {image: &apos;pic74.jpg&apos;},
-            {image: &apos;pic75.jpg&apos;},
-            {image: &apos;pic76.jpg&apos;},
-            {image: &apos;pic77.jpg&apos;},
-            {image: &apos;pic78.jpg&apos;},
-            {image: &apos;pic79.jpg&apos;},
-            {image: &apos;pic80.jpg&apos;},
-            {image: &apos;pic81.jpg&apos;},
-            {image: &apos;pic82.jpg&apos;},
-            {image: &apos;pic83.jpg&apos;},
-            {image: &apos;pic84.jpg&apos;},
-            {image: &apos;pic85.jpg&apos;},
-            {image: &apos;pic86.jpg&apos;},
-            {image: &apos;pic87.jpg&apos;},
-            {image: &apos;pic88.jpg&apos;},
-            {image: &apos;pic89.jpg&apos;},
-            {image: &apos;pic90.jpg&apos;},
-            {image: &apos;pic91.jpg&apos;},
-            {image: &apos;pic92.jpg&apos;},
-            {image: &apos;pic93.jpg&apos;},
-            {image: &apos;pic94.jpg&apos;},
-            {image: &apos;pic95.jpg&apos;},
-            {image: &apos;pic96.jpg&apos;},
-            {image: &apos;pic97.jpg&apos;},
-            {image: &apos;pic98.jpg&apos;},
-            {image: &apos;pic99.jpg&apos;},
-            {image: &apos;pic100.jpg&apos;},
-            {image: &apos;pic101.jpg&apos;},
-            {image: &apos;pic102.jpg&apos;},
-            {image: &apos;pic103.jpg&apos;},
-            {image: &apos;pic104.jpg&apos;},
-            {image: &apos;pic105.jpg&apos;},
-            {image: &apos;pic106.jpg&apos;},
-            {image: &apos;pic107.jpg&apos;},
-            {image: &apos;pic108.jpg&apos;},
-            {image: &apos;pic109.jpg&apos;},
-            {image: &apos;pic110.jpg&apos;},
-            {image: &apos;pic111.jpg&apos;},
-            {image: &apos;pic112.jpg&apos;},
-            {image: &apos;pic113.jpg&apos;},
-            {image: &apos;pic114.jpg&apos;},
-            {image: &apos;pic115.jpg&apos;},
-            {image: &apos;pic116.jpg&apos;},
-            {image: &apos;pic117.jpg&apos;},
-            {image: &apos;pic118.jpg&apos;},
-            {image: &apos;pic119.jpg&apos;},
-            {image: &apos;pic120.jpg&apos;},
-            {image: &apos;pic121.jpg&apos;},
-            {image: &apos;pic122.jpg&apos;},
-            {image: &apos;pic123.jpg&apos;},
-            {image: &apos;pic124.jpg&apos;},
-            {image: &apos;pic125.jpg&apos;},
-            {image: &apos;pic126.jpg&apos;},
-            {image: &apos;pic127.jpg&apos;},
-            {image: &apos;pic128.jpg&apos;}
+            {image: &quot;pic1.jpg&quot;},
+            {image: &quot;pic2.jpg&quot;},
+            {image: &quot;pic3.jpg&quot;},
+            {image: &quot;pic4.jpg&quot;},
+            {image: &quot;pic5.jpg&quot;},
+            {image: &quot;pic6.jpg&quot;},
+            {image: &quot;pic7.jpg&quot;},
+            {image: &quot;pic8.jpg&quot;},
+            {image: &quot;pic9.jpg&quot;},
+            {image: &quot;pic10.jpg&quot;},
+            {image: &quot;pic11.jpg&quot;},
+            {image: &quot;pic12.jpg&quot;},
+            {image: &quot;pic13.jpg&quot;},
+            {image: &quot;pic14.jpg&quot;},
+            {image: &quot;pic15.jpg&quot;},
+            {image: &quot;pic16.jpg&quot;},
+            {image: &quot;pic17.jpg&quot;},
+            {image: &quot;pic18.jpg&quot;},
+            {image: &quot;pic19.jpg&quot;},
+            {image: &quot;pic20.jpg&quot;},
+            {image: &quot;pic21.jpg&quot;},
+            {image: &quot;pic22.jpg&quot;},
+            {image: &quot;pic23.jpg&quot;},
+            {image: &quot;pic24.jpg&quot;},
+            {image: &quot;pic25.jpg&quot;},
+            {image: &quot;pic26.jpg&quot;},
+            {image: &quot;pic27.jpg&quot;},
+            {image: &quot;pic28.jpg&quot;},
+            {image: &quot;pic29.jpg&quot;},
+            {image: &quot;pic30.jpg&quot;},
+            {image: &quot;pic31.jpg&quot;},
+            {image: &quot;pic32.jpg&quot;},
+            {image: &quot;pic33.jpg&quot;},
+            {image: &quot;pic34.jpg&quot;},
+            {image: &quot;pic35.jpg&quot;},
+            {image: &quot;pic36.jpg&quot;},
+            {image: &quot;pic37.jpg&quot;},
+            {image: &quot;pic38.jpg&quot;},
+            {image: &quot;pic39.jpg&quot;},
+            {image: &quot;pic40.jpg&quot;},
+            {image: &quot;pic41.jpg&quot;},
+            {image: &quot;pic42.jpg&quot;},
+            {image: &quot;pic43.jpg&quot;},
+            {image: &quot;pic44.jpg&quot;},
+            {image: &quot;pic45.jpg&quot;},
+            {image: &quot;pic46.jpg&quot;},
+            {image: &quot;pic47.jpg&quot;},
+            {image: &quot;pic48.jpg&quot;},
+            {image: &quot;pic49.jpg&quot;},
+            {image: &quot;pic50.jpg&quot;},
+            {image: &quot;pic51.jpg&quot;},
+            {image: &quot;pic52.jpg&quot;},
+            {image: &quot;pic53.jpg&quot;},
+            {image: &quot;pic54.jpg&quot;},
+            {image: &quot;pic55.jpg&quot;},
+            {image: &quot;pic56.jpg&quot;},
+            {image: &quot;pic57.jpg&quot;},
+            {image: &quot;pic58.jpg&quot;},
+            {image: &quot;pic59.jpg&quot;},
+            {image: &quot;pic60.jpg&quot;},
+            {image: &quot;pic61.jpg&quot;},
+            {image: &quot;pic62.jpg&quot;},
+            {image: &quot;pic63.jpg&quot;},
+            {image: &quot;pic64.jpg&quot;},
+            {image: &quot;pic65.jpg&quot;},
+            {image: &quot;pic66.jpg&quot;},
+            {image: &quot;pic67.jpg&quot;},
+            {image: &quot;pic68.jpg&quot;},
+            {image: &quot;pic69.jpg&quot;},
+            {image: &quot;pic70.jpg&quot;},
+            {image: &quot;pic71.jpg&quot;},
+            {image: &quot;pic72.jpg&quot;},
+            {image: &quot;pic73.jpg&quot;},
+            {image: &quot;pic74.jpg&quot;},
+            {image: &quot;pic75.jpg&quot;},
+            {image: &quot;pic76.jpg&quot;},
+            {image: &quot;pic77.jpg&quot;},
+            {image: &quot;pic78.jpg&quot;},
+            {image: &quot;pic79.jpg&quot;},
+            {image: &quot;pic80.jpg&quot;},
+            {image: &quot;pic81.jpg&quot;},
+            {image: &quot;pic82.jpg&quot;},
+            {image: &quot;pic83.jpg&quot;},
+            {image: &quot;pic84.jpg&quot;},
+            {image: &quot;pic85.jpg&quot;},
+            {image: &quot;pic86.jpg&quot;},
+            {image: &quot;pic87.jpg&quot;},
+            {image: &quot;pic88.jpg&quot;},
+            {image: &quot;pic89.jpg&quot;},
+            {image: &quot;pic90.jpg&quot;},
+            {image: &quot;pic91.jpg&quot;},
+            {image: &quot;pic92.jpg&quot;},
+            {image: &quot;pic93.jpg&quot;},
+            {image: &quot;pic94.jpg&quot;},
+            {image: &quot;pic95.jpg&quot;},
+            {image: &quot;pic96.jpg&quot;},
+            {image: &quot;pic97.jpg&quot;},
+            {image: &quot;pic98.jpg&quot;},
+            {image: &quot;pic99.jpg&quot;},
+            {image: &quot;pic100.jpg&quot;},
+            {image: &quot;pic101.jpg&quot;},
+            {image: &quot;pic102.jpg&quot;},
+            {image: &quot;pic103.jpg&quot;},
+            {image: &quot;pic104.jpg&quot;},
+            {image: &quot;pic105.jpg&quot;},
+            {image: &quot;pic106.jpg&quot;},
+            {image: &quot;pic107.jpg&quot;},
+            {image: &quot;pic108.jpg&quot;},
+            {image: &quot;pic109.jpg&quot;},
+            {image: &quot;pic110.jpg&quot;},
+            {image: &quot;pic111.jpg&quot;},
+            {image: &quot;pic112.jpg&quot;},
+            {image: &quot;pic113.jpg&quot;},
+            {image: &quot;pic114.jpg&quot;},
+            {image: &quot;pic115.jpg&quot;},
+            {image: &quot;pic116.jpg&quot;},
+            {image: &quot;pic117.jpg&quot;},
+            {image: &quot;pic118.jpg&quot;},
+            {image: &quot;pic119.jpg&quot;},
+            {image: &quot;pic120.jpg&quot;},
+            {image: &quot;pic121.jpg&quot;},
+            {image: &quot;pic122.jpg&quot;},
+            {image: &quot;pic123.jpg&quot;},
+            {image: &quot;pic124.jpg&quot;},
+            {image: &quot;pic125.jpg&quot;},
+            {image: &quot;pic126.jpg&quot;},
+            {image: &quot;pic127.jpg&quot;},
+            {image: &quot;pic128.jpg&quot;}
         ]
     });
 
@@ -727,73 +713,73 @@ define([&apos;pipAPI&apos;], function(APIconstructor) {
     API.addSequence([
         { //Instructions trial
             data: {blockStart:true},
-            inherit : &quot;inst&quot;,
+            inherit : "inst",
             stimuli: [
                 {//The instructions stimulus
                     //the instructions that will be shown on the screen
-                    media:{html:&apos;&lt;div&gt;&lt;p style=&quot;font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial&quot;&gt;&lt;color=&quot;FFFFFF&quot;&gt;Press the key &lt;B&gt;I&lt;/B&gt; if the drawing is more pleasant than average. Hit the &lt;b&gt;E&lt;/b&gt; key If it is more unpleasant than average. The images appear and disappear quickly.  Remember to ignore the first picture and evaluate only the Chinese drawing.&lt;br/&gt;&lt;br/&gt;When you are ready to try a few practice responses, hit the &lt;b&gt;space bar&lt;/b&gt;.&lt;/p&gt;&lt;/div&gt;&apos;}
+                    media:{html:&quot;&lt;div&gt;&lt;p style="font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial"&gt;&lt;color="FFFFFF"&gt;Press the key &lt;B&gt;I&lt;/B&gt; if the drawing is more pleasant than average. Hit the &lt;b&gt;E&lt;/b&gt; key If it is more unpleasant than average. The images appear and disappear quickly.  Remember to ignore the first picture and evaluate only the Chinese drawing.&lt;br/&gt;&lt;br/&gt;When you are ready to try a few practice responses, hit the &lt;b&gt;space bar&lt;/b&gt;.&lt;/p&gt;&lt;/div&gt;&quot;}
                 }]},
                 { //The presentation example trials
-                    mixer: &apos;repeat&apos;,// Repeat 3 times the trial.
+                    mixer: &quot;repeat&quot;,// Repeat 3 times the trial.
                     times: 3,
-                    data : [{inherit: &apos;example&apos;,data:{block:0}}]
+                    data : [{inherit: &quot;example&quot;,data:{block:0}}]
                 },
 
                 { //Instructions trial
                     data: {blockStart:true},
-                    inherit : &quot;inst&quot;,
+                    inherit : "inst",
                     stimuli: [
                         {//The instructions stimulus
-                            media:{html:&apos;&lt;div&gt;&lt;p style=&quot;font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial&quot;&gt;&lt;color=&quot;FFFFFF&quot;&gt;&lt;br/&gt;See how fast it is? Don\&apos;t worry if you miss some. Go with your gut feelings.&lt;br&gt;&lt;br&gt;Concentrate on the drawing and rate it as more &quot;pleasant&quot; than average with the &lt;b&gt;I&lt;/b&gt; key, or more &quot;unpleasant&quot; than average with the &lt;b&gt;E&lt;/b&gt; key.&lt;br/&gt;&lt;br/&gt;Evaluate each Chinese drawing and not the image that appears before it. The images are sometimes distracting.&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;font-size:14px; text-align:center; font-family:arial&quot;&gt;Ready? Press the &lt;b&gt;space bar&lt;/b&gt; to begin.&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;font-size:12px; text-align:center; font-family:arial&quot;&gt;(round 1 of 3)&lt;/p&gt;&lt;/div&gt;&apos;}
+                            media:{html:&quot;&lt;div&gt;&lt;p style="font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial"&gt;&lt;color="FFFFFF"&gt;&lt;br/&gt;See how fast it is? Don\&quot;t worry if you miss some. Go with your gut feelings.&lt;br&gt;&lt;br&gt;Concentrate on the drawing and rate it as more "pleasant" than average with the &lt;b&gt;I&lt;/b&gt; key, or more "unpleasant" than average with the &lt;b&gt;E&lt;/b&gt; key.&lt;br/&gt;&lt;br/&gt;Evaluate each Chinese drawing and not the image that appears before it. The images are sometimes distracting.&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style="font-size:14px; text-align:center; font-family:arial"&gt;Ready? Press the &lt;b&gt;space bar&lt;/b&gt; to begin.&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style="font-size:12px; text-align:center; font-family:arial"&gt;(round 1 of 3)&lt;/p&gt;&lt;/div&gt;&quot;}
                         }]},
                         { //The presentation trials
-                            mixer: &apos;random&apos;,
+                            mixer: &quot;random&quot;,
                             data : [{
-                                mixer: &apos;repeat&apos;,// Repeat 40 times the trial. (20 times each combination)
+                                mixer: &quot;repeat&quot;,// Repeat 40 times the trial. (20 times each combination)
                                 times: 20,
                                 data : [
-                                    {inherit: &apos;prime1&apos;,data:{block:1}},
-                                    {inherit: &apos;prime2&apos;,data:{block:1}}
+                                    {inherit: &quot;prime1&quot;,data:{block:1}},
+                                    {inherit: &quot;prime2&quot;,data:{block:1}}
                                 ]
                             }]
                         },
 
                         { //Instructions trial, second round
                             data: {blockStart:true},
-                            inherit : &quot;inst&quot;,
+                            inherit : "inst",
                             stimuli: [
                                 {//The instructions stimulus
-                                    media:{html:&apos;&lt;div&gt;&lt;p style=&quot;font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial&quot;&gt;&lt;color=&quot;FFFFFF&quot;&gt;&lt;br/&gt;Continue to the second round of this task. The rules are exactly the same:&lt;br/&gt;&lt;br/&gt;Concentrate on the drawing and rate it as more &quot;pleasant&quot; than average with the &lt;b&gt;I&lt;/b&gt; key, or more &quot;unpleasant&quot; than average with the &lt;b&gt;E&lt;/b&gt; key.&lt;br/&gt;&lt;br/&gt;Evaluate each Chinese drawing and not the image that appears before it. The images are sometimes distracting.&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;font-size:14px; text-align:center; font-family:arial&quot;&gt;Ready? Press the &lt;b&gt;space bar&lt;/b&gt; to begin.&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;font-size:12px; text-align:center; font-family:arial&quot;&gt;(round 2 of 3)&lt;/p&gt;&lt;/div&gt;&apos;}
+                                    media:{html:&quot;&lt;div&gt;&lt;p style="font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial"&gt;&lt;color="FFFFFF"&gt;&lt;br/&gt;Continue to the second round of this task. The rules are exactly the same:&lt;br/&gt;&lt;br/&gt;Concentrate on the drawing and rate it as more "pleasant" than average with the &lt;b&gt;I&lt;/b&gt; key, or more "unpleasant" than average with the &lt;b&gt;E&lt;/b&gt; key.&lt;br/&gt;&lt;br/&gt;Evaluate each Chinese drawing and not the image that appears before it. The images are sometimes distracting.&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style="font-size:14px; text-align:center; font-family:arial"&gt;Ready? Press the &lt;b&gt;space bar&lt;/b&gt; to begin.&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style="font-size:12px; text-align:center; font-family:arial"&gt;(round 2 of 3)&lt;/p&gt;&lt;/div&gt;&quot;}
                                 }
                             ]},
                             { //The presentation trials
                                 // Repeat 40 times the trial. (20 times each combination)
-                                mixer: &apos;random&apos;,
+                                mixer: &quot;random&quot;,
                                 data : [{
-                                    mixer: &apos;repeat&apos;,// Repeat 40 times the trial. (20 times each combination)
+                                    mixer: &quot;repeat&quot;,// Repeat 40 times the trial. (20 times each combination)
                                     times: 20,
                                     data : [
-                                        {inherit: &apos;prime1&apos;,data:{block:2}},
-                                        {inherit: &apos;prime2&apos;,data:{block:2}}
+                                        {inherit: &quot;prime1&quot;,data:{block:2}},
+                                        {inherit: &quot;prime2&quot;,data:{block:2}}
                                     ]
                                 }]
                             },
 
                             { //Instructions trial, third round
                                 data: {blockStart:true},
-                                inherit : &quot;inst&quot;,
+                                inherit : "inst",
                                 stimuli: [
                                     {//The instructions stimulus
-                                        media:{html:&apos;&lt;div&gt;&lt;p style=&quot;font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial&quot;&gt;&lt;color=&quot;FFFFFF&quot;&gt;&lt;br/&gt;And now to the last round of this task. The rules are exactly the same: &lt;br/&gt;&lt;br/&gt;Concentrate on the drawing and rate it as more &quot;pleasant&quot; than average with the &lt;b&gt;I&lt;/b&gt; key, or more &quot;unpleasant&quot; than average with the &lt;b&gt;E&lt;/b&gt; key.&lt;br&gt;&lt;br&gt;Evaluate each Chinese drawing and not the image that appears before it. The images are sometimes distracting.&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;font-size:14px; text-align:center; font-family:arial&quot;&gt;Ready? Press the &lt;b&gt;space bar&lt;/b&gt; to begin.&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;font-size:12px; text-align:center; font-family:arial&quot;&gt;(round 3 of 3)&lt;/p&gt;&lt;/div&gt;&apos;}
+                                        media:{html:&quot;&lt;div&gt;&lt;p style="font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial"&gt;&lt;color="FFFFFF"&gt;&lt;br/&gt;And now to the last round of this task. The rules are exactly the same: &lt;br/&gt;&lt;br/&gt;Concentrate on the drawing and rate it as more "pleasant" than average with the &lt;b&gt;I&lt;/b&gt; key, or more "unpleasant" than average with the &lt;b&gt;E&lt;/b&gt; key.&lt;br&gt;&lt;br&gt;Evaluate each Chinese drawing and not the image that appears before it. The images are sometimes distracting.&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style="font-size:14px; text-align:center; font-family:arial"&gt;Ready? Press the &lt;b&gt;space bar&lt;/b&gt; to begin.&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style="font-size:12px; text-align:center; font-family:arial"&gt;(round 3 of 3)&lt;/p&gt;&lt;/div&gt;&quot;}
                                     }]},
                                     { //The presentation trials
-                                        mixer: &apos;random&apos;,
+                                        mixer: &quot;random&quot;,
                                         data : [{
-                                            mixer: &apos;repeat&apos;,// Repeat 40 times the trial. (20 times each combination)
+                                            mixer: &quot;repeat&quot;,// Repeat 40 times the trial. (20 times each combination)
                                             times: 20,
                                             data : [
-                                                {inherit: &apos;prime1&apos;,data:{block:3}},
-                                                {inherit: &apos;prime2&apos;,data:{block:3}}
+                                                {inherit: &quot;prime1&quot;,data:{block:3}},
+                                                {inherit: &quot;prime2&quot;,data:{block:3}}
                                             ]
                                         }]
                                     },
@@ -801,29 +787,29 @@ define([&apos;pipAPI&apos;], function(APIconstructor) {
                                     // user feedback
                                     {
                                         data: {blockStart:true},
-                                        inherit: &quot;inst&quot;,
+                                        inherit: "inst",
                                         layout: [],
                                         stimuli: [],
                                         customize: function(){
                                             var trial = this;
-                                            //console.log(&apos;computing AMP score..&apos;);//printing to the console
+                                            //console.log(&quot;computing AMP score..&quot;);//printing to the console
                                             resetCounters();
-                                            //console.log(API.getLogs());//printing to the consol the log&apos;s array
+                                            //console.log(API.getLogs());//printing to the consol the log&quot;s array
                                             var logs = API.getLogs();//saving the logs
                                             computeAMPScore(logs);// computing the AMP score
-                                            var feedback = &apos;After &apos; + condition1 + &apos;, &apos;+AMPScorer.counter.prime1.category1+&apos; of the responses were ‘pleasant’  and &apos;+ AMPScorer.counter.prime1.category2+&apos; of the responses were ‘unpleasant’&lt;br&gt;After &apos; + condition2 + &apos;, &apos;+ AMPScorer.counter.prime2.category1+&apos; of the responses were ‘pleasant’ and &apos;+ AMPScorer.counter.prime2.category2+&apos; of the responses were ‘unpleasant’.&apos;;
+                                            var feedback = &quot;After &quot; + condition1 + &quot;, &quot;+AMPScorer.counter.prime1.category1+&quot; of the responses were ‘pleasant’  and &quot;+ AMPScorer.counter.prime1.category2+&quot; of the responses were ‘unpleasant’&lt;br&gt;After &quot; + condition2 + &quot;, &quot;+ AMPScorer.counter.prime2.category1+&quot; of the responses were ‘pleasant’ and &quot;+ AMPScorer.counter.prime2.category2+&quot; of the responses were ‘unpleasant’.&quot;;
 
                                             //show the score
-                                            var media1 = {media:{html:&apos;&lt;div&gt;&lt;p style=&quot;font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial&quot;&gt;&lt;color=&quot;#FFFFFF&quot;&gt;&apos; + feedback + &apos;&lt;/p&gt;&lt;/div&gt;&apos;}};
+                                            var media1 = {media:{html:&quot;&lt;div&gt;&lt;p style="font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial"&gt;&lt;color="#FFFFFF"&gt;&quot; + feedback + &quot;&lt;/p&gt;&lt;/div&gt;&quot;}};
                                             trial.stimuli.push(media1);
                                         }
                                     },
                                     { //Instructions trial, the end of the task, instruction what to do next
                                         data: {blockStart:true},
-                                        inherit : &quot;inst&quot;,
+                                        inherit : "inst",
                                         stimuli: [
                                             {//The instructions stimulus
-                                                media:{html:&apos;&lt;div&gt;&lt;p style=&quot;style=&quot;font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial&quot;&gt;&lt;color=&quot;#FFFFFF&quot;&gt;You have completed the task. Press space for continue to next task.&lt;/p&gt;&lt;/div&gt;&apos;}
+                                                media:{html:&quot;&lt;div&gt;&lt;p style="style="font-size:16px; text-align:left; vertical-align:bottom; margin-left:10px; font-family:arial"&gt;&lt;color="#FFFFFF"&gt;You have completed the task. Press space for continue to next task.&lt;/p&gt;&lt;/div&gt;&quot;}
                                             }
                                         ]
                                     }

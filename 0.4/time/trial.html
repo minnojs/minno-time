@@ -19,20 +19,6 @@
 					<a href="/minno-time/0.4/time/overview.html">miTime</a>
 				</nav>
 				<nav>
-                    <div id="search-box">
-                        <script>
-                            (function() {
-                                var cx = '002953266509769041597:smg5beek-iu';
-                                var gcse = document.createElement('script');
-                                gcse.type = 'text/javascript';
-                                gcse.async = true;
-                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
-                                var s = document.getElementsByTagName('script')[0];
-                                s.parentNode.insertBefore(gcse, s);
-                            })();
-                        </script>
-                        <gcse:searchbox-only></gcse:searchbox-only>
-                    </div>
                     <select id="version-select"><option value="0.3" >v0.3</option>,<option value="0.4" selected>v0.4</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
@@ -104,7 +90,7 @@
     <div class="editor">// All miTime source files are wrapped inside define function
 // This function gives you access to the API object that we use to build the various tasks
 // If you want to know more about this, you can read up about AMD and check out http://requirejs.org/
-define([&apos;pipAPI&apos;], function(APIconstructor) {
+define([&quot;pipAPI&quot;], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
@@ -120,15 +106,15 @@ define([&apos;pipAPI&apos;], function(APIconstructor) {
 			// It can be used to keep track of trial types, blocks, score etc.
 			// It becomes incrementaly usefull with more advance features of the miTime.
 			data: {
-				myProperty: &apos;information&apos;,
-				myOtherProperty: &apos;more information&apos;
+				myProperty: &quot;information&quot;,
+				myOtherProperty: &quot;more information&quot;
 			},
 
 			// The input property of the trial is used to create the user interface.
 			// In this case we tell the player to listen for hits on the space key.
 			// Later on we will tell the player what to do when the space button is clicked.
 			input: [
-				{handle:&apos;space&apos;,on:&apos;space&apos;}
+				{handle:&quot;space&quot;,on:&quot;space&quot;}
 			],
 
 			// The layout property of the trial is used to display statick stimuli.
@@ -136,15 +122,15 @@ define([&apos;pipAPI&apos;], function(APIconstructor) {
 			// This property holds an array of stimuli objects, in this case the stimuli are set to display words in the top left and bottom right of the screen.
 			// We will learn more about Stimuli in a later tutorial.
 			layout:[
-				{location:{left:0,top:0},media:{word:&apos;top left&apos;}},
-				{location:{left:&apos;auto&apos;,right:0,top:&apos;auto&apos;,bottom:0},media:{word:&apos;bottom right&apos;}}
+				{location:{left:0,top:0},media:{word:&quot;top left&quot;}},
+				{location:{left:&quot;auto&quot;,right:0,top:&quot;auto&quot;,bottom:0},media:{word:&quot;bottom right&quot;}}
 			],
 
 			// The stimuli property of the trial holds stimuli that are dynamicaly displayed durring the trial.
 			// These trials are not displayed by default, and can be affected by user interactions.
 			// Like the layout property the stimuli property holds an array of stimuli objects.
 			stimuli: [
-				{media :{word:&apos;Hello world&apos;}}
+				{media :{word:&quot;Hello world&quot;}}
 			],
 
 			// The interaction property of the trial is responsible for any interactions the user has through the trial.
@@ -155,17 +141,17 @@ define([&apos;pipAPI&apos;], function(APIconstructor) {
 				// 1. Display Stimulus
 				{
 					/* when we begin the trial (condition) */
-					conditions: [{type:&apos;begin&apos;}],
+					conditions: [{type:&quot;begin&quot;}],
 					/* show all stimuli (action) */
-					actions: [{type:&apos;showStim&apos;,handle:&apos;All&apos;}]
+					actions: [{type:&quot;showStim&quot;,handle:&quot;All&quot;}]
 				},
 
 				// 2. End trial on space click
 				{
 					/* when space is clicked */
-					conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],
+					conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],
 					/* end the trial */
-					actions: [{type:&apos;endTrial&apos;}]
+					actions: [{type:&quot;endTrial&quot;}]
 				}
 			]
 		}
@@ -175,7 +161,7 @@ define([&apos;pipAPI&apos;], function(APIconstructor) {
 
 	return API.script;
 });
-/* don&apos;t forget to close the require wrapper */</div>
+/* don&quot;t forget to close the require wrapper */</div>
 </section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" integrity="sha256-xrr4HH5eSY+cFz4SH7ja/LaAi9qcEdjMpeMP49/iOLs=" crossorigin="anonymous"></script>
 <script src="../assets/playground.js"></script>

@@ -66,6 +66,14 @@ a img {
   visibility: hidden; }
 .minno-stimulus-visible {
   visibility: visible; }
+.minno-stimulus-center-x {
+  left: 50%;
+  transform: translateX(-50%); }
+.minno-stimulus-center-y {
+  top: 50%;
+  transform: translateY(-50%); }
+.minno-stimulus-center-y.minno-stimulus-center-x {
+  transform: translate(-50%, -50%); }
 .minno-progress {
   background-color: #20201F;
   border-radius: 20px;
@@ -78,7 +86,7 @@ a img {
   margin-top: -12px; }
 .minno-progress-bar {
   background-color: #807b7a;
-  width: 48%;
+  width: 0%;
   
   height: 16px;
   border-radius: 10px; }

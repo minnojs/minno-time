@@ -6,20 +6,13 @@ define(function(require){
     function stimCollection(trial, canvas){
         var source = trial._source;
         var stimuli = source.stimuli.map(toStim);
-        var layout = source.layout.map(toStim);
+        var layout = source.layout.map(toLayout).map(toStim);
         var ready = Promise.all(stimuli.concat(layout).map(function(stim){return stim.init();}));
-
-        // show layout
-        ready.then(function(){
-            layout.forEach(function(stim){stim.show();});
-        });
-
         var self = {
             canvas: canvas,
             stimuli: stimuli,
             layout: layout,
             ready: ready,
-            render: render,
             getStimlist: getStimlist,
             getMedialist: getMedialist,
             destroy: destroy
@@ -28,10 +21,7 @@ define(function(require){
         return self;
 
         function toStim(stim){ return Stimulus(stim, trial, canvas); }
-    }
-
-    function render(){
-        this.stimuli.concat(this.layout).forEach(function(stim){stim.render();});
+        function toLayout(stim){ stim.isLayout = true; return stim;}
     }
 
     function getStimlist(){

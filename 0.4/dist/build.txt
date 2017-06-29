@@ -26,9 +26,7 @@ js/utils/database/store/storeProvider.js
 js/utils/database/databaseSequenceProvider.js
 js/utils/database/databaseProvider.js
 js/utils/database/main.js
-js/app/sequencer/database.js
 js/app/sequencer/sequenceGoto.js
-js/app/sequencer/taskSequence.js
 js/app/task/parser.js
 js/utils/getSize.js
 js/app/task/adjust_canvas.js
