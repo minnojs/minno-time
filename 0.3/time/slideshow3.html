@@ -19,6 +19,20 @@
 					<a href="/minno-time/0.3/time/overview.html">miTime</a>
 				</nav>
 				<nav>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
                     <select id="version-select"><option value="0.3" selected>v0.3</option>,<option value="0.4" >v0.4</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
@@ -84,48 +98,48 @@
         <a class="activate-button">Activate</a>
         <a class="download-button" href="slideshow3.js" download>Download</a>
     </div>
-    <div class="editor">define([&quot;pipAPI&quot;], function(APIconstructor) {
+    <div class="editor">define([&apos;pipAPI&apos;], function(APIconstructor) {
 
-	var API = new APIconstructor(&quot;slideshow&quot;);
+	var API = new APIconstructor(&apos;slideshow&apos;);
 
 
-	// Create a trial set with the "Hello world" trial.
-	API.addTrialSets(&quot;slide&quot;,[{
-		input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
-		layout: [{media :{word:&quot;Hello world&quot;}}],
+	// Create a trial set with the &quot;Hello world&quot; trial.
+	API.addTrialSets(&apos;slide&apos;,[{
+		input: [{handle:&apos;space&apos;,on:&apos;space&apos;}],
+		layout: [{media :{word:&apos;Hello world&apos;}}],
 		interactions: [{
-			conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],
-			actions: [{type:&quot;endTrial&quot;}]
+			conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],
+			actions: [{type:&apos;endTrial&apos;}]
 		}]
 	}]);
 
 	// Create a stimulus set with the default style for all trials.
-	API.addStimulusSets(&quot;default&quot;,[
-		{css:{fontSize:&quot;2em&quot;,color:&quot;#D7685A&quot;}}
+	API.addStimulusSets(&apos;default&apos;,[
+		{css:{fontSize:&apos;2em&apos;,color:&apos;#D7685A&apos;}}
 	]);
 
 	// Create the sequence.
 	API.addSequence([
 		// Trials know to inherit from trial sets.
 		{
-			inherit:&quot;slide&quot;,
+			inherit:&apos;slide&apos;,
 			// Stimuli know to inherit from stimulus sets.
 			layout: [{
-				inherit:&quot;default&quot;,
-				media :{word:&quot;This&quot;}
+				inherit:&apos;default&apos;,
+				media :{word:&apos;This&apos;}
 			}]
 		},
 		{
-			inherit:&quot;slide&quot;,
-			layout: [{inherit:&quot;default&quot;,media :{word:&quot;is&quot;}}]
+			inherit:&apos;slide&apos;,
+			layout: [{inherit:&apos;default&apos;,media :{word:&apos;is&apos;}}]
 		},
 		{
-			inherit:&quot;slide&quot;,
-			layout: [{inherit:&quot;default&quot;,media :{word:&quot;even&quot;}}]
+			inherit:&apos;slide&apos;,
+			layout: [{inherit:&apos;default&apos;,media :{word:&apos;even&apos;}}]
 		},
 		{
-			inherit:&quot;slide&quot;,
-			layout: [{inherit:&quot;default&quot;,media :{word:&quot;Cooler!&quot;}}]
+			inherit:&apos;slide&apos;,
+			layout: [{inherit:&apos;default&apos;,media :{word:&apos;Cooler!&apos;}}]
 		}
 	]);
 

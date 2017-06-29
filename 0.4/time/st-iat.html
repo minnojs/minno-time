@@ -19,6 +19,20 @@
 					<a href="/minno-time/0.4/time/overview.html">miTime</a>
 				</nav>
 				<nav>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
                     <select id="version-select"><option value="0.3" >v0.3</option>,<option value="0.4" selected>v0.4</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
@@ -86,79 +100,79 @@
         <a class="download-button" href="st-iat.js" download>Download</a>
     </div>
     <div class="editor">// You can find the images used for this task [here](https://github.com/minnojs/minno-time/tree/gh-pages/images).
-define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Scorer) {
+define([&apos;pipAPI&apos;,&apos;pipScorer&apos;], function(APIConstructor,Scorer) {
 
-    var API = new APIConstructor(&quot;plainIAT&quot;);
+    var API = new APIConstructor(&apos;plainIAT&apos;);
     var scorer = new Scorer();
 
-    var attribute1 = &quot;Unpleasant&quot;;
-    var attribute2 = &quot;Pleasant&quot;;
-    var category = &quot;Black People&quot;;
-    // the layout for the trials were the &quot;Black People&quot; are on the left side (with the &quot;Unpleasant&quot;)
+    var attribute1 = &apos;Unpleasant&apos;;
+    var attribute2 = &apos;Pleasant&apos;;
+    var category = &apos;Black People&apos;;
+    // the layout for the trials were the &apos;Black People&apos; are on the left side (with the &apos;Unpleasant&apos;)
     var leftLayout = [
-        {location:{left:16,top:12},media:{word:&quot;or&quot;}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
-        {location:{left:10,top:6},media:{word:attribute1}, css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
-        {location:{left:10,top:18},media:{word:category}, css:{color:&quot;red&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
-        {location:{right:10,top:6},media:{word:attribute2}, css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
+        {location:{left:16,top:12},media:{word:&apos;or&apos;}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;2em&apos;}},
+        {location:{left:10,top:6},media:{word:attribute1}, css:{color:&apos;white&apos;,&apos;font-size&apos;:&apos;2em&apos;}},
+        {location:{left:10,top:18},media:{word:category}, css:{color:&apos;red&apos;,&apos;font-size&apos;:&apos;2em&apos;}},
+        {location:{right:10,top:6},media:{word:attribute2}, css:{color:&apos;white&apos;,&apos;font-size&apos;:&apos;2em&apos;}}
     ];
-    // the layout for the trials were the &quot;Black People&quot; are on the right side (with the &quot;Pleasant&quot;)
+    // the layout for the trials were the &apos;Black People&apos; are on the right side (with the &apos;Pleasant&apos;)
     var rightLayout = [
-        {location:{right:16,top:12},media:{word:&quot;or&quot;}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
-        {location:{left:10,top:6},media:{word:attribute1}, css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
-        {location:{right:6,top:18},media:{word:category}, css:{color:&quot;red&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
-        {location:{right:10,top:6},media:{word:attribute2}, css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
+        {location:{right:16,top:12},media:{word:&apos;or&apos;}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;2em&apos;}},
+        {location:{left:10,top:6},media:{word:attribute1}, css:{color:&apos;white&apos;,&apos;font-size&apos;:&apos;2em&apos;}},
+        {location:{right:6,top:18},media:{word:category}, css:{color:&apos;red&apos;,&apos;font-size&apos;:&apos;2em&apos;}},
+        {location:{right:10,top:6},media:{word:attribute2}, css:{color:&apos;white&apos;,&apos;font-size&apos;:&apos;2em&apos;}}
     ];
 
-    API.addSettings(&quot;canvas&quot;,{
+    API.addSettings(&apos;canvas&apos;,{
         maxWidth: 1000,
         proportions : 0.8,
         //Change the colors to allow better presentation of the colored stimuli.
-        background: &quot;white&quot;,
-        canvasBackground: &quot;green&quot;,
+        background: &apos;white&apos;,
+        canvasBackground: &apos;green&apos;,
         borderWidth: 5,
-        borderColor: &quot;black&quot;
+        borderColor: &apos;black&apos;
     });
 
-    API.addSettings(&quot;base_url&quot;,{
-        image : &quot;/minno-time/images&quot;
+    API.addSettings(&apos;base_url&apos;,{
+        image : &apos;/minno-time/images&apos;
     });
 
-    API.addSettings(&quot;logger&quot;,{
+    API.addSettings(&apos;logger&apos;,{
         pulse: 20,
-        url : &quot;/implicit/PiPlayerApplet&quot;
+        url : &apos;/implicit/PiPlayerApplet&apos;
     });
 
     //the scorer that computes the user feedback
-    scorer.addSettings(&quot;compute&quot;,{
-        ErrorVar:&quot;score&quot;,
-        condVar:"condition",
+    scorer.addSettings(&apos;compute&apos;,{
+        ErrorVar:&apos;score&apos;,
+        condVar:&quot;condition&quot;,
         //condition 1
         cond1VarValues: [// Unpleasant, Black people/ pleasant
-            attribute1 + &quot;,&quot; + category + &quot;/&quot; + attribute2
+            attribute1 + &apos;,&apos; + category + &apos;/&apos; + attribute2
         ],
         //condition 2
         cond2VarValues: [// Unpleasant / Black people, Pleasant
-            attribute2 + &quot;,&quot; + category + &quot;/&quot; + attribute1
+            attribute2 + &apos;,&apos; + category + &apos;/&apos; + attribute1
         ],
-        parcelVar : "parcel",
-        parcelValue : [&quot;first&quot;],
+        parcelVar : &quot;parcel&quot;,
+        parcelValue : [&apos;first&apos;],
         fastRT : 150, //Below this reaction time, the latency is considered extremely fast.
         maxFastTrialsRate : 0.1, //Above this % of extremely fast responses within a condition, the participant is considered too fast.
         minRT : 400, //Below this latency
         maxRT : 10000, //above this
-        errorLatency : {use:"latency", penalty:600, useForSTD:true},
-        postSettings : {score:"score",msg:"feedback",url:"/implicit/scorer"}
+        errorLatency : {use:&quot;latency&quot;, penalty:600, useForSTD:true},
+        postSettings : {score:&quot;score&quot;,msg:&quot;feedback&quot;,url:&quot;/implicit/scorer&quot;}
     });
 
-    scorer.addSettings(&quot;message&quot;,{ /**chack*/
+    scorer.addSettings(&apos;message&apos;,{ /**chack*/
                        MessageDef: [
-                           { cut:&quot;-0.65&quot;, message:&quot;Your data suggest strong positive automatic attitude toward Black People.&quot; },
-                           { cut:&quot;-0.35&quot;, message:&quot;Your data suggest moderate positive automatic attitude toward Black People.&quot; },
-                           { cut:&quot;-0.15&quot;, message:&quot;Your data suggest weak positive automatic attitude toward Black People.&quot; },
-                           { cut:&quot;0.15&quot;, message:&quot;Your data suggest neutral automatic attitude toward Black People.&quot; },
-                           { cut:&quot;0.35&quot;, message:&quot;Your data suggest weak negative automatic attitude toward Black People.&quot; },
-                           { cut:&quot;0.65&quot;, message:&quot;Your data suggest moderate negative automatic attitude toward Black People.&quot; },
-                           { cut:&quot;5&quot;, message:&quot;Your data suggest strong negative automatic attitude toward Black People.&quot; }
+                           { cut:&apos;-0.65&apos;, message:&apos;Your data suggest strong positive automatic attitude toward Black People.&apos; },
+                           { cut:&apos;-0.35&apos;, message:&apos;Your data suggest moderate positive automatic attitude toward Black People.&apos; },
+                           { cut:&apos;-0.15&apos;, message:&apos;Your data suggest weak positive automatic attitude toward Black People.&apos; },
+                           { cut:&apos;0.15&apos;, message:&apos;Your data suggest neutral automatic attitude toward Black People.&apos; },
+                           { cut:&apos;0.35&apos;, message:&apos;Your data suggest weak negative automatic attitude toward Black People.&apos; },
+                           { cut:&apos;0.65&apos;, message:&apos;Your data suggest moderate negative automatic attitude toward Black People.&apos; },
+                           { cut:&apos;5&apos;, message:&apos;Your data suggest strong negative automatic attitude toward Black People.&apos; }
                        ]
     });
 
@@ -166,63 +180,63 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
      * Create default Trial
      * note that this function takes a single object
      */
-    API.addTrialSets(&quot;Default&quot;,{
+    API.addTrialSets(&apos;Default&apos;,{
         // by default each trial is correct, this is modified in case of an error
         data: {score:0},
         // set the interface for trials
         input: [
-            {handle:&quot;enter&quot;,on:&quot;enter&quot;},
-            {handle:&quot;left&quot;,on:&quot;keypressed&quot;,key:&quot;e&quot;},
-            {handle:&quot;right&quot;,on:&quot;keypressed&quot;,key:&quot;i&quot;},
-            {handle:&quot;left&quot;,on:&quot;leftTouch&quot;,touch:true},
-            {handle:&quot;right&quot;,on:&quot;rightTouch&quot;,touch:true}
+            {handle:&apos;enter&apos;,on:&apos;enter&apos;},
+            {handle:&apos;left&apos;,on:&apos;keypressed&apos;,key:&apos;e&apos;},
+            {handle:&apos;right&apos;,on:&apos;keypressed&apos;,key:&apos;i&apos;},
+            {handle:&apos;left&apos;,on:&apos;leftTouch&apos;,touch:true},
+            {handle:&apos;right&apos;,on:&apos;rightTouch&apos;,touch:true}
         ],
 
         // user interactions
         interactions: [
             // begin trial : display stimulus imidiately
             {
-                conditions: [{type:&quot;begin&quot;}],
-                actions: [{type:&quot;showStim&quot;,handle:&quot;myStim&quot;}]
+                conditions: [{type:&apos;begin&apos;}],
+                actions: [{type:&apos;showStim&apos;,handle:&apos;myStim&apos;}]
             },
 
             // error
             {
                 conditions: [
-                    {type:&quot;inputEqualsStim&quot;,property:&quot;side&quot;,negate:true},								// check if the input handle is unequal to the "side" attribute of stimulus.data
-                    {type:&quot;inputEquals&quot;,value:[&quot;right&quot;,&quot;left&quot;]}									// make sure this is a click interaction
+                    {type:&apos;inputEqualsStim&apos;,property:&apos;side&apos;,negate:true},								// check if the input handle is unequal to the &quot;side&quot; attribute of stimulus.data
+                    {type:&apos;inputEquals&apos;,value:[&apos;right&apos;,&apos;left&apos;]}									// make sure this is a click interaction
                 ],
                 actions: [
-                    {type:&quot;showStim&quot;,handle:&quot;error&quot;},											// show error stimulus
-                    {type:&quot;setTrialAttr&quot;, setter:{score:1}}										// set the score to 1
+                    {type:&apos;showStim&apos;,handle:&apos;error&apos;},											// show error stimulus
+                    {type:&apos;setTrialAttr&apos;, setter:{score:1}}										// set the score to 1
                 ]
             },
 
             // correct
             {
-                conditions: [{type:&quot;inputEqualsStim&quot;,property:&quot;side&quot;}],								// check if the input handle is equal to the "side" attribute of stimulus.data
+                conditions: [{type:&apos;inputEqualsStim&apos;,property:&apos;side&apos;}],								// check if the input handle is equal to the &quot;side&quot; attribute of stimulus.data
                 actions: [
-                    {type:&quot;removeInput&quot;,handle:[&quot;left&quot;,&quot;right&quot;]},
-                    {type:&quot;hideStim&quot;, handle: &quot;All&quot;},											// hide everything
-                    {type:&quot;log&quot;},																// log this trial
-                    {type:&quot;setInput&quot;,input:{handle:&quot;end&quot;, on:&quot;timeout&quot;,duration:250}}			// trigger the "end action after ITI"
+                    {type:&apos;removeInput&apos;,handle:[&apos;left&apos;,&apos;right&apos;]},
+                    {type:&apos;hideStim&apos;, handle: &apos;All&apos;},											// hide everything
+                    {type:&apos;log&apos;},																// log this trial
+                    {type:&apos;setInput&apos;,input:{handle:&apos;end&apos;, on:&apos;timeout&apos;,duration:250}}			// trigger the &quot;end action after ITI&quot;
                 ]
             },
 
             // end after ITI
             {
-                conditions: [{type:&quot;inputEquals&quot;,value:&quot;end&quot;}],
+                conditions: [{type:&apos;inputEquals&apos;,value:&apos;end&apos;}],
                 actions: [
-                    {type:&quot;endTrial&quot;}
+                    {type:&apos;endTrial&apos;}
                 ]
             },
 
             // skip block
             {
-                conditions: [{type:&quot;inputEquals&quot;,value:&quot;enter&quot;}],
+                conditions: [{type:&apos;inputEquals&apos;,value:&apos;enter&apos;}],
                 actions: [
-                    {type:&quot;goto&quot;, destination: &quot;nextWhere&quot;, properties: {blockStart:true}},
-                    {type:&quot;endTrial&quot;}
+                    {type:&apos;goto&apos;, destination: &apos;nextWhere&apos;, properties: {blockStart:true}},
+                    {type:&apos;endTrial&apos;}
                 ]
             }
         ]
@@ -232,40 +246,40 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
      * Create default Introduction trials
      * note that this function takes an array of objects
      */
-    API.addTrialSets("introduction", [
+    API.addTrialSets(&quot;introduction&quot;, [
         // generic introduction trial, to be inherited by all other inroduction trials
         {
             // set block as generic so we can inherit it later
-            data: {block: &quot;generic&quot;},
+            data: {block: &apos;generic&apos;},
 
             // create user interface (just click to move on...)
             input: [
-                {handle:&quot;space&quot;,on:&quot;space&quot;},
-                {handle:&quot;enter&quot;,on:&quot;enter&quot;},
-                {handle:&quot;space&quot;,on:&quot;bottomTouch&quot;,touch:true}
+                {handle:&apos;space&apos;,on:&apos;space&apos;},
+                {handle:&apos;enter&apos;,on:&apos;enter&apos;},
+                {handle:&apos;space&apos;,on:&apos;bottomTouch&apos;,touch:true}
             ],
 
             interactions: [
                 // display instructions
                 {
-                    conditions: [{type:&quot;begin&quot;}],
+                    conditions: [{type:&apos;begin&apos;}],
                     actions: [
-                        {type:&quot;showStim&quot;,handle:&quot;All&quot;}
+                        {type:&apos;showStim&apos;,handle:&apos;All&apos;}
                     ]
                 },
 
                 // end trial
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],
-                    actions: [{type:&quot;endTrial&quot;}]
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],
+                    actions: [{type:&apos;endTrial&apos;}]
                 },
 
                 // skip block
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;enter&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;enter&apos;}],
                     actions: [
-                        {type:&quot;goto&quot;, destination: &quot;nextWhere&quot;, properties: {blockStart:true}},
-                        {type:&quot;endTrial&quot;}
+                        {type:&apos;goto&apos;, destination: &apos;nextWhere&apos;, properties: {blockStart:true}},
+                        {type:&apos;endTrial&apos;}
                     ]
                 }
             ]
@@ -279,63 +293,63 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
 
         leftBlack:[{//black people + unpleasant/ pleasant
 
-            data: {condition: attribute1 + &quot;,&quot; + category + &quot;/&quot; + attribute2},
+            data: {condition: attribute1 + &apos;,&apos; + category + &apos;/&apos; + attribute2},
             layout: leftLayout,
-            inherit: &quot;Default&quot;,
+            inherit: &apos;Default&apos;,
             stimuli: [
-                {inherit:{type:&quot;exRandom&quot;,set:&quot;category_left&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+                {inherit:{type:&apos;exRandom&apos;,set:&apos;category_left&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;feedback&apos;}}
             ]
         }],
         rightUnpleasant:[{ //black people + pleasant/ unpleasant
 
-            data: {condition: attribute2 + &quot;,&quot; + category + &quot;/&quot; + attribute1},
+            data: {condition: attribute2 + &apos;,&apos; + category + &apos;/&apos; + attribute1},
             layout: rightLayout,
-            inherit: &quot;Default&quot;,
+            inherit: &apos;Default&apos;,
             stimuli: [
-                {inherit:{type:&quot;exRandom&quot;,set:&quot;left&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+                {inherit:{type:&apos;exRandom&apos;,set:&apos;left&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;feedback&apos;}}
             ]
         }],
         leftUnpleasant:[{ //black people + unpleasant/ pleasant
 
-            data: {condition: attribute1 + &quot;,&quot; + category + &quot;/&quot; + attribute2},
+            data: {condition: attribute1 + &apos;,&apos; + category + &apos;/&apos; + attribute2},
             layout: leftLayout,
-            inherit: &quot;Default&quot;,
+            inherit: &apos;Default&apos;,
             stimuli: [
-                {inherit:{type:&quot;exRandom&quot;,set:&quot;left&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+                {inherit:{type:&apos;exRandom&apos;,set:&apos;left&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;feedback&apos;}}
             ]
         }],
 
         leftPleasant:[{ //black people + unpleasant/ pleasant
 
-            data: {condition: attribute1 + &quot;,&quot; + category + &quot;/&quot; + attribute2},
+            data: {condition: attribute1 + &apos;,&apos; + category + &apos;/&apos; + attribute2},
             layout: leftLayout,
-            inherit: &quot;Default&quot;,
+            inherit: &apos;Default&apos;,
             stimuli: [
-                {inherit:{type:&quot;exRandom&quot;,set:&quot;right&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+                {inherit:{type:&apos;exRandom&apos;,set:&apos;right&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;feedback&apos;}}
             ]
         }],
         rightPleasant:[{ //black people + pleasant/ unpleasant
 
-            data: {condition: attribute2 + &quot;,&quot; + category + &quot;/&quot; + attribute1},
+            data: {condition: attribute2 + &apos;,&apos; + category + &apos;/&apos; + attribute1},
             layout: rightLayout,
-            inherit: &quot;Default&quot;,
+            inherit: &apos;Default&apos;,
             stimuli: [
-                {inherit:{type:&quot;exRandom&quot;,set:&quot;right&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+                {inherit:{type:&apos;exRandom&apos;,set:&apos;right&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;feedback&apos;}}
             ]
         }],
 
         rightBlack:[{ //black people + pleasant/ unpleasant
-            data: {condition: attribute2 + &quot;,&quot; + category + &quot;/&quot; + attribute1},
+            data: {condition: attribute2 + &apos;,&apos; + category + &apos;/&apos; + attribute1},
             layout: rightLayout,
-            inherit: &quot;Default&quot;,													// inherit the default trial
+            inherit: &apos;Default&apos;,													// inherit the default trial
             stimuli: [
-                {inherit:{type:&quot;exRandom&quot;,set:&quot;category_right&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;feedback&quot;}}
+                {inherit:{type:&apos;exRandom&apos;,set:&apos;category_right&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;feedback&apos;}}
             ]
         }]
     });
@@ -347,59 +361,59 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
     API.addStimulusSets({
         // This Default stimulus is inherited by the other stimuli so that we can have a consistent look and change it from one place
     Default: [
-        {css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
+        {css:{color:&apos;white&apos;,&apos;font-size&apos;:&apos;2em&apos;}}
     ],
 
     Instructions: [
-        {css:{&quot;font-size&quot;:&quot;1.3em&quot;,color:&quot;black&quot;, lineHeight:1.2}}
+        {css:{&apos;font-size&apos;:&apos;1.3em&apos;,color:&apos;black&apos;, lineHeight:1.2}}
     ],
 
     // The trial stimuli
     // Each stimulus set holds the left and right stimuli for a specific page settings (is the first attribute/category in the left or right?)
     // Notably the attribute/category sets repeat themselves 5 times each, this is so that when calling them they will be balanced accross each ten trials
     category_left: [
-        {data:{side:&quot;left&quot;, handle:&quot;myStim&quot;, alias:category}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;category&quot;}}}
+        {data:{side:&apos;left&apos;, handle:&apos;myStim&apos;, alias:category}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;category&apos;}}}
     ],
     category_right : [
-        {data:{side:&quot;right&quot;, handle:&quot;myStim&quot;, alias:category}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;category&quot;}}}
+        {data:{side:&apos;right&apos;, handle:&apos;myStim&apos;, alias:category}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;category&apos;}}}
     ],
     right : [
-        {data:{side:&quot;right&quot;, handle:&quot;myStim&quot;, alias:attribute2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute2&quot;}}}
+        {data:{side:&apos;right&apos;, handle:&apos;myStim&apos;, alias:attribute2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute2&apos;}}}
     ],
     left : [
-        {data:{side:&quot;left&quot;, handle:&quot;myStim&quot;, alias:attribute1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute1&quot;}}}
+        {data:{side:&apos;left&apos;, handle:&apos;myStim&apos;, alias:attribute1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute1&apos;}}}
     ],
 
     // this stimulus used for giving feedback, in this case only the error notification
     feedback : [
-        {handle:&quot;error&quot;, location: {top: 80}, css:{color:&quot;red&quot;,&quot;font-size&quot;:&quot;4em&quot;}, media: {word:&quot;X&quot;}, nolog:true}
+        {handle:&apos;error&apos;, location: {top: 80}, css:{color:&apos;red&apos;,&apos;font-size&apos;:&apos;4em&apos;}, media: {word:&apos;X&apos;}, nolog:true}
     ]
     });
 
     API.addMediaSets({
         attribute1 : [
-            {word: &quot;Bomb&quot;},
-            {word: &quot;Abuse&quot;},
-            {word: &quot;Sadness&quot;},
-            {word: &quot;Pain&quot;},
-            {word: &quot;Poison&quot;},
-            {word: &quot;Grief&quot;}
+            {word: &apos;Bomb&apos;},
+            {word: &apos;Abuse&apos;},
+            {word: &apos;Sadness&apos;},
+            {word: &apos;Pain&apos;},
+            {word: &apos;Poison&apos;},
+            {word: &apos;Grief&apos;}
         ],
         attribute2: [
-            {word: &quot;Paradise&quot;},
-            {word: &quot;Pleasure&quot;},
-            {word: &quot;Cheer&quot;},
-            {word: &quot;Wonderful&quot;},
-            {word: &quot;Splendid&quot;},
-            {word: &quot;Love&quot;}
+            {word: &apos;Paradise&apos;},
+            {word: &apos;Pleasure&apos;},
+            {word: &apos;Cheer&apos;},
+            {word: &apos;Wonderful&apos;},
+            {word: &apos;Splendid&apos;},
+            {word: &apos;Love&apos;}
         ],
         category: [
-            {image: &quot;epbm1.jpg&quot;},
-            {image: &quot;epbm2.jpg&quot;},
-            {image: &quot;epbm3.jpg&quot;},
-            {image: &quot;epbf1.jpg&quot;},
-            {image: &quot;epbf2.jpg&quot;},
-            {image: &quot;epbf3.jpg&quot;}
+            {image: &apos;epbm1.jpg&apos;},
+            {image: &apos;epbm2.jpg&apos;},
+            {image: &apos;epbm3.jpg&apos;},
+            {image: &apos;epbf1.jpg&apos;},
+            {image: &apos;epbf2.jpg&apos;},
+            {image: &apos;epbf3.jpg&apos;}
         ]
     });
 
@@ -410,30 +424,30 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
         //first block
         {
             data: {block:1, blockStart:true},			// we set the data with the category names so the template can display them
-            inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+            inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
             layout: rightLayout,
             stimuli: [{
-                inherit:&quot;Instructions&quot;,
-                media:{html:&quot;&lt;div&gt;&lt;p style="font-size:24px"&gt;&lt;color="#FFFAFA"&gt;&lt;br/&gt;&lt;br/&gt;Put your middle or index fingers on the &lt;b&gt;E&lt;/b&gt; key and &lt;b&gt;I&lt;/b&gt; keys of your keyboard. Items representing the categories at the top will appear one-by-one in the middle of the screen. When the item belongs to a category on the left, press the &lt;b&gt;E&lt;/b&gt; key;when the item belongs to a category on the right, press the &lt;b&gt;I&lt;/b&gt; key. Items belong to only one category.If you make an error, an &lt;font color="#FF0000"&gt;&lt;b&gt;X&lt;/b&gt;&lt;/font&gt; will appear - fix the error by hitting the other key.&lt;br/&gt;&lt;b&gt;GO AS FAST AS YOU CAN&lt;/b&gt; while making as few mistakes as possible.Going too slow or making too many errors will result in an uninterpretable score.&lt;br /&gt;&lt;p align="center"&gt;&lt;br/&gt;Press the &lt;b&gt;space bar&lt;/b&gt; to begin.&lt;br&gt;&lt;br&gt;(round 1 of 4)&lt;/p&gt;&lt;/p&gt;&lt;/div&gt;&quot;}
+                inherit:&apos;Instructions&apos;,
+                media:{html:&apos;&lt;div&gt;&lt;p style=&quot;font-size:24px&quot;&gt;&lt;color=&quot;#FFFAFA&quot;&gt;&lt;br/&gt;&lt;br/&gt;Put your middle or index fingers on the &lt;b&gt;E&lt;/b&gt; key and &lt;b&gt;I&lt;/b&gt; keys of your keyboard. Items representing the categories at the top will appear one-by-one in the middle of the screen. When the item belongs to a category on the left, press the &lt;b&gt;E&lt;/b&gt; key;when the item belongs to a category on the right, press the &lt;b&gt;I&lt;/b&gt; key. Items belong to only one category.If you make an error, an &lt;font color=&quot;#FF0000&quot;&gt;&lt;b&gt;X&lt;/b&gt;&lt;/font&gt; will appear - fix the error by hitting the other key.&lt;br/&gt;&lt;b&gt;GO AS FAST AS YOU CAN&lt;/b&gt; while making as few mistakes as possible.Going too slow or making too many errors will result in an uninterpretable score.&lt;br /&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;Press the &lt;b&gt;space bar&lt;/b&gt; to begin.&lt;br&gt;&lt;br&gt;(round 1 of 4)&lt;/p&gt;&lt;/p&gt;&lt;/div&gt;&apos;}
             }]
         },
         { //The presentation trials
-            mixer: &quot;random&quot;,		//in random order: 14 times: pleasant, 14 times: black people 14+6=20 times: unpleasant
+            mixer: &apos;random&apos;,		//in random order: 14 times: pleasant, 14 times: black people 14+6=20 times: unpleasant
             data : [
                 { //The presentation trials
-                    mixer: &quot;repeat&quot;,
+                    mixer: &apos;repeat&apos;,
                     times:14,
                     data : [
-                        {inherit: &quot;rightBlack&quot;,data:{block:1, parcel:&quot;first&quot;}},
-                        {inherit: &quot;rightPleasant&quot;,data:{block:1, parcel:&quot;first&quot;}},
-                        {inherit: &quot;rightUnpleasant&quot;,data:{block:1, parcel:&quot;first&quot;}}
+                        {inherit: &apos;rightBlack&apos;,data:{block:1, parcel:&apos;first&apos;}},
+                        {inherit: &apos;rightPleasant&apos;,data:{block:1, parcel:&apos;first&apos;}},
+                        {inherit: &apos;rightUnpleasant&apos;,data:{block:1, parcel:&apos;first&apos;}}
                     ]
                 },
                 { //The presentation trials
-                    mixer: &quot;repeat&quot;,
+                    mixer: &apos;repeat&apos;,
                     times:6,
                     data : [
-                        {inherit: &quot;rightUnpleasant&quot;,data:{block:1, parcel:&quot;first&quot;}}
+                        {inherit: &apos;rightUnpleasant&apos;,data:{block:1, parcel:&apos;first&apos;}}
                     ]
                 }
             ]
@@ -441,30 +455,30 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
         //second block
         {
             data: {block:2, blockStart:true},
-            inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+            inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
             layout: leftLayout,
             stimuli: [{
-                inherit:&quot;Instructions&quot;,
-                media:{html:&quot;&lt;div&gt;&lt;p style="font-size:24px"&gt;&lt;color="#FFFAFA"&gt;&lt;br/&gt;&lt;br/&gt;&lt;b&gt;See above, the categories have changed locations.&lt;/b&gt;&lt;br/&gt; The rules, however, are the same.&lt;/p&gt;&lt;br /&gt;&lt;p&gt;When the item belongs to a category on the left, press the &lt;b&gt;E&lt;/b&gt; key; when the item belongs to a category on the right, press the &lt;b&gt;I&lt;/b&gt; key. Items belong to only one category. &lt;br/&gt; &lt;b&gt;GO AS FAST AS YOU CAN.&lt;/b&gt;&lt;/p&gt;&lt;br /&gt; &lt;p align="center"&gt;Press the &lt;b&gt;space bar&lt;/b&gt; to begin.&lt;br&gt;&lt;br&gt;(round 2 of 4)&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/div&gt;&quot;}
+                inherit:&apos;Instructions&apos;,
+                media:{html:&apos;&lt;div&gt;&lt;p style=&quot;font-size:24px&quot;&gt;&lt;color=&quot;#FFFAFA&quot;&gt;&lt;br/&gt;&lt;br/&gt;&lt;b&gt;See above, the categories have changed locations.&lt;/b&gt;&lt;br/&gt; The rules, however, are the same.&lt;/p&gt;&lt;br /&gt;&lt;p&gt;When the item belongs to a category on the left, press the &lt;b&gt;E&lt;/b&gt; key; when the item belongs to a category on the right, press the &lt;b&gt;I&lt;/b&gt; key. Items belong to only one category. &lt;br/&gt; &lt;b&gt;GO AS FAST AS YOU CAN.&lt;/b&gt;&lt;/p&gt;&lt;br /&gt; &lt;p align=&quot;center&quot;&gt;Press the &lt;b&gt;space bar&lt;/b&gt; to begin.&lt;br&gt;&lt;br&gt;(round 2 of 4)&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/div&gt;&apos;}
             }]
         },
         { //The presentation trials
-            mixer: &quot;random&quot;,		//in random order: 14 times: unpleasant, 14 times: black people 14+6=20 times: pleasant
+            mixer: &apos;random&apos;,		//in random order: 14 times: unpleasant, 14 times: black people 14+6=20 times: pleasant
             data : [
                 { //The presentation trials
-                    mixer: &quot;repeat&quot;,
+                    mixer: &apos;repeat&apos;,
                     times:14,
                     data : [
-                        {inherit: &quot;leftBlack&quot;,data:{block:2, parcel:&quot;first&quot;}},
-                        {inherit: &quot;leftUnpleasant&quot;,data:{block:2, parcel:&quot;first&quot;}},
-                        {inherit: &quot;leftPleasant&quot;,data:{block:2, parcel:&quot;first&quot;}}
+                        {inherit: &apos;leftBlack&apos;,data:{block:2, parcel:&apos;first&apos;}},
+                        {inherit: &apos;leftUnpleasant&apos;,data:{block:2, parcel:&apos;first&apos;}},
+                        {inherit: &apos;leftPleasant&apos;,data:{block:2, parcel:&apos;first&apos;}}
                     ]
                 },
                 { //The presentation trials
-                    mixer: &quot;repeat&quot;,
+                    mixer: &apos;repeat&apos;,
                     times:6,
                     data : [
-                        {inherit: &quot;leftPleasant&quot;,data:{block:2, parcel:&quot;first&quot;}}
+                        {inherit: &apos;leftPleasant&apos;,data:{block:2, parcel:&apos;first&apos;}}
                     ]
                 }
             ]
@@ -472,30 +486,30 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
         //third block
         {
             data: {block:3, blockStart:true},
-            inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+            inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
             layout: rightLayout,
             stimuli: [{
-                inherit:&quot;Instructions&quot;,
-                media:{html:&quot;&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt;&lt;br/&gt;&lt;br/&gt;&lt;b&gt;The categories have changed locations again.&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;p align="center"&gt;Press the &lt;b&gt;space bar&lt;/b&gt; to continue with the same task.&lt;br&gt;&lt;br&gt;(round 3 of 4)&lt;/p&gt;&lt;/p&gt;&lt;/div&gt;&quot;}
+                inherit:&apos;Instructions&apos;,
+                media:{html:&apos;&lt;div&gt;&lt;p style=&quot;font-size:28px&quot;&gt;&lt;color=&quot;#FFFAFA&quot;&gt;&lt;br/&gt;&lt;br/&gt;&lt;b&gt;The categories have changed locations again.&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;p align=&quot;center&quot;&gt;Press the &lt;b&gt;space bar&lt;/b&gt; to continue with the same task.&lt;br&gt;&lt;br&gt;(round 3 of 4)&lt;/p&gt;&lt;/p&gt;&lt;/div&gt;&apos;}
             }]
         },
         { //The presentation trials
-            mixer: &quot;random&quot;,
+            mixer: &apos;random&apos;,
             data : [
                 {
-                    mixer: &quot;repeat&quot;,
+                    mixer: &apos;repeat&apos;,
                     times:14,
                     data : [
-                        {inherit: &quot;rightBlack&quot;,data:{block:3, parcel:&quot;second&quot;}},
-                        {inherit: &quot;rightPleasant&quot;,data:{block:3, parcel:&quot;second&quot;}},
-                        {inherit: &quot;rightUnpleasant&quot;,data:{block:3, parcel:&quot;second&quot;}}
+                        {inherit: &apos;rightBlack&apos;,data:{block:3, parcel:&apos;second&apos;}},
+                        {inherit: &apos;rightPleasant&apos;,data:{block:3, parcel:&apos;second&apos;}},
+                        {inherit: &apos;rightUnpleasant&apos;,data:{block:3, parcel:&apos;second&apos;}}
                     ]
                 },
                 { //The presentation trials
-                    mixer: &quot;repeat&quot;,
+                    mixer: &apos;repeat&apos;,
                     times:6,
                     data : [
-                        {inherit: &quot;rightUnpleasant&quot;,data:{block:3, parcel:&quot;second&quot;}}
+                        {inherit: &apos;rightUnpleasant&apos;,data:{block:3, parcel:&apos;second&apos;}}
                     ]
                 }
             ]
@@ -503,37 +517,37 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
         //fourth block
         {
             data: {block:4, blockStart:true},
-            inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+            inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
             layout: leftLayout,
             stimuli: [{
-                inherit:&quot;Instructions&quot;,
-                media:{html:&quot;&lt;div&gt;&lt;p style="font-size:26px"&gt;&lt;color="#FFFAFA"&gt;&lt;br/&gt;&lt;br/&gt;The task is almost finished.&lt;br/&gt; Press the &lt;b&gt;space bar&lt;/b&gt; when you are ready for the final round.&lt;/p&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;(round 4 of 4)&lt;/p&gt;&lt;/div&gt;&quot;}
+                inherit:&apos;Instructions&apos;,
+                media:{html:&apos;&lt;div&gt;&lt;p style=&quot;font-size:26px&quot;&gt;&lt;color=&quot;#FFFAFA&quot;&gt;&lt;br/&gt;&lt;br/&gt;The task is almost finished.&lt;br/&gt; Press the &lt;b&gt;space bar&lt;/b&gt; when you are ready for the final round.&lt;/p&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;(round 4 of 4)&lt;/p&gt;&lt;/div&gt;&apos;}
             }]
         },
         { //The presentation trials
-            mixer: &quot;random&quot;,
+            mixer: &apos;random&apos;,
             data : [
                 {
-                    mixer: &quot;repeat&quot;,
+                    mixer: &apos;repeat&apos;,
                     times:14,
                     data : [
-                        {inherit: &quot;leftBlack&quot;,data:{block:4, parcel:&quot;second&quot;}},
-                        {inherit: &quot;leftUnpleasant&quot;,data:{block:4, parcel:&quot;second&quot;}},
-                        {inherit: &quot;leftPleasant&quot;,data:{block:4, parcel:&quot;second&quot;}}
+                        {inherit: &apos;leftBlack&apos;,data:{block:4, parcel:&apos;second&apos;}},
+                        {inherit: &apos;leftUnpleasant&apos;,data:{block:4, parcel:&apos;second&apos;}},
+                        {inherit: &apos;leftPleasant&apos;,data:{block:4, parcel:&apos;second&apos;}}
                     ]
                 },
                 { //The presentation trials
-                    mixer: &quot;repeat&quot;,
+                    mixer: &apos;repeat&apos;,
                     times:6,
                     data : [
-                        {inherit: &quot;leftPleasant&quot;,data:{block:4, parcel:&quot;second&quot;}}
+                        {inherit: &apos;leftPleasant&apos;,data:{block:4, parcel:&apos;second&apos;}}
                     ]
                 }
             ]
         },
         // user feedback- here we will use the computeD function.
         {
-            inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
+            inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},
             data: {blockStart:true},
             stimuli: [],
             customize: function(){
@@ -542,16 +556,16 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
                 var trial = this;
 
 
-                scorer.addSettings(&quot;compute&quot;,{
-                    parcelValue : [&quot;first&quot;]
+                scorer.addSettings(&apos;compute&apos;,{
+                    parcelValue : [&apos;first&apos;]
                 });
 
                 DScoreObj = scorer.computeD();
                 var DScore1= DScoreObj.DScore;
 
                 //////second call to score//////
-                scorer.addSettings(&quot;compute&quot;,{
-                    parcelValue : [&quot;second&quot;]
+                scorer.addSettings(&apos;compute&apos;,{
+                    parcelValue : [&apos;second&apos;]
                 });
 
                 DScoreObj = scorer.computeD();
@@ -561,16 +575,16 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
                 console.log(DScore1);
                 console.log(DScore2);
                 // If all scores are numbers
-                if ((DScore1 !== &quot;&quot;) &amp;&amp; (DScore2 !== &quot;&quot;)){
+                if ((DScore1 !== &apos;&apos;) &amp;&amp; (DScore2 !== &apos;&apos;)){
                     //Average the 4 scores
                     DScore = (parseFloat(DScore1) + parseFloat(DScore2))/2;
                     FBMsg = scorer.getFBMsg(DScore);
                 } else {
-                    DScore = &quot;&quot;;
-                    FBMsg = &quot;An error has occurred&quot;;
+                    DScore = &apos;&apos;;
+                    FBMsg = &apos;An error has occurred&apos;;
                 }
 
-                var media = {css:{color:&quot;black&quot;},media:{html:&quot;&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt; &quot;+FBMsg+&quot;&lt;br&gt;The Score is:&quot;+DScore+&quot;&lt;/p&gt;&lt;/div&gt;&quot;}};
+                var media = {css:{color:&apos;black&apos;},media:{html:&apos;&lt;div&gt;&lt;p style=&quot;font-size:28px&quot;&gt;&lt;color=&quot;#FFFAFA&quot;&gt; &apos;+FBMsg+&apos;&lt;br&gt;The Score is:&apos;+DScore+&apos;&lt;/p&gt;&lt;/div&gt;&apos;}};
                 trial.stimuli.push(media);
                 scorer.dynamicPost({
                     score1: DScoreObj.DScore,
@@ -582,12 +596,12 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
 
         { //Instructions trial, the end of the task, instruction what to do next
             data: {blockStart:true},
-            inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
+            inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},
             stimuli: [
                 {//The instructions stimulus
-                    data : {&quot;handle&quot;:&quot;instStim&quot;},
-                    css: {color:&quot;black&quot;},
-                    media:{html:&quot;&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt;You have completed the study&lt;br/&gt;&lt;br/&gt;Thank you very much for your participation.&lt;br/&gt;&lt;br/&gt; Press "space" for continue to next task.&lt;/p&gt;&lt;/div&gt;&quot;}
+                    data : {&apos;handle&apos;:&apos;instStim&apos;},
+                    css: {color:&apos;black&apos;},
+                    media:{html:&apos;&lt;div&gt;&lt;p style=&quot;font-size:28px&quot;&gt;&lt;color=&quot;#FFFAFA&quot;&gt;You have completed the study&lt;br/&gt;&lt;br/&gt;Thank you very much for your participation.&lt;br/&gt;&lt;br/&gt; Press &quot;space&quot; for continue to next task.&lt;/p&gt;&lt;/div&gt;&apos;}
                 }
             ]
         }

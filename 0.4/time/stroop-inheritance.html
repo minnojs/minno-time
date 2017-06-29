@@ -19,6 +19,20 @@
 					<a href="/minno-time/0.4/time/overview.html">miTime</a>
 				</nav>
 				<nav>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
                     <select id="version-select"><option value="0.3" >v0.3</option>,<option value="0.4" selected>v0.4</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
@@ -124,7 +138,7 @@
     <div class="editor">// This section of the tutorial deals with using the inheritance features of the player in order to keep complex tasks as simple as possible.
 
 // ### Data
-// Before we dive into the actual practice of inheritance, it is important to understand the function and use of the trial&quot;s `data` property.
+// Before we dive into the actual practice of inheritance, it is important to understand the function and use of the trial&apos;s `data` property.
 // The `data` property holds an object that keeps information that has to do with this trial.
 // Remember that all the properties and values of `data` are arbitrary, and you can use them in any way that is convenient to you.
 
@@ -135,19 +149,19 @@
 
 // ```javascript
 // {
-// 	data:{group:&quot;congruent&quot;}
+// 	data:{group:&apos;congruent&apos;}
 // }
 // ```
 
 // Furthermore, the data object may be used by player interactions.
-// The condition `inputEqualsTrial` compares the input handle to a specified property of the trial&quot;s data object.
+// The condition `inputEqualsTrial` compares the input handle to a specified property of the trial&apos;s data object.
 // This means that we can create interactions that behave a bit differently as a function of trial type as defined in the data object.
 // The following interaction fires when the input handle is equal to the *group* property of the data object:
 
 // ```javascript
 // {
 // 	conditions: [
-// 		{type:&quot;inputEqualsTrial&quot;,property:&quot;group&quot;}
+// 		{type:&apos;inputEqualsTrial&apos;,property:&apos;group&apos;}
 // 	],
 // 	actions: [
 // 		/* Some cool stuff of you own design */
@@ -165,17 +179,17 @@
 // 		/* The conditions of your choice */
 // 	],
 // 	actions: [
-// 		{type:&quot;setTrialAttr&quot;, setter:{score:1}}
+// 		{type:&apos;setTrialAttr&apos;, setter:{score:1}}
 // 	]
 // }
 // ```
 
-define([&quot;pipAPI&quot;], function(APIconstructor) {
+define([&apos;pipAPI&apos;], function(APIconstructor) {
 
-	var API = new APIconstructor(&quot;stroop&quot;);
+	var API = new APIconstructor(&apos;stroop&apos;);
 
 
-	API.addSettings(&quot;canvas&quot;,{
+	API.addSettings(&apos;canvas&apos;,{
 		textSize: 5
 	});
 
@@ -188,22 +202,22 @@ define([&quot;pipAPI&quot;], function(APIconstructor) {
 	// the third is the type of the trial as reported to the server.
 	// What we will do is create separate trials that hold these differences and inherit the base trial that has the rest of the trial specifications.
 
-	API.addStimulusSets(&quot;red&quot;,[
-		{media:&quot;Red&quot;, css:{color:&quot;red&quot;}},
-		{media:&quot;Blue&quot;, css:{color:&quot;red&quot;}},
-		{media:&quot;Green&quot;, css:{color:&quot;red&quot;}}
+	API.addStimulusSets(&apos;red&apos;,[
+		{media:&apos;Red&apos;, css:{color:&apos;red&apos;}},
+		{media:&apos;Blue&apos;, css:{color:&apos;red&apos;}},
+		{media:&apos;Green&apos;, css:{color:&apos;red&apos;}}
 	]);
 
-	API.addStimulusSets(&quot;blue&quot;,[
-		{media:&quot;Red&quot;, css:{color:&quot;blue&quot;}},
-		{media:&quot;Blue&quot;, css:{color:&quot;blue&quot;}},
-		{media:&quot;Green&quot;, css:{color:&quot;blue&quot;}}
+	API.addStimulusSets(&apos;blue&apos;,[
+		{media:&apos;Red&apos;, css:{color:&apos;blue&apos;}},
+		{media:&apos;Blue&apos;, css:{color:&apos;blue&apos;}},
+		{media:&apos;Green&apos;, css:{color:&apos;blue&apos;}}
 	]);
 
-	API.addStimulusSets(&quot;green&quot;,[
-		{media:&quot;Red&quot;, css:{color:&quot;green&quot;}},
-		{media:&quot;Blue&quot;, css:{color:&quot;green&quot;}},
-		{media:&quot;Green&quot;, css:{color:&quot;green&quot;}}
+	API.addStimulusSets(&apos;green&apos;,[
+		{media:&apos;Red&apos;, css:{color:&apos;green&apos;}},
+		{media:&apos;Blue&apos;, css:{color:&apos;green&apos;}},
+		{media:&apos;Green&apos;, css:{color:&apos;green&apos;}}
 	]);
 
 	// ### Evolving the stroop trial (trials)
@@ -211,78 +225,78 @@ define([&quot;pipAPI&quot;], function(APIconstructor) {
 	// We create a base trial that will be the base for anything further that we do.
 
 	// The primary change that we made is in evaluating the correct response.
-	// `inputEqualsTrial` compares the input handle to the (trial&quot;s) data property *group*.
+	// `inputEqualsTrial` compares the input handle to the (trial&apos;s) data property *group*.
 	// If they are the same then the answer is correct. The incorrect response answer reflects the same principle, only negated.
 
 
-	API.addTrialSets(&quot;base&quot;,[{
+	API.addTrialSets(&apos;base&apos;,[{
 		input: [
-			{handle:&quot;red&quot;,on:&quot;keypressed&quot;,key:&quot;1&quot;},
-			{handle:&quot;blue&quot;,on:&quot;keypressed&quot;,key:&quot;2&quot;},
-			{handle:&quot;green&quot;,on:&quot;keypressed&quot;,key:&quot;3&quot;}
+			{handle:&apos;red&apos;,on:&apos;keypressed&apos;,key:&apos;1&apos;},
+			{handle:&apos;blue&apos;,on:&apos;keypressed&apos;,key:&apos;2&apos;},
+			{handle:&apos;green&apos;,on:&apos;keypressed&apos;,key:&apos;3&apos;}
 		],
 		layout: [
-			{media:&quot;1&quot;,location:{left:2,top:2},css:{background:&quot;red&quot;,padding:&quot;2%&quot;,fontSize:&quot;1.5em&quot;}},
-			{media:&quot;2&quot;,location:{top:2},css:{background:&quot;blue&quot;,padding:&quot;2%&quot;,fontSize:&quot;1.5em&quot;}},
-			{media:&quot;3&quot;,location:{right:2,top:2},css:{background:&quot;green&quot;,padding:&quot;2%&quot;,fontSize:&quot;1.5em&quot;}}
+			{media:&apos;1&apos;,location:{left:2,top:2},css:{background:&apos;red&apos;,padding:&apos;2%&apos;,fontSize:&apos;1.5em&apos;}},
+			{media:&apos;2&apos;,location:{top:2},css:{background:&apos;blue&apos;,padding:&apos;2%&apos;,fontSize:&apos;1.5em&apos;}},
+			{media:&apos;3&apos;,location:{right:2,top:2},css:{background:&apos;green&apos;,padding:&apos;2%&apos;,fontSize:&apos;1.5em&apos;}}
 		],
 		interactions: [
 			/* Display the target stimulus. */
 			{
-				conditions:[{type:&quot;begin&quot;}],
-				actions: [{type:&quot;showStim&quot;, handle: &quot;target&quot;}]
+				conditions:[{type:&apos;begin&apos;}],
+				actions: [{type:&apos;showStim&apos;, handle: &apos;target&apos;}]
 			},
 			/* Correct response actions */
 			{
 				conditions: [
-					{type:&quot;inputEqualsTrial&quot;,property:&quot;group&quot;}
+					{type:&apos;inputEqualsTrial&apos;,property:&apos;group&apos;}
 				],
 				actions: [
-					{type:&quot;setTrialAttr&quot;, setter:{score:1}},
-					{type:&quot;log&quot;},
-					{type:&quot;endTrial&quot;}
+					{type:&apos;setTrialAttr&apos;, setter:{score:1}},
+					{type:&apos;log&apos;},
+					{type:&apos;endTrial&apos;}
 				]
 			},
 			/* Incorrect response actions */
 			{
 				conditions: [
-					{type:&quot;inputEqualsTrial&quot;,property:&quot;group&quot;,negate:true},
-					{type:&quot;inputEquals&quot;,value:[&quot;red&quot;,&quot;blue&quot;,&quot;green&quot;]}
+					{type:&apos;inputEqualsTrial&apos;,property:&apos;group&apos;,negate:true},
+					{type:&apos;inputEquals&apos;,value:[&apos;red&apos;,&apos;blue&apos;,&apos;green&apos;]}
 				],
 				actions: [
-					{type:&quot;setTrialAttr&quot;, setter:{score:0}},
-					{type:&quot;log&quot;},
-					{type:&quot;endTrial&quot;}
+					{type:&apos;setTrialAttr&apos;, setter:{score:0}},
+					{type:&apos;log&apos;},
+					{type:&apos;endTrial&apos;}
 				]
 			}
 		]
 	}]);
 
-	// We&quot;ve created three trials here, one for each of the trial types (colors), and set them into `trialSets` so they can later be inherited themselves.
-	// Note that we haven&quot;t made any changes to the interactions.
+	// We&apos;ve created three trials here, one for each of the trial types (colors), and set them into `trialSets` so they can later be inherited themselves.
+	// Note that we haven&apos;t made any changes to the interactions.
 	// We will change the interactions in the base trial so that they depend on the trial type (as set in data *group*).
 
-	API.addTrialSets(&quot;red&quot;,[{
-		inherit:&quot;base&quot;,
-		data: {group:&quot;red&quot;},
+	API.addTrialSets(&apos;red&apos;,[{
+		inherit:&apos;base&apos;,
+		data: {group:&apos;red&apos;},
 		stimuli: [
-			{inherit:&quot;red&quot;, handle:&quot;target&quot;}
+			{inherit:&apos;red&apos;, handle:&apos;target&apos;}
 		]
 	}]);
 
-	API.addTrialSets(&quot;blue&quot;,[{
-		inherit:&quot;base&quot;,
-		data: {group:&quot;blue&quot;},
+	API.addTrialSets(&apos;blue&apos;,[{
+		inherit:&apos;base&apos;,
+		data: {group:&apos;blue&apos;},
 		stimuli: [
-			{inherit:&quot;blue&quot;, handle:&quot;target&quot;}
+			{inherit:&apos;blue&apos;, handle:&apos;target&apos;}
 		]
 	}]);
 
-	API.addTrialSets(&quot;green&quot;,[{
-		inherit:&quot;base&quot;,
-		data: {group:&quot;green&quot;},
+	API.addTrialSets(&apos;green&apos;,[{
+		inherit:&apos;base&apos;,
+		data: {group:&apos;green&apos;},
 		stimuli: [
-			{inherit:&quot;green&quot;, handle:&quot;target&quot;}
+			{inherit:&apos;green&apos;, handle:&apos;target&apos;}
 		]
 	}]);
 
@@ -290,9 +304,9 @@ define([&quot;pipAPI&quot;], function(APIconstructor) {
 	// What we have left now, is to put the task together. Here we display a congruent and incongruent trial consequently.
 
 	API.addSequence([
-		{inherit:&quot;red&quot;},
-		{inherit:&quot;blue&quot;},
-		{inherit:&quot;green&quot;}
+		{inherit:&apos;red&apos;},
+		{inherit:&apos;blue&apos;},
+		{inherit:&apos;green&apos;}
 	]);
 
 	// We can go ahead now, and create our tasks manually by inserting trials at any order that we want, but that would be static and hard to maintain.

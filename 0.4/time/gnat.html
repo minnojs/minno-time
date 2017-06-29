@@ -19,6 +19,20 @@
 					<a href="/minno-time/0.4/time/overview.html">miTime</a>
 				</nav>
 				<nav>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
                     <select id="version-select"><option value="0.3" >v0.3</option>,<option value="0.4" selected>v0.4</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
@@ -88,73 +102,73 @@
     </div>
     <div class="editor">// You can find the images used for this task [here](https://github.com/minnojs/minno-time/tree/gh-pages/images)
 // and the templates [here](https://github.com/minnojs/minno-time/tree/gh-pages/resources/GNAT).
-define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Scorer) {
+define([&apos;pipAPI&apos;,&apos;pipScorer&apos;], function(APIConstructor,Scorer) {
 
-    var API = new APIConstructor(&quot;plainIAT&quot;);
+    var API = new APIConstructor(&apos;plainIAT&apos;);
     var scorer = new Scorer();
 
-    var attribute1 = &quot;Pleasant&quot;;
-    var attribute2 = &quot;Unpleasant&quot;;
-    var category1 = &quot;Black People&quot;;
-    var category2 = &quot;White People&quot;;
-    var practiceCategory1 = &quot;Birds&quot;;
-    var practiceCategory2= &quot;Mammals&quot;;
+    var attribute1 = &apos;Pleasant&apos;;
+    var attribute2 = &apos;Unpleasant&apos;;
+    var category1 = &apos;Black People&apos;;
+    var category2 = &apos;White People&apos;;
+    var practiceCategory1 = &apos;Birds&apos;;
+    var practiceCategory2= &apos;Mammals&apos;;
 
-    API.addSettings(&quot;canvas&quot;,{
+    API.addSettings(&apos;canvas&apos;,{
         maxWidth: 1000,
         proportions : 0.8,
         //Change the colors to allow better presentation of the colored stimuli.
-        background: &quot;white&quot;,
-        canvasBackground: &quot;green&quot;,
+        background: &apos;white&apos;,
+        canvasBackground: &apos;green&apos;,
         borderWidth: 5,
-        borderColor: &quot;black&quot;
+        borderColor: &apos;black&apos;
     });
 
-    API.addSettings(&quot;base_url&quot;,{
-        image : &quot;/minno-time/images&quot;,
-        template : &quot;/minno-time/resources/GNAT&quot;
+    API.addSettings(&apos;base_url&apos;,{
+        image : &apos;/minno-time/images&apos;,
+        template : &apos;/minno-time/resources/GNAT&apos;
     });
 
 
-    API.addSettings(&quot;logger&quot;,{
-        url : &quot;/implicit/PiPlayerApplet&quot;
+    API.addSettings(&apos;logger&apos;,{
+        url : &apos;/implicit/PiPlayerApplet&apos;
     });
 
     //the scorer that computes the user feedback
-    scorer.addSettings(&quot;compute&quot;,{
-        ErrorVar:&quot;score&quot;,
-        condVar:"condition",
+    scorer.addSettings(&apos;compute&apos;,{
+        ErrorVar:&apos;score&apos;,
+        condVar:&quot;condition&quot;,
         //condition 1
         cond1VarValues: [
-            category1 + &quot;+&quot; + attribute1 //Pleasant + Black people
+            category1 + &apos;+&apos; + attribute1 //Pleasant + Black people
         ],
         //condition 2
         cond2VarValues: [
-            category2 + &quot;+&quot; + attribute1 //Pleasant + White people
+            category2 + &apos;+&apos; + attribute1 //Pleasant + White people
         ],
-        parcelVar : "parcel",
-        parcelValue : [&quot;first&quot;],
+        parcelVar : &quot;parcel&quot;,
+        parcelValue : [&apos;first&apos;],
         fastRT : 150, //Below this reaction time, the latency is considered extremely fast.
         maxFastTrialsRate : 0.1, //Above this % of extremely fast responses within a condition, the participant is considered too fast.
         minRT : 400, //Below this latency
         maxRT : 1000, //above this
-        errorLatency : {use:"latency", penalty:600, useForSTD:true},
-        postSettings : {score:"score",msg:"feedback",url:"/implicit/scorer"}
+        errorLatency : {use:&quot;latency&quot;, penalty:600, useForSTD:true},
+        postSettings : {score:&quot;score&quot;,msg:&quot;feedback&quot;,url:&quot;/implicit/scorer&quot;}
         /**NEED TO ADD*/
         //Recode latencies faster than 400ms to 400, and latencies slower than 2000ms to 2000 (perhaps not supported by Ben’s computeD function; need to ask him to update the function to support that).
         //Ignore tasks with more than 40% error trials in one of the blocks Yoav: (let me know if not supported by Ben’s function because we can use an alternative rule here).
 
     });
 
-    scorer.addSettings(&quot;message&quot;,{
+    scorer.addSettings(&apos;message&apos;,{
         MessageDef: [
-            { cut:&quot;-0.65&quot;, message:&quot;Your data suggest a strong implicit preference for Black People compared to White People&quot; },
-            { cut:&quot;-0.35&quot;, message:&quot;Your data suggest a moderate implicit preference for Black People compared to White People.&quot; },
-            { cut:&quot;-0.15&quot;, message:&quot;Your data suggest a slight implicit preference for Black People compared to White People.&quot; },
-            { cut:&quot;0.15&quot;, message:&quot;Your data suggest little to no difference in implicit preference between Black People and White People.&quot; },
-            { cut:&quot;0.35&quot;, message:&quot;Your data suggest a slight implicit preference for White People compared to Black People&quot; },
-            { cut:&quot;0.65&quot;, message:&quot;Your data suggest a moderate implicit preference for White People compared to Black People&quot; },
-            { cut:&quot;5&quot;, message:&quot;Your data suggest a strong implicit preference for White People compared to Black People&quot; }
+            { cut:&apos;-0.65&apos;, message:&apos;Your data suggest a strong implicit preference for Black People compared to White People&apos; },
+            { cut:&apos;-0.35&apos;, message:&apos;Your data suggest a moderate implicit preference for Black People compared to White People.&apos; },
+            { cut:&apos;-0.15&apos;, message:&apos;Your data suggest a slight implicit preference for Black People compared to White People.&apos; },
+            { cut:&apos;0.15&apos;, message:&apos;Your data suggest little to no difference in implicit preference between Black People and White People.&apos; },
+            { cut:&apos;0.35&apos;, message:&apos;Your data suggest a slight implicit preference for White People compared to Black People&apos; },
+            { cut:&apos;0.65&apos;, message:&apos;Your data suggest a moderate implicit preference for White People compared to Black People&apos; },
+            { cut:&apos;5&apos;, message:&apos;Your data suggest a strong implicit preference for White People compared to Black People&apos; }
         ]
     });
 
@@ -162,286 +176,286 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
      * Create default Trial
      * note that this function takes a single object
      */
-    //this trial is for the &quot;Go&quot; trial, during the first practice block
+    //this trial is for the &apos;Go&apos; trial, during the first practice block
     API.addTrialSets({
         PracticeGo: [{
             // by default each trial is correct, this is modified in case of an error
             data: {score:0},
 
             input: [
-                {handle:&quot;enter&quot;,on:&quot;enter&quot;} //to skip block
+                {handle:&apos;enter&apos;,on:&apos;enter&apos;} //to skip block
             ],
 
             // user interactions
             interactions: [
                 // begin trial : display stimulus afte 1000ms
                 {
-                    conditions: [{type:&quot;begin&quot;}],
+                    conditions: [{type:&apos;begin&apos;}],
                     actions: [
-                        {type:&quot;showStim&quot;,handle:&quot;blankScreen&quot;},
-                        {type:&quot;setInput&quot;,input:{handle:&quot;showMyStim&quot;, on:&quot;timeout&quot;,duration:1000}}//show the stim 1000 ms after the beginin
+                        {type:&apos;showStim&apos;,handle:&apos;blankScreen&apos;},
+                        {type:&apos;setInput&apos;,input:{handle:&apos;showMyStim&apos;, on:&apos;timeout&apos;,duration:1000}}//show the stim 1000 ms after the beginin
                     ]
                 },
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;showMyStim&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;showMyStim&apos;}],
                     actions: [
-                        {type:&quot;showStim&quot;,handle:&quot;myStim&quot;},
-                        {type:&quot;setInput&quot;,input:{handle: &quot;in&quot;,on:&quot;centerTouch&quot;,touch:true}},
-                        {type:&quot;setInput&quot;,input:{handle: &quot;in&quot;,on:&quot;space&quot;}},
-                        {type:&quot;setInput&quot;,input:{handle:&quot;targetOut&quot;,on:&quot;timeout&quot;,duration:1500}}
+                        {type:&apos;showStim&apos;,handle:&apos;myStim&apos;},
+                        {type:&apos;setInput&apos;,input:{handle: &apos;in&apos;,on:&apos;centerTouch&apos;,touch:true}},
+                        {type:&apos;setInput&apos;,input:{handle: &apos;in&apos;,on:&apos;space&apos;}},
+                        {type:&apos;setInput&apos;,input:{handle:&apos;targetOut&apos;,on:&apos;timeout&apos;,duration:1500}}
                     ]
                 },
 
                 // error
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;targetOut&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;targetOut&apos;}],
                     actions: [
-                        {type:&quot;removeInput&quot;,handle:&quot;in&quot;},
-                        {type:&quot;showStim&quot;,handle:&quot;error&quot;},						// show error stimulus
-                        {type:&quot;log&quot;},											// log this trial
-                        {type:&quot;setTrialAttr&quot;, setter:{score:1}},
-                        {type:&quot;setInput&quot;,input:{handle:&quot;end&quot;, on:&quot;timeout&quot;,duration:250}}					// set the score to 1
+                        {type:&apos;removeInput&apos;,handle:&apos;in&apos;},
+                        {type:&apos;showStim&apos;,handle:&apos;error&apos;},						// show error stimulus
+                        {type:&apos;log&apos;},											// log this trial
+                        {type:&apos;setTrialAttr&apos;, setter:{score:1}},
+                        {type:&apos;setInput&apos;,input:{handle:&apos;end&apos;, on:&apos;timeout&apos;,duration:250}}					// set the score to 1
                     ]
                 },
 
                 // correct
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;in&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;in&apos;}],
                     actions: [
-                        {type:&quot;removeInput&quot;,handle:[&quot;in&quot;,&quot;targetOut&quot;]},
-                        {type:&quot;showStim&quot;, handle: &quot;correct&quot;},
-                        {type:&quot;log&quot;},																// log this trial
-                        {type:&quot;setInput&quot;,input:{handle:&quot;end&quot;, on:&quot;timeout&quot;,duration:250}}			// trigger the "end action after ITI"
+                        {type:&apos;removeInput&apos;,handle:[&apos;in&apos;,&apos;targetOut&apos;]},
+                        {type:&apos;showStim&apos;, handle: &apos;correct&apos;},
+                        {type:&apos;log&apos;},																// log this trial
+                        {type:&apos;setInput&apos;,input:{handle:&apos;end&apos;, on:&apos;timeout&apos;,duration:250}}			// trigger the &quot;end action after ITI&quot;
                     ]
                 },
 
                 // end after ITI
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;end&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;end&apos;}],
                     actions: [
-                        {type:&quot;endTrial&quot;}
+                        {type:&apos;endTrial&apos;}
                     ]
                 },
 
                 // skip block
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;enter&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;enter&apos;}],
                     actions: [
-                        {type:&quot;goto&quot;, destination: &quot;nextWhere&quot;, properties: {blockStart:true}},
-                        {type:&quot;endTrial&quot;}
+                        {type:&apos;goto&apos;, destination: &apos;nextWhere&apos;, properties: {blockStart:true}},
+                        {type:&apos;endTrial&apos;}
                     ]
                 }
             ]
         }] // end basic trial
     }); // end trialsets
-    //this trial is for the &quot;NoGo&quot; trial, during the first practice block
+    //this trial is for the &apos;NoGo&apos; trial, during the first practice block
     API.addTrialSets({
         PracticeNoGo: [{
             // by default each trial is correct, this is modified in case of an error
             data: {score:0},
 
             input: [
-                {handle:&quot;enter&quot;,on:&quot;enter&quot;}
+                {handle:&apos;enter&apos;,on:&apos;enter&apos;}
             ],
 
             // user interactions
             interactions: [
                 {
-                    conditions: [{type:&quot;begin&quot;}],
+                    conditions: [{type:&apos;begin&apos;}],
                     actions: [
-                        {type:&quot;showStim&quot;,handle:&quot;blankScreen&quot;},
-                        {type:&quot;setInput&quot;,input:{handle:&quot;showMyStim&quot;, on:&quot;timeout&quot;,duration:1000}}//show the stim 1000 ms after the beginin
+                        {type:&apos;showStim&apos;,handle:&apos;blankScreen&apos;},
+                        {type:&apos;setInput&apos;,input:{handle:&apos;showMyStim&apos;, on:&apos;timeout&apos;,duration:1000}}//show the stim 1000 ms after the beginin
                     ]
                 },
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;showMyStim&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;showMyStim&apos;}],
                     actions: [
-                        {type:&quot;showStim&quot;,handle:&quot;myStim&quot;},
-                        {type:&quot;setInput&quot;,input:{handle: &quot;in&quot;,on:&quot;centerTouch&quot;,touch:true}},
-                        {type:&quot;setInput&quot;,input:{handle: &quot;in&quot;,on:&quot;space&quot;}},
-                        {type:&quot;setInput&quot;,input:{handle:&quot;targetOut&quot;,on:&quot;timeout&quot;,duration:1500}}
+                        {type:&apos;showStim&apos;,handle:&apos;myStim&apos;},
+                        {type:&apos;setInput&apos;,input:{handle: &apos;in&apos;,on:&apos;centerTouch&apos;,touch:true}},
+                        {type:&apos;setInput&apos;,input:{handle: &apos;in&apos;,on:&apos;space&apos;}},
+                        {type:&apos;setInput&apos;,input:{handle:&apos;targetOut&apos;,on:&apos;timeout&apos;,duration:1500}}
                     ]
                 },
 
                 // correct
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;targetOut&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;targetOut&apos;}],
                     actions: [
-                        {type:&quot;removeInput&quot;,handle:&quot;in&quot;},
-                        {type:&quot;log&quot;},
-                        {type:&quot;showStim&quot;,handle:&quot;correct&quot;},											// show error stimulus
-                        {type:&quot;setInput&quot;,input:{handle:&quot;end&quot;, on:&quot;timeout&quot;,duration:250}}
+                        {type:&apos;removeInput&apos;,handle:&apos;in&apos;},
+                        {type:&apos;log&apos;},
+                        {type:&apos;showStim&apos;,handle:&apos;correct&apos;},											// show error stimulus
+                        {type:&apos;setInput&apos;,input:{handle:&apos;end&apos;, on:&apos;timeout&apos;,duration:250}}
                     ]
                 },
 
                 // error
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;in&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;in&apos;}],
                     actions: [
-                        {type:&quot;removeInput&quot;,handle:[&quot;in&quot;,&quot;targetOut&quot;]},
-                        {type:&quot;showStim&quot;, handle: &quot;error&quot;},
-                        {type:&quot;log&quot;},
-                        {type:&quot;setTrialAttr&quot;, setter:{score:1}},									// set the score to 1
-                        {type:&quot;setInput&quot;,input:{handle:&quot;end&quot;, on:&quot;timeout&quot;,duration:250}}			// trigger the "end action after ITI"
+                        {type:&apos;removeInput&apos;,handle:[&apos;in&apos;,&apos;targetOut&apos;]},
+                        {type:&apos;showStim&apos;, handle: &apos;error&apos;},
+                        {type:&apos;log&apos;},
+                        {type:&apos;setTrialAttr&apos;, setter:{score:1}},									// set the score to 1
+                        {type:&apos;setInput&apos;,input:{handle:&apos;end&apos;, on:&apos;timeout&apos;,duration:250}}			// trigger the &quot;end action after ITI&quot;
                     ]
                 },
 
                 // end after ITI
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;end&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;end&apos;}],
                     actions: [
-                        {type:&quot;endTrial&quot;}
+                        {type:&apos;endTrial&apos;}
                     ]
                 },
 
                 // skip block
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;enter&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;enter&apos;}],
                     actions: [
-                        {type:&quot;goto&quot;, destination: &quot;nextWhere&quot;, properties: {blockStart:true}},
-                        {type:&quot;endTrial&quot;}
+                        {type:&apos;goto&apos;, destination: &apos;nextWhere&apos;, properties: {blockStart:true}},
+                        {type:&apos;endTrial&apos;}
                     ]
                 }
             ]
         }] // end basic trial
     });
-    //this trial is for the &quot;Go&quot; trial
+    //this trial is for the &apos;Go&apos; trial
     API.addTrialSets({
         Go: [{
             // by default each trial is correct, this is modified in case of an error
             data: {score:0},
 
             input: [
-                {handle:&quot;enter&quot;,on:&quot;enter&quot;}
+                {handle:&apos;enter&apos;,on:&apos;enter&apos;}
             ],
 
             // user interactions
             interactions: [
                 {
-                    conditions: [{type:&quot;begin&quot;}],
+                    conditions: [{type:&apos;begin&apos;}],
                     actions: [
-                        {type:&quot;showStim&quot;,handle:&quot;blankScreen&quot;},
-                        {type:&quot;setInput&quot;,input:{handle:&quot;showMyStim&quot;, on:&quot;timeout&quot;,duration:1000}}//show the stim 1000 ms after the beginin
+                        {type:&apos;showStim&apos;,handle:&apos;blankScreen&apos;},
+                        {type:&apos;setInput&apos;,input:{handle:&apos;showMyStim&apos;, on:&apos;timeout&apos;,duration:1000}}//show the stim 1000 ms after the beginin
                     ]
                 },
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;showMyStim&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;showMyStim&apos;}],
                     actions: [
-                        {type:&quot;showStim&quot;,handle:&quot;myStim&quot;},
-                        {type:&quot;setInput&quot;,input:{handle: &quot;in&quot;,on:&quot;centerTouch&quot;,touch:true}},
-                        {type:&quot;setInput&quot;,input:{handle: &quot;in&quot;,on:&quot;space&quot;}},
-                        {type:&quot;setInput&quot;,input:{handle:&quot;targetOut&quot;,on:&quot;timeout&quot;,duration:1200}}
+                        {type:&apos;showStim&apos;,handle:&apos;myStim&apos;},
+                        {type:&apos;setInput&apos;,input:{handle: &apos;in&apos;,on:&apos;centerTouch&apos;,touch:true}},
+                        {type:&apos;setInput&apos;,input:{handle: &apos;in&apos;,on:&apos;space&apos;}},
+                        {type:&apos;setInput&apos;,input:{handle:&apos;targetOut&apos;,on:&apos;timeout&apos;,duration:1200}}
                     ]
                 },
 
                 // error
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;targetOut&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;targetOut&apos;}],
                     actions: [
-                        {type:&quot;removeInput&quot;,handle:&quot;in&quot;},
-                        {type:&quot;showStim&quot;,handle:&quot;error&quot;},// show error stimulus
-                        {type:&quot;log&quot;},
-                        {type:&quot;setTrialAttr&quot;, setter:{score:1}},
-                        {type:&quot;setInput&quot;,input:{handle:&quot;end&quot;, on:&quot;timeout&quot;,duration:250}}					// set the score to 1
+                        {type:&apos;removeInput&apos;,handle:&apos;in&apos;},
+                        {type:&apos;showStim&apos;,handle:&apos;error&apos;},// show error stimulus
+                        {type:&apos;log&apos;},
+                        {type:&apos;setTrialAttr&apos;, setter:{score:1}},
+                        {type:&apos;setInput&apos;,input:{handle:&apos;end&apos;, on:&apos;timeout&apos;,duration:250}}					// set the score to 1
                     ]
                 },
 
                 // correct
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;in&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;in&apos;}],
                     actions: [
-                        {type:&quot;removeInput&quot;,handle:[&quot;in&quot;,&quot;targetOut&quot;]},
-                        {type:&quot;showStim&quot;, handle: &quot;correct&quot;},											// hide everything
-                        {type:&quot;log&quot;},																// log this trial
-                        {type:&quot;setInput&quot;,input:{handle:&quot;end&quot;, on:&quot;timeout&quot;,duration:250}}			// trigger the "end action after ITI"
+                        {type:&apos;removeInput&apos;,handle:[&apos;in&apos;,&apos;targetOut&apos;]},
+                        {type:&apos;showStim&apos;, handle: &apos;correct&apos;},											// hide everything
+                        {type:&apos;log&apos;},																// log this trial
+                        {type:&apos;setInput&apos;,input:{handle:&apos;end&apos;, on:&apos;timeout&apos;,duration:250}}			// trigger the &quot;end action after ITI&quot;
                     ]
                 },
 
                 // end after ITI
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;end&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;end&apos;}],
                     actions: [
-                        {type:&quot;endTrial&quot;}
+                        {type:&apos;endTrial&apos;}
                     ]
                 },
 
                 // skip block
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;enter&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;enter&apos;}],
                     actions: [
-                        {type:&quot;goto&quot;, destination: &quot;nextWhere&quot;, properties: {blockStart:true}},
-                        {type:&quot;endTrial&quot;}
+                        {type:&apos;goto&apos;, destination: &apos;nextWhere&apos;, properties: {blockStart:true}},
+                        {type:&apos;endTrial&apos;}
                     ]
                 }
             ]
         }] // end basic trial
     });
-    //this trial is for the &quot;NoGo&quot; trial
+    //this trial is for the &apos;NoGo&apos; trial
     API.addTrialSets({
         NoGo: [{
             // by default each trial is correct, this is modified in case of an error
             data: {score:0},
 
             input: [
-                {handle:&quot;enter&quot;,on:&quot;enter&quot;}
+                {handle:&apos;enter&apos;,on:&apos;enter&apos;}
             ],
 
             // user interactions
             interactions: [
                 {
-                    conditions: [{type:&quot;begin&quot;}],
+                    conditions: [{type:&apos;begin&apos;}],
                     actions: [
-                        {type:&quot;showStim&quot;,handle:&quot;blankScreen&quot;},
-                        {type:&quot;setInput&quot;,input:{handle:&quot;showMyStim&quot;, on:&quot;timeout&quot;,duration:1000}}//show the stim 1000 ms after the beginin
+                        {type:&apos;showStim&apos;,handle:&apos;blankScreen&apos;},
+                        {type:&apos;setInput&apos;,input:{handle:&apos;showMyStim&apos;, on:&apos;timeout&apos;,duration:1000}}//show the stim 1000 ms after the beginin
                     ]
                 },
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;showMyStim&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;showMyStim&apos;}],
                     actions: [
-                        {type:&quot;showStim&quot;,handle:&quot;myStim&quot;},
-                        {type:&quot;setInput&quot;,input:{handle: &quot;in&quot;,on:&quot;centerTouch&quot;,touch:true}},
-                        {type:&quot;setInput&quot;,input:{handle: &quot;in&quot;,on:&quot;space&quot;}},
-                        {type:&quot;setInput&quot;,input:{handle:&quot;targetOut&quot;,on:&quot;timeout&quot;,duration:1000}}
+                        {type:&apos;showStim&apos;,handle:&apos;myStim&apos;},
+                        {type:&apos;setInput&apos;,input:{handle: &apos;in&apos;,on:&apos;centerTouch&apos;,touch:true}},
+                        {type:&apos;setInput&apos;,input:{handle: &apos;in&apos;,on:&apos;space&apos;}},
+                        {type:&apos;setInput&apos;,input:{handle:&apos;targetOut&apos;,on:&apos;timeout&apos;,duration:1000}}
                     ]
                 },
 
                 // correct
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;targetOut&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;targetOut&apos;}],
                     actions: [
-                        {type:&quot;removeInput&quot;,handle:&quot;in&quot;},
-                        {type:&quot;showStim&quot;,handle:&quot;correct&quot;},	// show error stimulus
-                        {type:&quot;log&quot;},
-                        {type:&quot;setInput&quot;,input:{handle:&quot;end&quot;, on:&quot;timeout&quot;,duration:250}}					// set the score to 1
+                        {type:&apos;removeInput&apos;,handle:&apos;in&apos;},
+                        {type:&apos;showStim&apos;,handle:&apos;correct&apos;},	// show error stimulus
+                        {type:&apos;log&apos;},
+                        {type:&apos;setInput&apos;,input:{handle:&apos;end&apos;, on:&apos;timeout&apos;,duration:250}}					// set the score to 1
                     ]
                 },
 
                 // error
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;in&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;in&apos;}],
                     actions: [
-                        {type:&quot;removeInput&quot;,handle:[&quot;in&quot;,&quot;targetOut&quot;]},
-                        {type:&quot;showStim&quot;, handle: &quot;error&quot;},
-                        {type:&quot;log&quot;},
-                        {type:&quot;setTrialAttr&quot;, setter:{score:1}},
-                        {type:&quot;setInput&quot;,input:{handle:&quot;end&quot;, on:&quot;timeout&quot;,duration:250}}			// trigger the "end action after ITI"
+                        {type:&apos;removeInput&apos;,handle:[&apos;in&apos;,&apos;targetOut&apos;]},
+                        {type:&apos;showStim&apos;, handle: &apos;error&apos;},
+                        {type:&apos;log&apos;},
+                        {type:&apos;setTrialAttr&apos;, setter:{score:1}},
+                        {type:&apos;setInput&apos;,input:{handle:&apos;end&apos;, on:&apos;timeout&apos;,duration:250}}			// trigger the &quot;end action after ITI&quot;
                     ]
                 },
 
                 // end after ITI
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;end&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;end&apos;}],
                     actions: [
-                        {type:&quot;endTrial&quot;}
+                        {type:&apos;endTrial&apos;}
                     ]
                 },
 
                 // skip block
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;enter&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;enter&apos;}],
                     actions: [
-                        {type:&quot;goto&quot;, destination: &quot;nextWhere&quot;, properties: {blockStart:true}},
-                        {type:&quot;endTrial&quot;}
+                        {type:&apos;goto&apos;, destination: &apos;nextWhere&apos;, properties: {blockStart:true}},
+                        {type:&apos;endTrial&apos;}
                     ]
                 }
             ]
@@ -452,38 +466,38 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
      * Create default Introduction trials
      * note that this function takes an array of objects
      */
-    API.addTrialSets("introduction", [
+    API.addTrialSets(&quot;introduction&quot;, [
         // generic introduction trial, to be inherited by all other inroduction trials
 
         {
-            data: {block: &quot;generic&quot;},
+            data: {block: &apos;generic&apos;},
             // create user interface (just click to move on...)
             input: [
-                {handle:&quot;space&quot;,on:&quot;space&quot;},
-                {handle:&quot;enter&quot;,on:&quot;enter&quot;},
-                {handle:&quot;space&quot;,on:&quot;bottomTouch&quot;,touch:true}
+                {handle:&apos;space&apos;,on:&apos;space&apos;},
+                {handle:&apos;enter&apos;,on:&apos;enter&apos;},
+                {handle:&apos;space&apos;,on:&apos;bottomTouch&apos;,touch:true}
             ],
             interactions: [
                 // display instructions
                 {
-                    conditions: [{type:&quot;begin&quot;}],
+                    conditions: [{type:&apos;begin&apos;}],
                     actions: [
-                        {type:&quot;showStim&quot;,handle:&quot;All&quot;}
+                        {type:&apos;showStim&apos;,handle:&apos;All&apos;}
                     ]
                 },
 
                 // end trial
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],
-                    actions: [{type:&quot;endTrial&quot;}]
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],
+                    actions: [{type:&apos;endTrial&apos;}]
                 },
 
                 // skip block
                 {
-                    conditions: [{type:&quot;inputEquals&quot;,value:&quot;enter&quot;}],
+                    conditions: [{type:&apos;inputEquals&apos;,value:&apos;enter&apos;}],
                     actions: [
-                        {type:&quot;goto&quot;, destination: &quot;nextWhere&quot;, properties: {blockStart:true}},
-                        {type:&quot;endTrial&quot;}
+                        {type:&apos;goto&apos;, destination: &apos;nextWhere&apos;, properties: {blockStart:true}},
+                        {type:&apos;endTrial&apos;}
                     ]
                 }
             ]
@@ -493,103 +507,103 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
     /**
      * Create specific trials for each block
      */
-    API.addTrialSets({ // pleasant+black people as &quot;go&quot;
+    API.addTrialSets({ // pleasant+black people as &apos;go&apos;
         BlackGo:[{
-            data: {condition: category1 + &quot;+&quot; + attribute1},
+            data: {condition: category1 + &apos;+&apos; + attribute1},
             layout: [
-                {location:{top:3},media:{word:"Hit &quot;space&quot; bar if the item belongs to"}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;1em&quot;}},
-                {location:{top:6},media:{word:category1}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
-                {location:{top:14},media:{word:&quot;or&quot;}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
-                {location:{top:22},media:{word:attribute1}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
+                {location:{top:3},media:{word:&quot;Hit &apos;space&apos; bar if the item belongs to&quot;}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;1em&apos;}},
+                {location:{top:6},media:{word:category1}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;2em&apos;}},
+                {location:{top:14},media:{word:&apos;or&apos;}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;2em&apos;}},
+                {location:{top:22},media:{word:attribute1}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;2em&apos;}}
             ],
-            inherit:{set: &quot;Go&quot;},
+            inherit:{set: &apos;Go&apos;},
             stimuli: [
-                {inherit:{type:&quot;exRandom&quot;,set:&quot;category1_attribute1&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;blankScreen&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;correctFeedback&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;errorFeedback&quot;}}
+                {inherit:{type:&apos;exRandom&apos;,set:&apos;category1_attribute1&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;blankScreen&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;correctFeedback&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;errorFeedback&apos;}}
             ]
         }],
-        BlackNoGo:[{ // pleasant+white people as &quot;go&quot;
-            data: {condition: category1 + &quot;+&quot; + attribute2},
+        BlackNoGo:[{ // pleasant+white people as &apos;go&apos;
+            data: {condition: category1 + &apos;+&apos; + attribute2},
             layout: [
-                {location:{top:3},media:{word:"Hit &quot;space&quot; bar if the item belongs to"}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;1em&quot;}},
-                {location:{top:6},media:{word:category2}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
-                {location:{top:14},media:{word:&quot;or&quot;}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
-                {location:{top:22},media:{word:attribute1}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
+                {location:{top:3},media:{word:&quot;Hit &apos;space&apos; bar if the item belongs to&quot;}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;1em&apos;}},
+                {location:{top:6},media:{word:category2}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;2em&apos;}},
+                {location:{top:14},media:{word:&apos;or&apos;}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;2em&apos;}},
+                {location:{top:22},media:{word:attribute1}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;2em&apos;}}
             ],
-            inherit:{set: &quot;NoGo&quot;},
+            inherit:{set: &apos;NoGo&apos;},
             stimuli: [
-                {inherit:{type:&quot;exRandom&quot;,set:&quot;category1_attribute2&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;blankScreen&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;correctFeedback&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;errorFeedback&quot;}}
+                {inherit:{type:&apos;exRandom&apos;,set:&apos;category1_attribute2&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;blankScreen&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;correctFeedback&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;errorFeedback&apos;}}
             ]
         }],
 
-        WhiteGo:[{ // pleasant+white people as &quot;go&quot;
-            data: {condition: category2 + &quot;+&quot; + attribute1},
+        WhiteGo:[{ // pleasant+white people as &apos;go&apos;
+            data: {condition: category2 + &apos;+&apos; + attribute1},
             layout: [
-                {location:{top:3},media:{word:"Hit &quot;space&quot; bar if the item belongs to"}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;1em&quot;}},
-                {location:{top:6},media:{word:category2}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
-                {location:{top:14},media:{word:&quot;or&quot;}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
-                {location:{top:22},media:{word:attribute1}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
+                {location:{top:3},media:{word:&quot;Hit &apos;space&apos; bar if the item belongs to&quot;}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;1em&apos;}},
+                {location:{top:6},media:{word:category2}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;2em&apos;}},
+                {location:{top:14},media:{word:&apos;or&apos;}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;2em&apos;}},
+                {location:{top:22},media:{word:attribute1}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;2em&apos;}}
             ],
 
-            inherit:{set: &quot;Go&quot;},													// inherit the default trial
+            inherit:{set: &apos;Go&apos;},													// inherit the default trial
             stimuli: [
-                {inherit:{type:&quot;exRandom&quot;,set:&quot;category2_attribute1&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;blankScreen&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;correctFeedback&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;errorFeedback&quot;}}
+                {inherit:{type:&apos;exRandom&apos;,set:&apos;category2_attribute1&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;blankScreen&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;correctFeedback&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;errorFeedback&apos;}}
             ]
         }],
-        WhiteNoGo:[{ //pleasant + black people as &quot;go&quot;
-            data: {condition: category2 + &quot;+&quot; + attribute2},
+        WhiteNoGo:[{ //pleasant + black people as &apos;go&apos;
+            data: {condition: category2 + &apos;+&apos; + attribute2},
             layout: [
-                {location:{top:3},media:{word:"Hit &quot;space&quot; bar if the item belongs to"}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;1em&quot;}},
-                {location:{top:6},media:{word:category1}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
-                {location:{top:14},media:{word:&quot;or&quot;}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
-                {location:{top:22},media:{word:attribute1}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
+                {location:{top:3},media:{word:&quot;Hit &apos;space&apos; bar if the item belongs to&quot;}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;1em&apos;}},
+                {location:{top:6},media:{word:category1}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;2em&apos;}},
+                {location:{top:14},media:{word:&apos;or&apos;}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;2em&apos;}},
+                {location:{top:22},media:{word:attribute1}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;2em&apos;}}
             ],
-            inherit:{set: &quot;NoGo&quot;},
+            inherit:{set: &apos;NoGo&apos;},
             stimuli: [
-                {inherit:{type:&quot;exRandom&quot;,set:&quot;category2_attribute2&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;blankScreen&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;correctFeedback&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;errorFeedback&quot;}}
+                {inherit:{type:&apos;exRandom&apos;,set:&apos;category2_attribute2&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;blankScreen&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;correctFeedback&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;errorFeedback&apos;}}
             ]
         }],
         practiceBlockGo:[{
-            data: {condition: &quot;example&quot;},
+            data: {condition: &apos;example&apos;},
             layout: [
-                {location:{top:3},media:{word:"Hit &quot;space&quot; bar if the item belongs to"}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;1em&quot;}},
-                {location:{top:6},media:{word:practiceCategory1}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
-                {location:{top:14},media:{word:&quot;or&quot;}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
-                {location:{top:22},media:{word:attribute1}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
+                {location:{top:3},media:{word:&quot;Hit &apos;space&apos; bar if the item belongs to&quot;}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;1em&apos;}},
+                {location:{top:6},media:{word:practiceCategory1}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;2em&apos;}},
+                {location:{top:14},media:{word:&apos;or&apos;}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;2em&apos;}},
+                {location:{top:22},media:{word:attribute1}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;2em&apos;}}
             ],
-            inherit:{set: &quot;PracticeGo&quot;},
+            inherit:{set: &apos;PracticeGo&apos;},
             stimuli: [
-                {inherit:{type:&quot;exRandom&quot;,set:&quot;exampleGo&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;blankScreen&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;correctFeedback&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;errorFeedback&quot;}}
+                {inherit:{type:&apos;exRandom&apos;,set:&apos;exampleGo&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;blankScreen&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;correctFeedback&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;errorFeedback&apos;}}
             ]
         }],
         practiceBlockNoGo:[{
-            data: {condition: &quot;example&quot;},
+            data: {condition: &apos;example&apos;},
             layout: [
-                {location:{top:3},media:{word:"Hit &quot;space&quot; bar if the item belongs to"}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;1em&quot;}},
-                {location:{top:6},media:{word:practiceCategory1}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
-                {location:{top:14},media:{word:&quot;or&quot;}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}},
-                {location:{top:22},media:{word:attribute1}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
+                {location:{top:3},media:{word:&quot;Hit &apos;space&apos; bar if the item belongs to&quot;}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;1em&apos;}},
+                {location:{top:6},media:{word:practiceCategory1}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;2em&apos;}},
+                {location:{top:14},media:{word:&apos;or&apos;}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;2em&apos;}},
+                {location:{top:22},media:{word:attribute1}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;2em&apos;}}
             ],
-            inherit:{set: &quot;PracticeNoGo&quot;},
+            inherit:{set: &apos;PracticeNoGo&apos;},
             stimuli: [
-                {inherit:{type:&quot;exRandom&quot;,set:&quot;exampleNoGo&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;blankScreen&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;correctFeedback&quot;}},
-                {inherit:{type:&quot;random&quot;,set:&quot;errorFeedback&quot;}}
+                {inherit:{type:&apos;exRandom&apos;,set:&apos;exampleNoGo&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;blankScreen&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;correctFeedback&apos;}},
+                {inherit:{type:&apos;random&apos;,set:&apos;errorFeedback&apos;}}
             ]
         }]
     });
@@ -601,150 +615,150 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
     API.addStimulusSets({
         // This Default stimulus is inherited by the other stimuli so that we can have a consistent look and change it from one place
     Default: [
-        {css:{color:&quot;white&quot;,&quot;font-size&quot;:&quot;2em&quot;}}
+        {css:{color:&apos;white&apos;,&apos;font-size&apos;:&apos;2em&apos;}}
     ],
     Instructions: [
-        {css:{&quot;font-size&quot;:&quot;1.3em&quot;,color:&quot;black&quot;, lineHeight:1.2}}
+        {css:{&apos;font-size&apos;:&apos;1.3em&apos;,color:&apos;black&apos;, lineHeight:1.2}}
     ],
     // The trial stimuli
     category1_attribute1 : [ // pleasant + black people
-        {data:{handle:&quot;myStim&quot;, alias:attribute1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute1&quot;}}},
-        {data:{handle:&quot;myStim&quot;, alias:category1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;category1&quot;}}}
+        {data:{handle:&apos;myStim&apos;, alias:attribute1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute1&apos;}}},
+        {data:{handle:&apos;myStim&apos;, alias:category1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;category1&apos;}}}
     ],
     category1_attribute2 : [ // unpleasant + black people
-        {data:{handle:&quot;myStim&quot;, alias:attribute2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute2&quot;}}},
-        {data:{handle:&quot;myStim&quot;, alias:category1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;category1&quot;}}}
+        {data:{handle:&apos;myStim&apos;, alias:attribute2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute2&apos;}}},
+        {data:{handle:&apos;myStim&apos;, alias:category1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;category1&apos;}}}
     ],
     category2_attribute1 : [ // pleasant + white people
-        {data:{handle:&quot;myStim&quot;, alias:attribute1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute1&quot;}}},
-        {data:{handle:&quot;myStim&quot;, alias:category2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;category2&quot;}}}
+        {data:{handle:&apos;myStim&apos;, alias:attribute1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute1&apos;}}},
+        {data:{handle:&apos;myStim&apos;, alias:category2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;category2&apos;}}}
     ],
     category2_attribute2 : [ // unpleasant + white people
-        {data:{handle:&quot;myStim&quot;, alias:attribute2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute2&quot;}}},
-        {data:{handle:&quot;myStim&quot;, alias:category2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;category2&quot;}}}
+        {data:{handle:&apos;myStim&apos;, alias:attribute2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute2&apos;}}},
+        {data:{handle:&apos;myStim&apos;, alias:category2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;category2&apos;}}}
     ],
     //for the first block (Mammals/ Birds)
     exampleGo: [ //pleasant + Birds
-        {data:{handle:&quot;myStim&quot;, alias:attribute1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute1&quot;}}},
-        {data:{handle:&quot;myStim&quot;, alias:practiceCategory1}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;practiceCategory1&quot;}}}
+        {data:{handle:&apos;myStim&apos;, alias:attribute1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute1&apos;}}},
+        {data:{handle:&apos;myStim&apos;, alias:practiceCategory1}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;practiceCategory1&apos;}}}
     ],
     exampleNoGo: [ //unpleasant + mammals
-        {data:{handle:&quot;myStim&quot;, alias:attribute2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;attribute2&quot;}}},
-        {data:{handle:&quot;myStim&quot;, alias:practiceCategory2}, inherit:&quot;Default&quot;, media: {inherit:{type:&quot;exRandom&quot;,set:&quot;practiceCategory2&quot;}}}
+        {data:{handle:&apos;myStim&apos;, alias:attribute2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;attribute2&apos;}}},
+        {data:{handle:&apos;myStim&apos;, alias:practiceCategory2}, inherit:&apos;Default&apos;, media: {inherit:{type:&apos;exRandom&apos;,set:&apos;practiceCategory2&apos;}}}
     ],
 
 
     // this stimulus used for giving feedback
     errorFeedback : [  //error
-        {handle:&quot;error&quot;, location: {top: 80}, css:{color:&quot;red&quot;,&quot;font-size&quot;:&quot;4em&quot;}, media: {word:&quot;X&quot;}, nolog:true}
+        {handle:&apos;error&apos;, location: {top: 80}, css:{color:&apos;red&apos;,&apos;font-size&apos;:&apos;4em&apos;}, media: {word:&apos;X&apos;}, nolog:true}
     ],
     correctFeedback : [ //correct
-        {handle:&quot;correct&quot;, location: {top: 80}, css:{color:&quot;#00FF00&quot;,&quot;font-size&quot;:&quot;4em&quot;}, media: {word:&quot;O&quot;}, nolog:true}
+        {handle:&apos;correct&apos;, location: {top: 80}, css:{color:&apos;#00FF00&apos;,&apos;font-size&apos;:&apos;4em&apos;}, media: {word:&apos;O&apos;}, nolog:true}
     ],
     blankScreen : [ // for the first 1000 ms in the begining of each trial (can be used for fixation)
-        {handle:&quot;blankScreen&quot;, location: {top: 80}, css:{color:&quot;black&quot;,&quot;font-size&quot;:&quot;4em&quot;}, media: {word:&quot; &quot;}, nolog:true}
+        {handle:&apos;blankScreen&apos;, location: {top: 80}, css:{color:&apos;black&apos;,&apos;font-size&apos;:&apos;4em&apos;}, media: {word:&apos; &apos;}, nolog:true}
     ]
     });
     API.addMediaSets({
         attribute1 : [// Pleasant
-            {word: &quot;Nice&quot;},
-            {word: &quot;Heaven&quot;},
-            {word: &quot;Happy&quot;},
-            {word: &quot;Pleasure&quot;}
+            {word: &apos;Nice&apos;},
+            {word: &apos;Heaven&apos;},
+            {word: &apos;Happy&apos;},
+            {word: &apos;Pleasure&apos;}
         ],
         attribute2: [ //Unpleasant
-            {word: &quot;Nasty&quot;},
-            {word: &quot;Hell&quot;},
-            {word: &quot;Horrible&quot;},
-            {word: &quot;Rotten&quot;}
+            {word: &apos;Nasty&apos;},
+            {word: &apos;Hell&apos;},
+            {word: &apos;Horrible&apos;},
+            {word: &apos;Rotten&apos;}
         ],
         category1: [ // Black people
-            {image: &quot;bf14_nc.jpg&quot;},
-            {image: &quot;bf23_nc.jpg&quot;},
-            {image: &quot;bf56_nc.jpg&quot;},
-            {image: &quot;bm14_nc.jpg&quot;}
+            {image: &apos;bf14_nc.jpg&apos;},
+            {image: &apos;bf23_nc.jpg&apos;},
+            {image: &apos;bf56_nc.jpg&apos;},
+            {image: &apos;bm14_nc.jpg&apos;}
         ],
         category2: [ //White people
-            {image: &quot;wf2_nc.jpg&quot;},
-            {image: &quot;wf3_nc.jpg&quot;},
-            {image: &quot;wf6_nc.jpg&quot;},
-            {image: &quot;wm1_nc.jpg&quot;}
+            {image: &apos;wf2_nc.jpg&apos;},
+            {image: &apos;wf3_nc.jpg&apos;},
+            {image: &apos;wf6_nc.jpg&apos;},
+            {image: &apos;wm1_nc.jpg&apos;}
         ],
         practiceCategory1: [//birds
-            {image: &quot;ctsduck.jpg&quot;},
-            {image: &quot;ctsparrot.jpg&quot;},
-            {image: &quot;ctsrobin.jpg&quot;},
-            {image: &quot;ctssparrow.jpg&quot;}
+            {image: &apos;ctsduck.jpg&apos;},
+            {image: &apos;ctsparrot.jpg&apos;},
+            {image: &apos;ctsrobin.jpg&apos;},
+            {image: &apos;ctssparrow.jpg&apos;}
         ],
         practiceCategory2: [//mammals
-            {image: &quot;ctsbison.jpg&quot;},
-            {image: &quot;ctsgiraffe.jpg&quot;},
-            {image: &quot;ctshippo.jpg&quot;},
-            {image: &quot;ctsrhino.jpg&quot;}
+            {image: &apos;ctsbison.jpg&apos;},
+            {image: &apos;ctsgiraffe.jpg&apos;},
+            {image: &apos;ctshippo.jpg&apos;},
+            {image: &apos;ctsrhino.jpg&apos;}
         ]
     });
-    //  the &quot;black people&quot; as the first focal category
+    //  the &apos;black people&apos; as the first focal category
     var GNAT1 = [{
         data: {block:0,blockStart:true},
-        inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+        inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
         stimuli: [{
-            inherit:&quot;Instructions&quot;,
-            media:{template:&quot;inst1.jst&quot;}
+            inherit:&apos;Instructions&apos;,
+            media:{template:&apos;inst1.jst&apos;}
         }]
     },
     { //The presentation trials
         // Repeat 16 times the trial. (8 times each combination)
-        mixer: &quot;random&quot;,
+        mixer: &apos;random&apos;,
         data : [
             {
-                mixer: &quot;repeat&quot;,
+                mixer: &apos;repeat&apos;,
                 times: 8,
                 data : [
-                    {inherit: &quot;practiceBlockGo&quot;,data:{block:0}},
-                    {inherit: &quot;practiceBlockNoGo&quot;,data:{block:0}}
+                    {inherit: &apos;practiceBlockGo&apos;,data:{block:0}},
+                    {inherit: &apos;practiceBlockNoGo&apos;,data:{block:0}}
                 ]
             } // end wrapper
         ]
     },
     {   //the instructions
         data: {block:1,blockStart:true},
-        inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+        inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
         stimuli: [{
-            inherit:&quot;Instructions&quot;,
-            media:{template:&quot;inst2.jst&quot;}
+            inherit:&apos;Instructions&apos;,
+            media:{template:&apos;inst2.jst&apos;}
         }]
     },
     { //The presentation trials
         // Repeat 16 times the trial. (8 times each combination)
-        mixer: &quot;random&quot;,		//
+        mixer: &apos;random&apos;,		//
         data : [
             {
-                mixer: &quot;repeat&quot;,
+                mixer: &apos;repeat&apos;,
                 times: 8,
                 data : [
-                    {inherit: &quot;BlackGo&quot;,data:{block:1,parcel:&quot;first&quot;}},
-                    {inherit: &quot;WhiteNoGo&quot;,data:{block:1}}
+                    {inherit: &apos;BlackGo&apos;,data:{block:1,parcel:&apos;first&apos;}},
+                    {inherit: &apos;WhiteNoGo&apos;,data:{block:1}}
                 ]
             } // end wrapper
         ]
     },
     {
         data: {block:2,blockStart:true},
-        inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+        inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
         stimuli: [{
-            inherit:&quot;Instructions&quot;,
-            media:{template:&quot;inst3.jst&quot;}}]
+            inherit:&apos;Instructions&apos;,
+            media:{template:&apos;inst3.jst&apos;}}]
     },
     { //The presentation trials
         // Repeat 16 times the trial. (8 times each combination)
-        mixer: &quot;random&quot;,		//
+        mixer: &apos;random&apos;,		//
         data : [
             {
-                mixer: &quot;repeat&quot;,
+                mixer: &apos;repeat&apos;,
                 times: 8,
                 data : [
-                    {inherit: &quot;BlackNoGo&quot;,data:{block:2}},
-                    {inherit: &quot;WhiteGo&quot;,data:{block:2,parcel:&quot;first&quot;}}
+                    {inherit: &apos;BlackNoGo&apos;,data:{block:2}},
+                    {inherit: &apos;WhiteGo&apos;,data:{block:2,parcel:&apos;first&apos;}}
                 ]
             } // end wrapper
         ]
@@ -752,44 +766,44 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
     //blocks 3+4
     {
         data: {block:3,blockStart:true},
-        inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+        inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
         stimuli: [{
-            inherit:&quot;Instructions&quot;,
-            media:{template:&quot;inst2.jst&quot;}
+            inherit:&apos;Instructions&apos;,
+            media:{template:&apos;inst2.jst&apos;}
         }]
     },
     { //The presentation trials
         // Repeat 16 times the trial. (8 times each combination)
-        mixer: &quot;random&quot;,		//
+        mixer: &apos;random&apos;,		//
         data : [
             {
-                mixer: &quot;repeat&quot;,
+                mixer: &apos;repeat&apos;,
                 times: 8,
                 data : [
-                    {inherit: &quot;BlackGo&quot;,data:{block:3,parcel:&quot;second&quot;}},
-                    {inherit: &quot;WhiteNoGo&quot;,data:{block:3}}
+                    {inherit: &apos;BlackGo&apos;,data:{block:3,parcel:&apos;second&apos;}},
+                    {inherit: &apos;WhiteNoGo&apos;,data:{block:3}}
                 ]
             } // end wrapper
         ]
     },
     {
         data: {block:4,blockStart:true},
-        inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+        inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
         stimuli: [{
-            inherit:&quot;Instructions&quot;,
-            media:{template:&quot;inst3.jst&quot;}
+            inherit:&apos;Instructions&apos;,
+            media:{template:&apos;inst3.jst&apos;}
         }]
     },
     { //The presentation trials
         // Repeat 16 times the trial. (8 times each combination)
-        mixer: &quot;random&quot;,		//
+        mixer: &apos;random&apos;,		//
         data : [
             {
-                mixer: &quot;repeat&quot;,
+                mixer: &apos;repeat&apos;,
                 times: 8,
                 data : [
-                    {inherit: &quot;BlackNoGo&quot;,data:{block:4}},
-                    {inherit: &quot;WhiteGo&quot;,data:{block:4,parcel:&quot;second&quot;}}
+                    {inherit: &apos;BlackNoGo&apos;,data:{block:4}},
+                    {inherit: &apos;WhiteGo&apos;,data:{block:4,parcel:&apos;second&apos;}}
                 ]
             } // end wrapper
         ]
@@ -797,44 +811,44 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
     //blocks 5+6
     {
         data: {block:5,blockStart:true},
-        inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+        inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
         stimuli: [{
-            inherit:&quot;Instructions&quot;,
-            media:{template:&quot;inst2.jst&quot;}
+            inherit:&apos;Instructions&apos;,
+            media:{template:&apos;inst2.jst&apos;}
         }]
     },
     { //The presentation trials
         // Repeat 16 times the trial. (8 times each combination)
-        mixer: &quot;random&quot;,		//
+        mixer: &apos;random&apos;,		//
         data : [
             {
-                mixer: &quot;repeat&quot;,
+                mixer: &apos;repeat&apos;,
                 times: 8,
                 data : [
-                    {inherit: &quot;BlackGo&quot;,data:{block:5,parcel:&quot;third&quot;}},
-                    {inherit: &quot;WhiteNoGo&quot;,data:{block:5}}
+                    {inherit: &apos;BlackGo&apos;,data:{block:5,parcel:&apos;third&apos;}},
+                    {inherit: &apos;WhiteNoGo&apos;,data:{block:5}}
                 ]
             } // end wrapper
         ]
     },
     {
         data: {block:6,blockStart:true},
-        inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+        inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
         stimuli: [{
-            inherit:&quot;Instructions&quot;,
-            media:{template:&quot;inst3.jst&quot;}
+            inherit:&apos;Instructions&apos;,
+            media:{template:&apos;inst3.jst&apos;}
         }]
     },
     { //The presentation trials
         // Repeat 16 times the trial. (8 times each combination)
-        mixer: &quot;random&quot;,		//
+        mixer: &apos;random&apos;,		//
         data : [
             {
-                mixer: &quot;repeat&quot;,
+                mixer: &apos;repeat&apos;,
                 times: 8,
                 data : [
-                    {inherit: &quot;BlackNoGo&quot;,data:{block:6}},
-                    {inherit: &quot;WhiteGo&quot;,data:{block:6,parcel:&quot;third&quot;}}
+                    {inherit: &apos;BlackNoGo&apos;,data:{block:6}},
+                    {inherit: &apos;WhiteGo&apos;,data:{block:6,parcel:&apos;third&apos;}}
                 ]
             } // end wrapper
         ]
@@ -842,111 +856,111 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
     //blocks 7+8
     {
         data: {block:7,blockStart:true},
-        inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+        inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
         stimuli: [{
-            inherit:&quot;Instructions&quot;,
-            media:{template:&quot;inst2.jst&quot;}
+            inherit:&apos;Instructions&apos;,
+            media:{template:&apos;inst2.jst&apos;}
         }]
     },
     { //The presentation trials
         // Repeat 16 times the trial. (8 times each combination)
-        mixer: &quot;random&quot;,		//
+        mixer: &apos;random&apos;,		//
         data : [
             {
-                mixer: &quot;repeat&quot;,
+                mixer: &apos;repeat&apos;,
                 times: 8,
                 data : [
-                    {inherit: &quot;BlackGo&quot;,data:{block:7,parcel:&quot;fourth&quot;}},
-                    {inherit: &quot;WhiteNoGo&quot;,data:{block:7}}
+                    {inherit: &apos;BlackGo&apos;,data:{block:7,parcel:&apos;fourth&apos;}},
+                    {inherit: &apos;WhiteNoGo&apos;,data:{block:7}}
                 ]
             } // end wrapper
         ]
     },
     {
         data: {block:8,blockStart:true},
-        inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+        inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
         stimuli: [{
-            inherit:&quot;Instructions&quot;,
-            media:{template:&quot;inst3.jst&quot;}
+            inherit:&apos;Instructions&apos;,
+            media:{template:&apos;inst3.jst&apos;}
         }]
     },
     { //The presentation trials
         // Repeat 16 times the trial. (8 times each combination)
-        mixer: &quot;random&quot;,		//
+        mixer: &apos;random&apos;,		//
         data : [
             {
-                mixer: &quot;repeat&quot;,
+                mixer: &apos;repeat&apos;,
                 times: 8,
                 data : [
-                    {inherit: &quot;BlackNoGo&quot;,data:{block:8}},
-                    {inherit: &quot;WhiteGo&quot;,data:{block:8,parcel:&quot;fourth&quot;}}
+                    {inherit: &apos;BlackNoGo&apos;,data:{block:8}},
+                    {inherit: &apos;WhiteGo&apos;,data:{block:8,parcel:&apos;fourth&apos;}}
                 ]
             } // end wrapper
         ]
     }
     ];
-    //  the &quot;white people&quot; as the first focal category
+    //  the &apos;white people&apos; as the first focal category
     var GNAT2 = [{
         data: {block:0,blockStart:true},
-        inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+        inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
         stimuli: [{
-            inherit:&quot;Instructions&quot;,
-            media:{template:&quot;inst1.jst&quot;}
+            inherit:&apos;Instructions&apos;,
+            media:{template:&apos;inst1.jst&apos;}
         }]
     },
     { //The presentation trials
         // Repeat 16 times the trial. (8 times each combination)
-        mixer: &quot;random&quot;,		//
+        mixer: &apos;random&apos;,		//
         data : [
             {
-                mixer: &quot;repeat&quot;,
+                mixer: &apos;repeat&apos;,
                 times: 8,
                 data : [
-                    {inherit: &quot;practiceBlockGo&quot;,data:{block:0}},
-                    {inherit: &quot;practiceBlockNoGo&quot;,data:{block:0}}
+                    {inherit: &apos;practiceBlockGo&apos;,data:{block:0}},
+                    {inherit: &apos;practiceBlockNoGo&apos;,data:{block:0}}
                 ]
             } // end wrapper
         ]
     },
     {   //the instructions
         data: {block:1,blockStart:true},
-        inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+        inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
         stimuli: [{
-            inherit:&quot;Instructions&quot;,
-            media:{template:&quot;inst3.jst&quot;}
+            inherit:&apos;Instructions&apos;,
+            media:{template:&apos;inst3.jst&apos;}
         }]
     },
     { //The presentation trials
         // Repeat 16 times the trial. (8 times each combination)
-        mixer: &quot;random&quot;,		//
+        mixer: &apos;random&apos;,		//
         data : [
             {
-                mixer: &quot;repeat&quot;,
+                mixer: &apos;repeat&apos;,
                 times: 8,
                 data : [
-                    {inherit: &quot;BlackNoGo&quot;,data:{block:1}},
-                    {inherit: &quot;WhiteGo&quot;,data:{block:1,parcel:&quot;first&quot;}}
+                    {inherit: &apos;BlackNoGo&apos;,data:{block:1}},
+                    {inherit: &apos;WhiteGo&apos;,data:{block:1,parcel:&apos;first&apos;}}
                 ]
             } // end wrapper
         ]
     },
     {
         data: {block:2,blockStart:true},
-        inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+        inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
         stimuli: [{
-            inherit:&quot;Instructions&quot;,
-            media:{template:&quot;inst2.jst&quot;}}]
+            inherit:&apos;Instructions&apos;,
+            media:{template:&apos;inst2.jst&apos;}}]
     },
     { //The presentation trials
         // Repeat 16 times the trial. (8 times each combination)
-        mixer: &quot;random&quot;,		//
+        mixer: &apos;random&apos;,		//
         data : [
             {
-                mixer: &quot;repeat&quot;,
+                mixer: &apos;repeat&apos;,
                 times: 8,
                 data : [
-                    {inherit: &quot;BlackGo&quot;,data:{block:2,parcel:&quot;first&quot;}},
-                    {inherit: &quot;WhiteNoGo&quot;,data:{block:2}}
+                    {inherit: &apos;BlackGo&apos;,data:{block:2,parcel:&apos;first&apos;}},
+                    {inherit: &apos;WhiteNoGo&apos;,data:{block:2}}
                 ]
             } // end wrapper
         ]
@@ -954,44 +968,44 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
     //blocks 3+4
     {
         data: {block:3,blockStart:true},
-        inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+        inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
         stimuli: [{
-            inherit:&quot;Instructions&quot;,
-            media:{template:&quot;inst3.jst&quot;}
+            inherit:&apos;Instructions&apos;,
+            media:{template:&apos;inst3.jst&apos;}
         }]
     },
     { //The presentation trials
         // Repeat 16 times the trial. (8 times each combination)
-        mixer: &quot;random&quot;,		//
+        mixer: &apos;random&apos;,		//
         data : [
             {
-                mixer: &quot;repeat&quot;,
+                mixer: &apos;repeat&apos;,
                 times: 8,
                 data : [
-                    {inherit: &quot;BlackNoGo&quot;,data:{block:3}},
-                    {inherit: &quot;WhiteGo&quot;,data:{block:3,parcel:&quot;second&quot;}}
+                    {inherit: &apos;BlackNoGo&apos;,data:{block:3}},
+                    {inherit: &apos;WhiteGo&apos;,data:{block:3,parcel:&apos;second&apos;}}
                 ]
             } // end wrapper
         ]
     },
     {
         data: {block:4,blockStart:true},
-        inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+        inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
         stimuli: [{
-            inherit:&quot;Instructions&quot;,
-            media:{template:&quot;inst2.jst&quot;}
+            inherit:&apos;Instructions&apos;,
+            media:{template:&apos;inst2.jst&apos;}
         }]
     },
     { //The presentation trials
         // Repeat 16 times the trial. (8 times each combination)
-        mixer: &quot;random&quot;,		//
+        mixer: &apos;random&apos;,		//
         data : [
             {
-                mixer: &quot;repeat&quot;,
+                mixer: &apos;repeat&apos;,
                 times: 8,
                 data : [
-                    {inherit: &quot;BlackGo&quot;,data:{block:4,parcel:&quot;second&quot;}},
-                    {inherit: &quot;WhiteNoGo&quot;,data:{block:4}}
+                    {inherit: &apos;BlackGo&apos;,data:{block:4,parcel:&apos;second&apos;}},
+                    {inherit: &apos;WhiteNoGo&apos;,data:{block:4}}
                 ]
             } // end wrapper
         ]
@@ -999,44 +1013,44 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
     //blocks 5+6
     {
         data: {block:5,blockStart:true},
-        inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+        inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
         stimuli: [{
-            inherit:&quot;Instructions&quot;,
-            media:{template:&quot;inst3.jst&quot;}
+            inherit:&apos;Instructions&apos;,
+            media:{template:&apos;inst3.jst&apos;}
         }]
     },
     { //The presentation trials
         // Repeat 16 times the trial. (8 times each combination)
-        mixer: &quot;random&quot;,		//
+        mixer: &apos;random&apos;,		//
         data : [
             {
-                mixer: &quot;repeat&quot;,
+                mixer: &apos;repeat&apos;,
                 times: 8,
                 data : [
-                    {inherit: &quot;BlackNoGo&quot;,data:{block:5}},
-                    {inherit: &quot;WhiteGo&quot;,data:{block:5,parcel:&quot;third&quot;}}
+                    {inherit: &apos;BlackNoGo&apos;,data:{block:5}},
+                    {inherit: &apos;WhiteGo&apos;,data:{block:5,parcel:&apos;third&apos;}}
                 ]
             } // end wrapper
         ]
     },
     {
         data: {block:6,blockStart:true},
-        inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+        inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
         stimuli: [{
-            inherit:&quot;Instructions&quot;,
-            media:{template:&quot;inst2.jst&quot;}
+            inherit:&apos;Instructions&apos;,
+            media:{template:&apos;inst2.jst&apos;}
         }]
     },
     { //The presentation trials
         // Repeat 16 times the trial. (8 times each combination)
-        mixer: &quot;random&quot;,		//
+        mixer: &apos;random&apos;,		//
         data : [
             {
-                mixer: &quot;repeat&quot;,
+                mixer: &apos;repeat&apos;,
                 times: 8,
                 data : [
-                    {inherit: &quot;BlackGo&quot;,data:{block:6,parcel:&quot;third&quot;}},
-                    {inherit: &quot;WhiteNoGo&quot;,data:{block:6}}
+                    {inherit: &apos;BlackGo&apos;,data:{block:6,parcel:&apos;third&apos;}},
+                    {inherit: &apos;WhiteNoGo&apos;,data:{block:6}}
                 ]
             } // end wrapper
         ]
@@ -1044,44 +1058,44 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
     //blocks 7+8
     {
         data: {block:7,blockStart:true},
-        inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+        inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
         stimuli: [{
-            inherit:&quot;Instructions&quot;,
-            media:{template:&quot;inst3.jst&quot;}
+            inherit:&apos;Instructions&apos;,
+            media:{template:&apos;inst3.jst&apos;}
         }]
     },
     { //The presentation trials
         // Repeat 16 times the trial. (8 times each combination)
-        mixer: &quot;random&quot;,		//
+        mixer: &apos;random&apos;,		//
         data : [
             {
-                mixer: &quot;repeat&quot;,
+                mixer: &apos;repeat&apos;,
                 times: 8,
                 data : [
-                    {inherit: &quot;BlackNoGo&quot;,data:{block:7}},
-                    {inherit: &quot;WhiteGo&quot;,data:{block:7,parcel:&quot;fourth&quot;}}
+                    {inherit: &apos;BlackNoGo&apos;,data:{block:7}},
+                    {inherit: &apos;WhiteGo&apos;,data:{block:7,parcel:&apos;fourth&apos;}}
                 ]
             } // end wrapper
         ]
     },
     {
         data: {block:8,blockStart:true},
-        inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},			// inhertit the generic instruction block
+        inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},			// inhertit the generic instruction block
         stimuli: [{
-            inherit:&quot;Instructions&quot;,
-            media:{template:&quot;inst2.jst&quot;}
+            inherit:&apos;Instructions&apos;,
+            media:{template:&apos;inst2.jst&apos;}
         }]
     },
     { //The presentation trials
         // Repeat 16 times the trial. (8 times each combination)
-        mixer: &quot;random&quot;,		//
+        mixer: &apos;random&apos;,		//
         data : [
             {
-                mixer: &quot;repeat&quot;,
+                mixer: &apos;repeat&apos;,
                 times: 8,
                 data : [
-                    {inherit: &quot;BlackGo&quot;,data:{block:8,parcel:&quot;fourth&quot;}},
-                    {inherit: &quot;WhiteNoGo&quot;,data:{block:8}}
+                    {inherit: &apos;BlackGo&apos;,data:{block:8,parcel:&apos;fourth&apos;}},
+                    {inherit: &apos;WhiteNoGo&apos;,data:{block:8}}
                 ]
             } // end wrapper
         ]
@@ -1095,27 +1109,27 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
      */
     API.addSequence([
         {
-            mixer: &quot;choose&quot;, //randomly choose if &quot;White People&quot; or &quot;Black People&quot; will be the first focal category
+            mixer: &apos;choose&apos;, //randomly choose if &apos;White People&apos; or &apos;Black People&apos; will be the first focal category
             data: [
-                {mixer:&quot;wrapper&quot;,data:GNAT1},
-                {mixer:&quot;wrapper&quot;,data:GNAT2}
+                {mixer:&apos;wrapper&apos;,data:GNAT1},
+                {mixer:&apos;wrapper&apos;,data:GNAT2}
             ]
         },
 
         // user feedback- here we will use the computeD function.
         {
             data: {blockStart:true},
-            inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
+            inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},
             stimuli: [],
             customize: function(){
                 /* global console */
                 var trial = this;
-                console.log(&quot;calling scorer&quot;);
+                console.log(&apos;calling scorer&apos;);
                 var DScoreObj, DScore, FBMsg;
 
                 //////first call to score//////
-                scorer.addSettings(&quot;compute&quot;,{
-                    parcelValue : [&quot;first&quot;]
+                scorer.addSettings(&apos;compute&apos;,{
+                    parcelValue : [&apos;first&apos;]
                 });
 
                 DScoreObj = scorer.computeD();
@@ -1123,48 +1137,48 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
                 console.log(DScore1);
 
                 //////second call to score//////
-                scorer.addSettings(&quot;compute&quot;,{
-                    parcelValue : [&quot;second&quot;]
+                scorer.addSettings(&apos;compute&apos;,{
+                    parcelValue : [&apos;second&apos;]
                 });
 
-                console.log(&quot;calling scorer for the second time&quot;);
+                console.log(&apos;calling scorer for the second time&apos;);
                 DScoreObj = scorer.computeD();
                 var DScore2 = DScoreObj.DScore;
                 console.log(DScore2);
 
 
                 //////third call to score//////
-                scorer.addSettings(&quot;compute&quot;,{
-                    parcelValue : [&quot;third&quot;]
+                scorer.addSettings(&apos;compute&apos;,{
+                    parcelValue : [&apos;third&apos;]
                 });
-                console.log(&quot;calling scorer for the third time&quot;);
+                console.log(&apos;calling scorer for the third time&apos;);
                 DScoreObj = scorer.computeD();
                 var DScore3 = DScoreObj.DScore;
                 console.log(DScore3);
 
 
                 //////fourth call to score//////
-                scorer.addSettings(&quot;compute&quot;,{
-                    parcelValue : [&quot;fourth&quot;]
+                scorer.addSettings(&apos;compute&apos;,{
+                    parcelValue : [&apos;fourth&apos;]
                 });
-                console.log(&quot;calling scorer for the fourth time&quot;);
+                console.log(&apos;calling scorer for the fourth time&apos;);
                 DScoreObj = scorer.computeD();
                 var DScore4 = DScoreObj.DScore;
                 console.log(DScore4);
 
                 // If all scores are numbers
-                if ((DScore1 !== &quot;&quot;) &amp;&amp; (DScore2 !== &quot;&quot;) &amp;&amp; (DScore3 !== &quot;&quot;) &amp;&amp; (DScore4 !== &quot;&quot;)){
+                if ((DScore1 !== &apos;&apos;) &amp;&amp; (DScore2 !== &apos;&apos;) &amp;&amp; (DScore3 !== &apos;&apos;) &amp;&amp; (DScore4 !== &apos;&apos;)){
                     //Average the 4 scores
                     DScore = (parseFloat(DScore1) + parseFloat(DScore2) + parseFloat(DScore3) + parseFloat(DScore4))/4;
                     FBMsg = scorer.getFBMsg(DScore);
                 } else {
-                    DScore = &quot;&quot;;
-                    FBMsg = &quot;An error has occurred&quot;;
+                    DScore = &apos;&apos;;
+                    FBMsg = &apos;An error has occurred&apos;;
                 }
 
                 console.log(DScore);
                 console.log(FBMsg);
-                var media = {css:{color:&quot;black&quot;},media:{html:&quot;&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt; &quot;+FBMsg+&quot;&lt;br&gt;The Score is:&quot;+DScore+&quot;&lt;/p&gt;&lt;/div&gt;&quot;}};
+                var media = {css:{color:&apos;black&apos;},media:{html:&apos;&lt;div&gt;&lt;p style=&quot;font-size:28px&quot;&gt;&lt;color=&quot;#FFFAFA&quot;&gt; &apos;+FBMsg+&apos;&lt;br&gt;The Score is:&apos;+DScore+&apos;&lt;/p&gt;&lt;/div&gt;&apos;}};
                 trial.stimuli.push(media);
                 scorer.dynamicPost({
                     score: DScoreObj.DScore,
@@ -1176,12 +1190,12 @@ define([&quot;pipAPI&quot;,&quot;pipScorer&quot;], function(APIConstructor,Score
 
         { //Instructions trial, the end of the task, instruction what to do next
             data: {blockStart:true},
-            inherit: {set:&quot;introduction&quot;, type:&quot;byData&quot;, data: {block:&quot;generic&quot;}},
+            inherit: {set:&apos;introduction&apos;, type:&apos;byData&apos;, data: {block:&apos;generic&apos;}},
             stimuli: [
                 {//The instructions stimulus
-                    data : {&quot;handle&quot;:&quot;instStim&quot;},
-                    css: {color:&quot;black&quot;},
-                    media:{html:&quot;&lt;div&gt;&lt;p style="font-size:28px"&gt;&lt;color="#FFFAFA"&gt;You have completed the study&lt;br/&gt;&lt;br/&gt;Thank you very much for your participation.&lt;br/&gt;&lt;br/&gt; Press "space" for continue to next task.&lt;/p&gt;&lt;/div&gt;&quot;}
+                    data : {&apos;handle&apos;:&apos;instStim&apos;},
+                    css: {color:&apos;black&apos;},
+                    media:{html:&apos;&lt;div&gt;&lt;p style=&quot;font-size:28px&quot;&gt;&lt;color=&quot;#FFFAFA&quot;&gt;You have completed the study&lt;br/&gt;&lt;br/&gt;Thank you very much for your participation.&lt;br/&gt;&lt;br/&gt; Press &quot;space&quot; for continue to next task.&lt;/p&gt;&lt;/div&gt;&apos;}
                 }
             ]
         }

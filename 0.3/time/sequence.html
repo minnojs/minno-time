@@ -19,6 +19,20 @@
 					<a href="/minno-time/0.3/time/overview.html">miTime</a>
 				</nav>
 				<nav>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
                     <select id="version-select"><option value="0.3" selected>v0.3</option>,<option value="0.4" >v0.4</option></select>
 					<a href="https://github.com/minnojs">Github</a>
 				</nav>
@@ -84,7 +98,7 @@
         <a class="activate-button">Activate</a>
         <a class="download-button" href="sequence.js" download>Download</a>
     </div>
-    <div class="editor">define([&quot;pipAPI&quot;], function(APIconstructor) {
+    <div class="editor">define([&apos;pipAPI&apos;], function(APIconstructor) {
 
 	var API = new APIconstructor();
 
@@ -98,22 +112,22 @@
 		// The sequence is an array of trials. you can sequentially add in as many trials as you want
 		{
 			// First trial
-			input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
-			layout: [{media :{word:&quot;First trial&quot;}}],
-			interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+			input: [{handle:&apos;space&apos;,on:&apos;space&apos;}],
+			layout: [{media :{word:&apos;First trial&apos;}}],
+			interactions: [{conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],actions: [{type:&apos;endTrial&apos;}]}]
 		},
 		{
 			// Second trial
-			input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
-			layout: [{media :{word:&quot;Second trial&quot;}}],
-			interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+			input: [{handle:&apos;space&apos;,on:&apos;space&apos;}],
+			layout: [{media :{word:&apos;Second trial&apos;}}],
+			interactions: [{conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],actions: [{type:&apos;endTrial&apos;}]}]
 		}
 		// #### Mixer objects
 		// In order to create more complex sequences you can use mixer objects. Mixer objects allow you to repeat and randomize trials. &lt;/br&gt;
 		// Each mixer object has a mixer property that defines what type of mixer it is, and a data property that holds a sequence array to be mixed. This means that the sequence may include any number of trials and/or mixer objects.&lt;/br&gt;
 
 		//        {
-		//            mixer: &quot;mixer-type&quot;,
+		//            mixer: &apos;mixer-type&apos;,
 		//            data: [task1, task2]
 		//        }
 		,
@@ -122,23 +136,23 @@
 		{
 			// The mixer property tells the sequence what sort of mixer object this is.
 			// This mixer randomizes its sequence.
-			mixer : &quot;random&quot;,
+			mixer : &apos;random&apos;,
 			// The data property holds a sequence array to be randomized. These trials will be inserted into the sequence in a random order.
 			data : [
 				{
-					input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
-					layout: [{media :{word:&quot;Random 1&quot;}}],
-					interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+					input: [{handle:&apos;space&apos;,on:&apos;space&apos;}],
+					layout: [{media :{word:&apos;Random 1&apos;}}],
+					interactions: [{conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],actions: [{type:&apos;endTrial&apos;}]}]
 				},
 				{
-					input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
-					layout: [{media :{word:&quot;Random 2&quot;}}],
-					interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+					input: [{handle:&apos;space&apos;,on:&apos;space&apos;}],
+					layout: [{media :{word:&apos;Random 2&apos;}}],
+					interactions: [{conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],actions: [{type:&apos;endTrial&apos;}]}]
 				},
 				{
-					input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
-					layout: [{media :{word:&quot;Random 3&quot;}}],
-					interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+					input: [{handle:&apos;space&apos;,on:&apos;space&apos;}],
+					layout: [{media :{word:&apos;Random 3&apos;}}],
+					interactions: [{conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],actions: [{type:&apos;endTrial&apos;}]}]
 				}
 			]
 		},
@@ -146,15 +160,15 @@
 		// ##### Repeat
 		{
 			// This mixer repeats the trials in the data property.
-			mixer : &quot;repeat&quot;,
+			mixer : &apos;repeat&apos;,
 			// The repeat mixer requires the times property that defines how many times to repeat the trials.
 			times : 3,
 			// The data property holds a sequence array to be repeated.
 			data : [
 				{
-					input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
-					layout: [{media :{word:&quot;I am repeated !!&quot;}}],
-					interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+					input: [{handle:&apos;space&apos;,on:&apos;space&apos;}],
+					layout: [{media :{word:&apos;I am repeated !!&apos;}}],
+					interactions: [{conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],actions: [{type:&apos;endTrial&apos;}]}]
 				}
 			]
 		},
@@ -162,25 +176,25 @@
 		// ##### Choose
 		{
 			// This mixer randomly chooses one or more trials
-			mixer : &quot;choose&quot;,
+			mixer : &apos;choose&apos;,
 			// The number of trials to choose (by default only one)
 			n : 1,
 			// The data property holds a sequence array from which the mixer picks trials.
 			data : [
 				{
-					input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
-					layout: [{media :{word:&quot;Choose only one (1)&quot;}}],
-					interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+					input: [{handle:&apos;space&apos;,on:&apos;space&apos;}],
+					layout: [{media :{word:&apos;Choose only one (1)&apos;}}],
+					interactions: [{conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],actions: [{type:&apos;endTrial&apos;}]}]
 				},
 				{
-					input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
-					layout: [{media :{word:&quot;Choose only one (2)&quot;}}],
-					interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+					input: [{handle:&apos;space&apos;,on:&apos;space&apos;}],
+					layout: [{media :{word:&apos;Choose only one (2)&apos;}}],
+					interactions: [{conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],actions: [{type:&apos;endTrial&apos;}]}]
 				},
 				{
-					input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
-					layout: [{media :{word:&quot;Choose only one (3)&quot;}}],
-					interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+					input: [{handle:&apos;space&apos;,on:&apos;space&apos;}],
+					layout: [{media :{word:&apos;Choose only one (3)&apos;}}],
+					interactions: [{conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],actions: [{type:&apos;endTrial&apos;}]}]
 				}
 
 			]
@@ -189,20 +203,20 @@
 		// ##### Weighted Random
 		{
 			// The weighted random mixer chooses an element from `data` with specific weights for each entry.
-			mixer : &quot;weightedRandom&quot;,
+			mixer : &apos;weightedRandom&apos;,
 			// The weights of the elements. The numbers in this array are the relative weights of each respective element in data.
 			weights: [0.2,0.8],
 			// The data property holds a sequence array to be randomized.
 			data : [
 				{
-					input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
-					layout: [{media :{word:&quot;Random 1 (20%)&quot;}}],
-					interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+					input: [{handle:&apos;space&apos;,on:&apos;space&apos;}],
+					layout: [{media :{word:&apos;Random 1 (20%)&apos;}}],
+					interactions: [{conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],actions: [{type:&apos;endTrial&apos;}]}]
 				},
 				{
-					input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
-					layout: [{media :{word:&quot;Random 2 (80%)&quot;}}],
-					interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+					input: [{handle:&apos;space&apos;,on:&apos;space&apos;}],
+					layout: [{media :{word:&apos;Random 2 (80%)&apos;}}],
+					interactions: [{conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],actions: [{type:&apos;endTrial&apos;}]}]
 				}
 			]
 		},
@@ -210,29 +224,29 @@
 		// ##### Wrapper (blocks within randomize)
 		{
 			// This mixer randomizes its sequence
-			mixer : &quot;random&quot;,
+			mixer : &apos;random&apos;,
 			// The data property holds a sequence array to be randomized.
 			data : [
 				// This trial is randomized normally
 				{
-					input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
-					layout: [{media :{word:&quot;Complex - may be before or after the pair&quot;}}],
-					interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+					input: [{handle:&apos;space&apos;,on:&apos;space&apos;}],
+					layout: [{media :{word:&apos;Complex - may be before or after the pair&apos;}}],
+					interactions: [{conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],actions: [{type:&apos;endTrial&apos;}]}]
 				},
 				// The wrapper mixer tells the sequencer to keep the data inside it together despite the randomization. It is analogous to parenthesis in math. &lt;/br&gt;
 				// In contrast, if we has a repeat mixer here, its content would be randomized.
 				{
-					mixer: &quot;wrapper&quot;,
+					mixer: &apos;wrapper&apos;,
 					data: [
 						{
-							input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
-							layout: [{media :{word:&quot;Pair 1&quot;}}],
-							interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+							input: [{handle:&apos;space&apos;,on:&apos;space&apos;}],
+							layout: [{media :{word:&apos;Pair 1&apos;}}],
+							interactions: [{conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],actions: [{type:&apos;endTrial&apos;}]}]
 						},
 						{
-							input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
-							layout: [{media :{word:&quot;Pair 2&quot;}}],
-							interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+							input: [{handle:&apos;space&apos;,on:&apos;space&apos;}],
+							layout: [{media :{word:&apos;Pair 2&apos;}}],
+							interactions: [{conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],actions: [{type:&apos;endTrial&apos;}]}]
 						}
 					]
 				}
@@ -242,28 +256,28 @@
 		// ##### Wrapper (randomization within repeat)
 		{
 			// This mixer repeats its sequence.
-			mixer : &quot;repeat&quot;,
+			mixer : &apos;repeat&apos;,
 			// Two times.
 			times: 2,
 			// The data property holds a sequence array to be repeated.
 			data : [
 				// The wrapper mixer tells the sequencer to deffer the randomization until after the repeat&lt;/br&gt;
-				// In contrast, if we didn&quot;t have the wrapper the randomizer would be run only once, and we would always randomize the same sequence.
+				// In contrast, if we didn&apos;t have the wrapper the randomizer would be run only once, and we would always randomize the same sequence.
 				{
-					mixer: &quot;wrapper&quot;,
+					mixer: &apos;wrapper&apos;,
 					data: [
 						{
-							mixer:&quot;random&quot;,
+							mixer:&apos;random&apos;,
 							data: [
 								{
-									input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
-									layout: [{media :{word:&quot;First Stim&quot;}}],
-									interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+									input: [{handle:&apos;space&apos;,on:&apos;space&apos;}],
+									layout: [{media :{word:&apos;First Stim&apos;}}],
+									interactions: [{conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],actions: [{type:&apos;endTrial&apos;}]}]
 								},
 								{
-									input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
-									layout: [{media :{word:&quot;Second Stim&quot;}}],
-									interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+									input: [{handle:&apos;space&apos;,on:&apos;space&apos;}],
+									layout: [{media :{word:&apos;Second Stim&apos;}}],
+									interactions: [{conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],actions: [{type:&apos;endTrial&apos;}]}]
 								}
 							]
 						}
@@ -275,9 +289,9 @@
 
 		// ##### The End
 		{
-			input: [{handle:&quot;space&quot;,on:&quot;space&quot;}],
-			layout: [{media :{word:&quot;The End&quot;}}],
-			interactions: [{conditions: [{type:&quot;inputEquals&quot;,value:&quot;space&quot;}],actions: [{type:&quot;endTrial&quot;}]}]
+			input: [{handle:&apos;space&apos;,on:&apos;space&apos;}],
+			layout: [{media :{word:&apos;The End&apos;}}],
+			interactions: [{conditions: [{type:&apos;inputEquals&apos;,value:&apos;space&apos;}],actions: [{type:&apos;endTrial&apos;}]}]
 		}
 	]);
 	/* this is where we close the sequence */
@@ -289,7 +303,7 @@
 	// Following is such an example. &lt;/br&gt;
 
 	// Require the mixer function
-	require([&quot;utils/mixer&quot;], function(mixer) {
+	require([&apos;utils/mixer&apos;], function(mixer) {
 		var sequence;
 
 		// Create a sequence using numbers (or strings) instead of trials.
@@ -298,19 +312,19 @@
 		// Each one of these begins with a `1`, ends with a `9`, and has all the digits between `2` and `8` randomized between them.
 		sequence = [
 			{
-				mixer : &quot;repeat&quot;,
+				mixer : &apos;repeat&apos;,
 				times : 4,
 				data : [
 					// Parse the wrapper only **after** repeating.
 					{
-						mixer: &quot;wrapper&quot;,
+						mixer: &apos;wrapper&apos;,
 						data: [
 							{
-								mixer : &quot;wrapper&quot;,
+								mixer : &apos;wrapper&apos;,
 								data : [
 									1,
 									{
-										mixer: &quot;random&quot;,
+										mixer: &apos;random&apos;,
 										// Note that we use numbers instead of trials here. This allows us to follow the order that this mixer follows.
 										data: [
 											2,3,4,5,6,7,8
@@ -334,7 +348,7 @@
 	return API.script;
 
 });
-/* don&quot;t forget to close the define wrapper */</div>
+/* don&apos;t forget to close the define wrapper */</div>
 </section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" integrity="sha256-xrr4HH5eSY+cFz4SH7ja/LaAi9qcEdjMpeMP49/iOLs=" crossorigin="anonymous"></script>
 <script src="../assets/playground.js"></script>
