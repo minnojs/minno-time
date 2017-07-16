@@ -6,7 +6,6 @@ define(function(require){
 
     var _ = require('underscore');
     var pubsub = require('utils/pubsub');
-    var trial = require('app/trial/current_trial');
     var settings = require('app/task/settings');
     var send = require('./send');
     var logStackGetter = require('./log_stack');
@@ -59,7 +58,7 @@ define(function(require){
     /*
      * create log row and push it into log stack
      */
-    pubsub.subscribe('log',function(options, input_data){
+    pubsub.subscribe('log',function(action, input_data, trial){
         var logStack = logStackGetter();
         // get settings
         var logger = settings().logger || {};
@@ -67,8 +66,7 @@ define(function(require){
         var callback = logger.logger ? logger.logger : defaultLogger;
 
         // add row to log stack
-        var trialObj = trial();
-        var row = callback.apply(trialObj,[trialObj.data, input_data, options,logStack]);
+        var row = callback.apply(trial,[trial.data, input_data, action,logStack]);
 
         if (logger.meta){
             if (_.isPlainObject(logger.meta)) _.assign(row, logger.meta);
