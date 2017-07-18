@@ -380,7 +380,12 @@ Remove input listener, takes an input `handle` or an array of input handles. The
 
 **resetTimer**:
 Resets trial timer. The latency of any events from here on (including the current one) will be calculated back to the reset instead of the begining of the trial.
+By default, reseting the timer synchronizes it with the upcomming screen paint.
+This setup ensures that we time from the time that stimuli are actually displayed and not from when the command is issued.
+In order to cancel this behaviour, you may set the  `immidiate` property.
+
 * `{type:'resetTimer'}`
+* `{type:'resetTimer', immediate:true}`
 
 **endTrial**:
 *Speaks for itself (note that any actions that come after this is called may not work properly).

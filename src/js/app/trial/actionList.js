@@ -1,7 +1,8 @@
 define(function(require){
 
-    var _ = require('underscore')
-        , global = require('app/global');
+    var _ = require('underscore');
+    var global = require('app/global');
+    var fastdom = require('utils/fastdom');
     var pubsub = require('utils/pubsub');
 
     var actions = {
@@ -73,10 +74,13 @@ define(function(require){
         },
 
         resetTimer: function(action,eventData,trial){
-            // set current evenData to 0
-            eventData.latency = 0;
-            // reset the global timer
-            trial.input.resetTimer();
+            // when to reset timer
+            action.immidiate ? reset() :  fastdom.mutate(reset);
+
+            function reset(){
+                eventData.latency = 0;
+                trial.input.resetTimer();
+            }
         },
 
         /*
