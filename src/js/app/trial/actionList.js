@@ -1,16 +1,15 @@
 define(function(require){
 
     var _ = require('underscore');
-    var global = require('app/global');
     var fastdom = require('utils/fastdom');
-    var pubsub = require('utils/pubsub');
+    var global = require('app/global');
 
+    // @TODO: see if we can afford to change the signature of actions
+    // I'd like to have the trial go first here (used almost always).
     var actions = {
         /*
          * Stimulus actions
-         *
          */
-
         showStim: function(action, eventData, trial){
             var handle = action.handle || action;
             trial.stimulusCollection.stimuli.forEach(function(stim){
@@ -87,8 +86,8 @@ define(function(require){
          * Logger
          */
 
-        log: function(){
-            pubsub.publish('log',arguments);
+        log: function(action,eventData,trial){
+            trial.$logs(arguments);
         },
 
         /*

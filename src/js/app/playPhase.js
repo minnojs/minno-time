@@ -2,10 +2,10 @@ define(function(require){
 
     var _               = require('underscore');
     var Trial           = require('app/trial/Trial');
-    var logger          = require('app/task/logger/logger');
     var nextTrial       = require('./sequencer/nextTrial');
     var stream          = require('utils/stream');
     var fastdom = require('utils/fastdom');
+    var createLogs      = require('./task/logger/createLogs');
 
     return playerPhase;
 
@@ -18,15 +18,20 @@ define(function(require){
     function playerPhase(canvas, db, script){
         var $source = stream();
         var $trial = $source.map(activateTrial());
+        var $logs = stream();
 
         var onDone = _.get(script, 'settings.hooks.endTask', script.settings.onEnd || _.noop);
 
         $source.end
-            .map(logger) // @TODO this is a bit awkward here: we're posting any leftover logs
             .map(clearCanvas)
             .map(onDone);
 
-        return {$trial:$trial, end:$source.end, play: play};
+        return {
+            $trial:$trial, 
+            end: $source.end,  // TODO:  possibly bind to true?
+            $logs: createLogs($logs, script.settings.logger || {}), 
+            play: play // TODO: possibly rename to start
+        };
 
         function clearCanvas(){
             var trial = $trial();
@@ -43,8 +48,8 @@ define(function(require){
             return activate;
             function activate(source){
                 var oldTrial = cache;
-                var trial = cache = new Trial(source, canvas);
-
+                var trial = cache = new Trial(source, canvas, script.settings);
+                trial.$logs.map($logs); 
                 trial.$end
                     .map(function(){
                         play(trial._next); // when we're done try to play the next one

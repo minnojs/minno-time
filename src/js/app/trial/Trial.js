@@ -9,11 +9,12 @@ define(function(require){
     var stream = require('utils/stream');
 
     // data is already fully inflated
-    function Trial(source, canvas){
+    function Trial(source, canvas, settings){
         // make sure we have all our stuff :)
         if (!source.interactions) throw new Error('Interactions not defined');
 
         this.canvas = canvas;
+        this.settings = settings;
         this._source = source;
         this.input = input;
 
@@ -26,6 +27,7 @@ define(function(require){
 
         this.stimulusCollection = stimulusCollection(this, canvas);
 
+        this.$logs = stream();
         this.$events = stream();
         this.$end = this.$events.end;
 
@@ -72,9 +74,6 @@ define(function(require){
             // unsubscribe
             this._pubsubStack.forEach(function(handle){ pubsub.unsubscribe(handle); });
             this._pubsubStack.length = 0;
-
-            // @TODO lets make the logger make some more sense. what is it doing here?
-            pubsub.publish('log:send'); // see if we need to send the log stack
 
             this.$end(true);
         },
