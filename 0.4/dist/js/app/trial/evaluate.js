@@ -16,15 +16,13 @@ define(function(require){
 
     var _ = require('underscore');
     var globalGetter = require('app/global');
-    var current_trial = require('./current_trial');
 
 
     // @TODO This should be done using some sort of mapping function (reduce? for loop?)
     // lets have a uniform API for the evaluation functions.
-    return function evaluate(conditions, inputData){
+    return function evaluate(conditions, inputData, trial){
         var global = globalGetter();
         var current = global.current || {};
-        var trial = current_trial();
 
         if (!conditions) throw new Error('There is an interaction without conditions!!');
 
