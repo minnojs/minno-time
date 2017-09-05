@@ -436,11 +436,14 @@ Any attributes in the setter object will be coppied into the global object.</p>
 <p><strong>trigger</strong>:
 Activate the input <code>handle</code>. If duration is set, the activation happens after the duration. By default the input <code>handle</code> is triggered immediately.</p>
 <ul>
-<li><code>{type:&#39;trigger&#39;,handle : &#39;now&#39;}</code></li>
-<li><code>{type:&#39;trigger&#39;,handle : &#39;later&#39;,duration:250}</code></li>
+<li><code>{type:&#39;trigger&#39;,handle:&#39;now&#39;}</code></li>
+<li><code>{type:&#39;trigger&#39;,handle:&#39;later&#39;,duration:250}</code></li>
+<li><code>{type:&#39;trigger&#39;,handle:&#39;time&#39;,on:&#39;timeout&#39;,duration:[300,600,900]]}</code>            pick a random value from an array</li>
+<li><code>{type:&#39;trigger&#39;,handle:&#39;time&#39;,on:&#39;timeout&#39;,duration:{min:300, max: 900}}}</code>      randomly pick from within a range</li>
+<li><code>{type:&#39;trigger&#39;,handle:&#39;time&#39;,on:&#39;timeout&#39;,duration:function(){return 630}}</code>    use a custom function to pick duration</li>
 </ul>
 <p><strong>setInput</strong>:
-Set input listener (useful for adding timeouts), takes an <code>input</code> <a href="#input-">object</a>.</p>
+Set input listener (useful for adding timeouts), takes an <code>input</code> <a href="#input">object</a>.</p>
 <ul>
 <li><code>{type:&#39;setInput&#39;,input:{handle:&#39;time&#39;,on:&#39;timeout&#39;,duration:300}}</code></li>
 </ul>
