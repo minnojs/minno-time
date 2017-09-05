@@ -367,11 +367,14 @@ Any attributes in the setter object will be coppied into the global object.
 
 **trigger**:
 Activate the input `handle`. If duration is set, the activation happens after the duration. By default the input `handle` is triggered immediately.
-* `{type:'trigger',handle : 'now'}`
-* `{type:'trigger',handle : 'later',duration:250}`
+* `{type:'trigger',handle:'now'}`
+* `{type:'trigger',handle:'later',duration:250}`
+* `{type:'trigger',handle:'time',on:'timeout',duration:[300,600,900]]}`            pick a random value from an array
+* `{type:'trigger',handle:'time',on:'timeout',duration:{min:300, max: 900}}}`      randomly pick from within a range
+* `{type:'trigger',handle:'time',on:'timeout',duration:function(){return 630}}`    use a custom function to pick duration
 
 **setInput**:
-Set input listener (useful for adding timeouts), takes an `input` [object](#input-).
+Set input listener (useful for adding timeouts), takes an `input` [object](#input).
 * `{type:'setInput',input:{handle:'time',on:'timeout',duration:300}}`
 
 **removeInput**:
