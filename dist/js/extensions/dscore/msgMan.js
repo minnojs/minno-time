@@ -27,9 +27,7 @@ define(function(require){
 
             var array = this.messages.MessageDef;
 
-            if (!array || !array.length){
-                throw new Error('You must define a "MessageDef" array.');
-            }
+            if (Array.isArray(array) || !array.length) throw new Error('You must define a "MessageDef" array.'); 
 
             var scoreNum = parseFloat(score);
             var cut = null;
