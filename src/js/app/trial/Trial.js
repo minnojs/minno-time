@@ -1,9 +1,8 @@
 define(function(require){
 
     var _ = require('underscore');
-    var pubsub = require('utils/pubsub');
-    var input = require('utils/interface/interface');
-    var stimulusCollection = require('../stimulus/stimulusCollection');
+    var input = require('./input/input');
+    var stimulusCollection = require('./stimulus/stimulusCollection');
     var interactions = require('./interactions');
     var gid = 0;
     var stream = require('utils/stream');
@@ -16,7 +15,10 @@ define(function(require){
         this.canvas = canvas;
         this.settings = settings;
         this._source = source;
-        this.input = input;
+
+        this.$logs = stream();
+        this.$events = stream();
+        this.$end = this.$events.end;
 
         // make sure we always have a data container
         this.data = source.data || {};
@@ -25,14 +27,11 @@ define(function(require){
         this._id = _.uniqueId('trial_');
         this.counter = gid++;
 
+        this.input = input(this.$events, this);
         this.stimulusCollection = stimulusCollection(this, canvas);
 
-        this.$logs = stream();
-        this.$events = stream();
-        this.$end = this.$events.end;
-
-        // subscription stack
-        this._pubsubStack = [];
+        // listen for interactions
+        this.$events.map(interactions(this));
 
         // the next trial we want to play
         // by default this is simply the next trial, this can be changed using the goto action
@@ -52,11 +51,11 @@ define(function(require){
                 .then(function(){
 
                     // activate input
-                    input.add(arrayWrap(trial._source.input));
-                    input.resetTimer(); // reset the interface timer so that event latencies are relative to now.
+                    arrayWrap(trial._source.input).forEach(trial.input.add); // add each input
+                    trial.input.resetTimer(); // reset the interface timer so that event latencies are relative to now.
 
-                    // listen for interaction
-                    interactions.activate(trial._source.interactions, trial);
+                    // start running
+                    trial.$events({type:'begin',latency:0});
                 });
         },
 
@@ -66,15 +65,9 @@ define(function(require){
             if (this._source.DEBUG && window.DEBUG) console.groupEnd('Trial: ' + this.counter); 
             
             // cancel all listeners
-            input.destroy();
+            this.input.destroy();
 
-            // stop interaction listeners
-            interactions.disable();
-
-            // unsubscribe
-            this._pubsubStack.forEach(function(handle){ pubsub.unsubscribe(handle); });
-            this._pubsubStack.length = 0;
-
+            this.$events.end(true);
             this.$end(true);
         },
 

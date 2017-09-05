@@ -6,10 +6,6 @@ define(function(require){
     var _ = require('underscore');
     var post = require('utils/post');
 
-
-	// Description: make sure console.log is safe among all browsers.
-    window.console || (window.console = {log: _.noop, error: _.noop});
-
     function Scorer(){
         this.computeData = new ComputeData();
         this.msgMan = new MsgMan();
