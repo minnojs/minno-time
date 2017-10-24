@@ -1,0 +1,31 @@
+{
+  "name": "minno-time",
+  "version": "0.5.0",
+  "description": "",
+  "main": "dist/time.js",
+  "scripts": {
+    "test": "karma start",
+    "build": "cp src/time.css dist/time.css && ./node_modules/rollup/bin/rollup -c",
+    "dev": "./node_modules/rollup/bin/rollup -c -w"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "css": "file:src/utils/css",
+    "fastdom": "^1.0.6",
+    "lodash": "^3.10.1",
+    "mithril-stream": "^1.1.0",
+    "sequencer": "github:eladzlot/minno-sequencer"
+  },
+  "devDependencies": {
+    "jasmine": "^2.8.0",
+    "karma": "^1.7.1",
+    "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-rollup-preprocessor": "^5.0.1",
+    "rollup": "^0.50.0",
+    "rollup-plugin-commonjs": "^8.2.1",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1"
+  }
+}

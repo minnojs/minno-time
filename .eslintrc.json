@@ -1,0 +1,29 @@
+{
+    "parserOptions": {
+        "sourceType": "module"
+    },
+    "rules": {
+        "indent": [1, 4, {"SwitchCase": 1}],
+        "quotes": [1,"single"],
+        "linebreak-style": [2,"unix"],
+        "semi": [1,"always"],
+        "no-console": [1]
+    },
+    "globals": {
+        "Promise": false
+    },
+    "env": {
+        "browser": true
+    },
+    "extends": "eslint:recommended",
+
+    "overrides": [
+        {
+            "files": [ "src/**/*.spec.js" ],
+            "env": {
+                "jasmine": true
+            }
+        }
+    ]
+
+}
