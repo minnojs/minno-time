@@ -16,7 +16,7 @@
     "fastdom": "^1.0.6",
     "lodash": "^3.10.1",
     "mithril-stream": "^1.1.0",
-    "sequencer": "github:eladzlot/minno-sequencer"
+    "sequencer": "github:minnojs/minno-sequencer"
   },
   "devDependencies": {
     "jasmine": "^2.8.0",
