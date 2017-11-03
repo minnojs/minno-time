@@ -3,6 +3,7 @@
   "version": "0.5.0",
   "description": "",
   "main": "dist/time.js",
+  "module": "src/index.js",
   "scripts": {
     "test": "karma start",
     "build": "cp src/time.css dist/time.css && ./node_modules/rollup/bin/rollup -c",
