@@ -1,5 +1,7 @@
 // You can find the images used for this task [here](https://github.com/minnojs/minno-time/tree/gh-pages/images)
 // and the templates [here](https://github.com/minnojs/minno-time/tree/gh-pages/resources/GNAT).
+//
+// ** This example is intended for educational purposes only. If you want to actually use this type of task, please see the [extensions page](https://app-prod-03.implicit.harvard.edu/implicit/common/all/js/pip/piscripts/ydocs/dist/index.html). **
 define(['pipAPI','pipScorer'], function(APIConstructor,Scorer) {
 
     var API = new APIConstructor('plainIAT');
