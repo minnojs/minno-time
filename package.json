@@ -5,8 +5,7 @@
   "description": "Project Implicit Player",
   "minno": {
     "activeVersions": [
-      "0.3",
-      "0.4"
+      "0.3"
     ],
     "questVersion": "0.1"
   },
