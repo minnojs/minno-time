@@ -4,7 +4,7 @@ export default transformLogs;
 
 function transformLogs(action,eventData,trial){
     var global = window.piGlobal;
-    var trialData = trial.data, inputData = eventData, logStack = global().current.logs;
+    var trialData = trial.data, inputData = eventData, logStack = global.current.logs;
     var fullpath = _.get(trial, 'settings.logger.fullpath', false);
 
     var stimList = trial.stimulusCollection.getStimlist();
