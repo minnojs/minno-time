@@ -7,7 +7,8 @@
   "scripts": {
     "test": "karma start",
     "build": "cp src/time.css dist/time.css && ./node_modules/rollup/bin/rollup -c",
-    "dev": "./node_modules/rollup/bin/rollup -c -w"
+    "dev": "./node_modules/rollup/bin/rollup -c -w",
+    "e2e": "nightwatch"
   },
   "author": "",
   "license": "Apache-2.0",
@@ -25,8 +26,10 @@
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-rollup-preprocessor": "^5.0.1",
     "rollup": "^0.51.5",
+    "nightwatch": "^0.9.16",
     "rollup-plugin-commonjs": "^8.2.1",
     "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-uglify": "^2.0.1"
+    "rollup-plugin-uglify": "^2.0.1",
+    "selenium-download": "^2.0.10"
   }
 }

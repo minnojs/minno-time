@@ -24,6 +24,7 @@
 	text-align:center;
 	overflow: hidden;
     visibility: hidden;
+    width: fit-content; /* for all modern brosers */
 }
 
 .minno-stimulus-visible {visibility:visible;}
