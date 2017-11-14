@@ -1,6 +1,10 @@
 /* eslint-env node */
 const SauceLabs = require('saucelabs');
 
+const TRAVIS_JOB_NUMBER = process.env.TRAVIS_JOB_NUMBER
+const SAUCE_USERNAME = process.env.SAUCE_USERNAME
+const SAUCE_ACCESS_KEY = process.env.SAUCE_ACCESS_KEY
+
 const SCREENSHOT_PATH = './screenshots/';
 const BINPATH = './node_modules/nightwatch/bin/';
 
@@ -21,8 +25,8 @@ module.exports = {
         }
     },
     'test_settings': {
+        /*
         'default': {
-            'filter': '*.e2e.js',
             'screenshots': {
                 'enabled': false, // if you want to keep screenshots
                 'path': './screenshots' // save screenshots here
@@ -34,12 +38,63 @@ module.exports = {
                 'browserName': 'chrome'
             }
         },
+        */
+
+    default: {
+        launch_url: 'http://ondemand.saucelabs.com:80',
+        selenium_port: 80,
+        selenium_host: 'ondemand.saucelabs.com',
+        silent: true,
+        port: 4445,
+        username: SAUCE_USERNAME,
+        access_key: SAUCE_ACCESS_KEY,
+        desiredCapabilities: {
+            build: 'build-' + TRAVIS_JOB_NUMBER,
+            'tunnel-identifier': TRAVIS_JOB_NUMBER
+        },
+        'globals': {
+            afterEach:afterEach,
+            'waitForConditionTimeout': 30000 // sometimes internet is slow so wait.
+        },
+    },
         'chrome': {
             'desiredCapabilities': {
                 'browserName': 'chrome',
                 'javascriptEnabled': true // turn off to test progressive enhancement
             }
-        }
+        },
+    ie11: {
+      integration: true,
+      desiredCapabilities: {
+        browserName: 'internet explorer',
+        platform: 'Windows 10',
+        version: '11.103',
+        javascriptEnabled: true,
+        acceptSslCerts: true
+      }
+    },
+
+    firefox51: {
+      integration: true,
+      desiredCapabilities: {
+        browserName: 'firefox',
+        platform: 'Windows 10',
+        version: '51.0',
+        javascriptEnabled: true,
+        acceptSslCerts: true
+      }
+    },
+
+    safari10: {
+      integration: true,
+      desiredCapabilities: {
+        browserName: 'safari',
+        platform: 'OS X 10.11',
+        version: '10.0',
+        javascriptEnabled: true,
+        acceptSslCerts: true
+      }
+    }
     }
 };
 
