@@ -3,7 +3,7 @@ require('../nightwatch.conf.js');
 module.exports = { // adapted from: https://git.io/vodU0
     'hello world': function(browser) {
         browser
-        .url('localhost:8080/pip/example?url=../e2e/helloWorld.js')
+        .url('localhost:9000/index.html?url=scripts/helloWorld.js')
         .waitForElementPresent('.minno-stimulus')
         .assert.hidden('.minno-stimulus')
         .element('css selector', '.minno-canvas')

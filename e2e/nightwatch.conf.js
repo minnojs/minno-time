@@ -1,10 +1,13 @@
+/* eslint-env node */
+const SauceLabs = require('saucelabs');
+
 const SCREENSHOT_PATH = './screenshots/';
 const BINPATH = './node_modules/nightwatch/bin/';
 
 // we use a nightwatch.conf.js file so we can include comments and helper functions
 module.exports = {
     'src_folders': [
-        'e2e'// Where you are storing your Nightwatch e2e tests
+        'e2e/specs'// Where you are storing your Nightwatch e2e tests
     ],
     filter: '**/*.e2e.js',
     'output_folder': './reports', // reports (test outcome) output by nightwatch
@@ -80,3 +83,29 @@ function imgpath (browser) {
 
 module.exports.imgpath = imgpath;
 module.exports.SCREENSHOT_PATH = SCREENSHOT_PATH;
+
+
+/**
+ * execute a callback after each test, informing Saucelabs
+ * whether the test has passed or not, to be able to generate
+ * the browser compatibility matrix
+ *
+ * Expected env variables:
+ *   SAUCE_USERNAME
+ *   SAUCE_ACCESS_KEY
+ */
+function afterEach(client, done) {
+    const saucelabs = new SauceLabs({
+        username: process.env.SAUCE_USERNAME,
+        password: process.env.SAUCE_ACCESS_KEY
+    })
+
+    const title = client.currentTest.name
+    const sessionId = client.capabilities['webdriver.remote.sessionid']
+    const passed = client.currentTest.results.failed === 0 && client.currentTest.results.errors === 0
+
+    saucelabs.updateJob(sessionId, {
+        title: title,
+        passed: passed
+    }, done)
+}
