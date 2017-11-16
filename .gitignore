@@ -35,5 +35,6 @@ nbproject
 node_modules
 pages
 reports
+dist
 
 package-lock.json

@@ -1,7 +1,7 @@
 import fastdom from 'fastdom';
 import getMedia from './getMedia';
 import setSize from './setSize';
-import setPlace from './setPlace';
+import setPlace, {fixIE} from './setPlace';
 import css from 'css';
 
 export default Stimulus;
@@ -53,7 +53,9 @@ function setupElement(canvas, el){
 
             // append to canvas
             canvas.appendChild(el);
-            resolve(el);
+
+            if (document.documentMode) fixIE(el, resolve);
+            else resolve(el);
         });
     });
 }

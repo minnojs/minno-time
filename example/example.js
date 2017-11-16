@@ -1,6 +1,8 @@
 define(function(){
     return {
-        settings: {},
+        settings: {
+            canvas: {background:'lightgreen'}
+        },
         sequence: [
             {
                 input: [ {handle:'space',on:'space'} ],
