@@ -7,6 +7,88 @@ const SAUCE_ACCESS_KEY = process.env.SAUCE_ACCESS_KEY
 
 const SCREENSHOT_PATH = './screenshots/';
 const BINPATH = './node_modules/nightwatch/bin/';
+const IS_SAUCE = process.argv.slice(2).indexOf('--sauce') !== -1;
+
+const localSettings = {
+    default: {
+        'screenshots': {
+            'enabled': false, // if you want to keep screenshots
+            'path': './screenshots' // save screenshots here
+        },
+        'globals': {
+            'waitForConditionTimeout': 5000 // sometimes internet is slow so wait.
+        },
+        'desiredCapabilities': { // use Chrome as the default browser for tests
+            'browserName': 'chrome'
+        }
+    },
+    chrome: {
+        'desiredCapabilities': {
+            'browserName': 'chrome',
+            'javascriptEnabled': true // turn off to test progressive enhancement
+        }
+    }
+};
+
+const sauceSettings = {
+    default: {
+        launch_url: 'http://ondemand.saucelabs.com:80',
+        selenium_port: 80,
+        selenium_host: 'ondemand.saucelabs.com',
+        silent: true,
+        port: 4445,
+        username: SAUCE_USERNAME,
+        access_key: SAUCE_ACCESS_KEY,
+        desiredCapabilities: {
+            build: 'build-' + TRAVIS_JOB_NUMBER,
+            'tunnel-identifier': TRAVIS_JOB_NUMBER
+        },
+        'globals': {
+            afterEach:afterEach,
+            'waitForConditionTimeout': 10000 // sometimes internet is slow so wait.
+        },
+    },
+    chrome: {
+        'desiredCapabilities': {
+            'browserName': 'chrome',
+            'javascriptEnabled': true // turn off to test progressive enhancement
+        }
+    },
+
+    ie11: {
+        integration: true,
+        desiredCapabilities: {
+            browserName: 'internet explorer',
+            platform: 'Windows 10',
+            version: '11.103',
+            javascriptEnabled: true,
+            acceptSslCerts: true
+        }
+    },
+/*
+    firefox56: {
+        integration: true,
+        'seleniumVersion' : '3.5.0'
+        desiredCapabilities: {
+            browserName: 'firefox',
+            platform: 'Windows 10',
+            version: '56.0',
+            javascriptEnabled: true,
+            acceptSslCerts: true
+        }
+    },
+    safari10: {
+        integration: true,
+        desiredCapabilities: {
+            browserName: 'safari',
+            platform: 'OS X 10.11',
+            version: '10.0',
+            javascriptEnabled: true,
+            acceptSslCerts: true
+        }
+    }
+    */
+};
 
 // we use a nightwatch.conf.js file so we can include comments and helper functions
 module.exports = {
@@ -24,78 +106,7 @@ module.exports = {
             'webdriver.chrome.driver' : './node_modules/nightwatch/bin/chromedriver'
         }
     },
-    'test_settings': {
-        /*
-        'default': {
-            'screenshots': {
-                'enabled': false, // if you want to keep screenshots
-                'path': './screenshots' // save screenshots here
-            },
-            'globals': {
-                'waitForConditionTimeout': 5000 // sometimes internet is slow so wait.
-            },
-            'desiredCapabilities': { // use Chrome as the default browser for tests
-                'browserName': 'chrome'
-            }
-        },
-        */
-
-    default: {
-        launch_url: 'http://ondemand.saucelabs.com:80',
-        selenium_port: 80,
-        selenium_host: 'ondemand.saucelabs.com',
-        silent: true,
-        port: 4445,
-        username: SAUCE_USERNAME,
-        access_key: SAUCE_ACCESS_KEY,
-        desiredCapabilities: {
-            build: 'build-' + TRAVIS_JOB_NUMBER,
-            'tunnel-identifier': TRAVIS_JOB_NUMBER
-        },
-        'globals': {
-            afterEach:afterEach,
-            'waitForConditionTimeout': 30000 // sometimes internet is slow so wait.
-        },
-    },
-        'chrome': {
-            'desiredCapabilities': {
-                'browserName': 'chrome',
-                'javascriptEnabled': true // turn off to test progressive enhancement
-            }
-        },
-    ie11: {
-      integration: true,
-      desiredCapabilities: {
-        browserName: 'internet explorer',
-        platform: 'Windows 10',
-        version: '11.103',
-        javascriptEnabled: true,
-        acceptSslCerts: true
-      }
-    },
-
-    firefox51: {
-      integration: true,
-      desiredCapabilities: {
-        browserName: 'firefox',
-        platform: 'Windows 10',
-        version: '51.0',
-        javascriptEnabled: true,
-        acceptSslCerts: true
-      }
-    },
-
-    safari10: {
-      integration: true,
-      desiredCapabilities: {
-        browserName: 'safari',
-        platform: 'OS X 10.11',
-        version: '10.0',
-        javascriptEnabled: true,
-        acceptSslCerts: true
-      }
-    }
-    }
+    test_settings: IS_SAUCE ? sauceSettings : localSettings
 };
 
 /**

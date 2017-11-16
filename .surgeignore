@@ -1,0 +1,4 @@
+*
+!example/*
+!dist/*
+!e2e/scripts/*

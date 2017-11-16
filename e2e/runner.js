@@ -18,12 +18,17 @@ if (opts.indexOf('--env') === -1) {
 }
 
 const start = () => {
-    const spawn = require('cross-spawn');
+    if (1 || opts.indexOf('--sauce') === -1) return runNightWatch();
     sauceConnect.start([]);
     sauceConnect.defaultInstance.stdout.on('data', connectMessage => {
         const message = connectMessage.toString();
         console.log(message);
         if (!/Sauce Connect is up, you may start your tests/.test(message)) return;
+        runNightWatch();
+    });
+
+    function runNightWatch(){
+        const spawn = require('cross-spawn');
         const runner = spawn('node_modules/.bin/nightwatch', opts, { stdio: 'inherit' });
 
         runner.on('exit', function (code) {
@@ -37,7 +42,7 @@ const start = () => {
             socket.close();
             throw err;
         });
-    });
+    }
 };
 
 console.log('Attempting to start mocks server...');
