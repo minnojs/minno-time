@@ -5,7 +5,7 @@
     "main": "dist/time.js",
     "module": "src/index.js",
     "scripts": {
-        "postinstall": "node e2e/nightwatch.config.js",
+        "postinstall": "node e2e/nightwatch.conf.js",
         "test": "karma start",
         "build": "cp src/time.css dist/time.css && ./node_modules/rollup/bin/rollup -c",
         "dev": "./node_modules/rollup/bin/rollup -c -w",
