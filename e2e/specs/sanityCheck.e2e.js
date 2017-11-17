@@ -7,7 +7,7 @@ module.exports = { // adapted from: https://git.io/vodU0
             .waitForElementPresent('.minno-stimulus')
             .assert.hidden('.minno-stimulus')
             .keys(browser.Keys.SPACE)
-            .assert.visible('.minno-stimulus')
+            .waitForElementVisible('.minno-stimulus')
             .assert.containsText('.minno-stimulus', 'hello world')
             .end();
     },

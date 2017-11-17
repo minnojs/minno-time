@@ -1,6 +1,5 @@
 /* eslint-env node */
 const server = require('./express.conf');
-const sauceConnect = require('node-sauce-connect');
 let socket;
 
 let opts = process.argv.slice(2);
@@ -18,31 +17,18 @@ if (opts.indexOf('--env') === -1) {
 }
 
 const start = () => {
-    if (1 || opts.indexOf('--sauce') === -1) return runNightWatch();
-    sauceConnect.start([]);
-    sauceConnect.defaultInstance.stdout.on('data', connectMessage => {
-        const message = connectMessage.toString();
-        console.log(message);
-        if (!/Sauce Connect is up, you may start your tests/.test(message)) return;
-        runNightWatch();
+    const spawn = require('cross-spawn');
+    const runner = spawn('node_modules/.bin/nightwatch', opts, { stdio: 'inherit' });
+
+    runner.on('exit', function (code) {
+        socket.close();
+        process.exit(code);
     });
 
-    function runNightWatch(){
-        const spawn = require('cross-spawn');
-        const runner = spawn('node_modules/.bin/nightwatch', opts, { stdio: 'inherit' });
-
-        runner.on('exit', function (code) {
-            sauceConnect.stop();
-            socket.close();
-            process.exit(code);
-        });
-
-        runner.on('error', function (err) {
-            sauceConnect.stop();
-            socket.close();
-            throw err;
-        });
-    }
+    runner.on('error', function (err) {
+        socket.close();
+        throw err;
+    });
 };
 
 console.log('Attempting to start mocks server...');
