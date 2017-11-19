@@ -54,7 +54,6 @@ const sauceSettings = {
         }
     },
 
-/*
     ie11: {
         integration: true,
         desiredCapabilities: {
@@ -65,6 +64,7 @@ const sauceSettings = {
             acceptSslCerts: true
         }
     },
+/*
     firefox56: {
         integration: true,
         'seleniumVersion' : '3.5.0'
