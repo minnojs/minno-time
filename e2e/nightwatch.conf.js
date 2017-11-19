@@ -40,8 +40,7 @@ const sauceSettings = {
         username: SAUCE_USERNAME,
         access_key: SAUCE_ACCESS_KEY,
         desiredCapabilities: {
-            build: 'build-' + TRAVIS_JOB_NUMBER,
-            'tunnel-identifier': TRAVIS_JOB_NUMBER
+            build: 'build-' + TRAVIS_JOB_NUMBER
         },
         'globals': {
             afterEach:afterEach,
