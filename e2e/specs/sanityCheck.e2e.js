@@ -6,7 +6,8 @@ module.exports = { // adapted from: https://git.io/vodU0
             .url(surgeUrl('helloWorld'))
             .waitForElementPresent('.minno-stimulus')
             .assert.hidden('.minno-stimulus')
-            .keys(browser.Keys.SPACE)
+            .keys(browser.Keys.SPACE) // chrome, edge
+            .setValue('.minno-canvas', browser.Keys.SPACE) // FF
             .waitForElementVisible('.minno-stimulus')
             .assert.containsText('.minno-stimulus', 'hello world')
             .end();
@@ -29,8 +30,8 @@ module.exports = { // adapted from: https://git.io/vodU0
                 };
             }, [], function(deltas){
                 const value = deltas.value;
-                browser.assert.equal(value.right, value.left, 's1 centered x');
-                browser.assert.equal(value.bottom, value.top, 's1 centered y');
+                browser.assert.ok(Math.abs(value.right - value.left) < 0.1, 's1 centered x');
+                browser.assert.ok(Math.abs(value.bottom - value.top) < 0.1, 's1 centered y');
             })
 
             // x centered
@@ -46,7 +47,7 @@ module.exports = { // adapted from: https://git.io/vodU0
                 };
             }, [], function(deltas){
                 const value = deltas.value;
-                browser.assert.equal(value.right, value.left, 's2 centered x');
+                browser.assert.ok(Math.abs(value.right - value.left) < 0.1, 's2 centered x');
                 browser.assert.ok(value.bottom > value.top, 's2 not centered y');
             })
 
@@ -64,7 +65,7 @@ module.exports = { // adapted from: https://git.io/vodU0
             }, [], function(deltas){
                 const value = deltas.value;
                 browser.assert.ok(value.right < value.left, 's3 not centered x');
-                browser.assert.equal(value.bottom, value.top, 's3 centered y');
+                browser.assert.ok(Math.abs(value.bottom - value.top) < 0.1, 's3 centered y');
             })
             .end();
     }

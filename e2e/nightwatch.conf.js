@@ -48,40 +48,41 @@ const sauceSettings = {
         },
     },
     chrome: {
-        'desiredCapabilities': {
-            'browserName': 'chrome',
-            'javascriptEnabled': true // turn off to test progressive enhancement
+        desiredCapabilities: {
+            browserName: 'chrome'
         }
     },
-
+    firefox56: {
+        integration: true,
+        desiredCapabilities: {
+            browserName: 'firefox',
+            platform: 'Windows 10',
+            version: '56.0'
+        }
+    },
+    edge: {
+        integration:true,
+        desiredCapabilities: {
+            browserName: 'MicrosoftEdge',
+            platform: 'Windows 10',
+            version: '14.14393'
+        }
+    },
+    /*
     ie11: {
         integration: true,
         desiredCapabilities: {
             browserName: 'internet explorer',
             platform: 'Windows 10',
-            version: '11.103',
-            javascriptEnabled: true,
-            acceptSslCerts: true
+            version: '11.103'
         }
     },
-/*
-    firefox56: {
-        integration: true,
-        'seleniumVersion' : '3.5.0'
-        desiredCapabilities: {
-            browserName: 'firefox',
-            platform: 'Windows 10',
-            version: '56.0',
-            javascriptEnabled: true,
-            acceptSslCerts: true
-        }
-    },
-    safari10: {
+    safari11: {
         integration: true,
         desiredCapabilities: {
             browserName: 'safari',
-            platform: 'OS X 10.11',
-            version: '10.0',
+            platform: 'macOS 10.12',
+            version: '11.0',
             javascriptEnabled: true,
             acceptSslCerts: true
         }
