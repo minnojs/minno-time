@@ -1,12 +1,11 @@
 /* eslint-env node */
 const SauceLabs = require('saucelabs');
 
-const TRAVIS_JOB_NUMBER = process.env.TRAVIS_JOB_NUMBER
-const SAUCE_USERNAME = process.env.SAUCE_USERNAME
-const SAUCE_ACCESS_KEY = process.env.SAUCE_ACCESS_KEY
+const TRAVIS_JOB_NUMBER = process.env.TRAVIS_JOB_NUMBER;
+const SAUCE_USERNAME = process.env.SAUCE_USERNAME;
+const SAUCE_ACCESS_KEY = process.env.SAUCE_ACCESS_KEY;
 
 const SCREENSHOT_PATH = './screenshots/';
-const BINPATH = './node_modules/nightwatch/bin/';
 const IS_SAUCE = process.argv.slice(2).indexOf('--sauce') !== -1;
 
 const localSettings = {
@@ -109,22 +108,6 @@ module.exports = {
     test_settings: IS_SAUCE ? sauceSettings : localSettings
 };
 
-/**
- * selenium-download does exactly what it's name suggests;
- * downloads (or updates) the version of Selenium (& chromedriver)
- * on your localhost where it will be used by Nightwatch.
- /the following code checks for the existence of `selenium.jar` before trying to run our tests.
- */
-
-require('fs').stat(BINPATH + 'selenium.jar', function (err, stat) { // got it?
-    if (err || !stat || stat.size < 1) {
-        require('selenium-download').ensure(BINPATH, function(error) {
-            if (error) throw new Error(error); // no point continuing so exit!
-            console.log('✔ Selenium & Chromedriver downloaded to:', BINPATH);
-        });
-    }
-});
-
 function padLeft (count) { // theregister.co.uk/2016/03/23/npm_left_pad_chaos/
     return count < 10 ? '0' + count : count.toString();
 }
@@ -164,14 +147,14 @@ function afterEach(client, done) {
     const saucelabs = new SauceLabs({
         username: process.env.SAUCE_USERNAME,
         password: process.env.SAUCE_ACCESS_KEY
-    })
+    });
 
-    const title = client.currentTest.name
-    const sessionId = client.capabilities['webdriver.remote.sessionid']
-    const passed = client.currentTest.results.failed === 0 && client.currentTest.results.errors === 0
+    const title = client.currentTest.name;
+    const sessionId = client.capabilities['webdriver.remote.sessionid'];
+    const passed = client.currentTest.results.failed === 0 && client.currentTest.results.errors === 0;
 
     saucelabs.updateJob(sessionId, {
         title: title,
         passed: passed
-    }, done)
+    }, done);
 }
