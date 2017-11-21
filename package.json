@@ -25,7 +25,6 @@
     },
     "devDependencies": {
         "cross-env": "^5.1.1",
-        "express": "^4.16.2",
         "jasmine": "^2.8.0",
         "karma": "^1.7.1",
         "karma-jasmine": "^1.1.0",
