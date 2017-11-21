@@ -2,7 +2,7 @@ import _ from 'lodash';
 import adjustCanvas from './adjust_canvas';
 import applyCanvasStyles from './applyCanvasStyles';
 import stream from 'mithril-stream';
-import css from 'css';
+import css from 'minno-css';
 
 export default setupCanvas;
 

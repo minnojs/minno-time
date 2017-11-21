@@ -1,4 +1,4 @@
-import css from 'css';
+import css from 'minno-css';
 import fastdom from 'fastdom';
 
 export default mouseEvents;

@@ -4,7 +4,7 @@ import mouseEvents from './bindings/mouseEvents';
 import keypressed from './bindings/keypressed';
 import keyup from './bindings/keyup';
 import timeout from './bindings/timeout';
-import css from 'css';
+import css from 'minno-css';
 
 export default inputBinder;
 

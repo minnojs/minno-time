@@ -2,7 +2,7 @@ import fastdom from 'fastdom';
 import getMedia from './getMedia';
 import setSize from './setSize';
 import setPlace, {fixIE} from './setPlace';
-import css from 'css';
+import css from 'minno-css';
 
 export default Stimulus;
 

@@ -1,4 +1,4 @@
-import './utils/polyfills';
+import './polyfills';
 
 import _ from 'lodash';
 

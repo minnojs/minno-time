@@ -5,8 +5,7 @@
     "main": "dist/time.js",
     "module": "src/index.js",
     "scripts": {
-        "postinstall": "npm run install:css && node e2e/nightwatch.conf.js",
-        "install:css": "rm -rf node_modules/css && ln -s ../src/utils/css node_modules/css",
+        "postinstall": "node e2e/nightwatch.conf.js",
         "test": "karma start",
         "build": "cp src/time.css dist/time.css && ./node_modules/rollup/bin/rollup -c",
         "dev": "./node_modules/rollup/bin/rollup -c -w",
@@ -20,6 +19,7 @@
     "dependencies": {
         "fastdom": "^1.0.6",
         "lodash": "^3.10.1",
+        "minno-css": "github:minnojs/minno-css",
         "minno-sequencer": "github:minnojs/minno-sequencer",
         "mithril-stream": "^1.1.0"
     },
