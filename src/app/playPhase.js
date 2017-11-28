@@ -14,23 +14,30 @@ export default playerPhase;
  * @returns sink : {end, promise}
  **/
 
-function playerPhase(canvas, db, script){
+function playerPhase(sink){
+    var canvas = sink.canvas;
+    var db = sink.db;
+    var settings = sink.settings;
+
     var $source = stream();
     var $trial = $source.map(activateTrial());
     var $logs = stream();
 
-    var onDone = _.get(script, 'settings.hooks.endTask', script.settings.onEnd || _.noop);
+    var onDone = _.get(settings, 'hooks.endTask', settings.onEnd || _.noop);
 
     $source.end
         .map(clearCanvas)
         .map(onDone);
 
-    return {
+
+    $trial.end.map(console.log.bind(null, 'sdfsdf'))
+
+    return _.extend({
         $trial:$trial, 
-        end: $source.end,  // TODO:  possibly bind to true?
-        $logs: createLogs($logs, script.settings.logger || {}), 
-        play: play // TODO: possibly rename to start
-    };
+        end: $source.end.bind(null,true), 
+        $logs: createLogs($logs, settings.logger || {}), 
+        start: play.bind(null, ['next', {}])
+    }, sink);
 
     function clearCanvas(){
         var trial = $trial();
@@ -47,7 +54,7 @@ function playerPhase(canvas, db, script){
         return activate;
         function activate(source){
             var oldTrial = cache;
-            var trial = cache = new Trial(source, canvas, script.settings);
+            var trial = cache = new Trial(source, canvas, settings);
             trial.$logs.map($logs); 
             trial.$end
                 .map(function(){

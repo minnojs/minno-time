@@ -7,9 +7,9 @@ import _ from 'lodash';
 import Database from 'minno-sequencer';
 import go from '../sequencer/sequenceGoto';
 
-export default parser;
+export default createDB;
 
-function parser(script){
+function createDB(script){
     var db = new Database();
     db.createColl('trial');
     db.createColl('stimulus');

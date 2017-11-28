@@ -1,2 +1,2310 @@
-!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?module.exports=t(require("lodash"),require("minno-sequencer")):"function"==typeof define&&define.amd?define(["lodash","minno-sequencer"],t):e["minno-time"]=t(e._,e.Database)}(this,function(e,t){"use strict";function n(){console.log.apply(console,arguments)}function r(e){return e&&(R=e),R}function i(t,n){return n?H=t:(e.isPlainObject(t)&&(e.each(function(e,t){console.warn&&i[t]&&console.warn('Overwriting "'+t+'" in global object.')}),e.merge(H,t)),H)}function o(e,t,n){var r=this.mixerSequence;switch(e){case"nextWhere":case"previousWhere":a("next",t,n,r);break;case"current":break;case"first":do{r.prev(n)}while(r.current(n));break;case"last":do{r.next(n)}while(r.current(n));r.prev();break;case"end":do{r.next(n)}while(r.current(n));break;case"next":r.next(n);break;default:throw new Error('Unknow destination "'+e+'" for goto.')}return this}function a(t,n,r,i){var o;do{i[t](),o=i.current(r)}while(o&&!e.callback(n)(o.data))}function s(e){return parseFloat(e,10)||0}function u(t,n){function r(){var r=function(t,n){var r=function(t){if(e.isPlainObject(t.proportions)){if("number"!=typeof t.proportions.height||"number"!=typeof t.proportions.width)throw new Error("The canvas proportions object`s height and a width properties must be numeric");return t.proportions.height/t.proportions.width}return t.proportions||.8}(t);if(t.width)return{width:t.width,height:t.width*r};var i=window.document.documentElement,o=i.clientHeight,a=Math.min(t.maxWidth,i.clientWidth,function(e){var t=window.getComputedStyle(e);return{height:s(e.offsetHeight)-s(t.borderTopWidth)-s(t.borderBottomWidth),width:s(e.offsetWidth)-s(t.borderLeftWidth)-s(t.borderRightWidth)}}(n.parentNode).width);return o>r*a?{height:a*r,width:a}:{height:o,width:o/r}}(n,t),i=window.getComputedStyle(t);r.height-=c(i.borderTopWidth)+c(i.borderBottomWidth)+c(i.marginTop),r.width-=c(i.borderLeftWidth)+c(i.borderRightWidth),t.style.width=r.width+"px",t.style.height=r.height+"px",t.style.fontSize=r.height*(n.textSize||3)/100+"px",window.scrollTo(0,1)}return e.throttle(function(e){"orientationchange"==e.type?setTimeout(r,500):r()},16)}function c(e){return parseFloat(e,10)||0}function l(t,n){var r;if(!e.isPlainObject(t))throw new Error("canvas(map): You must set a rule map for canvas to work properly");if(e.isUndefined(n))return e.noop;if(!e.isPlainObject(n))throw new Error("canvas(settings): canvas settings must be an object");return r=e.map(n,function(e,n){var r=t[n];if(r)return function(e,t,n){var r=e.style[t];return e.style[t]=n,function(){e.style[t]=r}}(r.element,r.property,e);throw new Error("canvas("+n+"): unknow key in canvas object.")}),function(){e.forEach(r,function(e){e.call()})}}function d(e,t){return t={exports:{}},e(t,t.exports),t.exports}function f(t,n){var i,o=function(e){var t=r().settings||{};return e?t[e]:t}();return e.isString(o.base_url)?i=o.base_url:e.isObject(o.base_url)&&(i=o.base_url[n]),"image"==n&&/^data:image/.test(t)?t:(i?"/"!=i[i.length-1]&&(i+="/"):i="",i+t)}function h(t){e.isUndefined(t.image)||ee.load(f(t.image,"image"),"image"),e.isUndefined(t.template)||ee.load(f(t.template,"template"),"template")}function p(e){e.media&&h(e.media)}function m(e){e.element&&h(e.element)}function v(t){e.each(t.layout||[],p),e.each(t.stimuli||[],p),e.each(t.input||[],m)}function w(t){e.each(t,function(t){e.isUndefined(t.mixer)?v(t):w(t.data)})}function g(t,n,r){switch(r&&ee.reset(),n){case"media":h(t);break;case"stimulus":p(t);break;case"trial":v(t);break;case"script":default:!function(t){e.each(t.mediaSets||[],h),e.each(t.stimulusSets||[],p),e.each(t.trialSets||[],v),w(t.sequence)}(t)}return ee}function y(e,t,n,r){var i=n.element;return i&&(X(i,n.css),te.mutate(function(){r.appendChild(i)})),r.addEventListener(e,function(e){var r=e.target;return i&&r===i?t(e):i||r.getAttribute("data-handle")!==n.stimHandle?void 0:t(e)}),t.end.map(function(){i&&r.removeChild(i),r.removeEventListener(e,t)}),t}function b(e,t){function n(t){ne[t.which]||-1===r.indexOf(t.which)||(t.preventDefault(),ne[t.which]=!0,e(t))}var r=(Array.isArray(t.key)?t.key:[t.key]).map(function(e){return"string"==typeof e?e.toUpperCase().charCodeAt(0):e});return document.addEventListener("keydown",n),e.end.map(function(){document.removeEventListener("keydown",n)}),e}function E(t,n){var r,i=function(t,n){if(e.isArray(t))return t[Math.floor(Math.random()*t.length)];if(e.isFunction(t))return t.call(n);if(e.isPlainObject(t)){if(!e.isNumber(t.min)||!e.isNumber(t.max)||t.min>t.max)throw new Error("randomization objects need both a max and a minimum property, also max has to be larger than min");return t.min+(t.max-t.min)*Math.random()}return t}(n.duration)||0;return t.end.map(function(){clearTimeout(r)}),i?setTimeout(t.bind(null,{}),i):t({}),t}function k(t,n,r){function i(e,t){var n=document.createElement("div");return X(n,t),X(n,e),n}var o=n.on;switch(o){case"keypressed":return b(t,n);case"keyup":return function(e,t){var n=(Array.isArray(t.key)?t.key:[t.key]).map(function(e){return"string"==typeof e?e.toUpperCase().charCodeAt(0):e});return document.addEventListener("keyup",function(t){if(-1!==n.indexOf(t.which))return t.preventDefault(),e(t)}),e.end.map(function(){document.removeEventListener("keyup",e)}),e}(t,n);case"click":case"mousedown":return y("mousedown",t,n,r);case"mouseup":return y("mouseup",t,n);case"mouseenter":return y("mouseenter",t,n);case"mouseleave":return y("mouseleave",t,n);case"timeout":return E(t,n);case"enter":return b(t,e.assign({key:13},n));case"space":return b(t,e.assign({key:32},n));case"esc":return b(t,e.assign({key:27},n));case"leftTouch":return n.element=i(n.css,{position:"absolute",left:0,width:"30%",height:"100%",background:"#00FF00",opacity:.3}),y("mousedown",t,n);case"rightTouch":return n.element=i(n.css,{position:"absolute",right:0,width:"30%",height:"100%",background:"#00FF00",opacity:.3}),y("mousedown",t,n);case"topTouch":return n.element=i(n.css,{position:"absolute",top:0,width:"100%",height:"30%",background:"#00FF00",opacity:.3}),y("mousedown",t,n);case"bottomTouch":return n.element=i(n.css,{position:"absolute",bottom:0,width:"100%",height:"30%",background:"#00FF00",opacity:.3}),y("mousedown",t,n);default:throw new Error('You have an input element without a recognized "on" property: '+o)}}function _(t,n){var r=Y();if(r.handle=t.handle,e.isFunction(t)){if(r=t(r,t,n),function(e){return e._state}(r))return r;throw new Error("Input functions must return valid streams")}if(!e.isPlainObject(t))throw new Error("Input must only contain objects and functions, do you have an undefined value?");return e.isString(t.on)?k(r,t,n):(e.isFunction(t.on)&&t.on(r,t,n),e.isFunction(t.off)&&r.end.map(t.off),r)}function q(e,t){return e in t}function T(e,t){var n=t.location||{};("center"==n.top||"center"==n.bottom||void 0===n.top&&void 0===n.bottom)&&e.classList.add(ie),("center"==n.left||"center"==n.right||void 0===n.left&&void 0===n.right)&&e.classList.add(oe),["top","bottom","left","right"].forEach(function(t){(function(e){return!isNaN(+e)})(n[t])&&(e.style[t]=n[t]+"%")})}function P(){if(!this.source.media)throw new Error("Media object not defined for "+this.name());return function(e){var t,n=e.html||e.inlineTemplate||e.template;return e.word?(t=document.createElement("div"),t.textContent=e.word,Promise.resolve(t)):e.image?new Promise(function(n,r){(t=document.createElement("img")).onload=function(){n(t)},t.onerror=function(){r(new Error("Image not found: "+t.src))},t.src=e.image}):(e.jquery&&Promise.reject(new Error("Jquery is no longer supported in minno-time")),n?(t=document.createElement("div"),t.innerHTML=n,Promise.resolve(t)):Promise.reject(new Error("Unrecognized media type")))}(this.source.media).then(function(e,t){var n=this;return this.el=t,new Promise(function(r){te.mutate(function(){t.classList.add("minno-stimulus"),t.setAttribute("data-handle",n.handle),function(e,t){var n=e.style,r=t.size||{};r.font_size&&(n.fontSize=r.font_size),q("height",r)&&!t.media.word&&(n.height=r.height+"%"),q("width",r)&&(n.width=r.width+"%")}(t,n.source),T(t,n.source),X(t,n.source.css||{}),n.source.isLayout&&t.classList.add("minno-stimulus-visible"),e.appendChild(t),document.documentMode?function(e,t){var n=e.style,r=e.classList.contains(oe),i=e.classList.contains(ie);if(!r&&!i)return t(e);te.measure(function(){var t=window.getComputedStyle(e),o=parseFloat(t.width),a=parseFloat(t.height);te.mutate(function(){n.transform="none",r&&(n.marginLeft="-"+o/2+"px"),i&&(n.marginTop="-"+a/2+"px")})})}(t,r):r(t)})})}.bind(this,this.canvas))}function x(){var e=this.el;if(!e)throw new Error("A stimulus can not be shown before init is called");te.mutate(function(){e.classList.add("minno-stimulus-visible")})}function C(){var e=this.el;if(!e)throw new Error("A stimulus can not be hidden before init is called");te.mutate(function(){e.classList.remove("minno-stimulus-visible")})}function A(){var e=this.el,t=this.canvas;te.mutate(function(){t.removeChild(e)})}function S(){var e=this.source;return e.alias?e.alias:this.data.alias?this.data.alias:e.inherit&&e.inherit.set?e.inherit.set:this.handle?this.handle:void 0}function j(e){var t=this.source.media,n=e&&e.fullpath;if(t.alias)return t.alias;for(var r in t){if(F(["image","template"],r))return n?t[r]:t[r].replace(/^.*[\\/]/,"");if(F(["word","html","inlineTemplate"],r)&&t[r])return t[r]}}function F(e,t){return-1!=e.indexOf(t)}function L(e,t){function n(n){return function(e,t,n){var r={el:null,source:e,trial:t,canvas:n,init:P,show:x,hide:C,name:S,mediaName:j,destroy:A};return r.data=e.data||{},r.handle=r.data.handle=r.data.handle||e.handle||e.set,r}(n,e,t)}var r=e._source,i=r.stimuli.map(n),o=r.layout.map(function(e){return e.isLayout=!0,e}).map(n),a=Promise.all(i.concat(o).map(function(e){return e.init()}));return{canvas:t,stimuli:i,layout:o,ready:a,getStimlist:O,getMedialist:D,destroy:U}}function O(){return this.stimuli.filter(function(e){return!e.source.nolog}).map(function(e,t){return e.name()||"stim"+t})}function D(e){return this.stimuli.filter(function(e){return!e.source.nolog}).map(function(t,n){return t.mediaName(e)||"media"+n})}function U(){this.stimuli.concat(this.layout).forEach(function(e){e.destroy()})}function M(t,n,r){function o(e){return r.stimulusCollection.stimuli.some(function(t){var n=t.data;for(var r in e)if(e[r]!==n[r])return!1;return!0})}var a=i(),s=a.current||{};if(!t)throw new Error("There is an interaction without conditions!!");t=Array.isArray(t)?t:[t];var u=!0;return("begin"!=(n=n||{}).type||!t.every(function(e){return"begin"!=e.type}))&&(t.forEach(function(t){var i,c=!0;switch(t.type){case"begin":"begin"!==n.type&&(c=!1);break;case"inputEquals":e.isArray(t.value)||(t.value=[t.value]),-1===e.indexOf(t.value,n.handle)&&(c=!1);break;case"inputEqualsTrial":n.handle!==r.data[t.property]&&(c=!1);break;case"inputEqualsStim":i={},t.handle&&(i.handle=t.handle),i[t.property]=n.handle,o(i)||(c=!1);break;case"trialEquals":if(void 0===t.property||void 0===t.value)throw new Error('trialEquals requires both "property" and "value" to be defined');t.value!==r.data[t.property]&&(c=!1);break;case"inputEqualsGlobal":if(void 0===t.property)throw new Error('inputEqualsGlobal requires "property" to be defined');n.handle!==a[t.property]&&(c=!1);break;case"globalEquals":if(void 0===t.property||void 0===t.value)throw new Error('globalEquals requires both "property" and "value" to be defined');t.value!==a[t.property]&&(c=!1);break;case"globalEqualsTrial":if(void 0===t.globalProp||void 0===t.trialProp)throw new Error('globalEqualsTrial requires both "globalProp" and "trialProp" to be defined');a[t.globalProp]!==r.data[t.trialProp]&&(c=!1);break;case"globalEqualsStim":if(void 0===t.globalProp||void 0===t.stimProp)throw new Error('globalEqualsStim requires both "globalProp" and "stimProp" to be defined');i={},t.handle&&(i.handle=t.handle),i[t.stimProp]=a[t.globalProp],o(i)||(c=!1);break;case"inputEqualsCurrent":if(void 0===t.property)throw new Error('inputEqualsCurrent requires "property" to be defined');n.handle!==s[t.property]&&(c=!1);break;case"currentEquals":if(void 0===t.property||void 0===t.value)throw new Error('currentEquals requires both "property" and "value" to be defined');t.value!==s[t.property]&&(c=!1);break;case"currentEqualsTrial":if(void 0===t.currentProp||void 0===t.trialProp)throw new Error('currentEqualsTrial requires both "currentProp" and "trialProp" to be defined');s[t.currentProp]!==r.data[t.trialProp]&&(c=!1);break;case"currentEqualsStim":if(void 0===t.currentProp||void 0===t.stimProp)throw new Error('currentEqualsStim requires both "currentProp" and "stimProp" to be defined');i={},t.handle&&(i.handle=t.handle),i[t.stimProp]=s[t.currentProp],o(i)||(c=!1);break;case"function":t.value.apply(r,[t,n,r])||(c=!1);break;case"custom":t.fn.apply(null,[t,n,r])||(c=!1);break;default:throw new Error("Unknown condition type: "+t.type)}u=u&&(t.negate?!c:c)}),u)}function W(t,n,r){var i=!0;if(!t)throw new Error("There is an interaction without actions!!");return t=e.isArray(t)?t:[t],e.forEach(t,function(e){var t=ae[e.type];if(!t)throw new Error("unknown action: "+e.type);"endTrial"===e.type&&(i=!1),t(e,n,r)}),i}function z(t,n,r){if(!t.interactions)throw new Error("Interactions not defined");this.canvas=n,this.settings=r,this._source=t,this.$logs=Y(),this.$events=Y(),this.$end=this.$events.end,this.data=t.data||{},this._id=e.uniqueId("trial_"),this.counter=se++,this.input=function(e,t){var n=[],r=0;return{add:function(i){if(!i)throw new Error("Missing input element. Could not add input listener");var o=_(i,t.canvas);o.map(function(e){return{handle:i.handle,event:e,trialId:t._id,counter:t.counter,timestamp:+new Date,latency:re()-r}}).map(e),n.push(o)},remove:function(e){for(var t=n.length-1;t>=0;t--){var r=n[t];r.handle===e&&(r.end(!0),n.splice(t,1))}},destroy:function(){n.forEach(function(e){e.end(!0)}),n.length=0},resetTimer:function(){r=re()}}}(this.$events,this),this.stimulusCollection=L(this,n),this.$events.map(function(e){var t=e._source.interactions,n=e._source.DEBUG&&window.DEBUG;return function(r){var i,o,a;for(n&&console.groupCollapsed("Event: "+(r.handle||r.type),r),i=0;i<t.length&&(o=t[i],a=M(o.conditions,r,e),n&&console.log(a,o.conditions),!a||W(o.actions,r,e));i++);return n&&console.groupEnd("Event: "+(r.handle||r.type)),r}}(this)),this._next=["next",{}]}function I(e,t){return new Promise(function(n,r){var i=new XMLHttpRequest;i.open("POST",e,!0),i.setRequestHeader("Content-Type","application/json; charset=UTF-8"),i.onreadystatechange=function(){4===this.readyState&&(this.status>=200&&this.status<400?n(this.responseText):r(new Error("Failed posting to: "+e)))},i.send(function(e){return"string"==typeof e?e:JSON.stringify(e)}(t))})}function $(t,n){function r(t){var r={json:JSON.stringify(t)},i=function(e){var t,n=[];for(t in e)n.push(encodeURIComponent(t)+"="+encodeURIComponent(e[t]));return n.join("&").replace(/%20/g,"+")}(e.assign(r,n.metaData));return I(o,i).catch(function(){return I(o,i)}).catch(n.error||e.noop)}var i=[],o=n.url;o&&(t.map(function(e){i.push(e),n.pulse&&i.length>=n.pulse&&(r(i),i.length=0)}),t.end.map(function(){i.length&&r(i)}))}function N(t,n){var r=t.map(function(e){return function(t){return e.apply(null,t)}}(n.logger||n.transformLogs||function(t,n,r){var i=window.piGlobal,o=r.data,a=n,s=i.current.logs,u=e.get(r,"settings.logger.fullpath",!1),c=r.stimulusCollection.getStimlist(),l=r.stimulusCollection.getMedialist({fullpath:u});return{log_serial:s.length,trial_id:r.counter,name:r.name(),responseHandle:a.handle,latency:Math.floor(a.latency),stimuli:c,media:l,data:o}}));return r.map(function(e){i().current.logs.push(e)}),$(r,n),n.poster&&n.poster(r,n),r}function B(t,n,r){function o(t){var r=function(t,n){function r(n,r,i){var o=n[r];if(e.isUndefined(o))return!1;e.isString(o)&&(o={word:o}),(o=t.inflate("media",o,i)).image&&(o.image=f(o.image,"image")),o.template&&(o.inlineTemplate=requirejs("text!"+f(o.template,"template")),o.inlineTemplate=e.template(o.inlineTemplate)(i)),n[r]=o,i.mediaData=null,i.mediaMeta=null}function o(e){return e=t.inflate("stimulus",e,this,{skip:["media","touchMedia"]}),r(e,"media",this),r(e,"touchMedia",this),this.stimulusData=null,this.stimulusMeta=null,e}var a,s=n[0],u=n[1],c=t.currentSequence,l=i(),d={global:l,current:l.current};return c.go(s,u,d),(a=c.current(d,{skip:["layout","stimuli"]}))?(a.stimuli=e.map(a.stimuli||[],o,d),a.layout=e.map(a.layout||[],o,d),d.trialData=null,{value:a}):{done:!0}}(n,t);r.done?a.end(!0):a(r.value)}var a=Y(),s=a.map(function(e){return function(n){var i=e,a=e=new z(n,t,r.settings);return a.$logs.map(u),a.$end.map(function(){o(a._next)}),a.start(),i&&te.mutate(function(){i.stimulusCollection.destroy()}),a}}()),u=Y(),c=e.get(r,"settings.hooks.endTask",r.settings.onEnd||e.noop);return a.end.map(function(){var e=s();e&&e.stimulusCollection.destroy()}).map(c),{$trial:s,end:a.end,$logs:N(u,r.settings.logger||{}),play:o}}e=e&&e.hasOwnProperty("default")?e.default:e,t=t&&t.hasOwnProperty("default")?t.default:t,Date.now||(Date.now=function(){return(new Date).getTime()}),console.group||(console.group=n),console.groupCollapsed||(console.groupCollapsed=n),console.groupEnd||(console.groupEnd=n),console.table||(console.table=n),function(){for(var e=["webkit","moz"],t=0;t<e.length&&!window.requestAnimationFrame;++t){var n=e[t];window.requestAnimationFrame=window[n+"RequestAnimationFrame"],window.cancelAnimationFrame=window[n+"CancelAnimationFrame"]||window[n+"CancelRequestAnimationFrame"]}if(/iP(ad|hone|od).*OS 6/.test(window.navigator.userAgent)||!window.requestAnimationFrame||!window.cancelAnimationFrame){var r=0;window.requestAnimationFrame=function(e){var t=Date.now(),n=Math.max(r+16,t);return setTimeout(function(){e(r=n)},n-t)},window.cancelAnimationFrame=clearTimeout}}();var G=function(e){function t(e,t){return function a(l){var d;try{if(!t||null==l||"object"!=typeof l&&"function"!=typeof l||"function"!=typeof(d=l.then))c(function(){t||0!==e.length||console.error("Possible unhandled promise rejection:",l);for(var n=0;n<e.length;n++)e[n](l);i.length=0,o.length=0,u.state=t,u.retry=function(){a(l)}});else{if(l===r)throw new TypeError("Promise can't be resolved w/ itself");n(d.bind(l))}}catch(e){s(e)}}}function n(e){function t(e){return function(t){n++>0||e(t)}}var n=0,r=t(s);try{e(t(a),r)}catch(e){r(e)}}if(!(this instanceof G))throw new Error("Promise must be called with `new`");if("function"!=typeof e)throw new TypeError("executor must be a function");var r=this,i=[],o=[],a=t(i,!0),s=t(o,!1),u=r._instance={resolvers:i,rejectors:o},c="function"==typeof setImmediate?setImmediate:setTimeout;n(e)};G.prototype.then=function(e,t){function n(e,t,n,a){t.push(function(t){if("function"!=typeof e)n(t);else try{r(e(t))}catch(e){i&&i(e)}}),"function"==typeof o.retry&&a===o.state&&o.retry()}var r,i,o=this._instance,a=new G(function(e,t){r=e,i=t});return n(e,o.resolvers,r,!0),n(t,o.rejectors,i,!1),a},G.prototype.catch=function(e){return this.then(null,e)},G.resolve=function(e){return e instanceof G?e:new G(function(t){t(e)})},G.reject=function(e){return new G(function(t,n){n(e)})},G.all=function(e){return new G(function(t,n){var r=e.length,i=0,o=[];if(0===e.length)t([]);else for(var a=0;a<e.length;a++)!function(a){function s(e){i++,o[a]=e,i===r&&t(o)}null==e[a]||"object"!=typeof e[a]&&"function"!=typeof e[a]||"function"!=typeof e[a].then?s(e[a]):e[a].then(s,n)}(a)})},G.race=function(e){return new G(function(t,n){for(var r=0;r<e.length;r++)e[r].then(t,n)})},void 0===window.Promise&&(window.Promise=G);var R={},H=window.piGlobal||(window.piGlobal={}),J="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},Y=d(function(e){!function(){function t(){function e(){return arguments.length>0&&arguments[0]!==w&&n(e,arguments[0]),e._state.value}return function(e){e.constructor=t,e._state={id:v++,value:void 0,state:0,derive:void 0,recover:void 0,deps:{},parents:[],endStream:void 0,unregister:void 0},e.map=e["fantasy-land/map"]=u,e["fantasy-land/ap"]=c,e["fantasy-land/of"]=t,e.valueOf=l,e.toJSON=d,e.toString=l,Object.defineProperties(e,{end:{get:function(){if(!e._state.endStream){var n=t();n.map(function(t){return!0===t&&(s(e),n._state.unregister=function(){s(n)}),t}),e._state.endStream=n}return e._state.endStream}}})}(e),arguments.length>0&&arguments[0]!==w&&n(e,arguments[0]),e}function n(e,t){r(e,t);for(var n in e._state.deps)i(e._state.deps[n],!1);null!=e._state.unregister&&e._state.unregister(),function(e){e._state.changed=!1;for(var t in e._state.deps)e._state.deps[t]._state.changed=!1}(e)}function r(e,t){e._state.value=t,e._state.changed=!0,2!==e._state.state&&(e._state.state=1)}function i(e,t){var n=e._state.parents;if(n.length>0&&n.every(h)&&(t||n.some(p))){var i=e._state.derive();if(i===w)return!1;r(e,i)}}function o(e,n){if(!n.every(f))throw new Error("Ensure that each item passed to stream.combine/stream.merge is a stream");return function(e,t,n){var r=e._state;return r.derive=n,r.parents=t.filter(m),a(e,r.parents),i(e,!0),e}(t(),n,function(){return e.apply(this,n.concat([n.filter(p)]))})}function a(e,t){for(var n=0;n<t.length;n++)t[n]._state.deps[e._state.id]=e,a(e,t[n]._state.parents)}function s(e){for(var t=0;t<e._state.parents.length;t++){delete e._state.parents[t]._state.deps[e._state.id]}for(var n in e._state.deps){var r=e._state.deps[n],i=r._state.parents.indexOf(e);i>-1&&r._state.parents.splice(i,1)}e._state.state=2,e._state.deps={}}function u(e){return o(function(t){return e(t())},[this])}function c(e){return o(function(e,t){return e()(t())},[e,this])}function l(){return this._state.value}function d(){return null!=this._state.value&&"function"==typeof this._state.value.toJSON?this._state.value.toJSON():this._state.value}function f(e){return e._state}function h(e){return 1===e._state.state}function p(e){return e._state.changed}function m(e){return 2!==e._state.state}var v=0,w={};t["fantasy-land/of"]=t,t.merge=function(e){return o(function(){return e.map(function(e){return e()})},e)},t.combine=o,t.scan=function(e,t,n){var r=o(function(n){return t=e(t,n._state.value)},[n]);return 0===r._state.state&&r(t),r},t.scanMerge=function(e,t){var n=e.map(function(e){var t=e[0];return 0===t._state.state&&t(void 0),t});return o(function(){var r=arguments[arguments.length-1];return n.forEach(function(n,i){r.indexOf(n)>-1&&(t=e[i][1](t,n._state.value))}),t},n)},t.HALT=w,e.exports=t}()}),X=function(e,t){var n=e.style;if(t)for(var r in t)n[r.replace(/-([a-z])/g,function(e){return e[1].toUpperCase()})]=t[r]},K=[],Q=[],V=0,Z={},ee={load:function(e,t){var n;if(t=t||"image",-1!==K.indexOf(e))return!1;switch(t){case"template":n=new Promise(function(t,n){requirejs(["text!"+e],t,function(){n(new Error("Template not found: "+e))})});break;case"image":default:n=new Promise(function(t,n){var r=document.createElement("img");r.onload=function(){t(r)},r.onerror=function(){n(new Error("Image not found: "+r.src))},r.src=e,Z[e]=r})}return n.then(function(){V++}).then(function(){ee.onload&&ee.onload()}),Q.push(n),K.push(e),n},all:function(){return Promise.all(Q)},getImage:function(e){return Z[e].cloneNode()},reset:function(){K=[],Q=[]},progress:function(){return Q.length?V/Q.length:1}},te=d(function(e){!function(t){function n(){this.reads=[],this.writes=[],this.raf=s.bind(t)}function r(e){e.scheduled||(e.scheduled=!0,e.raf(function(e){var t,n=e.writes,o=e.reads;try{a("flushing reads",o.length),i(o),a("flushing writes",n.length),i(n)}catch(e){t=e}e.scheduled=!1,(o.length||n.length)&&r(e);if(t){if(a("task errored",t.message),!e.catch)throw t;e.catch(t)}}.bind(null,e)))}function i(e){for(var t;t=e.shift();)t()}function o(e,t){var n=e.indexOf(t);return!!~n&&!!e.splice(n,1)}var a=function(){},s=t.requestAnimationFrame||t.webkitRequestAnimationFrame||t.mozRequestAnimationFrame||t.msRequestAnimationFrame||function(e){return setTimeout(e,16)};n.prototype={constructor:n,measure:function(e,t){var n=t?e.bind(t):e;return this.reads.push(n),r(this),n},mutate:function(e,t){var n=t?e.bind(t):e;return this.writes.push(n),r(this),n},clear:function(e){return o(this.reads,e)||o(this.writes,e)},extend:function(e){if("object"!=typeof e)throw new Error("expected object");var t=Object.create(this);return function(e,t){for(var n in t)t.hasOwnProperty(n)&&(e[n]=t[n])}(t,e),t.fastdom=this,t.initialize&&t.initialize(),t},catch:null};var u=t.fastdom=t.fastdom||new n;e.exports=u}("undefined"!=typeof window?window:J)}),ne=[];document.addEventListener("keyup",function(e){ne[e.which]=!1});var re=window.performance.now?window.performance.now.bind(window.performance):Date.now.bind(Date),ie="minno-stimulus-center-y",oe="minno-stimulus-center-x",ae={showStim:function(e,t,n){var r=e.handle||e;n.stimulusCollection.stimuli.forEach(function(e){"All"!=r&&e.handle!=r||e.show()})},hideStim:function(e,t,n){var r=e.handle||e;n.stimulusCollection.stimuli.forEach(function(e){"All"!=r&&e.handle!=r||e.hide()})},setStimAttr:function(t,n,r){var i=t.handle,o=t.setter;r.stimulusCollection.stimuli.forEach(function(t){"All"!=i&&t.handle!=i||(e.isFunction(o)?o.apply(t):e.extend(t.data,o))})},setTrialAttr:function(t,n,r){var i=t.setter;if(void 0===i)throw new Error("The setTrialAttr action requires a setter property");e.isFunction(i)?i.apply(r,[r.data,n]):e.extend(r.data,i)},setInput:function(e,t,n){if(void 0===e.input)throw new Error("The setInput action requires an input property");n.input.add(e.input)},trigger:function(e,t,n){if(void 0===e.handle)throw new Error("The trigger action requires a handle property");n.input.add({handle:e.handle,on:"timeout",duration:+e.duration||0})},removeInput:function(t,n,r){var i=r.input,o=t.handle;if(void 0===o)throw new Error("The removeInput action requires a handle property");"All"==o||e.include(o,"All")?i.destroy():i.remove(o)},goto:function(e,t,n){n._next=[e.destination,e.properties]},endTrial:function(e,t,n){n.end()},resetTimer:function(e,t,n){function r(){t.latency=0,n.input.resetTimer()}e.immidiate?r():te.mutate(r)},log:function(e,t,n){n.$logs(arguments)},setGlobalAttr:function(t){switch(typeof t.setter){case"function":t.setter.apply(null,[i(),t]);break;case"object":e.extend(i(),t.setter);break;default:throw new Error('setGlobalAttr requires a "setter" property')}},custom:function(e,t,n){if("function"!=typeof e.fn)throw new Error("The custom action requires a fn propery");e.fn(e,t,n)},canvas:function(t,n,r){var i=r.cavnas,o=l({background:{element:document.body,property:"backgroundColor"},canvasBackground:{element:i,property:"backgroundColor"},borderColor:{element:i,property:"borderColor"},borderWidth:{element:i,property:"borderWidth"}},e.pick(t,["background","canvasBackground","borderColor","borderWidth"]));r.$end.map(o)}},se=0;return e.extend(z.prototype,{start:function(){var t=this;return this._source.DEBUG&&window.DEBUG&&console.group("Trial: "+this.counter),t.stimulusCollection.ready.then(function(){(function(t){return t?e.isArray(t)?t:[t]:[]})(t._source.input).forEach(t.input.add),t.input.resetTimer(),t.$events({type:"begin",latency:0})})},end:function(){this._source.DEBUG&&window.DEBUG&&console.groupEnd("Trial: "+this.counter),this.input.destroy(),this.$events.end(!0),this.$end(!0)},name:function(){return this.alias?this.alias:this.data.alias?this.data.alias:e.isString(this._source.inherit)?this._source.inherit:e.isPlainObject(this._source.inherit)?this._source.inherit.set:void 0}}),function(n,a){var s=function(t,n){var r=e.get(n,"settings.canvas",{}),i=Y();t.classList.add("minno-canvas"),i.map(u(t,r)),i({}),window.addEventListener("orientationchange",i),window.addEventListener("resize",i);var o=l({background:{element:document.body,property:"backgroundColor"},canvasBackground:{element:t,property:"backgroundColor"},borderColor:{element:t,property:"borderColor"},borderWidth:{element:t,property:"borderWidth"}},e.pick(r,["background","canvasBackground","borderColor","borderWidth"]));return r.css&&X(t,r.css),i.end.map(function(){t.classList.remove("minno-canvas")}).map(function(){window.removeEventListener("orientationchange",i),window.removeEventListener("resize",i)}).map(o),i}(n,a),c=B(n,function(n){var r=new t;if(r.createColl("trial"),r.createColl("stimulus"),r.createColl("media"),r.add("trial",n.trialSets||[]),r.add("stimulus",n.stimulusSets||[]),r.add("media",n.mediaSets||[]),!e.isArray(n.sequence))throw new Error("You must set a sequence array.");var i=r.sequence("trial",n.sequence);return i.go=o,r.currentSequence=i,r}(a),a);return function(t){var n=i(i()),o=t.name||"anonymous minno-time",a=e.isPlainObject(t.current)?t.current:{};a.logs||(a.logs=[]),n[o]=n.current=a,r(t)}(a),c.end.map(function(){s.end(!0)}),function(e,t){function n(){for(;e.firstChild;)e.removeChild(e.firstChild)}var r=g(a);if(1==r.progress())return Promise.resolve().then(n);e.innerHTML='<div class="minno-progress"><div class="minno-progress-bar"></div></div>';var i=e.getElementsByClassName("minno-progress-bar")[0].style;return i.width=r.progress()+"%",r.onload=function(){te.mutate(function(){i.width=100*r.progress()+"%"})},r.all().then(n).catch(function(e){throw new Error("loading resource failed, do something about it! (you can start by checking the error log, you are probably reffering to the wrong url - "+e+")")})}(n).then(c.play.bind(null,["next",{}])),c}});
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('lodash'), require('minno-sequencer')) :
+	typeof define === 'function' && define.amd ? define(['lodash', 'minno-sequencer'], factory) :
+	(global['minno-time'] = factory(global._,global.Database));
+}(this, (function (_,Database) { 'use strict';
+
+_ = _ && _.hasOwnProperty('default') ? _['default'] : _;
+Database = Database && Database.hasOwnProperty('default') ? Database['default'] : Database;
+
+if (!Date.now) Date.now = function() { return new Date().getTime(); };
+
+function log(){ console.log.apply(console, arguments); }
+if (!console.group) console.group = log;
+if (!console.groupCollapsed) console.groupCollapsed = log;
+if (!console.groupEnd) console.groupEnd = log;
+if (!console.table) console.table = log;
+
+
+(function() {
+    var vendors = ['webkit', 'moz'];
+    for (var i = 0; i < vendors.length && !window.requestAnimationFrame; ++i) {
+        var vp = vendors[i];
+        window.requestAnimationFrame = window[vp+'RequestAnimationFrame'];
+        window.cancelAnimationFrame = (window[vp+'CancelAnimationFrame']
+            || window[vp+'CancelRequestAnimationFrame']);
+    }
+    // iOS6 is buggy
+    if (/iP(ad|hone|od).*OS 6/.test(window.navigator.userAgent) || !window.requestAnimationFrame || !window.cancelAnimationFrame) {
+        var lastTime = 0;
+        window.requestAnimationFrame = function(callback) {
+            var now = Date.now();
+            var nextTime = Math.max(lastTime + 16, now);
+            return setTimeout(function() { callback(lastTime = nextTime); },
+                              nextTime - now);
+        };
+        window.cancelAnimationFrame = clearTimeout;
+    }
+}());
+
+// Promise polyfill from https://github.com/MithrilJS/mithril.js/blob/next/promise/promise.js 
+var PromisePolyfill = function(executor) {
+    if (!(this instanceof PromisePolyfill)) throw new Error("Promise must be called with `new`")
+        if (typeof executor !== "function") throw new TypeError("executor must be a function")
+
+            var self = this, resolvers = [], rejectors = [], resolveCurrent = handler(resolvers, true), rejectCurrent = handler(rejectors, false);
+            var instance = self._instance = {resolvers: resolvers, rejectors: rejectors};
+            var callAsync = typeof setImmediate === "function" ? setImmediate : setTimeout;
+            function handler(list, shouldAbsorb) {
+                return function execute(value) {
+                    var then;
+                    try {
+                        if (shouldAbsorb && value != null && (typeof value === "object" || typeof value === "function") && typeof (then = value.then) === "function") {
+                            if (value === self) throw new TypeError("Promise can't be resolved w/ itself")
+                                executeOnce(then.bind(value));
+                        }
+                        else {
+                            callAsync(function() {
+                                if (!shouldAbsorb && list.length === 0) console.error("Possible unhandled promise rejection:", value);
+                                    for (var i = 0; i < list.length; i++) list[i](value);
+                                        resolvers.length = 0, rejectors.length = 0;
+                                instance.state = shouldAbsorb;
+                                instance.retry = function() {execute(value);};
+                            });
+                        }
+                    }
+                    catch (e) {
+                        rejectCurrent(e);
+                    }
+                }
+            }
+            function executeOnce(then) {
+                var runs = 0;
+                function run(fn) {
+                    return function(value) {
+                        if (runs++ > 0) return
+                        fn(value);
+                    }
+                }
+                var onerror = run(rejectCurrent);
+                try {then(run(resolveCurrent), onerror);} catch (e) {onerror(e);}
+            }
+
+            executeOnce(executor);
+};
+PromisePolyfill.prototype.then = function(onFulfilled, onRejection) {
+    var self = this, instance = self._instance;
+    function handle(callback, list, next, state) {
+        list.push(function(value) {
+            if (typeof callback !== "function") next(value);
+                else try {resolveNext(callback(value));} catch (e) {if (rejectNext) rejectNext(e);}
+        });
+        if (typeof instance.retry === "function" && state === instance.state) instance.retry();
+    }
+var resolveNext, rejectNext;
+var promise = new PromisePolyfill(function(resolve, reject) {resolveNext = resolve, rejectNext = reject;});
+handle(onFulfilled, instance.resolvers, resolveNext, true), handle(onRejection, instance.rejectors, rejectNext, false);
+return promise
+};
+PromisePolyfill.prototype.catch = function(onRejection) {
+    return this.then(null, onRejection)
+};
+PromisePolyfill.resolve = function(value) {
+    if (value instanceof PromisePolyfill) return value
+    return new PromisePolyfill(function(resolve) {resolve(value);})
+};
+PromisePolyfill.reject = function(value) {
+    return new PromisePolyfill(function(resolve, reject) {reject(value);})
+};
+PromisePolyfill.all = function(list) {
+    return new PromisePolyfill(function(resolve, reject) {
+        var total = list.length, count = 0, values = [];
+        if (list.length === 0) resolve([]);
+            else for (var i = 0; i < list.length; i++) {
+                (function(i) {
+                    function consume(value) {
+                        count++;
+                            values[i] = value;
+                            if (count === total) resolve(values);
+                    }
+                if (list[i] != null && (typeof list[i] === "object" || typeof list[i] === "function") && typeof list[i].then === "function") {
+                    list[i].then(consume, reject);
+                }
+                else consume(list[i]);
+                })(i);
+            }
+    })
+};
+PromisePolyfill.race = function(list) {
+    return new PromisePolyfill(function(resolve, reject) {
+        for (var i = 0; i < list.length; i++) {
+            list[i].then(resolve, reject);
+        }
+    })
+};
+
+if (typeof window.Promise === "undefined") window.Promise = PromisePolyfill;
+
+/*
+ * this file holds the script we are to run
+ */
+
+var scriptObj = {};
+
+/**
+ * Getter/Setter fo script
+ *
+ * @param  {Object || null} obj 	The new script, if it is not set this is simply a getter.
+ * @return {Object}     			The full script
+ */
+function script$1(obj){
+    obj && (scriptObj = obj);
+    return scriptObj;
+}
+
+var glob = window.piGlobal || (window.piGlobal = {});
+
+/**
+ * getter setter for the global object
+ * @param  {Object} obj     The object to add to the global
+ * @param  {Bool} 	replace A new object to fully replace the old global
+ * @return {Object}         The full global
+ */
+function global$2(obj, replace){
+
+    if (replace) {
+        glob = obj;
+        return glob;
+    }
+
+    if (_.isPlainObject(obj)){
+        _.each(function(value, key){
+            /* eslint-disable no-console */
+            console.warn && global$2[key] && console.warn('Overwriting "' + key  + '" in global object.');
+            /* eslint-enable no-console */
+        });
+        _.merge(glob, obj);
+    }
+
+    return glob;
+}
+
+/**
+ * Go to a destination within the sequence (must be a property of a sequence)
+ * @param  {String} target destination type
+ * @param  {Object} properties destination options
+ * @return {Object}        result element
+ */
+
+function go$1(destination, properties, context){
+    var mixerSequence = this.mixerSequence;
+
+    switch (destination){
+        case 'nextWhere':
+            where('next', properties, context, mixerSequence);
+            break;
+        case 'previousWhere':
+            where('next', properties, context, mixerSequence);
+            break;
+        case 'current':
+            // don't need to do anything...
+            break;
+        case 'first':
+            do {mixerSequence.prev(context);} while (mixerSequence.current(context));
+            break;
+        case 'last':
+            do {mixerSequence.next(context);} while (mixerSequence.current(context));
+            mixerSequence.prev();
+            break;
+        case 'end':
+            do {mixerSequence.next(context);} while (mixerSequence.current(context));
+            break;
+        case 'next' :
+            mixerSequence.next(context); // get the next trial, in case there are no more trials, returns undefined
+            break;
+        default:
+            throw new Error('Unknow destination "' + destination + '" for goto.');
+    }
+
+    return this;
+}
+
+function where(direction, properties, context, sequence){
+    var curr;
+
+    do {
+        sequence[direction]();
+        curr = sequence.current(context);
+    } while (curr && !_.callback(properties)(curr.data));
+}
+
+/*
+ * this file is resposible for taking the experiment script (json) and parsing it
+ */
+
+// load dependancies
+function createDB$1(script){
+    var db = new Database();
+    db.createColl('trial');
+    db.createColl('stimulus');
+    db.createColl('media');
+
+    db.add('trial', script.trialSets || []);
+    db.add('stimulus', script.stimulusSets || []);
+    db.add('media', script.mediaSets || []);
+
+    if (!_.isArray(script.sequence)) throw new Error('You must set a sequence array.');
+
+    var sequence = db.sequence('trial', script.sequence);
+    sequence.go = go$1; // see sequence/goto.js to understand why we are doing this
+    db.currentSequence = sequence;
+    return db;
+}
+
+function getSize$1(el){
+    var computedStyle = window.getComputedStyle(el);
+    return {
+        height    : parse$1(el.offsetHeight) - parse$1(computedStyle.borderTopWidth) - parse$1(computedStyle.borderBottomWidth),
+        width    : parse$1(el.offsetWidth) - parse$1(computedStyle.borderLeftWidth) - parse$1(computedStyle.borderRightWidth)
+    };
+}
+
+function parse$1(num){ return parseFloat(num, 10) || 0;}
+
+/*
+ * adjust canvas according to window size and settings
+ * this module is built to be part of the main view
+ */
+
+function adjust_canvas(canvas, settings){
+
+    return _.throttle(eventListener, 16);
+
+    function eventListener(event){
+        // we put this in a time out because of a latency of orientation change on android devices
+        if (event.type == 'orientationchange') setTimeout(resize, 500);
+        else resize();
+    }
+
+    function resize(){
+        var targetSize = getTargetSize(settings, canvas);
+
+        // remove border width and top margin from calculated width (can't depend on cool box styles yet...)
+        // we compute only margin-top because of a difference calculating margins between chrome + IE and firefox + mobile
+        var computedStyle = window.getComputedStyle(canvas);
+        targetSize.height -= parse(computedStyle.borderTopWidth) + parse(computedStyle.borderBottomWidth) + parse(computedStyle.marginTop);
+        targetSize.width -= parse(computedStyle.borderLeftWidth) + parse(computedStyle.borderRightWidth);
+
+        // reset canvas size
+        canvas.style.width = targetSize.width + 'px';
+        canvas.style.height = targetSize.height + 'px';
+        canvas.style.fontSize = targetSize.height*(settings.textSize || 3)/100 + 'px';
+
+        // scroll to top of window (hides some of the mess on the top of mobile devices)
+        window.scrollTo(0, 1);
+    }
+}
+
+function getProportions(settings){
+    // if proportions are an object they should include width and height
+    if (_.isPlainObject(settings.proportions)) {
+        if (typeof settings.proportions.height !== 'number' || typeof settings.proportions.width !== 'number'){
+            throw new Error('The canvas proportions object`s height and a width properties must be numeric');
+        }
+        return settings.proportions.height/settings.proportions.width; 
+    } 
+    return settings.proportions || 0.8; // by default proportions are 0.8
+}
+
+function getTargetSize(settings, canvas){
+    // calculate proportions (as height/width)
+    var proportions = getProportions(settings);
+
+    // static canvas size
+    // ------------------
+    if (settings.width) return {
+        width: settings.width,
+        height: settings.width*proportions
+    };
+
+    // dynamic canvas size
+    // -------------------
+
+    var docElement = window.document.documentElement; // used to get client view size
+
+    var maxHeight = docElement.clientHeight;
+    var maxWidth = Math.min(settings.maxWidth, docElement.clientWidth, getSize$1(canvas.parentNode).width);
+
+    // calculate the correct size for this screen size
+    if (maxHeight > proportions * maxWidth) return { height: maxWidth*proportions, width: maxWidth };
+    else return { height: maxHeight, width: maxHeight/proportions};
+}
+
+function parse(num){ return parseFloat(num, 10) || 0;}
+
+/**
+ *
+ * This whole module taken from piManager
+ *
+ */
+
+function canvasContructor(map, settings){
+    var offArr;
+
+    if (!_.isPlainObject(map)) throw new Error('canvas(map): You must set a rule map for canvas to work properly');
+
+    // if settings is undefined return a function that doesn't do anything
+    // just so we don't need to make sure that the user modifies the canvas
+    if (_.isUndefined(settings)) return _.noop;
+    if (!_.isPlainObject(settings)) throw new Error('canvas(settings): canvas settings must be an object');
+
+    // create an array of off functions to undo any changes by this action
+    offArr = _.map(settings, function(value,key){
+        var rule = map[key];
+        if (rule) return on(rule.element, rule.property, value);
+        throw new Error('canvas('+ key +'): unknow key in canvas object.');
+    });
+
+    return function off(){
+        _.forEach(offArr, function(fn){fn.call();});
+    };
+}
+
+function on(el, property, value){
+    var old = el.style[property]; // save old value
+    el.style[property] = value; // set new value
+    return function(){el.style[property] = old;};  // create off function
+}
+
+var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+
+
+
+
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
+
+var stream = createCommonjsModule(function (module) {
+/* eslint-disable */
+(function() {
+var guid = 0, HALT = {};
+function createStream() {
+	function stream() {
+		if (arguments.length > 0 && arguments[0] !== HALT) updateStream(stream, arguments[0]);
+		return stream._state.value
+	}
+	initStream(stream);
+
+	if (arguments.length > 0 && arguments[0] !== HALT) updateStream(stream, arguments[0]);
+
+	return stream
+}
+function initStream(stream) {
+	stream.constructor = createStream;
+	stream._state = {id: guid++, value: undefined, state: 0, derive: undefined, recover: undefined, deps: {}, parents: [], endStream: undefined, unregister: undefined};
+	stream.map = stream["fantasy-land/map"] = map, stream["fantasy-land/ap"] = ap, stream["fantasy-land/of"] = createStream;
+	stream.valueOf = valueOf, stream.toJSON = toJSON, stream.toString = valueOf;
+
+	Object.defineProperties(stream, {
+		end: {get: function() {
+			if (!stream._state.endStream) {
+				var endStream = createStream();
+				endStream.map(function(value) {
+					if (value === true) {
+						unregisterStream(stream);
+						endStream._state.unregister = function(){unregisterStream(endStream);};
+					}
+					return value
+				});
+				stream._state.endStream = endStream;
+			}
+			return stream._state.endStream
+		}}
+	});
+}
+function updateStream(stream, value) {
+	updateState(stream, value);
+	for (var id in stream._state.deps) updateDependency(stream._state.deps[id], false);
+	if (stream._state.unregister != null) stream._state.unregister();
+	finalize(stream);
+}
+function updateState(stream, value) {
+	stream._state.value = value;
+	stream._state.changed = true;
+	if (stream._state.state !== 2) stream._state.state = 1;
+}
+function updateDependency(stream, mustSync) {
+	var state = stream._state, parents = state.parents;
+	if (parents.length > 0 && parents.every(active) && (mustSync || parents.some(changed))) {
+		var value = stream._state.derive();
+		if (value === HALT) return false
+		updateState(stream, value);
+	}
+}
+function finalize(stream) {
+	stream._state.changed = false;
+	for (var id in stream._state.deps) stream._state.deps[id]._state.changed = false;
+}
+
+function combine(fn, streams) {
+	if (!streams.every(valid)) throw new Error("Ensure that each item passed to stream.combine/stream.merge is a stream")
+	return initDependency(createStream(), streams, function() {
+		return fn.apply(this, streams.concat([streams.filter(changed)]))
+	})
+}
+
+function initDependency(dep, streams, derive) {
+	var state = dep._state;
+	state.derive = derive;
+	state.parents = streams.filter(notEnded);
+
+	registerDependency(dep, state.parents);
+	updateDependency(dep, true);
+
+	return dep
+}
+function registerDependency(stream, parents) {
+	for (var i = 0; i < parents.length; i++) {
+		parents[i]._state.deps[stream._state.id] = stream;
+		registerDependency(stream, parents[i]._state.parents);
+	}
+}
+function unregisterStream(stream) {
+	for (var i = 0; i < stream._state.parents.length; i++) {
+		var parent = stream._state.parents[i];
+		delete parent._state.deps[stream._state.id];
+	}
+	for (var id in stream._state.deps) {
+		var dependent = stream._state.deps[id];
+		var index = dependent._state.parents.indexOf(stream);
+		if (index > -1) dependent._state.parents.splice(index, 1);
+	}
+	stream._state.state = 2; //ended
+	stream._state.deps = {};
+}
+
+function map(fn) {return combine(function(stream) {return fn(stream())}, [this])}
+function ap(stream) {return combine(function(s1, s2) {return s1()(s2())}, [stream, this])}
+function valueOf() {return this._state.value}
+function toJSON() {return this._state.value != null && typeof this._state.value.toJSON === "function" ? this._state.value.toJSON() : this._state.value}
+
+function valid(stream) {return stream._state }
+function active(stream) {return stream._state.state === 1}
+function changed(stream) {return stream._state.changed}
+function notEnded(stream) {return stream._state.state !== 2}
+
+function merge(streams) {
+	return combine(function() {
+		return streams.map(function(s) {return s()})
+	}, streams)
+}
+
+function scan(reducer, seed, stream) {
+	var newStream = combine(function (s) {
+		return seed = reducer(seed, s._state.value)
+	}, [stream]);
+
+	if (newStream._state.state === 0) newStream(seed);
+
+	return newStream
+}
+
+function scanMerge(tuples, seed) {
+	var streams = tuples.map(function(tuple) {
+		var stream = tuple[0];
+		if (stream._state.state === 0) stream(undefined);
+		return stream
+	});
+
+	var newStream = combine(function() {
+		var changed = arguments[arguments.length - 1];
+
+		streams.forEach(function(stream, idx) {
+			if (changed.indexOf(stream) > -1) {
+				seed = tuples[idx][1](seed, stream._state.value);
+			}
+		});
+
+		return seed
+	}, streams);
+
+	return newStream
+}
+
+createStream["fantasy-land/of"] = createStream;
+createStream.merge = merge;
+createStream.combine = combine;
+createStream.scan = scan;
+createStream.scanMerge = scanMerge;
+createStream.HALT = HALT;
+
+module["exports"] = createStream;
+
+}());
+});
+
+var css_1 = css;
+
+/**
+ * @arg el DOMElement any dom element
+ * @arg obj Object a hash of styleName:value, where the style name may be either css-style or jsStyle (camelCase)
+ * @returns void
+ *
+ * The function applies the styles set in obj to the el
+ **/
+
+function css(el, obj){
+    var style = el.style;
+
+    if (!obj) return;
+
+    for (var key in obj) style[camelCase(key)] = obj[key];
+
+    function camelCase(str){ 
+        return  str.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); }); 
+    }
+}
+
+function setupCanvas(canvas, canvasSettings){
+    canvasSettings || (canvasSettings = {});
+    var $resize = stream();
+
+    if (!_.isElement(canvas)) throw new Error('Minno-time: canvas is not a DOM element');
+
+    canvas.classList.add('minno-canvas');
+
+    // apply canvas styles
+    var map = {
+        background 			: {element: document.body, property: 'backgroundColor'},
+        canvasBackground	: {element: canvas, property:'backgroundColor'},
+        borderColor			: {element: canvas, property:'borderColor'},
+        borderWidth			: {element: canvas, property:'borderWidth'}
+    };
+
+    var off = canvasContructor(map, _.pick(canvasSettings,['background','canvasBackground','borderColor','borderWidth']));
+
+    canvasSettings.css && css_1(canvas, canvasSettings.css);
+
+    // setup canvas resize
+    $resize.map(adjust_canvas(canvas, canvasSettings));
+    $resize({});
+
+    window.addEventListener('orientationchange', $resize);
+    window.addEventListener('resize', $resize);
+
+    $resize.end
+        .map(function(){canvas.classList.remove('minno-canvas');})
+        .map(function removeListeners(){
+            window.removeEventListener('orientationchange',$resize);
+            window.removeEventListener('resize', $resize);
+        })
+        .map(off);
+
+
+
+    return $resize;
+
+}
+
+/*
+ * media preloader
+ */
+
+var srcStack = [];				// an array holding all our sources
+var defStack = [];				// an array holding all the deferreds
+var stackDone = 0;				// the number of sources we have completed downloading
+var images = {};
+
+var loader = {
+    // loads a single source
+    load: load,
+
+    all: function(){
+        return Promise.all(defStack);
+    },
+
+    getImage: function(url){
+        return images[url].cloneNode();
+    },
+
+    // reset globals so we can reuse this object
+    reset: function(){
+        srcStack = [];
+        defStack = [];
+    },
+
+    progress: function(){
+        return defStack.length ? stackDone/defStack.length : 1;
+    }
+};
+
+// load a single source
+function load(src, type){
+    var promise;
+    type = type || 'image';
+    // the source was already loaded
+    if (srcStack.indexOf(src) !== -1) return false;
+
+    // if we haven't loaded this yet
+    switch (type) {
+        case 'template':
+            promise = new Promise(function(resolve, reject){
+                // @TODO: get rid of requirejs dependency
+                requirejs(['text!' + src], resolve, function(){
+                    reject(new Error('Template not found: ' + src));
+                });
+            });
+            break;
+        case 'image':
+            /* falls through */
+        default :
+            promise = new Promise(function(resolve, reject){
+                var el = document.createElement('img');
+                el.onload = function(){resolve(el);};
+                el.onerror = function(){reject(new Error('Image not found: ' + el.src ));};
+                el.src = src;
+                images[src] = el;
+            });
+            break;
+    }
+
+    promise
+        .then(function(){stackDone++;})
+        .then(function(){
+            loader.onload && loader.onload();
+        });
+
+    // keep defered and source for later.
+    defStack.push(promise);
+    srcStack.push(src);
+
+    return promise;
+}
+
+/*
+ * simply take settings out of the script
+ */
+
+function settingsGetter$1(name){
+    var settings = script$1().settings || {};
+
+    if (name) return settings[name];
+    return settings;
+}
+
+/*
+ * build the url for this src (add the generic base_url)
+ * @Todo: pass in the base_url (drop global settings, pass them through the sink).
+ */
+
+function buildUrl$1(url, type){
+    var settings = settingsGetter$1();
+    var base_url;
+
+    // the base url setting may be either a string, or an object with the type as a field
+    if (_.isString(settings.base_url)) {
+        base_url = settings.base_url;
+    } else {
+        if (_.isObject(settings.base_url)) {
+            base_url = settings.base_url[type];
+        }
+    }
+
+    // it this is a dataUrl type of image, we don't need to append the baseurl
+    if (type == 'image' && /^data:image/.test(url)){
+        return url;
+    }
+
+    // make sure base url is set, and add trailing slash if needed
+    if (!base_url) {
+        base_url='';
+    } else {
+        if (base_url[base_url.length-1] != '/') {
+            base_url+='/';
+        }
+    }
+
+    return base_url + url;
+}
+
+/*
+ * gets all media that needs preloading and preloads it
+ */
+
+function loadMedia(media){
+    if (!_.isUndefined(media.image)) loader.load(buildUrl$1(media.image, 'image'),'image');
+    if (!_.isUndefined(media.template)) loader.load(buildUrl$1(media.template,'template'),'template');
+}
+
+function loadStimulus(stimulus) {
+    if (stimulus.media) loadMedia(stimulus.media);
+}
+
+function loadInput(input){
+    if (input.element) loadMedia(input.element);
+}
+
+function loadTrial(trial){
+    _.each(trial.layout || [], loadStimulus);
+    _.each(trial.stimuli || [], loadStimulus);
+    _.each(trial.input || [], loadInput);
+}
+
+// load trials in sequence (essentialy, recursively pick out the trials out of the mixer)
+function loadSequence (sequence){
+    _.each(sequence,function(element){
+        if (!_.isUndefined(element.mixer)) loadSequence(element.data);
+        else loadTrial(element);
+    });
+}
+
+function loadScript(script){
+    // load media sets
+    _.each(script.mediaSets || [], loadMedia);
+
+    // load stimsets
+    _.each(script.stimulusSets || [], loadStimulus);
+
+    // load trialsets
+    _.each(script.trialSets || [], loadTrial);
+
+    loadSequence(script.sequence);
+} // load script
+
+// accepts a piece of script and a type
+// @param script: a piece of script
+// @param type: what sort of object this is (media/stimulus/trial)
+// @param reset: should we reset the preloader before activating it (use if for some reason we lost the cache...)
+// @returns a deferred object
+function sequencePreload (script, type, reset){
+    if (reset) loader.reset();
+
+    switch (type){
+        case 'media'	: loadMedia(script); break;
+        case 'stimulus'	: loadStimulus(script); break;
+        case 'trial'	: loadTrial(script); break;
+        case 'script'	:
+            /* falls through */
+        default:
+            loadScript(script); break;
+    }
+    return loader;
+}
+
+var fastdom = createCommonjsModule(function (module) {
+!(function(win) {
+
+/**
+ * FastDom
+ *
+ * Eliminates layout thrashing
+ * by batching DOM read/write
+ * interactions.
+ *
+ * @author Wilson Page <wilsonpage@me.com>
+ * @author Kornel Lesinski <kornel.lesinski@ft.com>
+ */
+
+var debug = function() {};
+
+/**
+ * Normalized rAF
+ *
+ * @type {Function}
+ */
+var raf = win.requestAnimationFrame
+  || win.webkitRequestAnimationFrame
+  || win.mozRequestAnimationFrame
+  || win.msRequestAnimationFrame
+  || function(cb) { return setTimeout(cb, 16); };
+
+/**
+ * Initialize a `FastDom`.
+ *
+ * @constructor
+ */
+function FastDom() {
+  var self = this;
+  self.reads = [];
+  self.writes = [];
+  self.raf = raf.bind(win); // test hook
+  
+}
+
+FastDom.prototype = {
+  constructor: FastDom,
+
+  /**
+   * Adds a job to the read batch and
+   * schedules a new frame if need be.
+   *
+   * @param  {Function} fn
+   * @public
+   */
+  measure: function(fn, ctx) {
+    var task = !ctx ? fn : fn.bind(ctx);
+    this.reads.push(task);
+    scheduleFlush(this);
+    return task;
+  },
+
+  /**
+   * Adds a job to the
+   * write batch and schedules
+   * a new frame if need be.
+   *
+   * @param  {Function} fn
+   * @public
+   */
+  mutate: function(fn, ctx) {
+    var task = !ctx ? fn : fn.bind(ctx);
+    this.writes.push(task);
+    scheduleFlush(this);
+    return task;
+  },
+
+  /**
+   * Clears a scheduled 'read' or 'write' task.
+   *
+   * @param {Object} task
+   * @return {Boolean} success
+   * @public
+   */
+  clear: function(task) {
+    return remove(this.reads, task) || remove(this.writes, task);
+  },
+
+  /**
+   * Extend this FastDom with some
+   * custom functionality.
+   *
+   * Because fastdom must *always* be a
+   * singleton, we're actually extending
+   * the fastdom instance. This means tasks
+   * scheduled by an extension still enter
+   * fastdom's global task queue.
+   *
+   * The 'super' instance can be accessed
+   * from `this.fastdom`.
+   *
+   * @example
+   *
+   * var myFastdom = fastdom.extend({
+   *   initialize: function() {
+   *     // runs on creation
+   *   },
+   *
+   *   // override a method
+   *   measure: function(fn) {
+   *     // do extra stuff ...
+   *
+   *     // then call the original
+   *     return this.fastdom.measure(fn);
+   *   },
+   *
+   *   ...
+   * });
+   *
+   * @param  {Object} props  properties to mixin
+   * @return {FastDom}
+   */
+  extend: function(props) {
+    if (typeof props != 'object') throw new Error('expected object');
+
+    var child = Object.create(this);
+    mixin(child, props);
+    child.fastdom = this;
+
+    // run optional creation hook
+    if (child.initialize) child.initialize();
+
+    return child;
+  },
+
+  // override this with a function
+  // to prevent Errors in console
+  // when tasks throw
+  catch: null
+};
+
+/**
+ * Schedules a new read/write
+ * batch if one isn't pending.
+ *
+ * @private
+ */
+function scheduleFlush(fastdom) {
+  if (!fastdom.scheduled) {
+    fastdom.scheduled = true;
+    fastdom.raf(flush.bind(null, fastdom));
+    
+  }
+}
+
+/**
+ * Runs queued `read` and `write` tasks.
+ *
+ * Errors are caught and thrown by default.
+ * If a `.catch` function has been defined
+ * it is called instead.
+ *
+ * @private
+ */
+function flush(fastdom) {
+  var writes = fastdom.writes;
+  var reads = fastdom.reads;
+  var error;
+
+  try {
+    debug('flushing reads', reads.length);
+    runTasks(reads);
+    debug('flushing writes', writes.length);
+    runTasks(writes);
+  } catch (e) { error = e; }
+
+  fastdom.scheduled = false;
+
+  // If the batch errored we may still have tasks queued
+  if (reads.length || writes.length) scheduleFlush(fastdom);
+
+  if (error) {
+    debug('task errored', error.message);
+    if (fastdom.catch) fastdom.catch(error);
+    else throw error;
+  }
+}
+
+/**
+ * We run this inside a try catch
+ * so that if any jobs error, we
+ * are able to recover and continue
+ * to flush the batch until it's empty.
+ *
+ * @private
+ */
+function runTasks(tasks) {
+  var task; while (task = tasks.shift()) task();
+}
+
+/**
+ * Remove an item from an Array.
+ *
+ * @param  {Array} array
+ * @param  {*} item
+ * @return {Boolean}
+ */
+function remove(array, item) {
+  var index = array.indexOf(item);
+  return !!~index && !!array.splice(index, 1);
+}
+
+/**
+ * Mixin own properties of source
+ * object into the target.
+ *
+ * @param  {Object} target
+ * @param  {Object} source
+ */
+function mixin(target, source) {
+  for (var key in source) {
+    if (source.hasOwnProperty(key)) target[key] = source[key];
+  }
+}
+
+// There should never be more than
+// one instance of `FastDom` in an app
+var exports = win.fastdom = (win.fastdom || new FastDom()); // jshint ignore:line
+
+// Expose to CJS & AMD
+if ((typeof undefined) == 'function') undefined(function() { return exports; });
+else module.exports = exports;
+
+})( typeof window !== 'undefined' ? window : commonjsGlobal);
+});
+
+function preloadPhase$1(canvas, script){
+    var preloader = sequencePreload(script);
+
+    if (preloader.progress() == 1) return Promise.resolve().then(emptyCanvas);
+
+    canvas.innerHTML = '<div class="minno-progress"><div class="minno-progress-bar"></div></div>';
+
+    var barStyle = canvas.getElementsByClassName('minno-progress-bar')[0].style;
+    barStyle.width = preloader.progress() + '%';
+    preloader.onload = function(){
+        fastdom.mutate(function(){
+            barStyle.width = preloader.progress()*100 + '%';
+        });
+    };
+
+    return preloader.all()
+        .then(emptyCanvas)['catch'](function(src){
+            throw new Error('loading resource failed, do something about it! (you can start by checking the error log, you are probably reffering to the wrong url - ' + src +')');
+        });
+
+    function emptyCanvas(){
+        while (canvas.firstChild) canvas.removeChild(canvas.firstChild);
+    }
+}
+
+function mouseEvents$1(eventName, $listener,inputObj, canvas){
+    var element = inputObj.element;
+
+    if (element){
+        css_1(element, inputObj.css);
+        fastdom.mutate(function(){
+            canvas.appendChild(element);
+        });
+    }
+
+    canvas.addEventListener(eventName, clickListener);
+
+    $listener.end.map(removeClickListener);
+    return $listener;
+
+    function clickListener(e){
+        var target = e.target;
+        if (element && target === element) return $listener(e);
+        if (!element && target.getAttribute('data-handle') === inputObj.stimHandle) return $listener(e);
+        return;
+    }
+
+    function removeClickListener(){
+        if (element) canvas.removeChild(element);
+        canvas.removeEventListener(eventName, $listener);
+    }
+}
+
+/*
+* key pressed listener
+* reqires key
+*
+* key can be either charCode or string.
+* or an array of charCode/strings.
+*/
+
+// we monitor all key up events so that we trigger only once per key down
+var keyDownArr = [];
+
+document.addEventListener('keyup',function(e){ keyDownArr[e.which] = false; });// unset flag to prevent multi pressing of a key 
+
+function keypressed$1($listener,inputObj){
+    // make sure key is an array
+    var keys = Array.isArray(inputObj.key) ? inputObj.key : [inputObj.key];
+
+    // map keys to keyCodes
+    var target = keys.map(function(value){ 
+        return typeof value == 'string' ? value.toUpperCase().charCodeAt(0) : value; 
+    });
+
+    document.addEventListener('keydown', keypressListener);
+
+    $listener.end.map(removeKeypressListener);
+    return $listener;
+
+    function keypressListener(e){
+        if (keyDownArr[e.which] || (target.indexOf(e.which) === -1)) return;
+        e.preventDefault(); // prevent FF from wasting about 10ms in browser-content.js (and fast search)
+        keyDownArr[e.which] = true; // set flag to prevent multi pressing of a key
+        $listener(e);
+    }
+
+    function removeKeypressListener(){
+        document.removeEventListener('keydown', keypressListener);
+    }
+}
+
+function keyup$1($listener,inputObj){
+    // make sure key is array
+    var keys = Array.isArray(inputObj.key) ? inputObj.key : [inputObj.key];
+
+    // map keys to keyCodes
+    var target = keys.map(function(value){ 
+        return typeof value == 'string' ? value.toUpperCase().charCodeAt(0) : value; 
+    });
+
+    document.addEventListener('keyup', keypressListener);
+
+    $listener.end.map(removeKeypressListener);
+    return $listener;
+
+    function keypressListener(e){
+        if (target.indexOf(e.which) === -1) return;
+        e.preventDefault();
+        return $listener(e);
+    }
+
+    function removeKeypressListener(){
+        document.removeEventListener('keyup', $listener);
+    }
+}
+
+/**
+ *	Takes a properties objects and returns the result of a randomization:
+ *	If it is an array - pick a random member
+ *	If it is an object pick from within a range
+ *	If it is a function return its result using the context
+ *	Otherwise simply return the properties
+ */
+function simpleRandomize(properties, context){
+
+    if (_.isArray(properties)) {
+        var index = Math.floor(Math.random()*properties.length);
+        return properties[index];
+    }
+
+    if (_.isFunction(properties)) {
+        return properties.call(context);
+    }
+
+    // this must be after the test for arrays and functions, because they are considered objects too
+    if (_.isPlainObject(properties)) {
+        if (!_.isNumber(properties.min) || !_.isNumber(properties.max) || properties.min > properties.max) {
+            throw new Error('randomization objects need both a max and a minimum property, also max has to be larger than min');
+        }
+        return properties.min + (properties.max - properties.min) * Math.random();
+    }
+
+    // if this is not a randomization object simply return
+    return properties;
+}
+
+function timeout$1($listener, inputObj){
+    var timeoutID;
+    var duration = simpleRandomize(inputObj.duration) || 0;
+
+    $listener.end.map(cancel);
+
+    if (duration) setTimeout($listener.bind(null, {}), duration);
+    else $listener({}); // listener is already registered with $events so this should be immidiate
+
+    return $listener;
+
+    function cancel(){
+        clearTimeout(timeoutID);
+    }
+}
+
+function inputBinder($listener, inputObj, canvas){
+    var on = inputObj.on; // what type of binding is this?
+
+    switch (on){
+
+        case 'keypressed'	: return keypressed$1($listener, inputObj);
+
+        case 'keyup'		: return keyup$1($listener, inputObj);
+
+        case 'click'		:
+        case 'mousedown'    :
+            return mouseEvents$1('mousedown', $listener,inputObj, canvas);
+
+        case 'mouseup'	    : return mouseEvents$1('mouseup', $listener,inputObj);
+
+        case 'mouseenter'	: return mouseEvents$1('mouseenter', $listener,inputObj);
+
+        case 'mouseleave'	: return mouseEvents$1('mouseleave', $listener,inputObj);
+
+        case 'timeout'		: return timeout$1($listener,inputObj);
+
+        /*
+         * Shortcuts
+         */
+
+        case 'enter'	: return keypressed$1($listener, _.assign({key:13},inputObj));
+
+        case 'space'	: return keypressed$1($listener, _.assign({key:32},inputObj));
+
+        case 'esc'	    : return keypressed$1($listener, _.assign({key:27},inputObj));
+
+        case 'leftTouch'	:
+            inputObj.element = createElement(inputObj.css, {
+                position: 'absolute',
+                left: 0,
+                width: '30%',
+                height: '100%',
+                background: '#00FF00',
+                opacity: 0.3
+            });
+
+            return mouseEvents$1('mousedown', $listener,inputObj);
+
+        case 'rightTouch'	:
+            inputObj.element = createElement(inputObj.css, {
+                position: 'absolute',
+                right: 0,
+                width: '30%',
+                height: '100%',
+                background: '#00FF00',
+                opacity: 0.3
+            });
+
+            return mouseEvents$1('mousedown', $listener,inputObj);
+
+        case 'topTouch'	:
+            inputObj.element = createElement(inputObj.css, {
+                position: 'absolute',
+                top: 0,
+                width: '100%',
+                height: '30%',
+                background: '#00FF00',
+                opacity: 0.3
+            });
+
+            return mouseEvents$1('mousedown', $listener,inputObj);
+
+        case 'bottomTouch'	:
+            inputObj.element = createElement(inputObj.css, {
+                position: 'absolute',
+                bottom: 0,
+                width: '100%',
+                height: '30%',
+                background: '#00FF00',
+                opacity: 0.3
+            });
+
+            return mouseEvents$1('mousedown', $listener,inputObj);
+
+        default:
+            throw new Error('You have an input element without a recognized "on" property: ' + on);
+
+    }
+
+
+    function createElement(css2, css1){
+        var el = document.createElement('div');
+        css_1(el, css1);
+        css_1(el, css2);
+        return el;
+    }
+}
+
+function createListener$1(inputObj,canvas){
+    // @TODO: this API is very confusing
+    // the binder MUST return the original stream ($listener)
+    // maybe we should simplify this, possibly instead of explicitly exposing streams, expose callbacks?
+    var $listener = stream();
+    $listener.handle = inputObj.handle;
+
+    if (_.isFunction(inputObj)) {
+        $listener = inputObj($listener, inputObj, canvas);
+        if (isStream($listener)) return $listener;
+        throw new Error('Input functions must return valid streams');
+    }
+
+    if (!_.isPlainObject(inputObj)) throw new Error('Input must only contain objects and functions, do you have an undefined value?');
+
+    if (_.isString(inputObj.on)) return inputBinder($listener,inputObj,canvas); // must return $listener :(
+
+    if (_.isFunction(inputObj.on )) inputObj.on($listener, inputObj, canvas);
+    if (_.isFunction(inputObj.off)) $listener.end.map(inputObj.off);
+    return $listener;
+}
+
+
+function isStream(stream$$1) {return stream$$1._state; }
+
+var now = window.performance.now
+    ? window.performance.now.bind(window.performance)
+
+    // We aren't using the absoulte time anywhere so we can use raw Date.now as a replacement
+    // if we're not on IE9
+    : Date.now.bind(Date);
+
+function interfaceFn($events, trial){
+    var listenerStack = []; // holds all active listeners
+    var baseTime = 0;
+
+    return { add:add,remove:remove,destroy:destroy,resetTimer:resetTimer };
+
+    function add(inputObj){
+        if (!inputObj) throw new Error('Missing input element. Could not add input listener');
+        var stream = createListener$1(inputObj, trial.canvas);
+        stream.map(addDetails).map($events); // pipe events to $events
+        listenerStack.push(stream);
+
+        function addDetails(event){
+            return {
+                handle      : inputObj.handle,
+                event       : event,
+                trialId     : trial._id,
+                counter     : trial.counter,
+                timestamp	: +new Date(),
+                latency		: now() - baseTime
+            };
+        }
+    }
+
+    function remove(handle){
+        // go through the listener stack and remove any listeners that fit the handle
+        // note that we do this in reverse so that the index does not change
+        for (var i = listenerStack.length - 1; i >= 0 ; i--){
+            var listener = listenerStack[i];
+            if (listener.handle === handle){
+                listener.end(true);
+                listenerStack.splice(i,1);
+            }
+        }
+    }
+
+    function destroy(){
+        listenerStack.forEach(function(stream){
+            stream.end(true);
+        });
+        listenerStack.length = 0;
+    }
+
+    function resetTimer(){ baseTime = now(); }
+}
+
+function getMedia$1(media){
+    // all templateing is done within the inflate trial function and the sequencer
+    var template = media.html || media.inlineTemplate || media.template; // give inline template precedence over template, because tempaltes are loaded into inlinetemplate
+    var el;
+
+    if (media.word) {
+        el = document.createElement('div');
+        el.textContent = media.word;
+        return Promise.resolve(el);
+    }
+
+    if (media.image) {
+        // at this time, we count on the preloader to throw for errors
+        // the reject option isn't really being used here...
+        return new Promise(function(resolve, reject){
+            el = document.createElement('img');
+            el.onload = function(){resolve(el);};
+            el.onerror = function(){reject(new Error('Image not found: ' + el.src ));};
+            el.src = media.image;
+        });
+    }
+
+    if (media.jquery) Promise.reject(new Error('Jquery is no longer supported in minno-time'));
+
+    if (template) { // html | template | inlineTemplate
+        el = document.createElement('div');
+        el.innerHTML = template;
+        return Promise.resolve(el);
+    } 
+
+    return Promise.reject(new Error('Unrecognized media type')); // this is not a supported html type
+}
+
+function setSize$1(el, stimulus){
+    var style = el.style;
+    var size = stimulus.size || {};
+
+    if (size.font_size) style.fontSize = size.font_size;
+
+    // if this is a word, we don't want to set height (it breaks centering)
+    if (isSet('height', size) && !stimulus.media.word) style.height = size.height + '%';
+
+    if (isSet('width', size)) style.width = size.width + '%';
+
+    return el;
+}
+
+function isSet(prop, obj){return prop in obj;}
+
+var YCLASS = 'minno-stimulus-center-y';
+var XCLASS = 'minno-stimulus-center-x';
+
+function setPlace$1(el,stimulus){
+    var location = stimulus.location || {};
+
+    // set offsets:
+    if (location.top == 'center' || location.bottom == 'center' || (location.top === undefined && location.bottom === undefined)) el.classList.add(YCLASS);
+    if (location.left == 'center' || location.right == 'center' || (location.left === undefined && location.right === undefined)) el.classList.add(XCLASS);
+
+    ['top','bottom','left','right'].forEach(setNumericLocation);
+
+    function isNumeric(val) {return !isNaN(+val);}
+    function setNumericLocation(attr){ if (isNumeric(location[attr])) el.style[attr] = location[attr] + '%'; }
+}
+
+function fixIE(el, resolve){
+    var style = el.style;
+
+    // count on setplace to findout when we need to center
+    var xCenter = el.classList.contains(XCLASS);
+    var yCenter = el.classList.contains(YCLASS);
+
+    if (!xCenter && !yCenter) return resolve(el);
+
+    fastdom.measure(function(){
+        var computedStyle = window.getComputedStyle(el);
+        var width = parseFloat(computedStyle.width);
+        var height = parseFloat(computedStyle.height);
+
+        fastdom.mutate(function(){
+            // location (left/top) is set to 50% within the center class
+            // we're adding the margin on IE where the transform does not work well
+            // we need to cancel the transform set within the class though...
+            style.transform = 'none';
+            if (xCenter) style.marginLeft = '-' + (width/2) + 'px';
+            if (yCenter) style.marginTop = '-' + (height/2) + 'px';
+        });
+
+    });
+}
+
+function Stimulus$1(stimulus, trial, canvas){
+    var self = {
+        el: null, // is set within init, some methods will break if not called before init...
+        source: stimulus,
+        trial: trial,
+        canvas: canvas,
+        init: init,
+        show: show,
+        hide: hide,
+        name: name,
+        mediaName: mediaName,
+        destroy: destroy$1
+    };
+
+    // make sure we have a data object
+    self.data = stimulus.data || {};
+
+    // set the handle
+    self.handle = self.data.handle = self.data.handle || stimulus.handle || stimulus.set;
+
+    return self;
+}
+
+
+function init(){
+    if (!this.source.media) throw new Error('Media object not defined for ' + this.name());
+
+    return getMedia$1(this.source.media)
+        .then(setupElement.bind(this, this.canvas));
+}
+
+function setupElement(canvas, el){
+    var self = this;
+    this.el = el;
+    return new Promise(function(resolve){
+        fastdom.mutate(function initStim(){
+            // setup element
+            el.classList.add('minno-stimulus');
+            el.setAttribute('data-handle', self.handle); // data-handle for handeling of mouse/touch interactions
+            setSize$1(el, self.source);
+            setPlace$1(el, self.source);
+            css_1(el, self.source.css || {});
+
+            if (self.source.isLayout) el.classList.add('minno-stimulus-visible');
+
+            // append to canvas
+            canvas.appendChild(el);
+
+            if (document.documentMode) fixIE(el, resolve);
+            else resolve(el);
+        });
+    });
+}
+
+function show(){
+    var el = this.el;
+    if (!el) throw new Error('A stimulus can not be shown before init is called');
+
+    fastdom.mutate(function showStim(){
+        el.classList.add('minno-stimulus-visible');
+    });
+}
+
+function hide(){
+    var el = this.el;
+    if (!el) throw new Error('A stimulus can not be hidden before init is called');
+
+    fastdom.mutate(function hideStim(){
+        el.classList.remove('minno-stimulus-visible');
+    });
+}
+
+function destroy$1(){
+    var el = this.el;
+    var canvas = this.canvas;
+    fastdom.mutate(function removeStim(){
+        canvas.removeChild(el);
+    });
+}
+
+function name(){
+    var source = this.source;
+    // if we have an alias ues it
+    if (source.alias) {return source.alias;}
+    if (this.data.alias) {return this.data.alias;} // if we have an alias ues it
+
+    if (source.inherit && source.inherit.set) {return source.inherit.set;} // otherwise try using the set we inherited from
+    if (this.handle) {return this.handle;} // otherwise use handle
+
+    // if no individual name is given, we set a default at the collection level
+}
+
+function mediaName(options){
+    var media = this.source.media;
+    var fullpath = options && options.fullpath; // as set within settings
+
+    if (media.alias) {return media.alias;} // if we have an alias ues it
+
+    for (var prop in media) {
+        if (contains(['image','template'],prop)) return fullpath ? media[prop] : media[prop].replace(/^.*[\\/]/, '');
+
+        // sometimes we have an empty value (this happens when we load a template and then translate it into an inline template)
+        if (contains(['word','html','inlineTemplate'],prop) && media[prop]) return media[prop];
+    }
+
+    // if no individual name is given, we set a default at the collection level
+}
+
+function contains(arr, val){ return arr.indexOf(val) != -1;}
+
+function stimCollection(trial, canvas){
+    var source = trial._source;
+    var stimuli = source.stimuli.map(toStim);
+    var layout = source.layout.map(toLayout).map(toStim);
+    var ready = Promise.all(stimuli.concat(layout).map(function(stim){return stim.init();}));
+    var self = {
+        canvas: canvas,
+        stimuli: stimuli,
+        layout: layout,
+        ready: ready,
+        getStimlist: getStimlist,
+        getMedialist: getMedialist,
+        destroy: destroy
+    };
+
+    return self;
+
+    function toStim(stim){ return Stimulus$1(stim, trial, canvas); }
+    function toLayout(stim){ stim.isLayout = true; return stim;}
+}
+
+function getStimlist(){
+    return this.stimuli
+        .filter(function(stim){return !stim.source.nolog;})
+        .map(function(stim, index){return stim.name() || ('stim' + index);});
+}
+
+function getMedialist(options){
+    return this.stimuli
+        .filter(function(stim){return !stim.source.nolog;})
+        .map(function(stim, index){return stim.mediaName(options) || ('media' + index);});
+}
+
+function destroy(){
+    this.stimuli.concat(this.layout).forEach(function(stim){stim.destroy();});
+}
+
+/*
+ * gets a condition array (or a single condition) and evaluates it
+ * returns true if all statements are true, false otherwise
+ *
+ * a single condition looks like this:
+ *
+ *	condition = {
+ *		type : 'begin/inputEquals/inputEqualsTrial/inputEqualsStim/function',
+ *		value: 'right/trialAttribute/stimAttribute/customFunction',
+ *		handle: 'stim handle' (optional in case we're targeting a stimulus)
+ *	}
+ *
+ */
+
+function evaluate$1(conditions, inputData, trial){
+    var global = global$2();
+    var current = global.current || {};
+
+    if (!conditions) throw new Error('There is an interaction without conditions!!');
+
+    // make sure conditions is an array
+    conditions = Array.isArray(conditions) ? conditions : [conditions];
+
+    // the internal event
+    inputData = inputData || {};
+
+    // assume condition is true
+    var isTrue = true;
+
+    // if this is a begin event, make sure we only run conditions that have begin in them
+    if (inputData.type == 'begin' && conditions.every(function(condition){return condition.type != 'begin';})) return false;
+
+    // try to refute the condition
+    conditions.forEach(function checkCondition(condition){
+        var searchObj;
+        var evaluation = true;
+
+        switch (condition.type){
+            case 'begin':
+                if (inputData.type !== 'begin') {
+                    evaluation = false;
+                }
+                break;
+
+            case 'inputEquals' :
+                // make sure condition.value is an array
+                _.isArray(condition.value) || (condition.value = [condition.value]);
+
+                if (_.indexOf(condition.value,inputData.handle) === -1) {
+                    evaluation = false;
+                }
+                break;
+
+            case 'inputEqualsTrial':
+                if (inputData.handle !== trial.data[condition.property]) {
+                    evaluation = false;
+                }
+                break;
+
+            case 'inputEqualsStim':
+                // create search object
+                searchObj = {};
+                if (condition.handle) searchObj['handle'] = condition.handle;
+                searchObj[condition.property] = inputData.handle;
+
+                // are there stimuli answering this descriptions?
+                if (!hasData(searchObj)) evaluation = false;
+                break;
+
+            case 'trialEquals':
+                if (typeof condition.property == 'undefined' || typeof condition.value == 'undefined'){
+                    throw new Error('trialEquals requires both "property" and "value" to be defined');
+                }
+                if (condition.value !== trial.data[condition.property]) evaluation = false;
+                break;
+
+            case 'inputEqualsGlobal':
+                if (typeof condition.property == 'undefined'){
+                    throw new Error('inputEqualsGlobal requires "property" to be defined');
+                }
+                if (inputData.handle !== global[condition.property]){
+                    evaluation = false;
+                }
+                break;
+
+            case 'globalEquals':
+                if (typeof condition.property == 'undefined' || typeof condition.value == 'undefined'){
+                    throw new Error('globalEquals requires both "property" and "value" to be defined');
+                }
+                if (condition.value !== global[condition.property]){
+                    evaluation = false;
+                }
+                break;
+
+            case 'globalEqualsTrial':
+                if (typeof condition.globalProp == 'undefined' || typeof condition.trialProp == 'undefined'){
+                    throw new Error('globalEqualsTrial requires both "globalProp" and "trialProp" to be defined');
+                }
+                if (global[condition.globalProp] !== trial.data[condition.trialProp]) {
+                    evaluation = false;
+                }
+                break;
+
+            case 'globalEqualsStim':
+                if (typeof condition.globalProp == 'undefined' || typeof condition.stimProp == 'undefined'){
+                    throw new Error('globalEqualsStim requires both "globalProp" and "stimProp" to be defined');
+                }
+
+                // create search object
+                searchObj = {};
+                if (condition.handle){
+                    searchObj['handle'] = condition.handle;
+                }
+                searchObj[condition.stimProp] = global[condition.globalProp];
+
+                // are there stimuli answering this descriptions?
+                if (!hasData(searchObj)) evaluation = false;
+                break;
+
+            case 'inputEqualsCurrent':
+                if (typeof condition.property == 'undefined'){
+                    throw new Error('inputEqualsCurrent requires "property" to be defined');
+                }
+                if (inputData.handle !== current[condition.property]){
+                    evaluation = false;
+                }
+                break;
+
+            case 'currentEquals':
+                if (typeof condition.property == 'undefined' || typeof condition.value == 'undefined'){
+                    throw new Error('currentEquals requires both "property" and "value" to be defined');
+                }
+                if (condition.value !== current[condition.property]){
+                    evaluation = false;
+                }
+                break;
+
+            case 'currentEqualsTrial':
+                if (typeof condition.currentProp == 'undefined' || typeof condition.trialProp == 'undefined'){
+                    throw new Error('currentEqualsTrial requires both "currentProp" and "trialProp" to be defined');
+                }
+                if (current[condition.currentProp] !== trial.data[condition.trialProp]) evaluation = false;
+                break;
+
+            case 'currentEqualsStim':
+                if (typeof condition.currentProp == 'undefined' || typeof condition.stimProp == 'undefined'){
+                    throw new Error('currentEqualsStim requires both "currentProp" and "stimProp" to be defined');
+                }
+
+                // create search object
+                searchObj = {};
+                if (condition.handle) searchObj['handle'] = condition.handle;
+                searchObj[condition.stimProp] = current[condition.currentProp];
+
+                // are there stimuli answering this descriptions?
+                if (!hasData(searchObj)) evaluation = false;
+                break;
+
+            case 'function' :
+                if (!condition.value.apply(trial,[condition,inputData, trial])) evaluation = false;
+                break;
+
+            case 'custom':
+                if (!condition.fn.apply(null, [condition, inputData, trial])) evaluation = false;
+                break;
+
+            default:
+                throw new Error('Unknown condition type: ' + condition.type);
+        }
+
+        isTrue = isTrue && (condition.negate ? !evaluation : evaluation);
+    });
+
+    return isTrue;
+
+    function hasData(searchObj){
+        return trial.stimulusCollection.stimuli.some(function(stim){
+            var data = stim.data;
+            for (var key in searchObj) {
+                if (searchObj[key] !== data[key]) return false;
+            }
+            return true;
+        });
+    }
+}
+
+var actions = {
+    /*
+     * Stimulus actions
+     */
+    showStim: function(action, eventData, trial){
+        var handle = action.handle || action;
+        trial.stimulusCollection.stimuli.forEach(function(stim){
+            if (handle == 'All' || stim.handle == handle) stim.show();
+        });
+    },
+
+    hideStim: function(action, eventData, trial){
+        var handle = action.handle || action;
+        trial.stimulusCollection.stimuli.forEach(function(stim){
+            if (handle == 'All' || stim.handle == handle) stim.hide();
+        });
+    },
+
+    setStimAttr: function(action, eventData, trial){
+        var handle = action.handle;
+        var setter = action.setter;
+        trial.stimulusCollection.stimuli.forEach(function(stim){
+            if (handle == 'All' || stim.handle == handle) {
+                if (_.isFunction(setter)) setter.apply(stim);
+                else _.extend(stim.data, setter);
+            }
+        });
+    },
+
+    /*
+     * Trial actions
+     */
+
+    setTrialAttr: function(action, eventData, trial){
+        var setter = action.setter;
+        if (typeof setter == 'undefined') throw new Error('The setTrialAttr action requires a setter property');
+        if (_.isFunction(setter)) setter.apply(trial, [trial.data,eventData]);
+        else _.extend(trial.data,setter);
+    },
+
+    setInput: function(action, eventData, trial){
+        if (typeof action.input == 'undefined') throw new Error('The setInput action requires an input property');
+        trial.input.add(action.input);
+    },
+
+    trigger: function(action, eventData, trial){
+        if (typeof action.handle == 'undefined') throw new Error('The trigger action requires a handle property');
+        trial.input.add({handle:action.handle, on:'timeout', duration:+action.duration || 0});
+    },
+
+    removeInput: function(action, eventData, trial){
+        var input = trial.input;
+        var handleList = action.handle;
+        if (typeof handleList == 'undefined') throw new Error('The removeInput action requires a handle property');
+        if (handleList == 'All' || _.include(handleList,'All')) input.destroy();
+        else input.remove(handleList);
+    },
+
+    goto: function(action, eventData, trial){
+        trial._next = [action.destination,action.properties];
+    },
+
+    endTrial: function(action, eventData, trial){
+        trial.end();
+    },
+
+    resetTimer: function(action,eventData,trial){
+        // when to reset timer
+        action.immidiate ? reset() :  fastdom.mutate(reset);
+
+        function reset(){
+            eventData.latency = 0;
+            trial.input.resetTimer();
+        }
+    },
+
+    /*
+     * Logger
+     */
+
+    log: function(action,eventData,trial){
+        trial.$logs(arguments);
+    },
+
+    /*
+     * Misc
+     */
+
+    setGlobalAttr: function(action){
+        switch (typeof action.setter){
+            case 'function':
+                action.setter.apply(null,[global$2(), action]);
+                break;
+            case 'object':
+                _.extend(global$2(), action.setter);
+                break;
+            default:
+                throw new Error('setGlobalAttr requires a "setter" property');
+        }
+    },
+
+    custom: function(action,eventData, trial){
+        if (typeof action.fn != 'function') throw new Error('The custom action requires a fn propery');
+        action.fn(action, eventData, trial);
+    },
+
+    canvas: function(action, eventData, trial){
+        var canvas = trial.cavnas;
+        var map = {
+            background 			: {element: document.body, property: 'backgroundColor'},
+            canvasBackground	: {element: canvas, property:'backgroundColor'},
+            borderColor			: {element: canvas, property:'borderColor'},
+            borderWidth			: {element: canvas, property:'borderWidth'}
+        };
+
+        // settings activator
+        var off = canvasContructor(map, _.pick(action,['background','canvasBackground','borderColor','borderWidth']));
+        trial.$end.map(off);
+    }
+
+};
+
+/*
+ * accepts an array of actions (or a single action)
+ * and applies them
+ *
+ * actions = [
+ *		{type:actionName,more:options},
+ *		{actionName:options}
+ * ]
+ * @param actions: single action object or array of action objects
+ * @param eventData: eventData object
+ * @returns Boolean continueActions: whether this action stops further action activations
+ */
+
+function applyActions(actions$$1, eventData, trial){
+    // marks whether this is the final action to take
+    var continueActions = true;
+
+    if (!actions$$1) throw new Error('There is an interaction without actions!!');
+
+    actions$$1 = _.isArray(actions$$1) ? actions$$1 : [actions$$1];
+
+    _.forEach(actions$$1,function(action){
+        var actionFn = actions[action.type];
+        if (!actionFn) throw new Error('unknown action: ' + action.type);
+
+        // the only reason to halt action activation is the endTrial command
+        if (action.type === 'endTrial') continueActions = false;
+        actionFn(action, eventData, trial);
+    });
+
+    return continueActions;
+}
+
+/*
+* Organizer for the interaction function
+*/
+
+function interactions$1(trial){
+    var interactions = trial._source.interactions;
+    var isDebug = trial._source.DEBUG && window.DEBUG;
+
+    // @TODO: validate interactions (isArray[Object], Object has conditions, Object has actions
+    
+    return eventMap;
+    function eventMap(event){
+        var i, interaction, conditionTrue;
+
+
+        // eslint-disable-next-line no-console
+        if (isDebug) console.groupCollapsed('Event: ' + (event.handle || event.type), event);
+
+        // use an explicit for loop because we need to be able to break
+        for (i=0; i<interactions.length; i++){
+            interaction = interactions[i];
+            conditionTrue = evaluate$1(interaction.conditions, event, trial);
+
+            // eslint-disable-next-line no-console
+            if (isDebug) console.log(conditionTrue, interaction.conditions);
+
+            // if this action includes endTrial we want to stop evalutation
+            // otherwise we might evaluate using data from the next trial by accident...
+            if (conditionTrue) if ( !applyActions(interaction.actions, event, trial) ) break;
+        }
+
+        // eslint-disable-next-line no-console
+        if (isDebug) console.groupEnd('Event: ' + (event.handle || event.type));
+
+        return event;
+    }
+}
+
+var gid = 0;
+
+// data is already fully inflated
+function Trial$1(source, canvas, settings){
+    // make sure we have all our stuff :)
+    if (!source.interactions) throw new Error('Interactions not defined');
+
+    this.canvas = canvas;
+    this.settings = settings;
+    this._source = source;
+
+    this.$logs = stream();
+    this.$events = stream();
+    this.$end = this.$events.end;
+
+    // make sure we always have a data container
+    this.data = source.data || {};
+
+    // create a uniqueId for this trial
+    this._id = _.uniqueId('trial_');
+    this.counter = gid++;
+
+    this.input = interfaceFn(this.$events, this);
+    this.stimulusCollection = stimCollection(this, canvas);
+
+    // listen for interactions
+    this.$events.map(interactions$1(this));
+
+    // the next trial we want to play
+    // by default this is simply the next trial, this can be changed using the goto action
+    // the syntax is [destination, properties]
+    this._next = ['next',{}];
+}
+
+_.extend(Trial$1.prototype,{
+    start: function(){
+        var trial = this;
+
+        // eslint-disable-next-line no-console
+        if (this._source.DEBUG && window.DEBUG) console.group('Trial: ' + this.counter); 
+
+        // wait until all simuli are loaded
+        return trial.stimulusCollection.ready
+            .then(function(){
+
+                // activate input
+                arrayWrap(trial._source.input).forEach(trial.input.add); // add each input
+                trial.input.resetTimer(); // reset the interface timer so that event latencies are relative to now.
+
+                // start running
+                trial.$events({type:'begin',latency:0});
+            });
+    },
+
+    end: function(){
+
+        // eslint-disable-next-line no-console
+        if (this._source.DEBUG && window.DEBUG) console.groupEnd('Trial: ' + this.counter); 
+
+        // cancel all listeners
+        this.input.destroy();
+
+        this.$events.end(true);
+        this.$end(true);
+    },
+
+    name: function(){
+        // if we have an alias ues it
+        if (this.alias) { return this.alias; }
+        if (this.data.alias) { return this.data.alias; }
+
+        // otherwise try using the set we inherited from
+        if (_.isString(this._source.inherit)){ return this._source.inherit; }
+        if (_.isPlainObject(this._source.inherit)){
+            return this._source.inherit.set;
+        }
+
+        // we're out of options here
+    }
+});
+
+function arrayWrap(arr){
+    if (!arr){return [];}
+    return _.isArray(arr) ? arr : [arr];
+}
+
+function nextTrial$1(db, goto){
+    var destination = goto[0], properties = goto[1];
+    var sequence = db.currentSequence;
+    var global = global$2();
+    var context = {global: global, current: global.current};
+    var source;
+
+    sequence.go(destination, properties, context);
+    source = sequence.current(context, {skip:['layout','stimuli']});
+
+    if (!source) return {done:true};
+
+    source.stimuli = _.map(source.stimuli || [], buildStim, context);
+    source.layout = _.map(source.layout || [], buildStim, context);
+
+    context.trialData = null;
+
+    return {value:source};
+
+    function buildMedia(stim, prop, context){
+        var val = stim[prop];
+
+        if (_.isUndefined(val)) return false;
+        if (_.isString(val)) val = {word: val};
+
+        val = db.inflate('media', val, context);
+
+        // note that the base url is added to the media object during the sequence preload
+        // if needed, build url
+        if (val.image) val.image = buildUrl$1(val.image,'image');
+
+        if (val.template){
+            // @TODO: remove dependency on requirejs
+            val.inlineTemplate = requirejs('text!' + buildUrl$1(val.template, 'template'));
+            val.inlineTemplate = _.template(val.inlineTemplate)(context);
+        }
+
+        stim[prop] = val;
+
+        context.mediaData = null;
+        context.mediaMeta = null;
+    }
+
+    function buildStim(stim){
+        var context = this;
+
+        stim = db.inflate('stimulus', stim, context, {skip:['media','touchMedia']});
+        buildMedia(stim, 'media', context);
+        buildMedia(stim, 'touchMedia', context);
+        context.stimulusData = null;
+        context.stimulusMeta = null;
+        return stim;
+    }
+}
+
+function post$1(url, data){
+    return new Promise(function(resolve, reject){
+        var request = new XMLHttpRequest();
+        request.open('POST',url, true);
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+
+        request.onreadystatechange = function() {
+            if (this.readyState === 4) {
+                if (this.status >= 200 && this.status < 400) resolve(this.responseText);
+                else reject(new Error('Failed posting to: ' + url));
+            }
+        };
+
+        request.send(serialize(data));
+    });
+}
+
+function serialize(data) {
+    if (typeof data == 'string') return data;
+    return JSON.stringify(data);
+}
+
+function poster$1($logs, settings){
+    var cache = [];
+    var url = settings.url;
+
+    if (!url) return; // if we have no url, we can't log anything anyway
+
+    $logs.map(eachLog);
+    $logs.end.map(finalizefLogs);
+
+    function eachLog(log){
+        cache.push(log);
+        if (!settings.pulse) return;
+        if (cache.length >= settings.pulse) {
+            send(cache);
+            cache.length = 0;
+        }
+    }
+
+    function finalizefLogs(){
+        if (cache.length) send(cache);
+    }
+
+    function send(logs){
+        // build post data
+        var data = {json: JSON.stringify(logs)};
+        var postData = _.assign(data, settings.metaData);
+        var serializedPost = serialize(postData);
+
+        return post$1(url,serializedPost)
+            .catch(function retry(){ return post$1(url, serializedPost); })
+            .catch(settings.error || _.noop);
+    }
+
+    function serialize(data){
+        var key, r = [];
+        for (key in data) r.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+        return r.join('&').replace(/%20/g, '+');
+    }
+}
+
+function transformLogs$1(action,eventData,trial){
+    var global = window.piGlobal;
+    var trialData = trial.data, inputData = eventData, logStack = global.current.logs;
+    var fullpath = _.get(trial, 'settings.logger.fullpath', false);
+
+    var stimList = trial.stimulusCollection.getStimlist();
+    var mediaList = trial.stimulusCollection.getMedialist({fullpath:fullpath});
+
+    return {
+        log_serial : logStack.length,
+        trial_id: trial.counter,
+        name: trial.name(),
+        responseHandle: inputData.handle,
+        latency: Math.floor(inputData.latency),
+        stimuli: stimList,
+        media: mediaList,
+        data: trialData
+    };
+}
+
+function createLogs$1($logs, settings){
+    var $sink = $logs.map(applyMap(settings.logger || settings.transformLogs || transformLogs$1));
+    $sink.map(function(log){
+        global$2().current.logs.push(log);
+    });
+
+    poster$1($sink, settings);
+    if (settings.poster) settings.poster($sink, settings);
+
+    return $sink;
+
+    // $logs is a stream of array, we want to apply them as args to the transform function
+    function applyMap(fn){
+        return function(args){ return fn.apply(null,args); };
+    }
+}
+
+function playerPhase(sink){
+    var canvas = sink.canvas;
+    var db = sink.db;
+    var settings = sink.settings;
+
+    var $source = stream();
+    var $trial = $source.map(activateTrial());
+    var $logs = stream();
+
+    var onDone = _.get(settings, 'hooks.endTask', settings.onEnd || _.noop);
+
+    $source.end
+        .map(clearCanvas)
+        .map(onDone);
+
+
+    $trial.end.map(console.log.bind(null, 'sdfsdf'));
+
+    return _.extend({
+        $trial:$trial, 
+        end: $source.end.bind(null,true), 
+        $logs: createLogs$1($logs, settings.logger || {}), 
+        start: play.bind(null, ['next', {}])
+    }, sink);
+
+    function clearCanvas(){
+        var trial = $trial();
+        if (trial) trial.stimulusCollection.destroy();
+    }
+
+    function play(goto){
+        var next = nextTrial$1(db, goto);
+        if (next.done) $source.end(true);
+        else $source(next.value);
+    }
+
+    function activateTrial(cache){
+        return activate;
+        function activate(source){
+            var oldTrial = cache;
+            var trial = cache = new Trial$1(source, canvas, settings);
+            trial.$logs.map($logs); 
+            trial.$end
+                .map(function(){
+                    play(trial._next); // when we're done try to play the next one
+                });
+
+            trial.start();
+
+            if (oldTrial) {
+                // we leave the old stimuli until the current ones are visiblie to maintain the continuity between trials
+                // This mutate waits until the first mutation in order to schedudual the removal of the old stimuli
+                fastdom.mutate(function oldtrial(){
+                    oldTrial.stimulusCollection.destroy();
+                });
+            }
+
+            return trial;
+        }
+    }
+
+}
+
+function activate$1(canvas, script$$1){
+    var $resize = setupCanvas(canvas, _.get(script$$1, 'settings.canvas', {}));
+    var db = createDB$1(script$$1);
+    var sink = {
+        canvas: canvas,
+        script: script$$1,
+        settings: script$$1.settings || {},
+        db: db,
+        $resize: $resize
+    };
+
+    var playSink = playerPhase(sink);
+
+    setupVars(script$$1);
+
+    playSink.$trial.end.map($resize.end.bind(null, true)); // end resize stream
+
+    // preload Images, then start "playPhase"
+    preloadPhase$1(canvas, script$$1).then(playSink.start);
+
+    return playSink;
+}
+
+function setupVars(script$$1){
+    // init global
+    var glob = global$2(global$2());
+    var name = script$$1.name || 'anonymous minno-time';
+    var current = script$$1.current ? script$$1.current : {};
+
+    current.logs || (current.logs = []); // init logs object
+    glob[name] = glob.current = current; // create local namespace
+
+    // set the main script as a global
+    script$1(script$$1);
+}
+
+return activate$1;
+
+})));
 //# sourceMappingURL=time.js.map

@@ -1,6 +1,7 @@
 /*
  * Send log chunk
  * returns a function that takes data and sends it to the server after appending any meta data
+ * @Todo: pass in the settings (drop global settings, pass them through the sink).
  */
 import _ from 'lodash';
 import settingsGetter from '../settings';

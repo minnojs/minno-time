@@ -5,9 +5,10 @@
     "main": "dist/time.js",
     "module": "src/index.js",
     "scripts": {
-        "test": "echo \"Not running any tests currently\"",
+        "test": "karma start",
+        "test:ci": "karma start --single-run",
         "build": "cp src/time.css dist/time.css && ./node_modules/rollup/bin/rollup -c",
-        "dev": "./node_modules/rollup/bin/rollup -c -w",
+        "dev": "./node_modules/rollup/bin/rollup -c -w & karma start",
         "e2e:debug": "node ./e2e/debug.js",
         "e2e": "node ./e2e/runner.js",
         "e2e:sauce": "node ./e2e/runner.js --sauce",
