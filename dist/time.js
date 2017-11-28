@@ -135,47 +135,10 @@ PromisePolyfill.race = function(list) {
 
 if (typeof window.Promise === "undefined") window.Promise = PromisePolyfill;
 
-/*
- * this file holds the script we are to run
- */
-
-var scriptObj = {};
-
-/**
- * Getter/Setter fo script
- *
- * @param  {Object || null} obj 	The new script, if it is not set this is simply a getter.
- * @return {Object}     			The full script
- */
-function script$1(obj){
-    obj && (scriptObj = obj);
-    return scriptObj;
-}
-
+// initiate piGloabl
 var glob = window.piGlobal || (window.piGlobal = {});
 
-/**
- * getter setter for the global object
- * @param  {Object} obj     The object to add to the global
- * @param  {Bool} 	replace A new object to fully replace the old global
- * @return {Object}         The full global
- */
-function global$2(obj, replace){
-
-    if (replace) {
-        glob = obj;
-        return glob;
-    }
-
-    if (_.isPlainObject(obj)){
-        _.each(function(value, key){
-            /* eslint-disable no-console */
-            console.warn && global$2[key] && console.warn('Overwriting "' + key  + '" in global object.');
-            /* eslint-enable no-console */
-        });
-        _.merge(glob, obj);
-    }
-
+function global$2(){
     return glob;
 }
 
@@ -596,6 +559,50 @@ function setupCanvas(canvas, canvasSettings){
 
     return $resize;
 
+}
+
+/*
+ * this file holds the script we are to run
+ */
+
+var scriptObj = {};
+
+/**
+ * Getter/Setter fo script
+ *
+ * @param  {Object || null} obj 	The new script, if it is not set this is simply a getter.
+ * @return {Object}     			The full script
+ */
+function script$1(obj){
+    obj && (scriptObj = obj);
+    return scriptObj;
+}
+
+function setup$1(canvas, script$$1){
+    var $resize = setupCanvas(canvas, _.get(script$$1, 'settings.canvas', {}));
+    var db = createDB$1(script$$1);
+    setupVars(script$$1);
+
+    return {
+        db:db, 
+        $resize:$resize,
+        canvas: canvas,
+        script: script$$1,
+        settings: script$$1.settings || {}
+    };
+}
+
+function setupVars(script$$1){
+    // init global
+    var glob = global$2(global$2());
+    var name = script$$1.name || 'anonymous minno-time';
+    var current = script$$1.current ? script$$1.current : {};
+
+    current.logs || (current.logs = []); // init logs object
+    glob[name] = glob.current = current; // create local namespace
+
+    // set the main script as a global
+    script$1(script$$1);
 }
 
 /*
@@ -2256,40 +2263,16 @@ function playerPhase(sink){
 
 }
 
-function activate$1(canvas, script$$1){
-    var $resize = setupCanvas(canvas, _.get(script$$1, 'settings.canvas', {}));
-    var db = createDB$1(script$$1);
-    var sink = {
-        canvas: canvas,
-        script: script$$1,
-        settings: script$$1.settings || {},
-        db: db,
-        $resize: $resize
-    };
-
+function activate$1(canvas, script){
+    var sink = setup$1(canvas, script);
     var playSink = playerPhase(sink);
 
-    setupVars(script$$1);
-
-    playSink.$trial.end.map($resize.end.bind(null, true)); // end resize stream
+    playSink.$trial.end.map(playSink.$resize.end.bind(null, true)); // end resize stream
 
     // preload Images, then start "playPhase"
-    preloadPhase$1(canvas, script$$1).then(playSink.start);
+    preloadPhase$1(canvas, script).then(playSink.start);
 
     return playSink;
-}
-
-function setupVars(script$$1){
-    // init global
-    var glob = global$2(global$2());
-    var name = script$$1.name || 'anonymous minno-time';
-    var current = script$$1.current ? script$$1.current : {};
-
-    current.logs || (current.logs = []); // init logs object
-    glob[name] = glob.current = current; // create local namespace
-
-    // set the main script as a global
-    script$1(script$$1);
 }
 
 return activate$1;
