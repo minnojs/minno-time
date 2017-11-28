@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import globalGetter from '../global';
+import globalGetter from '../../global';
 import buildUrl from './buildUrl';
 
 export default nextTrial;

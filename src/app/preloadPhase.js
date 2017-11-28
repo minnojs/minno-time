@@ -1,4 +1,4 @@
-import preload from './sequencer/sequencePreload';
+import preload from './task/sequencer/sequencePreload';
 import fastdom from 'fastdom';
 
 export default preloadPhase;

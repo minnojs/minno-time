@@ -3,7 +3,7 @@ import stream from 'mithril-stream';
 import fastdom from 'fastdom';
 
 import Trial from './trial/Trial';
-import nextTrial from './sequencer/nextTrial';
+import nextTrial from './task/sequencer/nextTrial';
 import createLogs from './task/logger/createLogs';
 
 export default playerPhase;
