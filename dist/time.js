@@ -584,31 +584,15 @@ function setupVars(script){
     glob[name] = glob.current = current; // create local namespace
 }
 
-/*
- * media preloader
- */
-
 var srcStack = [];				// an array holding all our sources
 var defStack = [];				// an array holding all the deferreds
 var stackDone = 0;				// the number of sources we have completed downloading
-var images = {};
-
 var loader = {
     // loads a single source
     load: load,
 
     all: function(){
         return Promise.all(defStack);
-    },
-
-    getImage: function(url){
-        return images[url].cloneNode();
-    },
-
-    // reset globals so we can reuse this object
-    reset: function(){
-        srcStack = [];
-        defStack = [];
     },
 
     progress: function(){
@@ -641,7 +625,7 @@ function load(src, type){
                 el.onload = function(){resolve(el);};
                 el.onerror = function(){reject(new Error('Image not found: ' + el.src ));};
                 el.src = src;
-                images[src] = el;
+                
             });
             break;
     }

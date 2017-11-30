@@ -5,7 +5,7 @@
 // load dependancies
 import _ from 'lodash';
 import Database from 'minno-sequencer';
-import go from './sequencer/sequenceGoto';
+import go from './sequenceGoto';
 
 export default createDB;
 

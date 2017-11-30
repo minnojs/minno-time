@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import global from './global';
-import createDB from './task/createDB';
+import createDB from './task/sequencer/createDB';
 import canvasSetup from './task/canvas/canvasSetup';
 
 export default setup;

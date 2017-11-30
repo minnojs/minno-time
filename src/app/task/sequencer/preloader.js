@@ -1,7 +1,8 @@
+
 /*
  * media preloader
+ * TODO: turn into factory, possibly make progress into a stream.
  */
-
 export default loader;
 
 var srcStack = [];				// an array holding all our sources
@@ -15,16 +16,6 @@ var loader = {
 
     all: function(){
         return Promise.all(defStack);
-    },
-
-    getImage: function(url){
-        return images[url].cloneNode();
-    },
-
-    // reset globals so we can reuse this object
-    reset: function(){
-        srcStack = [];
-        defStack = [];
     },
 
     progress: function(){
