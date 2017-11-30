@@ -135,7 +135,6 @@ PromisePolyfill.race = function(list) {
 
 if (typeof window.Promise === "undefined") window.Promise = PromisePolyfill;
 
-// initiate piGloabl
 var glob = window.piGlobal || (window.piGlobal = {});
 
 function global$2(){
@@ -561,48 +560,28 @@ function setupCanvas(canvas, canvasSettings){
 
 }
 
-/*
- * this file holds the script we are to run
- */
-
-var scriptObj = {};
-
-/**
- * Getter/Setter fo script
- *
- * @param  {Object || null} obj 	The new script, if it is not set this is simply a getter.
- * @return {Object}     			The full script
- */
-function script$1(obj){
-    obj && (scriptObj = obj);
-    return scriptObj;
-}
-
-function setup$1(canvas, script$$1){
-    var $resize = setupCanvas(canvas, _.get(script$$1, 'settings.canvas', {}));
-    var db = createDB$1(script$$1);
-    setupVars(script$$1);
+function setup$1(canvas, script){
+    var $resize = setupCanvas(canvas, _.get(script, 'settings.canvas', {}));
+    var db = createDB$1(script);
+    setupVars(script);
 
     return {
         db:db, 
         $resize:$resize,
         canvas: canvas,
-        script: script$$1,
-        settings: script$$1.settings || {}
+        script: script,
+        settings: script.settings || {}
     };
 }
 
-function setupVars(script$$1){
+function setupVars(script){
     // init global
     var glob = global$2(global$2());
-    var name = script$$1.name || 'anonymous minno-time';
-    var current = script$$1.current ? script$$1.current : {};
+    var name = script.name || 'anonymous minno-time';
+    var current = script.current ? script.current : {};
 
     current.logs || (current.logs = []); // init logs object
     glob[name] = glob.current = current; // create local namespace
-
-    // set the main script as a global
-    script$1(script$$1);
 }
 
 /*
@@ -681,102 +660,61 @@ function load(src, type){
 }
 
 /*
- * simply take settings out of the script
+ * build the url for this src (add the generic baseUrl)
+ * @Todo: pass in the baseUrl (drop global settings, pass them through the sink).
  */
 
-function settingsGetter$1(name){
-    var settings = script$1().settings || {};
-
-    if (name) return settings[name];
-    return settings;
-}
-
-/*
- * build the url for this src (add the generic base_url)
- * @Todo: pass in the base_url (drop global settings, pass them through the sink).
- */
-
-function buildUrl$1(url, type){
-    var settings = settingsGetter$1();
-    var base_url;
-
-    // the base url setting may be either a string, or an object with the type as a field
-    if (_.isString(settings.base_url)) base_url = settings.base_url;
-    else if (_.isObject(settings.base_url)) base_url = settings.base_url[type];
-
+function buildUrl(baseUrl, url, type){
     // it this is a dataUrl type of image, we don't need to append the baseurl
     if (type == 'image' && /^data:image/.test(url)) return url;
 
-    // make sure base url is set, and add trailing slash if needed
-    if (!base_url) base_url='';
-    else if (base_url[base_url.length-1] != '/') base_url+='/';
+    // the base url setting may be either a string, or an object with the type as a field
+    if (_.isObject(baseUrl)) baseUrl = baseUrl[type];
 
-    return base_url + url;
+    // make sure base url is set, and add trailing slash if needed
+    if (!baseUrl) baseUrl = '';
+    else if (baseUrl[baseUrl.length-1] != '/') baseUrl += '/';
+
+    return baseUrl + url;
 }
 
 /*
  * gets all media that needs preloading and preloads it
  */
 
-function loadMedia(media){
-    if (!_.isUndefined(media.image)) loader.load(buildUrl$1(media.image, 'image'),'image');
-    if (!_.isUndefined(media.template)) loader.load(buildUrl$1(media.template,'template'),'template');
-}
-
-function loadStimulus(stimulus) {
-    if (stimulus.media) loadMedia(stimulus.media);
-}
-
-function loadInput(input){
-    if (input.element) loadMedia(input.element);
-}
-
-function loadTrial(trial){
-    _.each(trial.layout || [], loadStimulus);
-    _.each(trial.stimuli || [], loadStimulus);
-    _.each(trial.input || [], loadInput);
-}
-
-// load trials in sequence (essentialy, recursively pick out the trials out of the mixer)
-function loadSequence (sequence){
-    _.each(sequence,function(element){
-        if (!_.isUndefined(element.mixer)) loadSequence(element.data);
-        else loadTrial(element);
-    });
-}
-
-function loadScript(script){
-    // load media sets
-    _.each(script.mediaSets || [], loadMedia);
-
-    // load stimsets
-    _.each(script.stimulusSets || [], loadStimulus);
-
-    // load trialsets
-    _.each(script.trialSets || [], loadTrial);
-
-    loadSequence(script.sequence);
-} // load script
-
-// accepts a piece of script and a type
-// @param script: a piece of script
-// @param type: what sort of object this is (media/stimulus/trial)
-// @param reset: should we reset the preloader before activating it (use if for some reason we lost the cache...)
-// @returns a deferred object
-function sequencePreload (script, type, reset){
-    if (reset) loader.reset();
-
-    switch (type){
-        case 'media'	: loadMedia(script); break;
-        case 'stimulus'	: loadStimulus(script); break;
-        case 'trial'	: loadTrial(script); break;
-        case 'script'	:
-            /* falls through */
-        default:
-            loadScript(script); break;
-    }
+function preloadScript(script, baseUrl){
+    getScriptMedia(script).forEach(loadMedia);
     return loader;
+
+    function loadMedia(media){
+        if (!_.isUndefined(media.image)) loader.load(buildUrl(baseUrl, media.image, 'image'),'image');
+        if (!_.isUndefined(media.template)) loader.load(buildUrl(baseUrl, media.template,'template'),'template');
+    }
 }
+
+/**
+ * Iterates over a script and gathers all media
+ **/
+function getScriptMedia(script){
+    var mediaSets = script.mediaSets;
+    var stimulusSets = _.map(script.stimulusSets, getStimMedia);
+    var trialSets = _.map(script.trialSets, getTrialMedia);
+    var sequence = _.filter(script.sequence,notMixer).map(getTrialMedia);
+
+    return _.flattenDeep([mediaSets, stimulusSets, trialSets, sequence]).filter(notUndefined);
+} 
+
+function getTrialMedia(trial){
+    return [
+        _.map(trial.input, function(input){ return input.element; }),
+        _.map(trial.stimuli, getStimMedia),
+        _.map(trial.layout, getStimMedia)
+    ];
+}
+
+function getStimMedia(stim){ return stim.media; }
+function notMixer(trial){ return !trial.mixer; }
+function notUndefined(val){ return !_.isUndefined(val); }
 
 var fastdom = createCommonjsModule(function (module) {
 !(function(win) {
@@ -1010,7 +948,7 @@ else module.exports = exports;
 });
 
 function preloadPhase$1(canvas, script){
-    var preloader = sequencePreload(script);
+    var preloader = preloadScript(script, script.base_url);
 
     if (preloader.progress() == 1) return Promise.resolve().then(emptyCanvas);
 
@@ -2046,7 +1984,7 @@ function arrayWrap(arr){
     return _.isArray(arr) ? arr : [arr];
 }
 
-function nextTrial$1(db, goto){
+function nextTrial$1(db, settings, goto){
     var destination = goto[0], properties = goto[1];
     var sequence = db.currentSequence;
     var global = global$2();
@@ -2075,11 +2013,11 @@ function nextTrial$1(db, goto){
 
         // note that the base url is added to the media object during the sequence preload
         // if needed, build url
-        if (val.image) val.image = buildUrl$1(val.image,'image');
+        if (val.image) val.image = buildUrl(settings.base_url, val.image, 'image');
 
         if (val.template){
             // @TODO: remove dependency on requirejs
-            val.inlineTemplate = requirejs('text!' + buildUrl$1(val.template, 'template'));
+            val.inlineTemplate = requirejs('text!' + buildUrl(settings.base_url, val.template, 'template'));
             val.inlineTemplate = _.template(val.inlineTemplate)(context);
         }
 
@@ -2215,9 +2153,6 @@ function playerPhase(sink){
         .map(clearCanvas)
         .map(onDone);
 
-
-    $trial.end.map(console.log.bind(null, 'sdfsdf'));
-
     return _.extend({
         $trial:$trial, 
         end: $source.end.bind(null,true), 
@@ -2231,7 +2166,7 @@ function playerPhase(sink){
     }
 
     function play(goto){
-        var next = nextTrial$1(db, goto);
+        var next = nextTrial$1(db, settings, goto);
         if (next.done) $source.end(true);
         else $source(next.value);
     }
@@ -2260,7 +2195,6 @@ function playerPhase(sink){
             return trial;
         }
     }
-
 }
 
 function activate$1(canvas, script){

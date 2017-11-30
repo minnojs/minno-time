@@ -29,9 +29,6 @@ function playerPhase(sink){
         .map(clearCanvas)
         .map(onDone);
 
-
-    $trial.end.map(console.log.bind(null, 'sdfsdf'))
-
     return _.extend({
         $trial:$trial, 
         end: $source.end.bind(null,true), 
@@ -45,7 +42,7 @@ function playerPhase(sink){
     }
 
     function play(goto){
-        var next = nextTrial(db, goto);
+        var next = nextTrial(db, settings, goto);
         if (next.done) $source.end(true);
         else $source(next.value);
     }
@@ -74,5 +71,4 @@ function playerPhase(sink){
             return trial;
         }
     }
-
 }

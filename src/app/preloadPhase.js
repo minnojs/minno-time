@@ -1,10 +1,10 @@
-import preload from './task/sequencer/sequencePreload';
+import scriptPreloader from './task/sequencer/scriptPreloader';
 import fastdom from 'fastdom';
 
 export default preloadPhase;
 
 function preloadPhase(canvas, script){
-    var preloader = preload(script);
+    var preloader = scriptPreloader(script, script.base_url);
 
     if (preloader.progress() == 1) return Promise.resolve().then(emptyCanvas);
 
