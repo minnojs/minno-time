@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import input from './input/input';
 import stimulusCollection from './stimulus/stimulusCollection';
-import interactions from './interactions';
+import interactions from './interactions/interactions';
 import stream from 'mithril-stream';
 
 export default Trial;

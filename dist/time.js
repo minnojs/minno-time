@@ -584,6 +584,10 @@ function setupVars(script){
     glob[name] = glob.current = current; // create local namespace
 }
 
+/*
+ * media preloader
+ * TODO: turn into factory, possibly make progress into a stream.
+ */
 var srcStack = [];				// an array holding all our sources
 var defStack = [];				// an array holding all the deferreds
 var stackDone = 0;				// the number of sources we have completed downloading
@@ -1503,6 +1507,131 @@ function destroy(){
     this.stimuli.concat(this.layout).forEach(function(stim){stim.destroy();});
 }
 
+var global$3 = global$2();
+var conditionHash = {
+    begin:begin,
+    inputEquals:inputEquals,
+    inputEqualsTrial:inputEqualsTrial,
+    inputEqualsStim:inputEqualsStim,
+    trialEquals:trialEquals,
+    inputEqualsGlobal:inputEqualsGlobal,
+    globalEquals:globalEquals,
+    globalEqualsTrial:globalEqualsTrial,
+    globalEqualsStim:globalEqualsStim,
+    currentEquals:currentEquals,
+    currentEqualsTrial:currentEqualsTrial,
+    currentEqualsStim:currentEqualsStim,
+    inputEqualsCurrent:inputEqualsCurrent,
+    fn:fn,
+    custom:custom,
+
+};
+
+function getConditonFn(condition){
+    if (_.isFunction(condition)) return condition;
+    if (_.isFunction(conditionHash[condition.type])) return conditionHash[condition.type];
+    throw new Error('Unknown condition type: ' + JSON.stringify(condition));
+}
+
+function begin(inputData){ return inputData.type === 'begin'; }
+
+function inputEquals(inputData, condition){
+    var values = Array.isArray(condition.value) ? condition.value : [condition.value];
+    return values.indexOf(inputData.handle) !== -1;
+}
+
+function inputEqualsTrial(inputData, condition, trial){ return inputData.handle === trial.data[condition.property]; }
+
+function inputEqualsStim(inputData, condition, trial){
+    // create search object
+    var searchObj = {};
+    if (condition.handle) searchObj['handle'] = condition.handle;
+    searchObj[condition.property] = inputData.handle;
+
+    // are there stimuli answering this descriptions?
+    return hasData(searchObj,trial);
+}
+
+function trialEquals(inputData, condition, trial){
+    if (typeof condition.property == 'undefined' || typeof condition.value == 'undefined') throw new Error('trialEquals requires both "property" and "value" to be defined');
+    return condition.value === trial.data[condition.property];
+}
+
+function inputEqualsGlobal(inputData, condition){
+    if (typeof condition.property == 'undefined') throw new Error('inputEqualsGlobal requires "property" to be defined');
+    return inputData.handle === global$3[condition.property];
+}
+
+function globalEquals(inputData, condition){
+    if (typeof condition.property == 'undefined' || typeof condition.value == 'undefined') throw new Error('globalEquals requires both "property" and "value" to be defined');
+    return condition.value === global$3[condition.property];
+}
+
+function globalEqualsTrial(inputData, condition, trial){
+    if (typeof condition.globalProp == 'undefined' || typeof condition.trialProp == 'undefined') throw new Error('globalEqualsTrial requires both "globalProp" and "trialProp" to be defined');
+    return global$3[condition.globalProp] !== trial.data[condition.trialProp];
+}
+
+function globalEqualsStim(inputData, condition, trial){
+    if (typeof condition.globalProp == 'undefined' || typeof condition.stimProp == 'undefined') throw new Error('globalEqualsStim requires both "globalProp" and "stimProp" to be defined');
+
+    // create search object
+    var searchObj = {};
+    if (condition.handle) searchObj['handle'] = condition.handle;
+    searchObj[condition.stimProp] = global$3[condition.globalProp];
+
+    // are there stimuli answering this descriptions?
+    return hasData(searchObj,trial);
+}
+
+function inputEqualsCurrent(inputData, condition){
+    var current = global$3.current;
+    if (typeof condition.property == 'undefined') throw new Error('inputEqualsCurrent requires "property" to be defined');
+    return inputData.handle === current[condition.property];
+}
+function currentEquals(inputData, condition){
+    var current = global$3.current;
+    if (typeof condition.property == 'undefined' || typeof condition.value == 'undefined') throw new Error('currentEquals requires both "property" and "value" to be defined');
+    return condition.value !== current[condition.property];
+}
+
+function currentEqualsTrial(inputData, condition, trial){
+    var current = global$3.current;
+    if (typeof condition.currentProp == 'undefined' || typeof condition.trialProp == 'undefined') throw new Error('currentEqualsTrial requires both "currentProp" and "trialProp" to be defined');
+    return current[condition.currentProp] === trial.data[condition.trialProp];
+}
+
+function currentEqualsStim(inputData, condition, trial){
+    var current = global$3.current;
+    if (typeof condition.currentProp == 'undefined' || typeof condition.stimProp == 'undefined') throw new Error('currentEqualsStim requires both "currentProp" and "stimProp" to be defined');
+
+    // create search object
+    var searchObj = {};
+    if (condition.handle) searchObj['handle'] = condition.handle;
+    searchObj[condition.stimProp] = current[condition.currentProp];
+
+    // are there stimuli answering this descriptions?
+    return hasData(searchObj, trial);
+}
+
+function fn(inputData, condition, trial){
+    return condition.value.apply(trial,[condition,inputData, trial]);
+}
+
+function custom(inputData, condition, trial){
+    return condition.fn.apply(null, [condition, inputData, trial]);
+}
+
+function hasData(searchObj, trial){
+    return trial.stimulusCollection.stimuli.some(function(stim){
+        var data = stim.data;
+        for (var key in searchObj) {
+            if (searchObj[key] !== data[key]) return false;
+        }
+        return true;
+    });
+}
+
 /*
  * gets a condition array (or a single condition) and evaluates it
  * returns true if all statements are true, false otherwise
@@ -1517,175 +1646,20 @@ function destroy(){
  *
  */
 
-function evaluate$1(conditions, inputData, trial){
-    var global = global$2();
-    var current = global.current || {};
-
+function conditionsEvaluate(conditions, inputData, trial){
     if (!conditions) throw new Error('There is an interaction without conditions!!');
 
     // make sure conditions is an array
     conditions = Array.isArray(conditions) ? conditions : [conditions];
 
-    // the internal event
-    inputData = inputData || {};
-
-    // assume condition is true
-    var isTrue = true;
-
     // if this is a begin event, make sure we only run conditions that have begin in them
     if (inputData.type == 'begin' && conditions.every(function(condition){return condition.type != 'begin';})) return false;
 
-    // try to refute the condition
-    conditions.forEach(function checkCondition(condition){
-        var searchObj;
-        var evaluation = true;
+    return conditions.every(checkCondition);
 
-        switch (condition.type){
-            case 'begin':
-                if (inputData.type !== 'begin') {
-                    evaluation = false;
-                }
-                break;
 
-            case 'inputEquals' :
-                // make sure condition.value is an array
-                _.isArray(condition.value) || (condition.value = [condition.value]);
-
-                if (_.indexOf(condition.value,inputData.handle) === -1) {
-                    evaluation = false;
-                }
-                break;
-
-            case 'inputEqualsTrial':
-                if (inputData.handle !== trial.data[condition.property]) {
-                    evaluation = false;
-                }
-                break;
-
-            case 'inputEqualsStim':
-                // create search object
-                searchObj = {};
-                if (condition.handle) searchObj['handle'] = condition.handle;
-                searchObj[condition.property] = inputData.handle;
-
-                // are there stimuli answering this descriptions?
-                if (!hasData(searchObj)) evaluation = false;
-                break;
-
-            case 'trialEquals':
-                if (typeof condition.property == 'undefined' || typeof condition.value == 'undefined'){
-                    throw new Error('trialEquals requires both "property" and "value" to be defined');
-                }
-                if (condition.value !== trial.data[condition.property]) evaluation = false;
-                break;
-
-            case 'inputEqualsGlobal':
-                if (typeof condition.property == 'undefined'){
-                    throw new Error('inputEqualsGlobal requires "property" to be defined');
-                }
-                if (inputData.handle !== global[condition.property]){
-                    evaluation = false;
-                }
-                break;
-
-            case 'globalEquals':
-                if (typeof condition.property == 'undefined' || typeof condition.value == 'undefined'){
-                    throw new Error('globalEquals requires both "property" and "value" to be defined');
-                }
-                if (condition.value !== global[condition.property]){
-                    evaluation = false;
-                }
-                break;
-
-            case 'globalEqualsTrial':
-                if (typeof condition.globalProp == 'undefined' || typeof condition.trialProp == 'undefined'){
-                    throw new Error('globalEqualsTrial requires both "globalProp" and "trialProp" to be defined');
-                }
-                if (global[condition.globalProp] !== trial.data[condition.trialProp]) {
-                    evaluation = false;
-                }
-                break;
-
-            case 'globalEqualsStim':
-                if (typeof condition.globalProp == 'undefined' || typeof condition.stimProp == 'undefined'){
-                    throw new Error('globalEqualsStim requires both "globalProp" and "stimProp" to be defined');
-                }
-
-                // create search object
-                searchObj = {};
-                if (condition.handle){
-                    searchObj['handle'] = condition.handle;
-                }
-                searchObj[condition.stimProp] = global[condition.globalProp];
-
-                // are there stimuli answering this descriptions?
-                if (!hasData(searchObj)) evaluation = false;
-                break;
-
-            case 'inputEqualsCurrent':
-                if (typeof condition.property == 'undefined'){
-                    throw new Error('inputEqualsCurrent requires "property" to be defined');
-                }
-                if (inputData.handle !== current[condition.property]){
-                    evaluation = false;
-                }
-                break;
-
-            case 'currentEquals':
-                if (typeof condition.property == 'undefined' || typeof condition.value == 'undefined'){
-                    throw new Error('currentEquals requires both "property" and "value" to be defined');
-                }
-                if (condition.value !== current[condition.property]){
-                    evaluation = false;
-                }
-                break;
-
-            case 'currentEqualsTrial':
-                if (typeof condition.currentProp == 'undefined' || typeof condition.trialProp == 'undefined'){
-                    throw new Error('currentEqualsTrial requires both "currentProp" and "trialProp" to be defined');
-                }
-                if (current[condition.currentProp] !== trial.data[condition.trialProp]) evaluation = false;
-                break;
-
-            case 'currentEqualsStim':
-                if (typeof condition.currentProp == 'undefined' || typeof condition.stimProp == 'undefined'){
-                    throw new Error('currentEqualsStim requires both "currentProp" and "stimProp" to be defined');
-                }
-
-                // create search object
-                searchObj = {};
-                if (condition.handle) searchObj['handle'] = condition.handle;
-                searchObj[condition.stimProp] = current[condition.currentProp];
-
-                // are there stimuli answering this descriptions?
-                if (!hasData(searchObj)) evaluation = false;
-                break;
-
-            case 'function' :
-                if (!condition.value.apply(trial,[condition,inputData, trial])) evaluation = false;
-                break;
-
-            case 'custom':
-                if (!condition.fn.apply(null, [condition, inputData, trial])) evaluation = false;
-                break;
-
-            default:
-                throw new Error('Unknown condition type: ' + condition.type);
-        }
-
-        isTrue = isTrue && (condition.negate ? !evaluation : evaluation);
-    });
-
-    return isTrue;
-
-    function hasData(searchObj){
-        return trial.stimulusCollection.stimuli.some(function(stim){
-            var data = stim.data;
-            for (var key in searchObj) {
-                if (searchObj[key] !== data[key]) return false;
-            }
-            return true;
-        });
+    function checkCondition(condition){
+        return getConditonFn(condition)(condition, inputData, trial);
     }
 }
 
@@ -1848,6 +1822,11 @@ function applyActions(actions$$1, eventData, trial){
 * Organizer for the interaction function
 */
 
+/*
+ * Trial -> Event -> Event
+ * 
+ * Can use trial to produce side efects
+ **/
 function interactions$1(trial){
     var interactions = trial._source.interactions;
     var isDebug = trial._source.DEBUG && window.DEBUG;
@@ -1865,7 +1844,7 @@ function interactions$1(trial){
         // use an explicit for loop because we need to be able to break
         for (i=0; i<interactions.length; i++){
             interaction = interactions[i];
-            conditionTrue = evaluate$1(interaction.conditions, event, trial);
+            conditionTrue = conditionsEvaluate(interaction.conditions, event, trial);
 
             // eslint-disable-next-line no-console
             if (isDebug) console.log(conditionTrue, interaction.conditions);

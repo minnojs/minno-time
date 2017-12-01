@@ -2,7 +2,7 @@
 * Organizer for the interaction function
 */
 
-import evaluate from './evaluate';
+import evaluate from './conditionsEvaluate';
 import activate from './action';
 
 export default interactions;

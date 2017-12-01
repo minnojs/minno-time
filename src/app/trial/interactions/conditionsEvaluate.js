@@ -1,0 +1,34 @@
+/*
+ * gets a condition array (or a single condition) and evaluates it
+ * returns true if all statements are true, false otherwise
+ *
+ * a single condition looks like this:
+ *
+ *	condition = {
+ *		type : 'begin/inputEquals/inputEqualsTrial/inputEqualsStim/function',
+ *		value: 'right/trialAttribute/stimAttribute/customFunction',
+ *		handle: 'stim handle' (optional in case we're targeting a stimulus)
+ *	}
+ *
+ */
+
+import getConditionFn from './getConditionFn';
+
+export default conditionsEvaluate;
+
+function conditionsEvaluate(conditions, inputData, trial){
+    if (!conditions) throw new Error('There is an interaction without conditions!!');
+
+    // make sure conditions is an array
+    conditions = Array.isArray(conditions) ? conditions : [conditions];
+
+    // if this is a begin event, make sure we only run conditions that have begin in them
+    if (inputData.type == 'begin' && conditions.every(function(condition){return condition.type != 'begin';})) return false;
+
+    return conditions.every(checkCondition);
+
+
+    function checkCondition(condition){
+        return getConditionFn(condition)(condition, inputData, trial);
+    }
+}

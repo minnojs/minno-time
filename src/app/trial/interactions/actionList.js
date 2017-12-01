@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import fastdom from 'fastdom';
-import global from '../global';
-import applyCanvasStyles from '../task/canvas/applyCanvasStyles';
+import global from '../../global';
+import applyCanvasStyles from '../../task/canvas/applyCanvasStyles';
 
 export default actions;
 
