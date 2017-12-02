@@ -1,8 +1,10 @@
 import randomize from './simpleRandomize';
+import stream from 'mithril-stream';
 
 export default timeout;
 
-function timeout($listener, inputObj){
+function timeout(inputObj){
+    var $listener = stream();
     var timeoutID;
     var duration = randomize(inputObj.duration) || 0;
 

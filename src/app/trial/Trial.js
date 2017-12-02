@@ -66,7 +66,7 @@ _.extend(Trial.prototype,{
         if (this._source.DEBUG && window.DEBUG) console.groupEnd('Trial: ' + this.counter); 
 
         // cancel all listeners
-        this.input.destroy();
+        this.input.removeAll();
 
         this.$events.end(true);
         this.$end(true);

@@ -1,6 +1,8 @@
+import stream from 'mithril-stream';
 export default keyup; 
 
-function keyup($listener,inputObj){
+function keyup(inputObj){
+    var $listener = stream();
     // make sure key is array
     var keys = Array.isArray(inputObj.key) ? inputObj.key : [inputObj.key];
 

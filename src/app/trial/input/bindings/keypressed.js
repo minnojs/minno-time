@@ -7,13 +7,16 @@
 */
 
 // we monitor all key up events so that we trigger only once per key down
+import stream from 'mithril-stream';
 export default keypressed;
 
 var keyDownArr = [];
 
 document.addEventListener('keyup',function(e){ keyDownArr[e.which] = false; });// unset flag to prevent multi pressing of a key 
 
-function keypressed($listener,inputObj){
+function keypressed(inputObj){
+    var $listener = stream();
+
     // make sure key is an array
     var keys = Array.isArray(inputObj.key) ? inputObj.key : [inputObj.key];
 

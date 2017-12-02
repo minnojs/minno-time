@@ -1,9 +1,11 @@
 import css from 'minno-css';
 import fastdom from 'fastdom';
+import stream from 'mithril-stream';
 
 export default mouseEvents;
 
-function mouseEvents(eventName, $listener,inputObj, canvas){
+function mouseEvents(eventName,inputObj, canvas){
+    var $listener = stream();
     var element = inputObj.element;
 
     if (element){

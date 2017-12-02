@@ -138,14 +138,14 @@ Each input object must include both a `handle` and an `on` property.
 `on`: what triggers this input element. for now we have several types of input:
 
 **keypressed**: Takes a `key` property that may either be a key code, a one letter string, or an array of keys.
-* `{handle: 'enter',on: 'keypressed',key:'a'}`
-* `{handle: 'enter',on: 'keypressed',key:13}`
-* `{handle: 'enter',on: 'keypressed',key:[13,'a']}`
+* `{handle: 'ay',on: 'keypressed',key:'a'}`
+* `{handle: 'ay',on: 'keypressed',key:13}`
+* `{handle: 'ay',on: 'keypressed',key:[13,'a']}`
 
 **keyup**: Takes a `key` property that may either be a key code, a one letter string, or an array of keys.
-* `{handle: 'enter',on: 'keypressed',key:'a'}`
-* `{handle: 'enter',on: 'keypressed',key:13}`
-* `{handle: 'enter',on: 'keypressed',key:[13,'a']}`
+* `{handle: 'ay',on: 'keyup',key:'a'}`
+* `{handle: 'ay',on: 'keyup',key:13}`
+* `{handle: 'ay',on: 'keyup',key:[13,'a']}`
 
 **click**: Takes either a stimulus handle (`stimHandle`) or an html element (`element`). The input is activated when the user clicks the stimulus or the html element. In case an element is defined it is presented as soon as the input is activated.
 * `{handle:'right',on:'click',element:$('<div>',css:{})}`
@@ -188,22 +188,19 @@ Protip: In addition to the preset input types you can create custom input:
 ```javascript
     {
         handle: 'myInput',
-        on: function(callback){
-            // do your mojo here and then
-            // where e is the raw event, and 'eventType' is the name of this event
-            callback(e, 'eventType');
+        on: function(inputObj, canvas, stream){
+            var $listener = stream();
+            document.addEventListener('click', $listener);
+            $listener.end.map(function(){
+                document.removeEventListener('click', $listener);
+            });
+            return $listener;
         },
         off: function(){
-            // remove your listener (if you need to keep state you can encapsulate the whole input object in a module)
+            // remove your listener 
         }
     }
 ```
-
-The input objects support an additional meta property: `touch`. If touch is undefined then this input will always be used.
-If it is set to `true` then the input will be used only on touch devices.
-If it is set to `false` then the input will be used only on non touch devices.
-* `{handle:'end',on:'bottomTouch',touch:true}`
-* `{handle: 'end',on: 'enter', touch:false}`
 
 #### Interactions
 Interactions are composed of conditions and actions. Every time an event is fired (any input including timeout or the begining of a trial) all the conditions are evaluated.
