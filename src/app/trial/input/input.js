@@ -4,7 +4,7 @@ import now from './now';
 export default interfaceFn;
 
 // @TODO: remove dependency on trial. only canvas is essential, and adding trial can be exported
-function interfaceFn($events, trial){
+function interfaceFn($events, canvas){
     var listenerStack = []; // holds all active listeners
     var baseTime = 0;
 
@@ -12,16 +12,14 @@ function interfaceFn($events, trial){
 
     function add(inputObj){
         if (!inputObj) throw new Error('Missing input element. Could not add input listener');
-        var $listener = createListener(inputObj, trial.canvas);
+        var $listener = createListener(inputObj, canvas);
         $listener.map(addDetails).map($events); // pipe events to $events
         listenerStack.push($listener);
 
         function addDetails(event){
             return {
-                handle      : inputObj.handle,
+                handle      : $listener.handle,
                 event       : event,
-                trialId     : trial._id,
-                counter     : trial.counter,
                 timestamp	: +new Date(),
                 latency		: now() - baseTime
             };

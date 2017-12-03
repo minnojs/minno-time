@@ -28,16 +28,27 @@ function Trial(source, canvas, settings){
     this._id = _.uniqueId('trial_');
     this.counter = gid++;
 
-    this.input = input(this.$events, this);
+    this.input = input(this.$events, canvas);
     this.stimulusCollection = stimulusCollection(this, canvas);
 
     // listen for interactions
-    this.$events.map(interactions(this));
+    this.$events
+        .map(addTrialDetails(this))
+        .map(interactions(this));
 
     // the next trial we want to play
     // by default this is simply the next trial, this can be changed using the goto action
     // the syntax is [destination, properties]
     this._next = ['next',{}];
+
+    function addTrialDetails(trial){
+        return function(event){
+            return _.assign(event, {
+                trialId     : trial._id,
+                counter     : trial.counter
+            });
+        };
+    }
 }
 
 _.extend(Trial.prototype,{
