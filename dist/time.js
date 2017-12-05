@@ -37,7 +37,7 @@ if (!console.table) console.table = log;
     }
 }());
 
-// Promise polyfill from https://github.com/MithrilJS/mithril.js/blob/next/promise/promise.js 
+/** @constructor */
 var PromisePolyfill = function(executor) {
     if (!(this instanceof PromisePolyfill)) throw new Error("Promise must be called with `new`")
         if (typeof executor !== "function") throw new TypeError("executor must be a function")
@@ -135,6 +135,7 @@ PromisePolyfill.race = function(list) {
 
 if (typeof window.Promise === "undefined") window.Promise = PromisePolyfill;
 
+// initiate piGloabl
 var glob = window.piGlobal || (window.piGlobal = {});
 
 function global$2(){
@@ -213,6 +214,7 @@ function createDB$1(script){
     return db;
 }
 
+// helper function: returns sizes of element;
 function getSize$1(el){
     var computedStyle = window.getComputedStyle(el);
     return {
@@ -228,6 +230,7 @@ function parse$1(num){ return parseFloat(num, 10) || 0;}
  * this module is built to be part of the main view
  */
 
+// the function to be used by the main view
 function adjust_canvas(canvas, settings){
 
     return _.throttle(eventListener, 16);
@@ -300,6 +303,21 @@ function parse(num){ return parseFloat(num, 10) || 0;}
  *
  */
 
+/**
+ * Takes a map of css rules and applies them.
+ * Returns a function that returns the page to its former condition.
+ *
+ * The rule map is an object of ruleName -> ruleObject.
+ *
+ * var ruleObject = {
+ * 	element : wrapped element to affect
+ * 	property: css property to modify
+ * }
+ *
+ * @param  {Object} map      A hash of rules.
+ * @param  {Object} settings A hash of ruleName -> value
+ * @return {Function}        A function that undoes all the previous changes
+ */
 function canvasContructor(map, settings){
     var offArr;
 
@@ -584,10 +602,6 @@ function setupVars(script){
     glob[name] = glob.current = current; // create local namespace
 }
 
-/*
- * media preloader
- * TODO: turn into factory, possibly make progress into a stream.
- */
 var srcStack = [];				// an array holding all our sources
 var defStack = [];				// an array holding all the deferreds
 var stackDone = 0;				// the number of sources we have completed downloading
@@ -652,6 +666,13 @@ function load(src, type){
  * @Todo: pass in the baseUrl (drop global settings, pass them through the sink).
  */
 
+/**
+ * @param baseUrl {String|Object} the base url to prepend
+ * @param url {String} the url we are dealing with
+ * @param type {String} the type of resource we are dealing with (image or tempmlate) in case we have multiple base urls
+ *
+ * @returns String built url
+ **/
 function buildUrl(baseUrl, url, type){
     // it this is a dataUrl type of image, we don't need to append the baseurl
     if (type == 'image' && /^data:image/.test(url)) return url;
@@ -1103,6 +1124,10 @@ function timeout$1(inputObj){
     }
 }
 
+/**
+ * The input binder is a hash of default input types
+ * It returns a stream of events
+ **/
 function inputBinder(inputObj, canvas){
     var on = inputObj.on; // what type of binding is this?
 
@@ -1234,6 +1259,7 @@ var now = window.performance.now
     // if we're not on IE9
     : Date.now.bind(Date);
 
+// @TODO: remove dependency on trial. only canvas is essential, and adding trial can be exported
 function interfaceFn($events, canvas){
     var listenerStack = []; // holds all active listeners
     var baseTime = 0;
@@ -1672,6 +1698,8 @@ function conditionsEvaluate(conditions, inputData, trial){
     }
 }
 
+// @TODO: see if we can afford to change the signature of actions
+// I'd like to have the trial go first here (used almost always).
 var actions = {
     /*
      * Stimulus actions
@@ -1831,6 +1859,11 @@ function applyActions(actions$$1, eventData, trial){
 * Organizer for the interaction function
 */
 
+/*
+ * Trial -> Event -> Event
+ * 
+ * Can use trial to produce side efects
+ **/
 function interactions$1(trial){
     var interactions = trial._source.interactions;
     var isDebug = trial._source.DEBUG && window.DEBUG;
@@ -2062,7 +2095,7 @@ function poster$1($logs, settings){
     }
 
     function send(logs){
-        var serializedPost = buildPost(logs, settings.metaData);
+        var serializedPost = settings.newServelet ? buildPost(logs, settings.metaData) : buildPostOld(logs, settings.metaData);
 
         return post$1(url,serializedPost)
             .catch(function retry(){ return post$1(url, serializedPost); })
@@ -2072,10 +2105,16 @@ function poster$1($logs, settings){
 }
 
 function buildPost(logs, metaData){
+    var data = _.assign({ data:logs }, metaData);
+    return JSON.stringify(data);
+}
+
+function buildPostOld(logs, metaData){
     var data = 'json=' + JSON.stringify(logs); // do not re-encode json
     var meta = serialize(metaData);
     return data + (meta ? '&'+meta : '');
 }
+
 
 function serialize(data){
     var key, r = [];
@@ -2119,6 +2158,12 @@ function createLogs$1($logs, settings){
         return function(args){ return fn.apply(null,args); };
     }
 }
+
+/**
+ * run the task
+ * @param canvas : htmlElement
+ * @returns sink : {end, promise}
+ **/
 
 function playerPhase(sink){
     var canvas = sink.canvas;
@@ -2179,6 +2224,12 @@ function playerPhase(sink){
     }
 }
 
+/**
+ * activate : (HTMLelement, timeScript) -> Sink
+ *
+ * timeScript : {settings, sequence, trialSets, stimulusSets, mediaSets, current}
+ * Sink: {$trial, $logs, play, end}
+ **/
 function activate$1(canvas, script){
     var sink = setup$1(canvas, script);
     var playSink = playerPhase(sink);

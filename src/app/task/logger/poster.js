@@ -26,7 +26,7 @@ function poster($logs, settings){
     }
 
     function send(logs){
-        var serializedPost = buildPost(logs, settings.metaData);
+        var serializedPost = settings.newServelet ? buildPost(logs, settings.metaData) : buildPostOld(logs, settings.metaData);
 
         return post(url,serializedPost)
             .catch(function retry(){ return post(url, serializedPost); })
@@ -36,10 +36,16 @@ function poster($logs, settings){
 }
 
 export function buildPost(logs, metaData){
+    var data = _.assign({ data:logs }, metaData);
+    return JSON.stringify(data);
+}
+
+export function buildPostOld(logs, metaData){
     var data = 'json=' + JSON.stringify(logs); // do not re-encode json
     var meta = serialize(metaData);
     return data + (meta ? '&'+meta : '');
 }
+
 
 function serialize(data){
     var key, r = [];
