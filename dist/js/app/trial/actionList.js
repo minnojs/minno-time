@@ -53,7 +53,7 @@ define(function(require){
 
         trigger: function(action, eventData, trial){
             if (typeof action.handle == 'undefined') throw new Error('The trigger action requires a handle property');
-            trial.input.add({handle:action.handle, on:'timeout', duration:+action.duration || 0});
+            trial.input.add({handle:action.handle, on:'timeout', duration:action.duration || 0});
         },
 
         removeInput: function(action, eventData, trial){
