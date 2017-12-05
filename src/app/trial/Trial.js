@@ -31,55 +31,43 @@ function Trial(source, canvas, settings){
     this.input = input(this.$events, canvas);
     this.stimulusCollection = stimulusCollection(this, canvas);
 
-    // listen for interactions
-    this.$events
-        .map(addTrialDetails(this))
-        .map(interactions(this));
-
     // the next trial we want to play
     // by default this is simply the next trial, this can be changed using the goto action
     // the syntax is [destination, properties]
     this._next = ['next',{}];
 
-    function addTrialDetails(trial){
-        return function(event){
-            return _.assign(event, {
-                trialId     : trial._id,
-                counter     : trial.counter
-            });
-        };
-    }
 }
 
 _.extend(Trial.prototype,{
     start: function(){
         var trial = this;
 
-        // eslint-disable-next-line no-console
-        if (this._source.DEBUG && window.DEBUG) console.group('Trial: ' + this.counter); 
+        if (this._source.DEBUG && window.DEBUG) {
+            console.group('Trial: ' + this.counter); // eslint-disable-line no-console
+            this.$end.map(function(){
+                console.groupEnd('Trial: ' + this.counter); // eslint-disable-line no-console
+            });
+        }
 
         // wait until all simuli are loaded
-        return trial.stimulusCollection.ready
-            .then(function(){
+        return trial.stimulusCollection.ready.then(function(){
+            // listen for interactions
+            trial.$events
+                .map(addTrialDetails(trial))
+                .map(interactions(trial));
 
-                // activate input
-                arrayWrap(trial._source.input).forEach(trial.input.add); // add each input
-                trial.input.resetTimer(); // reset the interface timer so that event latencies are relative to now.
+            // activate input
+            arrayWrap(trial._source.input).forEach(trial.input.add); // add each input
+            trial.input.resetTimer(); // reset the interface timer so that event latencies are relative to now.
 
-                // start running
-                trial.$events({type:'begin',latency:0});
-            });
+            // start running
+            trial.$events({type:'begin',latency:0});
+        });
     },
 
     end: function(){
-
-        // eslint-disable-next-line no-console
-        if (this._source.DEBUG && window.DEBUG) console.groupEnd('Trial: ' + this.counter); 
-
-        // cancel all listeners
+        // remove all listeners
         this.input.removeAll();
-
-        this.$events.end(true);
         this.$end(true);
     },
 
@@ -89,17 +77,23 @@ _.extend(Trial.prototype,{
         if (this.data.alias) { return this.data.alias; }
 
         // otherwise try using the set we inherited from
-        if (_.isString(this._source.inherit)){ return this._source.inherit; }
-        if (_.isPlainObject(this._source.inherit)){
-            return this._source.inherit.set;
-        }
+        if (_.isString(this._source.inherit)) return this._source.inherit;
+        if (_.isPlainObject(this._source.inherit)) return this._source.inherit.set;
 
         // we're out of options here
     }
 });
 
+function addTrialDetails(trial){
+    return function(event){
+        return _.assign(event, {
+            trialId     : trial._id,
+            counter     : trial.counter
+        });
+    };
+}
+
 function arrayWrap(arr){
     if (!arr){return [];}
     return _.isArray(arr) ? arr : [arr];
 }
-
