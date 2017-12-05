@@ -27,20 +27,23 @@ define(function(require){
         }
 
         function send(logs){
-            // build post data
-            var data = {json: JSON.stringify(logs)};
-            var postData = _.assign(data, settings.metaData);
-            var serializedPost = serialize(postData);
+            var serializedPost = buildPost(logs, settings.metaData);
 
             return post(url,serializedPost)
                 .catch(function retry(){ return post(url, serializedPost); })
                 .catch(settings.error || _.noop);
         }
+    }
 
-        function serialize(data){
-            var key, r = [];
-            for (key in data) r.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
-            return r.join('&').replace(/%20/g, '+');
-        }
+    function buildPost(logs, metaData){
+        var data = 'json=' + JSON.stringify(logs); // do not re-encode json
+        var meta = serialize(metaData);
+        return data + (meta ? '&'+meta : '');
+    }
+
+    function serialize(data){
+        var key, r = [];
+        for (key in data) r.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+        return r.join('&').replace(/%20/g, '+');
     }
 });
