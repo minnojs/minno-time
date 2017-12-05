@@ -2030,11 +2030,11 @@ function post$1(url, data){
             }
         };
 
-        request.send(serialize(data));
+        request.send(serialize$1(data));
     });
 }
 
-function serialize(data) {
+function serialize$1(data) {
     if (typeof data == 'string') return data;
     return JSON.stringify(data);
 }
@@ -2062,21 +2062,25 @@ function poster$1($logs, settings){
     }
 
     function send(logs){
-        // build post data
-        var data = {json: JSON.stringify(logs)};
-        var postData = _.assign(data, settings.metaData);
-        var serializedPost = serialize(postData);
+        var serializedPost = buildPost(logs, settings.metaData);
 
         return post$1(url,serializedPost)
             .catch(function retry(){ return post$1(url, serializedPost); })
             .catch(settings.error || _.noop);
     }
 
-    function serialize(data){
-        var key, r = [];
-        for (key in data) r.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
-        return r.join('&').replace(/%20/g, '+');
-    }
+}
+
+function buildPost(logs, metaData){
+    var data = 'json=' + JSON.stringify(logs); // do not re-encode json
+    var meta = serialize(metaData);
+    return data + (meta ? '&'+meta : '');
+}
+
+function serialize(data){
+    var key, r = [];
+    for (key in data) r.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+    return r.join('&').replace(/%20/g, '+');
 }
 
 function transformLogs$1(action,eventData,trial){
