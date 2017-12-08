@@ -5,6 +5,7 @@ import fastdom from 'fastdom';
 import Trial from './trial/Trial';
 import nextTrial from './task/sequencer/nextTrial';
 import createLogs from './task/logger/createLogStream';
+import defaultLogMap from './task/logger/defaultLogMap';
 import global from './global';
 
 export default playerPhase;
@@ -23,7 +24,7 @@ function playerPhase(sink){
     var $source = stream();
     var $trial = $source.map(activateTrial());
     var $sourceLogs = stream();
-    var $logs = createLogs($sourceLogs, settings.logger || {});
+    var $logs = createLogs($sourceLogs, settings.logger || {}, defaultLogMap);
 
     $logs.map(function(log){
         global().current.logs.push(log);

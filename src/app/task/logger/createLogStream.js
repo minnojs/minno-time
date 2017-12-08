@@ -1,10 +1,9 @@
 import poster from './poster';
-import transformLogs from './transformLogs';
 
 export default createLogs;
 
-function createLogs($sourceLogs, settings){
-    var $logs = $sourceLogs.map(applyMap(settings.logger || settings.transformLogs || transformLogs));
+function createLogs($sourceLogs, settings, defaultLogMap){
+    var $logs = $sourceLogs.map(applyMap(settings.logger || settings.logMap || defaultLogMap));
 
     if (settings.poster) settings.poster($logs, settings, poster);
     else poster($logs, settings);

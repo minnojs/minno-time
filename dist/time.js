@@ -2085,7 +2085,21 @@ function serialize(data){
     return r.join('&').replace(/%20/g, '+');
 }
 
-function transformLogs$1(action,eventData,trial){
+function createLogs$1($sourceLogs, settings, defaultLogMap){
+    var $logs = $sourceLogs.map(applyMap(settings.logger || settings.logMap || defaultLogMap));
+
+    if (settings.poster) settings.poster($logs, settings, poster$1);
+    else poster$1($logs, settings);
+
+    return $logs;
+
+    // $logs is a stream of array, we want to apply them as args to the transform function
+    function applyMap(fn){
+        return function(args){ return fn.apply(null,args); };
+    }
+}
+
+function transformLogs(action,eventData,trial){
     var global = window.piGlobal;
     var trialData = trial.data, inputData = eventData, logStack = global.current.logs;
     var fullpath = _.get(trial, 'settings.logger.fullpath', false);
@@ -2105,20 +2119,6 @@ function transformLogs$1(action,eventData,trial){
     };
 }
 
-function createLogs$1($sourceLogs, settings){
-    var $logs = $sourceLogs.map(applyMap(settings.logger || settings.transformLogs || transformLogs$1));
-
-    if (settings.poster) settings.poster($logs, settings, poster$1);
-    else poster$1($logs, settings);
-
-    return $logs;
-
-    // $logs is a stream of array, we want to apply them as args to the transform function
-    function applyMap(fn){
-        return function(args){ return fn.apply(null,args); };
-    }
-}
-
 function playerPhase(sink){
     var canvas = sink.canvas;
     var db = sink.db;
@@ -2127,7 +2127,7 @@ function playerPhase(sink){
     var $source = stream();
     var $trial = $source.map(activateTrial());
     var $sourceLogs = stream();
-    var $logs = createLogs$1($sourceLogs, settings.logger || {});
+    var $logs = createLogs$1($sourceLogs, settings.logger || {}, transformLogs);
 
     $logs.map(function(log){
         global$1().current.logs.push(log);
