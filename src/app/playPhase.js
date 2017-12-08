@@ -4,7 +4,8 @@ import fastdom from 'fastdom';
 
 import Trial from './trial/Trial';
 import nextTrial from './task/sequencer/nextTrial';
-import createLogs from './task/logger/createLogs';
+import createLogs from './task/logger/createLogStream';
+import global from './global';
 
 export default playerPhase;
 
@@ -21,7 +22,12 @@ function playerPhase(sink){
 
     var $source = stream();
     var $trial = $source.map(activateTrial());
-    var $logs = stream();
+    var $sourceLogs = stream();
+    var $logs = createLogs($sourceLogs, settings.logger || {});
+
+    $logs.map(function(log){
+        global().current.logs.push(log);
+    });
 
     var onDone = _.get(settings, 'hooks.endTask', settings.onEnd || _.noop);
 
@@ -32,7 +38,7 @@ function playerPhase(sink){
     return _.extend({
         $trial:$trial, 
         end: $source.end.bind(null,true), 
-        $logs: createLogs($logs, settings.logger || {}), 
+        $logs: $logs,
         start: play.bind(null, ['next', {}])
     }, sink);
 
@@ -52,7 +58,7 @@ function playerPhase(sink){
         function activate(source){
             var oldTrial = cache;
             var trial = cache = new Trial(source, canvas, settings);
-            trial.$logs.map($logs); 
+            trial.$logs.map($sourceLogs); 
             trial.$end
                 .map(function(){
                     play(trial._next); // when we're done try to play the next one

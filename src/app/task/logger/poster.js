@@ -26,7 +26,8 @@ function poster($logs, settings){
     }
 
     function send(logs){
-        var serializedPost = settings.newServelet ? buildPost(logs, settings.metaData) : buildPostOld(logs, settings.metaData);
+        var serialize = settings.serialize || (settings.newServelet ? buildPost : buildPostOld);
+        var serializedPost = serialize(logs, settings.metaData);
 
         return post(url,serializedPost)
             .catch(function retry(){ return post(url, serializedPost); })

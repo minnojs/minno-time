@@ -17,6 +17,7 @@ module.exports = function(config) {
         // Make sure to disable Karma’s file watcher
         // because the preprocessor will use its own.
         files: [ 
+            { pattern: 'src/polyfills.js'},
 			{ pattern: 'src/**/*.spec.js', watched: false }
         ],
 
