@@ -18,7 +18,6 @@ var conditionHash = {
     inputEqualsCurrent:inputEqualsCurrent,
     fn:fn,
     custom:custom,
-
 };
 
 export default function getConditonFn(condition){

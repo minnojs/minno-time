@@ -1,6 +1,5 @@
 /*
  * build the url for this src (add the generic baseUrl)
- * @Todo: pass in the baseUrl (drop global settings, pass them through the sink).
  */
 
 import _ from 'lodash';

@@ -649,7 +649,6 @@ function load(src, type){
 
 /*
  * build the url for this src (add the generic baseUrl)
- * @Todo: pass in the baseUrl (drop global settings, pass them through the sink).
  */
 
 function buildUrl(baseUrl, url, type){
@@ -1831,6 +1830,11 @@ function applyActions(actions$$1, eventData, trial){
 * Organizer for the interaction function
 */
 
+/*
+ * Trial -> Event -> Event
+ * 
+ * Can use trial to produce side efects
+ **/
 function interactions$1(trial){
     var interactions = trial._source.interactions;
     var isDebug = trial._source.DEBUG && window.DEBUG;
@@ -1839,27 +1843,28 @@ function interactions$1(trial){
     
     return eventMap;
     function eventMap(event){
-        var i, interaction, conditionTrue;
+        var i, interaction, conditionTrue, endTrial;
+        var groupName = 'Event: ' + (event.handle || event.type);
 
 
         // eslint-disable-next-line no-console
-        if (isDebug) console.groupCollapsed('Event: ' + (event.handle || event.type), event);
+        if (isDebug) console.groupCollapsed(groupName, event);
 
         // use an explicit for loop because we need to be able to break
         for (i=0; i<interactions.length; i++){
             interaction = interactions[i];
+
             conditionTrue = conditionsEvaluate(interaction.conditions, event, trial);
+            if (isDebug) console.log(conditionTrue, interaction.conditions); // eslint-disable-line no-console
 
-            // eslint-disable-next-line no-console
-            if (isDebug) console.log(conditionTrue, interaction.conditions);
+            if (conditionTrue) endTrial = applyActions(interaction.actions, event, trial);
 
-            // if this action includes endTrial we want to stop evalutation
-            // otherwise we might evaluate using data from the next trial by accident...
-            if (conditionTrue) if ( !applyActions(interaction.actions, event, trial) ) break;
+            // if this action includes endTrial we want to stop evalutation immidiately
+            if (endTrial) break;
         }
 
         // eslint-disable-next-line no-console
-        if (isDebug) console.groupEnd('Event: ' + (event.handle || event.type));
+        if (isDebug) console.groupEnd(groupName);
 
         return event;
     }
@@ -2118,12 +2123,6 @@ function transformLogs(action,eventData,trial){
         data: trialData
     };
 }
-
-/**
- * run the task
- * Essentialy wiring up all the play phase stuff
- * @TODO: document this function, its super complicated
- **/
 
 function playerPhase(sink){
     var canvas = sink.canvas;

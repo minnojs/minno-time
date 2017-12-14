@@ -1,48 +1,29 @@
-/*
-  import interactions from './interactions';
+import {validateInteractions} from './interactions';
 
 describe('interactions', function(){
-    it('should return a function', function(){
-        expect(typeof interactions(trial)).toBe('function');
-    });
 
-    it('should validate the interactions array', function(){
-        expect(interactions.bind(null, {})).toThrow();
-        expect(interactions.bind(null, {_source:{}})).toThrow();
-        expect(interactions.bind(null, {_source:{interactions:'a'}})).toThrow();
-        expect(interactions.bind(null, {_source:{interactions:[]}})).toThrow();
-        expect(interactions.bind(null, {_source:{interactions:[1,2]}})).toThrow();
-        expect(interactions.bind(null, {_source:{interactions:[{}]}})).toThrow();
-        expect(interactions.bind(null, {_source:{interactions:[{conditions:[]}]}})).toThrow();
-        expect(interactions.bind(null, {_source:{interactions:[{actions:[]}]}})).toThrow();
-        expect(interactions.bind(null, {_source:{interactions:[{conditions:[],actions:[]}]}})).not.toThrow();
-    });
-});
+    describe('validate', function(){
+        function validate(arr){ return validateInteractions.bind(null, arr); }
 
-describe('eventMap', function(){
-    it('should pass through the event', function(){
-        var event = {};
-    });
-});
-*/
-/*
-describe('events', function(){
-    describe('interactions', function(){
-        it('should ensure trial.interactions are valid', function(){
-            
+        it('should not accept non objects interactions', function(){
+            expect(validate([function(){}])).toThrow();
+            expect(validate([undefined])).toThrow();
+            expect(validate(['string'])).toThrow();
+            expect(validate([123])).toThrow();
+            expect(validate([[]])).toThrow();
         });
 
-        it('should evaluate event', function(){
+        it('should not accept empty interactions', function(){
+            expect(validate(null)).toThrow();
+            expect(validate([])).toThrow();
         });
 
-        it('should activate only interactions that are true', function(){
+        it('should require both conditions and actions', function(){
+            expect(validate([{}])).toThrow();
+            expect(validate([{conditions:[]}])).toThrow();
+            expect(validate([{actions:[]}])).toThrow();
+            expect(validate([{conditions:[],actions:[]}])).not.toThrow();
         });
     });
 
-    describe('action', function(){
-    });
-
-    describe('evaluate', function(){
-    });
 });
-*/

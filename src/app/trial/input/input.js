@@ -3,7 +3,6 @@ import now from './now';
 
 export default interfaceFn;
 
-// @TODO: remove dependency on trial. only canvas is essential, and adding trial can be exported
 function interfaceFn($events, canvas){
     var listenerStack = []; // holds all active listeners
     var baseTime = 0;

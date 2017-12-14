@@ -17,12 +17,10 @@ import getConditionFn from './getConditionFn';
 export default conditionsEvaluate;
 
 function conditionsEvaluate(conditions, inputData, trial){
-    if (!conditions) throw new Error('There is an interaction without conditions!!');
-
     // make sure conditions is an array
     conditions = Array.isArray(conditions) ? conditions : [conditions];
 
-    // if this is a begin event, make sure we only run conditions that have begin in them
+    // if this is a begin event, make sure we only run interactions that have begin in them
     if (inputData.type == 'begin' && conditions.every(function(condition){return condition.type != 'begin';})) return false;
 
     return conditions.every(checkCondition);
