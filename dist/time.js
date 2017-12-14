@@ -2119,6 +2119,12 @@ function transformLogs(action,eventData,trial){
     };
 }
 
+/**
+ * run the task
+ * Essentialy wiring up all the play phase stuff
+ * @TODO: document this function, its super complicated
+ **/
+
 function playerPhase(sink){
     var canvas = sink.canvas;
     var db = sink.db;
@@ -2127,7 +2133,7 @@ function playerPhase(sink){
     var $source = stream();
     var $trial = $source.map(activateTrial());
     var $sourceLogs = stream();
-    var $logs = createLogs$1($sourceLogs, settings.logger || {}, transformLogs);
+    var $logs = createLogs$1($sourceLogs, composeLoggerSettings(sink.script, global$1()), transformLogs);
 
     $logs.map(function(log){
         global$1().current.logs.push(log);
@@ -2181,6 +2187,14 @@ function playerPhase(sink){
             return trial;
         }
     }
+}
+
+// create metaDeta to add to post
+function composeLoggerSettings(script, global){
+    var loggerSettings = _.assign({}, _.get(script, 'settings.logger'));
+    var metaData = _.assign({taskName:script.name}, global.$meta, loggerSettings.metaData);
+    loggerSettings.metaData = metaData;
+    return loggerSettings;
 }
 
 function activate$1(canvas, script){

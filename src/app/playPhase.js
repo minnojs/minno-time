@@ -12,8 +12,8 @@ export default playerPhase;
 
 /**
  * run the task
- * @param canvas : htmlElement
- * @returns sink : {end, promise}
+ * Essentialy wiring up all the play phase stuff
+ * @TODO: document this function, its super complicated
  **/
 
 function playerPhase(sink){
@@ -24,7 +24,7 @@ function playerPhase(sink){
     var $source = stream();
     var $trial = $source.map(activateTrial());
     var $sourceLogs = stream();
-    var $logs = createLogs($sourceLogs, settings.logger || {}, defaultLogMap);
+    var $logs = createLogs($sourceLogs, composeLoggerSettings(sink.script, global()), defaultLogMap);
 
     $logs.map(function(log){
         global().current.logs.push(log);
@@ -78,4 +78,12 @@ function playerPhase(sink){
             return trial;
         }
     }
+}
+
+// create metaDeta to add to post
+export function composeLoggerSettings(script, global){
+    var loggerSettings = _.assign({}, _.get(script, 'settings.logger'));
+    var metaData = _.assign({taskName:script.name}, global.$meta, loggerSettings.metaData);
+    loggerSettings.metaData = metaData;
+    return loggerSettings;
 }

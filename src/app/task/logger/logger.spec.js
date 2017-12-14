@@ -10,10 +10,10 @@ describe('logger', function(){
             expect($logs._state).toBeTruthy();
         });
 
-        it('should apply source[] to settings.transformLogs', function(){
+        it('should apply source[] to settings.logMap', function(){
             var $source = stream();
-            var spy = jasmine.createSpy('transformLogs').and.returnValue(333);
-            var $logs = createLogStream($source, {transformLogs:spy});
+            var spy = jasmine.createSpy('logMap').and.returnValue(333);
+            var $logs = createLogStream($source, {logMap:spy});
             $source([1,2,3,4]);
             expect(spy).toHaveBeenCalledWith(1,2,3,4);
             expect($logs()).toBe(333);
@@ -37,7 +37,7 @@ describe('logger', function(){
         });
     });
 
-    fdescribe('default poster', function(){
+    describe('default poster', function(){
         beforeEach(jasmine.Ajax.install.bind(jasmine.Ajax));
         afterEach(jasmine.Ajax.uninstall.bind(jasmine.Ajax));
 
