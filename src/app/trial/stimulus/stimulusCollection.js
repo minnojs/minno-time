@@ -1,12 +1,17 @@
 import Stimulus from './Stimulus';
+import _ from 'lodash';
 
 export default stimCollection;
 
 function stimCollection(trial, canvas){
+    validateStimuli('stimuli', trial._source);
+    validateStimuli('layout', trial._source);
+
     var source = trial._source;
-    var stimuli = source.stimuli.map(toStim);
-    var layout = source.layout.map(toLayout).map(toStim);
+    var stimuli = _.map(source.stimuli, toStim);
+    var layout = _.map(source.layout, toLayout).map(toStim);
     var ready = Promise.all(stimuli.concat(layout).map(function(stim){return stim.init();}));
+
     var self = {
         canvas: canvas,
         stimuli: stimuli,
@@ -37,4 +42,11 @@ function getMedialist(options){
 
 function destroy(){
     this.stimuli.concat(this.layout).forEach(function(stim){stim.destroy();});
+}
+
+export function validateStimuli(type, source){
+    var stimuli = source[type];
+    if (!stimuli) return;
+    if (!Array.isArray(stimuli)) throw new Error(type + ' must be an array');
+    if (!stimuli.every(function(stim){ return 'media' in stim; })) throw new Error('Each ' + type + ' stimulus must have a media property');
 }

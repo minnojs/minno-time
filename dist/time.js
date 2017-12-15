@@ -1282,24 +1282,15 @@ function getMedia$1(media){
     var template = media.html || media.inlineTemplate || media.template; // give inline template precedence over template, because tempaltes are loaded into inlinetemplate
     var el;
 
+    if (_.isFunction(media)) return customMedia(media);
+
+    if (_.isString(media)) media = {word:media};
+
     if (media.word) {
         el = document.createElement('div');
         el.textContent = media.word;
         return Promise.resolve(el);
     }
-
-    if (media.image) {
-        // at this time, we count on the preloader to throw for errors
-        // the reject option isn't really being used here...
-        return new Promise(function(resolve, reject){
-            el = document.createElement('img');
-            el.onload = function(){resolve(el);};
-            el.onerror = function(){reject(new Error('Image not found: ' + el.src ));};
-            el.src = media.image;
-        });
-    }
-
-    if (media.jquery) Promise.reject(new Error('Jquery is no longer supported in minno-time'));
 
     if (template) { // html | template | inlineTemplate
         el = document.createElement('div');
@@ -1307,7 +1298,27 @@ function getMedia$1(media){
         return Promise.resolve(el);
     } 
 
+    // at this time, we count on the preloader to throw for errors
+    // the reject option isn't really being used here...
+    if (media.image) return new Promise(function(resolve, reject){
+        el = document.createElement('img');
+        el.onload = function(){resolve(el);};
+        el.onerror = function(){reject(new Error('Image not found: ' + el.src ));};
+        el.src = media.image;
+    });
+
+    if (media.jquery) return Promise.reject(new Error('Jquery is no longer supported in minno-time'));
+
     return Promise.reject(new Error('Unrecognized media type')); // this is not a supported html type
+}
+
+function customMedia(media){
+    var promise = media();
+    if (!isThenable(promise)) return Promise.reject(new Error('Custom media must return a promise'));
+    return promise.then(forceElement);
+
+    function isThenable(p){ return p && _.isFunction(p.then); }
+    function forceElement(el){ return _.isElement(el) ? el : Promise.reject('Custom media must resolve with an element');}
 }
 
 function setSize$1(el, stimulus){
@@ -1479,10 +1490,14 @@ function mediaName(options){
 function contains(arr, val){ return arr.indexOf(val) != -1;}
 
 function stimCollection(trial, canvas){
+    validateStimuli('stimuli', trial._source);
+    validateStimuli('layout', trial._source);
+
     var source = trial._source;
-    var stimuli = source.stimuli.map(toStim);
-    var layout = source.layout.map(toLayout).map(toStim);
+    var stimuli = _.map(source.stimuli, toStim);
+    var layout = _.map(source.layout, toLayout).map(toStim);
     var ready = Promise.all(stimuli.concat(layout).map(function(stim){return stim.init();}));
+
     var self = {
         canvas: canvas,
         stimuli: stimuli,
@@ -1515,6 +1530,13 @@ function destroy(){
     this.stimuli.concat(this.layout).forEach(function(stim){stim.destroy();});
 }
 
+function validateStimuli(type, source){
+    var stimuli = source[type];
+    if (!stimuli) return;
+    if (!Array.isArray(stimuli)) throw new Error(type + ' must be an array');
+    if (!stimuli.every(function(stim){ return 'media' in stim; })) throw new Error('Each ' + type + ' stimulus must have a media property');
+}
+
 var global$2 = global$1();
 var conditionHash = {
     begin:begin,
@@ -1532,7 +1554,6 @@ var conditionHash = {
     inputEqualsCurrent:inputEqualsCurrent,
     fn:fn,
     custom:custom,
-
 };
 
 function getConditonFn(condition){
@@ -1655,12 +1676,10 @@ function hasData(searchObj, trial){
  */
 
 function conditionsEvaluate(conditions, inputData, trial){
-    if (!conditions) throw new Error('There is an interaction without conditions!!');
-
     // make sure conditions is an array
     conditions = Array.isArray(conditions) ? conditions : [conditions];
 
-    // if this is a begin event, make sure we only run conditions that have begin in them
+    // if this is a begin event, make sure we only run interactions that have begin in them
     if (inputData.type == 'begin' && conditions.every(function(condition){return condition.type != 'begin';})) return false;
 
     return conditions.every(checkCondition);
@@ -1790,7 +1809,6 @@ var actions = {
         var off = canvasContructor(map, _.pick(action,['background','canvasBackground','borderColor','borderWidth']));
         trial.$end.map(off);
     }
-
 };
 
 /*
@@ -1810,8 +1828,6 @@ function applyActions(actions$$1, eventData, trial){
     // marks whether this is the final action to take
     var continueActions = true;
 
-    if (!actions$$1) throw new Error('There is an interaction without actions!!');
-
     actions$$1 = _.isArray(actions$$1) ? actions$$1 : [actions$$1];
 
     _.forEach(actions$$1,function(action){
@@ -1830,16 +1846,12 @@ function applyActions(actions$$1, eventData, trial){
 * Organizer for the interaction function
 */
 
-/*
- * Trial -> Event -> Event
- * 
- * Can use trial to produce side efects
- **/
 function interactions$1(trial){
     var interactions = trial._source.interactions;
     var isDebug = trial._source.DEBUG && window.DEBUG;
 
-    // @TODO: validate interactions (isArray[Object], Object has conditions, Object has actions
+    // @TODO: parse error
+    validateInteractions(interactions);
     
     return eventMap;
     function eventMap(event){
@@ -1867,6 +1879,21 @@ function interactions$1(trial){
         if (isDebug) console.groupEnd(groupName);
 
         return event;
+    }
+}
+
+function validateInteractions(interactions){
+    if (!Array.isArray(interactions)) throw new Error('Interactions must be an array');
+    if (!interactions.length) throw new Error('There are no interactions defined');
+
+    if (!interactions.every(_.isPlainObject)) throw new Error('Interactions must be plain objects');
+    if (!interactions.every(isValidProp('conditions'))) throw new Error('Conditions must be either an array or a function');
+    if (!interactions.every(isValidProp('actions'))) throw new Error('Actions must be either an array or a function');
+
+    function isValidProp(prop){ 
+        return function(interaction) {
+            return Array.isArray(interaction[prop]) || _.isFunction(interaction[prop]); 
+        };
     }
 }
 
@@ -1899,7 +1926,6 @@ function Trial$1(source, canvas, settings){
     // by default this is simply the next trial, this can be changed using the goto action
     // the syntax is [destination, properties]
     this._next = ['next',{}];
-
 }
 
 _.extend(Trial$1.prototype,{
@@ -1921,7 +1947,7 @@ _.extend(Trial$1.prototype,{
                 .map(interactions$1(trial));
 
             // activate input
-            arrayWrap(trial._source.input).forEach(trial.input.add); // add each input
+            _.forEach(trial._source.input, trial.input.add); // add each input
             trial.input.resetTimer(); // reset the interface timer so that event latencies are relative to now.
 
             // start running
@@ -1955,11 +1981,6 @@ function addTrialDetails(trial){
             counter     : trial.counter
         });
     };
-}
-
-function arrayWrap(arr){
-    if (!arr){return [];}
-    return _.isArray(arr) ? arr : [arr];
 }
 
 function nextTrial$1(db, settings, goto){

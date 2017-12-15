@@ -126,6 +126,5 @@ var actions = {
         var off = applyCanvasStyles(map, _.pick(action,['background','canvasBackground','borderColor','borderWidth']));
         trial.$end.map(off);
     }
-
 };
 

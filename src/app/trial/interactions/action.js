@@ -20,8 +20,6 @@ function applyActions(actions, eventData, trial){
     // marks whether this is the final action to take
     var continueActions = true;
 
-    if (!actions) throw new Error('There is an interaction without actions!!');
-
     actions = _.isArray(actions) ? actions : [actions];
 
     _.forEach(actions,function(action){

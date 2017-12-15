@@ -35,7 +35,6 @@ function Trial(source, canvas, settings){
     // by default this is simply the next trial, this can be changed using the goto action
     // the syntax is [destination, properties]
     this._next = ['next',{}];
-
 }
 
 _.extend(Trial.prototype,{
@@ -57,7 +56,7 @@ _.extend(Trial.prototype,{
                 .map(interactions(trial));
 
             // activate input
-            arrayWrap(trial._source.input).forEach(trial.input.add); // add each input
+            _.forEach(trial._source.input, trial.input.add); // add each input
             trial.input.resetTimer(); // reset the interface timer so that event latencies are relative to now.
 
             // start running
@@ -91,9 +90,4 @@ function addTrialDetails(trial){
             counter     : trial.counter
         });
     };
-}
-
-function arrayWrap(arr){
-    if (!arr){return [];}
-    return _.isArray(arr) ? arr : [arr];
 }
