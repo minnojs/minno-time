@@ -17,6 +17,7 @@ module.exports = function(config) {
         // Make sure to disable Karma’s file watcher
         // because the preprocessor will use its own.
         files: [ 
+            { pattern: 'src/time.css'},
             { pattern: 'src/polyfills.js'},
 			{ pattern: 'src/**/*.spec.js', watched: false }
         ],
@@ -60,7 +61,7 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['PhantomJS'],
+        browsers: ['ChromeHeadless'],
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits

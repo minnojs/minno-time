@@ -3,12 +3,21 @@ import stimulusCollection from './stimulusCollection';
 describe('stimuli', function(){
 
     var trial, canvas;
+    var CANVAS_WIDTH = 150;
+    var CANVAS_HEIGHT = 100;
     
     function stimuli(trialSource){
         canvas = document.createElement('div');
+        canvas.classList.add('minno-canvas');
+        canvas.style.height = CANVAS_HEIGHT + 'px';
+        canvas.style.width = CANVAS_WIDTH + 'px';
+        canvas.style.border = 0; //remove border for easyness in measuring
+
+        document.body.appendChild(canvas);
         trial = { _source: trialSource };
         return stimulusCollection(trial,canvas);
     }
+    function stimulus(stim){ return stimuli({layout:[stim]}); }
     
     describe('collection', function(){
         it('should append all stimuli but not show them', function(){
@@ -48,6 +57,44 @@ describe('stimuli', function(){
             expect(doneSpy).not.toHaveBeenCalled();
             end(document.createElement('div'));
             return collection.ready; // will faile if isn't eventually resolved
+        });
+    });
+
+    describe('location', function(){
+        it('should center by default', function(){
+            return stimulus({media:'hello'}).ready.then(function(){
+                var canvasLocation = canvas.getBoundingClientRect();
+                var stimLocation = canvas.firstChild.getBoundingClientRect();
+                expect(stimLocation.left - canvasLocation.left).toBeCloseTo(canvasLocation.right - stimLocation.right , 1, 'centered on y');
+                expect(stimLocation.top - canvasLocation.top).toBeCloseTo(canvasLocation.bottom - stimLocation.bottom , 1, 'centered on x');
+            });
+        });
+
+        it('should center on y only', function(){
+            return stimulus({media:'hello', location:{left:0}}).ready.then(function(){
+                var canvasLocation = canvas.getBoundingClientRect();
+                var stimLocation = canvas.firstChild.getBoundingClientRect();
+                expect(stimLocation.left - canvasLocation.left).toBeCloseTo(0, 1, 'not centered on x');
+                expect(stimLocation.top - canvasLocation.top).toBeCloseTo(canvasLocation.bottom - stimLocation.bottom , 1, 'centered on y');
+            });
+        });
+
+        it('should center on x only', function(){
+            return stimulus({media:'hello', location:{top:0}}).ready.then(function(){
+                var canvasLocation = canvas.getBoundingClientRect();
+                var stimLocation = canvas.firstChild.getBoundingClientRect();
+                expect(stimLocation.left - canvasLocation.left).toBeCloseTo(canvasLocation.right - stimLocation.right , 1, 'centered on x');
+                expect(stimLocation.top - canvasLocation.top).toBeCloseTo(0 , 1, 'not centered on y');
+            });
+        });
+
+        it('should locate by percent', function(){
+            return stimulus({media:{html:'<div></div>'}, location:{left:30,top:20}}).ready.then(function(){
+                var canvasLocation = canvas.getBoundingClientRect();
+                var stimLocation = canvas.firstChild.getBoundingClientRect();
+                expect(stimLocation.left - canvasLocation.left).toBeCloseTo(CANVAS_WIDTH * 0.3, 1, 'left is 30%');
+                expect(stimLocation.top - canvasLocation.top).toBeCloseTo(CANVAS_HEIGHT * 0.2, 1, 'top is 20%');
+            });
         });
     });
 
