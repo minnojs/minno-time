@@ -9,14 +9,12 @@
     - [Interactions](#interactions)
         + [Conditions](#interactions-conditions)
         + [Actions](#interactions-actions)
-- [Inheritance](#inheritance)
 - [Logging](#logging)
 
 ### Definitions
 * **Media** are the objects that we display.
 * **Stimuli** are responsible for how we display the media.
 * **Trials** are a set of stimuli and the rules governing their display.
-
 
 ### Media
 Media are the objects that we display. We currently support five types of media:
@@ -32,7 +30,6 @@ The folowing two media definitions have the same outcome:`'Wiki'`, `{word:'Wiki'
 ### Stimuli
 
 Stimuli are responsible for *how* we present the media.
-
 
 
 ```javascript
@@ -388,7 +385,7 @@ Resets trial timer. The latency of any events from here on (including the curren
 * `{type:'resetTimer'}`
 
 **endTrial**:
-*Speaks for itself (note that any actions that come after this is called may not work properly).
+End this trial (note that any actions that come after this is called may not work properly).
 * `{type:'endTrial'}`
 
 **canvas**:
@@ -417,248 +414,6 @@ The `properties` property is an object to compare to the trial data. Note that t
 * `{type:'goto',destination: 'end'}` end this task
 * `{type:'goto',destination: 'nextWhere', properties: {blockStart:true}}` goto the next trial that has these properties
 * `{type:'goto',destination: 'previousWhere', properties: {blockStart:true}}` goto the previous trial that has these properties
-
-
-### Inheritance
-
-Each element in the miTime (trial/stimulus/media) can inherit its attributes from an element set.
-
-#### Sets
-
-The element sets are defined in the main task script under `trialSets`/`stimulusSets`/`mediaSets`. Or using using the API using `addMediaSets`/`addStimulusSets`/`addTrialSets`.
-
-Each set is simply an array of elements that can later be referred to as a base for new elements. Note that the name that you give the set (in the example, default or IAT) is the handle that you later use to refer to it.
-
-The examples here use trials as an example, the same principles apply to stimuli and media elements.
-
-```javascript
-var task = {
-    // these are the trial sets
-    trialSets: {
-        // This is the first set, it has only one trial
-        default : [
-            defaultTrial
-        ],
-
-        // This is the second set it has three trials
-        // The first trial explicitly inherits the default trial and adds some data to it
-        IAT : [
-            {inherit:{set:default},data:{block:1}},
-            block02Trials,
-            block03Trials
-        ]
-    },
-
-    // these are the stimulus and media sets
-    stimulusSets : stimulusSets,
-    mediaSets : mediaSets
-}
-```
-
-#### Inheriting
-
-When inheriting an element the new element starts out with all of the parent's attributes and extends them with its own.
-This means that we use the parent element as a base and then copy in any properties that the child has, overwriting any existing properties.
-The only exception to this rule is their `data` objects which we attempt to merge (giving precedence again to the child).
-
-Follow this pseudo code:
-```javascript
-// The parent trial
-{
-    data: {name: 'jhon', family:'doe'}
-    stimuli: [
-        stim1,
-        stim2
-    ]
-}
-
-// The child trial which attempts to inherit the parent
-{
-    inherit: 'parent',
-    data: {name: 'jack'}
-    stimuli: [
-        stim1
-    ]
-}
-
-// The result would be:
-{
-    data: {name: 'jack', family:'doe'}  // the child kept its own name but inherited the family name
-    stimuli: [                          // the stimuli array was completely overwritten
-        stim1
-    ]
-}
-```
-
-In order for an element to inherit another element it must use the `inherit` property of the inheriting element.
-
-```javascript
-{
-    inherit: inheritObject
-}
-```
-
-The inherit object has a `set` property defining which element set it should inherit from.
-It also has a `type` property that defines what type of inheritance we should use.
-
-We have implemented several types of inheritance:
-
-**random**:
-Randomly picks an element from the set. Note that this is the default inheritance type and so it is not obligatory to use the `type` property. You can also use a short cut and set the `set` using a simple string instead of an object (see example below).
-* `'setName'`
-* `{set: 'setName'}`
-* `{set: 'setName', type:'random'}`
-
-**exRandom**:
-Picks a random element without repeating the same element until we've gone through the whole set
-* `{set: 'setName', type:'exRandom'}`
-
-**bySequence**:
-Picks the elements by the order they were inserted into the set
-* `{set: 'setName', type:'bySequence'}`
-
-**byData**:
-Picks a specific element from the set.
-We compare the `data` property to the `element.data` property and if `data` is a subset of `element.data` it picks the element
-(this means that if all properties of data property equal to the properties of the same name in element.data it is a fit).
-This function will pick only the first element to fit the data.
-If the data property is set as a string, we assume it refers to the element handle.
-
-* `{set: 'setName', type: 'byData', data: {block:1, row:2}}` picks the element with both block:1 and row:2
-* `{set: 'setName', type: 'byData', data: "myStimHandle"}` picks the element that has the "myStimHandle" handle
-
-**function**:
-You may also use a custom function to pick your element.
-```javascript
-{set: 'setName', type: function(definitions){
-    // definitions is the inherit object (including  set, type, and whatever other properties you'd like to use)
-    // the context ("this") is the element collection, it is a Backbone.js collection of the elements in the set
-}}
-```
-
-#### Customization
-
-Each trial/stimulus/media can also have a customize method, this method is called once the element is inherited but before it is activated.
-It accepts two arguments: the source object on which it is called (in this case the appropriate trial object), and the global object. The source object is also the context for the function.
-The example shows how you can use customize to push a stimulus into the trial, this allows us to generate stim1 dynamicaly.
-
-```javascript
-{
-    inherit: 'something',
-    stimuli: [], // note that their are no stimuli yet!
-    customize : function(trialSource, globalObject){
-        // push a stimulus into the stimulus array
-        trialSource.stimuli.push(stim1);
-    }
-}
-```
-
-
-### The sequence
-
-The sequence is an ordered list of the trials that you want to present consequently to the users.
-```javascript
-task = {
-    trialSets: trialSets,
-    stimulusSets : stimulusSets,
-    mediaSets : mediaSets,
-    sequence: [
-        trial1,
-        trial2,
-        trial3
-    ]
-
-}
-```
-
-This is all you really need to know in order to run a task. In addition the sequencer provides several mixing options
-that allow for powerful randomization of your task.
-
-#### Mixing
-
-The mixer allows wrapping sub sequences in objects that allow you to manipulate the way in which they appear.
-You may insert such an object at any place within the sequence and it will be replaced by the appropriate trials.
-
-The basic structure of a mixer object is:
-```javascript
-{
-    mixer: 'functionType',
-    data: [trial1, trial2]
-}
-```
-
-The `mixer` property holds the mixer type.
-
-The `data` property holds an array of elements (either trials or mixer objects).
-
-A sequence can look something like this (don't get scared it's simpler than it looks):
-
-```javascript
-[
-    // The first trial to present.
-    firstTrial,
-
-    // Repeat the structure inside 10 time (so we get 40 trials)
-    {
-        mixer: 'repeat',
-        times: 10,
-        data: [
-            // Delay the mixing of these elements until after the `repeat`.
-            {
-                mixer: 'wrapper',
-                data: [
-                    trial1,
-                    // Randomize the order of the trials within.
-                    {
-                        mixer: 'random',
-                        data: [
-                            trial2,
-                            // Keep trial 3 and 4 together.
-                            {
-                                mixer: 'wrapper',
-                                data: [
-                                    trial3,
-                                    trial4
-                                ]
-                            }
-                        ]
-                    } // end random
-                ]
-            } // end wrapper
-        ]
-    }, // end repeat
-
-    // the last trial to present
-    lastTrial
-]
-```
-This sequence has an opening and ending trial (`firstTrial` and `lastTrial`).
-Between them them we repeat a set of four trials ten times.
-The order of the four trials is randomized, so that `trial1` always comes first and the order of the following trials are randomized but `trial3` and `trial4` are wrapped together and therefore always stay consecutive.
-
-We support several mixer types.
-
-**repeat**:
-Repeats the element in `data` `times` times.
-* `{mixer:'repeat', times:10, data: [trial1,trial2]}`
-
-**random**:
-Randomizes the order of elements in `data`.
-* `{mixer:'random', data: [trial1,trial2]}`
-
-**weightedRandom**:
-Picks a single element using a weighted random algorithm. Each element in `data` is given the appropriate weight from `weights`. In the following example trial2 has four times the probability of being picked as trial1.
-* `{mixer:'weightedRandom', weights: [0.2,0.8], data: [trial1,trial2]}`
-
-**choose**:
-Picks `n` random elements from `data` (by default the chooser picks one element).
-* `{mixer:'choose', data: [trial1,trial2]}` pick one of these two trials
-* `{mixer:'choose', n:2, data: [trial1,trial2,trial3]}` pick two of these three trials
-
-**wrapper**:
-The wrapper mixer serves a sort of parenthesis for the mixer. It has two primary functions; first, in case you want to keep a set of elements as a block (when randomizing) simply wrap them and they'll stay together. Second, when repeating a `random` mixer, the mixer first randomizes the content of the inner mixer and only then repeats it. If you want the randomization to be deferred until after the repeat all you have to do is wrap it in a wrapper.
-* `{mixer:'wrapper', data: [trial1,trial2]}`
-
 
 ### Changing Settings
 
