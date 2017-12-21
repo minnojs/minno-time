@@ -98,6 +98,30 @@ describe('stimuli', function(){
         });
     });
 
+    describe('size', function(){
+        it('should size on both dimensions', function(){
+            return stimulus({media:{html:'<div></div>'}, size:{height:30,width:20}}).ready.then(function(){
+                var stimLocation = canvas.firstChild.getBoundingClientRect();
+                expect(stimLocation.width).toBe(CANVAS_WIDTH * 0.2, 1, 'size.width');
+                expect(stimLocation.height).toBe(CANVAS_HEIGHT * 0.3, 1, 'size.height');
+            });
+        });
+
+        it('should not set size for word media', function(){
+            return stimulus({media:'word', size:{height:70,width:20}}).ready.then(function(){
+                var stimLocation = canvas.firstChild.getBoundingClientRect();
+                expect(stimLocation.width).toBe(CANVAS_WIDTH * 0.2, 1, 'size.width');
+                expect(stimLocation.height).not.toBe(CANVAS_HEIGHT * 0.7, 1, 'size.height');
+            });
+        });
+
+        it('should respect size.fontSize', function(){
+            return stimulus({media:'word', size:{font_size:'2em'}}).ready.then(function(){
+                expect(canvas.firstChild.style.fontSize).toBe('2em');
+            });
+        });
+    });
+
     describe('media', function(){
         function media(media){ return stimuli({layout:[{media:media}]}); }
 
