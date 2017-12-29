@@ -1,6 +1,6 @@
 {
   "name": "minno-time",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "A free tool for creating reaction time tasks",
   "main": "dist/time.js",
   "module": "src/index.js",
