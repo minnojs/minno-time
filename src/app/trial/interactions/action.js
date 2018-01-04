@@ -8,7 +8,7 @@
  * ]
  * @param actions: single action object or array of action objects
  * @param eventData: eventData object
- * @returns Boolean continueActions: whether this action stops further action activations
+ * @returns Boolean: endTrial whether this action stops further action activations
  */
 
 import _ from 'lodash';
@@ -18,7 +18,7 @@ export default applyActions;
 
 function applyActions(actions, eventData, trial){
     // marks whether this is the final action to take
-    var continueActions = true;
+    var endTrial = false;
 
     actions = _.isArray(actions) ? actions : [actions];
 
@@ -27,9 +27,9 @@ function applyActions(actions, eventData, trial){
         if (!actionFn) throw new Error('unknown action: ' + action.type);
 
         // the only reason to halt action activation is the endTrial command
-        if (action.type === 'endTrial') continueActions = false;
+        if (action.type === 'endTrial') endTrial = true;
         actionFn(action, eventData, trial);
     });
 
-    return continueActions;
+    return endTrial;
 }

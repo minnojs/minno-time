@@ -15,35 +15,44 @@ export default interactions;
  **/
 function interactions(trial){
     var interactions = trial._source.interactions;
-    var isDebug = trial._source.DEBUG && window.DEBUG;
 
-    // @TODO: parse error
-    validateInteractions(interactions);
+    try {
+        validateInteractions(interactions);
+    } catch(error){
+        trial.$messages({type:'error', message: 'trial.interactions error', error:error});
+        throw error;
+    }
     
     return eventMap;
+
     function eventMap(event){
         var i, interaction, conditionTrue, endTrial;
         var groupName = 'Event: ' + (event.handle || event.type);
+        var debugLog = [];
 
+        try{
+            // use an explicit for loop because we need to be able to break
+            for (i=0; i<interactions.length; i++){
+                interaction = interactions[i];
 
-        // eslint-disable-next-line no-console
-        if (isDebug) console.groupCollapsed(groupName, event);
+                conditionTrue = evaluate(interaction.conditions, event, trial);
+                debugLog.push([conditionTrue, interaction.conditions]);
 
-        // use an explicit for loop because we need to be able to break
-        for (i=0; i<interactions.length; i++){
-            interaction = interactions[i];
+                if (conditionTrue) endTrial = activate(interaction.actions, event, trial);
 
-            conditionTrue = evaluate(interaction.conditions, event, trial);
-            if (isDebug) console.log(conditionTrue, interaction.conditions); // eslint-disable-line no-console
+                // if this action includes endTrial we want to stop evalutation immidiately
+                if (endTrial) break;
+            }
 
-            if (conditionTrue) endTrial = activate(interaction.actions, event, trial);
-
-            // if this action includes endTrial we want to stop evalutation immidiately
-            if (endTrial) break;
+        } catch(error){
+            trial.$messages({type:'error', message: 'trial.interactions error', error:error});
+            throw error;
         }
 
-        // eslint-disable-next-line no-console
-        if (isDebug) console.groupEnd(groupName);
+        trial.$messages({type:'debug', message: groupName, rows: debugLog});
+
+        // this is here and not within actions so that messages can be sent befor ending the trial
+        if (endTrial) trial.end();
 
         return event;
     }
@@ -63,3 +72,4 @@ export function validateInteractions(interactions){
         };
     }
 }
+

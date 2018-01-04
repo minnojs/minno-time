@@ -60,24 +60,45 @@ function playerPhase(sink){
             var oldTrial = cache;
             var trial = cache = new Trial(source, canvas, settings);
             trial.$logs.map($sourceLogs); 
-            trial.$end
-                .map(function(){
-                    play(trial._next); // when we're done try to play the next one
-                });
+
+            // must be *before* the subscription to $end for the next trial
+            if (source.DEBUG && window.DEBUG) setupDebug(trial);
+
+            trial.$end.map(function(){
+                play(trial._next); // when we're done try to play the next one
+            });
 
             trial.start();
 
-            if (oldTrial) {
-                // we leave the old stimuli until the current ones are visiblie to maintain the continuity between trials
-                // This mutate waits until the first mutation in order to schedudual the removal of the old stimuli
-                fastdom.mutate(function oldtrial(){
-                    oldTrial.stimulusCollection.destroy();
-                });
-            }
+            // we leave the old stimuli until the current ones are visiblie to maintain the continuity between trials
+            // This mutate waits until the first mutation in order to schedudual the removal of the old stimuli
+            if (oldTrial) fastdom.mutate(function oldtrial(){
+                oldTrial.stimulusCollection.destroy();
+            });
 
             return trial;
         }
     }
+}
+
+function setupDebug(trial){
+    /* eslint-disable no-console */
+    var trialName = 'Trial :' + trial.counter;
+    console.group(trialName);
+    trial.$messages.map(debugLog);
+    trial.$events.end.map(function(){ console.groupEnd(trialName); });
+
+    function debugLog(log){
+        if (log.type !== 'debug') return log;
+        if (log.rows){
+            console.groupCollapsed(log.message);
+            log.rows.forEach(function(row){ console.log.apply(console, row); });
+            console.groupEnd(log.message);
+        }
+        else console.log(log.message);
+        return log;
+    }
+    /* eslint-enable no-console */
 }
 
 // create metaDeta to add to post

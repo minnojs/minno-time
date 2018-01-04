@@ -18,6 +18,7 @@ function Trial(source, canvas, settings){
     this._source = source;
 
     this.$logs = stream();
+    this.$messages = stream();
     this.$events = stream();
     this.$end = this.$events.end;
 
@@ -40,13 +41,6 @@ function Trial(source, canvas, settings){
 _.extend(Trial.prototype,{
     start: function(){
         var trial = this;
-
-        if (this._source.DEBUG && window.DEBUG) {
-            console.group('Trial: ' + this.counter); // eslint-disable-line no-console
-            this.$end.map(function(){
-                console.groupEnd('Trial: ' + this.counter); // eslint-disable-line no-console
-            });
-        }
 
         // wait until all simuli are loaded
         return trial.stimulusCollection.ready.then(function(){

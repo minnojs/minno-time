@@ -69,8 +69,9 @@ var actions = {
         trial._next = [action.destination,action.properties];
     },
 
-    endTrial: function(action, eventData, trial){
-        trial.end();
+    endTrial: function(){
+        // this is explicitly managed in interaction.js
+        // in order to improve trial lifecycle control
     },
 
     resetTimer: function(action,eventData,trial){

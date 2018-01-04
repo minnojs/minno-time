@@ -5,6 +5,7 @@ define(function(){
         },
         sequence: [
             {
+                DEBUG:true,
                 input: [ {handle:'space',on:'space'} ],
                 layout: [
                     {
