@@ -1,6 +1,5 @@
 define(function(require){
-    var $ = require('jquery')
-		, is_touch_device = require('utils/is_touch');
+    var $ = require('jquery');
 
 	/*
 	 * takes care of click events
@@ -25,22 +24,22 @@ define(function(require){
 	 */
 
     return function(listener,definitions){
-        var eventName = (is_touch_device ? 'touchstart' : 'mousedown') + '.interface';
+        var eventName = 'mousedown.interface';
         var $element = definitions.element ? $(definitions.element) : false;
 
         listener.on = function(callback){
             function activateCallback(e){ callback(e,eventName); }
             this.activateCallback = activateCallback;
 
-			// If we're binding to an existing element, bind to its appropriate handle
+            // If we're binding to an existing element, bind to its appropriate handle
             if (!$element){
                 $(document).on(eventName,'[data-handle="'+definitions.stimHandle + '"]', activateCallback);
             } else {
-				// the element to attach
+                // the element to attach
                 $element
-					.css(definitions.css || {})
-					.appendTo('#canvas')							// @todo, not great form, we should probably have a variable pointing there...
-					.on(eventName,activateCallback);
+                .css(definitions.css || {})
+                .appendTo('#canvas')							// @todo, not great form, we should probably have a variable pointing there...
+                .on(eventName,activateCallback);
             }
         };
 
