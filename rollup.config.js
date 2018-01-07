@@ -3,6 +3,8 @@
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import uglify from 'rollup-plugin-uglify';
+import postcss from 'rollup-plugin-postcss';
+import cssnano from 'cssnano';
 
 // `npm run build` -> `production` is true
 // `npm run dev` -> `production` is false
@@ -17,6 +19,7 @@ export default {
         sourcemap: true
     },
     plugins: [
+        postcss({plugins:[cssnano()]}),
         resolve(),
         commonjs(),
         production && uglify() // minify, but only in production

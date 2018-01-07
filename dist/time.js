@@ -4,6 +4,24 @@
 	(global['minno-time'] = factory(global._,global.Database));
 }(this, (function (_,Database) { 'use strict';
 
+function __$styleInject(css, returnValue) {
+  if (typeof document === 'undefined') {
+    return returnValue;
+  }
+  css = css || '';
+  var head = document.head || document.getElementsByTagName('head')[0];
+  var style = document.createElement('style');
+  style.type = 'text/css';
+  head.appendChild(style);
+  
+  if (style.styleSheet){
+    style.styleSheet.cssText = css;
+  } else {
+    style.appendChild(document.createTextNode(css));
+  }
+  return returnValue;
+}
+
 _ = _ && _.hasOwnProperty('default') ? _['default'] : _;
 Database = Database && Database.hasOwnProperty('default') ? Database['default'] : Database;
 
@@ -37,7 +55,7 @@ if (!console.table) console.table = log;
     }
 }());
 
-// Promise polyfill from https://github.com/MithrilJS/mithril.js/blob/next/promise/promise.js 
+/** @constructor */
 var PromisePolyfill = function(executor) {
     if (!(this instanceof PromisePolyfill)) throw new Error("Promise must be called with `new`")
         if (typeof executor !== "function") throw new TypeError("executor must be a function")
@@ -135,6 +153,9 @@ PromisePolyfill.race = function(list) {
 
 if (typeof window.Promise === "undefined") window.Promise = PromisePolyfill;
 
+__$styleInject(".minno-canvas{height:400px;width:500px;position:relative;border:5px solid #fff;margin:auto;margin-top:10px;-webkit-text-size-adjust:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.minno-stimulus{position:absolute;text-align:center;overflow:hidden;visibility:hidden;width:fit-content}.minno-stimulus-visible{visibility:visible}.minno-stimulus-center-x{left:50%;transform:translateX(-50%)}.minno-stimulus-center-y{top:50%;transform:translateY(-50%)}.minno-stimulus-center-y.minno-stimulus-center-x{transform:translate(-50%,-50%)}.minno-progress{background-color:#20201f;border-radius:20px;padding:4px;position:relative;top:50%;width:80%;margin-left:10%;margin-top:-12px}.minno-progress-bar{background-color:#807b7a;width:0;height:16px;border-radius:10px}",undefined);
+
+// initiate piGloabl
 var glob = window.piGlobal || (window.piGlobal = {});
 
 function global$1(){
@@ -213,6 +234,7 @@ function createDB$1(script){
     return db;
 }
 
+// helper function: returns sizes of element;
 function getSize$1(el){
     var computedStyle = window.getComputedStyle(el);
     return {
@@ -228,6 +250,7 @@ function parse$1(num){ return parseFloat(num, 10) || 0;}
  * this module is built to be part of the main view
  */
 
+// the function to be used by the main view
 function adjust_canvas(canvas, settings){
 
     return _.throttle(eventListener, 16);
@@ -300,6 +323,21 @@ function parse(num){ return parseFloat(num, 10) || 0;}
  *
  */
 
+/**
+ * Takes a map of css rules and applies them.
+ * Returns a function that returns the page to its former condition.
+ *
+ * The rule map is an object of ruleName -> ruleObject.
+ *
+ * var ruleObject = {
+ * 	element : wrapped element to affect
+ * 	property: css property to modify
+ * }
+ *
+ * @param  {Object} map      A hash of rules.
+ * @param  {Object} settings A hash of ruleName -> value
+ * @return {Function}        A function that undoes all the previous changes
+ */
 function canvasContructor(map, settings){
     var offArr;
 
@@ -584,10 +622,6 @@ function setupVars(script){
     glob[name] = glob.current = current; // create local namespace
 }
 
-/*
- * media preloader
- * TODO: turn into factory, possibly make progress into a stream.
- */
 var srcStack = [];				// an array holding all our sources
 var defStack = [];				// an array holding all the deferreds
 var stackDone = 0;				// the number of sources we have completed downloading
@@ -651,6 +685,13 @@ function load(src, type){
  * build the url for this src (add the generic baseUrl)
  */
 
+/**
+ * @param baseUrl {String|Object} the base url to prepend
+ * @param url {String} the url we are dealing with
+ * @param type {String} the type of resource we are dealing with (image or tempmlate) in case we have multiple base urls
+ *
+ * @returns String built url
+ **/
 function buildUrl(baseUrl, url, type){
     // it this is a dataUrl type of image, we don't need to append the baseurl
     if (type == 'image' && /^data:image/.test(url)) return url;
@@ -1102,6 +1143,10 @@ function timeout$1(inputObj){
     }
 }
 
+/**
+ * The input binder is a hash of default input types
+ * It returns a stream of events
+ **/
 function inputBinder(inputObj, canvas){
     var on = inputObj.on; // what type of binding is this?
 
@@ -1691,6 +1736,8 @@ function conditionsEvaluate(conditions, inputData, trial){
     }
 }
 
+// @TODO: see if we can afford to change the signature of actions
+// I'd like to have the trial go first here (used almost always).
 var actions = {
     /*
      * Stimulus actions
@@ -1848,6 +1895,11 @@ function applyActions(actions$$1, eventData, trial){
 * Organizer for the interaction function
 */
 
+/*
+ * Trial -> Event -> Event
+ * 
+ * Can use trial to produce side efects
+ **/
 function interactions$1(trial){
     var interactions = trial._source.interactions;
 
@@ -2249,6 +2301,12 @@ function composeLoggerSettings(script, global){
     return loggerSettings;
 }
 
+/**
+ * activate : (HTMLelement, timeScript) -> Sink
+ *
+ * timeScript : {settings, sequence, trialSets, stimulusSets, mediaSets, current}
+ * Sink: {$trial, $logs, play, end}
+ **/
 function activate$1(canvas, script){
     var sink = setup$1(canvas, script);
     var playSink = playerPhase(sink);

@@ -1,4 +1,5 @@
 import './polyfills';
+import './time.css';
 
 import setup from './app/setup';
 import preloadPhase from './app/preloadPhase';

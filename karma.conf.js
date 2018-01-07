@@ -33,6 +33,7 @@ module.exports = function(config) {
 
 		rollupPreprocessor: {
 			plugins: [
+                require('rollup-plugin-postcss')(),
 				require('rollup-plugin-node-resolve')(),
 				require('rollup-plugin-commonjs')()
 			],
