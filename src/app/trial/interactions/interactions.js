@@ -14,7 +14,9 @@ export default interactions;
  * Can use trial to produce side efects
  **/
 
+var MAX_RECURSION_DEPTH = 50;
 function interactions(trial){
+    var recursionDepth = 0;
     var interactions = trial._source.interactions;
 
     try {
@@ -30,6 +32,9 @@ function interactions(trial){
         var groupName = 'Event: ' + (event.handle || event.type);
         var debugLog = [];
 
+        if (recursionDepth > MAX_RECURSION_DEPTH) throw new Error('It seem you have created an infinite loop. Minno has been halted');
+
+        recursionDepth++;
         try{
             // use an explicit for loop because we need to be able to break
             for (i=0; i<interactions.length; i++){
@@ -48,6 +53,7 @@ function interactions(trial){
             trial.$messages({type:'error', message: 'trial.interactions error', error:error});
             throw error;
         }
+        recursionDepth--;
 
         trial.$messages({type:'debug', message: groupName, rows: debugLog});
 

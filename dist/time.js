@@ -1711,8 +1711,6 @@ function conditionsEvaluate(conditions, inputData, trial){
     }
 }
 
-// @TODO: see if we can afford to change the signature of actions
-// I'd like to have the trial go first here (used almost always).
 var actions = {
     /*
      * Stimulus actions
@@ -1855,7 +1853,7 @@ function applyActions(actions$$1, eventData, trial){
     actions$$1 = _.isArray(actions$$1) ? actions$$1 : [actions$$1];
 
     _.forEach(actions$$1,function(action){
-        var actionFn = actions[action.type];
+        var actionFn = _.isFunction(action) ? action : actions[action.type];
         if (!actionFn) throw new Error('unknown action: ' + action.type);
 
         // the only reason to halt action activation is the endTrial command
@@ -1870,7 +1868,15 @@ function applyActions(actions$$1, eventData, trial){
 * Organizer for the interaction function
 */
 
+/*
+ * Trial -> Event -> Event
+ *
+ * Can use trial to produce side efects
+ **/
+
+var MAX_RECURSION_DEPTH = 50;
 function interactions$1(trial){
+    var recursionDepth = 0;
     var interactions = trial._source.interactions;
 
     try {
@@ -1886,6 +1892,9 @@ function interactions$1(trial){
         var groupName = 'Event: ' + (event.handle || event.type);
         var debugLog = [];
 
+        if (recursionDepth > MAX_RECURSION_DEPTH) throw new Error('It seem you have created an infinite loop. Minno has been halted');
+
+        recursionDepth++;
         try{
             // use an explicit for loop because we need to be able to break
             for (i=0; i<interactions.length; i++){
@@ -1904,6 +1913,7 @@ function interactions$1(trial){
             trial.$messages({type:'error', message: 'trial.interactions error', error:error});
             throw error;
         }
+        recursionDepth--;
 
         trial.$messages({type:'debug', message: groupName, rows: debugLog});
 

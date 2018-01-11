@@ -23,7 +23,7 @@ function applyActions(actions, eventData, trial){
     actions = _.isArray(actions) ? actions : [actions];
 
     _.forEach(actions,function(action){
-        var actionFn = actionList[action.type];
+        var actionFn = _.isFunction(action) ? action : actionList[action.type];
         if (!actionFn) throw new Error('unknown action: ' + action.type);
 
         // the only reason to halt action activation is the endTrial command
