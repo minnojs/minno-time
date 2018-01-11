@@ -10,9 +10,10 @@ export default interactions;
 
 /*
  * Trial -> Event -> Event
- * 
+ *
  * Can use trial to produce side efects
  **/
+
 function interactions(trial){
     var interactions = trial._source.interactions;
 
@@ -22,7 +23,6 @@ function interactions(trial){
         trial.$messages({type:'error', message: 'trial.interactions error', error:error});
         throw error;
     }
-    
     return eventMap;
 
     function eventMap(event){
@@ -66,9 +66,9 @@ export function validateInteractions(interactions){
     if (!interactions.every(isValidProp('conditions'))) throw new Error('Conditions must be either an array or a function');
     if (!interactions.every(isValidProp('actions'))) throw new Error('Actions must be either an array or a function');
 
-    function isValidProp(prop){ 
+    function isValidProp(prop){
         return function(interaction) {
-            return Array.isArray(interaction[prop]) || _.isFunction(interaction[prop]); 
+            return Array.isArray(interaction[prop]) || _.isFunction(interaction[prop]);
         };
     }
 }

@@ -27,6 +27,6 @@ function conditionsEvaluate(conditions, inputData, trial){
 
 
     function checkCondition(condition){
-        return getConditionFn(condition)(condition, inputData, trial);
+        return getConditionFn(condition)(inputData, condition, trial);
     }
 }

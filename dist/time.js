@@ -55,7 +55,7 @@ if (!console.table) console.table = log;
     }
 }());
 
-/** @constructor */
+// Promise polyfill from https://github.com/MithrilJS/mithril.js/blob/next/promise/promise.js 
 var PromisePolyfill = function(executor) {
     if (!(this instanceof PromisePolyfill)) throw new Error("Promise must be called with `new`")
         if (typeof executor !== "function") throw new TypeError("executor must be a function")
@@ -155,7 +155,6 @@ if (typeof window.Promise === "undefined") window.Promise = PromisePolyfill;
 
 __$styleInject(".minno-canvas{height:400px;width:500px;position:relative;border:5px solid #fff;margin:auto;margin-top:10px;-webkit-text-size-adjust:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.minno-stimulus{position:absolute;text-align:center;overflow:hidden;visibility:hidden;width:fit-content}.minno-stimulus-visible{visibility:visible}.minno-stimulus-center-x{left:50%;transform:translateX(-50%)}.minno-stimulus-center-y{top:50%;transform:translateY(-50%)}.minno-stimulus-center-y.minno-stimulus-center-x{transform:translate(-50%,-50%)}.minno-progress{background-color:#20201f;border-radius:20px;padding:4px;position:relative;top:50%;width:80%;margin-left:10%;margin-top:-12px}.minno-progress-bar{background-color:#807b7a;width:0;height:16px;border-radius:10px}",undefined);
 
-// initiate piGloabl
 var glob = window.piGlobal || (window.piGlobal = {});
 
 function global$1(){
@@ -234,7 +233,6 @@ function createDB$1(script){
     return db;
 }
 
-// helper function: returns sizes of element;
 function getSize$1(el){
     var computedStyle = window.getComputedStyle(el);
     return {
@@ -250,7 +248,6 @@ function parse$1(num){ return parseFloat(num, 10) || 0;}
  * this module is built to be part of the main view
  */
 
-// the function to be used by the main view
 function adjust_canvas(canvas, settings){
 
     return _.throttle(eventListener, 16);
@@ -323,21 +320,6 @@ function parse(num){ return parseFloat(num, 10) || 0;}
  *
  */
 
-/**
- * Takes a map of css rules and applies them.
- * Returns a function that returns the page to its former condition.
- *
- * The rule map is an object of ruleName -> ruleObject.
- *
- * var ruleObject = {
- * 	element : wrapped element to affect
- * 	property: css property to modify
- * }
- *
- * @param  {Object} map      A hash of rules.
- * @param  {Object} settings A hash of ruleName -> value
- * @return {Function}        A function that undoes all the previous changes
- */
 function canvasContructor(map, settings){
     var offArr;
 
@@ -622,6 +604,10 @@ function setupVars(script){
     glob[name] = glob.current = current; // create local namespace
 }
 
+/*
+ * media preloader
+ * TODO: turn into factory, possibly make progress into a stream.
+ */
 var srcStack = [];				// an array holding all our sources
 var defStack = [];				// an array holding all the deferreds
 var stackDone = 0;				// the number of sources we have completed downloading
@@ -685,13 +671,6 @@ function load(src, type){
  * build the url for this src (add the generic baseUrl)
  */
 
-/**
- * @param baseUrl {String|Object} the base url to prepend
- * @param url {String} the url we are dealing with
- * @param type {String} the type of resource we are dealing with (image or tempmlate) in case we have multiple base urls
- *
- * @returns String built url
- **/
 function buildUrl(baseUrl, url, type){
     // it this is a dataUrl type of image, we don't need to append the baseurl
     if (type == 'image' && /^data:image/.test(url)) return url;
@@ -1143,10 +1122,6 @@ function timeout$1(inputObj){
     }
 }
 
-/**
- * The input binder is a hash of default input types
- * It returns a stream of events
- **/
 function inputBinder(inputObj, canvas){
     var on = inputObj.on; // what type of binding is this?
 
@@ -1628,12 +1603,12 @@ function inputEqualsStim(inputData, condition, trial){
 }
 
 function trialEquals(inputData, condition, trial){
-    if (typeof condition.property == 'undefined' || typeof condition.value == 'undefined') throw new Error('trialEquals requires both "property" and "value" to be defined');
+    if (_.isUndefined(condition.property) || _.isUndefined(condition.value)) throw new Error('trialEquals requires both "property" and "value" to be defined');
     return condition.value === trial.data[condition.property];
 }
 
 function inputEqualsGlobal(inputData, condition){
-    if (typeof condition.property == 'undefined') throw new Error('inputEqualsGlobal requires "property" to be defined');
+    if (_.isUndefined(condition.property)) throw new Error('inputEqualsGlobal requires "property" to be defined');
     return inputData.handle === global$2[condition.property];
 }
 
@@ -1732,7 +1707,7 @@ function conditionsEvaluate(conditions, inputData, trial){
 
 
     function checkCondition(condition){
-        return getConditonFn(condition)(condition, inputData, trial);
+        return getConditonFn(condition)(inputData, condition, trial);
     }
 }
 
@@ -1895,11 +1870,6 @@ function applyActions(actions$$1, eventData, trial){
 * Organizer for the interaction function
 */
 
-/*
- * Trial -> Event -> Event
- * 
- * Can use trial to produce side efects
- **/
 function interactions$1(trial){
     var interactions = trial._source.interactions;
 
@@ -1909,7 +1879,6 @@ function interactions$1(trial){
         trial.$messages({type:'error', message: 'trial.interactions error', error:error});
         throw error;
     }
-    
     return eventMap;
 
     function eventMap(event){
@@ -1953,9 +1922,9 @@ function validateInteractions(interactions){
     if (!interactions.every(isValidProp('conditions'))) throw new Error('Conditions must be either an array or a function');
     if (!interactions.every(isValidProp('actions'))) throw new Error('Actions must be either an array or a function');
 
-    function isValidProp(prop){ 
+    function isValidProp(prop){
         return function(interaction) {
-            return Array.isArray(interaction[prop]) || _.isFunction(interaction[prop]); 
+            return Array.isArray(interaction[prop]) || _.isFunction(interaction[prop]);
         };
     }
 }
@@ -2006,7 +1975,6 @@ _.extend(Trial$1.prototype,{
             // activate input
             _.forEach(trial._source.input, trial.input.add); // add each input
             trial.input.resetTimer(); // reset the interface timer so that event latencies are relative to now.
-
             // start running
             trial.$events({type:'begin',latency:0});
         });
@@ -2202,20 +2170,16 @@ function transformLogs(action,eventData,trial){
     };
 }
 
-/**
- * run the task
- * Essentialy wiring up all the play phase stuff
- * @TODO: document this function, its super complicated
- **/
-
 function playerPhase(sink){
+
     var canvas = sink.canvas;
     var db = sink.db;
     var settings = sink.settings;
 
-    var $source = stream();
+    var $source = stream(); // a stream of trial POJO
     var $trial = $source.map(activateTrial());
     var $sourceLogs = stream();
+    var $messages = stream();
     var $logs = createLogs$1($sourceLogs, composeLoggerSettings(sink.script, global$1()), transformLogs);
 
     $logs.map(function(log){
@@ -2232,7 +2196,9 @@ function playerPhase(sink){
         $trial:$trial, 
         end: $source.end.bind(null,true), 
         $logs: $logs,
-        start: play.bind(null, ['next', {}])
+        $messages: $messages,
+        start: play.bind(null, ['next', {}]),
+        onEnd: function(fn){ $source.end.map(fn); }
     }, sink);
 
     function clearCanvas(){
@@ -2252,6 +2218,7 @@ function playerPhase(sink){
             var oldTrial = cache;
             var trial = cache = new Trial$1(source, canvas, settings);
             trial.$logs.map($sourceLogs); 
+            trial.$messages.map($messages); 
 
             // must be *before* the subscription to $end for the next trial
             if (source.DEBUG && window.DEBUG) setupDebug(trial);
@@ -2301,12 +2268,6 @@ function composeLoggerSettings(script, global){
     return loggerSettings;
 }
 
-/**
- * activate : (HTMLelement, timeScript) -> Sink
- *
- * timeScript : {settings, sequence, trialSets, stimulusSets, mediaSets, current}
- * Sink: {$trial, $logs, play, end}
- **/
 function activate$1(canvas, script){
     var sink = setup$1(canvas, script);
     var playSink = playerPhase(sink);

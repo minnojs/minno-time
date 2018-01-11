@@ -46,12 +46,12 @@ function inputEqualsStim(inputData, condition, trial){
 }
 
 function trialEquals(inputData, condition, trial){
-    if (typeof condition.property == 'undefined' || typeof condition.value == 'undefined') throw new Error('trialEquals requires both "property" and "value" to be defined');
+    if (_.isUndefined(condition.property) || _.isUndefined(condition.value)) throw new Error('trialEquals requires both "property" and "value" to be defined');
     return condition.value === trial.data[condition.property];
 }
 
 function inputEqualsGlobal(inputData, condition){
-    if (typeof condition.property == 'undefined') throw new Error('inputEqualsGlobal requires "property" to be defined');
+    if (_.isUndefined(condition.property)) throw new Error('inputEqualsGlobal requires "property" to be defined');
     return inputData.handle === global[condition.property];
 }
 

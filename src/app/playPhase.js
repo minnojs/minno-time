@@ -17,13 +17,15 @@ export default playerPhase;
  **/
 
 function playerPhase(sink){
+
     var canvas = sink.canvas;
     var db = sink.db;
     var settings = sink.settings;
 
-    var $source = stream();
+    var $source = stream(); // a stream of trial POJO
     var $trial = $source.map(activateTrial());
     var $sourceLogs = stream();
+    var $messages = stream();
     var $logs = createLogs($sourceLogs, composeLoggerSettings(sink.script, global()), defaultLogMap);
 
     $logs.map(function(log){
@@ -40,7 +42,9 @@ function playerPhase(sink){
         $trial:$trial, 
         end: $source.end.bind(null,true), 
         $logs: $logs,
-        start: play.bind(null, ['next', {}])
+        $messages: $messages,
+        start: play.bind(null, ['next', {}]),
+        onEnd: function(fn){ $source.end.map(fn); }
     }, sink);
 
     function clearCanvas(){
@@ -60,6 +64,7 @@ function playerPhase(sink){
             var oldTrial = cache;
             var trial = cache = new Trial(source, canvas, settings);
             trial.$logs.map($sourceLogs); 
+            trial.$messages.map($messages); 
 
             // must be *before* the subscription to $end for the next trial
             if (source.DEBUG && window.DEBUG) setupDebug(trial);
