@@ -22,7 +22,7 @@ function interactions(trial){
     try {
         validateInteractions(interactions);
     } catch(error){
-        trial.$messages({type:'error', message: 'trial.interactions error', error:error});
+        trial.$messages({type:'error', message: 'trial.interactions error', error:error, context:trial._source});
         throw error;
     }
     return eventMap;
