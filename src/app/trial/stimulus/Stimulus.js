@@ -31,10 +31,19 @@ function Stimulus(stimulus, trial, canvas){
 
 
 function init(){
+    var source = this.source;
+    var $messages = this.trial.$messages;
     if (!this.source.media) throw new Error('Media object not defined for ' + this.name());
 
     return getMedia(this.source.media)
-        .then(setupElement.bind(this, this.canvas));
+        .then(setupElement.bind(this, this.canvas), onError);
+
+    function onError(error){
+        $messages({type:'error', message: 'trial.stimulus error', error:error, context:source});
+        throw error;
+    }       
+    
+
 }
 
 function setupElement(canvas, el){

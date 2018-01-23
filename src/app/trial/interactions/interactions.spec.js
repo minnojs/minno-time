@@ -3,7 +3,7 @@ import Trial from '../Trial';
 
 describe('interactions', function(){
 
-    fdescribe('map', function(){
+    describe('map', function(){
         var trial;
         function truthy(){return true;}
         function falsy(){return false;}
