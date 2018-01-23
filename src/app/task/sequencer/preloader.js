@@ -3,12 +3,14 @@
  * media preloader
  * TODO: turn into factory, possibly make progress into a stream.
  */
+import _ from 'lodash';
 export default loader;
 
 var srcStack = [];				// an array holding all our sources
 var defStack = [];				// an array holding all the deferreds
 var stackDone = 0;				// the number of sources we have completed downloading
 var images = {};
+var getText = _.memoize(getXhr);
 
 var loader = {
     // loads a single source
@@ -25,33 +27,11 @@ var loader = {
 
 // load a single source
 function load(src, type){
-    var promise;
-    type = type || 'image';
     // the source was already loaded
     if (srcStack.indexOf(src) !== -1) return false;
 
     // if we haven't loaded this yet
-    switch (type) {
-        case 'template':
-            promise = new Promise(function(resolve, reject){
-                // @TODO: get rid of requirejs dependency
-                requirejs(['text!' + src], resolve, function(){
-                    reject(new Error('Template not found: ' + src));
-                });
-            });
-            break;
-        case 'image':
-            /* falls through */
-        default :
-            promise = new Promise(function(resolve, reject){
-                var el = document.createElement('img');
-                el.onload = function(){resolve(el);};
-                el.onerror = function(){reject(new Error('Image not found: ' + el.src ));};
-                el.src = src;
-                images[src] = el;
-            });
-            break;
-    }
+    var promise = type == 'template' ? getText(src) : getImage(src);
 
     promise
         .then(function(){stackDone++;})
@@ -64,4 +44,27 @@ function load(src, type){
     srcStack.push(src);
 
     return promise;
+}
+
+function getImage(url){
+    return  new Promise(function(resolve, reject){
+        var el = document.createElement('img');
+        el.onload = function(){resolve(el);};
+        el.onerror = function(){reject(new Error('Image not found: ' + url ));};
+        el.src = url;
+        images[url] = el;
+    });
+}
+function getXhr(url){
+    return new Promise(function(resolve, reject){
+        var request = new XMLHttpRequest();
+        request.open('GET',url, true);
+        request.onreadystatechange = function() {
+            if (this.readyState === 4) {
+                if (this.status >= 200 && this.status < 400) resolve(this.responseText);
+                else reject(new Error('Template not found:' + url));
+            }
+        };
+        request.send();
+    });
 }
