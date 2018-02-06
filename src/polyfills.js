@@ -1,5 +1,24 @@
 if (!Date.now) Date.now = function() { return new Date().getTime(); };
 
+(function(w){
+	var perfNow;
+	var perfNowNames = ['now', 'webkitNow', 'msNow', 'mozNow'];
+	if(!!w['performance']) for(var i = 0; i < perfNowNames.length; ++i)
+	{
+		var n = perfNowNames[i];
+		if(!!w['performance'][n])
+		{
+			perfNow = function(){return w['performance'][n]()};
+			break;
+		}
+	}
+	if(!perfNow)
+	{
+		perfNow = Date.now;
+	}
+	w.perfNow = perfNow;
+})(window);
+
 function log(){ console.log.apply(console, arguments); }
 if (!console.group) console.group = log;
 if (!console.groupCollapsed) console.groupCollapsed = log;

@@ -53,7 +53,7 @@ function inputBinder(inputObj, canvas){
                 opacity: 0.3
             });
 
-            return mouseEvents('mousedown', inputObj);
+            return mouseEvents('mousedown', inputObj, canvas);
 
         case 'rightTouch'	:
             inputObj.element = createElement(inputObj.css, {
@@ -65,7 +65,7 @@ function inputBinder(inputObj, canvas){
                 opacity: 0.3
             });
 
-            return mouseEvents('mousedown', inputObj);
+            return mouseEvents('mousedown', inputObj, canvas);
 
         case 'topTouch'	:
             inputObj.element = createElement(inputObj.css, {
@@ -77,7 +77,7 @@ function inputBinder(inputObj, canvas){
                 opacity: 0.3
             });
 
-            return mouseEvents('mousedown', inputObj);
+            return mouseEvents('mousedown', inputObj, canvas);
 
         case 'bottomTouch'	:
             inputObj.element = createElement(inputObj.css, {
@@ -89,7 +89,7 @@ function inputBinder(inputObj, canvas){
                 opacity: 0.3
             });
 
-            return mouseEvents('mousedown', inputObj);
+            return mouseEvents('mousedown', inputObj, canvas);
 
         default:
             throw new Error('You have an input element with an unrecognized "on" property: ' + on);
