@@ -18,12 +18,16 @@ define(function(require){
             }
 
 			// If we're binding to an existing element, bind to its appropriate handle
-            $(document).on(eventName + '.interface','[data-handle="'+definitions.stimHandle + '"]', activateCallback);
+            $(document).on(buildEventName(eventName),'[data-handle="'+definitions.stimHandle + '"]', activateCallback);
         };
 
         listener.off = function(){
-            $(document).off(eventName + '.interface','[data-handle="'+definitions.stimHandle + '"]');
+            $(document).off(buildEventName(eventName),'[data-handle="'+definitions.stimHandle + '"]');
         };
+    }
+
+    function buildEventName(eventName){
+        return eventName.split(' ').map(function(event){ return event + '.interface'; }).join(' ');
     }
 
     return mouseEventsDecorator;

@@ -24,7 +24,7 @@ define(function(require){
 	 */
 
     return function(listener,definitions){
-        var eventName = 'mousedown.interface';
+        var eventName = 'mousedown.interface touchstart.interface';
         var $element = definitions.element ? $(definitions.element) : false;
 
         listener.on = function(callback){
@@ -38,6 +38,7 @@ define(function(require){
                 // the element to attach
                 $element
                 .css(definitions.css || {})
+                .attr('onclick', 'javascript:void(0);')
                 .appendTo('#canvas')							// @todo, not great form, we should probably have a variable pointing there...
                 .on(eventName,activateCallback);
             }

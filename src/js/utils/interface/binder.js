@@ -42,11 +42,11 @@ define(function(require){
                 break;
 
             case 'mouseup'	:
-                mouseEvents('mouseup', listener,definitions);
+                mouseEvents('mouseup touchend', listener,definitions);
                 break;
 
             case 'mousedown'	:
-                mouseEvents('mousedown', listener,definitions);
+                mouseEvents('mousedown touchstart', listener,definitions);
                 break;
 
             case 'mouseenter'	:
