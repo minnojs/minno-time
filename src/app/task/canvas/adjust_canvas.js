@@ -38,20 +38,15 @@ function adjust_canvas(canvas, settings){
     }
 }
 
-function getProportions(settings){
-    // if proportions are an object they should include width and height
-    if (_.isPlainObject(settings.proportions)) {
-        if (typeof settings.proportions.height !== 'number' || typeof settings.proportions.width !== 'number'){
-            throw new Error('The canvas proportions object`s height and a width properties must be numeric');
-        }
-        return settings.proportions.height/settings.proportions.width; 
-    } 
-    return settings.proportions || 0.8; // by default proportions are 0.8
+function getProportions(proportions){
+    if (!_.isPlainObject(proportions)) return proportions || 0.8; // by default proportions are 0.8
+    if ([proportions.height, proportions.width].every(_.isFinite)) return proportions.height/proportions.width; 
+    throw new Error('The canvas proportions object`s height and a width properties must be numeric');
 }
 
 function getTargetSize(settings, canvas){
     // calculate proportions (as height/width)
-    var proportions = getProportions(settings);
+    var proportions = getProportions(settings.proportions);
 
     // static canvas size
     // ------------------
@@ -66,7 +61,7 @@ function getTargetSize(settings, canvas){
     var docElement = window.document.documentElement; // used to get client view size
 
     var maxHeight = docElement.clientHeight;
-    var maxWidth = Math.min(settings.maxWidth, docElement.clientWidth, getSize(canvas.parentNode).width);
+    var maxWidth = Math.min(settings.maxWidth || Infinity, docElement.clientWidth, getSize(canvas.parentNode).width);
 
     // calculate the correct size for this screen size
     if (maxHeight > proportions * maxWidth) return { height: maxWidth*proportions, width: maxWidth };
