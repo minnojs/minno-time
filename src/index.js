@@ -17,7 +17,7 @@ function activate(canvas, script){
     var sink = setup(canvas, script);
     var playSink = playPhase(sink);
 
-    playSink.$trial.end.map(playSink.$resize.end.bind(null, true)); // end resize stream
+    playSink.$trial.end.map(playSink.$resize.end); // end resize stream
 
     // preload Images, then start "playPhase"
     preloadPhase(canvas, script).then(playSink.start);
