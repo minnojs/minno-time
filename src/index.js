@@ -20,7 +20,7 @@ function activate(canvas, script){
     playSink.$trial.end.map(playSink.$resize.end); // end resize stream
 
     // preload Images, then start "playPhase"
-    preloadPhase(canvas, script).then(playSink.start);
+    preloadPhase(canvas, script, playSink.$messages).then(playSink.start);
 
     return playSink;
 }

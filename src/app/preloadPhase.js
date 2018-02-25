@@ -3,8 +3,8 @@ import fastdom from 'fastdom';
 
 export default preloadPhase;
 
-function preloadPhase(canvas, script){
-    var preloader = scriptPreloader(script, script.base_url);
+function preloadPhase(canvas, script, $messages){
+    var preloader = scriptPreloader(script, script.settings.base_url);
 
     if (preloader.progress() == 1) return Promise.resolve().then(emptyCanvas);
 
@@ -15,6 +15,14 @@ function preloadPhase(canvas, script){
     preloader.onload = function(){
         fastdom.mutate(function(){
             barStyle.width = preloader.progress()*100 + '%';
+        });
+    };
+    preloader.onerror = function(e, src){
+        $messages({
+            type:'error',
+            message: 'Failed to preload',
+            error:e,
+            context:src
         });
     };
 

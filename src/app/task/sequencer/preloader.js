@@ -36,7 +36,10 @@ function load(src, type){
     promise
         .then(function(){stackDone++;})
         .then(function(){
-            loader.onload && loader.onload();
+            loader.onload && loader.onload(src);
+        })
+        .catch(function(e){
+            loader.onerror && loader.onerror(e, src);
         });
 
     // keep defered and source for later.
@@ -55,6 +58,7 @@ function getImage(url){
         images[url] = el;
     });
 }
+
 function getXhr(url){
     return new Promise(function(resolve, reject){
         var request = new XMLHttpRequest();

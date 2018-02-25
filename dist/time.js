@@ -267,7 +267,6 @@ function parse$1(num){ return parseFloat(num, 10) || 0;}
  * this module is built to be part of the main view
  */
 
-// the function to be used by the main view
 function adjust_canvas(canvas, settings){
 
     return _.throttle(eventListener, 16);
@@ -649,10 +648,16 @@ function load(src, type){
     // if we haven't loaded this yet
     var promise = type == 'template' ? getText(src) : getImage(src);
 
+    console.log(src);
+
     promise
         .then(function(){stackDone++;})
         .then(function(){
-            loader.onload && loader.onload();
+            loader.onload && loader.onload(src);
+        })
+        .catch(function(e){
+            console.log(e);
+            loader.onerror && loader.onerror(e, src);
         });
 
     // keep defered and source for later.
@@ -671,6 +676,7 @@ function getImage(url){
         
     });
 }
+
 function getXhr(url){
     return new Promise(function(resolve, reject){
         var request = new XMLHttpRequest();
@@ -972,7 +978,7 @@ else module.exports = exports;
 })( typeof window !== 'undefined' ? window : commonjsGlobal);
 });
 
-function preloadPhase$1(canvas, script){
+function preloadPhase$1(canvas, script, $messages){
     var preloader = preloadScript(script, script.base_url);
 
     if (preloader.progress() == 1) return Promise.resolve().then(emptyCanvas);
@@ -984,6 +990,14 @@ function preloadPhase$1(canvas, script){
     preloader.onload = function(){
         fastdom.mutate(function(){
             barStyle.width = preloader.progress()*100 + '%';
+        });
+    };
+    preloader.onerror = function(e, src){
+        $messages({
+            type:'error',
+            message: 'Failed to preload',
+            error:e,
+            context:src
         });
     };
 
@@ -2094,88 +2108,11 @@ function nextTrial$1(db, settings, goto){
     }
 }
 
-function post$1(url, data){
-    return new Promise(function(resolve, reject){
-        var request = new XMLHttpRequest();
-        request.open('POST',url, true);
-        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-
-        request.onreadystatechange = function() {
-            if (this.readyState === 4) {
-                if (this.status >= 200 && this.status < 400) resolve(this.responseText);
-                else reject(new Error('Failed posting to: ' + url));
-            }
-        };
-
-        request.send(serialize$1(data));
-    });
-}
-
-function serialize$1(data) {
-    if (typeof data == 'string') return data;
-    return JSON.stringify(data);
-}
-
-function poster$1($logs, settings){
-    var cache = [];
-    var url = settings.url;
-
-    if (!url) return; // if we have no url, we can't log anything anyway
-
-    $logs.map(eachLog);
-    $logs.end.map(finalizefLogs);
-
-    function eachLog(log){
-        cache.push(log);
-        if (!settings.pulse) return;
-        if (cache.length >= settings.pulse) {
-            send(cache);
-            cache.length = 0;
-        }
-    }
-
-    function finalizefLogs(){
-        if (cache.length) send(cache);
-    }
-
-    function send(logs){
-        var serialize = settings.serialize || (settings.newServelet ? buildPost : buildPostOld);
-        var serializedPost = serialize(logs, settings.metaData);
-
-        return post$1(url,serializedPost)
-            .catch(function retry(){ return post$1(url, serializedPost); })
-            .catch(settings.error || _.noop);
-    }
-
-}
-
-function buildPost(logs, metaData){
-    var data = _.assign({ data:logs }, metaData);
-    return JSON.stringify(data);
-}
-
-function buildPostOld(logs, metaData){
-    var data = 'json=' + JSON.stringify(logs); // do not re-encode json
-    var meta = serialize(metaData);
-    return data + (meta ? '&'+meta : '');
-}
-
-
-function serialize(data){
-    var key, r = [];
-    for (key in data) r.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
-    return r.join('&').replace(/%20/g, '+');
-}
-
 function createLogs$1($sourceLogs, settings, defaultLogMap){
-    var $logs = $sourceLogs.map(applyMap(settings.logger || settings.logMap || defaultLogMap));
+    var logMap = settings.logger || settings.logMap || defaultLogMap;
+    return  $sourceLogs.map(applyMap(logMap));
 
-    if (settings.poster) settings.poster($logs, settings, poster$1);
-    else poster$1($logs, settings);
-
-    return $logs;
-
-    // $logs is a stream of array, we want to apply them as args to the transform function
+    // $logs is a stream of arrays, we want to apply them as args to the transform function
     function applyMap(fn){
         return function(args){ return fn.apply(null,args); };
     }
@@ -2303,10 +2240,10 @@ function activate$1(canvas, script){
     var sink = setup$1(canvas, script);
     var playSink = playerPhase(sink);
 
-    playSink.$trial.end.map(playSink.$resize.end.bind(null, true)); // end resize stream
+    playSink.$trial.end.map(playSink.$resize.end); // end resize stream
 
     // preload Images, then start "playPhase"
-    preloadPhase$1(canvas, script).then(playSink.start);
+    preloadPhase$1(canvas, script, playSink.$messages).then(playSink.start);
 
     return playSink;
 }
