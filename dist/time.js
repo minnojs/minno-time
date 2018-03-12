@@ -648,15 +648,12 @@ function load(src, type){
     // if we haven't loaded this yet
     var promise = type == 'template' ? getText(src) : getImage(src);
 
-    console.log(src);
-
     promise
         .then(function(){stackDone++;})
         .then(function(){
             loader.onload && loader.onload(src);
         })
         .catch(function(e){
-            console.log(e);
             loader.onerror && loader.onerror(e, src);
         });
 
@@ -979,7 +976,7 @@ else module.exports = exports;
 });
 
 function preloadPhase$1(canvas, script, $messages){
-    var preloader = preloadScript(script, script.base_url);
+    var preloader = preloadScript(script, script.settings.base_url);
 
     if (preloader.progress() == 1) return Promise.resolve().then(emptyCanvas);
 
@@ -2138,6 +2135,12 @@ function transformLogs(action,eventData,trial){
     };
 }
 
+/**
+ * run the task
+ * Essentialy wiring up all the play phase stuff
+ * @TODO: document this function, its super complicated
+ **/
+
 function playerPhase(sink){
 
     var canvas = sink.canvas;
@@ -2157,6 +2160,7 @@ function playerPhase(sink){
     var onDone = _.get(settings, 'hooks.endTask', settings.onEnd || _.noop);
 
     $source.end
+        .map($trial.end)
         .map(clearCanvas)
         .map(onDone);
 

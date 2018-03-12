@@ -35,6 +35,7 @@ function playerPhase(sink){
     var onDone = _.get(settings, 'hooks.endTask', settings.onEnd || _.noop);
 
     $source.end
+        .map($trial.end)
         .map(clearCanvas)
         .map(onDone);
 
