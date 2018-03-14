@@ -2135,12 +2135,6 @@ function transformLogs(action,eventData,trial){
     };
 }
 
-/**
- * run the task
- * Essentialy wiring up all the play phase stuff
- * @TODO: document this function, its super complicated
- **/
-
 function playerPhase(sink){
 
     var canvas = sink.canvas;
@@ -2152,15 +2146,11 @@ function playerPhase(sink){
     var $sourceLogs = stream();
     var $messages = stream();
     var $logs = createLogs$1($sourceLogs, composeLoggerSettings(sink.script, global$1()), transformLogs);
-
-    $logs.map(function(log){
-        global$1().current.logs.push(log);
-    });
-
     var onDone = _.get(settings, 'hooks.endTask', settings.onEnd || _.noop);
 
     $source.end
         .map($trial.end)
+        .map($sourceLogs.end)
         .map(clearCanvas)
         .map(onDone);
 
@@ -2240,6 +2230,12 @@ function composeLoggerSettings(script, global){
     return loggerSettings;
 }
 
+/**
+ * activate : (HTMLelement, timeScript) -> Sink
+ *
+ * timeScript : {settings, sequence, trialSets, stimulusSets, mediaSets, current}
+ * Sink: {$trial, $logs, play, end}
+ **/
 function activate$1(canvas, script){
     var sink = setup$1(canvas, script);
     var playSink = playerPhase(sink);

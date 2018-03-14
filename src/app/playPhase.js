@@ -27,15 +27,11 @@ function playerPhase(sink){
     var $sourceLogs = stream();
     var $messages = stream();
     var $logs = createLogs($sourceLogs, composeLoggerSettings(sink.script, global()), defaultLogMap);
-
-    $logs.map(function(log){
-        global().current.logs.push(log);
-    });
-
     var onDone = _.get(settings, 'hooks.endTask', settings.onEnd || _.noop);
 
     $source.end
         .map($trial.end)
+        .map($sourceLogs.end)
         .map(clearCanvas)
         .map(onDone);
 
