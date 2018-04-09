@@ -4,22 +4,31 @@
 	(global['minno-time'] = factory(global._,global.Database));
 }(this, (function (_,Database) { 'use strict';
 
-function __$styleInject(css, returnValue) {
-  if (typeof document === 'undefined') {
-    return returnValue;
-  }
-  css = css || '';
+function __$styleInject(css, ref) {
+  if ( ref === void 0 ) ref = {};
+  var insertAt = ref.insertAt;
+
+  if (!css || typeof document === 'undefined') { return; }
+
   var head = document.head || document.getElementsByTagName('head')[0];
   var style = document.createElement('style');
   style.type = 'text/css';
-  head.appendChild(style);
-  
-  if (style.styleSheet){
+
+  if (insertAt === 'top') {
+    if (head.firstChild) {
+      head.insertBefore(style, head.firstChild);
+    } else {
+      head.appendChild(style);
+    }
+  } else {
+    head.appendChild(style);
+  }
+
+  if (style.styleSheet) {
     style.styleSheet.cssText = css;
   } else {
     style.appendChild(document.createTextNode(css));
   }
-  return returnValue;
 }
 
 _ = _ && _.hasOwnProperty('default') ? _['default'] : _;
@@ -172,7 +181,7 @@ PromisePolyfill.race = function(list) {
 
 if (typeof window.Promise === "undefined") window.Promise = PromisePolyfill;
 
-__$styleInject(".minno-canvas{height:400px;width:500px;position:relative;border:5px solid #fff;margin:auto;margin-top:10px;-webkit-text-size-adjust:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.minno-stimulus{position:absolute;text-align:center;overflow:hidden;visibility:hidden;width:fit-content}.minno-stimulus-visible{visibility:visible}.minno-stimulus-center-x{left:50%;transform:translateX(-50%)}.minno-stimulus-center-y{top:50%;transform:translateY(-50%)}.minno-stimulus-center-y.minno-stimulus-center-x{transform:translate(-50%,-50%)}.minno-progress{background-color:#20201f;border-radius:20px;padding:4px;position:relative;top:50%;width:80%;margin-left:10%;margin-top:-12px}.minno-progress-bar{background-color:#807b7a;width:0;height:16px;border-radius:10px}",undefined);
+__$styleInject(".minno-canvas{height:400px;width:500px;position:relative;border:5px solid #fff;margin:auto;margin-top:10px;-webkit-text-size-adjust:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.minno-stimulus{position:absolute;text-align:center;overflow:hidden;visibility:hidden;width:fit-content}.minno-stimulus-visible{visibility:visible}.minno-stimulus-center-x{left:50%;transform:translateX(-50%)}.minno-stimulus-center-y{top:50%;transform:translateY(-50%)}.minno-stimulus-center-y.minno-stimulus-center-x{transform:translate(-50%,-50%)}.minno-progress{background-color:#20201f;border-radius:20px;padding:4px;position:relative;top:50%;width:80%;margin-left:10%;margin-top:-12px}.minno-progress-bar{background-color:#807b7a;width:0;height:16px;border-radius:10px}", {});
 
 var glob = window.piGlobal || (window.piGlobal = {});
 
@@ -792,6 +801,7 @@ FastDom.prototype = {
    * schedules a new frame if need be.
    *
    * @param  {Function} fn
+   * @param  {Object} ctx the context to be bound to `fn` (optional).
    * @public
    */
   measure: function(fn, ctx) {
@@ -807,6 +817,7 @@ FastDom.prototype = {
    * a new frame if need be.
    *
    * @param  {Function} fn
+   * @param  {Object} ctx the context to be bound to `fn` (optional).
    * @public
    */
   mutate: function(fn, ctx) {
@@ -1745,7 +1756,8 @@ function conditionsEvaluate(conditions, inputData, trial){
 
 
     function checkCondition(condition){
-        return getConditonFn(condition)(inputData, condition, trial);
+        var value = getConditonFn(condition)(inputData, condition, trial);
+        return condition.negate ? !value : value;
     }
 }
 
@@ -2230,12 +2242,6 @@ function composeLoggerSettings(script, global){
     return loggerSettings;
 }
 
-/**
- * activate : (HTMLelement, timeScript) -> Sink
- *
- * timeScript : {settings, sequence, trialSets, stimulusSets, mediaSets, current}
- * Sink: {$trial, $logs, play, end}
- **/
 function activate$1(canvas, script){
     var sink = setup$1(canvas, script);
     var playSink = playerPhase(sink);

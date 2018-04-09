@@ -27,6 +27,7 @@ function conditionsEvaluate(conditions, inputData, trial){
 
 
     function checkCondition(condition){
-        return getConditionFn(condition)(inputData, condition, trial);
+        var value = getConditionFn(condition)(inputData, condition, trial);
+        return condition.negate ? !value : value;
     }
 }
