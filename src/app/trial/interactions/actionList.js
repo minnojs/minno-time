@@ -161,7 +161,7 @@ var actions = {
             trial.data[logAs].push(results);
         }, action.logRate || 15);
 
-        trial.data[logAs] = [];
+        trial.data[logAs] || (trial.data[logAs] = []);
         trial.data.$listener = listener;
 
         document.addEventListener('mousemove', listener);

@@ -392,7 +392,7 @@ Change canvas style using any of the following properties (see [settings](#canva
 **startMouseTracking**:
 Starts mouse tracking. Mouse tracking logs all measurements into an array in `data`.
 It stops when you call the `stopMouseTracking` action or automatically at the end of the trial.
-* `{type:'startMouseTracking'`
+* `{type:'startMouseTracking'}`
 * `{type:'startMouseTracking', logAs:'tracking', logRate: 150, logStimulusLocation: ['myHandle']}`
 
 property            | description
@@ -401,6 +401,9 @@ logAs               | Set the property within `data` to which the tracking data 
 logRate             | The minmum time between measurements in miliseconds (default: 15).
 logStimulusLocation | An array of stimulus handles for which location data should be logged.
 
+**stopMouseTracking**:
+Stops ongoing mousetracking.
+* `{type:'stopMouseTracking'}`
 
 **log**:
 Log this action. Pushes this action into the logging stack so that it is later sent to the server (you can set how the player logs an action using the [logger settings](#logger))
