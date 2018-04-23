@@ -39,7 +39,6 @@ var actions = {
     /*
      * Trial actions
      */
-
     setTrialAttr: function(action, eventData, trial){
         var setter = action.setter;
         if (typeof setter == 'undefined') throw new Error('The setTrialAttr action requires a setter property');
@@ -126,6 +125,54 @@ var actions = {
         // settings activator
         var off = applyCanvasStyles(map, _.pick(action,['background','canvasBackground','borderColor','borderWidth']));
         trial.$end.map(off);
+    },
+
+    /*
+     *  Mouse tracking
+     */
+    startMouseTracking: function(action, eventData, trial){
+        if (trial.data.listener) return trial.$message({ type:'warn', message: 'Mouse tracking has already been activated.' });
+
+        var startTime = performance.now();
+        var canvas = trial.canvas;// get its computed style
+        var logAs = action.logAs || 'mousetracker';
+
+        // get canvas borders so that we can compute relative to the content box
+        var styling = getComputedStyle(canvas);
+        var topBorder = parseInt(styling.getPropertyValue('border-top-width'));
+        var leftBorder = parseInt(styling.getPropertyValue('border-left-width'));
+
+        var trackedStimuli = trial.stimulusCollection.stimuli.filter(function(stim){ return _.contains(action.logStimulusLocation, stim.handle); });
+
+        var listener = _.throttle(function(e){
+            var canvasLocation = canvas.getBoundingClientRect();
+            var correctedCanvas = {x:canvasLocation.x+leftBorder, y:canvasLocation.y+topBorder};
+            var mouseLocation = { mouseX: e.clientX - correctedCanvas.x, mouseY: e.clientY - correctedCanvas.y };
+
+            var locations = trackedStimuli.reduce(function(acc, val){
+                var rect = val.el.getBoundingClientRect();
+                _.set(acc, val.handle+'X',rect.x - correctedCanvas.x);
+                _.set(acc, val.handle+'Y',rect.y - correctedCanvas.y);
+                return acc;
+            }, mouseLocation);
+
+            var results = _.mapValues(_.set(locations, 'time', performance.now()-startTime), Math.round);
+
+            trial.data[logAs].push(results);
+        }, action.logRate || 15);
+
+        trial.data[logAs] = [];
+        trial.data.$listener = listener;
+
+        document.addEventListener('mousemove', listener);
+        trial.$events.end.map(function(){ // make sure that the listener is removed at the end of the trial
+            document.removeEventListener('mousemove', listener);
+        });
+    },
+
+
+    stopMouseTracking: function(e, ed, trial){
+        _.isFunction(trial.data.$listener) && document.removeEventListener('mousemove', trial.data.$listener);
     }
 };
 

@@ -382,12 +382,25 @@ Resets trial timer. The latency of any events from here on (including the curren
 * `{type:'resetTimer'}`
 
 **endTrial**:
-*Speaks for itself (note that any actions that come after this is called may not work properly).
+Speaks for itself (note that any actions that come after this is called may not work properly).
 * `{type:'endTrial'}`
 
 **canvas**:
 Change canvas style using any of the following properties (see [settings](#canvas)): `background`, `canvasBackground`, `borderColor`, `borderWidth`.
 * `{type:'canvas', background:'blue'}`
+
+**startMouseTracking**:
+Starts mouse tracking. Mouse tracking logs all measurements into an array in `data`.
+It stops when you call the `stopMouseTracking` action or automatically at the end of the trial.
+* `{type:'startMouseTracking'`
+* `{type:'startMouseTracking', logAs:'tracking', logRate: 150, logStimulusLocation: ['myHandle']}`
+
+property            | description
+--------            | -----------
+logAs               | Set the property within `data` to which the tracking data is logged (default: 'mousetracking').
+logRate             | The minmum time between measurements in miliseconds (default: 15).
+logStimulusLocation | An array of stimulus handles for which location data should be logged.
+
 
 **log**:
 Log this action. Pushes this action into the logging stack so that it is later sent to the server (you can set how the player logs an action using the [logger settings](#logger))
