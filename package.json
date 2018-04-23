@@ -12,7 +12,15 @@
     "e2e:debug": "node ./e2e/debug.js",
     "e2e": "node ./e2e/runner.js",
     "e2e:sauce": "node ./e2e/runner.js --sauce",
+    "gendocs": "minno-gendocs docs pages",
     "surge": "surge --project ./ --domain minno-time-e2e.surge.sh"
+  },
+  "minno": {
+    "activeVersions": [
+      "0.3",
+      "0.5"
+    ],
+    "questVersion": "0.2"
   },
   "author": "",
   "license": "Apache-2.0",
@@ -32,6 +40,7 @@
     "karma-chrome-launcher": "^2.2.0",
     "karma-jasmine": "^1.1.0",
     "karma-rollup-preprocessor": "^5.0.1",
+    "minno-gendocs": "^1.0.5",
     "nightwatch": "^0.9.16",
     "rollup": "^0.51.5",
     "rollup-plugin-commonjs": "^8.2.1",
