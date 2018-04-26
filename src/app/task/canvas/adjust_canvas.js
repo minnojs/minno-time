@@ -4,6 +4,7 @@
  */
 
 import _ from 'lodash';
+import fastdom from 'fastdom';
 import getSize from './getSize';
 
 export default adjust_canvas;
@@ -20,21 +21,25 @@ function adjust_canvas(canvas, settings){
     }
 
     function resize(){
-        var targetSize = getTargetSize(settings, canvas);
+        fastdom.measure(function(){
+            var targetSize = getTargetSize(settings, canvas);
 
-        // remove border width and top margin from calculated width (can't depend on cool box styles yet...)
-        // we compute only margin-top because of a difference calculating margins between chrome + IE and firefox + mobile
-        var computedStyle = window.getComputedStyle(canvas);
-        targetSize.height -= parse(computedStyle.borderTopWidth) + parse(computedStyle.borderBottomWidth) + parse(computedStyle.marginTop);
-        targetSize.width -= parse(computedStyle.borderLeftWidth) + parse(computedStyle.borderRightWidth);
+            // remove border width and top margin from calculated width (can't depend on cool box styles yet...)
+            // we compute only margin-top because of a difference calculating margins between chrome + IE and firefox + mobile
+            var computedStyle = window.getComputedStyle(canvas);
+            targetSize.height -= parse(computedStyle.borderTopWidth) + parse(computedStyle.borderBottomWidth) + parse(computedStyle.marginTop);
+            targetSize.width -= parse(computedStyle.borderLeftWidth) + parse(computedStyle.borderRightWidth);
 
-        // reset canvas size
-        canvas.style.width = targetSize.width + 'px';
-        canvas.style.height = targetSize.height + 'px';
-        canvas.style.fontSize = targetSize.height*(settings.textSize || 3)/100 + 'px';
+            fastdom.mutate(function(){
+                // reset canvas size
+                canvas.style.width = targetSize.width + 'px';
+                canvas.style.height = targetSize.height + 'px';
+                canvas.style.fontSize = targetSize.height*(settings.textSize || 3)/100 + 'px';
 
-        // scroll to top of window (hides some of the mess on the top of mobile devices)
-        window.scrollTo(0, 1);
+                // scroll to top of window (hides some of the mess on the top of mobile devices)
+                window.scrollTo(0, 1);
+            });
+        });
     }
 }
 
