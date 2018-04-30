@@ -392,6 +392,7 @@ Change canvas style using any of the following properties (see [settings](#canva
 **startMouseTracking**:
 Starts mouse tracking. Mouse tracking logs all measurements into an array in `data`.
 It stops when you call the `stopMouseTracking` action or automatically at the end of the trial.
+Calling `startMouseTracking` when it is already running does not do anything.
 * `{type:'startMouseTracking'}`
 * `{type:'startMouseTracking', logAs:'tracking', logRate: 150, logStimulusLocation: ['myHandle']}`
 
@@ -399,7 +400,21 @@ property            | description
 --------            | -----------
 logAs               | Set the property within `data` to which the tracking data is logged (default: 'mousetracking').
 logRate             | The minmum time between measurements in miliseconds (default: 15).
-logStimulusLocation | An array of stimulus handles for which location data should be logged.
+logStimulusLocation | An array of stimulus handles for which location data should be logged. You can use this to save the location of the stimuli you're using as response options.
+
+The tracking data is logged as an array of Objects with the following structure:
+
+property                | description
+-----------             | -----------
+time                    | Time in ms from the initiation of mouseTracking.
+mouseX                  | The vertical location of the mouse relative to the canvas.
+mouseY                  | The horizontal location of the mouse relative to the canvas.
+&lt;handle&gth;X        | (optional) The vertical location of the &lt;handle&gth; elment relative to the canvas.
+&lt;handle&gth;Y        | (optional) The horizontal location of the &lt;handle&gth; elment relative to the canvas.
+&lt;handle&gth;Width    | (optional) The width of the &lt;handle&gth; elment.
+&lt;handle&gth;Height   | (optional) The height of the &lt;handle&gth; elment.
+
+
 
 **stopMouseTracking**:
 Stops ongoing mousetracking.

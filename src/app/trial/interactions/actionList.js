@@ -153,6 +153,8 @@ var actions = {
                 var rect = val.el.getBoundingClientRect();
                 _.set(acc, val.handle+'X',rect.x - correctedCanvas.x);
                 _.set(acc, val.handle+'Y',rect.y - correctedCanvas.y);
+                _.set(acc, val.handle+'Width',rect.width);
+                _.set(acc, val.handle+'Height',rect.height);
                 return acc;
             }, mouseLocation);
 
@@ -172,7 +174,10 @@ var actions = {
 
 
     stopMouseTracking: function(e, ed, trial){
-        _.isFunction(trial.data.$listener) && document.removeEventListener('mousemove', trial.data.$listener);
+        if (_.isFunction(trial.data.$listener)) { 
+            document.removeEventListener('mousemove', trial.data.$listener);
+            trial.data.$listener = null;
+        }
     }
 };
 
