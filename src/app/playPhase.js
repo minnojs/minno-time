@@ -6,7 +6,7 @@ import Trial from './trial/Trial';
 import nextTrial from './task/sequencer/nextTrial';
 import createLogs from './task/logger/createLogStream';
 import defaultLogMap from './task/logger/defaultLogMap';
-import global from './global';
+import piGlobal from './global';
 
 export default playerPhase;
 
@@ -21,13 +21,19 @@ function playerPhase(sink){
     var canvas = sink.canvas;
     var db = sink.db;
     var settings = sink.settings;
+    var global = piGlobal();
 
     var $source = stream(); // a stream of trial POJO
     var $trial = $source.map(activateTrial());
     var $sourceLogs = stream();
     var $messages = stream();
-    var $logs = createLogs($sourceLogs, composeLoggerSettings(sink.script, global()), defaultLogMap);
+    var $logs = createLogs($sourceLogs, composeLoggerSettings(sink.script, global), defaultLogMap);
     var onDone = _.get(settings, 'hooks.endTask', settings.onEnd || _.noop);
+
+    // expose logs on current
+    $logs.map(function(log){
+        global.current.logs.push(log);        
+    });
 
     $source.end
         .map($trial.end)
