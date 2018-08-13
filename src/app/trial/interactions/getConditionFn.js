@@ -62,7 +62,7 @@ function globalEquals(inputData, condition){
 
 function globalEqualsTrial(inputData, condition, trial){
     if (typeof condition.globalProp == 'undefined' || typeof condition.trialProp == 'undefined') throw new Error('globalEqualsTrial requires both "globalProp" and "trialProp" to be defined');
-    return global[condition.globalProp] !== trial.data[condition.trialProp];
+    return global[condition.globalProp] === trial.data[condition.trialProp];
 }
 
 function globalEqualsStim(inputData, condition, trial){
@@ -85,7 +85,7 @@ function inputEqualsCurrent(inputData, condition){
 function currentEquals(inputData, condition){
     var current = global.current;
     if (typeof condition.property == 'undefined' || typeof condition.value == 'undefined') throw new Error('currentEquals requires both "property" and "value" to be defined');
-    return condition.value !== current[condition.property];
+    return condition.value === current[condition.property];
 }
 
 function currentEqualsTrial(inputData, condition, trial){
