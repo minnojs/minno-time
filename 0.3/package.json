@@ -1,11 +1,12 @@
 {
   "name": "PIPlayer",
-  "version": "0.3.37",
+  "version": "0.3.38",
   "license": "Apache-2.0",
   "description": "Project Implicit Player",
   "minno": {
     "activeVersions": [
-      "0.3"
+      "0.3",
+      "0.5"
     ],
     "questVersion": "0.1"
   },

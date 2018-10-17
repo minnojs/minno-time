@@ -1,0 +1,55 @@
+{
+  "name": "minno-time",
+  "version": "0.5.10",
+  "description": "A free tool for creating reaction time tasks",
+  "main": "dist/time.js",
+  "module": "src/index.js",
+  "scripts": {
+    "test": "karma start",
+    "test:ci": "karma start --single-run",
+    "build": "./node_modules/rollup/bin/rollup -c",
+    "dev": "./node_modules/rollup/bin/rollup -c -w & karma start",
+    "e2e:debug": "node ./e2e/debug.js",
+    "e2e": "node ./e2e/runner.js",
+    "e2e:sauce": "node ./e2e/runner.js --sauce",
+    "gendocs": "minno-gendocs docs pages",
+    "surge": "surge --project ./ --domain minno-time-e2e.surge.sh"
+  },
+  "minno": {
+    "activeVersions": [
+      "0.3",
+      "0.5"
+    ],
+    "questVersion": "0.2"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "fastdom": "^1.0.6",
+    "lodash": "^3.10.1",
+    "minno-css": "github:minnojs/minno-css",
+    "minno-sequencer": "github:minnojs/minno-sequencer",
+    "mithril-stream": "^1.1.0"
+  },
+  "devDependencies": {
+    "cross-env": "^5.1.1",
+    "cssnano": "^3.10.0",
+    "jasmine": "^2.8.0",
+    "jasmine-ajax": "^3.3.1",
+    "karma": "^1.7.1",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-rollup-preprocessor": "^5.0.1",
+    "minno-gendocs": "^1.0.5",
+    "nightwatch": "^0.9.16",
+    "rollup": "^0.51.5",
+    "rollup-plugin-commonjs": "^8.2.1",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-postcss": "^0.5.5",
+    "rollup-plugin-uglify": "^2.0.1",
+    "saucelabs": "^1.4.0",
+    "selenium-download": "^2.0.10",
+    "simulant": "^0.2.2",
+    "surge": "^0.19.0"
+  }
+}

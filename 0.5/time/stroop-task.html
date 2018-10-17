@@ -1,0 +1,304 @@
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Minno.js</title>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+		<link href="../assets/prism.css" rel="stylesheet" />
+		<link href="../assets/style.css" rel="stylesheet" />
+	</head>
+	<body>
+		<header>
+			<section>
+				<nav class="brand">
+                    <a href="/"><h1>Minno</h1></a>
+				</nav>
+				<nav>
+					<a href="/minno-quest/0.2/basics/overview.html">Basics</a>
+					<a href="/minno-quest/0.2/manager/overview.html">miManager</a>
+					<a href="/minno-quest/0.2/quest/overview.html">miQuest</a>
+					<a href="/minno-time/0.5/time/overview.html">miTime</a>
+				</nav>
+				<nav>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
+                    <select id="version-select"><option value="0.3" >v0.3</option>,<option value="0.5" selected>v0.5</option></select>
+					<a href="https://github.com/minnojs">Github</a>
+				</nav>
+			</section>
+		</header>
+		<main>
+			<section class="docs">
+                <h1><a name="a-hrefstroop-taskhtmltaska" class="header-link" href="#a-hrefstroop-taskhtmltaska"><span></span></a><a href="stroop-task.html">Task</a></h1><ul>
+<li>Core<ul>
+<li><a href="overview.html">Overview</a></li>
+<li><a href="API.html">API</a></li>
+<li><a href="scorer.html">Scorer</a></li>
+<li><a href="resources.html">Resources</a></li>
+<li><a href="playground.html">Playground</a></li>
+</ul>
+</li>
+<li>Tutorials<ul>
+<li><a href="hello.html">Hello World</a><ul>
+<li><a href="helloPlay.html">Playground</a></li>
+</ul>
+</li>
+<li><a href="slideshow.html">Slide show</a><ul>
+<li><a href="slideshow1.html">step1</a></li>
+<li><a href="slideshow2.html">step2</a></li>
+<li><a href="slideshow3.html">step3</a></li>
+</ul>
+</li>
+<li>Stroop<ul>
+<li><a href="stroop-setup.html">Setup</a></li>
+<li><a href="stroop-interactions.html">Interactions</a></li>
+<li><a href="stroop-inheritance.html">inheritance</a></li>
+<li><a href="stroop-block.html">Blocks</a></li>
+<li><strong>Task</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Examples<ul>
+<li><a href="iat.html">IAT</a></li>
+<li><a href="amp.html">AMP</a></li>
+<li><a href="biat.html">BIAT</a></li>
+<li><a href="gnat.html">GNAT</a></li>
+<li><a href="spf.html">SPF</a></li>
+<li><a href="st-iat.html">ST-IAT</a></li>
+<li><a href="evaluative_priming.html">Evaluative priming</a></li>
+<li><a href="evaluative_priming2.html">Evaluative priming 2</a></li>
+</ul>
+</li>
+<li>Snippets<ul>
+<li><a href="inheritance.html">Inheritance</a></li>
+<li><a href="input.html">Input</a></li>
+<li><a href="interactions.html">Interactions</a></li>
+<li><a href="sequence.html">Sequence</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="stimulus.html">Stimulus</a></li>
+<li><a href="touch.html">Touch</a></li>
+<li><a href="trial.html">Trial</a></li>
+</ul>
+</li>
+</ul>
+<p> We&#39;ve been slowly pulling the stroop task together, now is the time for a few last touches, just to get the feel for how things work.</p>
+<section playground>
+    <div class="buttons">
+        <a class="activate-button">Activate</a>
+        <a class="download-button" href="stroop-task.js" download>Download</a>
+    </div>
+    <div class="editor">// We&apos;ve been slowly pulling the stroop task together, now is the time for a few last touches, just to get the feel for how things work.
+
+define([&apos;pipAPI&apos;], function(APIconstructor) {
+
+	var API = new APIconstructor();
+
+	API.addSettings(&apos;canvas&apos;,{
+		textSize: 5
+	});
+
+	API.addStimulusSets(&apos;red&apos;,[
+		{media:&apos;Red&apos;, css:{color:&apos;red&apos;}},
+		{media:&apos;Blue&apos;, css:{color:&apos;red&apos;}},
+		{media:&apos;Green&apos;, css:{color:&apos;red&apos;}}
+	]);
+
+	API.addStimulusSets(&apos;blue&apos;,[
+		{media:&apos;Red&apos;, css:{color:&apos;blue&apos;}},
+		{media:&apos;Blue&apos;, css:{color:&apos;blue&apos;}},
+		{media:&apos;Green&apos;, css:{color:&apos;blue&apos;}}
+	]);
+
+	API.addStimulusSets(&apos;green&apos;,[
+		{media:&apos;Red&apos;, css:{color:&apos;green&apos;}},
+		{media:&apos;Blue&apos;, css:{color:&apos;green&apos;}},
+		{media:&apos;Green&apos;, css:{color:&apos;green&apos;}}
+	]);
+
+	API.addStimulusSets(&apos;error&apos;,[
+		{handle:&apos;error&apos;,media:&apos;X&apos;, css:{fontSize:&apos;2em&apos;,color:&apos;#FF0000&apos;}, location:{top:70}}
+	]);
+
+	API.addTrialSets(&apos;base&apos;,[{
+		input: [
+			{handle:&apos;red&apos;,on:&apos;keypressed&apos;,key:&apos;1&apos;},
+			{handle:&apos;blue&apos;,on:&apos;keypressed&apos;,key:&apos;2&apos;},
+			{handle:&apos;green&apos;,on:&apos;keypressed&apos;,key:&apos;3&apos;}
+		],
+		layout: [
+			{media:&apos;1&apos;,location:{left:2,top:2},css:{background:&apos;red&apos;,padding:&apos;2%&apos;,fontSize:&apos;1.5em&apos;}},
+			{media:&apos;2&apos;,location:{top:2},css:{background:&apos;blue&apos;,padding:&apos;2%&apos;,fontSize:&apos;1.5em&apos;}},
+			{media:&apos;3&apos;,location:{right:2,top:2},css:{background:&apos;green&apos;,padding:&apos;2%&apos;,fontSize:&apos;1.5em&apos;}}
+		],
+		interactions: [
+			/* Display the target stimulus. */
+			{
+				conditions:[{type:&apos;begin&apos;}],
+				actions: [{type:&apos;showStim&apos;, handle: &apos;target&apos;}]
+			},
+
+			// ### Error feedback
+			// Lets add error feedback to our task.
+
+			// Above, we created the error stimulus. This creates a stimulus that displays a red X at the bottom of the screen.
+
+			// Now that we have the error stimulus in place we can add the instruction how to display it.
+			// On incorrect responses we will display the error feedback, and trigger the end of the trial only after another 250 miliseconds.
+
+			/* Correct response actions */
+			{
+				conditions: [
+					{type:&apos;inputEqualsTrial&apos;,property:&apos;group&apos;}
+				],
+				actions: [
+					{type:&apos;setTrialAttr&apos;, setter:{score:1}},
+					{type:&apos;log&apos;},
+					{type:&apos;trigger&apos;, handle:&apos;ITI&apos;}
+				]
+			},
+
+			/* Incorrect response actions */
+			{
+				conditions: [
+					{type:&apos;inputEqualsTrial&apos;,property:&apos;group&apos;,negate:true},
+					{type:&apos;inputEquals&apos;,value:[&apos;red&apos;,&apos;blue&apos;,&apos;green&apos;]}
+				],
+				actions: [
+					{type:&apos;setTrialAttr&apos;, setter:{score:0}},
+					{type:&apos;log&apos;},
+					{type:&apos;showStim&apos;, handle:&apos;error&apos;},
+					{type:&apos;removeInput&apos;,handle:[&apos;red&apos;,&apos;blue&apos;,&apos;green&apos;]},
+					{type:&apos;trigger&apos;, handle:&apos;ITI&apos;, duration:500}
+				]
+			},
+
+			// There are several changes done here to achieve this task.
+
+			// First, all the end trial actions have move into an interaction of their own (see below), that is activated when `ITI` is triggered.
+			// Second, the correct response now triggers the ITI immediately.
+			// Third, The incorrect response first displays the error feedback (`showStim`) and only after 500 milliseconds triggers the ITI.
+
+			// You should also note that the `hideStim` action within the ITI interaction uses the handle `&apos;All&apos;`. When you want to refer to all the stimuli in a trial you can use the handle `&apos;All&apos;` and all stimuli will be affected.
+
+			// ### Inter trial interval
+			// We add an inter trial interval (ITI).
+			// The way we are going to do this is by adding a set interval to the end of each trial.
+			// Instead of directly calling the `endTrial` action, we will trigger a timeout, and end the trial from it.
+			// While waiting for the trial to end we want to prevent users from responding again.
+			// Note that we only need to do this to the *base* trial, all other trials inherit everything from it...
+
+			/* Inter trial interval */
+			{
+				conditions: [{type:&apos;inputEquals&apos;, value:&apos;ITI&apos;}],
+				actions:[
+					{type:&apos;hideStim&apos;,handle:&apos;All&apos;},
+					{type:&apos;removeInput&apos;,handle:[&apos;red&apos;,&apos;blue&apos;,&apos;green&apos;]},
+					{type:&apos;trigger&apos;, handle:&apos;end&apos;,duration:500}
+				]
+			},
+
+			// We&apos;ve added three actions to each of the responses.
+			// `hideStim` hides the target stimulus so that we see a blank screen as soon as a response is made.
+			// `removeInput` removes the input listeners that have the handles *red*, *blue* and *green*, this prevents users from giving any further responses.
+			// `trigger` triggers an internal player event as if the user has committed an action.
+			// In this case, it triggers an event with the input handle `end` after a `duration` of 500 milliseconds.
+
+			// Furthermore, we&apos;ve added an interaction that responds to the `end` event, that ends the trial.
+			// Note that the users can not trigger the `end` event directly, only through the events that were exposed to them using the `keypressed` input.
+
+			/* End trial */
+			{
+				conditions: [{type:&apos;inputEquals&apos;, value:&apos;end&apos;}],
+				actions:[
+					{type:&apos;endTrial&apos;}
+				]
+			}
+
+
+		]
+	}]);
+
+	// Finaly, we need to add it to each of the specific color trials.
+	// We can&apos;t add it to the *base* trial because the specific color trials make changes to `stimuli` and would overwrite it.
+
+	API.addTrialSets(&apos;red&apos;,[{
+		inherit:&apos;base&apos;,
+		data: {group:&apos;red&apos;},
+		stimuli: [
+			{inherit:{set:&apos;red&apos;,type:&apos;exRandom&apos;}, handle:&apos;target&apos;},
+			{inherit:&apos;error&apos;}
+		]
+	}]);
+
+	API.addTrialSets(&apos;blue&apos;,[{
+		inherit:&apos;base&apos;,
+		data: {group:&apos;blue&apos;},
+		stimuli: [
+			{inherit:{set:&apos;blue&apos;,type:&apos;exRandom&apos;}, handle:&apos;target&apos;},
+			{inherit:&apos;error&apos;}
+		]
+	}]);
+
+	API.addTrialSets(&apos;green&apos;,[{
+		inherit:&apos;base&apos;,
+		data: {group:&apos;green&apos;},
+		stimuli: [
+			{inherit:{set:&apos;green&apos;,type:&apos;exRandom&apos;}, handle:&apos;target&apos;},
+			{inherit:&apos;error&apos;}
+		]
+	}]);
+
+	// ### Sequence
+
+	API.addSequence([
+		{
+			mixer: &apos;random&apos;,
+			data: [
+				{
+					mixer: &apos;repeat&apos;,
+					times: 20,
+					data: [
+						{inherit:&apos;red&apos;},
+						{inherit:&apos;blue&apos;},
+						{inherit:&apos;green&apos;}
+					]
+				}
+			]
+		}
+	]);
+
+	// Return script
+	return API.script;
+});</div>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" integrity="sha256-xrr4HH5eSY+cFz4SH7ja/LaAi9qcEdjMpeMP49/iOLs=" crossorigin="anonymous"></script>
+<script src="../assets/playground.js"></script>
+
+				<hr />
+				<small>License: Apache 2. &copy; Project Implicit. &middot; Current version [version]</small>
+			</section>
+		</main>
+		<script src="../assets/prism.js"></script>
+        <script>
+            (function(){
+                var select = document.getElementById('version-select');
+                select.addEventListener('change', function(event){
+                    var version = event.target.value;
+                    location.href = location.href.replace(/[0-9]\.[0-9]/, version)
+                });
+            })();
+        </script>
+	</body>
+</html>

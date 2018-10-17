@@ -1,0 +1,257 @@
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Minno.js</title>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+		<link href="../assets/prism.css" rel="stylesheet" />
+		<link href="../assets/style.css" rel="stylesheet" />
+	</head>
+	<body>
+		<header>
+			<section>
+				<nav class="brand">
+                    <a href="/"><h1>Minno</h1></a>
+				</nav>
+				<nav>
+					<a href="/minno-quest/0.2/basics/overview.html">Basics</a>
+					<a href="/minno-quest/0.2/manager/overview.html">miManager</a>
+					<a href="/minno-quest/0.2/quest/overview.html">miQuest</a>
+					<a href="/minno-time/0.5/time/overview.html">miTime</a>
+				</nav>
+				<nav>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
+                    <select id="version-select"><option value="0.3" >v0.3</option>,<option value="0.5" selected>v0.5</option></select>
+					<a href="https://github.com/minnojs">Github</a>
+				</nav>
+			</section>
+		</header>
+		<main>
+			<section class="docs">
+                <h1><a name="slide-show" class="header-link" href="#slide-show"><span></span></a>Slide show</h1><ul>
+<li>Core<ul>
+<li><a href="overview.html">Overview</a></li>
+<li><a href="API.html">API</a></li>
+<li><a href="scorer.html">Scorer</a></li>
+<li><a href="resources.html">Resources</a></li>
+<li><a href="playground.html">Playground</a></li>
+</ul>
+</li>
+<li>Tutorials<ul>
+<li><a href="hello.html">Hello World</a><ul>
+<li><a href="helloPlay.html">Playground</a></li>
+</ul>
+</li>
+<li><strong><a href="slideshow.html">Slide show</a></strong><ul>
+<li><a href="slideshow1.html">step1</a></li>
+<li><a href="slideshow2.html">step2</a></li>
+<li><a href="slideshow3.html">step3</a></li>
+</ul>
+</li>
+<li>Stroop<ul>
+<li><a href="stroop-setup.html">Setup</a></li>
+<li><a href="stroop-interactions.html">Interactions</a></li>
+<li><a href="stroop-inheritance.html">inheritance</a></li>
+<li><a href="stroop-block.html">Blocks</a></li>
+<li><a href="stroop-task.html">Task</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Examples<ul>
+<li><a href="iat.html">IAT</a></li>
+<li><a href="amp.html">AMP</a></li>
+<li><a href="biat.html">BIAT</a></li>
+<li><a href="gnat.html">GNAT</a></li>
+<li><a href="spf.html">SPF</a></li>
+<li><a href="st-iat.html">ST-IAT</a></li>
+<li><a href="evaluative_priming.html">Evaluative priming</a></li>
+<li><a href="evaluative_priming2.html">Evaluative priming 2</a></li>
+</ul>
+</li>
+<li>Snippets<ul>
+<li><a href="inheritance.html">Inheritance</a></li>
+<li><a href="input.html">Input</a></li>
+<li><a href="interactions.html">Interactions</a></li>
+<li><a href="sequence.html">Sequence</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="stimulus.html">Stimulus</a></li>
+<li><a href="touch.html">Touch</a></li>
+<li><a href="trial.html">Trial</a></li>
+</ul>
+</li>
+</ul>
+<p>This section of the tutorial will walk you through creating a slide show. We will create a simple task that displays a series of stimuli. In this tutorial we will learn how to utilize the sequence, and the very basics of inheritance.</p>
+<h3><a name="a-simple-slide-show" class="header-link" href="#a-simple-slide-show"><span></span></a>A simple slide show</h3><p>Tasks normally include more than one trial. The sequence holds an array: the trials in the array will be activated sequentially.</p>
+<p>This is the trial that we already know from the <em>Hello world</em> tutorial:</p>
+<pre><code class="lang-javascript">{
+    input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+    layout: [{
+        media :{word:&#39;Hello world&#39;},
+        css:{fontSize:&#39;2em&#39;,color:&#39;#D7685A&#39;}
+    }],
+    interactions: [{
+        conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],
+        actions: [{type:&#39;endTrial&#39;}]
+    }]
+}
+</code></pre>
+<p>We will now duplicate this trial a few times for a simple slide show:</p>
+<pre><code class="lang-javascript">API.addSequence([
+    {
+        input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+        layout: [{
+            media :{word:&#39;Is\&#39;nt&#39;},
+            css:{fontSize:&#39;2em&#39;,color:&#39;#D7685A&#39;}
+        }],
+        interactions: [{
+            conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],
+            actions: [{type:&#39;endTrial&#39;}]
+        }]
+    },
+    {
+        input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+        layout: [{
+            media :{word:&#39;this&#39;},
+            css:{fontSize:&#39;2em&#39;,color:&#39;#D7685A&#39;}
+        }],
+        interactions: [{
+            conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],
+            actions: [{type:&#39;endTrial&#39;}]
+        }]
+    },
+    {
+        input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+        layout: [{
+            media :{word:&#39;cool?&#39;},
+            css:{fontSize:&#39;2em&#39;,color:&#39;#D7685A&#39;}
+        }],
+        interactions: [{
+            conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],
+            actions: [{type:&#39;endTrial&#39;}]
+        }]
+    }
+]);
+</code></pre>
+<p>You should try it (don&#39;t forget the wrapper, and the activation function at the end (<code>API.play()</code>)). Try adding another trial. Try changing the media or style of the stimuli.</p>
+<p>Download <a href="slideshow1.html">here</a>. You can see it in action right <a href="./slideshow1Play.html">here</a>.</p>
+<h3><a name="basic-inheritance" class="header-link" href="#basic-inheritance"><span></span></a>Basic inheritance</h3><p>Our task is becoming longer and harder to maintain. Imagine a slide show with 50 slides, it will need more than 500 lines of code. If we would want to make any changes that apply to all the trials (e.g., increase the font size), we will have to go through each trial individually and make the same change. This is where the concept of inheritance comes in. Inheritance allows you to create a prototype of a trial (or stimulus or media object), and re-use it whenever you want. To understand how this works, we need to first learn a bit about sets.</p>
+<h4><a name="strongsetsstrong" class="header-link" href="#strongsetsstrong"><span></span></a><strong>Sets</strong></h4><p><a href="./API.html#sets">Set</a> is a list of one or more miTime objects (trials, stimuli or media objects). After defining a set of objects (e.g., trials), we can re-use those objects. Therefore, if we want to create a basic trial and re-use it a few times, we create a one-trial set, and then re-use it in a sequence. We will focus here on trial sets, but everything that applies to the trials sets also applies to stimuli sets or media sets as well.</p>
+<p>We create trial sets using the <code>API.addTrialSets()</code> function. The simplest use of the function involves two arguments; the first is the set name, and the second is an array of objects to add to the set. The following code creates a trial set called <em>slide</em> and populates it with one trial: our &quot;Hello world&quot; trial.</p>
+<pre><code class="lang-javascript">API.addTrialSets(&#39;slide&#39;,[{
+    input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+    layout: [{media :{word:&#39;Hello world&#39;}}],
+    interactions: [{
+        conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],
+        actions: [{type:&#39;endTrial&#39;}]
+    }]
+}])
+</code></pre>
+<p>Now, we can refer to this trial in the future with the name we gave it (&#39;slide&#39;), and re-use it over and over again in a sequence. We re-use trials (and media and stimulus objects) using inheritance.</p>
+<h4><a name="stronginheritancestrong" class="header-link" href="#stronginheritancestrong"><span></span></a><strong>Inheritance</strong></h4><p>Inheritance allows us to re-use trials: new trials can be created by inheriting a trial from a set. If there is only one trial in the set, we simply inherit the whole set.</p>
+<p>Trials (and stimuli and media too) have a special property called <a href="./API.html#inheriting">inherit</a> that allows them to specify a specific set to inherit from. This allows trials to be significantly shorter. The following code activates our slide three times:</p>
+<pre><code class="lang-javascript">API.addSequence([ //Our sequence is an array of trials.
+    {inherit:&#39;slide&#39;}, //Each object is a trial. 
+    {inherit:&#39;slide&#39;},
+    {inherit:&#39;slide&#39;}
+]);
+</code></pre>
+<p>This sequence will present the Hello World trial three times, one after the other.</p>
+<h4><a name="strongextendingstrong" class="header-link" href="#strongextendingstrong"><span></span></a><strong>Extending</strong></h4><p>But repeating slides is pretty boring. Our slideshow should display different text in each trial. So, blind inheritance is not enough for, we need also to extend.</p>
+<p>When we inherit a trial, we can extend it by simply adding properties or overriding existing ones. Let&#39;s call the trial that inherits a <code>child</code>, and the trial that is inherited a <code>parent</code>. A child inherits all of its parent&#39;s properties. Any property that is added to it overrides the parent&#39;s properties.</p>
+<p>For example, let&#39;s say the following object resides in the &quot;parent&quot; set.</p>
+<pre><code class="lang-javascript">{
+    family: &#39;Smith&#39;
+}
+</code></pre>
+<p>Simply inheriting it will result in an identical copy. But we can go one step further and extend it by adding an additional property; in this case - <em>name</em>:</p>
+<pre><code class="lang-javascript">{
+    inherit:&#39;parent&#39;,
+    name: &#39;John&#39;
+}
+</code></pre>
+<p>This extends the object which becomes:</p>
+<pre><code class="lang-javascript">{
+    family: &#39;Smith&#39;,
+    name: &#39;John&#39;
+}
+</code></pre>
+<p>Going back to our example, we can now extend each of the slides to display different text by copying all the basic trial&#39;s properties, and only overriding the layout object:</p>
+<pre><code class="lang-javascript">API.addSequence([
+    {
+        inherit:&#39;slide&#39;,
+        layout: [{media :{word:&#39;This&#39;}}]
+    },
+    {
+        inherit:&#39;slide&#39;,
+        layout: [{media :{word:&#39;is&#39;}}]
+    },
+    {
+        inherit:&#39;slide&#39;,
+        layout: [{media :{word:&#39;even&#39;}}]
+    },
+    {
+        inherit:&#39;slide&#39;,
+        layout: [{media :{word:&#39;Cooler!!&#39;}}]
+    }
+]);
+</code></pre>
+<p>Download <a href="slideshow2.html">here</a>. You can see it in action right <a href="slideshow2Play.html">here</a>.</p>
+<h4><a name="strongdefaultsstrong" class="header-link" href="#strongdefaultsstrong"><span></span></a><strong>Defaults</strong></h4><p>Let&#39;s take this one step further. What if we want to centralize the way stimuli look? Let&#39;s use inheritance to control that too. First, we create the basic stimulus (we&#39;ll call it &#39;default&#39;):</p>
+<pre><code class="lang-javascript">API.addStimulusSets(&#39;default&#39;,[
+    {css:{fontSize:&#39;2em&#39;,color:&#39;#D7685A&#39;}}
+]);
+</code></pre>
+<p>Then, when we create the stimulus object for the layout in each trial, that stimulus can inherit from our &#39;default&#39; stimulus:</p>
+<pre><code class="lang-javascript">API.addSequence([
+    {
+        inherit:&#39;slide&#39;, //Inherit the slide trial.
+        layout: [{ //override the layout object of the slide trial.
+            inherit:&#39;default&#39;, //Inherit the default stimulus.
+            media :{word:&#39;This&#39;} //Add a media to the default stimulus.
+        }]
+    }
+]);
+</code></pre>
+<p>Download the slideshow example <a href="slideshow3.html">here</a>. You can see it in action right <a href="slideshow3Play.html">here</a>.</p>
+<p>Note that the default stimulus had no media. It means that each stimulus that will inherit this stimulus will need to add a media object. We could have done the same thing with a basic slide trial: create a trial without any layout. </p>
+<pre><code class="lang-javascript">API.addTrialSets(&#39;slide&#39;,[{
+    input: [{handle:&#39;space&#39;,on:&#39;space&#39;}],
+    interactions: [{
+        conditions: [{type:&#39;inputEquals&#39;,value:&#39;space&#39;}],
+        actions: [{type:&#39;endTrial&#39;}]
+    }]
+}])
+</code></pre>
+<p>It means that each trial that will inherit &#39;slide&#39; will need to add layout stimulus. </p>
+<p>There is much more to learn about inheritance. You will learn about it in the <a href="./stroop-setupDocco.html">Stroop</a> example.<br>For instance, what happens when there are a few different objects in a set? We can use that in order to randomly choose a trial (or a stimulus or a media object). We can put three different trials in a set and then inherit the set in a way that will choose one of those trials <a href="./stroop-inheritanceDocco.html">randomly</a>. 
+You can also try to learn all that there is to know about inheritance straight from the <a href="./API.html#inheritance">API documentation</a>.</p>
+
+				<hr />
+				<small>License: Apache 2. &copy; Project Implicit. &middot; Current version [version]</small>
+			</section>
+		</main>
+		<script src="../assets/prism.js"></script>
+        <script>
+            (function(){
+                var select = document.getElementById('version-select');
+                select.addEventListener('change', function(event){
+                    var version = event.target.value;
+                    location.href = location.href.replace(/[0-9]\.[0-9]/, version)
+                });
+            })();
+        </script>
+	</body>
+</html>

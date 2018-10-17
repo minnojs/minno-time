@@ -1,0 +1,147 @@
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Minno.js</title>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+		<link href="../assets/prism.css" rel="stylesheet" />
+		<link href="../assets/style.css" rel="stylesheet" />
+	</head>
+	<body>
+		<header>
+			<section>
+				<nav class="brand">
+                    <a href="/"><h1>Minno</h1></a>
+				</nav>
+				<nav>
+					<a href="/minno-quest/0.2/basics/overview.html">Basics</a>
+					<a href="/minno-quest/0.2/manager/overview.html">miManager</a>
+					<a href="/minno-quest/0.2/quest/overview.html">miQuest</a>
+					<a href="/minno-time/0.5/time/overview.html">miTime</a>
+				</nav>
+				<nav>
+                    <div id="search-box">
+                        <script>
+                            (function() {
+                                var cx = '002953266509769041597:smg5beek-iu';
+                                var gcse = document.createElement('script');
+                                gcse.type = 'text/javascript';
+                                gcse.async = true;
+                                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                                var s = document.getElementsByTagName('script')[0];
+                                s.parentNode.insertBefore(gcse, s);
+                            })();
+                        </script>
+                        <gcse:searchbox-only></gcse:searchbox-only>
+                    </div>
+                    <select id="version-select"><option value="0.3" >v0.3</option>,<option value="0.5" selected>v0.5</option></select>
+					<a href="https://github.com/minnojs">Github</a>
+				</nav>
+			</section>
+		</header>
+		<main>
+			<section class="docs">
+                <h1><a name="install" class="header-link" href="#install"><span></span></a>Install</h1><ul>
+<li>Core<ul>
+<li><a href="overview.html">Overview</a></li>
+<li><a href="API.html">API</a></li>
+<li><a href="scorer.html">Scorer</a></li>
+<li><a href="resources.html">Resources</a></li>
+<li><a href="playground.html">Playground</a></li>
+</ul>
+</li>
+<li>Tutorials<ul>
+<li><a href="hello.html">Hello World</a><ul>
+<li><a href="helloPlay.html">Playground</a></li>
+</ul>
+</li>
+<li><a href="slideshow.html">Slide show</a><ul>
+<li><a href="slideshow1.html">step1</a></li>
+<li><a href="slideshow2.html">step2</a></li>
+<li><a href="slideshow3.html">step3</a></li>
+</ul>
+</li>
+<li>Stroop<ul>
+<li><a href="stroop-setup.html">Setup</a></li>
+<li><a href="stroop-interactions.html">Interactions</a></li>
+<li><a href="stroop-inheritance.html">inheritance</a></li>
+<li><a href="stroop-block.html">Blocks</a></li>
+<li><a href="stroop-task.html">Task</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Examples<ul>
+<li><a href="iat.html">IAT</a></li>
+<li><a href="amp.html">AMP</a></li>
+<li><a href="biat.html">BIAT</a></li>
+<li><a href="gnat.html">GNAT</a></li>
+<li><a href="spf.html">SPF</a></li>
+<li><a href="st-iat.html">ST-IAT</a></li>
+<li><a href="evaluative_priming.html">Evaluative priming</a></li>
+<li><a href="evaluative_priming2.html">Evaluative priming 2</a></li>
+</ul>
+</li>
+<li>Snippets<ul>
+<li><a href="inheritance.html">Inheritance</a></li>
+<li><a href="input.html">Input</a></li>
+<li><a href="interactions.html">Interactions</a></li>
+<li><a href="sequence.html">Sequence</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="stimulus.html">Stimulus</a></li>
+<li><a href="touch.html">Touch</a></li>
+<li><a href="trial.html">Trial</a></li>
+</ul>
+</li>
+</ul>
+<p>The Minno player is an open source project and its source code is available on <a href="https://github.com/ProjectImplicit/miTimelayer">Github</a>. You may use it freely under the terms of the license. This page will explain the basics of getting the player to work.</p>
+<h3><a name="local-installation" class="header-link" href="#local-installation"><span></span></a>Local installation</h3><p>The player comes with a simple server that allows you to run it from your local machine. This server includes this tutorial, and lets you easily create and test tasks of your own. It does <em>not</em> save the data gathered from the player (but see the <a href="#public-installation">next section</a> about that).</p>
+<p>In order to install the player localy you have to install <a href="http://nodejs.org/">Node.html</a>. <strong>Node.html</strong> is a software platform for server-side and network applications. It is currently used by a number of large companies including LinkedIn, Microsoft, Yahoo!, Walmart and PayPal. And can be run off any of the popular operating systems.</p>
+<h4><a name="installing" class="header-link" href="#installing"><span></span></a>Installing:</h4><ul>
+<li>Download and install <a href="http://nodejs.org/">Node.html</a>.</li>
+<li>Download the player from <a href="https://github.com/ProjectImplicit/miTimelayer/archive/master.zip">Github</a>.</li>
+<li>Unzip the player into the directory of your choice.</li>
+<li>Open a terminal (a text interface):<ul>
+<li>On Windows, click the Start button, select All Programs, click Accessories, and then click Command Prompt.</li>
+<li>On Mac, click Finder, select Applications, then choose utilities and Double click on terminal.</li>
+<li>On Ubuntu you can click ctrl+alt+T.</li>
+</ul>
+</li>
+<li>Browse to the folder were you downloaded the player.</li>
+<li>Insert the following commands into the terminal: (You should see a long list of responses after each of these - it may take a few minutes...)<ul>
+<li><code>npm install</code></li>
+<li><code>npm build</code></li>
+</ul>
+</li>
+<li>When these commands have gone through - thats it, you&#39;ve installed the player.</li>
+</ul>
+<p>If you have a git client then you may want to clone Minno directly instead of downloading it:</p>
+<pre><code class="lang-bash">git clone https://github.com/ProjectImplicit/miTimelayer .
+</code></pre>
+<h4><a name="activating" class="header-link" href="#activating"><span></span></a>Activating</h4><p>Once you have installed the player, each time you want to activate the player all you have to do is run the following command: <code>npm start</code> from the player directory.</p>
+<p>You will find that a browser window opens with the tutorials site, only this time from your local machine.</p>
+<p>Beside serving the player and the tutorials, the local server gives you an easy interface for working with your local files. You will find a directory named <code>user</code> in your player directory. It starts out with a copy of each of the files used in the tutorials (you can freely delete them if you like), and you can add any files that you like to that.</p>
+<p>You will notice a new tab in the navigation bar on the top: <strong>Your Files</strong>. This tab gives you access to a directory listing of all the scripts within your <code>user</code> directory. You will be able to see a list of any syntax errors that you may have within your files as well as the buttons allowing you to view the file or downlad it.</p>
+<h3><a name="public-installation" class="header-link" href="#public-installation"><span></span></a>Public installation</h3><p>The back-end for recording the player data is not open source yet (if you want to write a back-end, thats great! we&#39;d love to cooperate).</p>
+<p>If you want to use the player within you own application you should use the files within <code>dist</code> and fit <code>index.html</code> to your needs. The idea is that the inner <code>require</code> takes the URL to your script (relative to the js folder - so it may be easier for you to give it absolute URLs).</p>
+<pre><code class="lang-javascript">require([&#39;js/config&#39;], function() {
+    require([&#39;path/to/your/script&#39;]);
+});
+</code></pre>
+<p>Integrating the player into a back-end requires the server side to parse and store the player&#39;s logs. (See <a href="./API.html#logging">API</a>).</p>
+
+				<hr />
+				<small>License: Apache 2. &copy; Project Implicit. &middot; Current version [version]</small>
+			</section>
+		</main>
+		<script src="../assets/prism.js"></script>
+        <script>
+            (function(){
+                var select = document.getElementById('version-select');
+                select.addEventListener('change', function(event){
+                    var version = event.target.value;
+                    location.href = location.href.replace(/[0-9]\.[0-9]/, version)
+                });
+            })();
+        </script>
+	</body>
+</html>

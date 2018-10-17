@@ -1,0 +1,61 @@
+body{margin:0;}
+body,table,h5 {font-size:17px;line-height:1.42; font-family:"Open Sans",Helvetica,Arial,sans-serif;}
+header,main {margin:auto;max-width:1000px;}
+header section {position:relative;width:100%;content:"";display:table;clear:both;font-size:1.2em;}
+nav {float:left}
+nav:last-child {float:right}
+nav a {padding:10px;font-weight:500;color:#563d7c;}
+nav a:hover{text-decoration:none;}
+nav:not(.brand) a:hover {color: #463265;background-color: #f9f9f9;}
+nav.brand a{padding-left:0;}
+nav.brand h1{margin:0;font-weight:700;font-family:serif;}
+main {margin-bottom:100px;border-top:1px solid #e0e0e0;}
+main > .docs {margin-left:270px;padding:30px 0 15px 30px;border-left:1px solid #e0e0e0;}
+h1 {margin:0 0 15px;}
+h5 {font-style:italic;}
+pre,code {background:#eee;font-family:monospace;}
+pre {border-left:3px solid #1e5799;overflow:auto;padding:10px 20px;}
+code {border:1px solid #ddd;display:inline-block;margin:0 0 1px;padding:3px;white-space:pre;}
+pre code {border:0;margin:0;padding:0;}
+table {border-collapse:collapse;width:100%;}
+tbody tr:nth-child(odd) {background:#fafafa;}
+thead tr,tbody tr:nth-child(even) {background:#f3f3f3;}
+th{text-align:left;background:#ccc;}
+th,td {padding:3px 10px;vertical-align:top;}
+a {color:#1e5799;display:inline-block;text-decoration:none;}
+a:hover {text-decoration:underline;}
+hr {border:0;border-bottom:1px solid #ddd;margin:30px 0;}
+select {font-size:1em;color:#563d7c;border:0;background-color:#fff;display:inline-block;-webkit-appearance: none;-moz-appearance: none;appearance: none;cursor:pointer;}
+blockquote{ padding-left: 15px; border-left: 3px solid #aaa;background:#eee; } 
+blockquote p{padding:5px;}
+
+/* menu */
+h1 + ul {margin:-46px 0 0 -300px;padding:0;position:absolute;width:250px;font-size:1.17em;}
+h1 + ul + hr {display:none;}
+h1 + ul li {list-style:none;margin:0;padding:0;}
+h1 + ul a {color:#666;}
+h1 + ul a:hover {color:#cc7a6f;text-decoration:none;}
+h1 + ul strong a{color:#cc7a6f;font-size:1.1em;}
+h1 + ul > li:not(:last-child) {border-bottom:1px solid #eee;}
+h1 + ul ul {margin:0.3em 0 10px;padding:0 0 0 15px;font-size:initial;}
+
+.header-link { position: relative; left: -1.4em; bottom:0.9em; opacity: 0; transition: opacity 0.2s ease-in-out 0.1s; -webkit-transition: opacity 0.2s ease-in-out 0.1s; -moz-transition: opacity 0.2s ease-in-out 0.1s; -ms-transition: opacity 0.2s ease-in-out 0.1s; }
+h2:hover .header-link, h3:hover .header-link, h4:hover .header-link, h5:hover .header-link, h6:hover .header-link { opacity: 1; }
+.header-link span { color: #000; position: absolute; margin-left: 8px; margin-top: 10px; width: 7px; height: 1px; background-color: currentColor; -webkit-transform: rotate(-45deg); transform: rotate(-45deg); }
+.header-link span:before { content: ''; position: absolute; top: -3px; left: -7px; width: 8px; height: 5px; border-radius: 2px; border: solid 1px currentColor; }
+.header-link span:after { content: ''; position: absolute; top: -3px; right: -7px; width: 8px; height: 5px; border-radius: 2px; border: solid 1px currentColor; }
+
+@media (max-width: 767px) {
+	main .docs {margin:0;}
+	h1 + ul + hr {display:block;}
+	header section,h1 + ul {margin:0 0 20px;position:static;width:auto;}
+}
+
+/* playground */
+.buttons a { padding: .5em 1em; color: #444; background-color: #E6E6E6; text-decoration: none; border-radius: 2px; display: inline-block; zoom: 1; vertical-align: middle; text-align: center; cursor: pointer; user-select: none; box-sizing: border-box; }
+.buttons a:hover {background-image:linear-gradient(transparent,rgba(0,0,0,.05) 40%,rgba(0,0,0,.1));}
+a.activate-button {background:rgba(86, 61, 123, 0.8);color:#ddd;}
+a.activate-button:before{ content: "\25B6\ "; }
+a.download-button:before{ content: "\21D3\ "; }
+.editor { margin-top: 1em; border-radius: 4px 4px 0; border: 1px solid #ddd; height: 30em; font-size: 14px; }
+
