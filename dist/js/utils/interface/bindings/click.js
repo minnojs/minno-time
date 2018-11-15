@@ -38,7 +38,6 @@ define(function(require){
                 // the element to attach
                 $element
                 .css(definitions.css || {})
-                .attr('onclick', 'javascript:void(0);')
                 .appendTo('#canvas')							// @todo, not great form, we should probably have a variable pointing there...
                 .on(eventName,activateCallback);
             }
