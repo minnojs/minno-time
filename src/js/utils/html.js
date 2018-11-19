@@ -6,11 +6,12 @@
  *		the context is the object used for templating
  */
 define(function(require) {
-    var $ = require('jquery')
-		,  preload = require('utils/preloader');
+    var $ = require('jquery');
+    var preload = require('utils/preloader');
+    var buildUrl = require('../app/task/build_url');
 
     function html(media){
-		// all templateing is done within the inflate trial function and the sequencer
+        // all templateing is done within the inflate trial function and the sequencer
         var template = media.html || media.inlineTemplate || media.template; // give inline template precedence over template, because tempaltes are loaded into inlinetemplate
 
         if (media.word) {
@@ -21,7 +22,7 @@ define(function(require) {
         else if (media.image) {
             media.displayType = 'element';
             media.type = 'image';
-            media.el = preload.getImage(media.image);
+            media.el = preload.getImage(buildUrl(media.image,'image'));
         }
         else if (media.jquery) {
             media.displayType = 'element';
