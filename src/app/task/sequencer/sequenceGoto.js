@@ -16,7 +16,7 @@ function go(destination, properties, context){
             where('next', properties, context, mixerSequence);
             break;
         case 'previousWhere':
-            where('next', properties, context, mixerSequence);
+            where('prev', properties, context, mixerSequence);
             break;
         case 'current':
             // don't need to do anything...

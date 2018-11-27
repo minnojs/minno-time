@@ -13,6 +13,7 @@ function nextTrial(db, settings, goto){
 
     sequence.go(destination, properties, context);
     source = sequence.current(context, {skip:['layout','stimuli']});
+    source = _.clone(source);
 
     if (!source) return {done:true};
 
@@ -51,6 +52,7 @@ function nextTrial(db, settings, goto){
         var context = this;
 
         stim = db.inflate('stimulus', stim, context, {skip:['media','touchMedia']});
+        stim = _.clone(stim);
         buildMedia(stim, 'media', context);
         buildMedia(stim, 'touchMedia', context);
         context.stimulusData = null;
