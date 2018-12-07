@@ -34,7 +34,7 @@ function nextTrial(db, settings, goto){
 
         // note that the base url is added to the media object during the sequence preload
         // if needed, build url
-        if (val.image) val.image = buildUrl(settings.base_url, val.image, 'image');
+        if (val.image) val.$image = buildUrl(settings.base_url, val.image, 'image');
 
         if (val.template){
             // @TODO: remove dependency on requirejs

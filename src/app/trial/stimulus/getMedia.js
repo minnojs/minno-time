@@ -24,11 +24,11 @@ function getMedia(media){
 
     // at this time, we count on the preloader to throw for errors
     // the reject option isn't really being used here...
-    if (media.image) return new Promise(function(resolve, reject){
+    if (media.$image) return new Promise(function(resolve, reject){
         el = document.createElement('img');
         el.onload = function(){resolve(el);};
         el.onerror = function(){reject(new Error('Image not found: ' + el.src ));};
-        el.src = media.image;
+        el.src = media.$image;
     });
 
     if (media.jquery) return Promise.reject(new Error('Jquery is no longer supported in minno-time'));
