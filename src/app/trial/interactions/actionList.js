@@ -60,8 +60,9 @@ var actions = {
         var input = trial.input;
         var handleList = action.handle;
         if (typeof handleList == 'undefined') throw new Error('The removeInput action requires a handle property');
-        if (handleList == 'All' || _.include(handleList,'All')) input.removeAll();
-        else input.remove(handleList);
+        if (!Array.isArray(handleList)) handleList = [handleList];
+        if (_.include(handleList,'All')) input.removeAll();
+        else handleList.forEach(input.remove);
     },
 
     goto: function(action, eventData, trial){
