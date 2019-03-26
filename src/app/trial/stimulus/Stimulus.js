@@ -6,6 +6,17 @@ import css from 'minno-css';
 
 export default Stimulus;
 
+var TRANSFORM_SUPPORTED = (function getSupportedTransform() {
+    var prefixes = 'transform WebkitTransform MozTransform OTransform msTransform'.split(' ');
+    var div = document.createElement('div');
+    for(var i = 0; i < prefixes.length; i++) {
+        if(div && div.style[prefixes[i]] !== undefined) {
+            return prefixes[i];
+        }
+    }
+    return false;
+})();
+
 function Stimulus(stimulus, trial, canvas){
     var self = {
         el: null, // is set within init, some methods will break if not called before init...
@@ -63,7 +74,7 @@ function setupElement(canvas, el){
             // append to canvas
             canvas.appendChild(el);
 
-            if (document.documentMode) fixIE(el, resolve);
+            if (!TRANSFORM_SUPPORTED) fixIE(el, resolve);
             else resolve(el);
         });
     });
