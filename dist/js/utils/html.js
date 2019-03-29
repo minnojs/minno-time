@@ -33,8 +33,10 @@ define(function(require) {
             media.displayType = 'element';
             media.type = 'html';
             try {
-                media.el = $(template);
+                media.el = $.parseHTML(template);
+                console.log('hi')
             } catch (e) {
+                console.error(e)
                 throw new Error('HTML must be wrapped in an html element such as <span></span>. ' + template + ' is invalid');
             }
         } else {

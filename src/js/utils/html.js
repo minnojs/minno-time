@@ -32,11 +32,7 @@ define(function(require) {
         else if (template) { // html | template | inlineTemplate
             media.displayType = 'element';
             media.type = 'html';
-            try {
-                media.el = $(template);
-            } catch (e) {
-                throw new Error('HTML must be wrapped in an html element such as <span></span>. ' + template + ' is invalid');
-            }
+            media.el = $.parseHTML(template);
         } else {
             return false; // this is not a supported html type
         }
