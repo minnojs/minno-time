@@ -26,6 +26,4 @@
 *.rtf diff=astextplain
 *.RTF diff=astextplain
 
-dist/** -diff
-src/css/*.map -diff
-package-lock.json -diff
+dist/* -diff
