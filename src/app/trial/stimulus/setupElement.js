@@ -22,10 +22,10 @@ function setupElement(el){
             setPlace(el, stimulus.source);
             css(el, stimulus.source.css || {});
 
-            // append to canvas
-            if (stimulus.source.isLayout) el.classList.add('minno-stimulus-visible');
-
-            if (!isIE) resolve(el);
+            if (!isIE) {
+                if (stimulus.source.isLayout) el.classList.add('minno-stimulus-visible');
+                resolve(el);
+            }
             else fixIE(stimulus, resolve);
         });
     });
@@ -48,6 +48,7 @@ function fixIE(stimulus, resolve){
             style.height = height;
             if (testProps(location.top, location.bottom)) style.top = style.bottom = 0;
             if (testProps(location.left, location.right)) style.left = style.right = 0;
+            if (stimulus.source.isLayout) el.classList.add('minno-stimulus-visible');
             resolve(el);
         });
     });
