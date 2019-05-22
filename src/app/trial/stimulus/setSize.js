@@ -1,7 +1,7 @@
 import _ from 'lodash';
 export default setSize;
 
-function setSize(el, stimulus){
+function setSize(el,stimulus){
     var style = el.style;
     var size = stimulus.size || {};
 
@@ -17,3 +17,4 @@ function setSize(el, stimulus){
 
 function isSet(prop, obj){return prop in obj;}
 function isWordMedia(media){ return _.isString(media) || _.isString(media.word); }
+

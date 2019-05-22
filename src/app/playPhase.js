@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import stream from 'mithril-stream';
-import fastdom from 'fastdom';
 
 import Trial from './trial/Trial';
 import nextTrial from './task/sequencer/nextTrial';
@@ -78,9 +77,8 @@ function playerPhase(sink){
 
             trial.start();
 
-            // we leave the old stimuli until the current ones are visiblie to maintain the continuity between trials
-            // This mutate waits until the first mutation in order to schedudual the removal of the old stimuli
-            if (oldTrial) fastdom.mutate(function oldtrial(){
+            // we leave the old stimuli until the current ones are ready to maintain the continuity between trials
+            if (oldTrial) trial.stimulusCollection.ready.then(function(){
                 oldTrial.stimulusCollection.destroy();
             });
 

@@ -1,21 +1,8 @@
 import fastdom from 'fastdom';
 import getMedia from './getMedia';
-import setSize from './setSize';
-import setPlace, {fixIE} from './setPlace';
-import css from 'minno-css';
+import setupElement from './setupElement';
 
 export default Stimulus;
-
-var TRANSFORM_SUPPORTED = (function getSupportedTransform() {
-    var prefixes = 'transform WebkitTransform MozTransform OTransform msTransform'.split(' ');
-    var div = document.createElement('div');
-    for(var i = 0; i < prefixes.length; i++) {
-        if(div && div.style[prefixes[i]] !== undefined) {
-            return prefixes[i];
-        }
-    }
-    return false;
-})();
 
 function Stimulus(stimulus, trial, canvas){
     var self = {
@@ -47,37 +34,13 @@ function init(){
     if (!this.source.media) throw new Error('Media object not defined for ' + this.name());
 
     return getMedia(this.source.media)
-        .then(setupElement.bind(this, this.canvas), onError);
+        .then(setupElement.bind(this))
+        .catch(onError);
 
     function onError(error){
         $messages({type:'error', message: 'trial.stimulus error', error:error, context:source});
         throw error;
-    }       
-    
-
-}
-
-function setupElement(canvas, el){
-    var self = this;
-    this.el = el;
-    return new Promise(function(resolve){
-        fastdom.mutate(function initStim(){
-            // setup element
-            el.classList.add('minno-stimulus');
-            el.setAttribute('data-handle', self.handle); // data-handle for handeling of mouse/touch interactions
-            setSize(el, self.source);
-            setPlace(el, self.source);
-            css(el, self.source.css || {});
-
-            if (self.source.isLayout) el.classList.add('minno-stimulus-visible');
-
-            // append to canvas
-            canvas.appendChild(el);
-
-            if (!TRANSFORM_SUPPORTED) fixIE(el, resolve);
-            else resolve(el);
-        });
-    });
+    }
 }
 
 function show(){

@@ -17,6 +17,10 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+    display:flex;
+    justify-content: center;
+    align-items: center;  
 }
 
 .minno-stimulus {
@@ -28,9 +32,6 @@
 }
 
 .minno-stimulus-visible {visibility:visible;}
-.minno-stimulus-center-x {left:50%; transform: translateX(-50%);}
-.minno-stimulus-center-y {top:50%; transform: translateY(-50%);}
-.minno-stimulus-center-y.minno-stimulus-center-x {transform: translate(-50%,-50%);}
 
 .minno-progress {
     background-color: #20201F;

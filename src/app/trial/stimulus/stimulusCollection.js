@@ -10,13 +10,13 @@ function stimCollection(trial, canvas){
     var source = trial._source;
     var stimuli = _.map(source.stimuli, toStim);
     var layout = _.map(source.layout, toLayout).map(toStim);
-    var ready = Promise.all(stimuli.concat(layout).map(function(stim){return stim.init();}));
+    var stimReady = stimuli.concat(layout).map(function(stim){return stim.init();});
 
     var self = {
         canvas: canvas,
         stimuli: stimuli,
         layout: layout,
-        ready: ready,
+        ready: Promise.all(stimReady),
         getStimlist: getStimlist,
         getMedialist: getMedialist,
         destroy: destroy
