@@ -14,7 +14,7 @@ describe('stimuli', function(){
         canvas.style.border = 0; //remove border for easyness in measuring
 
         document.body.appendChild(canvas);
-        trial = { _source: trialSource };
+        trial = { _source: trialSource, $messages: console.error};
         return stimulusCollection(trial,canvas);
     }
     function stimulus(stim){ return stimuli({layout:[stim]}); }
@@ -152,9 +152,9 @@ describe('stimuli', function(){
             });
         });
 
-        it('should render full html', function(){
+        it('should render images', function(){
             var src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-            return media({image:src}).ready.then(function(){
+            return media({$image:src}).ready.then(function(){
                 expect(canvas.firstChild.tagName.toLowerCase()).toBe('img');
                 expect(canvas.firstChild.src).toBe(src);
             });
