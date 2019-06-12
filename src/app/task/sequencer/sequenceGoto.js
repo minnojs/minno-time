@@ -47,5 +47,5 @@ function where(direction, properties, context, sequence){
     do {
         sequence[direction]();
         curr = sequence.current(context);
-    } while (curr && !_.callback(properties)(curr.data));
+    } while (curr && !_.iteratee(properties)(curr.data));
 }

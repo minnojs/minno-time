@@ -26,7 +26,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "fastdom": "^1.0.6",
-    "lodash": "^3.10.1",
+    "lodash": "^4.17.14",
     "minno-css": "github:minnojs/minno-css",
     "minno-sequencer": "github:minnojs/minno-sequencer",
     "mithril-stream": "^1.1.0"

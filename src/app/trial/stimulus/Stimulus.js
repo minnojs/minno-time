@@ -86,6 +86,7 @@ function mediaName(options){
     var fullpath = options && options.fullpath; // as set within settings
 
     if (media.alias) {return media.alias;} // if we have an alias ues it
+    if (media.data.alias) { return media.data.alias; }
 
     for (var prop in media) {
         if (contains(['image','template'],prop)) return fullpath ? media[prop] : media[prop].replace(/^.*[\\/]/, '');

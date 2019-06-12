@@ -61,7 +61,7 @@ var actions = {
         var handleList = action.handle;
         if (typeof handleList == 'undefined') throw new Error('The removeInput action requires a handle property');
         if (!Array.isArray(handleList)) handleList = [handleList];
-        if (_.include(handleList,'All')) input.removeAll();
+        if (_.includes(handleList,'All')) input.removeAll();
         else handleList.forEach(input.remove);
     },
 

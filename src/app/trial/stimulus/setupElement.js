@@ -40,14 +40,14 @@ function fixIE(stimulus, resolve){
     var location = stimulus.source.location || {};
 
     fastdom.measure(function(){
-        var width = (100 * el.clientWidth / canvas.clientWidth) + '%';
-        var height = (100 * el.clientHeight / canvas.clientHeight) + '%';
+        var width = (100 * el.clientWidth / canvas.clientWidth);
+        var height = (100 * el.clientHeight / canvas.clientHeight);
         fastdom.mutate(function(){
             var style = el.style;
-            style.width = width;
-            style.height = height;
-            if (testProps(location.top, location.bottom)) style.top = style.bottom = 0;
-            if (testProps(location.left, location.right)) style.left = style.right = 0;
+            style.width = width + '%';
+            style.height = height + '%';
+            if (testProps(location.top, location.bottom)) { style.top = (100-height)/2+'%'; }
+            if (testProps(location.left, location.right)) { style.left = (100-width)/2+'%'; }
             if (stimulus.source.isLayout) el.classList.add('minno-stimulus-visible');
             resolve(el);
         });

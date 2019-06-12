@@ -17,8 +17,8 @@ function nextTrial(db, settings, goto){
 
     if (!source) return {done:true};
 
-    source.stimuli = _.map(source.stimuli || [], buildStim, context);
-    source.layout = _.map(source.layout || [], buildStim, context);
+    source.stimuli = _.map(source.stimuli || [], buildStim.bind(context));
+    source.layout = _.map(source.layout || [], buildStim.bind(context));
 
     context.trialData = null;
 

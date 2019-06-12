@@ -28,7 +28,9 @@
 	text-align:center;
 	overflow: hidden;
     visibility: hidden;
-    width: fit-content; /* for all modern brosers */
+    width:auto;
+    height:auto;
+    max-width: 100%;
 }
 
 .minno-stimulus-visible {visibility:visible;}
@@ -37,10 +39,11 @@
     background-color: #20201F;
     border-radius: 20px; /* (heightOfInnerDiv / 2) + padding */
     padding: 4px;
-    position: relative;
+    position: absolute  ;
     top: 50%;
+    left:10%;
     width: 80%;
-    margin-left: 10%;
+    height: 24px;
     margin-top: -12px;
 }
 
