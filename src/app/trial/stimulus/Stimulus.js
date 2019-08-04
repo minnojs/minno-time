@@ -73,7 +73,7 @@ function name(){
     var source = this.source;
     // if we have an alias ues it
     if (source.alias) {return source.alias;}
-    if (this.data.alias) {return this.data.alias;} // if we have an alias ues it
+    if (this.data && this.data.alias) {return this.data.alias;} // if we have an alias ues it
 
     if (source.inherit && source.inherit.set) {return source.inherit.set;} // otherwise try using the set we inherited from
     if (this.handle) {return this.handle;} // otherwise use handle
