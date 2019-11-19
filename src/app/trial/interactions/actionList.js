@@ -143,7 +143,7 @@ var actions = {
         var topBorder = parseInt(styling.getPropertyValue('border-top-width'));
         var leftBorder = parseInt(styling.getPropertyValue('border-left-width'));
 
-        var trackedStimuli = trial.stimulusCollection.stimuli.filter(function(stim){ return _.contains(action.logStimulusLocation, stim.handle); });
+        var trackedStimuli = trial.stimulusCollection.stimuli.filter(function(stim){ return _.includes(action.logStimulusLocation, stim.handle); });
 
         var listener = _.throttle(function(e){
             var canvasLocation = canvas.getBoundingClientRect();
