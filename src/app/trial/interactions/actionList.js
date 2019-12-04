@@ -177,7 +177,7 @@ var actions = {
     stopMouseTracking: function(e, ed, trial){
         if (_.isFunction(trial.data.$listener)) { 
             document.removeEventListener('mousemove', trial.data.$listener);
-            trial.data.$listener = null;
+            trial.data.$listener = undefined; // should be undefined so that JSON.stringify does not encode it
         }
     }
 };
