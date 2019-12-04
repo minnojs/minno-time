@@ -12,7 +12,7 @@ export default playerPhase;
 /**
  * run the task
  * Essentialy wiring up all the play phase stuff
- * @TODO: document this function, its super complicated
+ * @TODO: document this function, it's super complicated
  **/
 
 function playerPhase(sink){
@@ -29,6 +29,12 @@ function playerPhase(sink){
     var $logs = createLogs($sourceLogs, composeLoggerSettings(sink.script, global), defaultLogMap);
     var onDone = _.get(settings, 'hooks.endTask', settings.onEnd || _.noop);
 
+    var kill; // placeholder for promise resolve
+    var promise = new Promise(function(resolve){ kill = resolve; })
+        .then($source.end.bind(null,true))
+        .then(clearCanvas)
+        .then(onDone);
+
     // expose logs on current
     $logs.map(function(log){
         global.current.logs.push(log);        
@@ -36,17 +42,15 @@ function playerPhase(sink){
 
     $source.end
         .map($trial.end)
-        .map($sourceLogs.end)
-        .map(clearCanvas)
-        .map(onDone);
+        .map($sourceLogs.end);
 
     return _.extend({
         $trial:$trial, 
-        end: $source.end.bind(null,true), 
         $logs: $logs,
         $messages: $messages,
         start: play.bind(null, ['next', {}]),
-        onEnd: function(fn){ $source.end.map(fn); }
+        end: kill,
+        promise: promise
     }, sink);
 
     function clearCanvas(){
@@ -56,7 +60,7 @@ function playerPhase(sink){
 
     function play(goto){
         var next = nextTrial(db, settings, goto);
-        if (next.done) $source.end(true);
+        if (next.done) kill();
         else $source(next.value);
     }
 
@@ -65,6 +69,7 @@ function playerPhase(sink){
         function activate(source){
             var oldTrial = cache;
             var trial = cache = new Trial(source, canvas, settings);
+            // pipe public streams to trial streams
             trial.$logs.map($sourceLogs); 
             trial.$messages.map($messages); 
 
