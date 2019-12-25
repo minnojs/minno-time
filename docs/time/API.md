@@ -157,11 +157,11 @@ Each input object must include both a `handle` and an `on` property.
 **mousedown**: Takes a stimulus handle (`stimHandle`). Triggers each time the mouse key is pressed over the space of the target object.
 * `{handle:'right',on:'mousedown',stimHandle:'myStimHandle'}`
 
-**mouseenter**: Takes a stimulus handle (`stimHandle`). Triggers each time the mouse enters the space of the target object. (note that this behaviour is meaningless in touch devices)
-* `{handle:'right',on:'mouseenter',stimHandle:'myStimHandle'}`
+**mouseover**: Takes a stimulus handle (`stimHandle`). Triggers each time the mouse enters the space of the target object. (note that this behaviour is meaningless in touch devices)
+* `{handle:'right',on:'mouseover',stimHandle:'myStimHandle'}`
 
-**mouseleave**: Takes a stimulus handle (`stimHandle`). Triggers each time the mouse leaves the space of the target object. (note that this behaviour is meaningless in touch devices)
-* `{handle:'right',on:'mouseleave',stimHandle:'myStimHandle'}`
+**mouseout**: Takes a stimulus handle (`stimHandle`). Triggers each time the mouse leaves the space of the target object. (note that this behaviour is meaningless in touch devices)
+* `{handle:'right',on:'mouseout',stimHandle:'myStimHandle'}`
 
 **timeout**: Takes a `duration` property and fires after the duration passes
 * `{handle:'time',on:'timeout',duration:300}`

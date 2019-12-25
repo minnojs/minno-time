@@ -27,9 +27,9 @@ function inputBinder(inputObj, canvas){
 
         case 'mouseup'	    : return mouseEvents('mouseup', inputObj, canvas);
 
-        case 'mouseenter'	: return mouseEvents('mouseenter', inputObj, canvas);
+        case 'mouseover'	: return mouseEvents('mouseover', inputObj, canvas);
 
-        case 'mouseleave'	: return mouseEvents('mouseleave', inputObj, canvas);
+        case 'mouseout'	: return mouseEvents('mouseout', inputObj, canvas);
 
         case 'timeout'		: return timeout(inputObj);
 

@@ -118,7 +118,7 @@ describe('input', function(){
         });
     });
 
-    ['mousedown', 'mouseup', 'mouseenter', 'mouseleave'].forEach(function(eventName){
+    ['mousedown', 'mouseup', 'mouseover', 'mouseout'].forEach(function(eventName){
         describe(eventName, function(){
             it('should work with stimulus', function(){
                 var target = document.createElement('div');
