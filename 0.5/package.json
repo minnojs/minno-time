@@ -1,6 +1,6 @@
 {
   "name": "minno-time",
-  "version": "0.5.10",
+  "version": "0.5.14",
   "description": "A free tool for creating reaction time tasks",
   "main": "dist/time.js",
   "module": "src/index.js",
@@ -26,22 +26,21 @@
   "license": "Apache-2.0",
   "dependencies": {
     "fastdom": "^1.0.6",
-    "lodash": "^3.10.1",
+    "lodash": "^4.17.14",
     "minno-css": "github:minnojs/minno-css",
     "minno-sequencer": "github:minnojs/minno-sequencer",
     "mithril-stream": "^1.1.0"
   },
   "devDependencies": {
     "cross-env": "^5.1.1",
-    "cssnano": "^3.10.0",
+    "cssnano": "^4.1.10",
     "jasmine": "^2.8.0",
     "jasmine-ajax": "^3.3.1",
-    "karma": "^1.7.1",
+    "karma": "^4.1.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-jasmine": "^1.1.0",
     "karma-rollup-preprocessor": "^5.0.1",
     "minno-gendocs": "^1.0.5",
-    "nightwatch": "^0.9.16",
     "rollup": "^0.51.5",
     "rollup-plugin-commonjs": "^8.2.1",
     "rollup-plugin-node-resolve": "^3.0.0",
@@ -50,6 +49,6 @@
     "saucelabs": "^1.4.0",
     "selenium-download": "^2.0.10",
     "simulant": "^0.2.2",
-    "surge": "^0.19.0"
+    "surge": "^0.20.5"
   }
 }
