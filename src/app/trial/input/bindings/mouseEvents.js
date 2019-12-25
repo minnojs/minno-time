@@ -21,7 +21,6 @@ function mouseEvents(eventName,inputObj, canvas){
     return $listener;
 
     function clickListener(e){
-        console.log(e)
         var target = e.target;
         if (element && target === element) return $listener(e);
         if (!element && target.getAttribute('data-handle') === inputObj.stimHandle) return $listener(e);
