@@ -302,7 +302,7 @@ This options is deprecated. use **custom** instead.
 It is also possible to create a custom condition:
 
 ```javascript
-{type:'custom', value:function(condtion, inputData, trial){
+{type:'custom', fn:function(condtion, inputData, trial){
     // do your mojo here and return true or false
 }}
 ```
