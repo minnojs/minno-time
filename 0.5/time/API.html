@@ -371,7 +371,7 @@ The optional property <code>handle</code> narrows the search down to stimuli fit
 This options is deprecated. use <strong>custom</strong> instead.</p>
 <p><strong>custom</strong>:
 It is also possible to create a custom condition:</p>
-<pre><code class="lang-javascript">{type:&#39;custom&#39;, value:function(condtion, inputData, trial){
+<pre><code class="lang-javascript">{type:&#39;custom&#39;, fn:function(condtion, inputData, trial){
     // do your mojo here and return true or false
 }}
 </code></pre>
