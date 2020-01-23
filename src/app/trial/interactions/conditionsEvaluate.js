@@ -20,6 +20,9 @@ function conditionsEvaluate(conditions, inputData, trial){
     // make sure conditions is an array
     conditions = Array.isArray(conditions) ? conditions : [conditions];
 
+    // do not activate empty condition arrays
+    if (!conditions.length) return false;
+
     // if this is a begin event, make sure we only run interactions that have begin in them
     if (inputData.type == 'begin' && conditions.every(function(condition){return condition.type != 'begin';})) return false;
 
