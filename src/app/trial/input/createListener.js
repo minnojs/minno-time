@@ -21,8 +21,12 @@ function getListener(inputObj, canvas){
     if (_.isPlainObject(inputObj)) {
         if (_.isString(inputObj.on)) return binder(inputObj,canvas,stream);
 
-        if (_.isFunction(inputObj.on )) $listener = inputObj.on(inputObj,canvas,stream);
-        if (_.isFunction(inputObj.off)) $listener.end.map(inputObj.off);
+        if (_.isFunction(inputObj.on )) {
+            $listener = inputObj.on(inputObj,canvas,stream);
+            if (!$listener || !$listener._state) throw new Error('input.on must return a stream');
+            if (_.isFunction(inputObj.off)) $listener.end.map(inputObj.off);
+            return $listener;
+        }
     }
         
     throw new Error('Input must only contain objects and functions, do you have an undefined value?');

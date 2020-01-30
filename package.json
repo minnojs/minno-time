@@ -27,7 +27,7 @@
   "dependencies": {
     "fastdom": "^1.0.6",
     "lodash": "^4.17.14",
-    "minno-css": "github:minnojs/minno-css",
+    "minno-css": "^1.0.0",
     "minno-sequencer": "github:minnojs/minno-sequencer",
     "mithril-stream": "^1.1.0"
   },
