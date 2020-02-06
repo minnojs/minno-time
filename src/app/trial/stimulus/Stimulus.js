@@ -33,7 +33,7 @@ function init(){
     var $messages = this.trial.$messages;
     if (!this.source.media) throw new Error('Media object not defined for ' + this.name());
 
-    return getMedia(this.source.media)
+    return getMedia(this.source.media, $messages)
         .then(setupElement.bind(this))
         .catch(onError);
 

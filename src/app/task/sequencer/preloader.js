@@ -51,8 +51,9 @@ function load(src, type){
 
 function getImage(url){
     return  new Promise(function(resolve, reject){
+        if (_.includes(url, '<%')) return resolve();
         var el = document.createElement('img');
-        el.onload = function(){resolve(el);};
+        el.onload = resolve;
         el.onerror = function(){reject(new Error('Image not found: ' + url ));};
         el.src = url;
         images[url] = el;
