@@ -17,10 +17,11 @@ function nextTrial(db, settings, goto){
 
     if (!source) return {done:true};
 
+    context.trialData = source.data;
+    context.trialMeta = source.$meta;
+
     source.stimuli = _.map(source.stimuli || [], buildStim.bind(context));
     source.layout = _.map(source.layout || [], buildStim.bind(context));
-
-    context.trialData = null;
 
     return {value:source};
 
@@ -28,7 +29,7 @@ function nextTrial(db, settings, goto){
         var val = stim[prop];
 
         if (_.isUndefined(val)) return false;
-        if (_.isString(val)) val = {word: val};
+        if (_.isString(val) || _.isNumber(val)) val = {word: val};
 
         val = db.inflate('media', val, context);
 
