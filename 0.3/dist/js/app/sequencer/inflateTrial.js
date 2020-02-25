@@ -4,7 +4,7 @@ define(function(require){
     var globalGetter 		= require('../global');
     var sequenceGetter		= require('./taskSequence');
     var db 					= require('./database');
-    var buildUrl 			= require('../task/build_url');
+    var buildUrl = require('../task/build_url');
 
     function inflateTrial(destination, properties){
         var sequence = sequenceGetter();
@@ -15,14 +15,13 @@ define(function(require){
         sequence.go(destination, properties, context);
         source = sequence.current(context, {skip:['layout','stimuli']});
 
-        if (!source){
-            return;
-        }
+        if (!source) return;
 
         source.stimuli = _.map(source.stimuli || [], buildStim, context);
         source.layout = _.map(source.layout || [], buildStim, context);
 
         context.trialData = null;
+
         return source;
     }
 
@@ -31,21 +30,10 @@ define(function(require){
     function buildMedia(stim, prop, context){
         var val = stim[prop];
 
-        if (!val) {
-            return false;
-        }
-
-        if (_.isString(val)){
-            stim[prop] = val = {word: val};
-        }
+        if (!val) return false;
+        if (_.isString(val)) stim[prop] = val = {word: val};
 
         val = db.inflate('media', val, context);
-
-		// note that the base url is added to the media object during the sequence preload
-		// if needed, build url
-        if (val.image){
-            val.image = buildUrl(val.image,'image');
-        }
 
         if (val.template){
             val.inlineTemplate = requirejs('text!' + buildUrl(val.template, 'template'));
