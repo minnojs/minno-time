@@ -4,12 +4,25 @@
 - [Media](#media)
 - [Stimuli](#stimuli)
 - [Trial](#trial)
-    - [Layout / stimuli](#layout-stimuli)
-    - [Input](#input)
-    - [Interactions](#interactions)
-        + [Conditions](#interactions-conditions)
-        + [Actions](#interactions-actions)
+  - [layout / stimuli](#layout--stimuli)
+  - [Input](#input)
+  - [Interactions](#interactions)
+  - [Interactions: conditions](#interactions-conditions)
+  - [Interactions: actions](#interactions-actions)
 - [Inheritance](#inheritance)
+  - [Sets](#sets)
+  - [Inheriting](#inheriting)
+  - [Customization](#customization)
+- [The sequence](#the-sequence)
+  - [Mixing](#mixing)
+- [Changing Settings](#changing-settings)
+  - [Logger](#logger)
+  - [Canvas](#canvas)
+  - [Base_url](#base_url)
+  - [Redirect](#redirect)
+  - [Hooks](#hooks)
+  - [onEnd](#onend)
+  - [Meta data](#meta-data)
 - [Logging](#logging)
 
 ### Definitions
@@ -51,7 +64,7 @@ Stimuli are responsible for *how* we present the media.
 Each trial may have multiple stimuli, and they are refered to by `handle`.
 This is how refer to this specific stimulus inside the player (i.e. if we want to hide or show it). 
 If more than one stimulus (per trial) has the same handle, all actions targeted at that handle will affect all stimuli.
-You can set a stimulus handle either by setting the `handle` property, or by setting `handle` into the [data object](/minno-quest/0.1/basics/variables.html#local-variables-local-&-meta).
+You can set a stimulus handle either by setting the `handle` property, or by setting `handle` into the [data object](/minno-quest/0.3/basics/variables.html#local-variables-local-&-meta).
 Alternatively, if a stimulus is inherited from a set, the handle is defined by default as the set that the stimulus was inherited from.
 
 `size`:
@@ -687,21 +700,9 @@ The wrapper mixer serves a sort of parenthesis for the mixer. It has two primary
 
 ### Changing Settings
 
-Player wide settings are set within the "settings" property of the task JSON.
-```javascript
-settings = {
-    logger: {
-        url: 'your/target/url',
-        logger: function(){
-            // do your mojo here :)
-        }
-    },
-    canvas: {
-        maxWidth: 800,
-        proportions : 1
-    }
-}
-```
+Settings that apply to the whole task may be changed using `API.addSettings` 
+(see [documentation](/minno-quest/0.3/basics/variables.html#addsettingsname-setting)).
+Following are the available settings.
 
 #### Logger
 
@@ -838,21 +839,17 @@ redirect: '//my.domain.edu'
 ```
 
 #### Hooks
-Hooks are functions that are to be run at predefined points throughout the player.
-
-```javascript
-hooks: {
-    endTask: function(){}
-}
-```
-
-`endTask`:
-Called at the end of the task instead of the default redirect.
+This option is deprecated, please use [`onEnd`](#onend) instead.
 
 #### onEnd
-Called at the end of the task instead of the default redirect.
-This function is a more standart complient version of `hooks.endTask`.
+A function to be called at the end of the task.
+For example, the following setting logs the task logs to the console.
 
+```
+API.addSettings(`onEnd`, function(){
+    console.log(API.getCurrent().logs);
+});
+```
 
 #### Meta data
 
@@ -868,132 +865,6 @@ metaData: {
 ```
 
 (the json field is the field that holds the player data it is created automaticaly)
-
-
-
-### API
-
-The API is a javascript object that is used to activate the miTime.
-The basic format for accessing the API is as follows:
-
-```javascript
-define(['app/API'], function(APIconstructor) {
-    var API = new APIconstructor();
-
-    API.addScript(script);
-    
-    return API.script;
-});
-```
-
-The API object exposes several helper function to help you organize your script.
-
-**addScript**:
-Allows pushing a whole script to the player:
-* `API.addScript(script);`
-
-**getScript**:
-Returns the whole player script:
-* `API.getScript();`
-
-**addGlobal, addCurrent**
-Allows extending the global or current objects respectively:
-* `API.addGlobal(object);`
-* `API.addCurrent(object);`
-
-    For instance if the current global object looks like this:
-
-    ```javascript
-    var globalObject = {
-        name: 'Sándor Ferenczi',
-        score: '90'
-    }
-    ```
-
-    Then the following script:
-    ```javascript
-    API.addGlobal({
-        score: '100',
-        done: true
-    })
-    ```
-
-    Will leave the global object as
-    ```javascript
-    var globalObject = {
-        name: 'Sándor Ferenczi',
-        score: '100',
-        done: true
-    }
-    ```
-
-**getGlobal, getCurrent**:
-Returns the global or current object respectively:
-* `API.getGlobal();`
-* `API.getCurrent();`
-
-**addSettings**:
-`API.addSettings` allows you to add settings to your script.
-
-You may add a whole settings section:
-
-```javascript
-API.addSettings({
-    canvas: {},
-    logger: {}
-});
-```
-
-Alternatively you may add a specific setting:
-```javascript
-API.addSettings('canvas',{
-    maxWidth: 800,
-    proportions : 0.8
-});
-```
-
-**addTrialSets, addStimulusSets and addMediaSets**:
-There are three add set functions, one for each of the set types: `addTrialSets`, `addStimulusSets` and `addMediaSets`.
-Each of them allows adding sets to your script.
-You may add a complete sets object:
-
-```javascript
-API.addTrialSets({
-    Default: [defaultTrial],
-    introduction: [intro1, intro2, intro3]
-});
-```
-
-Or you may add a single set:
-```javascript
-API.addTrialSets("introduction",[intro1, intro2]); // adds intro1 and intro2 to the introduction set
-```
-
-Or part of a set
-```javascript
-API.addTrialSets("introduction",intro3); // adds intro3 to the introduction set
-```
-
-**addSequence**
-Allows adding sequence objects to your script.
-
-Here is a single set:
-```javascript
-API.addSequence([trial1,trial2]);
-```
-
-And part of a set:
-```javascript
-API.addSequence(trial2);
-```
-
-**getScript**:
-Returns the script that you've built so far. Useful mainly for debugging:
-* `console.log(API.getScript());`
-
-**getLogs**:
-Returns the logs for this task. Useful for giving user feedback or creating staircase tasks
-* `console.log(API.getLogs());`
 
 ### Logging
 
