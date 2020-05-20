@@ -48,16 +48,33 @@
 <li><a href="#media">Media</a></li>
 <li><a href="#stimuli">Stimuli</a></li>
 <li><a href="#trial">Trial</a><ul>
-<li><a href="#layout-stimuli">Layout / stimuli</a></li>
+<li><a href="#layout--stimuli">layout / stimuli</a></li>
 <li><a href="#input">Input</a></li>
-<li><a href="#interactions">Interactions</a><ul>
-<li><a href="#interactions-conditions">Conditions</a></li>
-<li><a href="#interactions-actions">Actions</a></li>
+<li><a href="#interactions">Interactions</a></li>
+<li><a href="#interactions-conditions">Interactions: conditions</a></li>
+<li><a href="#interactions-actions">Interactions: actions</a></li>
 </ul>
 </li>
+<li><a href="#inheritance">Inheritance</a><ul>
+<li><a href="#sets">Sets</a></li>
+<li><a href="#inheriting">Inheriting</a></li>
+<li><a href="#customization">Customization</a></li>
 </ul>
 </li>
-<li><a href="#inheritance">Inheritance</a></li>
+<li><a href="#the-sequence">The sequence</a><ul>
+<li><a href="#mixing">Mixing</a></li>
+</ul>
+</li>
+<li><a href="#changing-settings">Changing Settings</a><ul>
+<li><a href="#logger">Logger</a></li>
+<li><a href="#canvas">Canvas</a></li>
+<li><a href="#base_url">Base_url</a></li>
+<li><a href="#redirect">Redirect</a></li>
+<li><a href="#hooks">Hooks</a></li>
+<li><a href="#onend">onEnd</a></li>
+<li><a href="#meta-data">Meta data</a></li>
+</ul>
+</li>
 <li><a href="#logging">Logging</a></li>
 </ul>
 </li>
@@ -139,7 +156,7 @@ The folowing two media definitions have the same outcome:<code>&#39;Wiki&#39;</c
 Each trial may have multiple stimuli, and they are refered to by <code>handle</code>.
 This is how refer to this specific stimulus inside the player (i.e. if we want to hide or show it). 
 If more than one stimulus (per trial) has the same handle, all actions targeted at that handle will affect all stimuli.
-You can set a stimulus handle either by setting the <code>handle</code> property, or by setting <code>handle</code> into the <a href="/minno-quest/0.1/basics/variables.html#local-variables-local-&amp;-meta">data object</a>.
+You can set a stimulus handle either by setting the <code>handle</code> property, or by setting <code>handle</code> into the <a href="/minno-quest/0.3/basics/variables.html#local-variables-local-&amp;-meta">data object</a>.
 Alternatively, if a stimulus is inherited from a set, the handle is defined by default as the set that the stimulus was inherited from.</p>
 <p><code>size</code>:
 The size of the stimulus in percentage of the player canvas. By default, size is set to {height:&#39;auto&#39;,width:&#39;auto&#39;}.</p>
@@ -763,20 +780,9 @@ The wrapper mixer serves a sort of parenthesis for the mixer. It has two primary
 <ul>
 <li><code>{mixer:&#39;wrapper&#39;, data: [trial1,trial2]}</code></li>
 </ul>
-<h3><a name="changing-settings" class="header-link" href="#changing-settings"><span></span></a>Changing Settings</h3><p>Player wide settings are set within the &quot;settings&quot; property of the task JSON.</p>
-<pre><code class="lang-javascript">settings = {
-    logger: {
-        url: &#39;your/target/url&#39;,
-        logger: function(){
-            // do your mojo here :)
-        }
-    },
-    canvas: {
-        maxWidth: 800,
-        proportions : 1
-    }
-}
-</code></pre>
+<h3><a name="changing-settings" class="header-link" href="#changing-settings"><span></span></a>Changing Settings</h3><p>Settings that apply to the whole task may be changed using <code>API.addSettings</code> 
+(see <a href="/minno-quest/0.3/basics/variables.html#addsettingsname-setting">documentation</a>).
+Following are the available settings.</p>
 <h4><a name="logger" class="header-link" href="#logger"><span></span></a>Logger</h4><pre><code class="lang-javascript">logger: {
     url: &#39;your/target/url&#39;,
     pulse: 3,
@@ -876,16 +882,13 @@ By default, the player simply refreshes the current page.
 This option is not used if the endTask hook is set.</p>
 <pre><code class="lang-javascript">redirect: &#39;//my.domain.edu&#39;
 </code></pre>
-<h4><a name="hooks" class="header-link" href="#hooks"><span></span></a>Hooks</h4><p>Hooks are functions that are to be run at predefined points throughout the player.</p>
-<pre><code class="lang-javascript">hooks: {
-    endTask: function(){}
-}
-</code></pre>
-<p><code>endTask</code>:
-Called at the end of the task instead of the default redirect.</p>
-<h4><a name="onend" class="header-link" href="#onend"><span></span></a>onEnd</h4><p>Called at the end of the task instead of the default redirect.
-This function is a more standart complient version of <code>hooks.endTask</code>.</p>
-<h4><a name="meta-data" class="header-link" href="#meta-data"><span></span></a>Meta data</h4><p>Meta data is data that should be returned with every request to the server.
+<h4><a name="hooks" class="header-link" href="#hooks"><span></span></a>Hooks</h4><p>This option is deprecated, please use <a href="#onend"><code>onEnd</code></a> instead.</p>
+<h4><a name="onend" class="header-link" href="#onend"><span></span></a>onEnd</h4><p>A function to be called at the end of the task.
+For example, the following setting logs the task logs to the console.</p>
+<pre><code>API.addSettings(`onEnd`, function(){
+    console.log(API.getCurrent().logs);
+});
+</code></pre><h4><a name="meta-data" class="header-link" href="#meta-data"><span></span></a>Meta data</h4><p>Meta data is data that should be returned with every request to the server.
 Any key value pair in the meta data is added to every post the player makes to the server.
 In order to create a post with three keys: json, session_id and task_id - you would write something like this:</p>
 <pre><code class="lang-javascript">metaData: {
@@ -894,106 +897,6 @@ In order to create a post with three keys: json, session_id and task_id - you wo
 }
 </code></pre>
 <p>(the json field is the field that holds the player data it is created automaticaly)</p>
-<h3><a name="api" class="header-link" href="#api"><span></span></a>API</h3><p>The API is a javascript object that is used to activate the miTime.
-The basic format for accessing the API is as follows:</p>
-<pre><code class="lang-javascript">define([&#39;app/API&#39;], function(APIconstructor) {
-    var API = new APIconstructor();
-
-    API.addScript(script);
-
-    return API.script;
-});
-</code></pre>
-<p>The API object exposes several helper function to help you organize your script.</p>
-<p><strong>addScript</strong>:
-Allows pushing a whole script to the player:</p>
-<ul>
-<li><code>API.addScript(script);</code></li>
-</ul>
-<p><strong>getScript</strong>:
-Returns the whole player script:</p>
-<ul>
-<li><code>API.getScript();</code></li>
-</ul>
-<p><strong>addGlobal, addCurrent</strong>
-Allows extending the global or current objects respectively:</p>
-<ul>
-<li><code>API.addGlobal(object);</code></li>
-<li><p><code>API.addCurrent(object);</code></p>
-<p>  For instance if the current global object looks like this:</p>
-<pre><code class="lang-javascript">  var globalObject = {
-      name: &#39;Sándor Ferenczi&#39;,
-      score: &#39;90&#39;
-  }
-</code></pre>
-<p>  Then the following script:</p>
-<pre><code class="lang-javascript">  API.addGlobal({
-      score: &#39;100&#39;,
-      done: true
-  })
-</code></pre>
-<p>  Will leave the global object as</p>
-<pre><code class="lang-javascript">  var globalObject = {
-      name: &#39;Sándor Ferenczi&#39;,
-      score: &#39;100&#39;,
-      done: true
-  }
-</code></pre>
-</li>
-</ul>
-<p><strong>getGlobal, getCurrent</strong>:
-Returns the global or current object respectively:</p>
-<ul>
-<li><code>API.getGlobal();</code></li>
-<li><code>API.getCurrent();</code></li>
-</ul>
-<p><strong>addSettings</strong>:
-<code>API.addSettings</code> allows you to add settings to your script.</p>
-<p>You may add a whole settings section:</p>
-<pre><code class="lang-javascript">API.addSettings({
-    canvas: {},
-    logger: {}
-});
-</code></pre>
-<p>Alternatively you may add a specific setting:</p>
-<pre><code class="lang-javascript">API.addSettings(&#39;canvas&#39;,{
-    maxWidth: 800,
-    proportions : 0.8
-});
-</code></pre>
-<p><strong>addTrialSets, addStimulusSets and addMediaSets</strong>:
-There are three add set functions, one for each of the set types: <code>addTrialSets</code>, <code>addStimulusSets</code> and <code>addMediaSets</code>.
-Each of them allows adding sets to your script.
-You may add a complete sets object:</p>
-<pre><code class="lang-javascript">API.addTrialSets({
-    Default: [defaultTrial],
-    introduction: [intro1, intro2, intro3]
-});
-</code></pre>
-<p>Or you may add a single set:</p>
-<pre><code class="lang-javascript">API.addTrialSets(&quot;introduction&quot;,[intro1, intro2]); // adds intro1 and intro2 to the introduction set
-</code></pre>
-<p>Or part of a set</p>
-<pre><code class="lang-javascript">API.addTrialSets(&quot;introduction&quot;,intro3); // adds intro3 to the introduction set
-</code></pre>
-<p><strong>addSequence</strong>
-Allows adding sequence objects to your script.</p>
-<p>Here is a single set:</p>
-<pre><code class="lang-javascript">API.addSequence([trial1,trial2]);
-</code></pre>
-<p>And part of a set:</p>
-<pre><code class="lang-javascript">API.addSequence(trial2);
-</code></pre>
-<p><strong>getScript</strong>:
-Returns the script that you&#39;ve built so far. Useful mainly for debugging:</p>
-<ul>
-<li><code>console.log(API.getScript());</code></li>
-</ul>
-<p><strong>getLogs</strong>:
-Returns the logs for this task. Useful for giving user feedback or creating staircase tasks</p>
-<ul>
-<li><code>console.log(API.getLogs());</code></li>
-</ul>
 <h3><a name="logging" class="header-link" href="#logging"><span></span></a>Logging</h3><p>The player sends all the data it has gathered to the url defined in the settings <a href="#logger">logger</a>.
 The data is sent as an ajax POST where the only field is &quot;json&quot; (unless you added something using <a href="#meta-data">metadata</a>).
 The field includes a json array including all logs created. each log is an object including the following fields:</p>
