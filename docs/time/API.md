@@ -23,6 +23,7 @@
   - [Hooks](#hooks)
   - [onEnd](#onend)
   - [Meta data](#meta-data)
+  - [preloadImages](#preloadimages)
 - [Logging](#logging)
 
 ### Definitions
@@ -865,6 +866,15 @@ metaData: {
 ```
 
 (the json field is the field that holds the player data it is created automaticaly)
+
+#### preloadImages
+There are times when you want to preload images manually, without relying on minno-time to recognize all your media automatically.
+This can be if you are using complex `html` type media that include images, or if you are using templates to set images.
+In these cases there is a convenience setting that allows you to add your images to the preloading queue.
+
+```javascript
+API.addSettings('preloadImages', ['img1.jpg', 'img2.jpg', 'img3.jpg']);
+```
 
 ### Logging
 

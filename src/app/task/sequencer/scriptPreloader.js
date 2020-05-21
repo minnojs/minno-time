@@ -26,8 +26,9 @@ export function getScriptMedia(script){
     var stimulusSets = _.map(script.stimulusSets, getStimMedia);
     var trialSets = _.map(script.trialSets, getTrialMedia);
     var sequence = _.filter(script.sequence,notMixer).map(getTrialMedia);
+    var preload = _.get(script.settings,'preloadImages', []).map(function(url){ return {image:url}; });
 
-    return _.flattenDeep([mediaSets, stimulusSets, trialSets, sequence]).filter(notUndefined);
+    return _.flattenDeep([mediaSets, stimulusSets, trialSets, sequence, preload]).filter(notUndefined);
 } 
 
 function getTrialMedia(trial){

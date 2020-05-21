@@ -41,4 +41,14 @@ describe('scriptPreloader', function(){
 
         expect(result).toEqual([1,2,3,4,5,6]);
     });
+
+    it('should harvest settings.imagePreloder', function(){
+        var script = {
+            settings: { preloadImages: [1,2,3,4] }
+        };
+
+        var result = getScriptMedia(script);
+
+        expect(result).toEqual([{image:1},{image:2},{image:3},{image:4}]);
+    });
 });
