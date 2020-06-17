@@ -439,8 +439,13 @@ Log this action. Pushes this action into the logging stack so that it is later s
 * `{type:'log'}`
 
 **custom**
-Run a custom function. This action is intended to for use by experienced users that want to tinker with the inner workings of the player - use at your own risk! The `fn` property takes a custom function. The function takes two arguments: options is the action object itself, the second is the event data object.
-* `{type:'custom',fn:function(options,eventData){}}`
+Run a custom function. This action is intended to for use by experienced users that want to tinker with the inner workings of the player - use at your own risk! 
+The `fn` property takes a custom function. 
+The function takes three arguments: `action` is the action object itself, the `eventData` is an object holding information about the triggering event, `trial` is an the implementation of the trial object.
+
+* `{type:'custom',fn:function(action,eventData,trial){}}`
+
+You can checkout some examples of the syntax in the [plaer code](https://github.com/minnojs/minno-time/blob/0.5/src/app/trial/interactions/actionList.js).
 
 **goto**:
 Responsible for the next trial we go to. This action will be executed only after the trial ends, you will probably want to follow it with an endTrial action.
