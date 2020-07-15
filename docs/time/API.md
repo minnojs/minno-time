@@ -407,6 +407,7 @@ Change canvas style using any of the following properties (see [settings](#canva
 Starts mouse tracking. Mouse tracking logs all measurements into an array in `data`.
 It stops when you call the `stopMouseTracking` action or automatically at the end of the trial.
 Calling `startMouseTracking` when it is already running does not do anything.
+
 * `{type:'startMouseTracking'}`
 * `{type:'startMouseTracking', logAs:'tracking', logRate: 150, logStimulusLocation: ['myHandle']}`
 
@@ -428,7 +429,9 @@ mouseY                  | The horizontal location of the mouse relative to the c
 &lt;handle&gth;Width    | (optional) The width of the &lt;handle&gth; elment.
 &lt;handle&gth;Height   | (optional) The height of the &lt;handle&gth; elment.
 
-
+Note that each row in the log represents a mouse movement, and not a point in time.
+This means that if the mouse does not move, there can be long stretches of time without movement recording.
+When analyzing the data, make sure you use the time property in order to identify movement timing, and do not assume that measurements occur at a pretedermined frequency.
 
 **stopMouseTracking**:
 Stops ongoing mousetracking.
