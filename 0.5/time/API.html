@@ -549,6 +549,9 @@ Calling <code>startMouseTracking</code> when it is already running does not do a
 </tr>
 </tbody>
 </table>
+<p>Note that each row in the log represents a mouse movement, and not a point in time.
+This means that if the mouse does not move, there can be long stretches of time without movement recording.
+When analyzing the data, make sure you use the time property in order to identify movement timing, and do not assume that measurements occur at a pretedermined frequency.</p>
 <p><strong>stopMouseTracking</strong>:
 Stops ongoing mousetracking.</p>
 <ul>
