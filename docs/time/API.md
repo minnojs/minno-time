@@ -422,10 +422,10 @@ The tracking data is logged as an array of Objects with the following structure:
 property                | description
 -----------             | -----------
 time                    | Time in ms from the initiation of mouseTracking.
-mouseX                  | The vertical location of the mouse relative to the canvas.
-mouseY                  | The horizontal location of the mouse relative to the canvas.
-&lt;handle&gth;X        | (optional) The vertical location of the &lt;handle&gth; elment relative to the canvas.
-&lt;handle&gth;Y        | (optional) The horizontal location of the &lt;handle&gth; elment relative to the canvas.
+mouseX                  | The horizontal location of the mouse relative to the canvas.
+mouseY                  | The vertical location of the mouse relative to the canvas.
+&lt;handle&gth;X        | (optional) The horizontal location of the &lt;handle&gth; elment relative to the canvas.
+&lt;handle&gth;Y        | (optional) The vertical location of the &lt;handle&gth; elment relative to the canvas.
 &lt;handle&gth;Width    | (optional) The width of the &lt;handle&gth; elment.
 &lt;handle&gth;Height   | (optional) The height of the &lt;handle&gth; elment.
 
