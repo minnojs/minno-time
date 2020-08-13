@@ -844,25 +844,33 @@ It is responsible for adding a logging row to be sent to the server.</p>
     };
 };
 </code></pre>
-<h4><a name="canvas" class="header-link" href="#canvas"><span></span></a>Canvas</h4><p>The canvas section is responsible for the overall look of the player.
-It controls the shape and appearance of the canvas.</p>
+<h4><a name="canvas" class="header-link" href="#canvas"><span></span></a>Canvas</h4><p>The canvas is the visable part of the player.
+This section in the settings controls the shape and appearance of the canvas.</p>
 <pre><code class="lang-javascript">canvas: {
     maxWidth: 800,
     proportions : 0.8
 }
 </code></pre>
-<p><code>width</code>:
-If width is set, then the canvas size is set to a constant width (set the hight using the <code>proportions</code> property).</p>
-<p><code>maxWidth</code>:
-The maximum width (in pixels) that the canvas may reach. By default it is set to 500px (note that if <code>width</code>  is set, then this property is ignored and the canvas size stays static).</p>
+<p>By default Minno attempts to keep the canvas size proportional so that the relationship between stimuli stays consistent.
+Therefore it attempts to take up as much screen space as posible while staying true to the <strong>proportion</strong>.</p>
 <p><code>proportions</code>:
-Responsible for the shape of the canvas. You can set it either as a number or an object. By default it is set to <code>0.8</code>.</p>
-<ul>
-<li><code>{width:2,height:3}</code></li>
-<li><code>1.5</code> calculated as height/width</li>
-</ul>
+The proportion settings describes the relationship between the height and width of the canvas
+(<em>proportion = height/width</em>).
+You can set it either directly as a number (i.e. <code>0.8</code>) or more explicitly as an object (i.e. <code>{width:5,height:4}</code>).<br>By default it is set to <code>0.8</code>.</p>
+<p><code>maxWidth</code>:
+The maximum width (in pixels) that the canvas may reach.
+This value must be a plain number (i.e. <code>800</code> and not <code>&#39;800px&#39;</code>).
+Note that if <code>width</code> is set, then this property is ignored and the canvas size stays static.</p>
+<p><code>width</code>:
+If width is set, then the canvas size is set to a constant width 
+(control the hight using the <code>proportions</code> property).
+This value must be a plain number (i.e. <code>800</code> and not <code>&#39;800px&#39;</code>).</p>
 <p><code>textSize</code>:
-Controls the default font size in the canvas. It takes a single number that represents font size in percentage of the canvas height (similar to the CSS3 <code>vh</code> unit). By default it is set to 3. Any fontSize within your script that uses a relative unit (percent/em) will be relative to this size. Any fontSize that uses an absolute unit (px/pt) will ignore it.</p>
+Controls the default font size in the canvas. 
+It takes a single number that represents font size in percentage of the canvas height (similar to the CSS3 <code>vh</code> unit). 
+By default it is set to 3. 
+Any stimulus that sets font-size using a relative unit (percent/em) will be relative to this size. 
+Any stimulus that sets font-size using an absolute unit (px/pt) will be displayed according to the absolute unit.</p>
 <p><code>background</code>:
 Controls the background color of the whole screen.</p>
 <p><code>canvasBackground</code>:
