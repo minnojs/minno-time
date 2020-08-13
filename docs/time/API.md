@@ -783,8 +783,8 @@ function(trialData, inputData, actionData,logStack){
 
 #### Canvas
 
-The canvas section is responsible for the overall look of the player.
-It controls the shape and appearance of the canvas.
+The canvas is the visable part of the player.
+This section in the settings controls the shape and appearance of the canvas.
 
 ```javascript
 canvas: {
@@ -793,19 +793,31 @@ canvas: {
 }
 ```
 
-`width`:
-If width is set, then the canvas size is set to a constant width (set the hight using the `proportions` property).
-
-`maxWidth`:
-The maximum width (in pixels) that the canvas may reach. By default it is set to 500px (note that if `width`  is set, then this property is ignored and the canvas size stays static).
+By default Minno attempts to keep the canvas size proportional so that the relationship between stimuli stays consistent.
+Therefore it attempts to take up as much screen space as posible while staying true to the **proportion**.
 
 `proportions`:
-Responsible for the shape of the canvas. You can set it either as a number or an object. By default it is set to `0.8`.
-* `{width:2,height:3}`
-* `1.5` calculated as height/width
+The proportion settings describes the relationship between the height and width of the canvas
+(*proportion = height/width*).
+You can set it either directly as a number (i.e. `0.8`) or more explicitly as an object (i.e. `{width:5,height:4}`).  
+By default it is set to `0.8`.
+
+`maxWidth`:
+The maximum width (in pixels) that the canvas may reach.
+This value must be a plain number (i.e. `800` and not `'800px'`).
+Note that if `width` is set, then this property is ignored and the canvas size stays static.
+
+`width`:
+If width is set, then the canvas size is set to a constant width 
+(control the hight using the `proportions` property).
+This value must be a plain number (i.e. `800` and not `'800px'`).
 
 `textSize`:
-Controls the default font size in the canvas. It takes a single number that represents font size in percentage of the canvas height (similar to the CSS3 `vh` unit). By default it is set to 3. Any fontSize within your script that uses a relative unit (percent/em) will be relative to this size. Any fontSize that uses an absolute unit (px/pt) will ignore it.
+Controls the default font size in the canvas. 
+It takes a single number that represents font size in percentage of the canvas height (similar to the CSS3 `vh` unit). 
+By default it is set to 3. 
+Any stimulus that sets font-size using a relative unit (percent/em) will be relative to this size. 
+Any stimulus that sets font-size using an absolute unit (px/pt) will be displayed according to the absolute unit.
 
 `background`:
 Controls the background color of the whole screen.

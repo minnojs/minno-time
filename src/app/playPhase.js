@@ -25,7 +25,6 @@ function playerPhase(sink){
     var $source = stream(); // a stream of trial POJO
     var $trial = $source.map(activateTrial());
     var $sourceLogs = stream();
-    var $messages = stream();
     var $logs = createLogs($sourceLogs, composeLoggerSettings(sink.script, global), defaultLogMap);
     var onDone = _.get(settings, 'hooks.endTask', settings.onEnd || _.noop);
 
@@ -47,7 +46,6 @@ function playerPhase(sink){
     return _.extend({
         $trial:$trial, 
         $logs: $logs,
-        $messages: $messages,
         start: play.bind(null, ['next', {}]),
         end: kill,
         promise: promise
@@ -71,7 +69,7 @@ function playerPhase(sink){
             var trial = cache = new Trial(source, canvas, settings);
             // pipe public streams to trial streams
             trial.$logs.map($sourceLogs); 
-            trial.$messages.map($messages); 
+            trial.$messages.map(sink.$messages); 
 
             // must be *before* the subscription to $end for the next trial
             if (source.DEBUG && window.DEBUG) setupDebug(trial);

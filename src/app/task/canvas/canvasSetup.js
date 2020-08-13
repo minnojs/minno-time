@@ -6,11 +6,11 @@ import css from 'minno-css';
 
 export default setupCanvas;
 
-function setupCanvas(canvas, canvasSettings){
+function setupCanvas(canvas, canvasSettings,$messages){
     canvasSettings || (canvasSettings = {});
     var $resize = stream();
 
-    if (!_.isElement(canvas)) throw new Error('Minno-time: canvas is not a DOM element');
+    if (!_.isElement(canvas)) throw new Error('minno-time: canvas is not a DOM element');
 
     canvas.classList.add('minno-canvas');
 
@@ -27,7 +27,7 @@ function setupCanvas(canvas, canvasSettings){
     canvasSettings.css && css(canvas, canvasSettings.css);
 
     // setup canvas resize
-    $resize.map(adjustCanvas(canvas, canvasSettings));
+    $resize.map(adjustCanvas(canvas, canvasSettings, $messages));
     $resize({});
 
     window.addEventListener('orientationchange', $resize);
@@ -41,8 +41,5 @@ function setupCanvas(canvas, canvasSettings){
         })
         .map(off);
 
-
-
     return $resize;
-
 }

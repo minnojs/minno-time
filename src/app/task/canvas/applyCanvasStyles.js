@@ -49,4 +49,3 @@ function on(el, property, value){
     el.style[property] = value; // set new value
     return function(){el.style[property] = old;};  // create off function
 }
-

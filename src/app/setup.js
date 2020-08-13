@@ -2,17 +2,20 @@ import _ from 'lodash';
 import global from './global';
 import createDB from './task/sequencer/createDB';
 import canvasSetup from './task/canvas/canvasSetup';
+import stream from 'mithril-stream';
 
 export default setup;
 
 function setup(canvas, script){
-    var $resize = canvasSetup(canvas, _.get(script, 'settings.canvas', {}));
+    var $messages = stream();
+    var $resize = canvasSetup(canvas, _.get(script, 'settings.canvas', {}),$messages);
     var db = createDB(script);
     setupVars(script);
 
     return {
         db:db, 
         $resize:$resize,
+        $messages: $messages,
         canvas: canvas,
         script: script,
         settings: script.settings || {}

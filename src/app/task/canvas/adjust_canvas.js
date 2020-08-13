@@ -10,7 +10,7 @@ import getSize from './getSize';
 export default adjust_canvas;
 
 // the function to be used by the main view
-function adjust_canvas(canvas, settings){
+function adjust_canvas(canvas, settings, $messages){
 
     return _.throttle(eventListener, 16);
 
@@ -41,36 +41,62 @@ function adjust_canvas(canvas, settings){
             });
         });
     }
-}
 
-function getProportions(proportions){
-    if (!_.isPlainObject(proportions)) return proportions || 0.8; // by default proportions are 0.8
-    if ([proportions.height, proportions.width].every(_.isFinite)) return proportions.height/proportions.width; 
-    throw new Error('The canvas proportions object`s height and a width properties must be numeric');
-}
+    function getProportions(settings){
+        var proportions = settings.proportions;
+        if (isNumeric(proportions)) return proportions;
+        if (_.isPlainObject(proportions)) {
+            if ([proportions.height, proportions.width].every(isNumeric)) return proportions.height/proportions.width; 
+            $messages({
+                type: 'warn',
+                message: 'minno settings.canvas.proportions.width and settings.canvas.proportions.height must both be numeric',
+                context: settings
+            });
+        }
+        if (proportions) $messages({
+            type: 'warn',
+            message: 'minno settings.canvas.proportions must be either numeric or a plain object',
+            context: settings
+        });
+        return 0.8;
+    }
 
-function getTargetSize(settings, canvas){
-    // calculate proportions (as height/width)
-    var proportions = getProportions(settings.proportions);
+    function getTargetSize(settings, canvas){
+        // calculate proportions (as height/width)
+        var proportions = getProportions(settings);
 
-    // static canvas size
-    // ------------------
-    if (settings.width) return {
-        width: settings.width,
-        height: settings.width*proportions
-    };
+        // static canvas size
+        // ------------------
+        if (settings.width) {
+            if (!isNumeric(settings.width)) $messages({
+                type: 'warn',
+                message: 'minno settings.canvas.width must be numeric',
+                context: settings
+            });
+            return {
+                width: settings.width,
+                height: settings.width*proportions
+            };
+        }
 
-    // dynamic canvas size
-    // -------------------
+        // dynamic canvas size
+        // -------------------
+        if (settings.maWidth && !isNumeric(settings.maxWidth)) $messages({
+            type: 'warn',
+            message: 'minno settings.canvas.maxWidth must be numeric',
+            context: settings
+        });
 
-    var docElement = window.document.documentElement; // used to get client view size
+        var docElement = window.document.documentElement; // used to get client view size
 
-    var maxHeight = docElement.clientHeight;
-    var maxWidth = Math.min(settings.maxWidth || Infinity, docElement.clientWidth, getSize(canvas.parentNode).width);
+        var maxHeight = docElement.clientHeight;
+        var maxWidth = Math.min(settings.maxWidth || Infinity, docElement.clientWidth, getSize(canvas.parentNode).width);
 
-    // calculate the correct size for this screen size
-    if (maxHeight > proportions * maxWidth) return { height: maxWidth*proportions, width: maxWidth };
-    else return { height: maxHeight, width: maxHeight/proportions};
+        // calculate the correct size for this screen size
+        if (maxHeight > proportions * maxWidth) return { height: maxWidth*proportions, width: maxWidth };
+        else return { height: maxHeight, width: maxHeight/proportions};
+    }
 }
 
 function parse(num){ return parseFloat(num, 10) || 0;}
+function isNumeric(n){ return !isNaN(parseFloat(n)) && isFinite(n); }
