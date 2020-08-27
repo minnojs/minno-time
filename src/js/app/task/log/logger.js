@@ -14,7 +14,6 @@ define(function(require){
 
 	// counter for the last time we sent (it holds the last length for which we sent)
     var lastSend = 0;
-    var postDef = $.Deferred().resolve(); // a defered to follow all posting
 
     function defaultLogger(trialData, inputData, actionData,logStack){
 
@@ -41,17 +40,15 @@ define(function(require){
         var logChunk; // the log chunk we want to send right now
         var logStack = logStackGetter();
 
-		// if  we've already sent everything,  we don't need to do anything
-        if (logStack.length - lastSend <= 0) {
-            return postDef;
-        } else {
-			// get the log chunk that we want to send
-            logChunk =  logStack.slice(lastSend, logStack.length);
+        // if  we've already sent everything,  we don't need to do anything
+        if (logStack.length - lastSend <= 0) return $.Deferred().resolve(); // a defered to follow all posting
 
-			// reset lastSend counter
-            lastSend = logStack.length;
-            return $.when(postDef, post(logChunk));
-        }
+        // get the log chunk that we want to send
+        logChunk = logStack.slice(lastSend, logStack.length);
+
+        // reset lastSend counter
+        lastSend = logStack.length;
+        return post(logChunk);
     }
 
 	/*
