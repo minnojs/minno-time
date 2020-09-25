@@ -118,7 +118,7 @@ define(function(require) {
             var media = this.media.options;
             var fullpath = settings.logger && settings.logger.fullpath; // should we use the full path or just the file name
             if (media.alias) {return media.alias;} // if we have an alias ues it
-            if (media.data.alias) {return media.data.alias;} 
+            if (_.get(media,'data.alias')) {return media.data.alias;} 
             for (var prop in media) {
                 if (_.contains(['image','template'],prop)) {
                     return fullpath ? media[prop] : media[prop].replace(/^.*[\\\/]/, '');
@@ -131,7 +131,7 @@ define(function(require) {
 
     });
 
-	// Returns the Model class
+    // Returns the Model class
     return Model;
 
 });
