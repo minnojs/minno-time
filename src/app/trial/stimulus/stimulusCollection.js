@@ -10,7 +10,7 @@ function stimCollection(trial, canvas){
     var source = trial._source;
     var stimuli = _.map(source.stimuli, toStim);
     var layout = _.map(source.layout, toLayout).map(toStim);
-    var stimReady = stimuli.concat(layout).map(function(stim){return stim.init();});
+    var stimReady = stimuli.concat(layout).map(function(stim,index){return stim.init(index);});
 
     var self = {
         canvas: canvas,

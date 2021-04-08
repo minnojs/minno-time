@@ -6,16 +6,16 @@ var isIE = window.document.documentMode;
 
 export default setupElement;
 
-function setupElement(el){
-    var stimulus = this;
+function setupElement(stimulus, index, el){
     var canvas = stimulus.canvas;
 
-    this.el = el;
+    stimulus.el = el;
     return new Promise(function(resolve){
         fastdom.mutate(function initStim(){
             // setup element
             el.classList.add('minno-stimulus');
             el.setAttribute('data-handle', stimulus.handle); // data-handle for handeling of mouse/touch interactions
+            el.style.zIndex = index*10; // make sure elements are layered correctly (becuase sometimes they are not linearly inserted into the dom).
             canvas.appendChild(el);
 
             setSize(el, stimulus.source);
