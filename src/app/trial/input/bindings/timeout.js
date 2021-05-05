@@ -24,7 +24,7 @@ function timeout(inputObj){
 
     else fastdom.measure(function(){
         // start timeout the same time that current visual stimuli occur
-        var target = now() + duration - offset;
+        var target = now() + +duration - offset;
         step();
         function step(){
             if (isCanceled) return;

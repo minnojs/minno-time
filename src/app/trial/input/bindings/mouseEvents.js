@@ -23,7 +23,7 @@ function mouseEvents(eventName,inputObj, canvas){
     function clickListener(e){
         var target = e.target;
         if (element && element.contains(target)) return $listener(e);
-        if (!element && target.closest('[data-handle=' + inputObj.stimHandle + ']')) return $listener(e);
+        if (!element && target.closest('[data-handle="' + inputObj.stimHandle + '"]')) return $listener(e);
         return;
     }
 
