@@ -16,22 +16,28 @@ function timeout(inputObj){
     var $listener = stream();
     var timeoutID;
     var duration = randomize(inputObj.duration) || 0;
+    var isCanceled = false;
 
-    $listener.end.map(cancel);
+    $listener.end.map(function(){isCanceled = true;});
 
-    // start timeout the same time that current visual stimuli occur
-    if (duration) fastdom.mutate(function(){
-        timeoutID = setTimeout($listener.bind(null, {}), duration-offset);
+    if (!duration) $listener({}); // listener is already registered with $events so this should be immidiate 
+
+    else fastdom.measure(function(){
+        // start timeout the same time that current visual stimuli occur
+        var target = now() + duration - offset;
+        step();
+        function step(){
+            if (isCanceled) return;
+            fastdom.measure(function(){
+                if (now() >= target) $listener({});
+                else fastdom.mutate(step); // we use mutate here so that step does not get called within the same RAF
+            });
+        }
     });
 
-    else $listener({}); // listener is already registered with $events so this should be immidiate
-
     return $listener;
-
-    function cancel(){
-        clearTimeout(timeoutID);
-    }
 }
+
 
 // compute true frame rate for this specific machine
 // and set offset to half of that
