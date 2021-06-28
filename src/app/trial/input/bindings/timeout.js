@@ -10,7 +10,7 @@ export default timeout;
  * This is done so that on overage we hit as close as possible to the true duration
  * `offset` is updated dynamically by correctOfset() below
  **/
-var offset = 8;
+var offset = 5;
 
 function timeout(inputObj){
     var $listener = stream();
@@ -55,7 +55,10 @@ function timeout(inputObj){
             results.push(b-a)
             a = b;
             if (results.length < itterations)  return setTimeout(update);
-            else offset = mean(results)/2; // we want an offset of half of the frame rate, so on average we hit the closest frame possible to the target.
+            else offset = mean(results)/3; 
+            // we want an offset of half of the frame rate, so on average we hit the closest frame possible to the target.
+            // but it turns out that can create fragile balances and a high variance in display length
+            // using an offset of 1/3 we get both improved accuracy (mean closer to target) and improved precission (study number of frames)
         });   
     }
 
