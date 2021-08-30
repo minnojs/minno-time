@@ -31,8 +31,8 @@ function keypressed(inputObj){
     return $listener;
 
     function keypressListener(e){
-        if (keyDownArr[e.which] || (target.indexOf(e.which) === -1)) return;
         e.preventDefault(); // prevent FF from wasting about 10ms in browser-content.js (and fast search)
+        if (keyDownArr[e.which] || (target.indexOf(e.which) === -1)) return;
         keyDownArr[e.which] = true; // set flag to prevent multi pressing of a key
         $listener(e);
     }
