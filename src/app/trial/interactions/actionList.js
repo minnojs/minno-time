@@ -76,7 +76,7 @@ var actions = {
 
     resetTimer: function(action,eventData,trial){
         // when to reset timer
-        action.immidiate ? reset() :  fastdom.mutate(reset);
+        action.immidiate ? reset() : fastdom.mutate(reset);
 
         function reset(){
             eventData.latency = 0;

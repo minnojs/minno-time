@@ -51,9 +51,15 @@ _.extend(Trial.prototype,{
 
             // activate input
             _.forEach(trial._source.input, trial.input.add); // add each input
-            trial.input.resetTimer(); // reset the interface timer so that event latencies are relative to now.
-            // start running
-            trial.$events({type:'begin',latency:0});
+
+            // make sure that we start the first trial at the begining of an animation frame.
+            fastdom.measure(function(){
+                // reset the interface timer so that event latencies are relative to the first frame
+                trial.input.resetTimer(); 
+
+                // start running
+                trial.$events({type:'begin',latency:0});
+            });
         });
     },
 

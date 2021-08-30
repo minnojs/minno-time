@@ -8,7 +8,7 @@ export default timeout;
 /*
  * We set timeout to trigger half a frame before the target time.
  * This is done so that on overage we hit as close as possible to the true duration
- * `offset` is updated dynamically by correctOfset() below
+ * `offset` is updated dynamically by correctOffset() below
  **/
 var offset = 5;
 
@@ -21,6 +21,9 @@ function timeout(inputObj){
     $listener.end.map(function(){isCanceled = true;});
 
     if (!duration) $listener({}); // listener is already registered with $events so this should be immidiate 
+    
+    // deal with timing dissociated from frames
+    else if (inputObj.immediate) setTimeout($listener.bind(null, {}), duration);
 
     else fastdom.measure(function(){
         // start timeout the same time that current visual stimuli occur
@@ -41,7 +44,7 @@ function timeout(inputObj){
 
 // compute true frame rate for this specific machine
 // and set offset to half of that
-(function correctOfset(){
+(function correctOffset(){
     var itterations = 50;
     var a,b, results = [];
     requestAnimationFrame(function(){
